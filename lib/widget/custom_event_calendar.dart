@@ -79,7 +79,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
             formatButtonShowsNext: false,
             titleTextStyle: Theme.of(context)
                 .textTheme
-                .headline1!
+                .headline4!
                 .copyWith(fontSize: 15.sp),
             titleCentered: false,
           ),
@@ -99,14 +99,11 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
             markersMaxCount: 1,
             outsideDaysVisible: false,
             isTodayHighlighted: true,
-            todayTextStyle: Theme.of(context)
-                .textTheme
-                .headline1!
-                .copyWith(fontSize: 11.sp, color: Colors.black),
-            todayDecoration: BoxDecoration(
+            todayTextStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                fontSize: 11.sp, color: Theme.of(context).colorScheme.primary),
+            todayDecoration: const BoxDecoration(
+              color: Colors.transparent,
               shape: BoxShape.circle,
-              border: Border.all(
-                  color: Colors.black, width: 0.2.w, style: BorderStyle.solid),
             ),
             selectedDecoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
@@ -114,19 +111,19 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
             ),
             disabledTextStyle: Theme.of(context)
                 .textTheme
-                .headline1!
+                .bodyText1!
                 .copyWith(fontSize: 11.sp, color: Colors.black38),
             defaultTextStyle: Theme.of(context)
                 .textTheme
-                .headline1!
+                .bodyText1!
                 .copyWith(fontSize: 11.sp, color: Colors.black),
             weekendTextStyle: Theme.of(context)
                 .textTheme
-                .headline1!
+                .bodyText1!
                 .copyWith(fontSize: 11.sp, color: Colors.black),
             selectedTextStyle: Theme.of(context)
                 .textTheme
-                .headline1!
+                .bodyText1!
                 .copyWith(fontSize: 11.sp, color: Colors.white),
             markerDecoration: BoxDecoration(
               color: Theme.of(context).colorScheme.secondary,
