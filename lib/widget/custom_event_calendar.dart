@@ -1,7 +1,6 @@
 import 'package:appointments/utils/date_util.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../data_types.dart';
@@ -65,23 +64,25 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               daysOfWeekStyle: DaysOfWeekStyle(
                 weekdayStyle: Theme.of(context)
                     .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 10.sp, color: Colors.black54),
+                    .subtitle2!
+                    .copyWith(color: Theme.of(context).colorScheme.outline),
                 weekendStyle: Theme.of(context)
                     .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 10.sp, color: Colors.black54),
+                    .subtitle2!
+                    .copyWith(color: Theme.of(context).colorScheme.outline),
               ),
               headerStyle: HeaderStyle(
-                leftChevronIcon: Icon(
-                  FontAwesomeIcons.chevronLeft,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 4.w,
+                leftChevronIcon: IconTheme(
+                  data: Theme.of(context).primaryIconTheme.copyWith(size: 7.w),
+                  child: const Icon(
+                    Icons.chevron_left,
+                  ),
                 ),
-                rightChevronIcon: Icon(
-                  FontAwesomeIcons.chevronRight,
-                  color: Theme.of(context).colorScheme.primary,
-                  size: 4.w,
+                rightChevronIcon: IconTheme(
+                  data: Theme.of(context).primaryIconTheme.copyWith(size: 7.w),
+                  child: const Icon(
+                    Icons.chevron_right,
+                  ),
                 ),
                 headerPadding: EdgeInsets.fromLTRB(0, 3.w, 0, 3.w),
                 formatButtonPadding:
@@ -92,14 +93,14 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 ),
                 formatButtonTextStyle: Theme.of(context)
                     .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 11.sp, color: Colors.white),
+                    .subtitle1!
+                    .copyWith(color: Colors.white),
                 formatButtonVisible: true,
                 formatButtonShowsNext: false,
                 titleTextStyle: Theme.of(context)
                     .textTheme
-                    .headline4!
-                    .copyWith(fontSize: 15.sp),
+                    .headline2!
+                    .copyWith(color: Theme.of(context).colorScheme.outline),
                 titleCentered: false,
               ),
               focusedDay: _focusedDay,
@@ -118,11 +119,9 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 markersMaxCount: 1,
                 outsideDaysVisible: false,
                 isTodayHighlighted: true,
-                todayTextStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    fontSize: 11.sp,
-                    color: Theme.of(context).colorScheme.primary),
-                todayDecoration: const BoxDecoration(
-                  color: Colors.transparent,
+                todayTextStyle: Theme.of(context).textTheme.bodyText1!,
+                todayDecoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primaryContainer,
                   shape: BoxShape.circle,
                 ),
                 selectedDecoration: BoxDecoration(
@@ -132,19 +131,15 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 disabledTextStyle: Theme.of(context)
                     .textTheme
                     .bodyText1!
-                    .copyWith(fontSize: 11.sp, color: Colors.black38),
-                defaultTextStyle: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 11.sp, color: Colors.black),
-                weekendTextStyle: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(fontSize: 11.sp, color: Colors.black),
+                    .copyWith(color: Theme.of(context).colorScheme.outline),
+                defaultTextStyle: Theme.of(context).textTheme.bodyText1!,
+                weekendTextStyle: Theme.of(context).textTheme.bodyText1!,
+                outsideTextStyle: Theme.of(context).textTheme.bodyText1!,
+                holidayTextStyle: Theme.of(context).textTheme.bodyText1!,
                 selectedTextStyle: Theme.of(context)
                     .textTheme
                     .bodyText1!
-                    .copyWith(fontSize: 11.sp, color: Colors.white),
+                    .copyWith(color: Colors.white),
                 markerDecoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
                   shape: BoxShape.circle,
@@ -174,7 +169,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 itemBuilder: (context, index) {
                   return EaseInAnimation(
                     beginAnimation: 0.98,
-                    onTap: () => {},
+                    onTap: () => {print('object')},
                     child: Card(
                       elevation: 2,
                       color: Theme.of(context).cardColor,
