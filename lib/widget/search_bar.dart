@@ -1,8 +1,9 @@
+import 'package:appointments/utils/layout_util.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 
 class SearchBar extends StatefulWidget implements PreferredSizeWidget {
   const SearchBar({
@@ -15,7 +16,9 @@ class SearchBar extends StatefulWidget implements PreferredSizeWidget {
   final Function(String) onSearchQueryChanged;
 
   @override
-  Size get preferredSize => const Size.fromHeight(65.0);
+  Size get preferredSize => Device.get().isIphoneX
+      ? Size.fromHeight(rSize(70))
+      : Size.fromHeight(rSize(55));
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -48,7 +51,7 @@ class _SearchBarState extends State<SearchBar>
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.fromLTRB(3.w, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(rSize(15), 0, 0, 0),
                 child: CustomIcon(
                   color: Theme.of(context).colorScheme.primary,
                   icon: EaseInAnimation(
@@ -64,45 +67,13 @@ class _SearchBarState extends State<SearchBar>
               ),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(5.w, 0, 5.w, 0),
+                  padding: EdgeInsets.fromLTRB(rSize(20), 0, rSize(20), 0),
                   child: CustomInputField(
                     isSearch: true,
                     controller: _searchFieldController,
                     labelText: 'Search...',
                   ),
                 ),
-                // child: TextField(
-                //   controller: _searchFieldController,
-                //   cursorColor: Colors.white,
-                //   style: Theme.of(context)
-                //       .textTheme
-                //       .bodyText1
-                //       ?.copyWith(fontSize: 13.sp),
-                //   decoration: InputDecoration(
-                //     border: InputBorder.none,
-                //     prefixIcon: IconTheme(
-                //       data: Theme.of(context).iconTheme,
-                //       child: const Icon(
-                //         Icons.search,
-                //       ),
-                //     ),
-                //     hintText: "Search...",
-                //     hintStyle: Theme.of(context)
-                //         .textTheme
-                //         .bodyText1
-                //         ?.copyWith(fontSize: 13.sp),
-                //     suffixIcon: InkWell(
-                //       child: IconTheme(
-                //         data: Theme.of(context).iconTheme,
-                //         child: const Icon(
-                //           Icons.close,
-                //         ),
-                //       ),
-                //       onTap: clearSearchQuery,
-                //     ),
-                //   ),
-                //   onChanged: widget.onSearchQueryChanged,
-                // ),
               )
             ],
           ),

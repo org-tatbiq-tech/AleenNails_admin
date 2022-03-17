@@ -1,3 +1,4 @@
+import 'package:appointments/utils/layout_util.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -11,10 +12,13 @@ class CustomIcon extends StatelessWidget {
     Color backgroundColor =
         color ?? Theme.of(context).colorScheme.primaryContainer;
     return Container(
-      width: 7.5.w,
-      height: 7.5.w,
+      width: rSize(40),
+      height: rSize(40),
       decoration: BoxDecoration(
-          color: backgroundColor, borderRadius: BorderRadius.circular(3.w)),
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(
+            rSize(10),
+          )),
       child: icon,
     );
   }

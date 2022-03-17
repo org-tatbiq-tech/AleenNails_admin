@@ -1,6 +1,8 @@
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_event_calendar.dart';
+import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -79,10 +81,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: CustomAppBar(
         withSearch: true,
-        leadingWidget: IconTheme(
-          data: Theme.of(context).primaryIconTheme,
-          child: const Icon(
-            Icons.menu,
+        leadingWidget: EaseInAnimation(
+          onTap: () => {
+            print(
+                "Device Width: ${Device.width}, Device Height: ${Device.height}")
+          },
+          child: IconTheme(
+            data: Theme.of(context).primaryIconTheme,
+            child: const Icon(
+              Icons.menu,
+            ),
           ),
         ),
         customIcon: IconTheme(

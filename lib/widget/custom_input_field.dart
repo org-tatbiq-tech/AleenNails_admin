@@ -1,5 +1,5 @@
+import 'package:appointments/utils/layout_util.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class CustomInputField extends StatelessWidget {
   final String labelText;
@@ -55,27 +55,31 @@ class CustomInputField extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconButton(
-                icon: const Icon(Icons.close),
-                iconSize: 2.h,
-                color: getColor(),
-                onPressed: () => controller.clear(),
-                constraints: const BoxConstraints(),
-                padding: EdgeInsets.fromLTRB(0, 0, 1.w, 0),
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
+              IconTheme(
+                data: Theme.of(context).iconTheme,
+                child: IconButton(
+                  icon: const Icon(Icons.close),
+                  color: getColor(),
+                  onPressed: () => controller.clear(),
+                  constraints: const BoxConstraints(),
+                  padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                ),
               ),
-              IconButton(
-                constraints: const BoxConstraints(),
-                padding: EdgeInsets.fromLTRB(0, 0, 3.w, 0),
-                iconSize: 2.h,
-                icon: Icon(isPasswordVisible
-                    ? Icons.visibility_off
-                    : Icons.visibility),
-                color: getColor(),
-                onPressed: () => togglePassword(),
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
+              IconTheme(
+                data: Theme.of(context).iconTheme,
+                child: IconButton(
+                  constraints: const BoxConstraints(),
+                  padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
+                  icon: Icon(isPasswordVisible
+                      ? Icons.visibility_off
+                      : Icons.visibility),
+                  color: getColor(),
+                  onPressed: () => togglePassword(),
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                ),
               ),
             ],
           );
@@ -87,7 +91,7 @@ class CustomInputField extends StatelessWidget {
               color: getColor(),
               onPressed: () => controller.clear(),
               constraints: const BoxConstraints(),
-              padding: EdgeInsets.fromLTRB(0, 0, 3.w, 0),
+              padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
               splashColor: Colors.transparent,
               highlightColor: Colors.transparent,
             ),
@@ -95,16 +99,18 @@ class CustomInputField extends StatelessWidget {
         }
       } else {
         if (isPassword) {
-          return IconButton(
-            icon: Icon(
-                isPasswordVisible ? Icons.visibility_off : Icons.visibility),
-            iconSize: 2.h,
-            color: getColor(),
-            onPressed: () => togglePassword(),
-            constraints: const BoxConstraints(),
-            padding: EdgeInsets.fromLTRB(0, 0, 3.w, 0),
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
+          return IconTheme(
+            data: Theme.of(context).iconTheme,
+            child: IconButton(
+              icon: Icon(
+                  isPasswordVisible ? Icons.visibility_off : Icons.visibility),
+              color: getColor(),
+              onPressed: () => togglePassword(),
+              constraints: const BoxConstraints(),
+              padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+            ),
           );
         } else {
           return null;
@@ -113,7 +119,7 @@ class CustomInputField extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: isSearch ? 0 : 2.w),
+      margin: EdgeInsets.symmetric(vertical: isSearch ? 0 : rSize(18)),
       child: TextFormField(
         controller: controller,
         obscureText: isPassword && !isPasswordVisible,
@@ -125,13 +131,13 @@ class CustomInputField extends StatelessWidget {
             ? (value) => validator(value, passwordToConfirm)
             : (value) => validator(context, value),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          contentPadding: EdgeInsets.fromLTRB(0, rSize(6), 0, rSize(6)),
           filled: true,
           floatingLabelBehavior: isSearch
               ? FloatingLabelBehavior.never
               : FloatingLabelBehavior.auto,
           fillColor: Theme.of(context).colorScheme.background,
-          errorStyle: TextStyle(fontSize: 9.sp),
+          errorStyle: TextStyle(fontSize: rSize(18)),
           suffixIcon: getSuffixIcon(),
           prefixIcon: !isSearch
               ? prefixIcon
@@ -145,30 +151,27 @@ class CustomInputField extends StatelessWidget {
           isDense: false,
           labelText: isDescription ? null : labelText,
           hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-              fontSize: 10.sp,
+              fontSize: rSize(18),
               color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),
-          floatingLabelStyle: Theme.of(context)
-              .textTheme
-              .bodyText1
-              ?.copyWith(fontSize: 12.sp, color: getColor()),
-          labelStyle:
-              Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: 12.sp),
+          floatingLabelStyle: Theme.of(context).textTheme.bodyText1,
+          labelStyle: Theme.of(context).textTheme.bodyText1,
           errorMaxLines: 1,
           errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(1.5.h),
-              borderSide: BorderSide(color: Colors.red, width: 0.2.w)),
+              borderRadius: BorderRadius.circular(rSize(10)),
+              borderSide: BorderSide(color: Colors.red, width: rSize(1))),
           focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(1.5.h),
-              borderSide: BorderSide(color: Colors.red, width: 0.3.w)),
+              borderRadius: BorderRadius.circular(rSize(10)),
+              borderSide: BorderSide(color: Colors.red, width: rSize(2))),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(1.5.h),
+              borderRadius: BorderRadius.circular(rSize(10)),
               borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary, width: 0.3.w)),
+                  color: Theme.of(context).colorScheme.primary,
+                  width: rSize(2))),
           enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(1.5.h),
+              borderRadius: BorderRadius.circular(rSize(10)),
               borderSide: BorderSide(
                   color: Theme.of(context).colorScheme.primaryContainer,
-                  width: 0.2.w)),
+                  width: rSize(1))),
         ),
       ),
     );

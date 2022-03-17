@@ -1,8 +1,9 @@
+import 'package:appointments/utils/layout_util.dart';
 import 'package:appointments/widget/app_bar_painter.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String titleText;
@@ -20,8 +21,11 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       this.leadingWidget,
       this.withSearch = false})
       : super(key: key);
+
   @override
-  Size get preferredSize => const Size.fromHeight(65.0);
+  Size get preferredSize => Device.get().isIphoneX
+      ? Size.fromHeight(rSize(70))
+      : Size.fromHeight(rSize(55));
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -87,7 +91,7 @@ class _CustomAppBarState extends State<CustomAppBar>
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(3.w, 0, 4.w, 0),
+                padding: EdgeInsets.fromLTRB(rSize(15), 0, rSize(15), 0),
                 child: CustomIcon(icon: widget.leadingWidget),
               ),
               Expanded(
@@ -119,17 +123,9 @@ class _CustomAppBarState extends State<CustomAppBar>
               widget.withSearch
                   ? GestureDetector(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 2.w, 0),
-                        child: Container(
-                          width: 7.5.w,
-                          height: 7.5.w,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withAlpha(50),
-                              borderRadius: BorderRadius.circular(3.w)),
-                          child: IconTheme(
+                        padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
+                        child: CustomIcon(
+                          icon: IconTheme(
                             data: Theme.of(context).primaryIconTheme,
                             child: const Icon(
                               Icons.search,
@@ -142,7 +138,7 @@ class _CustomAppBarState extends State<CustomAppBar>
                   : Container(),
               widget.customIcon != null
                   ? Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 2.w, 0),
+                      padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
                       child: CustomIcon(icon: widget.customIcon),
                     )
                   : Container(),
