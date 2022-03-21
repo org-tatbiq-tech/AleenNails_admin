@@ -1,6 +1,5 @@
 import 'package:appointments/screens/home/home.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_event_calendar.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';

@@ -1,46 +1,40 @@
+import 'package:appointments/data_types.dart';
 import 'package:appointments/utils/layout_util.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onTap;
-  final bool isPrimary;
-  final Color backgroundColor;
-  final bool isSecondary;
+  final CustomButtonProps customButtonProps;
+
   const CustomButton({
     Key? key,
-    this.text = '',
-    this.isPrimary = false,
-    this.isSecondary = false,
-    this.backgroundColor = Colors.white,
-    required this.onTap,
+    required this.customButtonProps,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Color getButtonColor() {
-      if (isPrimary) {
+      if (customButtonProps.isPrimary) {
         return Theme.of(context).colorScheme.primary;
       }
-      if (isSecondary) {
+      if (customButtonProps.isSecondary) {
         return Theme.of(context).colorScheme.background;
       }
-      return backgroundColor;
+      return customButtonProps.backgroundColor;
     }
 
     Color getTextColor() {
-      if (isPrimary) {
+      if (customButtonProps.isPrimary) {
         return Theme.of(context).colorScheme.background;
       }
-      if (isSecondary) {
+      if (customButtonProps.isSecondary) {
         return Theme.of(context).colorScheme.primary;
       }
-      return backgroundColor;
+      return customButtonProps.backgroundColor;
     }
 
     return EaseInAnimation(
-      onTap: onTap,
+      onTap: customButtonProps.onTap,
       child: Material(
         borderRadius: BorderRadius.circular(rSize(10)),
         child: Container(
@@ -61,8 +55,8 @@ class CustomButton extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: rSize(20), vertical: rSize(10)),
-            child: text.isNotEmpty
-                ? Text(text.toUpperCase(),
+            child: customButtonProps.text.isNotEmpty
+                ? Text(customButtonProps.text.toUpperCase(),
                     style: Theme.of(context).textTheme.button?.copyWith(
                           color: getTextColor(),
                         ))

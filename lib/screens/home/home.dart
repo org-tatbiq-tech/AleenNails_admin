@@ -1,6 +1,5 @@
-import 'package:appointments/utils/layout_util.dart';
+import 'package:appointments/data_types.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../widget/custom_modal.dart';
 

@@ -1,46 +1,17 @@
+import 'package:appointments/data_types.dart';
 import 'package:appointments/utils/layout_util.dart';
 import 'package:flutter/material.dart';
 
 class CustomInputField extends StatelessWidget {
-  final String labelText;
-  final String hintText;
-  final String errorText;
-  final TextEditingController controller;
-  final bool isDescription;
-  final bool isPassword;
-  final bool isConfirmPassword;
-  final bool isPasswordVisible;
-  final bool isSearch;
-  final dynamic togglePassword;
-  final String passwordToConfirm;
-  final dynamic validator;
-  final IconData icon;
-  final Widget? prefixIcon;
-  final dynamic keyboardType;
+  final CustomInputFieldProps customInputFieldProps;
 
-  const CustomInputField({
-    Key? key,
-    required this.controller,
-    this.labelText = '',
-    this.hintText = '',
-    this.errorText = '',
-    this.prefixIcon,
-    this.icon = Icons.person,
-    this.keyboardType = TextInputType.text,
-    this.isPassword = false,
-    this.isSearch = false,
-    this.isConfirmPassword = false,
-    this.isPasswordVisible = false,
-    this.isDescription = false,
-    this.passwordToConfirm = '',
-    this.togglePassword,
-    this.validator,
-  }) : super(key: key);
+  const CustomInputField({Key? key, required this.customInputFieldProps})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     getColor({opacity = 1.0}) {
-      if (errorText.isEmpty) {
+      if (customInputFieldProps.errorText.isEmpty) {
         return Theme.of(context).colorScheme.primary.withOpacity(opacity);
       } else {
         return Theme.of(context).colorScheme.error.withOpacity(opacity);
@@ -48,8 +19,8 @@ class CustomInputField extends StatelessWidget {
     }
 
     getSuffixIcon() {
-      if (controller.text.isNotEmpty) {
-        if (isPassword) {
+      if (customInputFieldProps.controller.text.isNotEmpty) {
+        if (customInputFieldProps.isPassword) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
@@ -60,7 +31,7 @@ class CustomInputField extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.close),
                   color: getColor(),
-                  onPressed: () => controller.clear(),
+                  onPressed: () => customInputFieldProps.controller.clear(),
                   constraints: const BoxConstraints(),
                   padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
                   splashColor: Colors.transparent,
@@ -72,11 +43,11 @@ class CustomInputField extends StatelessWidget {
                 child: IconButton(
                   constraints: const BoxConstraints(),
                   padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
-                  icon: Icon(isPasswordVisible
+                  icon: Icon(customInputFieldProps.isPasswordVisible
                       ? Icons.visibility_off
                       : Icons.visibility),
                   color: getColor(),
-                  onPressed: () => togglePassword(),
+                  onPressed: () => customInputFieldProps.togglePassword(),
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                 ),
@@ -89,7 +60,7 @@ class CustomInputField extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.close),
               color: getColor(),
-              onPressed: () => controller.clear(),
+              onPressed: () => customInputFieldProps.controller.clear(),
               constraints: const BoxConstraints(),
               padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
               splashColor: Colors.transparent,
@@ -98,14 +69,15 @@ class CustomInputField extends StatelessWidget {
           );
         }
       } else {
-        if (isPassword) {
+        if (customInputFieldProps.isPassword) {
           return IconTheme(
             data: Theme.of(context).iconTheme,
             child: IconButton(
-              icon: Icon(
-                  isPasswordVisible ? Icons.visibility_off : Icons.visibility),
+              icon: Icon(customInputFieldProps.isPasswordVisible
+                  ? Icons.visibility_off
+                  : Icons.visibility),
               color: getColor(),
-              onPressed: () => togglePassword(),
+              onPressed: () => customInputFieldProps.togglePassword(),
               constraints: const BoxConstraints(),
               padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
               splashColor: Colors.transparent,
@@ -119,37 +91,42 @@ class CustomInputField extends StatelessWidget {
     }
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: isSearch ? 0 : rSize(18)),
+      margin: EdgeInsets.symmetric(
+          vertical: customInputFieldProps.isSearch ? 0 : rSize(18)),
       child: TextFormField(
-        controller: controller,
-        obscureText: isPassword && !isPasswordVisible,
+        controller: customInputFieldProps.controller,
+        obscureText: customInputFieldProps.isPassword &&
+            !customInputFieldProps.isPasswordVisible,
         cursorColor: Theme.of(context).colorScheme.primary,
         style: Theme.of(context).textTheme.caption,
-        maxLines: isDescription ? 5 : 1,
-        keyboardType: keyboardType,
-        validator: isConfirmPassword
-            ? (value) => validator(value, passwordToConfirm)
-            : (value) => validator(context, value),
+        maxLines: customInputFieldProps.isDescription ? 5 : 1,
+        keyboardType: customInputFieldProps.keyboardType,
+        validator: customInputFieldProps.isConfirmPassword
+            ? (value) => customInputFieldProps.validator(
+                value, customInputFieldProps.passwordToConfirm)
+            : (value) => customInputFieldProps.validator(context, value),
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(0, rSize(6), 0, rSize(6)),
           filled: true,
-          floatingLabelBehavior: isSearch
+          floatingLabelBehavior: customInputFieldProps.isSearch
               ? FloatingLabelBehavior.never
               : FloatingLabelBehavior.auto,
           fillColor: Theme.of(context).colorScheme.background,
           errorStyle: TextStyle(fontSize: rSize(18)),
           suffixIcon: getSuffixIcon(),
-          prefixIcon: !isSearch
-              ? prefixIcon
+          prefixIcon: !customInputFieldProps.isSearch
+              ? customInputFieldProps.prefixIcon
               : IconTheme(
                   data: Theme.of(context).primaryIconTheme,
                   child: const Icon(
                     Icons.search,
                   ),
                 ),
-          hintText: hintText,
+          hintText: customInputFieldProps.hintText,
           isDense: false,
-          labelText: isDescription ? null : labelText,
+          labelText: customInputFieldProps.isDescription
+              ? null
+              : customInputFieldProps.labelText,
           hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
               fontSize: rSize(18),
               color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),

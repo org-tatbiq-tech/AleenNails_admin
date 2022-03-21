@@ -1,3 +1,4 @@
+import 'package:appointments/data_types.dart';
 import 'package:appointments/utils/layout_util.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_input_field.dart';
@@ -69,9 +70,10 @@ class _SearchBarState extends State<SearchBar>
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(rSize(20), 0, rSize(20), 0),
                   child: CustomInputField(
-                    isSearch: true,
-                    controller: _searchFieldController,
-                    labelText: 'Search...',
+                    customInputFieldProps: CustomInputFieldProps(
+                        controller: _searchFieldController,
+                        isSearch: true,
+                        labelText: 'Search...'),
                   ),
                 ),
               )

@@ -1,36 +1,8 @@
+import 'package:appointments/data_types.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../utils/layout_util.dart';
-
-enum ModalFooter { primaryButton, secondaryButton, both, none }
-
-class BottomModalProps {
-  BuildContext context;
-  Widget child;
-  bool isDismissible;
-  bool enableDrag;
-  bool showDragPen;
-  ModalFooter footerButton;
-  String title;
-  String primaryButtonText;
-  String secondaryButtonText;
-  bool centerTitle;
-  Duration duration;
-
-  BottomModalProps(
-      {required this.context,
-      required this.child,
-      this.isDismissible = true,
-      this.enableDrag = false,
-      this.showDragPen = false,
-      this.title = 'Header Title',
-      this.primaryButtonText = 'primary',
-      this.secondaryButtonText = 'secondary',
-      this.centerTitle = false,
-      this.duration = const Duration(milliseconds: 350),
-      this.footerButton = ModalFooter.none});
-}
 
 void showBottomModal(BottomModalProps bottomModalProps) {
   Widget renderFooterModal(BuildContext context) {
@@ -41,15 +13,18 @@ void showBottomModal(BottomModalProps bottomModalProps) {
           mainAxisSize: MainAxisSize.max,
           children: [
             CustomButton(
-              onTap: () => {Navigator.pop(context)},
-              text: bottomModalProps.secondaryButtonText,
-              isSecondary: true,
+              customButtonProps: CustomButtonProps(
+                onTap: () => {Navigator.pop(context)},
+                text: bottomModalProps.secondaryButtonText,
+                isSecondary: true,
+              ),
             ),
             CustomButton(
+                customButtonProps: CustomButtonProps(
               onTap: () => {Navigator.pop(context)},
               text: bottomModalProps.primaryButtonText,
               isPrimary: true,
-            ),
+            )),
           ]);
     }
     if (bottomModalProps.footerButton == ModalFooter.primaryButton) {
@@ -59,10 +34,11 @@ void showBottomModal(BottomModalProps bottomModalProps) {
           mainAxisSize: MainAxisSize.max,
           children: [
             CustomButton(
+                customButtonProps: CustomButtonProps(
               onTap: () => {Navigator.pop(context)},
               text: bottomModalProps.primaryButtonText,
               isPrimary: true,
-            ),
+            )),
           ]);
     }
     if (bottomModalProps.footerButton == ModalFooter.secondaryButton) {
@@ -72,9 +48,11 @@ void showBottomModal(BottomModalProps bottomModalProps) {
           mainAxisSize: MainAxisSize.max,
           children: [
             CustomButton(
-              onTap: () => {Navigator.pop(context)},
-              text: bottomModalProps.secondaryButtonText,
-              isSecondary: true,
+              customButtonProps: CustomButtonProps(
+                onTap: () => {Navigator.pop(context)},
+                text: bottomModalProps.secondaryButtonText,
+                isSecondary: true,
+              ),
             ),
           ]);
     }
@@ -86,6 +64,7 @@ void showBottomModal(BottomModalProps bottomModalProps) {
     bounce: false,
     duration: bottomModalProps.duration,
     isDismissible: bottomModalProps.isDismissible,
+    animationCurve: Curves.easeIn,
     barrierColor:
         Theme.of(bottomModalProps.context).colorScheme.outline.withOpacity(0.5),
     enableDrag: bottomModalProps.enableDrag,
