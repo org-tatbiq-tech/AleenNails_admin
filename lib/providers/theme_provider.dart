@@ -5,6 +5,7 @@ import 'package:sizer/sizer.dart';
 import '../utils/storage_manager.dart';
 
 Color primary = const Color(0xFF1bc4c9);
+Color secondary = const Color(0xFFc9201b);
 Color primaryWithAlpha1 = const Color(0xFFa3e7e9);
 Color primaryWithAlpha2 = const Color(0xFFd1f3f4);
 Color primaryWithAlpha3 = const Color(0xFFe8f9f9);
@@ -33,6 +34,10 @@ class ThemeNotifier with ChangeNotifier {
       shadowColor: Colors.black26,
       backgroundColor: primaryWithAlpha3,
       fontFamily: GoogleFonts.openSans().fontFamily,
+      dividerTheme: DividerThemeData(
+        color: primary,
+        thickness: rSize(1),
+      ),
       cardTheme: CardTheme(
           shadowColor: primary,
           color: primaryWithAlpha3,
@@ -59,11 +64,11 @@ class ThemeNotifier with ChangeNotifier {
         subtitle1: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w300,
-            fontSize: rSize(14)),
+            fontSize: rSize(16)),
         subtitle2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w300,
-            fontSize: rSize(14),
+            fontSize: rSize(16),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         bodyText1: TextStyle(
             color: primaryFont,
@@ -77,11 +82,11 @@ class ThemeNotifier with ChangeNotifier {
         headline1: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w700,
-            fontSize: rSize(24)),
+            fontSize: rSize(22)),
         headline2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w700,
-            fontSize: rSize(24),
+            fontSize: rSize(22),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         caption: TextStyle(
             color: primaryFont,
@@ -93,7 +98,7 @@ class ThemeNotifier with ChangeNotifier {
         primary: primary,
         onPrimary: primary,
         secondaryContainer: const Color(0xFF77454e),
-        secondary: const Color(0xFF99737b),
+        secondary: secondary,
         onSecondary: const Color(0xFF561723),
         background: primaryWithAlpha3,
         outline: primaryFontWithAlpha1,

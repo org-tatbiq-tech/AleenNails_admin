@@ -1,3 +1,4 @@
+import 'package:appointments/screens/home/home.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_event_calendar.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
@@ -100,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      body: const Center(child: CustomEventCalendar()),
+      body: const Center(child: HomePage()),
     );
   }
 }
