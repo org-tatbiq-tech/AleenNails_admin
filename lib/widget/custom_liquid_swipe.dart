@@ -134,7 +134,7 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           AnimatedSmoothIndicator(
@@ -176,7 +176,7 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
             ],
           );
         },
-        positionSlideIcon: 0.75,
+        // positionSlideIcon: 0.75,
         // slideIconWidget: liquidController.currentPage != data.length - 1
         //     ? Padding(
         //         padding: EdgeInsets.symmetric(horizontal: rSize(30)),
