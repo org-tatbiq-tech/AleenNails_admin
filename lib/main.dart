@@ -1,5 +1,7 @@
+import 'package:appointments/data_types.dart';
 import 'package:appointments/screens/home/home.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_liquid_swipe.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
@@ -79,28 +81,30 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: CustomAppBar(
-        withSearch: true,
-        leadingWidget: EaseInAnimation(
-          onTap: () => {
-            print(
-                "Device Width: ${Device.width}, Device Height: ${Device.height}")
-          },
-          child: IconTheme(
-            data: Theme.of(context).primaryIconTheme,
-            child: const Icon(
-              Icons.menu,
-            ),
-          ),
-        ),
-        customIcon: IconTheme(
-          data: Theme.of(context).primaryIconTheme,
-          child: const Icon(
-            Icons.more_vert,
-          ),
-        ),
-      ),
-      body: const Center(child: HomePage()),
+      // appBar: CustomAppBar(
+      //   customAppBarProps: CustomAppBarProps(
+      //     withSearch: true,
+      //     leadingWidget: EaseInAnimation(
+      //       onTap: () => {
+      //         print(
+      //             "Device Width: ${Device.width}, Device Height: ${Device.height}")
+      //       },
+      //       child: IconTheme(
+      //         data: Theme.of(context).primaryIconTheme,
+      //         child: const Icon(
+      //           Icons.menu,
+      //         ),
+      //       ),
+      //     ),
+      //     customIcon: IconTheme(
+      //       data: Theme.of(context).primaryIconTheme,
+      //       child: const Icon(
+      //         Icons.more_vert,
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      body: CustomLiquidSwipe(),
     );
   }
 }

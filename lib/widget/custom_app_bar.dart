@@ -1,3 +1,4 @@
+import 'package:appointments/data_types.dart';
 import 'package:appointments/utils/layout_util.dart';
 import 'package:appointments/widget/app_bar_painter.dart';
 import 'package:appointments/widget/custom_icon.dart';
@@ -6,20 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final String titleText;
-  final Widget? titleWidget;
-  final bool centerTitle;
-  final Widget? customIcon;
-  final bool withSearch;
-  final Widget? leadingWidget;
-  const CustomAppBar(
-      {Key? key,
-      this.titleText = 'Custom Title',
-      this.titleWidget,
-      this.centerTitle = true,
-      this.customIcon,
-      this.leadingWidget,
-      this.withSearch = false})
+  final CustomAppBarProps customAppBarProps;
+  const CustomAppBar({Key? key, required this.customAppBarProps})
       : super(key: key);
 
   @override
@@ -92,18 +81,18 @@ class _CustomAppBarState extends State<CustomAppBar>
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(rSize(15), 0, rSize(15), 0),
-                child: CustomIcon(icon: widget.leadingWidget),
+                child: CustomIcon(icon: widget.customAppBarProps.leadingWidget),
               ),
               Expanded(
                 child: Row(
-                  mainAxisAlignment: widget.centerTitle
+                  mainAxisAlignment: widget.customAppBarProps.centerTitle
                       ? MainAxisAlignment.center
                       : MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    widget.titleWidget ??
-                        Text(widget.titleText,
+                    widget.customAppBarProps.titleWidget ??
+                        Text(widget.customAppBarProps.titleText,
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2
@@ -120,7 +109,7 @@ class _CustomAppBarState extends State<CustomAppBar>
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              widget.withSearch
+              widget.customAppBarProps.withSearch
                   ? GestureDetector(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
@@ -136,10 +125,11 @@ class _CustomAppBarState extends State<CustomAppBar>
                       onTapUp: onSearchTapUp,
                     )
                   : Container(),
-              widget.customIcon != null
+              widget.customAppBarProps.customIcon != null
                   ? Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
-                      child: CustomIcon(icon: widget.customIcon),
+                      child:
+                          CustomIcon(icon: widget.customAppBarProps.customIcon),
                     )
                   : Container(),
             ],

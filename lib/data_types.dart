@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CalendarEvent {
   final String title;
@@ -8,6 +9,61 @@ class CalendarEvent {
 }
 
 enum ModalFooter { primaryButton, secondaryButton, both, none }
+
+class LiquidSwipeData {
+  final Color gradientStart;
+  final Color gradientEnd;
+  final String image;
+  final String text1;
+  final String text2;
+  final String text3;
+
+  LiquidSwipeData({
+    this.gradientStart = Colors.white,
+    this.gradientEnd = Colors.white,
+    required this.image,
+    this.text1 = '',
+    this.text2 = '',
+    this.text3 = '',
+  });
+}
+
+class CustomTextButtonProps {
+  final String text;
+  final Color? textColor;
+  final Icon icon;
+  final bool withIcon;
+  final VoidCallback onTap;
+  final TextStyle? textStyle;
+  CustomTextButtonProps({
+    this.text = '',
+    this.textColor,
+    this.withIcon = false,
+    this.textStyle,
+    this.icon = const Icon(
+      FontAwesomeIcons.plus,
+      color: Colors.green,
+      size: 3,
+    ),
+    required this.onTap,
+  });
+}
+
+class CustomAppBarProps {
+  final String titleText;
+  final Widget? titleWidget;
+  final bool centerTitle;
+  final Widget? customIcon;
+  final bool withSearch;
+  final Widget? leadingWidget;
+  CustomAppBarProps(
+      {this.titleText = 'Custom Title',
+      this.titleWidget,
+      this.centerTitle = true,
+      this.customIcon,
+      this.leadingWidget,
+      this.withSearch = false});
+}
 
 class CustomButtonProps {
   final String text;
