@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
       if (customButtonProps.isSecondary) {
         return Theme.of(context).colorScheme.primary;
       }
-      return customButtonProps.backgroundColor;
+      return customButtonProps.textColor;
     }
 
     return EaseInAnimation(
@@ -53,13 +53,17 @@ class CustomButton extends StatelessWidget {
                 )
               ]),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: rSize(20), vertical: rSize(10)),
+            padding:
+                EdgeInsets.symmetric(horizontal: rSize(16), vertical: rSize(6)),
             child: customButtonProps.text.isNotEmpty
-                ? Text(customButtonProps.text.toUpperCase(),
+                ? Text(
+                    customButtonProps.capitalizeText
+                        ? customButtonProps.text.toUpperCase()
+                        : customButtonProps.text,
                     style: Theme.of(context).textTheme.button?.copyWith(
                           color: getTextColor(),
-                        ))
+                        ),
+                  )
                 : Icon(
                     Icons.favorite,
                     size: rSize(20),
