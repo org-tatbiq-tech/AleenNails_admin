@@ -1,5 +1,8 @@
 import 'package:appointments/data_types.dart';
 import 'package:appointments/screens/home/home.dart';
+import 'package:appointments/screens/landing/landing.dart';
+import 'package:appointments/screens/login/login.dart';
+import 'package:appointments/screens/register/register.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_liquid_swipe.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
@@ -104,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ),
       //   ),
       // ),
-      body: CustomLiquidSwipe(),
+      body: RegisterScreen(),
     );
   }
 }

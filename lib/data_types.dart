@@ -31,6 +31,7 @@ class LiquidSwipeData {
 class CustomTextButtonProps {
   final String text;
   final Color? textColor;
+  final double? fontSize;
   final Icon icon;
   final bool withIcon;
   final VoidCallback onTap;
@@ -38,6 +39,7 @@ class CustomTextButtonProps {
   CustomTextButtonProps({
     this.text = '',
     this.textColor,
+    this.fontSize,
     this.withIcon = false,
     this.textStyle,
     this.icon = const Icon(
@@ -75,7 +77,7 @@ class CustomButtonProps {
   final bool isSecondary;
   CustomButtonProps({
     this.text = '',
-    this.isPrimary = false,
+    this.isPrimary = true,
     this.isSecondary = false,
     this.capitalizeText = true,
     this.backgroundColor = Colors.white,
@@ -90,6 +92,7 @@ class CustomInputFieldProps {
   final String errorText;
   final TextEditingController controller;
   final bool isDescription;
+  final int? maxLength;
   final bool isPassword;
   final bool isConfirmPassword;
   final bool isPasswordVisible;
@@ -106,6 +109,7 @@ class CustomInputFieldProps {
     this.hintText = '',
     this.errorText = '',
     this.prefixIcon,
+    this.maxLength,
     this.icon = Icons.person,
     this.keyboardType = TextInputType.text,
     this.isPassword = false,

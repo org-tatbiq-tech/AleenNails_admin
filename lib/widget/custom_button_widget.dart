@@ -53,8 +53,8 @@ class CustomButton extends StatelessWidget {
                 )
               ]),
           child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: rSize(16), vertical: rSize(6)),
+            padding: EdgeInsets.symmetric(
+                horizontal: rSize(16), vertical: rSize(10)),
             child: customButtonProps.text.isNotEmpty
                 ? Text(
                     customButtonProps.capitalizeText

@@ -90,10 +90,15 @@ class CustomInputField extends StatelessWidget {
       }
     }
 
-    return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: customInputFieldProps.isSearch ? 0 : rSize(18)),
+    return Material(
+      borderRadius: BorderRadius.circular(rSize(10)),
+      elevation: 2,
+      color: Colors.transparent,
+      // shadowColor: Theme.of(context).shadowColor,
+      // margin: EdgeInsets.symmetric(
+      //     vertical: customInputFieldProps.isSearch ? 0 : rSize(18),),
       child: TextFormField(
+        maxLength: customInputFieldProps.maxLength,
         controller: customInputFieldProps.controller,
         obscureText: customInputFieldProps.isPassword &&
             !customInputFieldProps.isPasswordVisible,
@@ -106,12 +111,17 @@ class CustomInputField extends StatelessWidget {
                 value, customInputFieldProps.passwordToConfirm)
             : (value) => customInputFieldProps.validator(context, value),
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(0, rSize(6), 0, rSize(6)),
+          alignLabelWithHint: true,
+          contentPadding: EdgeInsets.fromLTRB(
+              customInputFieldProps.isSearch ? 0 : rSize(12),
+              customInputFieldProps.isSearch ? 0 : rSize(20),
+              customInputFieldProps.isSearch ? 0 : rSize(20),
+              customInputFieldProps.isSearch ? 0 : rSize(12)),
           filled: true,
           floatingLabelBehavior: customInputFieldProps.isSearch
               ? FloatingLabelBehavior.never
               : FloatingLabelBehavior.auto,
-          fillColor: Theme.of(context).colorScheme.background,
+          fillColor: Theme.of(context).colorScheme.onBackground,
           errorStyle: TextStyle(fontSize: rSize(18)),
           suffixIcon: getSuffixIcon(),
           prefixIcon: !customInputFieldProps.isSearch
@@ -132,18 +142,19 @@ class CustomInputField extends StatelessWidget {
               color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),
           floatingLabelStyle: Theme.of(context).textTheme.bodyText1,
           labelStyle: Theme.of(context).textTheme.bodyText1,
+          floatingLabelAlignment: FloatingLabelAlignment.start,
           errorMaxLines: 1,
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(rSize(10)),
               borderSide: BorderSide(color: Colors.red, width: rSize(1))),
           focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(rSize(10)),
-              borderSide: BorderSide(color: Colors.red, width: rSize(2))),
+              borderSide: BorderSide(color: Colors.red, width: rSize(1))),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(rSize(10)),
               borderSide: BorderSide(
                   color: Theme.of(context).colorScheme.primary,
-                  width: rSize(2))),
+                  width: rSize(1))),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(rSize(10)),
               borderSide: BorderSide(

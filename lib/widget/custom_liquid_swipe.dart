@@ -7,7 +7,11 @@ import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CustomLiquidSwipe extends StatefulWidget {
-  const CustomLiquidSwipe({Key? key}) : super(key: key);
+  final List<LiquidSwipeData> liquidSwipeDataList;
+  const CustomLiquidSwipe({
+    Key? key,
+    required this.liquidSwipeDataList,
+  }) : super(key: key);
 
   @override
   _CustomLiquidSwipe createState() => _CustomLiquidSwipe();
@@ -17,33 +21,6 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
   int page = 0;
   late LiquidController liquidController;
 
-  List<LiquidSwipeData> data = [
-    LiquidSwipeData(
-      image: "assets/images/swiper-1.jpg",
-      text1: "This is a Title",
-      text2: "This is a sub Title",
-      text3: "This is a sub subTitle",
-    ),
-    LiquidSwipeData(
-      image: "assets/images/swiper-3.jpg",
-      text1: "This is a Title",
-      text2: "This is a sub Title",
-      text3: "This is a sub subTitle",
-    ),
-    LiquidSwipeData(
-      image: "assets/images/swiper-4.jpg",
-      text1: "This is a Title",
-      text2: "This is a sub Title",
-      text3: "This is a sub subTitle",
-    ),
-    LiquidSwipeData(
-      image: "assets/images/swiper-2.jpg",
-      text1: "This is a Title",
-      text2: "This is a sub Title",
-      text3: "This is a sub subTitle",
-    ),
-  ];
-
   @override
   void initState() {
     liquidController = LiquidController();
@@ -52,13 +29,14 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
 
   @override
   Widget build(BuildContext context) {
+    late List<LiquidSwipeData> data = widget.liquidSwipeDataList;
     return Scaffold(
       body: LiquidSwipe.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
           return Stack(
             children: [
-              data[index].image != null
+              data[index].image.isNotEmpty
                   ? Image(
                       image: AssetImage(data[index].image),
                       width: double.infinity,

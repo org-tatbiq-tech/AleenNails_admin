@@ -31,7 +31,7 @@ class ThemeNotifier with ChangeNotifier {
 
   final lightTheme = ThemeData(
       brightness: Brightness.light,
-      shadowColor: Colors.black26,
+      shadowColor: primaryFontWithAlpha1,
       backgroundColor: primaryWithAlpha3,
       fontFamily: GoogleFonts.openSans().fontFamily,
       dividerTheme: DividerThemeData(
@@ -60,6 +60,7 @@ class ThemeNotifier with ChangeNotifier {
         button: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w500,
+            fontFamily: GoogleFonts.aclonica().fontFamily,
             fontSize: rSize(20)),
         subtitle1: TextStyle(
             color: primaryFont,
@@ -71,13 +72,15 @@ class ThemeNotifier with ChangeNotifier {
             fontSize: rSize(16),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         bodyText1: TextStyle(
-            color: primaryFont,
-            fontWeight: FontWeight.w500,
-            fontSize: rSize(20)),
+          color: primaryFont,
+          fontWeight: FontWeight.w500,
+          fontSize: rSize(18),
+          fontFamily: GoogleFonts.openSans().fontFamily,
+        ),
         bodyText2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w500,
-            fontSize: rSize(20),
+            fontSize: rSize(18),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         headline1: TextStyle(
             color: primaryFont,
@@ -101,6 +104,7 @@ class ThemeNotifier with ChangeNotifier {
         secondary: secondary,
         onSecondary: const Color(0xFF561723),
         background: primaryWithAlpha3,
+        onBackground: primaryWithAlpha2,
         outline: primaryFontWithAlpha1,
       ));
 
