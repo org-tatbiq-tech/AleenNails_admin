@@ -6,14 +6,14 @@ import 'package:appointments/widget/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({Key? key}) : super(key: key);
+class RegisterMainScreen extends StatefulWidget {
+  const RegisterMainScreen({Key? key}) : super(key: key);
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<RegisterMainScreen> createState() => _RegisterMainScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen>
+class _RegisterMainScreenState extends State<RegisterMainScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _fullNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -67,6 +67,10 @@ class _RegisterScreenState extends State<RegisterScreen>
   void dispose() {
     super.dispose();
     _controller.dispose();
+    _fullNameController.dispose();
+    _passwordController.dispose();
+    _repeatPasswordController.dispose();
+    _emailController.dispose();
   }
 
   @override
