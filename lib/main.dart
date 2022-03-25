@@ -6,12 +6,14 @@ import 'providers/theme_provider.dart';
 import 'screens/register/main.dart';
 
 void main() {
-  return runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
-    ],
-    child: MyApp(),
-  ));
+  return runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -20,18 +22,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return Consumer<ThemeNotifier>(builder: (context, theme, child) {
-        return MaterialApp(
-          builder: (context, _) {
-            var child = _!;
-            return child;
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return Consumer<ThemeNotifier>(
+          builder: (context, theme, child) {
+            return MaterialApp(
+              builder: (context, _) {
+                var child = _!;
+                return child;
+              },
+              theme: theme.getTheme(),
+              home: const MyHomePage(),
+            );
           },
-          theme: theme.getTheme(),
-          home: const MyHomePage(),
         );
-      });
-    });
+      },
+    );
   }
 }
 

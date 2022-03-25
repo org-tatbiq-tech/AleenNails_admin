@@ -1,5 +1,6 @@
 import 'package:flutter_device_type/flutter_device_type.dart';
 
+/// TODO: Ahmad, please add documentation to this util
 double rSize(double fontSize, {double standardScreenHeight = 926}) {
   double offset = Device.get().isIphoneX ? 78 : 0;
   double standardLength = Device.screenWidth > Device.screenHeight

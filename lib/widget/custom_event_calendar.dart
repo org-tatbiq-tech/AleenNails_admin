@@ -1,9 +1,10 @@
-import 'package:appointments/utils/date_util.dart';
+import 'package:appointments/utils/date.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+
 import '../data_types.dart';
-import '../utils/layout_util.dart';
+import '../utils/layout.dart';
 
 class CustomEventCalendar extends StatefulWidget {
   const CustomEventCalendar({Key? key}) : super(key: key);
