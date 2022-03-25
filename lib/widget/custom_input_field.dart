@@ -113,10 +113,11 @@ class CustomInputField extends StatelessWidget {
         decoration: InputDecoration(
           alignLabelWithHint: true,
           contentPadding: EdgeInsets.fromLTRB(
-              customInputFieldProps.isSearch ? 0 : rSize(12),
-              customInputFieldProps.isSearch ? 0 : rSize(20),
-              customInputFieldProps.isSearch ? 0 : rSize(20),
-              customInputFieldProps.isSearch ? 0 : rSize(12)),
+            0,
+            customInputFieldProps.isSearch ? 0 : rSize(20),
+            0,
+            customInputFieldProps.isSearch ? 0 : rSize(12),
+          ),
           filled: true,
           floatingLabelBehavior: customInputFieldProps.isSearch
               ? FloatingLabelBehavior.never

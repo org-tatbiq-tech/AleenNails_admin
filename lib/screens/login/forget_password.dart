@@ -2,31 +2,23 @@ import 'package:appointments/data_types.dart';
 import 'package:appointments/utils/layout_util.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_input_field.dart';
-import 'package:appointments/widget/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ForgetPasswordScreen extends StatefulWidget {
+  const ForgetPasswordScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _userNameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _isPasswordVisible = false;
+  final TextEditingController _emailController = TextEditingController();
+
   late Animation _leftContentAnimation;
   late Animation _rightContentAnimation;
   late AnimationController _controller;
-
-  void _togglePassword() {
-    setState(() {
-      _isPasswordVisible = !_isPasswordVisible;
-    });
-  }
 
   @override
   void initState() {
@@ -42,8 +34,7 @@ class _LoginScreenState extends State<LoginScreen>
         CurvedAnimation(
             parent: _controller,
             curve: const Interval(0.3, 1, curve: Curves.linear)));
-    _userNameController.addListener(() => setState(() {}));
-    _passwordController.addListener(() => setState(() {}));
+    _emailController.addListener(() => setState(() {}));
     _controller.forward();
     _controller.addListener(() {
       setState(() {});
@@ -54,8 +45,7 @@ class _LoginScreenState extends State<LoginScreen>
   void dispose() {
     super.dispose();
     _controller.dispose();
-    _userNameController.dispose();
-    _passwordController.dispose();
+    _emailController.dispose();
   }
 
   @override
@@ -101,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen>
                       RotatedBox(
                         quarterTurns: -1,
                         child: Text(
-                          'LOGIN',
+                          'PASSWORD',
                           style:
                               Theme.of(context).textTheme.headline2?.copyWith(
                                   fontSize: rSize(50),
@@ -145,9 +135,20 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ),
                             Wrap(
+                              spacing: rSize(5),
+                              runSpacing: rSize(15),
+                              alignment: WrapAlignment.start,
+                              runAlignment: WrapAlignment.start,
                               children: [
                                 Text(
-                                  'Please enter the details below to continue.',
+                                  'Forget Password?',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1
+                                      ?.copyWith(fontSize: rSize(28)),
+                                ),
+                                Text(
+                                  'Do not worry! it happens. Please enter the address associated with your account ',
                                   style: Theme.of(context).textTheme.subtitle1,
                                 ),
                               ],
@@ -157,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen>
                             ),
                             CustomInputField(
                               customInputFieldProps: CustomInputFieldProps(
-                                controller: _userNameController,
+                                controller: _emailController,
                                 prefixIcon: IconTheme(
                                   data: Theme.of(context).primaryIconTheme,
                                   child: Icon(
@@ -165,49 +166,8 @@ class _LoginScreenState extends State<LoginScreen>
                                     size: rSize(20),
                                   ),
                                 ),
-                                labelText: 'User Name',
+                                labelText: 'Email',
                               ),
-                            ),
-                            SizedBox(
-                              height: rSize(20),
-                            ),
-                            CustomInputField(
-                              customInputFieldProps: CustomInputFieldProps(
-                                controller: _passwordController,
-                                isPassword: true,
-                                isPasswordVisible: _isPasswordVisible,
-                                togglePassword: _togglePassword,
-                                labelText: 'Password',
-                                prefixIcon: IconTheme(
-                                  data: Theme.of(context).primaryIconTheme,
-                                  child: Icon(
-                                    FontAwesomeIcons.lock,
-                                    size: rSize(20),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: rSize(20),
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                CustomTextButton(
-                                    customTextButtonProps:
-                                        CustomTextButtonProps(
-                                  text: 'Forget Password?',
-                                  textColor:
-                                      Theme.of(context).colorScheme.primary,
-                                  fontSize: rSize(16),
-                                  onTap: () => {
-                                    _controller.reset(),
-                                    _controller.forward()
-                                  },
-                                ))
-                              ],
                             ),
                             SizedBox(
                               height: rSize(40),
@@ -215,31 +175,9 @@ class _LoginScreenState extends State<LoginScreen>
                             CustomButton(
                               customButtonProps: CustomButtonProps(
                                 onTap: () => {},
-                                text: 'Login',
+                                text: 'Submit',
                                 isPrimary: true,
                               ),
-                            ),
-                            SizedBox(
-                              height: rSize(20),
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Dont have an account? ',
-                                  style: Theme.of(context).textTheme.subtitle1,
-                                ),
-                                CustomTextButton(
-                                    customTextButtonProps:
-                                        CustomTextButtonProps(
-                                  text: 'Register',
-                                  textColor:
-                                      Theme.of(context).colorScheme.primary,
-                                  onTap: () => {},
-                                ))
-                              ],
                             ),
                           ]),
                     ),
