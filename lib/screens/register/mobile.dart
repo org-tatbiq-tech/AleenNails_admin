@@ -147,7 +147,9 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen> with Single
                     ),
                     CustomButton(
                       customButtonProps: CustomButtonProps(
-                        onTap: () => {},
+                        onTap: () => {
+                          Navigator.pushNamed(context, '/register/otpConfirmation'),
+                        },
                         text: Languages.of(context)!.labelContinue,
                         isPrimary: true,
                       ),

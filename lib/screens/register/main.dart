@@ -250,7 +250,9 @@ class _RegisterMainScreenState extends State<RegisterMainScreen> with SingleTick
                   ),
                   CustomButton(
                     customButtonProps: CustomButtonProps(
-                      onTap: () => {},
+                      onTap: () => {
+                        Navigator.pushNamed(context, '/register/registerMobile'),
+                      },
                       text: Languages.of(context)!.labelRegister,
                       isPrimary: true,
                     ),
@@ -271,7 +273,9 @@ class _RegisterMainScreenState extends State<RegisterMainScreen> with SingleTick
                           customTextButtonProps: CustomTextButtonProps(
                         text: Languages.of(context)!.labelLogin,
                         textColor: Theme.of(context).colorScheme.primary,
-                        onTap: () => {},
+                        onTap: () => {
+                          Navigator.pushReplacementNamed(context, '/loginScreen'),
+                        },
                       ))
                     ],
                   ),

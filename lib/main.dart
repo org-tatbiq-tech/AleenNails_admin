@@ -9,7 +9,6 @@ import 'package:appointments/screens/login/login.dart';
 import 'package:appointments/screens/register/main.dart';
 import 'package:appointments/screens/register/mobile.dart';
 import 'package:appointments/screens/register/otp.dart';
-import 'package:appointments/utils/secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -27,8 +26,7 @@ void main() {
       providers: [
         ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider<LocaleData>(create: (_) => LocaleData()),
-        ChangeNotifierProvider<AuthenticationState>(
-            create: (_) => AuthenticationState())
+        ChangeNotifierProvider<AuthenticationState>(create: (_) => AuthenticationState())
       ],
       child: StudiosApp(),
     ),
@@ -44,18 +42,14 @@ class StudiosApp extends StatelessWidget {
   );
 
   Future<bool> getAutoLoginValue(AuthenticationState authData) async {
-    String? userAutoLogin = await UserSecureStorage.getAutoLogin();
-
-    if (userAutoLogin != null && userAutoLogin == 'true') {
-      if (authData.loginState == ApplicationLoginState.loggedIn) {
-        return true;
-      }
+    if (authData.loginState == ApplicationLoginState.loggedIn) {
+      return true;
     }
     return false;
   }
 
   Widget getInitScreen(isLoggedIn) {
-    return const ForgetPasswordScreen();
+    return const LoginScreen();
     if (isLoggedIn == true) {
       return const HomePage();
     }
@@ -80,8 +74,7 @@ class StudiosApp extends StatelessWidget {
               future: loadLocale(),
               builder: (context, locale) {
                 return Consumer<AuthenticationState>(
-                  builder: (context, authData, _) =>
-                      Sizer(builder: (context, orientation, deviceType) {
+                  builder: (context, authData, _) => Sizer(builder: (context, orientation, deviceType) {
                     return FutureBuilder(
                       future: getAutoLoginValue(authData),
                       builder: (context, auth) {
@@ -96,15 +89,11 @@ class StudiosApp extends StatelessWidget {
                           routes: {
                             '/home': (context) => const HomePage(),
                             '/loginScreen': (context) => const LoginScreen(),
-                            '/forgetPassword': (context) =>
-                                const ForgetPasswordScreen(),
+                            '/forgetPassword': (context) => const ForgetPasswordScreen(),
                             // '/resetPassword': (context) => const ResetPasswordScreen(),
-                            '/registerMain': (context) =>
-                                const RegisterMainScreen(),
-                            '/registerMobile': (context) =>
-                                const RegisterMobileScreen(),
-                            '/otpConfirmation': (context) =>
-                                const RegisterOTPScreen(),
+                            '/register': (context) => const RegisterMainScreen(),
+                            '/register/registerMobile': (context) => const RegisterMobileScreen(),
+                            '/register/otpConfirmation': (context) => const RegisterOTPScreen(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,
@@ -117,10 +106,8 @@ class StudiosApp extends StatelessWidget {
                           ],
                           localeResolutionCallback: (locale, supportedLocales) {
                             for (var supportedLocale in supportedLocales) {
-                              if (supportedLocale.languageCode ==
-                                      locale?.languageCode &&
-                                  supportedLocale.countryCode ==
-                                      locale?.countryCode) {
+                              if (supportedLocale.languageCode == locale?.languageCode &&
+                                  supportedLocale.countryCode == locale?.countryCode) {
                                 return supportedLocale;
                               }
                             }

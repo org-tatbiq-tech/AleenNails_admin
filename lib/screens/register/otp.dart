@@ -256,7 +256,9 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen> with SingleTicker
                     ),
                     CustomButton(
                       customButtonProps: CustomButtonProps(
-                        onTap: () => {},
+                        onTap: () => {
+                          Navigator.pushReplacementNamed(context, '/loginScreen'),
+                        },
                         text: Languages.of(context)!.submit,
                         isPrimary: true,
                       ),
