@@ -1,5 +1,5 @@
 import 'package:appointments/data_types.dart';
-import 'package:appointments/utils/layout_util.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:appointments/widget/ease_in_animation.dart';

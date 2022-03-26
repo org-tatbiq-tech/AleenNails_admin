@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+// TODO: Ahmad add documentation in each of the classed below
+// Where it is used and how ?
+/// Add documentation here - general documentation
+/// ...
+
 class CalendarEvent {
+  /// Add documentation here
+  /// ...
+
   final String title;
   const CalendarEvent(this.title);
   @override
   String toString() => title;
 }
 
-enum ModalFooter { primaryButton, secondaryButton, both, none }
+enum ModalFooter {
+  primaryButton,
+  secondaryButton,
+  both,
+  none,
+}
 
 class LiquidSwipeData {
+  /// Add documentation here
+  /// ...
+  /// Please don't use text1/text2/..., use meaningful names
   final Color gradientStart;
   final Color gradientEnd;
   final String image;

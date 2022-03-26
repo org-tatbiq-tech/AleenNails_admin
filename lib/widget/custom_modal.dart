@@ -2,7 +2,8 @@ import 'package:appointments/data_types.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import '../utils/layout_util.dart';
+
+import '../utils/layout.dart';
 
 void showBottomModal(BottomModalProps bottomModalProps) {
   Widget renderFooterModal(BuildContext context) {

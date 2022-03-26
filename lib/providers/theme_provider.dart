@@ -1,8 +1,7 @@
-import 'package:appointments/utils/layout_util.dart';
+import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/storage_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sizer/sizer.dart';
-import '../utils/storage_manager.dart';
 
 Color primary = const Color(0xFF1bc4c9);
 Color secondary = const Color(0xFFc9201b);
@@ -10,9 +9,10 @@ Color primaryWithAlpha1 = const Color(0xFFa3e7e9);
 Color primaryWithAlpha2 = const Color(0xFFd1f3f4);
 Color primaryWithAlpha3 = const Color(0xFFe8f9f9);
 Color primaryFont = const Color(0xFF003334);
-Color primaryFontWithAlpha1 = Color(0xFF668485);
+Color primaryFontWithAlpha1 = const Color(0xFF668485);
 
 class ThemeNotifier with ChangeNotifier {
+  /// Dark theme data definition
   final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.red,
@@ -29,6 +29,7 @@ class ThemeNotifier with ChangeNotifier {
     dividerColor: Colors.black12,
   );
 
+  /// Light theme data definition
   final lightTheme = ThemeData(
       brightness: Brightness.light,
       shadowColor: primaryFontWithAlpha1,
@@ -111,6 +112,7 @@ class ThemeNotifier with ChangeNotifier {
   ThemeData? _themeData;
   ThemeData? getTheme() => _themeData;
 
+  /// Loading theme data from storage, if not exist, then light.
   ThemeNotifier() {
     readData('themeMode').then((value) {
       var themeMode = value ?? 'light';

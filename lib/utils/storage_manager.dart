@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Local data storage manager, reading/writing/overriding from phone data.
+
 void saveData(String key, dynamic value) async {
   final preferences = await SharedPreferences.getInstance();
   if (value is int) {

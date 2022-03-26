@@ -1,30 +1,19 @@
-import 'package:appointments/data_types.dart';
-import 'package:appointments/screens/home/home.dart';
-import 'package:appointments/screens/landing/landing.dart';
-import 'package:appointments/screens/login/forget_password.dart';
-import 'package:appointments/screens/login/login.dart';
-import 'package:appointments/screens/register/main.dart';
-import 'package:appointments/screens/register/mobile.dart';
-import 'package:appointments/screens/register/otp.dart';
-import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_liquid_swipe.dart';
-import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'providers/theme_provider.dart';
+import 'screens/register/main.dart';
 
 void main() {
-  runApp(const MyApp());
-
-  return runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
-    ],
-    child: MyApp(),
-  ));
+  return runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -33,18 +22,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Sizer(builder: (context, orientation, deviceType) {
-      return Consumer<ThemeNotifier>(builder: (context, theme, child) {
-        return MaterialApp(
-          builder: (context, _) {
-            var child = _!;
-            return child;
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return Consumer<ThemeNotifier>(
+          builder: (context, theme, child) {
+            return MaterialApp(
+              builder: (context, _) {
+                var child = _!;
+                return child;
+              },
+              theme: theme.getTheme(),
+              home: const MyHomePage(),
+            );
           },
-          theme: theme.getTheme(),
-          home: const MyHomePage(),
         );
-      });
-    });
+      },
+    );
   }
 }
 
@@ -110,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ),
       //   ),
       // ),
-      body: RegisterOTPScreen(),
+      body: RegisterMainScreen(),
     );
   }
 }

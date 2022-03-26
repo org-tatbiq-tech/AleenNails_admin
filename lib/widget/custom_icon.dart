@@ -1,6 +1,5 @@
-import 'package:appointments/utils/layout_util.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 
 class CustomIcon extends StatelessWidget {
   final Widget? icon;
