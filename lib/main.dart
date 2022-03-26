@@ -1,5 +1,5 @@
 import 'package:appointments/providers/langs.dart';
-import 'package:appointments/screens/login/forget_password.dart';
+import 'package:appointments/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -51,8 +51,7 @@ class MyApp extends StatelessWidget {
                   ],
                   localeResolutionCallback: (locale, supportedLocales) {
                     for (var supportedLocale in supportedLocales) {
-                      if (supportedLocale.languageCode ==
-                              locale?.languageCode &&
+                      if (supportedLocale.languageCode == locale?.languageCode &&
                           supportedLocale.countryCode == locale?.countryCode) {
                         return supportedLocale;
                       }
@@ -143,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
               constraints: BoxConstraints.tightFor(
                 height: Device.screenHeight,
               ),
-              child: ForgetPasswordScreen()),
+              child: LoginScreen()),
         ),
       ),
     );

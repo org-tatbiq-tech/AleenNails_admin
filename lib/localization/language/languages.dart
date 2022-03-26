@@ -25,21 +25,31 @@ abstract class Languages {
 
   String get labelContinue;
 
+  String get wentWrong;
+
   /// ************ Landing labels ************///
   String get swiper1Title;
+
   String get swiper1SubTitle;
+
   String get swiper1Desc;
 
   String get swiper2Title;
+
   String get swiper2SubTitle;
+
   String get swiper2Desc;
 
   String get swiper3Title;
+
   String get swiper3SubTitle;
+
   String get swiper3Desc;
 
   String get swiper4Title;
+
   String get swiper4SubTitle;
+
   String get swiper4Desc;
 
   /// ************ Login labels ************///
@@ -88,7 +98,7 @@ abstract class Languages {
 
   String get labelPrivacyPolicy;
 
-  /// OTP ///
+  /// ************ OTP ************///
   String get labelMobileNumber;
 
   String get labelEnterOTP;
@@ -96,69 +106,10 @@ abstract class Languages {
   String get labelMobileCodeSent;
 
   String get labelChange;
+
   String get labelResend;
 
-  /// ************ Store labels ************///
-  String get labelStore;
-
-  String get labelOwner;
-
-  String get labelStoreName;
-
-  String get labelStoreAddress;
-
-  String get labelStoreOwnerName;
-
-  String get labelStoreOwnerNum;
-
-  /// ************ Package labels ************///
-  String get labelPackages;
-
-  String get labelStatusDelivered;
-
-  String get labelStatusPickedUp;
-
-  String get labelStatusWaiting;
-
-  String get deliveredMsg;
-
-  String get pickedUpMsg;
-
-  String get labelDeliveredPackages;
-
-  String get labelContactDetails;
-
-  String get labelStoreDetails;
-
-  /// ************ New Package labels ************///
-  String get labelNewPackage;
-
-  String get labelClientName;
-
-  String get labelName;
-
-  String get labelClientPhone;
-
-  String get labelAddress;
-
-  String get labelPrice;
-
-  String get labelDescription;
-
-  String get labelDescriptionHint;
-
-  String get labelPublish;
-
-  String get labelUpdate;
-
-  String get labelFlashPublish;
-
-  String get publishSuccessMsg;
-
   /// ************ validation messages ************///
-  String get emptyPrice;
-
-  String get validPrice;
 
   String get validPhone;
 

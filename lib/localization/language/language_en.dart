@@ -3,7 +3,7 @@ import 'languages.dart';
 class LanguageEn extends Languages {
   /// ************ App labels ************///
   @override
-  String get appName => "Delivery";
+  String get appName => "Studios";
 
   /// ************ Common labels ************///
   @override
@@ -16,8 +16,7 @@ class LanguageEn extends Languages {
   String get sent => "Sent!";
 
   @override
-  String get successSent =>
-      "Reset email sent successfully. Please check you email!";
+  String get successSent => "Reset email sent successfully. Please check you email!";
 
   @override
   String get submit => "submit";
@@ -30,6 +29,9 @@ class LanguageEn extends Languages {
 
   @override
   String get labelContinue => "Continue";
+
+  @override
+  String get wentWrong => "Something went wrong!";
 
   /// ************ Landing labels ************///
   @override
@@ -68,8 +70,6 @@ class LanguageEn extends Languages {
   @override
   String get swiper4Desc => "This is a desc";
 
-  ////////////////////////////////////////////////////////////////////
-
   /// ************ Login labels ************///
   @override
   String get labelSignIn => "Sign In";
@@ -96,8 +96,7 @@ class LanguageEn extends Languages {
   String get labelRegisterNow => "Register now!";
 
   @override
-  String get labelEnterLoginDetails =>
-      "Please enter the details below to continue";
+  String get labelEnterLoginDetails => "Please enter the details below to continue";
 
   @override
   String get labelUserName => "User name";
@@ -110,8 +109,7 @@ class LanguageEn extends Languages {
   String get labelFPassword => "Password?";
 
   @override
-  String get labelFMessage =>
-      "Do not worry! it happens.\nPlease enter email associated with your account";
+  String get labelFMessage => "Do not worry! it happens.\nPlease enter email associated with your account";
 
   /// ************ Registration labels ************///
   @override
@@ -138,116 +136,23 @@ class LanguageEn extends Languages {
   @override
   String get labelPrivacyPolicy => "Privacy policy";
 
-  /// OTP ///
+  /// ************ OTP ************///
   @override
   String get labelMobileNumber => 'Mobile number';
 
   @override
-  String get labelEnterOTP =>
-      "Please enter your Mobile number for OTP Authentication";
+  String get labelEnterOTP => "Please enter your Mobile number for OTP Authentication";
 
   @override
-  String get labelMobileCodeSent =>
-      "Please check your phone, verification code sent";
+  String get labelMobileCodeSent => "Please check your phone, verification code sent";
 
   @override
   String get labelChange => "Change";
+
   @override
   String get labelResend => "Resend";
 
-  /// ************ Store labels ************///
-  @override
-  String get labelStore => "Store";
-
-  @override
-  String get labelOwner => "Owner";
-
-  @override
-  String get labelStoreName => "Store name";
-
-  @override
-  String get labelStoreAddress => "Store address";
-
-  @override
-  String get labelStoreOwnerName => "Owner name";
-
-  @override
-  String get labelStoreOwnerNum => "Store phone";
-
-  /// ************ Package labels ************///
-  @override
-  String get labelPackages => "Packages";
-
-  @override
-  String get labelStatusDelivered => "Delivered";
-
-  @override
-  String get labelStatusPickedUp => "Picked up";
-
-  @override
-  String get labelStatusWaiting => "Waiting";
-
-  @override
-  String get deliveredMsg => "Package delivered!";
-
-  @override
-  String get pickedUpMsg => "Package picked up!";
-
-  @override
-  String get labelDeliveredPackages => "Delivered packages";
-
-  @override
-  String get labelContactDetails => "Contact details";
-
-  @override
-  String get labelStoreDetails => "Store details";
-
-  /// ************ New Package labels ************///
-  @override
-  String get labelNewPackage => 'New package';
-
-  @override
-  String get labelClientName => 'Client name';
-
-  @override
-  String get labelName => 'Full name';
-
-  @override
-  String get labelClientPhone => 'Client phone';
-
-  @override
-  String get labelAddress => 'Address';
-
-  @override
-  @override
-  String get labelPrice => 'Price';
-
-  @override
-  String get labelDescription => 'Description';
-
-  @override
-  String get labelDescriptionHint =>
-      "Fill your package description here if required";
-
-  @override
-  String get labelPublish => 'Publish';
-
-  @override
-  String get labelUpdate => "Update";
-
-  @override
-  String get labelFlashPublish => 'Published!';
-
-  @override
-  String get publishSuccessMsg => 'Your package was published';
-
   /// ************ validation messages ************///
-  @override
-  String get emptyPrice => 'Price can not be empty!';
-
-  @override
-  String get validPrice => 'Please enter valid price!';
-
   @override
   String get validPhone => 'Please enter valid phone number!';
 

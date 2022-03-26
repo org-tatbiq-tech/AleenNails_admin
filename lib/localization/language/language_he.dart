@@ -3,7 +3,7 @@ import 'languages.dart';
 class LanguageHe extends Languages {
   /// ************ App labels ************///
   @override
-  String get appName => "Delivery";
+  String get appName => "Studios";
 
   /// ************ Common labels ************///
   @override
@@ -16,8 +16,7 @@ class LanguageHe extends Languages {
   String get sent => "נשלח";
 
   @override
-  String get successSent =>
-      "אימיל שחזור סיסמה נשלח בהצלחה!, בבקשה תבדוק את המייל";
+  String get successSent => "אימיל שחזור סיסמה נשלח בהצלחה!, בבקשה תבדוק את המייל";
 
   @override
   String get submit => "שלח!";
@@ -30,6 +29,9 @@ class LanguageHe extends Languages {
 
   @override
   String get labelContinue => "Continue";
+
+  @override
+  String get wentWrong => "Something went wrong!";
 
   /// ************ Landing labels ************///
   @override
@@ -68,8 +70,6 @@ class LanguageHe extends Languages {
   @override
   String get swiper4Desc => "This is a desc";
 
-  ////////////////////////////////////////////////////////////////////
-
   /// ************ Login labels ************///
   @override
   String get labelSignIn => "התחבר";
@@ -96,8 +96,7 @@ class LanguageHe extends Languages {
   String get labelRegisterNow => "הירשם עכשיו!";
 
   @override
-  String get labelEnterLoginDetails =>
-      "Please enter the details below to continue";
+  String get labelEnterLoginDetails => "Please enter the details below to continue";
 
   @override
   String get labelUserName => "User name";
@@ -137,13 +136,12 @@ class LanguageHe extends Languages {
   @override
   String get labelPrivacyPolicy => "Privacy policy";
 
-  /// OTP ///
+  /// ************ OTP ************///
   @override
   String get labelMobileNumber => 'Mobile number';
 
   @override
-  String get labelEnterOTP =>
-      "Please enter your Mobile number for OTP Authentication";
+  String get labelEnterOTP => "Please enter your Mobile number for OTP Authentication";
 
   @override
   String get labelMobileCodeSent => "בדוק את הטלפון שלך, קוד האימות נשלח";
@@ -154,98 +152,7 @@ class LanguageHe extends Languages {
   @override
   String get labelResend => "שלח שוב";
 
-  /// ************ Store labels ************///
-  @override
-  String get labelStore => "חנות";
-
-  @override
-  String get labelOwner => "בעל החנות";
-
-  @override
-  String get labelStoreName => "שם החנות";
-
-  @override
-  String get labelStoreAddress => "כתובת החנות";
-
-  @override
-  String get labelStoreOwnerName => "שם בעל החנות";
-
-  @override
-  String get labelStoreOwnerNum => "טלפון החנות";
-
-  /// ************ Package labels ************///
-  @override
-  String get labelPackages => "חֲבִילָה";
-
-  @override
-  String get labelStatusDelivered => "נמסר";
-
-  @override
-  String get labelStatusPickedUp => "נאסף";
-
-  @override
-  String get labelStatusWaiting => "ממתין";
-
-  @override
-  String get deliveredMsg => "החבילה נמסרה!";
-
-  @override
-  String get pickedUpMsg => "החבילה נאספה!";
-
-  @override
-  String get labelDeliveredPackages => "החבילות שנמסרו";
-
-  @override
-  String get labelContactDetails => "פרטי איש קשר";
-
-  @override
-  String get labelStoreDetails => "פרטי חנות";
-
-  /// ************ New Package labels ************///
-  @override
-  String get labelNewPackage => 'חבילה חדשה';
-
-  @override
-  String get labelClientName => 'שם הלקוח';
-
-  @override
-  String get labelName => 'שם';
-
-  @override
-  String get labelClientPhone => 'טלפון לקוח';
-
-  @override
-  String get labelAddress => 'כתובת';
-
-  @override
-  String get labelPrice => 'מחיר';
-
-  @override
-  String get labelDescription => 'תיאור';
-
-  @override
-  String get labelDescriptionHint =>
-      "מלא את תיאור החבילה שלך כאן במידת וצריך...";
-
-  @override
-  String get labelPublish => 'הוספה';
-
-  @override
-  String get labelUpdate => "עדכון";
-
-  @override
-  String get labelFlashPublish => 'התווספה!';
-
-  @override
-  String get publishSuccessMsg => 'החבילה התווספה';
-
   /// ************ validation messages ************///
-  @override
-  String get emptyPrice => 'המחיר לא יכול להיות ריק!';
-
-  @override
-  String get validPrice => 'נא להזין מחיר חוקי!';
-
   @override
   String get validPhone => 'נא להזין מספר טלפון חוקי!';
 
