@@ -30,17 +30,17 @@ class LiquidSwipeData {
   final Color gradientStart;
   final Color gradientEnd;
   final String image;
-  final String text1;
-  final String text2;
-  final String text3;
+  final String title;
+  final String subTitle;
+  final String description;
 
   LiquidSwipeData({
     this.gradientStart = Colors.white,
     this.gradientEnd = Colors.white,
     required this.image,
-    this.text1 = '',
-    this.text2 = '',
-    this.text3 = '',
+    this.title = '',
+    this.subTitle = '',
+    this.description = '',
   });
 }
 

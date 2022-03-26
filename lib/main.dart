@@ -1,4 +1,9 @@
+import 'package:appointments/screens/login/forget_password.dart';
+import 'package:appointments/screens/login/login.dart';
+import 'package:appointments/screens/register/mobile.dart';
+import 'package:appointments/screens/register/otp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -80,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       // appBar: CustomAppBar(
       //   customAppBarProps: CustomAppBarProps(
       //     withSearch: true,
@@ -103,7 +109,22 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ),
       //   ),
       // ),
-      body: RegisterMainScreen(),
+      body: SingleChildScrollView(
+        // reverse: true,
+        child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: ConstrainedBox(
+              constraints: BoxConstraints.tightFor(
+                height: Device.screenHeight,
+              ),
+              child: ForgetPasswordScreen()),
+        ),
+      ),
     );
   }
 }

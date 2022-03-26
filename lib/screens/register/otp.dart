@@ -127,192 +127,168 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      // physics: const NeverScrollableScrollPhysics(),
-
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: MediaQuery.of(context).size.width,
-            minHeight: MediaQuery.of(context).size.height,
-          ),
-          child: IntrinsicHeight(
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: rSize(_leftContentAnimation.value.toDouble()),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      tileMode: TileMode.decal,
-                      colors: [
-                        Theme.of(context).colorScheme.primaryContainer,
-                        Theme.of(context).colorScheme.onBackground,
-                      ],
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      RotatedBox(
-                        quarterTurns: -1,
-                        child: Text(
-                          'OTP',
-                          style:
-                              Theme.of(context).textTheme.headline2?.copyWith(
-                                  fontSize: rSize(50),
-                                  letterSpacing: rSize(50),
-                                  shadows: [
-                                    BoxShadow(
-                                        offset: const Offset(4, 4),
-                                        spreadRadius: 1,
-                                        color: Theme.of(context).shadowColor)
-                                  ],
-                                  color: Theme.of(context).colorScheme.primary),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Opacity(
-                    opacity: _rightContentAnimation.value,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: rSize(20), vertical: rSize(80)),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.background,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Theme.of(context).shadowColor,
-                              offset: const Offset(0, 0),
-                              blurRadius: 5,
-                            ),
-                          ]),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Image(
-                                image: AssetImage('assets/images/otp.png'),
-                                width: rSize(250),
-                                fit: BoxFit.cover),
-                            SizedBox(
-                              height: rSize(40),
-                            ),
-                            Wrap(
-                              spacing: rSize(5),
-                              runSpacing: rSize(15),
-                              alignment: WrapAlignment.center,
-                              runAlignment: WrapAlignment.center,
-                              children: [
-                                Text(
-                                  'Verification Code',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1
-                                      ?.copyWith(fontSize: rSize(28)),
-                                ),
-                                Wrap(
-                                  spacing: rSize(5),
-                                  runSpacing: rSize(18),
-                                  alignment: WrapAlignment.center,
-                                  runAlignment: WrapAlignment.center,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    Text(
-                                      'We have sent the code verification to Your Mobile Number ',
-                                      style:
-                                          Theme.of(context).textTheme.subtitle1,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    Wrap(
-                                      spacing: rSize(5),
-                                      runSpacing: rSize(8),
-                                      alignment: WrapAlignment.center,
-                                      runAlignment: WrapAlignment.center,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.center,
-                                      children: [
-                                        Text(
-                                          '0505800955',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline1
-                                              ?.copyWith(fontSize: rSize(16)),
-                                        ),
-                                        // CustomIcon(
-                                        //   containerSize: 30,
-                                        //   icon: IconTheme(
-                                        //       child: Icon(
-                                        //         Icons.edit,
-                                        //         size: rSize(20),
-                                        //       ),
-                                        //       data: Theme.of(context)
-                                        //           .primaryIconTheme),
-                                        // ),
-                                        CustomTextButton(
-                                            customTextButtonProps:
-                                                CustomTextButtonProps(
-                                          fontSize: rSize(16),
-                                          textColor: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          onTap: () => {},
-                                          text: 'Change',
-                                        )),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: rSize(40),
-                            ),
-                            _buildTextFieldOTP(),
-                            SizedBox(
-                              height: rSize(20),
-                            ),
-                            CustomTextButton(
-                                customTextButtonProps: CustomTextButtonProps(
-                              fontSize: rSize(18),
-                              textColor: Theme.of(context).colorScheme.primary,
-                              onTap: () => {},
-                              text: 'Resend Code',
-                            )),
-                            SizedBox(
-                              height: rSize(40),
-                            ),
-                            CustomButton(
-                              customButtonProps: CustomButtonProps(
-                                onTap: () => {},
-                                text: 'Submit',
-                                isPrimary: true,
-                              ),
-                            ),
-                          ]),
-                    ),
-                  ),
-                )
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: rSize(_leftContentAnimation.value.toDouble()),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              tileMode: TileMode.decal,
+              colors: [
+                Theme.of(context).colorScheme.primaryContainer,
+                Theme.of(context).colorScheme.onBackground,
               ],
             ),
           ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              RotatedBox(
+                quarterTurns: -1,
+                child: Text(
+                  'OTP',
+                  style: Theme.of(context).textTheme.headline2?.copyWith(
+                      fontSize: rSize(50),
+                      letterSpacing: rSize(50),
+                      shadows: [
+                        BoxShadow(
+                            offset: const Offset(4, 4),
+                            spreadRadius: 1,
+                            color: Theme.of(context).shadowColor)
+                      ],
+                      color: Theme.of(context).colorScheme.primary),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+        Expanded(
+          child: Opacity(
+            opacity: _rightContentAnimation.value,
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: rSize(20), vertical: rSize(0)),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).shadowColor,
+                      offset: const Offset(0, 0),
+                      blurRadius: 5,
+                    ),
+                  ]),
+              child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image(
+                        image: AssetImage('assets/images/otp.png'),
+                        width: rSize(250),
+                        fit: BoxFit.cover),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    Wrap(
+                      spacing: rSize(5),
+                      runSpacing: rSize(15),
+                      alignment: WrapAlignment.center,
+                      runAlignment: WrapAlignment.center,
+                      children: [
+                        Text(
+                          'Verification Code',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline1
+                              ?.copyWith(fontSize: rSize(28)),
+                        ),
+                        Wrap(
+                          spacing: rSize(5),
+                          runSpacing: rSize(18),
+                          alignment: WrapAlignment.center,
+                          runAlignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Text(
+                              'We have sent the code verification to Your Mobile Number ',
+                              style: Theme.of(context).textTheme.subtitle1,
+                              textAlign: TextAlign.center,
+                            ),
+                            Wrap(
+                              spacing: rSize(5),
+                              runSpacing: rSize(8),
+                              alignment: WrapAlignment.center,
+                              runAlignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              children: [
+                                Text(
+                                  '0505800955',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline1
+                                      ?.copyWith(fontSize: rSize(16)),
+                                ),
+                                // CustomIcon(
+                                //   containerSize: 30,
+                                //   icon: IconTheme(
+                                //       child: Icon(
+                                //         Icons.edit,
+                                //         size: rSize(20),
+                                //       ),
+                                //       data: Theme.of(context)
+                                //           .primaryIconTheme),
+                                // ),
+                                CustomTextButton(
+                                    customTextButtonProps:
+                                        CustomTextButtonProps(
+                                  fontSize: rSize(16),
+                                  textColor:
+                                      Theme.of(context).colorScheme.primary,
+                                  onTap: () => {},
+                                  text: 'Change',
+                                )),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    _buildTextFieldOTP(),
+                    SizedBox(
+                      height: rSize(20),
+                    ),
+                    CustomTextButton(
+                        customTextButtonProps: CustomTextButtonProps(
+                      fontSize: rSize(18),
+                      textColor: Theme.of(context).colorScheme.primary,
+                      onTap: () => {},
+                      text: 'Resend Code',
+                    )),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    CustomButton(
+                      customButtonProps: CustomButtonProps(
+                        onTap: () => {},
+                        text: 'Submit',
+                        isPrimary: true,
+                      ),
+                    ),
+                  ]),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

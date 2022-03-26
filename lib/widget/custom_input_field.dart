@@ -125,6 +125,7 @@ class CustomInputField extends StatelessWidget {
           fillColor: Theme.of(context).colorScheme.onBackground,
           errorStyle: TextStyle(fontSize: rSize(18)),
           suffixIcon: getSuffixIcon(),
+          prefixIconConstraints: BoxConstraints(minWidth: rSize(50)),
           prefixIcon: !customInputFieldProps.isSearch
               ? customInputFieldProps.prefixIcon
               : IconTheme(

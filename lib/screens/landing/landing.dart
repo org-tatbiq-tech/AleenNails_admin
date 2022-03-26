@@ -18,27 +18,27 @@ class _LandingState extends State<Landing> {
       _data = [
         LiquidSwipeData(
           image: "assets/images/swiper-1.jpg",
-          text1: "This is a Title",
-          text2: "This is a sub Title",
-          text3: "This is a sub subTitle",
+          title: "This is a Title",
+          subTitle: "This is a sub Title",
+          description: "This is a sub subTitle",
         ),
         LiquidSwipeData(
           image: "assets/images/swiper-3.jpg",
-          text1: "This is a Title",
-          text2: "This is a sub Title",
-          text3: "This is a sub subTitle",
+          title: "This is a Title",
+          subTitle: "This is a sub Title",
+          description: "This is a sub subTitle",
         ),
         LiquidSwipeData(
           image: "assets/images/swiper-4.jpg",
-          text1: "This is a Title",
-          text2: "This is a sub Title",
-          text3: "This is a sub subTitle",
+          title: "This is a Title",
+          subTitle: "This is a sub Title",
+          description: "This is a sub subTitle",
         ),
         LiquidSwipeData(
           image: "assets/images/swiper-2.jpg",
-          text1: "This is a Title",
-          text2: "This is a sub Title",
-          text3: "This is a sub subTitle",
+          title: "This is a Title",
+          subTitle: "This is a sub Title",
+          description: "This is a sub subTitle",
         ),
       ];
     });

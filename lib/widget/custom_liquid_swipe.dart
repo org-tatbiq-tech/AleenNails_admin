@@ -74,9 +74,9 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      data[index].text1.isNotEmpty
+                      data[index].title.isNotEmpty
                           ? Text(
-                              data[index].text1,
+                              data[index].title,
                               style: Theme.of(context)
                                   .textTheme
                                   .headline2
@@ -86,9 +86,9 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                       SizedBox(
                         height: rSize(20),
                       ),
-                      data[index].text2.isNotEmpty
+                      data[index].subTitle.isNotEmpty
                           ? Text(
-                              data[index].text2,
+                              data[index].subTitle,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText2
@@ -98,9 +98,9 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                       SizedBox(
                         height: rSize(10),
                       ),
-                      data[index].text3.isNotEmpty
+                      data[index].description.isNotEmpty
                           ? Text(
-                              data[index].text3,
+                              data[index].description,
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
