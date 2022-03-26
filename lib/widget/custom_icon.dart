@@ -7,7 +7,7 @@ class CustomIcon extends StatelessWidget {
   final double containerSize;
   const CustomIcon({
     Key? key,
-    this.icon,
+    required this.icon,
     this.color,
     this.containerSize = 40,
   }) : super(key: key);
@@ -17,14 +17,16 @@ class CustomIcon extends StatelessWidget {
     Color backgroundColor =
         color ?? Theme.of(context).colorScheme.primaryContainer;
     return Container(
-      width: rSize(containerSize),
-      height: rSize(containerSize),
-      decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(
-            rSize(10),
-          )),
-      child: icon,
-    );
+        width: rSize(containerSize),
+        height: rSize(containerSize),
+        decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: BorderRadius.circular(
+              rSize(10),
+            )),
+        child: IconTheme(
+          data: Theme.of(context).primaryIconTheme,
+          child: icon ?? const SizedBox(),
+        ));
   }
 }

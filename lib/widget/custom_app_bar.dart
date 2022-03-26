@@ -8,16 +8,20 @@ import 'package:flutter_device_type/flutter_device_type.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final CustomAppBarProps customAppBarProps;
-  const CustomAppBar({Key? key, required this.customAppBarProps}) : super(key: key);
+  const CustomAppBar({Key? key, required this.customAppBarProps})
+      : super(key: key);
 
   @override
-  Size get preferredSize => Device.get().isIphoneX ? Size.fromHeight(rSize(70)) : Size.fromHeight(rSize(55));
+  Size get preferredSize => Device.get().isIphoneX
+      ? Size.fromHeight(rSize(70))
+      : Size.fromHeight(rSize(55));
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
 }
 
-class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderStateMixin {
+class _CustomAppBarState extends State<CustomAppBar>
+    with SingleTickerProviderStateMixin {
   double rippleStartX = 0;
   double rippleStartY = 0;
   late AnimationController _controller;
@@ -27,7 +31,8 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
   @override
   initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _controller.addStatusListener(animationStatusListener);
   }
@@ -74,14 +79,18 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(rSize(15), 0, rSize(15), 0),
-                child: CustomIcon(icon: widget.customAppBarProps.leadingWidget),
-              ),
+              widget.customAppBarProps.leadingWidget != null
+                  ? Padding(
+                      padding: EdgeInsets.fromLTRB(rSize(15), 0, rSize(15), 0),
+                      child: CustomIcon(
+                          icon: widget.customAppBarProps.leadingWidget),
+                    )
+                  : SizedBox(),
               Expanded(
                 child: Row(
-                  mainAxisAlignment:
-                      widget.customAppBarProps.centerTitle ? MainAxisAlignment.center : MainAxisAlignment.start,
+                  mainAxisAlignment: widget.customAppBarProps.centerTitle
+                      ? MainAxisAlignment.center
+                      : MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -90,7 +99,9 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2
-                                ?.copyWith(color: Theme.of(context).colorScheme.primary)),
+                                ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary)),
                   ],
                 ),
               )
@@ -120,7 +131,8 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
               widget.customAppBarProps.customIcon != null
                   ? Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
-                      child: CustomIcon(icon: widget.customAppBarProps.customIcon),
+                      child:
+                          CustomIcon(icon: widget.customAppBarProps.customIcon),
                     )
                   : Container(),
             ],
