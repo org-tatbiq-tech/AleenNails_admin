@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:appointments/data_types.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
-import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -217,7 +217,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                           crossAxisAlignment: WrapCrossAlignment.center,
                           children: [
                             Text(
-                              'We have sent the code verification to Your Mobile Number ',
+                              Languages.of(context)!.labelEnterOTP,
                               style: Theme.of(context).textTheme.subtitle1,
                               textAlign: TextAlign.center,
                             ),
@@ -252,7 +252,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                                   textColor:
                                       Theme.of(context).colorScheme.primary,
                                   onTap: () => {},
-                                  text: 'Change',
+                                  text: Languages.of(context)!.labelChange,
                                 )),
                               ],
                             ),
@@ -272,7 +272,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                       fontSize: rSize(18),
                       textColor: Theme.of(context).colorScheme.primary,
                       onTap: () => {},
-                      text: 'Resend Code',
+                      text: Languages.of(context)!.labelResend,
                     )),
                     SizedBox(
                       height: rSize(40),
@@ -280,7 +280,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                     CustomButton(
                       customButtonProps: CustomButtonProps(
                         onTap: () => {},
-                        text: 'Submit',
+                        text: Languages.of(context)!.submit,
                         isPrimary: true,
                       ),
                     ),

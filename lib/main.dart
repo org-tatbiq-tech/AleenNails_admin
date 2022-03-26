@@ -1,20 +1,21 @@
+import 'package:appointments/providers/langs.dart';
 import 'package:appointments/screens/login/forget_password.dart';
-import 'package:appointments/screens/login/login.dart';
-import 'package:appointments/screens/register/mobile.dart';
-import 'package:appointments/screens/register/otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import 'localization/localizations_delegate.dart';
+import 'localization/utils.dart';
 import 'providers/theme_provider.dart';
-import 'screens/register/main.dart';
 
 void main() {
   return runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
+        ChangeNotifierProvider<LocaleData>(create: (_) => LocaleData()),
       ],
       child: MyApp(),
     ),
@@ -29,17 +30,37 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return Consumer<ThemeNotifier>(
-          builder: (context, theme, child) {
-            return MaterialApp(
-              builder: (context, _) {
-                var child = _!;
-                return child;
-              },
-              theme: theme.getTheme(),
-              home: const MyHomePage(),
-            );
-          },
+        return Consumer2<ThemeNotifier, LocaleData>(
+          builder: (context, theme, localeProv, child) => FutureBuilder(
+            future: loadLocale(),
+            builder: (context, snapshot) {
+              return MaterialApp(
+                  builder: (context, _) {
+                    var child = _!;
+                    return child;
+                  },
+                  theme: theme.getTheme(),
+                  home: const MyHomePage(),
+                  locale: localeProv.locale,
+                  supportedLocales: supportedLocale,
+                  localizationsDelegates: const [
+                    AppLocalizationsDelegate(),
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  localeResolutionCallback: (locale, supportedLocales) {
+                    for (var supportedLocale in supportedLocales) {
+                      if (supportedLocale.languageCode ==
+                              locale?.languageCode &&
+                          supportedLocale.countryCode == locale?.countryCode) {
+                        return supportedLocale;
+                      }
+                    }
+                    return supportedLocales.first;
+                  });
+            },
+          ),
         );
       },
     );

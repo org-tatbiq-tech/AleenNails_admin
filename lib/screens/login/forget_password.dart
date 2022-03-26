@@ -1,4 +1,5 @@
 import 'package:appointments/data_types.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_input_field.dart';
@@ -76,7 +77,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
               RotatedBox(
                 quarterTurns: -1,
                 child: Text(
-                  'PASSWORD',
+                  Languages.of(context)!.labelPassword,
                   style: Theme.of(context).textTheme.headline2?.copyWith(
                       fontSize: rSize(50),
                       letterSpacing: rSize(50),
@@ -107,65 +108,66 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                     ),
                   ]),
               child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image(
-                        image: const AssetImage('assets/images/otp.png'),
-                        width: rSize(250),
-                        fit: BoxFit.cover),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    Wrap(
-                      spacing: rSize(5),
-                      runSpacing: rSize(15),
-                      alignment: WrapAlignment.center,
-                      runAlignment: WrapAlignment.center,
-                      children: [
-                        Text(
-                          'Forget Password?',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              ?.copyWith(fontSize: rSize(28)),
-                        ),
-                        Text(
-                          'Do not worry! it happens. Please enter the address associated with your account ',
-                          style: Theme.of(context).textTheme.subtitle1,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    CustomInputField(
-                      customInputFieldProps: CustomInputFieldProps(
-                        controller: _emailController,
-                        prefixIcon: IconTheme(
-                          data: Theme.of(context).primaryIconTheme,
-                          child: Icon(
-                            FontAwesomeIcons.userAlt,
-                            size: rSize(20),
-                          ),
-                        ),
-                        labelText: 'Email',
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image(
+                      image: const AssetImage('assets/images/password.png'),
+                      width: rSize(250),
+                      fit: BoxFit.cover),
+                  SizedBox(
+                    height: rSize(40),
+                  ),
+                  Wrap(
+                    spacing: rSize(5),
+                    runSpacing: rSize(15),
+                    alignment: WrapAlignment.center,
+                    runAlignment: WrapAlignment.center,
+                    children: [
+                      Text(
+                        Languages.of(context)!.labelForgotPassword,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline1
+                            ?.copyWith(fontSize: rSize(28)),
                       ),
-                    ),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    CustomButton(
-                      customButtonProps: CustomButtonProps(
-                        onTap: () => {},
-                        text: 'Submit',
-                        isPrimary: true,
+                      Text(
+                        Languages.of(context)!.labelFMessage,
+                        style: Theme.of(context).textTheme.subtitle1,
+                        textAlign: TextAlign.center,
                       ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: rSize(40),
+                  ),
+                  CustomInputField(
+                    customInputFieldProps: CustomInputFieldProps(
+                      controller: _emailController,
+                      prefixIcon: IconTheme(
+                        data: Theme.of(context).primaryIconTheme,
+                        child: Icon(
+                          FontAwesomeIcons.userAlt,
+                          size: rSize(20),
+                        ),
+                      ),
+                      labelText: Languages.of(context)!.labelEmail,
                     ),
-                  ]),
+                  ),
+                  SizedBox(
+                    height: rSize(40),
+                  ),
+                  CustomButton(
+                    customButtonProps: CustomButtonProps(
+                      onTap: () => {},
+                      text: Languages.of(context)!.submit,
+                      isPrimary: true,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         )

@@ -1,4 +1,5 @@
 import 'package:appointments/data_types.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_input_field.dart';
@@ -76,7 +77,7 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen>
               RotatedBox(
                 quarterTurns: -1,
                 child: Text(
-                  'REGISTER',
+                  Languages.of(context)!.labelRegister,
                   style: Theme.of(context).textTheme.headline2?.copyWith(
                       fontSize: rSize(50),
                       letterSpacing: rSize(50),
@@ -125,14 +126,14 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen>
                       runAlignment: WrapAlignment.center,
                       children: [
                         Text(
-                          'Mobile Number',
+                          Languages.of(context)!.labelMobileNumber,
                           style: Theme.of(context)
                               .textTheme
                               .headline1
                               ?.copyWith(fontSize: rSize(28)),
                         ),
                         Text(
-                          'Please enter your Mobile number for OTP Authentication',
+                          Languages.of(context)!.labelEnterOTP,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ],
@@ -151,7 +152,7 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen>
                             size: rSize(20),
                           ),
                         ),
-                        labelText: 'Mobile Number',
+                        labelText: Languages.of(context)!.labelMobileNumber,
                       ),
                     ),
                     SizedBox(
@@ -160,7 +161,7 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen>
                     CustomButton(
                       customButtonProps: CustomButtonProps(
                         onTap: () => {},
-                        text: 'Continue',
+                        text: Languages.of(context)!.labelContinue,
                         isPrimary: true,
                       ),
                     ),
