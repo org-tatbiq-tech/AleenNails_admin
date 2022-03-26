@@ -3,7 +3,7 @@ import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../data_types.dart';
+import '../utils/data_types.dart';
 import '../utils/layout.dart';
 
 class CustomEventCalendar extends StatefulWidget {
@@ -55,8 +55,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
         children: [
           Card(
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
             child: Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, rSize(15)),
               child: TableCalendar<CalendarEvent>(
@@ -65,50 +64,35 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 daysOfWeekHeight: rSize(30),
                 rowHeight: rSize(60),
                 daysOfWeekStyle: DaysOfWeekStyle(
-                  weekdayStyle: Theme.of(context)
-                      .textTheme
-                      .subtitle2!
-                      .copyWith(color: Theme.of(context).colorScheme.outline),
-                  weekendStyle: Theme.of(context)
-                      .textTheme
-                      .subtitle2!
-                      .copyWith(color: Theme.of(context).colorScheme.outline),
+                  weekdayStyle:
+                      Theme.of(context).textTheme.subtitle2!.copyWith(color: Theme.of(context).colorScheme.outline),
+                  weekendStyle:
+                      Theme.of(context).textTheme.subtitle2!.copyWith(color: Theme.of(context).colorScheme.outline),
                 ),
                 headerStyle: HeaderStyle(
                   leftChevronIcon: IconTheme(
-                    data: Theme.of(context)
-                        .primaryIconTheme
-                        .copyWith(size: rSize(30)),
+                    data: Theme.of(context).primaryIconTheme.copyWith(size: rSize(30)),
                     child: const Icon(
                       Icons.chevron_left,
                     ),
                   ),
                   rightChevronIcon: IconTheme(
-                    data: Theme.of(context)
-                        .primaryIconTheme
-                        .copyWith(size: rSize(30)),
+                    data: Theme.of(context).primaryIconTheme.copyWith(size: rSize(30)),
                     child: const Icon(
                       Icons.chevron_right,
                     ),
                   ),
-                  headerPadding:
-                      EdgeInsets.fromLTRB(0, rSize(20), 0, rSize(20)),
-                  formatButtonPadding: EdgeInsets.symmetric(
-                      horizontal: rSize(16), vertical: rSize(8)),
+                  headerPadding: EdgeInsets.fromLTRB(0, rSize(20), 0, rSize(20)),
+                  formatButtonPadding: EdgeInsets.symmetric(horizontal: rSize(16), vertical: rSize(8)),
                   formatButtonDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(rSize(6)),
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  formatButtonTextStyle: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: Colors.white),
+                  formatButtonTextStyle: Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.white),
                   formatButtonVisible: true,
                   formatButtonShowsNext: false,
-                  titleTextStyle: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: Theme.of(context).colorScheme.outline),
+                  titleTextStyle:
+                      Theme.of(context).textTheme.headline2!.copyWith(color: Theme.of(context).colorScheme.outline),
                   titleCentered: false,
                 ),
                 focusedDay: _focusedDay,
@@ -137,18 +121,13 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                     color: Theme.of(context).colorScheme.primary,
                     shape: BoxShape.circle,
                   ),
-                  disabledTextStyle: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(color: Theme.of(context).colorScheme.outline),
+                  disabledTextStyle:
+                      Theme.of(context).textTheme.bodyText1!.copyWith(color: Theme.of(context).colorScheme.outline),
                   defaultTextStyle: Theme.of(context).textTheme.bodyText1!,
                   weekendTextStyle: Theme.of(context).textTheme.bodyText1!,
                   outsideTextStyle: Theme.of(context).textTheme.bodyText1!,
                   holidayTextStyle: Theme.of(context).textTheme.bodyText1!,
-                  selectedTextStyle: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
-                      .copyWith(color: Colors.white),
+                  selectedTextStyle: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
                   markerDecoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.secondary,
                     shape: BoxShape.circle,
@@ -181,15 +160,13 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                         beginAnimation: 0.98,
                         onTap: () => {print('object')},
                         child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(rSize(5))),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(rSize(5))),
                           margin: EdgeInsets.symmetric(
                             horizontal: rSize(15),
                             vertical: rSize(10),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: rSize(8), vertical: rSize(16)),
+                            padding: EdgeInsets.symmetric(horizontal: rSize(8), vertical: rSize(16)),
                             child: Text('${value[index]}'),
                           ),
                         ),

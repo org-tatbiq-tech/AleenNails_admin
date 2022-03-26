@@ -1,5 +1,5 @@
-import 'package:appointments/data_types.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_input_field.dart';
@@ -13,8 +13,7 @@ class ForgetPasswordScreen extends StatefulWidget {
   State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
 }
 
-class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
-    with SingleTickerProviderStateMixin {
+class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> with SingleTickerProviderStateMixin {
   final TextEditingController _emailController = TextEditingController();
 
   late Animation _leftContentAnimation;
@@ -24,17 +23,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1500));
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
 
-    _leftContentAnimation = Tween(begin: 0.0, end: 100).animate(CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0, 0.3, curve: Curves.linear)));
+    _leftContentAnimation = Tween(begin: 0.0, end: 100)
+        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0, 0.3, curve: Curves.linear)));
 
-    _rightContentAnimation = Tween(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: _controller,
-            curve: const Interval(0.3, 1, curve: Curves.linear)));
+    _rightContentAnimation = Tween(begin: 0.0, end: 1.0)
+        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0.3, 1, curve: Curves.linear)));
     _emailController.addListener(() => setState(() {}));
     _controller.forward();
     _controller.addListener(() {
@@ -82,10 +77,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                       fontSize: rSize(50),
                       letterSpacing: rSize(50),
                       shadows: [
-                        BoxShadow(
-                            offset: const Offset(4, 4),
-                            spreadRadius: 1,
-                            color: Theme.of(context).shadowColor)
+                        BoxShadow(offset: const Offset(4, 4), spreadRadius: 1, color: Theme.of(context).shadowColor)
                       ],
                       color: Theme.of(context).colorScheme.primary),
                 ),
@@ -98,24 +90,19 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
             opacity: _rightContentAnimation.value,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).shadowColor,
-                      offset: const Offset(0, 0),
-                      blurRadius: 5,
-                    ),
-                  ]),
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.background, boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).shadowColor,
+                  offset: const Offset(0, 0),
+                  blurRadius: 5,
+                ),
+              ]),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image(
-                      image: const AssetImage('assets/images/password.png'),
-                      width: rSize(250),
-                      fit: BoxFit.cover),
+                  Image(image: const AssetImage('assets/images/password.png'), width: rSize(250), fit: BoxFit.cover),
                   SizedBox(
                     height: rSize(40),
                   ),
@@ -128,10 +115,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                       Text(
                         Languages.of(context)!.labelForgotPassword,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1
-                            ?.copyWith(fontSize: rSize(28)),
+                        style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(28)),
                       ),
                       Text(
                         Languages.of(context)!.labelFMessage,

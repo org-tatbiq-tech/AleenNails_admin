@@ -1,12 +1,11 @@
-import 'package:appointments/data_types.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomInputField extends StatelessWidget {
   final CustomInputFieldProps customInputFieldProps;
 
-  const CustomInputField({Key? key, required this.customInputFieldProps})
-      : super(key: key);
+  const CustomInputField({Key? key, required this.customInputFieldProps}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +42,7 @@ class CustomInputField extends StatelessWidget {
                 child: IconButton(
                   constraints: const BoxConstraints(),
                   padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
-                  icon: Icon(customInputFieldProps.isPasswordVisible
-                      ? Icons.visibility_off
-                      : Icons.visibility),
+                  icon: Icon(customInputFieldProps.isPasswordVisible ? Icons.visibility_off : Icons.visibility),
                   color: getColor(),
                   onPressed: () => customInputFieldProps.togglePassword(),
                   splashColor: Colors.transparent,
@@ -73,9 +70,7 @@ class CustomInputField extends StatelessWidget {
           return IconTheme(
             data: Theme.of(context).iconTheme,
             child: IconButton(
-              icon: Icon(customInputFieldProps.isPasswordVisible
-                  ? Icons.visibility_off
-                  : Icons.visibility),
+              icon: Icon(customInputFieldProps.isPasswordVisible ? Icons.visibility_off : Icons.visibility),
               color: getColor(),
               onPressed: () => customInputFieldProps.togglePassword(),
               constraints: const BoxConstraints(),
@@ -100,15 +95,13 @@ class CustomInputField extends StatelessWidget {
       child: TextFormField(
         maxLength: customInputFieldProps.maxLength,
         controller: customInputFieldProps.controller,
-        obscureText: customInputFieldProps.isPassword &&
-            !customInputFieldProps.isPasswordVisible,
+        obscureText: customInputFieldProps.isPassword && !customInputFieldProps.isPasswordVisible,
         cursorColor: Theme.of(context).colorScheme.primary,
         style: Theme.of(context).textTheme.caption,
         maxLines: customInputFieldProps.isDescription ? 5 : 1,
         keyboardType: customInputFieldProps.keyboardType,
         validator: customInputFieldProps.isConfirmPassword
-            ? (value) => customInputFieldProps.validator(
-                value, customInputFieldProps.passwordToConfirm)
+            ? (value) => customInputFieldProps.validator(value, customInputFieldProps.passwordToConfirm)
             : (value) => customInputFieldProps.validator(context, value),
         decoration: InputDecoration(
           alignLabelWithHint: true,
@@ -119,9 +112,8 @@ class CustomInputField extends StatelessWidget {
             customInputFieldProps.isSearch ? 0 : rSize(12),
           ),
           filled: true,
-          floatingLabelBehavior: customInputFieldProps.isSearch
-              ? FloatingLabelBehavior.never
-              : FloatingLabelBehavior.auto,
+          floatingLabelBehavior:
+              customInputFieldProps.isSearch ? FloatingLabelBehavior.never : FloatingLabelBehavior.auto,
           fillColor: Theme.of(context).colorScheme.onBackground,
           errorStyle: TextStyle(fontSize: rSize(18)),
           suffixIcon: getSuffixIcon(),
@@ -136,12 +128,11 @@ class CustomInputField extends StatelessWidget {
                 ),
           hintText: customInputFieldProps.hintText,
           isDense: false,
-          labelText: customInputFieldProps.isDescription
-              ? null
-              : customInputFieldProps.labelText,
-          hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-              fontSize: rSize(18),
-              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),
+          labelText: customInputFieldProps.isDescription ? null : customInputFieldProps.labelText,
+          hintStyle: Theme.of(context)
+              .textTheme
+              .subtitle1
+              ?.copyWith(fontSize: rSize(18), color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5)),
           floatingLabelStyle: Theme.of(context).textTheme.bodyText1,
           labelStyle: Theme.of(context).textTheme.bodyText1,
           floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -154,14 +145,10 @@ class CustomInputField extends StatelessWidget {
               borderSide: BorderSide(color: Colors.red, width: rSize(1))),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(rSize(10)),
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
-                  width: rSize(1))),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primary, width: rSize(1))),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(rSize(10)),
-              borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  width: rSize(1))),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.primaryContainer, width: rSize(1))),
         ),
       ),
     );

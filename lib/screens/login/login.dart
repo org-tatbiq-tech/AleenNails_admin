@@ -1,5 +1,5 @@
-import 'package:appointments/data_types.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_input_field.dart';
@@ -14,8 +14,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
-    with SingleTickerProviderStateMixin {
+class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
@@ -32,17 +31,13 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1500));
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
 
-    _leftContentAnimation = Tween(begin: 0.0, end: 100).animate(CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0, 0.3, curve: Curves.linear)));
+    _leftContentAnimation = Tween(begin: 0.0, end: 100)
+        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0, 0.3, curve: Curves.linear)));
 
-    _rightContentAnimation = Tween(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: _controller,
-            curve: const Interval(0.3, 1, curve: Curves.linear)));
+    _rightContentAnimation = Tween(begin: 0.0, end: 1.0)
+        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0.3, 1, curve: Curves.linear)));
     _userNameController.addListener(() => setState(() {}));
     _passwordController.addListener(() => setState(() {}));
     _controller.forward();
@@ -92,10 +87,7 @@ class _LoginScreenState extends State<LoginScreen>
                       fontSize: rSize(50),
                       letterSpacing: rSize(50),
                       shadows: [
-                        BoxShadow(
-                            offset: const Offset(4, 4),
-                            spreadRadius: 1,
-                            color: Theme.of(context).shadowColor)
+                        BoxShadow(offset: const Offset(4, 4), spreadRadius: 1, color: Theme.of(context).shadowColor)
                       ],
                       color: Theme.of(context).colorScheme.primary),
                 ),
@@ -108,15 +100,13 @@ class _LoginScreenState extends State<LoginScreen>
             opacity: _rightContentAnimation.value,
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).shadowColor,
-                      offset: const Offset(0, 0),
-                      blurRadius: 5,
-                    ),
-                  ]),
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.background, boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).shadowColor,
+                  offset: const Offset(0, 0),
+                  blurRadius: 5,
+                ),
+              ]),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -185,8 +175,7 @@ class _LoginScreenState extends State<LoginScreen>
                         text: Languages.of(context)!.labelForgotPassword,
                         textColor: Theme.of(context).colorScheme.primary,
                         fontSize: rSize(16),
-                        onTap: () =>
-                            {_controller.reset(), _controller.forward()},
+                        onTap: () => {_controller.reset(), _controller.forward()},
                       ))
                     ],
                   ),

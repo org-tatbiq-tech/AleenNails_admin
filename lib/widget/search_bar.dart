@@ -1,4 +1,4 @@
-import 'package:appointments/data_types.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_input_field.dart';
@@ -17,16 +17,13 @@ class SearchBar extends StatefulWidget implements PreferredSizeWidget {
   final Function(String) onSearchQueryChanged;
 
   @override
-  Size get preferredSize => Device.get().isIphoneX
-      ? Size.fromHeight(rSize(70))
-      : Size.fromHeight(rSize(55));
+  Size get preferredSize => Device.get().isIphoneX ? Size.fromHeight(rSize(70)) : Size.fromHeight(rSize(55));
 
   @override
   _SearchBarState createState() => _SearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar>
-    with SingleTickerProviderStateMixin {
+class _SearchBarState extends State<SearchBar> with SingleTickerProviderStateMixin {
   String searchQuery = '';
   final TextEditingController _searchFieldController = TextEditingController();
 
@@ -71,9 +68,7 @@ class _SearchBarState extends State<SearchBar>
                   padding: EdgeInsets.fromLTRB(rSize(20), 0, rSize(20), 0),
                   child: CustomInputField(
                     customInputFieldProps: CustomInputFieldProps(
-                        controller: _searchFieldController,
-                        isSearch: true,
-                        labelText: 'Search...'),
+                        controller: _searchFieldController, isSearch: true, labelText: 'Search...'),
                   ),
                 ),
               )

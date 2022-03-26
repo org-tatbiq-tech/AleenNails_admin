@@ -46,6 +46,8 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   pin_code_fields: ^7.3.0
   firebase_core: ^1.13.1
+  firebase_auth: ^3.3.11
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:

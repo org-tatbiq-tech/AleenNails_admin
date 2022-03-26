@@ -1,4 +1,4 @@
-import 'package:appointments/data_types.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/app_bar_painter.dart';
 import 'package:appointments/widget/custom_icon.dart';
@@ -8,20 +8,16 @@ import 'package:flutter_device_type/flutter_device_type.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final CustomAppBarProps customAppBarProps;
-  const CustomAppBar({Key? key, required this.customAppBarProps})
-      : super(key: key);
+  const CustomAppBar({Key? key, required this.customAppBarProps}) : super(key: key);
 
   @override
-  Size get preferredSize => Device.get().isIphoneX
-      ? Size.fromHeight(rSize(70))
-      : Size.fromHeight(rSize(55));
+  Size get preferredSize => Device.get().isIphoneX ? Size.fromHeight(rSize(70)) : Size.fromHeight(rSize(55));
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
 }
 
-class _CustomAppBarState extends State<CustomAppBar>
-    with SingleTickerProviderStateMixin {
+class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderStateMixin {
   double rippleStartX = 0;
   double rippleStartY = 0;
   late AnimationController _controller;
@@ -31,8 +27,7 @@ class _CustomAppBarState extends State<CustomAppBar>
   @override
   initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _controller.addStatusListener(animationStatusListener);
   }
@@ -85,9 +80,8 @@ class _CustomAppBarState extends State<CustomAppBar>
               ),
               Expanded(
                 child: Row(
-                  mainAxisAlignment: widget.customAppBarProps.centerTitle
-                      ? MainAxisAlignment.center
-                      : MainAxisAlignment.start,
+                  mainAxisAlignment:
+                      widget.customAppBarProps.centerTitle ? MainAxisAlignment.center : MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -96,9 +90,7 @@ class _CustomAppBarState extends State<CustomAppBar>
                             style: Theme.of(context)
                                 .textTheme
                                 .headline2
-                                ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary)),
+                                ?.copyWith(color: Theme.of(context).colorScheme.primary)),
                   ],
                 ),
               )
@@ -128,8 +120,7 @@ class _CustomAppBarState extends State<CustomAppBar>
               widget.customAppBarProps.customIcon != null
                   ? Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
-                      child:
-                          CustomIcon(icon: widget.customAppBarProps.customIcon),
+                      child: CustomIcon(icon: widget.customAppBarProps.customIcon),
                     )
                   : Container(),
             ],

@@ -1,12 +1,11 @@
-import 'package:appointments/data_types.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextButton extends StatelessWidget {
   final CustomTextButtonProps customTextButtonProps;
-  const CustomTextButton({Key? key, required this.customTextButtonProps})
-      : super(key: key);
+  const CustomTextButton({Key? key, required this.customTextButtonProps}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +25,10 @@ class CustomTextButton extends StatelessWidget {
           Text(
             customTextButtonProps.text,
             style: customTextButtonProps.textStyle ??
-                Theme.of(context).textTheme.subtitle1?.copyWith(
-                    color: customTextButtonProps.textColor,
-                    fontSize: customTextButtonProps.fontSize),
+                Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    ?.copyWith(color: customTextButtonProps.textColor, fontSize: customTextButtonProps.fontSize),
           ),
         ],
       ),

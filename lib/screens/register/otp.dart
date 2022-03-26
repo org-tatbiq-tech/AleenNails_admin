@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:appointments/data_types.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -16,8 +16,7 @@ class RegisterOTPScreen extends StatefulWidget {
   State<RegisterOTPScreen> createState() => _RegisterOTPScreenState();
 }
 
-class _RegisterOTPScreenState extends State<RegisterOTPScreen>
-    with SingleTickerProviderStateMixin {
+class _RegisterOTPScreenState extends State<RegisterOTPScreen> with SingleTickerProviderStateMixin {
   final TextEditingController _mobileController = TextEditingController();
   StreamController<ErrorAnimationType>? errorController;
   late Animation _leftContentAnimation;
@@ -28,17 +27,13 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
   void initState() {
     super.initState();
     errorController = StreamController<ErrorAnimationType>();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1500));
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
 
-    _leftContentAnimation = Tween(begin: 0.0, end: 100).animate(CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0, 0.3, curve: Curves.linear)));
+    _leftContentAnimation = Tween(begin: 0.0, end: 100)
+        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0, 0.3, curve: Curves.linear)));
 
-    _rightContentAnimation = Tween(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: _controller,
-            curve: const Interval(0.3, 1, curve: Curves.linear)));
+    _rightContentAnimation = Tween(begin: 0.0, end: 1.0)
+        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0.3, 1, curve: Curves.linear)));
     _mobileController.addListener(() => setState(() {}));
     _controller.forward();
     _controller.addListener(() {
@@ -61,8 +56,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
             fontSize: rSize(24),
             color: Theme.of(context).colorScheme.background,
           ),
-      pastedTextStyle:
-          Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(24)),
+      pastedTextStyle: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(24)),
       length: 6,
       obscureText: true,
       // obscuringCharacter: '*',
@@ -158,10 +152,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                       fontSize: rSize(50),
                       letterSpacing: rSize(50),
                       shadows: [
-                        BoxShadow(
-                            offset: const Offset(4, 4),
-                            spreadRadius: 1,
-                            color: Theme.of(context).shadowColor)
+                        BoxShadow(offset: const Offset(4, 4), spreadRadius: 1, color: Theme.of(context).shadowColor)
                       ],
                       color: Theme.of(context).colorScheme.primary),
                 ),
@@ -173,26 +164,20 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
           child: Opacity(
             opacity: _rightContentAnimation.value,
             child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: rSize(20), vertical: rSize(0)),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).shadowColor,
-                      offset: const Offset(0, 0),
-                      blurRadius: 5,
-                    ),
-                  ]),
+              padding: EdgeInsets.symmetric(horizontal: rSize(20), vertical: rSize(0)),
+              decoration: BoxDecoration(color: Theme.of(context).colorScheme.background, boxShadow: [
+                BoxShadow(
+                  color: Theme.of(context).shadowColor,
+                  offset: const Offset(0, 0),
+                  blurRadius: 5,
+                ),
+              ]),
               child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image(
-                        image: AssetImage('assets/images/otp.png'),
-                        width: rSize(250),
-                        fit: BoxFit.cover),
+                    Image(image: AssetImage('assets/images/otp.png'), width: rSize(250), fit: BoxFit.cover),
                     SizedBox(
                       height: rSize(40),
                     ),
@@ -204,10 +189,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                       children: [
                         Text(
                           'Verification Code',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline1
-                              ?.copyWith(fontSize: rSize(28)),
+                          style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(28)),
                         ),
                         Wrap(
                           spacing: rSize(5),
@@ -230,10 +212,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                               children: [
                                 Text(
                                   '0505800955',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline1
-                                      ?.copyWith(fontSize: rSize(16)),
+                                  style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(16)),
                                 ),
                                 // CustomIcon(
                                 //   containerSize: 30,
@@ -246,11 +225,9 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                                 //           .primaryIconTheme),
                                 // ),
                                 CustomTextButton(
-                                    customTextButtonProps:
-                                        CustomTextButtonProps(
+                                    customTextButtonProps: CustomTextButtonProps(
                                   fontSize: rSize(16),
-                                  textColor:
-                                      Theme.of(context).colorScheme.primary,
+                                  textColor: Theme.of(context).colorScheme.primary,
                                   onTap: () => {},
                                   text: Languages.of(context)!.labelChange,
                                 )),

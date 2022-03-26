@@ -1,4 +1,4 @@
-import 'package:appointments/data_types.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:flutter/material.dart';
 
 import '../../widget/custom_modal.dart';
@@ -14,10 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  bool clickedCentreFAB =
-      false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex =
-      0; //to handle which item is currently selected in the bottom app bar
+  bool clickedCentreFAB = false; //boolean used to handle container animation which expands from the FAB
+  int selectedIndex = 0; //to handle which item is currently selected in the bottom app bar
   String text = "Home";
 
   //call this method on click of each bottom app bar item to update the screen
@@ -47,26 +45,19 @@ class HomePageState extends State<HomePage> {
             child: AnimatedContainer(
               duration: Duration(milliseconds: 250),
               //if clickedCentreFAB == true, the first parameter is used. If it's false, the second.
-              height:
-                  clickedCentreFAB ? MediaQuery.of(context).size.height : 0.0,
+              height: clickedCentreFAB ? MediaQuery.of(context).size.height : 0.0,
               width: clickedCentreFAB ? MediaQuery.of(context).size.height : 0,
-              decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(clickedCentreFAB ? 0.0 : 300.0),
-                  color: Colors.red),
+              decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(clickedCentreFAB ? 0.0 : 300.0), color: Colors.red),
             ),
           )
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation
-          .centerDocked, //specify the location of the FAB
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, //specify the location of the FAB
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showBottomModal(
-            BottomModalProps(
-                context: context,
-                child: (Text('dasjdsakjlkjdaskjdalkjdak')),
-                title: 'Modal Title'),
+            BottomModalProps(context: context, child: (Text('dasjdsakjlkjdaskjdalkjdak')), title: 'Modal Title'),
           );
         },
         // tooltip: "Centre FAB",
@@ -92,9 +83,7 @@ class HomePageState extends State<HomePage> {
                 icon: Icon(
                   Icons.home,
                   //darken the icon if it is selected or else give it a different color
-                  color: selectedIndex == 0
-                      ? Colors.blue.shade900
-                      : Colors.grey.shade400,
+                  color: selectedIndex == 0 ? Colors.blue.shade900 : Colors.grey.shade400,
                 ),
               ),
               IconButton(
@@ -104,9 +93,7 @@ class HomePageState extends State<HomePage> {
                 iconSize: 27.0,
                 icon: Icon(
                   Icons.call_made,
-                  color: selectedIndex == 1
-                      ? Colors.blue.shade900
-                      : Colors.grey.shade400,
+                  color: selectedIndex == 1 ? Colors.blue.shade900 : Colors.grey.shade400,
                 ),
               ),
               //to leave space in between the bottom app bar items and below the FAB
@@ -120,9 +107,7 @@ class HomePageState extends State<HomePage> {
                 iconSize: 27.0,
                 icon: Icon(
                   Icons.call_received,
-                  color: selectedIndex == 2
-                      ? Colors.blue.shade900
-                      : Colors.grey.shade400,
+                  color: selectedIndex == 2 ? Colors.blue.shade900 : Colors.grey.shade400,
                 ),
               ),
               IconButton(
@@ -132,9 +117,7 @@ class HomePageState extends State<HomePage> {
                 iconSize: 27.0,
                 icon: Icon(
                   Icons.settings,
-                  color: selectedIndex == 3
-                      ? Colors.blue.shade900
-                      : Colors.grey.shade400,
+                  color: selectedIndex == 3 ? Colors.blue.shade900 : Colors.grey.shade400,
                 ),
               ),
             ],

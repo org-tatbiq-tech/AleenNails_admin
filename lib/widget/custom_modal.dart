@@ -1,4 +1,4 @@
-import 'package:appointments/data_types.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -66,8 +66,7 @@ void showBottomModal(BottomModalProps bottomModalProps) {
     duration: bottomModalProps.duration,
     isDismissible: bottomModalProps.isDismissible,
     animationCurve: Curves.easeIn,
-    barrierColor:
-        Theme.of(bottomModalProps.context).colorScheme.outline.withOpacity(0.5),
+    barrierColor: Theme.of(bottomModalProps.context).colorScheme.outline.withOpacity(0.5),
     enableDrag: bottomModalProps.enableDrag,
     topRadius: Radius.circular(rSize(40)),
     context: bottomModalProps.context,
@@ -85,18 +84,12 @@ void showBottomModal(BottomModalProps bottomModalProps) {
             children: [
               bottomModalProps.title.isNotEmpty
                   ? Container(
-                      alignment: bottomModalProps.centerTitle
-                          ? Alignment.center
-                          : Alignment.centerLeft,
+                      alignment: bottomModalProps.centerTitle ? Alignment.center : Alignment.centerLeft,
                       color: Theme.of(context).colorScheme.primaryContainer,
                       width: double.infinity,
                       padding: EdgeInsets.fromLTRB(
-                          rSize(30),
-                          bottomModalProps.showDragPen ? rSize(30) : rSize(15),
-                          rSize(30),
-                          rSize(15)),
-                      child: Text(bottomModalProps.title,
-                          style: Theme.of(context).textTheme.headline2),
+                          rSize(30), bottomModalProps.showDragPen ? rSize(30) : rSize(15), rSize(30), rSize(15)),
+                      child: Text(bottomModalProps.title, style: Theme.of(context).textTheme.headline2),
                     )
                   : const SizedBox(),
               Padding(
@@ -118,8 +111,7 @@ void showBottomModal(BottomModalProps bottomModalProps) {
                   width: rSize(40),
                   height: rSize(5),
                   decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(rSize(10))),
+                      color: Theme.of(context).colorScheme.primary, borderRadius: BorderRadius.circular(rSize(10))),
                 )
               : const SizedBox(),
         ),

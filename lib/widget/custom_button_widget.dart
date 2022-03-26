@@ -1,4 +1,4 @@
-import 'package:appointments/data_types.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +42,7 @@ class CustomButton extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(rSize(10)),
               color: getButtonColor(),
-              border: Border.all(
-                  width: rSize(1),
-                  color: Theme.of(context).colorScheme.primary),
+              border: Border.all(width: rSize(1), color: Theme.of(context).colorScheme.primary),
               boxShadow: [
                 BoxShadow(
                   color: Theme.of(context).shadowColor,
@@ -53,13 +51,10 @@ class CustomButton extends StatelessWidget {
                 )
               ]),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: rSize(16), vertical: rSize(10)),
+            padding: EdgeInsets.symmetric(horizontal: rSize(16), vertical: rSize(10)),
             child: customButtonProps.text.isNotEmpty
                 ? Text(
-                    customButtonProps.capitalizeText
-                        ? customButtonProps.text.toUpperCase()
-                        : customButtonProps.text,
+                    customButtonProps.capitalizeText ? customButtonProps.text.toUpperCase() : customButtonProps.text,
                     style: Theme.of(context).textTheme.button?.copyWith(
                           color: getTextColor(),
                         ),

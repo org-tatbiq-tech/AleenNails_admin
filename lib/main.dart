@@ -1,150 +1,136 @@
+import 'package:appointments/localization/localizations_delegate.dart';
+import 'package:appointments/localization/utils.dart';
+import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/providers/langs.dart';
+import 'package:appointments/providers/theme_provider.dart';
+import 'package:appointments/screens/home/home.dart';
+import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
+import 'package:appointments/screens/register/main.dart';
+import 'package:appointments/screens/register/mobile.dart';
+import 'package:appointments/screens/register/otp.dart';
+import 'package:appointments/utils/secure_storage.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import 'localization/localizations_delegate.dart';
-import 'localization/utils.dart';
-import 'providers/theme_provider.dart';
+import 'firebase_options.dart';
+import 'localization/language/languages.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   return runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider<LocaleData>(create: (_) => LocaleData()),
+        ChangeNotifierProvider<AuthenticationState>(create: (_) => AuthenticationState())
       ],
-      child: MyApp(),
+      child: StudiosApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class StudiosApp extends StatelessWidget {
+  StudiosApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  void initApp() {}
+  final Future<FirebaseApp> _fbApp = Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  Future<bool> getAutoLoginValue(AuthenticationState authData) async {
+    String? userAutoLogin = await UserSecureStorage.getAutoLogin();
+
+    if (userAutoLogin != null && userAutoLogin == 'true') {
+      if (authData.loginState == ApplicationLoginState.loggedIn) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Widget getInitScreen(isLoggedIn) {
+    return const LoginScreen();
+    if (isLoggedIn == true) {
+      return const HomePage();
+    }
+    return const LoginScreen();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) {
-        return Consumer2<ThemeNotifier, LocaleData>(
-          builder: (context, theme, localeProv, child) => FutureBuilder(
-            future: loadLocale(),
-            builder: (context, snapshot) {
-              return MaterialApp(
-                  builder: (context, _) {
-                    var child = _!;
-                    return child;
-                  },
-                  theme: theme.getTheme(),
-                  home: const MyHomePage(),
-                  locale: localeProv.locale,
-                  supportedLocales: supportedLocale,
-                  localizationsDelegates: const [
-                    AppLocalizationsDelegate(),
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  localeResolutionCallback: (locale, supportedLocales) {
-                    for (var supportedLocale in supportedLocales) {
-                      if (supportedLocale.languageCode == locale?.languageCode &&
-                          supportedLocale.countryCode == locale?.countryCode) {
-                        return supportedLocale;
-                      }
-                    }
-                    return supportedLocales.first;
-                  });
-            },
-          ),
+    return FutureBuilder(
+      future: _fbApp,
+      builder: (context, appLoad) {
+        if (appLoad.hasError) {
+          return Center(
+            child: Text(
+              Languages.of(context)!.wentWrong,
+            ),
+          );
+        }
+        if (appLoad.hasData) {
+          return Consumer2<ThemeNotifier, LocaleData>(
+            builder: (context, theme, localeProv, child) => FutureBuilder(
+              future: loadLocale(),
+              builder: (context, locale) {
+                return Consumer<AuthenticationState>(
+                  builder: (context, authData, _) => Sizer(builder: (context, orientation, deviceType) {
+                    return FutureBuilder(
+                      future: getAutoLoginValue(authData),
+                      builder: (context, auth) {
+                        return MaterialApp(
+                          builder: (context, _) {
+                            var child = _!;
+                            return child;
+                          },
+                          debugShowCheckedModeBanner: false,
+                          theme: theme.getTheme(),
+                          home: getInitScreen(auth.data),
+                          routes: {
+                            '/home': (context) => const HomePage(),
+                            '/loginScreen': (context) => const LoginScreen(),
+                            '/forgetPassword': (context) => const ForgetPasswordScreen(),
+                            // '/resetPassword': (context) => const ResetPasswordScreen(),
+                            '/registerMain': (context) => const RegisterMainScreen(),
+                            '/registerMobile': (context) => const RegisterMobileScreen(),
+                            '/otpConfirmation': (context) => const RegisterOTPScreen(),
+                            // '/registerProfile': (context) => const RegisterProfileScreen(),
+                          },
+                          locale: localeProv.locale,
+                          supportedLocales: supportedLocale,
+                          localizationsDelegates: const [
+                            AppLocalizationsDelegate(),
+                            GlobalMaterialLocalizations.delegate,
+                            GlobalWidgetsLocalizations.delegate,
+                            GlobalCupertinoLocalizations.delegate,
+                          ],
+                          localeResolutionCallback: (locale, supportedLocales) {
+                            for (var supportedLocale in supportedLocales) {
+                              if (supportedLocale.languageCode == locale?.languageCode &&
+                                  supportedLocale.countryCode == locale?.countryCode) {
+                                return supportedLocale;
+                              }
+                            }
+                            return supportedLocales.first;
+                          },
+                        );
+                      },
+                    );
+                  }),
+                );
+              },
+            ),
+          );
+        }
+        return const Center(
+          child: CircularProgressIndicator(),
         );
       },
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      // resizeToAvoidBottomInset: false,
-      // appBar: CustomAppBar(
-      //   customAppBarProps: CustomAppBarProps(
-      //     withSearch: true,
-      //     leadingWidget: EaseInAnimation(
-      //       onTap: () => {
-      //         print(
-      //             "Device Width: ${Device.width}, Device Height: ${Device.height}")
-      //       },
-      //       child: IconTheme(
-      //         data: Theme.of(context).primaryIconTheme,
-      //         child: const Icon(
-      //           Icons.menu,
-      //         ),
-      //       ),
-      //     ),
-      //     customIcon: IconTheme(
-      //       data: Theme.of(context).primaryIconTheme,
-      //       child: const Icon(
-      //         Icons.more_vert,
-      //       ),
-      //     ),
-      //   ),
-      // ),
-      body: SingleChildScrollView(
-        // reverse: true,
-        child: GestureDetector(
-          onTap: () {
-            FocusScopeNode currentFocus = FocusScope.of(context);
-            if (!currentFocus.hasPrimaryFocus) {
-              currentFocus.unfocus();
-            }
-          },
-          child: ConstrainedBox(
-              constraints: BoxConstraints.tightFor(
-                height: Device.screenHeight,
-              ),
-              child: LoginScreen()),
-        ),
-      ),
     );
   }
 }

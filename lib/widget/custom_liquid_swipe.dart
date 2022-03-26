@@ -1,4 +1,4 @@
-import 'package:appointments/data_types.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -49,14 +49,8 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context)
-                          .colorScheme
-                          .primaryContainer
-                          .withOpacity(0.2),
-                      Theme.of(context)
-                          .colorScheme
-                          .primaryContainer
-                          .withOpacity(1),
+                      Theme.of(context).colorScheme.primaryContainer.withOpacity(0.2),
+                      Theme.of(context).colorScheme.primaryContainer.withOpacity(1),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -77,10 +71,7 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                       data[index].title.isNotEmpty
                           ? Text(
                               data[index].title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2
-                                  ?.copyWith(fontSize: rSize(35)),
+                              style: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(35)),
                             )
                           : const SizedBox(),
                       SizedBox(
@@ -89,10 +80,7 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                       data[index].subTitle.isNotEmpty
                           ? Text(
                               data[index].subTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2
-                                  ?.copyWith(fontSize: rSize(25)),
+                              style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: rSize(25)),
                             )
                           : const SizedBox(),
                       SizedBox(
@@ -101,10 +89,7 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                       data[index].description.isNotEmpty
                           ? Text(
                               data[index].description,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle2
-                                  ?.copyWith(fontSize: rSize(15)),
+                              style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: rSize(15)),
                             )
                           : const SizedBox(),
                       SizedBox(
@@ -124,10 +109,8 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                                 spacing: rSize(16),
                                 dotWidth: rSize(16),
                                 dotHeight: rSize(16),
-                                dotColor:
-                                    Theme.of(context).colorScheme.background,
-                                activeDotColor:
-                                    Theme.of(context).colorScheme.primary),
+                                dotColor: Theme.of(context).colorScheme.background,
+                                activeDotColor: Theme.of(context).colorScheme.primary),
                             onDotClicked: (index) {
                               liquidController.jumpToPage(page: index);
                             },
@@ -137,13 +120,11 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                                   customButtonProps: CustomButtonProps(
                                       isPrimary: true,
                                       capitalizeText: false,
-                                      onTap: () => liquidController.jumpToPage(
-                                          page: data.length - 1),
+                                      onTap: () => liquidController.jumpToPage(page: data.length - 1),
                                       text: "Start"))
                               : CustomTextButton(
                                   customTextButtonProps: CustomTextButtonProps(
-                                      onTap: () => liquidController.jumpToPage(
-                                          page: data.length - 1),
+                                      onTap: () => liquidController.jumpToPage(page: data.length - 1),
                                       text: "Skip to End")),
                         ],
                       ),

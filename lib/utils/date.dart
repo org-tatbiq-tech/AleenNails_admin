@@ -1,6 +1,8 @@
 import 'dart:collection';
+
 import 'package:table_calendar/table_calendar.dart';
-import '../data_types.dart';
+
+import 'data_types.dart';
 
 /// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
 final kEvents = LinkedHashMap<DateTime, List<CalendarEvent>>(
@@ -11,8 +13,7 @@ final kEvents = LinkedHashMap<DateTime, List<CalendarEvent>>(
 final _kEventSource = {
   for (var item in List.generate(50, (index) => index))
     DateTime.utc(getFirstDay().year, getFirstDay().month, item * 5):
-        List.generate(item % 4 + 1,
-            (index) => CalendarEvent('CalendarEvent $item | ${index + 1}'))
+        List.generate(item % 4 + 1, (index) => CalendarEvent('CalendarEvent $item | ${index + 1}'))
 }..addAll({
     kToday: [
       CalendarEvent('Today\'s CalendarEvent 1'),
@@ -34,13 +35,11 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
 }
 
 DateTime getFirstDay({int years = 0, int months = 3, int days = 0}) {
-  return DateTime(
-      kToday.year - years, kToday.month - months, kToday.day - days);
+  return DateTime(kToday.year - years, kToday.month - months, kToday.day - days);
 }
 
 DateTime getLastDay({int years = 0, int months = 3, int days = 0}) {
-  return DateTime(
-      kToday.year + years, kToday.month + months, kToday.day + days);
+  return DateTime(kToday.year + years, kToday.month + months, kToday.day + days);
 }
 
 final kToday = DateTime.now();
