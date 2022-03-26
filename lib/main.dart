@@ -11,9 +11,9 @@ import 'package:appointments/screens/register/mobile.dart';
 import 'package:appointments/screens/register/otp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:sizer/sizer.dart';
 
 import 'firebase_options.dart';
 import 'localization/language/languages.dart';
@@ -48,12 +48,30 @@ class StudiosApp extends StatelessWidget {
     return false;
   }
 
-  Widget getInitScreen(isLoggedIn) {
-    return const LoginScreen();
-    if (isLoggedIn == true) {
-      return const HomePage();
-    }
-    return const LoginScreen();
+  Widget getInitScreen(BuildContext context, isLoggedIn) {
+    return SingleChildScrollView(
+      // reverse: true,
+      child: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+          if (!currentFocus.hasPrimaryFocus) {
+            currentFocus.unfocus();
+          }
+        },
+        child: ConstrainedBox(
+          constraints: BoxConstraints.tightFor(
+            height: Device.screenHeight,
+          ),
+          child: LoginScreen(),
+        ),
+      ),
+    );
+
+    // return const LoginScreen();
+    // if (isLoggedIn == true) {
+    //   return const HomePage();
+    // }
+    // return const LoginScreen();
   }
 
   @override
@@ -74,7 +92,7 @@ class StudiosApp extends StatelessWidget {
               future: loadLocale(),
               builder: (context, locale) {
                 return Consumer<AuthenticationState>(
-                  builder: (context, authData, _) => Sizer(builder: (context, orientation, deviceType) {
+                  builder: (context, authData, _) {
                     return FutureBuilder(
                       future: getAutoLoginValue(authData),
                       builder: (context, auth) {
@@ -85,7 +103,7 @@ class StudiosApp extends StatelessWidget {
                           },
                           debugShowCheckedModeBanner: false,
                           theme: theme.getTheme(),
-                          home: getInitScreen(auth.data),
+                          home: getInitScreen(context, auth.data),
                           routes: {
                             '/home': (context) => const HomePage(),
                             '/loginScreen': (context) => const LoginScreen(),
@@ -116,7 +134,7 @@ class StudiosApp extends StatelessWidget {
                         );
                       },
                     );
-                  }),
+                  },
                 );
               },
             ),

@@ -19,6 +19,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   bool _isPasswordVisible = false;
   late Animation _leftContentAnimation;
   late Animation _rightContentAnimation;
@@ -55,6 +57,27 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     _userNameController.dispose();
     _passwordController.dispose();
   }
+
+  /*
+  Future<void> validateAndLogin() async {
+    final form = _formKey.currentState;
+    final authState = Provider.of<AuthenticationState>(context, listen: false);
+    if (form!.validate()) {
+      showLoaderDialog(context);
+      final UserCredential? user = await authState.signInWithEmailAndPassword(
+          emailController.text, passwordController.text, errorCallback);
+      final userData = user?.user;
+      if (userData != null) {
+        if (rememberMeValue) {
+          UserSecureStorage.setAutoLogin('true');
+        } else {
+          UserSecureStorage.deleteAutoLogin();
+        }
+        Navigator.pushReplacementNamed(context, '/home');
+      }
+    }
+  }
+     */
 
   @override
   Widget build(BuildContext context) {
@@ -109,116 +132,119 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   blurRadius: 5,
                 ),
               ]),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconTheme(
-                    data: Theme.of(context).primaryIconTheme,
-                    child: Icon(
-                      FontAwesomeIcons.android,
-                      size: rSize(100),
-                    ),
-                  ),
-                  Wrap(
-                    children: [
-                      Text(
-                        Languages.of(context)!.labelEnterLoginDetails,
-                        style: Theme.of(context).textTheme.subtitle1,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    IconTheme(
+                      data: Theme.of(context).primaryIconTheme,
+                      child: Icon(
+                        FontAwesomeIcons.android,
+                        size: rSize(100),
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: rSize(40),
-                  ),
-                  CustomInputField(
-                    customInputFieldProps: CustomInputFieldProps(
-                      controller: _userNameController,
-                      prefixIcon: IconTheme(
-                        data: Theme.of(context).primaryIconTheme,
-                        child: Icon(
-                          FontAwesomeIcons.userAlt,
-                          size: rSize(20),
+                    ),
+                    Wrap(
+                      children: [
+                        Text(
+                          Languages.of(context)!.labelEnterLoginDetails,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
-                      ),
-                      labelText: Languages.of(context)!.labelUserName,
-                      validator: validateNotEmpty,
+                      ],
                     ),
-                  ),
-                  SizedBox(
-                    height: rSize(20),
-                  ),
-                  CustomInputField(
-                    customInputFieldProps: CustomInputFieldProps(
-                      controller: _passwordController,
-                      isPassword: true,
-                      isPasswordVisible: _isPasswordVisible,
-                      togglePassword: _togglePassword,
-                      labelText: Languages.of(context)!.labelPassword,
-                      prefixIcon: IconTheme(
-                        data: Theme.of(context).primaryIconTheme,
-                        child: Icon(
-                          FontAwesomeIcons.lock,
-                          size: rSize(20),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    CustomInputField(
+                      customInputFieldProps: CustomInputFieldProps(
+                        controller: _userNameController,
+                        prefixIcon: IconTheme(
+                          data: Theme.of(context).primaryIconTheme,
+                          child: Icon(
+                            FontAwesomeIcons.userAlt,
+                            size: rSize(20),
+                          ),
                         ),
+                        labelText: Languages.of(context)!.labelUserName,
+                        validator: validateNotEmpty,
                       ),
-                      validator: validateNotEmpty,
                     ),
-                  ),
-                  SizedBox(
-                    height: rSize(20),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CustomTextButton(
-                          customTextButtonProps: CustomTextButtonProps(
-                        text: Languages.of(context)!.labelForgotPassword,
-                        textColor: Theme.of(context).colorScheme.primary,
-                        fontSize: rSize(16),
-                        onTap: () => {
-                          Navigator.pushNamed(context, '/forgetPassword'),
-                        },
-                      ))
-                    ],
-                  ),
-                  SizedBox(
-                    height: rSize(40),
-                  ),
-                  CustomButton(
-                    customButtonProps: CustomButtonProps(
-                      onTap: () => {showLoaderDialog(context)},
-                      text: Languages.of(context)!.labelLogin,
-                      isPrimary: true,
+                    SizedBox(
+                      height: rSize(20),
                     ),
-                  ),
-                  SizedBox(
-                    height: rSize(20),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        Languages.of(context)!.labelNoAccount,
-                        style: Theme.of(context).textTheme.subtitle1,
+                    CustomInputField(
+                      customInputFieldProps: CustomInputFieldProps(
+                        controller: _passwordController,
+                        isPassword: true,
+                        isPasswordVisible: _isPasswordVisible,
+                        togglePassword: _togglePassword,
+                        labelText: Languages.of(context)!.labelPassword,
+                        prefixIcon: IconTheme(
+                          data: Theme.of(context).primaryIconTheme,
+                          child: Icon(
+                            FontAwesomeIcons.lock,
+                            size: rSize(20),
+                          ),
+                        ),
+                        validator: validateNotEmpty,
                       ),
-                      CustomTextButton(
-                        customTextButtonProps: CustomTextButtonProps(
-                          text: Languages.of(context)!.labelRegisterNow,
+                    ),
+                    SizedBox(
+                      height: rSize(20),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CustomTextButton(
+                            customTextButtonProps: CustomTextButtonProps(
+                          text: Languages.of(context)!.labelForgotPassword,
                           textColor: Theme.of(context).colorScheme.primary,
+                          fontSize: rSize(16),
                           onTap: () => {
-                            Navigator.pushNamed(context, '/register'),
+                            Navigator.pushNamed(context, '/forgetPassword'),
                           },
+                        ))
+                      ],
+                    ),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    CustomButton(
+                      customButtonProps: CustomButtonProps(
+                        onTap: () => {showLoaderDialog(context)},
+                        text: Languages.of(context)!.labelLogin,
+                        isPrimary: true,
+                      ),
+                    ),
+                    SizedBox(
+                      height: rSize(20),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          Languages.of(context)!.labelNoAccount,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
-                      )
-                    ],
-                  ),
-                ],
+                        CustomTextButton(
+                          customTextButtonProps: CustomTextButtonProps(
+                            text: Languages.of(context)!.labelRegisterNow,
+                            textColor: Theme.of(context).colorScheme.primary,
+                            onTap: () => {
+                              Navigator.pushNamed(context, '/register'),
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
