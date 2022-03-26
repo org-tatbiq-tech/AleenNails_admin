@@ -4,15 +4,21 @@ import 'package:flutter/material.dart';
 class CustomIcon extends StatelessWidget {
   final Widget? icon;
   final Color? color;
-  const CustomIcon({Key? key, this.icon, this.color}) : super(key: key);
+  final double containerSize;
+  const CustomIcon({
+    Key? key,
+    this.icon,
+    this.color,
+    this.containerSize = 40,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Color backgroundColor =
         color ?? Theme.of(context).colorScheme.primaryContainer;
     return Container(
-      width: rSize(40),
-      height: rSize(40),
+      width: rSize(containerSize),
+      height: rSize(containerSize),
       decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(

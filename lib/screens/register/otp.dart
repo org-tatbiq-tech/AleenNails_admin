@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:appointments/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -127,7 +128,8 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: const NeverScrollableScrollPhysics(),
+      // physics: const NeverScrollableScrollPhysics(),
+
       child: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -188,7 +190,8 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                   child: Opacity(
                     opacity: _rightContentAnimation.value,
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: rSize(20)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: rSize(20), vertical: rSize(80)),
                       decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.background,
                           boxShadow: [
@@ -203,21 +206,21 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            IconTheme(
-                              data: Theme.of(context).primaryIconTheme,
-                              child: Icon(
-                                FontAwesomeIcons.android,
-                                size: rSize(100),
-                              ),
+                            Image(
+                                image: AssetImage('assets/images/otp.png'),
+                                width: rSize(250),
+                                fit: BoxFit.cover),
+                            SizedBox(
+                              height: rSize(40),
                             ),
                             Wrap(
                               spacing: rSize(5),
                               runSpacing: rSize(15),
-                              alignment: WrapAlignment.start,
-                              runAlignment: WrapAlignment.start,
+                              alignment: WrapAlignment.center,
+                              runAlignment: WrapAlignment.center,
                               children: [
                                 Text(
-                                  'Enter OTP',
+                                  'Verification Code',
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline1
@@ -225,21 +228,24 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                                 ),
                                 Wrap(
                                   spacing: rSize(5),
-                                  runSpacing: rSize(8),
-                                  alignment: WrapAlignment.start,
-                                  runAlignment: WrapAlignment.start,
+                                  runSpacing: rSize(18),
+                                  alignment: WrapAlignment.center,
+                                  runAlignment: WrapAlignment.center,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
                                     Text(
-                                      'A 6 digits code has been sent to ',
+                                      'We have sent the code verification to Your Mobile Number ',
                                       style:
                                           Theme.of(context).textTheme.subtitle1,
+                                      textAlign: TextAlign.center,
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                    Wrap(
+                                      spacing: rSize(5),
+                                      runSpacing: rSize(8),
+                                      alignment: WrapAlignment.center,
+                                      runAlignment: WrapAlignment.center,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          WrapCrossAlignment.center,
                                       children: [
                                         Text(
                                           '0505800955',
@@ -248,9 +254,16 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                                               .headline1
                                               ?.copyWith(fontSize: rSize(16)),
                                         ),
-                                        SizedBox(
-                                          width: rSize(5),
-                                        ),
+                                        // CustomIcon(
+                                        //   containerSize: 30,
+                                        //   icon: IconTheme(
+                                        //       child: Icon(
+                                        //         Icons.edit,
+                                        //         size: rSize(20),
+                                        //       ),
+                                        //       data: Theme.of(context)
+                                        //           .primaryIconTheme),
+                                        // ),
                                         CustomTextButton(
                                             customTextButtonProps:
                                                 CustomTextButtonProps(
@@ -277,6 +290,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                             CustomTextButton(
                                 customTextButtonProps: CustomTextButtonProps(
                               fontSize: rSize(18),
+                              textColor: Theme.of(context).colorScheme.primary,
                               onTap: () => {},
                               text: 'Resend Code',
                             )),
