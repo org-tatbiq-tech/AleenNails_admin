@@ -151,12 +151,12 @@ class _LoginScreenState extends State<LoginScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      IconTheme(
-                        data: Theme.of(context).primaryIconTheme,
-                        child: Icon(
-                          FontAwesomeIcons.android,
-                          size: rSize(100),
-                        ),
+                      Image(
+                          image: AssetImage('assets/images/logo.png'),
+                          width: rSize(250),
+                          fit: BoxFit.cover),
+                      SizedBox(
+                        height: rSize(40),
                       ),
                       Wrap(
                         children: [

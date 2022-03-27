@@ -55,7 +55,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
     errorController!.close();
     _controller.dispose();
     _mobileController.dispose();
-    pinCodeController.dispose();
+    // pinCodeController.dispose();
   }
 
   Widget _buildTextFieldOTP() {
