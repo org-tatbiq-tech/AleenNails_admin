@@ -3,13 +3,13 @@ import 'package:appointments/utils/storage_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Color primary = const Color(0xFF1bc4c9);
-Color secondary = const Color(0xFFc9201b);
-Color primaryWithAlpha1 = const Color(0xFFa3e7e9);
-Color primaryWithAlpha2 = const Color(0xFFd1f3f4);
-Color primaryWithAlpha3 = const Color(0xFFe8f9f9);
-Color primaryFont = const Color(0xFF003334);
-Color primaryFontWithAlpha1 = const Color(0xFF668485);
+Color primary = const Color(0xFFA55CB5);
+Color secondary = const Color(0xFF6cb55c);
+Color primaryWithAlpha1 = const Color(0xFFdbbde1);
+Color primaryWithAlpha2 = const Color(0xFFeddef0);
+Color primaryWithAlpha3 = const Color(0xFFf6eef7);
+Color primaryFont = const Color(0xFF311b36);
+Color primaryFontWithAlpha1 = const Color(0xFF63376c);
 
 class ThemeNotifier with ChangeNotifier {
   /// Dark theme data definition
