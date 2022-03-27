@@ -1,13 +1,17 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/secure_storage.dart';
 import 'package:appointments/utils/validators.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:appointments/widget/custom_loading.dart';
 import 'package:appointments/widget/custom_text_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,9 +21,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
-  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _userEmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _rememberMeValue = false;
 
   bool _isPasswordVisible = false;
   late Animation _leftContentAnimation;
@@ -42,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
     _rightContentAnimation = Tween(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: _controller, curve: const Interval(0.3, 1, curve: Curves.linear)));
-    _userNameController.addListener(() => setState(() {}));
+    _userEmailController.addListener(() => setState(() {}));
     _passwordController.addListener(() => setState(() {}));
     _controller.forward();
     _controller.addListener(() {
@@ -54,21 +59,36 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   void dispose() {
     super.dispose();
     _controller.dispose();
-    _userNameController.dispose();
+    _userEmailController.dispose();
     _passwordController.dispose();
   }
 
-  /*
-  Future<void> validateAndLogin() async {
+  void errorCallback(FirebaseAuthException e) {
+    Navigator.pop(context);
+
+    /// TODO: Add flash
+    // showErrorFlash(
+    //   errorTitle: Languages.of(context)!.error,
+    //   errorBody: e.message.toString(),
+    //   context: context,
+    // );
+  }
+
+  Future<void> validateAndLogin(BuildContext context) async {
+    /// To remove till next //
+    Navigator.pushReplacementNamed(context, '/home');
+    return;
+
+    ///
     final form = _formKey.currentState;
     final authState = Provider.of<AuthenticationState>(context, listen: false);
     if (form!.validate()) {
       showLoaderDialog(context);
       final UserCredential? user = await authState.signInWithEmailAndPassword(
-          emailController.text, passwordController.text, errorCallback);
+          _userEmailController.text, _passwordController.text, errorCallback);
       final userData = user?.user;
       if (userData != null) {
-        if (rememberMeValue) {
+        if (_rememberMeValue) {
           UserSecureStorage.setAutoLogin('true');
         } else {
           UserSecureStorage.deleteAutoLogin();
@@ -77,7 +97,38 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       }
     }
   }
-     */
+
+  Widget _buildRememberCheckBox() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 10,
+          child: Transform.scale(
+            scale: 1,
+            child: Checkbox(
+                materialTapTargetSize: MaterialTapTargetSize.padded,
+                value: _rememberMeValue,
+                onChanged: (newValue) {
+                  setState(() {
+                    _rememberMeValue = newValue!;
+                  });
+                },
+                checkColor: Theme.of(context).colorScheme.onBackground,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+                splashRadius: 0,
+                side: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                activeColor: Theme.of(context).colorScheme.secondary),
+          ),
+        ),
+        Text(
+          Languages.of(context)!.labelRememberMe,
+          style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 12),
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     ),
                     CustomInputField(
                       customInputFieldProps: CustomInputFieldProps(
-                        controller: _userNameController,
+                        controller: _userEmailController,
                         prefixIcon: IconTheme(
                           data: Theme.of(context).primaryIconTheme,
                           child: Icon(
@@ -240,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                               Navigator.pushNamed(context, '/register'),
                             },
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ],

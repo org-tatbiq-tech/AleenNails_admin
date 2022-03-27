@@ -9,6 +9,7 @@ import 'package:appointments/screens/login/login.dart';
 import 'package:appointments/screens/register/main.dart';
 import 'package:appointments/screens/register/mobile.dart';
 import 'package:appointments/screens/register/otp.dart';
+import 'package:appointments/utils/secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
@@ -42,8 +43,12 @@ class StudiosApp extends StatelessWidget {
   );
 
   Future<bool> getAutoLoginValue(AuthenticationState authData) async {
-    if (authData.loginState == ApplicationLoginState.loggedIn) {
-      return true;
+    String? userAutoLogin = await UserSecureStorage.getAutoLogin();
+
+    if (userAutoLogin != null && userAutoLogin == 'true') {
+      if (authData.loginState == ApplicationLoginState.loggedIn) {
+        return true;
+      }
     }
     return false;
   }
