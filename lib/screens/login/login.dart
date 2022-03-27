@@ -6,6 +6,7 @@ import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:appointments/widget/custom_loading.dart';
 import 'package:appointments/widget/custom_text_button.dart';
+import 'package:appointments/widget/custom_container.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -16,7 +17,8 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -35,13 +37,17 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1500));
 
-    _leftContentAnimation = Tween(begin: 0.0, end: 100)
-        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0, 0.3, curve: Curves.linear)));
+    _leftContentAnimation = Tween(begin: 0.0, end: 100).animate(CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0, 0.3, curve: Curves.linear)));
 
-    _rightContentAnimation = Tween(begin: 0.0, end: 1.0)
-        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0.3, 1, curve: Curves.linear)));
+    _rightContentAnimation = Tween(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.3, 1, curve: Curves.linear)));
     _userNameController.addListener(() => setState(() {}));
     _passwordController.addListener(() => setState(() {}));
     _controller.forward();
@@ -81,175 +87,182 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: rSize(_leftContentAnimation.value.toDouble()),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              tileMode: TileMode.decal,
-              colors: [
-                Theme.of(context).colorScheme.primaryContainer,
-                Theme.of(context).colorScheme.onBackground,
+    return CustomContainer(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: rSize(_leftContentAnimation.value.toDouble()),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                tileMode: TileMode.decal,
+                colors: [
+                  Theme.of(context).colorScheme.primaryContainer,
+                  Theme.of(context).colorScheme.onBackground,
+                ],
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                RotatedBox(
+                  quarterTurns: -1,
+                  child: Text(
+                    Languages.of(context)!.labelLogin,
+                    style: Theme.of(context).textTheme.headline2?.copyWith(
+                        fontSize: rSize(50),
+                        letterSpacing: rSize(50),
+                        shadows: [
+                          BoxShadow(
+                              offset: const Offset(4, 4),
+                              spreadRadius: 1,
+                              color: Theme.of(context).shadowColor)
+                        ],
+                        color: Theme.of(context).colorScheme.primary),
+                  ),
+                ),
               ],
             ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              RotatedBox(
-                quarterTurns: -1,
-                child: Text(
-                  Languages.of(context)!.labelLogin,
-                  style: Theme.of(context).textTheme.headline2?.copyWith(
-                      fontSize: rSize(50),
-                      letterSpacing: rSize(50),
-                      shadows: [
-                        BoxShadow(offset: const Offset(4, 4), spreadRadius: 1, color: Theme.of(context).shadowColor)
-                      ],
-                      color: Theme.of(context).colorScheme.primary),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Opacity(
-            opacity: _rightContentAnimation.value,
+          Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-              decoration: BoxDecoration(color: Theme.of(context).colorScheme.background, boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).shadowColor,
-                  offset: const Offset(0, 0),
-                  blurRadius: 5,
-                ),
-              ]),
+              decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).shadowColor,
+                      offset: const Offset(0, 0),
+                      blurRadius: 5,
+                    ),
+                  ]),
               child: Form(
                 key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconTheme(
-                      data: Theme.of(context).primaryIconTheme,
-                      child: Icon(
-                        FontAwesomeIcons.android,
-                        size: rSize(100),
-                      ),
-                    ),
-                    Wrap(
-                      children: [
-                        Text(
-                          Languages.of(context)!.labelEnterLoginDetails,
-                          style: Theme.of(context).textTheme.subtitle1,
+                child: Opacity(
+                  opacity: _rightContentAnimation.value,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconTheme(
+                        data: Theme.of(context).primaryIconTheme,
+                        child: Icon(
+                          FontAwesomeIcons.android,
+                          size: rSize(100),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    CustomInputField(
-                      customInputFieldProps: CustomInputFieldProps(
-                        controller: _userNameController,
-                        prefixIcon: IconTheme(
-                          data: Theme.of(context).primaryIconTheme,
-                          child: Icon(
-                            FontAwesomeIcons.userAlt,
-                            size: rSize(20),
+                      ),
+                      Wrap(
+                        children: [
+                          Text(
+                            Languages.of(context)!.labelEnterLoginDetails,
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
-                        ),
-                        labelText: Languages.of(context)!.labelUserName,
-                        validator: validateNotEmpty,
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      height: rSize(20),
-                    ),
-                    CustomInputField(
-                      customInputFieldProps: CustomInputFieldProps(
-                        controller: _passwordController,
-                        isPassword: true,
-                        isPasswordVisible: _isPasswordVisible,
-                        togglePassword: _togglePassword,
-                        labelText: Languages.of(context)!.labelPassword,
-                        prefixIcon: IconTheme(
-                          data: Theme.of(context).primaryIconTheme,
-                          child: Icon(
-                            FontAwesomeIcons.lock,
-                            size: rSize(20),
+                      SizedBox(
+                        height: rSize(40),
+                      ),
+                      CustomInputField(
+                        customInputFieldProps: CustomInputFieldProps(
+                          controller: _userNameController,
+                          prefixIcon: IconTheme(
+                            data: Theme.of(context).primaryIconTheme,
+                            child: Icon(
+                              FontAwesomeIcons.userAlt,
+                              size: rSize(20),
+                            ),
                           ),
+                          labelText: Languages.of(context)!.labelUserName,
+                          validator: validateNotEmpty,
                         ),
-                        validator: validateNotEmpty,
                       ),
-                    ),
-                    SizedBox(
-                      height: rSize(20),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CustomTextButton(
-                            customTextButtonProps: CustomTextButtonProps(
-                          text: Languages.of(context)!.labelForgotPassword,
-                          textColor: Theme.of(context).colorScheme.primary,
-                          fontSize: rSize(16),
-                          onTap: () => {
-                            Navigator.pushNamed(context, '/forgetPassword'),
-                          },
-                        ))
-                      ],
-                    ),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    CustomButton(
-                      customButtonProps: CustomButtonProps(
-                        onTap: () => {showLoaderDialog(context)},
-                        text: Languages.of(context)!.labelLogin,
-                        isPrimary: true,
+                      SizedBox(
+                        height: rSize(20),
                       ),
-                    ),
-                    SizedBox(
-                      height: rSize(20),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          Languages.of(context)!.labelNoAccount,
-                          style: Theme.of(context).textTheme.subtitle1,
+                      CustomInputField(
+                        customInputFieldProps: CustomInputFieldProps(
+                          controller: _passwordController,
+                          isPassword: true,
+                          isPasswordVisible: _isPasswordVisible,
+                          togglePassword: _togglePassword,
+                          labelText: Languages.of(context)!.labelPassword,
+                          prefixIcon: IconTheme(
+                            data: Theme.of(context).primaryIconTheme,
+                            child: Icon(
+                              FontAwesomeIcons.lock,
+                              size: rSize(20),
+                            ),
+                          ),
+                          validator: validateNotEmpty,
                         ),
-                        CustomTextButton(
-                          customTextButtonProps: CustomTextButtonProps(
-                            text: Languages.of(context)!.labelRegisterNow,
+                      ),
+                      SizedBox(
+                        height: rSize(20),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CustomTextButton(
+                              customTextButtonProps: CustomTextButtonProps(
+                            text: Languages.of(context)!.labelForgotPassword,
                             textColor: Theme.of(context).colorScheme.primary,
+                            fontSize: rSize(16),
                             onTap: () => {
-                              Navigator.pushNamed(context, '/register'),
+                              Navigator.pushNamed(context, '/forgetPassword'),
                             },
+                          ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: rSize(40),
+                      ),
+                      CustomButton(
+                        customButtonProps: CustomButtonProps(
+                          onTap: () => {showLoaderDialog(context)},
+                          text: Languages.of(context)!.labelLogin,
+                          isPrimary: true,
+                        ),
+                      ),
+                      SizedBox(
+                        height: rSize(20),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            Languages.of(context)!.labelNoAccount,
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
-                        )
-                      ],
-                    ),
-                  ],
+                          CustomTextButton(
+                            customTextButtonProps: CustomTextButtonProps(
+                              text: Languages.of(context)!.labelRegisterNow,
+                              textColor: Theme.of(context).colorScheme.primary,
+                              onTap: () => {
+                                Navigator.pushNamed(context, '/register'),
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
