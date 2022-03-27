@@ -11,7 +11,6 @@ import 'package:appointments/screens/register/mobile.dart';
 import 'package:appointments/screens/register/otp.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +25,8 @@ void main() {
       providers: [
         ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider<LocaleData>(create: (_) => LocaleData()),
-        ChangeNotifierProvider<AuthenticationState>(create: (_) => AuthenticationState())
+        ChangeNotifierProvider<AuthenticationState>(
+            create: (_) => AuthenticationState())
       ],
       child: StudiosApp(),
     ),
@@ -49,25 +49,7 @@ class StudiosApp extends StatelessWidget {
   }
 
   Widget getInitScreen(BuildContext context, isLoggedIn) {
-    return SingleChildScrollView(
-      // reverse: true,
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-          if (!currentFocus.hasPrimaryFocus) {
-            currentFocus.unfocus();
-          }
-        },
-        child: ConstrainedBox(
-          constraints: BoxConstraints.tightFor(
-            height: Device.screenHeight,
-          ),
-          child: LoginScreen(),
-        ),
-      ),
-    );
-
-    // return const LoginScreen();
+    return const LoginScreen();
     // if (isLoggedIn == true) {
     //   return const HomePage();
     // }
@@ -107,11 +89,15 @@ class StudiosApp extends StatelessWidget {
                           routes: {
                             '/home': (context) => const HomePage(),
                             '/loginScreen': (context) => const LoginScreen(),
-                            '/forgetPassword': (context) => const ForgetPasswordScreen(),
+                            '/forgetPassword': (context) =>
+                                const ForgetPasswordScreen(),
                             // '/resetPassword': (context) => const ResetPasswordScreen(),
-                            '/register': (context) => const RegisterMainScreen(),
-                            '/register/registerMobile': (context) => const RegisterMobileScreen(),
-                            '/register/otpConfirmation': (context) => const RegisterOTPScreen(),
+                            '/register': (context) =>
+                                const RegisterMainScreen(),
+                            '/register/registerMobile': (context) =>
+                                const RegisterMobileScreen(),
+                            '/register/otpConfirmation': (context) =>
+                                const RegisterOTPScreen(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,
@@ -124,8 +110,10 @@ class StudiosApp extends StatelessWidget {
                           ],
                           localeResolutionCallback: (locale, supportedLocales) {
                             for (var supportedLocale in supportedLocales) {
-                              if (supportedLocale.languageCode == locale?.languageCode &&
-                                  supportedLocale.countryCode == locale?.countryCode) {
+                              if (supportedLocale.languageCode ==
+                                      locale?.languageCode &&
+                                  supportedLocale.countryCode ==
+                                      locale?.countryCode) {
                                 return supportedLocale;
                               }
                             }
