@@ -57,6 +57,14 @@ class ThemeNotifier with ChangeNotifier {
       appBarTheme: AppBarTheme(
         backgroundColor: primaryWithAlpha2,
       ),
+      bottomAppBarTheme: BottomAppBarTheme(
+        color: primaryWithAlpha2,
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: primaryWithAlpha1,
+        foregroundColor: primary,
+        splashColor: Colors.transparent,
+      ),
       textTheme: TextTheme(
         button: TextStyle(
             color: primaryFont,

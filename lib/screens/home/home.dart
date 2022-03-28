@@ -1,4 +1,8 @@
 import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_event_calendar.dart';
+import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
 import '../../widget/custom_modal.dart';
@@ -14,8 +18,10 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  bool clickedCentreFAB = false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex = 0; //to handle which item is currently selected in the bottom app bar
+  bool clickedCentreFAB =
+      false; //boolean used to handle container animation which expands from the FAB
+  int selectedIndex =
+      0; //to handle which item is currently selected in the bottom app bar
   String text = "Home";
 
   //call this method on click of each bottom app bar item to update the screen
@@ -29,35 +35,37 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        customAppBarProps: CustomAppBarProps(withSearch: true),
+      ),
       body: Stack(
         children: <Widget>[
-          Align(
-            alignment: FractionalOffset.center,
-            //in this demo, only the button text is updated based on the bottom app bar clicks
-            child: RaisedButton(
-              child: Text(text),
-              onPressed: () {},
-            ),
-          ),
+          CustomEventCalendar(),
           //this is the code for the widget container that comes from behind the floating action button (FAB)
           Align(
             alignment: FractionalOffset.bottomCenter,
             child: AnimatedContainer(
               duration: Duration(milliseconds: 250),
               //if clickedCentreFAB == true, the first parameter is used. If it's false, the second.
-              height: clickedCentreFAB ? MediaQuery.of(context).size.height : 0.0,
+              height:
+                  clickedCentreFAB ? MediaQuery.of(context).size.height : 0.0,
               width: clickedCentreFAB ? MediaQuery.of(context).size.height : 0,
-              decoration:
-                  BoxDecoration(borderRadius: BorderRadius.circular(clickedCentreFAB ? 0.0 : 300.0), color: Colors.red),
+              decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(clickedCentreFAB ? 0.0 : 350.0),
+                  color: Colors.red),
             ),
           )
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, //specify the location of the FAB
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showBottomModal(
-            BottomModalProps(context: context, child: (Text('dasjdsakjlkjdaskjdalkjdak')), title: 'Modal Title'),
+            BottomModalProps(
+                context: context,
+                child: (Text('dasjdsakjlkjdaskjdalkjdak')),
+                title: 'Modal Title'),
           );
         },
         // tooltip: "Centre FAB",
@@ -73,60 +81,62 @@ class HomePageState extends State<HomePage> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              IconButton(
-                //update the bottom app bar view each time an item is clicked
-                onPressed: () {
+            children: [
+              EaseInAnimation(
+                onTap: () {
                   updateTabSelection(0, "Home");
                 },
-                iconSize: 27.0,
-                icon: Icon(
+                child: Icon(
                   Icons.home,
-                  //darken the icon if it is selected or else give it a different color
-                  color: selectedIndex == 0 ? Colors.blue.shade900 : Colors.grey.shade400,
+                  size: rSize(40),
+                  color: selectedIndex == 0
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.primary,
                 ),
               ),
-              IconButton(
-                onPressed: () {
+              EaseInAnimation(
+                onTap: () {
                   updateTabSelection(1, "Outgoing");
                 },
-                iconSize: 27.0,
-                icon: Icon(
-                  Icons.call_made,
-                  color: selectedIndex == 1 ? Colors.blue.shade900 : Colors.grey.shade400,
+                child: Icon(
+                  Icons.report,
+                  size: rSize(40),
+                  color: selectedIndex == 1
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.primary,
                 ),
               ),
-              //to leave space in between the bottom app bar items and below the FAB
               SizedBox(
-                width: 50.0,
+                width: rSize(80),
               ),
-              IconButton(
-                onPressed: () {
+              EaseInAnimation(
+                onTap: () {
                   updateTabSelection(2, "Incoming");
                 },
-                iconSize: 27.0,
-                icon: Icon(
-                  Icons.call_received,
-                  color: selectedIndex == 2 ? Colors.blue.shade900 : Colors.grey.shade400,
+                child: Icon(
+                  Icons.person,
+                  size: rSize(40),
+                  color: selectedIndex == 2
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.primary,
                 ),
               ),
-              IconButton(
-                onPressed: () {
+              EaseInAnimation(
+                onTap: () {
                   updateTabSelection(3, "Settings");
                 },
-                iconSize: 27.0,
-                icon: Icon(
-                  Icons.settings,
-                  color: selectedIndex == 3 ? Colors.blue.shade900 : Colors.grey.shade400,
+                child: Icon(
+                  Icons.home,
+                  size: rSize(40),
+                  color: selectedIndex == 3
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.primary,
                 ),
               ),
             ],
           ),
         ),
-        //to add a space between the FAB and BottomAppBar
-        shape: CircularNotchedRectangle(),
-        //color of the BottomAppBar
-        color: Colors.white,
+        shape: const CircularNotchedRectangle(),
       ),
     );
   }
