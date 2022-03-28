@@ -3,7 +3,7 @@ import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/theme_provider.dart';
-import 'package:appointments/screens/home/home.dart';
+import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
 import 'package:appointments/screens/register/main.dart';
@@ -26,8 +26,7 @@ void main() {
       providers: [
         ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider<LocaleData>(create: (_) => LocaleData()),
-        ChangeNotifierProvider<AuthenticationState>(
-            create: (_) => AuthenticationState())
+        ChangeNotifierProvider<AuthenticationState>(create: (_) => AuthenticationState())
       ],
       child: StudiosApp(),
     ),
@@ -92,17 +91,14 @@ class StudiosApp extends StatelessWidget {
                           theme: theme.getTheme(),
                           home: getInitScreen(context, auth.data),
                           routes: {
-                            '/home': (context) => const HomePage(),
+                            '/home': (context) => const HomeScreen(),
+                            // '/home/timeline': (context) => const TimeLine(),
                             '/loginScreen': (context) => const LoginScreen(),
-                            '/forgetPassword': (context) =>
-                                const ForgetPasswordScreen(),
+                            '/forgetPassword': (context) => const ForgetPasswordScreen(),
                             // '/resetPassword': (context) => const ResetPasswordScreen(),
-                            '/register': (context) =>
-                                const RegisterMainScreen(),
-                            '/register/registerMobile': (context) =>
-                                const RegisterMobileScreen(),
-                            '/register/otpConfirmation': (context) =>
-                                const RegisterOTPScreen(),
+                            '/register': (context) => const RegisterMainScreen(),
+                            '/register/registerMobile': (context) => const RegisterMobileScreen(),
+                            '/register/otpConfirmation': (context) => const RegisterOTPScreen(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,
@@ -115,10 +111,8 @@ class StudiosApp extends StatelessWidget {
                           ],
                           localeResolutionCallback: (locale, supportedLocales) {
                             for (var supportedLocale in supportedLocales) {
-                              if (supportedLocale.languageCode ==
-                                      locale?.languageCode &&
-                                  supportedLocale.countryCode ==
-                                      locale?.countryCode) {
+                              if (supportedLocale.languageCode == locale?.languageCode &&
+                                  supportedLocale.countryCode == locale?.countryCode) {
                                 return supportedLocale;
                               }
                             }

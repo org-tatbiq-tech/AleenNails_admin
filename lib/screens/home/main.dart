@@ -1,36 +1,26 @@
+import 'package:appointments/screens/home/timeline.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_event_calendar.dart';
+import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
-import '../../widget/custom_modal.dart';
-
-//class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() {
-    return HomePageState();
-  }
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class HomePageState extends State<HomePage> {
-  bool clickedCentreFAB =
-      false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex =
-      0; //to handle which item is currently selected in the bottom app bar
-  String text = "Home";
-
-  //call this method on click of each bottom app bar item to update the screen
-  void updateTabSelection(int index, String buttonText) {
-    setState(() {
-      selectedIndex = index;
-      text = buttonText;
-    });
-  }
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedPage = 0;
+  final screens = [
+    TimeLine(),
+    TimeLine(),
+    TimeLine(),
+    TimeLine(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,34 +28,12 @@ class HomePageState extends State<HomePage> {
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(withSearch: true),
       ),
-      body: Stack(
-        children: <Widget>[
-          CustomEventCalendar(),
-          //this is the code for the widget container that comes from behind the floating action button (FAB)
-          Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 250),
-              //if clickedCentreFAB == true, the first parameter is used. If it's false, the second.
-              height:
-                  clickedCentreFAB ? MediaQuery.of(context).size.height : 0.0,
-              width: clickedCentreFAB ? MediaQuery.of(context).size.height : 0,
-              decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(clickedCentreFAB ? 0.0 : 350.0),
-                  color: Colors.red),
-            ),
-          )
-        ],
-      ),
+      body: screens[_selectedPage],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showBottomModal(
-            BottomModalProps(
-                context: context,
-                child: (Text('dasjdsakjlkjdaskjdalkjdak')),
-                title: 'Modal Title'),
+            BottomModalProps(context: context, child: (Text('dasjdsakjlkjdaskjdalkjdak')), title: 'Modal Title'),
           );
         },
         // tooltip: "Centre FAB",
@@ -84,24 +52,28 @@ class HomePageState extends State<HomePage> {
             children: [
               EaseInAnimation(
                 onTap: () {
-                  updateTabSelection(0, "Home");
+                  setState(() {
+                    _selectedPage = 0;
+                  });
                 },
                 child: Icon(
                   Icons.home,
                   size: rSize(40),
-                  color: selectedIndex == 0
+                  color: _selectedPage == 0
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
                 ),
               ),
               EaseInAnimation(
                 onTap: () {
-                  updateTabSelection(1, "Outgoing");
+                  setState(() {
+                    _selectedPage = 1;
+                  });
                 },
                 child: Icon(
                   Icons.report,
                   size: rSize(40),
-                  color: selectedIndex == 1
+                  color: _selectedPage == 1
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
                 ),
@@ -111,24 +83,28 @@ class HomePageState extends State<HomePage> {
               ),
               EaseInAnimation(
                 onTap: () {
-                  updateTabSelection(2, "Incoming");
+                  setState(() {
+                    _selectedPage = 2;
+                  });
                 },
                 child: Icon(
                   Icons.person,
                   size: rSize(40),
-                  color: selectedIndex == 2
+                  color: _selectedPage == 2
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
                 ),
               ),
               EaseInAnimation(
                 onTap: () {
-                  updateTabSelection(3, "Settings");
+                  setState(() {
+                    _selectedPage = 3;
+                  });
                 },
                 child: Icon(
                   Icons.home,
                   size: rSize(40),
-                  color: selectedIndex == 3
+                  color: _selectedPage == 3
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
                 ),
