@@ -126,6 +126,8 @@ abstract class Languages {
 
   String get labelCourseAttendees;
 
+  String get labelCourseGuide;
+
   /// ************ Contact details ************///
   String get contactDetails;
 
