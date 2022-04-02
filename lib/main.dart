@@ -3,6 +3,7 @@ import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/theme_provider.dart';
+import 'package:appointments/screens/home/courses/course_details.dart';
 import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
@@ -92,7 +93,7 @@ class StudiosApp extends StatelessWidget {
                           home: getInitScreen(context, auth.data),
                           routes: {
                             '/home': (context) => const HomeScreen(),
-                            // '/home/timeline': (context) => const TimeLine(),
+                            '/home/courseDetails': (context) => const CourseDetails(),
                             '/loginScreen': (context) => const LoginScreen(),
                             '/forgetPassword': (context) => const ForgetPasswordScreen(),
                             // '/resetPassword': (context) => const ResetPasswordScreen(),

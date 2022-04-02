@@ -116,4 +116,9 @@ abstract class Languages {
   String get emptyContact;
 
   String get emptyAddress;
+
+  /// ************ Course details ************///
+  String get courseDetails;
+
+  String get labelCourseName;
 }

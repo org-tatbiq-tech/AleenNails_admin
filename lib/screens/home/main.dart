@@ -1,3 +1,6 @@
+import 'package:appointments/screens/home/contacts.dart';
+import 'package:appointments/screens/home/profile.dart';
+import 'package:appointments/screens/home/statistics.dart';
 import 'package:appointments/screens/home/timeline.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
@@ -5,6 +8,7 @@ import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,9 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedPage = 0;
   final screens = [
     TimeLine(),
-    TimeLine(),
-    TimeLine(),
-    TimeLine(),
+    Contacts(),
+    Statistics(),
+    Profile(),
   ];
 
   @override
@@ -71,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 child: Icon(
-                  Icons.report,
+                  FontAwesomeIcons.addressBook,
                   size: rSize(40),
                   color: _selectedPage == 1
                       ? Theme.of(context).colorScheme.secondary
@@ -88,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 child: Icon(
-                  Icons.person,
+                  Icons.analytics,
                   size: rSize(40),
                   color: _selectedPage == 2
                       ? Theme.of(context).colorScheme.secondary
@@ -102,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 child: Icon(
-                  Icons.home,
+                  Icons.person,
                   size: rSize(40),
                   color: _selectedPage == 3
                       ? Theme.of(context).colorScheme.secondary

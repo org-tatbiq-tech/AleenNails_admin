@@ -1,10 +1,9 @@
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
-import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/calendar_view/flutter_week_view.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../utils/data_types.dart';
-import '../utils/layout.dart';
 
 class CustomEventCalendar extends StatefulWidget {
   const CustomEventCalendar({Key? key}) : super(key: key);
@@ -46,6 +45,49 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
+
+  List<FlutterWeekViewEvent> getCourses(BuildContext context) {
+    // return courses[_selectedDay]!;
+    DateTime now = DateTime.now();
+    DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+
+    Map<String, List<FlutterWeekViewEvent>> courses = {
+      'day1': [
+        FlutterWeekViewEvent(
+          title: 'An event 2',
+          description: 'A description 2',
+          start: date.add(Duration(hours: 19)),
+          end: date.add(Duration(hours: 22)),
+          onTap: () => print("Hello 2"),
+        ),
+        FlutterWeekViewEvent(
+          title: 'An event 3',
+          description: 'A description 3',
+          start: date.add(Duration(hours: 23, minutes: 30)),
+          end: date.add(Duration(hours: 24)),
+          onTap: () => print("Hello 3"),
+        ),
+        FlutterWeekViewEvent(
+          title: 'An event 4',
+          description: 'A description 433',
+          start: date.add(Duration(hours: 17)),
+          end: date.add(Duration(hours: 18, minutes: 30)),
+          onTap: () => print("Hello 4"),
+        ),
+        FlutterWeekViewEvent(
+          title: 'An event 5',
+          description: 'A description 5',
+          start: date.add(Duration(hours: 20)),
+          end: date.add(Duration(hours: 21)),
+          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+        ),
+      ],
+    };
+    return courses['day1']!.toList();
+  }
+
+  DateTime now = DateTime.now();
+  DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   @override
   Widget build(BuildContext context) {
@@ -149,31 +191,18 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
           ),
           Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(0, rSize(20), 0, 0),
-              child: ValueListenableBuilder<List<CalendarEvent>>(
-                valueListenable: _selectedEvents,
-                builder: (context, value, _) {
-                  return ListView.builder(
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
-                      return EaseInAnimation(
-                        beginAnimation: 0.98,
-                        onTap: () => {print('object')},
-                        child: Card(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(rSize(5))),
-                          margin: EdgeInsets.symmetric(
-                            horizontal: rSize(15),
-                            vertical: rSize(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: rSize(8), vertical: rSize(16)),
-                            child: Text('${value[index]}'),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                },
+              padding: EdgeInsets.fromLTRB(0, rSize(5), 0, 0),
+              child: DayView(
+                initialTime: const HourMinute(hour: 7),
+                minimumTime: const HourMinute(hour: 5),
+                maximumTime: const HourMinute(hour: 24),
+                userZoomable: true,
+                date: now,
+                events: getCourses(context),
+                // style: DayViewStyle.fromDate(
+                //   date: now,
+                //   currentTimeCircleColor: Colors.black,
+                // ),
               ),
             ),
           ),

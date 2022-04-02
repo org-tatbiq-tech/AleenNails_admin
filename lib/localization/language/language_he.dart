@@ -161,4 +161,11 @@ class LanguageHe extends Languages {
 
   @override
   String get emptyAddress => 'הכתובת לא יכולה להיות ריקה!';
+
+  /// ************ Course details ************///
+  @override
+  String get courseDetails => "Course details";
+
+  @override
+  String get labelCourseName => "Course name";
 }

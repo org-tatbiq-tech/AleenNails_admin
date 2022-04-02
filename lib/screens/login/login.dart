@@ -178,13 +178,16 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
           Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-              decoration: BoxDecoration(color: Theme.of(context).colorScheme.background, boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).shadowColor,
-                  offset: const Offset(0, 0),
-                  blurRadius: 5,
-                ),
-              ]),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.background,
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).shadowColor,
+                    offset: const Offset(0, 0),
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
               child: Form(
                 key: _formKey,
                 child: Opacity(

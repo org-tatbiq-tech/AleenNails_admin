@@ -161,4 +161,11 @@ class LanguageAr extends Languages {
 
   @override
   String get emptyAddress => 'لا يمكن أن يكون العنوان فارغًا!';
+
+  /// ************ Course details ************///
+  @override
+  String get courseDetails => "Course details";
+
+  @override
+  String get labelCourseName => "Course name";
 }
