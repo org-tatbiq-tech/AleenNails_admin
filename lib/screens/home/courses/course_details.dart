@@ -50,6 +50,66 @@ class _CourseDetailsState extends State<CourseDetails> {
     );
   }
 
+  Widget _getCourseID(BuildContext context, Course course) {
+    return Wrap(
+      children: [
+        Icon(
+          FontAwesomeIcons.idCard,
+          color: Theme.of(context).colorScheme.secondary,
+          size: rSize(22),
+        ),
+        Wrap(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+              child: Text(
+                Languages.of(context)!.labelCourseName + ':',
+                style: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(25)),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+              child: Text(
+                course.courseName,
+                style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(22)),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _getCourseAttendees(BuildContext context, Course course) {
+    return Wrap(
+      children: [
+        Icon(
+          Icons.numbers,
+          color: Theme.of(context).colorScheme.secondary,
+          size: rSize(22),
+        ),
+        Wrap(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+              child: Text(
+                Languages.of(context)!.labelCourseAttendees + ':',
+                style: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(25)),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+              child: Text(
+                course.attendees.toString(),
+                style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(22)),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget buildMainUI() {
     return CustomContainer(
       child: Container(
@@ -70,6 +130,9 @@ class _CourseDetailsState extends State<CourseDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
+              SizedBox(
+                height: rSize(20),
+              ),
               Wrap(
                 children: [
                   Text(
@@ -80,10 +143,15 @@ class _CourseDetailsState extends State<CourseDetails> {
               ),
               _getCourseName(context, tempCourse),
               SizedBox(
-                height: 2,
+                height: rSize(20),
               ),
+              _getCourseID(context, tempCourse),
               SizedBox(
-                height: 2,
+                height: rSize(20),
+              ),
+              _getCourseAttendees(context, tempCourse),
+              SizedBox(
+                height: rSize(20),
               )
             ],
           ),

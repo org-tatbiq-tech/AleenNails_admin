@@ -47,32 +47,36 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
   }
 
   List<FlutterWeekViewEvent> getCourses(BuildContext context) {
+    print(_focusedDay);
     // return courses[_selectedDay]!;
     DateTime now = DateTime.now();
     DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-
+    var day = 'day1';
+    if (_focusedDay.day % 2 == 0) {
+      day = 'day2';
+    }
     Map<String, List<FlutterWeekViewEvent>> courses = {
       'day1': [
         FlutterWeekViewEvent(
-          title: 'An event 2',
-          description: 'A description 2',
+          title: 'Course 1',
+          description: 'A description 1',
           start: date.add(Duration(hours: 19)),
           end: date.add(Duration(hours: 22)),
-          onTap: () => print("Hello 2"),
+          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
         FlutterWeekViewEvent(
-          title: 'An event 3',
-          description: 'A description 3',
+          title: 'Course 2',
+          description: 'A description 2',
           start: date.add(Duration(hours: 23, minutes: 30)),
           end: date.add(Duration(hours: 24)),
-          onTap: () => print("Hello 3"),
+          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
         FlutterWeekViewEvent(
-          title: 'An event 4',
-          description: 'A description 433',
+          title: 'Course 3',
+          description: 'A description 3',
           start: date.add(Duration(hours: 17)),
           end: date.add(Duration(hours: 18, minutes: 30)),
-          onTap: () => print("Hello 4"),
+          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
         FlutterWeekViewEvent(
           title: 'An event 5',
@@ -82,8 +86,38 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
           onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
       ],
+      'day2': [
+        FlutterWeekViewEvent(
+          title: 'Course 5',
+          description: 'A description 5',
+          start: date.add(Duration(hours: 10)),
+          end: date.add(Duration(hours: 11)),
+          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+        ),
+        FlutterWeekViewEvent(
+          title: 'Course 3',
+          description: 'A description 3',
+          start: date.add(Duration(hours: 12, minutes: 30)),
+          end: date.add(Duration(hours: 15)),
+          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+        ),
+        FlutterWeekViewEvent(
+          title: 'Course 9',
+          description: 'A description 9',
+          start: date.add(Duration(hours: 17)),
+          end: date.add(Duration(hours: 18, minutes: 30)),
+          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+        ),
+        FlutterWeekViewEvent(
+          title: 'An event 7',
+          description: 'A description 7',
+          start: date.add(Duration(hours: 22)),
+          end: date.add(Duration(hours: 23)),
+          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+        ),
+      ],
     };
-    return courses['day1']!.toList();
+    return courses[day]!.toList();
   }
 
   DateTime now = DateTime.now();
@@ -199,10 +233,6 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 userZoomable: true,
                 date: now,
                 events: getCourses(context),
-                // style: DayViewStyle.fromDate(
-                //   date: now,
-                //   currentTimeCircleColor: Colors.black,
-                // ),
               ),
             ),
           ),

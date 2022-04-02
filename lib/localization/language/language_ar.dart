@@ -168,4 +168,23 @@ class LanguageAr extends Languages {
 
   @override
   String get labelCourseName => "Course name";
+
+  @override
+  String get labelCourseID => "Course ID";
+
+  @override
+  String get labelCourseAttendees => "Course attendees";
+
+  /// ************ Contact details ************///
+  @override
+  String get contactDetails => "Contact details";
+
+  @override
+  String get labelContactName => "Name";
+
+  @override
+  String get labelContactPhone => "Phone";
+
+  @override
+  String get labelContactAddress => "Address";
 }

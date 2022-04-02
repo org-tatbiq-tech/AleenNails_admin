@@ -42,14 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         // tooltip: "Centre FAB",
         child: Container(
-          margin: EdgeInsets.all(15.0),
-          child: Icon(Icons.add),
+          margin: const EdgeInsets.all(15.0),
+          child: const Icon(Icons.add),
         ),
         elevation: 4.0,
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          margin: EdgeInsets.only(left: 12.0, right: 12.0),
+          margin: const EdgeInsets.only(left: 12.0, right: 12.0),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
