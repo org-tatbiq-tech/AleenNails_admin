@@ -50,7 +50,8 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
     print(_focusedDay);
     // return courses[_selectedDay]!;
     DateTime now = DateTime.now();
-    DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    DateTime date =
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     var day = 'day1';
     if (_focusedDay.day % 2 == 0) {
       day = 'day2';
@@ -120,8 +121,8 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
     return courses[day]!.toList();
   }
 
-  DateTime now = DateTime.now();
-  DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime date =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +132,8 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
         children: [
           Card(
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
             child: Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, rSize(15)),
               child: TableCalendar<CalendarEvent>(
@@ -140,35 +142,50 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 daysOfWeekHeight: rSize(30),
                 rowHeight: rSize(60),
                 daysOfWeekStyle: DaysOfWeekStyle(
-                  weekdayStyle:
-                      Theme.of(context).textTheme.subtitle2!.copyWith(color: Theme.of(context).colorScheme.outline),
-                  weekendStyle:
-                      Theme.of(context).textTheme.subtitle2!.copyWith(color: Theme.of(context).colorScheme.outline),
+                  weekdayStyle: Theme.of(context)
+                      .textTheme
+                      .subtitle2!
+                      .copyWith(color: Theme.of(context).colorScheme.outline),
+                  weekendStyle: Theme.of(context)
+                      .textTheme
+                      .subtitle2!
+                      .copyWith(color: Theme.of(context).colorScheme.outline),
                 ),
                 headerStyle: HeaderStyle(
                   leftChevronIcon: IconTheme(
-                    data: Theme.of(context).primaryIconTheme.copyWith(size: rSize(30)),
+                    data: Theme.of(context)
+                        .primaryIconTheme
+                        .copyWith(size: rSize(30)),
                     child: const Icon(
                       Icons.chevron_left,
                     ),
                   ),
                   rightChevronIcon: IconTheme(
-                    data: Theme.of(context).primaryIconTheme.copyWith(size: rSize(30)),
+                    data: Theme.of(context)
+                        .primaryIconTheme
+                        .copyWith(size: rSize(30)),
                     child: const Icon(
                       Icons.chevron_right,
                     ),
                   ),
-                  headerPadding: EdgeInsets.fromLTRB(0, rSize(20), 0, rSize(20)),
-                  formatButtonPadding: EdgeInsets.symmetric(horizontal: rSize(16), vertical: rSize(8)),
+                  headerPadding:
+                      EdgeInsets.fromLTRB(0, rSize(20), 0, rSize(20)),
+                  formatButtonPadding: EdgeInsets.symmetric(
+                      horizontal: rSize(16), vertical: rSize(8)),
                   formatButtonDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(rSize(6)),
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  formatButtonTextStyle: Theme.of(context).textTheme.subtitle1!.copyWith(color: Colors.white),
+                  formatButtonTextStyle: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .copyWith(color: Colors.white),
                   formatButtonVisible: true,
                   formatButtonShowsNext: false,
-                  titleTextStyle:
-                      Theme.of(context).textTheme.headline2!.copyWith(color: Theme.of(context).colorScheme.outline),
+                  titleTextStyle: Theme.of(context)
+                      .textTheme
+                      .headline2!
+                      .copyWith(color: Theme.of(context).colorScheme.outline),
                   titleCentered: false,
                 ),
                 focusedDay: _focusedDay,
@@ -197,13 +214,18 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                     color: Theme.of(context).colorScheme.primary,
                     shape: BoxShape.circle,
                   ),
-                  disabledTextStyle:
-                      Theme.of(context).textTheme.bodyText1!.copyWith(color: Theme.of(context).colorScheme.outline),
+                  disabledTextStyle: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Theme.of(context).colorScheme.outline),
                   defaultTextStyle: Theme.of(context).textTheme.bodyText1!,
                   weekendTextStyle: Theme.of(context).textTheme.bodyText1!,
                   outsideTextStyle: Theme.of(context).textTheme.bodyText1!,
                   holidayTextStyle: Theme.of(context).textTheme.bodyText1!,
-                  selectedTextStyle: Theme.of(context).textTheme.bodyText1!.copyWith(color: Colors.white),
+                  selectedTextStyle: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Colors.white),
                   markerDecoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.secondary,
                     shape: BoxShape.circle,
@@ -224,16 +246,28 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
             ),
           ),
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0, rSize(5), 0, 0),
-              child: DayView(
-                initialTime: const HourMinute(hour: 7),
-                minimumTime: const HourMinute(hour: 5),
-                maximumTime: const HourMinute(hour: 24),
-                userZoomable: true,
-                date: now,
-                events: getCourses(context),
+            child: DayView(
+              hoursColumnStyle: HoursColumnStyle(
+                color: Theme.of(context).colorScheme.onBackground,
+                textStyle: Theme.of(context).textTheme.subtitle1,
+                width: rSize(80),
               ),
+              style: DayViewStyle(
+                currentTimeCirclePosition: CurrentTimeCirclePosition.left,
+                backgroundColor: Colors.transparent,
+                backgroundRulesColor: Theme.of(context).colorScheme.primary,
+                currentTimeCircleRadius: rSize(5),
+                currentTimeCircleColor: Theme.of(context).colorScheme.secondary,
+                currentTimeRuleColor: Theme.of(context).colorScheme.secondary,
+                currentTimeRuleHeight: rSize(2),
+                hourRowHeight: rSize(80),
+              ),
+              initialTime: const HourMinute(hour: 7),
+              minimumTime: const HourMinute(hour: 5),
+              maximumTime: const HourMinute(hour: 24),
+              userZoomable: false,
+              date: kToday,
+              events: getCourses(context),
             ),
           ),
         ],
