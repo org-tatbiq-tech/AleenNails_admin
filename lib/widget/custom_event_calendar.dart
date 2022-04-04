@@ -2,6 +2,7 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/calendar_view/flutter_week_view.dart';
+import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -46,6 +47,87 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
     }
   }
 
+  Widget eventTextBuilder(
+    FlutterWeekViewEvent event,
+    BuildContext context,
+    DayView dayView,
+    double height,
+    double width,
+  ) {
+    // the height of each row in the description
+    double fontSize =
+        Theme.of(context).textTheme.subtitle1?.fontSize ?? rSize(16);
+    double fontHeight =
+        Theme.of(context).textTheme.subtitle1?.height ?? rSize(1.4);
+
+    // This is the height of the title
+    double fontHeight2 =
+        Theme.of(context).textTheme.headline1?.height ?? rSize(1.4);
+    double fontSize2 =
+        Theme.of(context).textTheme.headline1?.fontSize ?? rSize(22);
+
+    // here will calculate the max available max line in the event
+    int maxLines =
+        (height - (fontHeight2 * fontSize2)) ~/ (fontHeight * fontSize);
+
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          event.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context)
+              .textTheme
+              .headline1
+              ?.copyWith(color: event.backgroundColor),
+        ),
+        Text(event.description,
+            maxLines: maxLines != 0 ? maxLines : 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1
+                ?.copyWith(color: event.backgroundColor)),
+      ],
+    );
+  }
+
+  renderFlutterWeekViewEvent({
+    required String title,
+    String? description,
+    Color? backgroundColor,
+    required DateTime start,
+    required DateTime end,
+    VoidCallback? onTap,
+  }) {
+    backgroundColor = backgroundColor ?? Theme.of(context).colorScheme.primary;
+    return FlutterWeekViewEvent(
+      eventTextBuilder: eventTextBuilder,
+      padding: EdgeInsets.symmetric(
+        horizontal: rSize(20),
+        vertical: rSize(10),
+      ),
+      title: title,
+      description: description ?? '',
+      backgroundColor: backgroundColor,
+      margin: EdgeInsets.symmetric(
+        horizontal: rSize(6),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          rSize(10),
+        ),
+        color: lighten(backgroundColor, 0.35),
+      ),
+      start: start,
+      end: end,
+      onTap: onTap,
+    );
+  }
+
   List<FlutterWeekViewEvent> getCourses(BuildContext context) {
     print(_focusedDay);
     // return courses[_selectedDay]!;
@@ -58,60 +140,61 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
     }
     Map<String, List<FlutterWeekViewEvent>> courses = {
       'day1': [
-        FlutterWeekViewEvent(
+        renderFlutterWeekViewEvent(
           title: 'Course 1',
-          description: 'A description 1',
+          description:
+              'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 19)),
           end: date.add(Duration(hours: 22)),
           onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
-        FlutterWeekViewEvent(
+        renderFlutterWeekViewEvent(
           title: 'Course 2',
-          description: 'A description 2',
+          description:
+              'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 23, minutes: 30)),
           end: date.add(Duration(hours: 24)),
           onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
-        FlutterWeekViewEvent(
+        renderFlutterWeekViewEvent(
           title: 'Course 3',
-          description: 'A description 3',
+          description:
+              'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 17)),
           end: date.add(Duration(hours: 18, minutes: 30)),
           onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
-        FlutterWeekViewEvent(
+        renderFlutterWeekViewEvent(
           title: 'An event 5',
-          description: 'A description 5',
+          description:
+              'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 20)),
           end: date.add(Duration(hours: 21)),
           onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
       ],
       'day2': [
-        FlutterWeekViewEvent(
-          title: 'Course 5',
-          description: 'A description 5',
-          start: date.add(Duration(hours: 10)),
-          end: date.add(Duration(hours: 11)),
-          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
-        ),
-        FlutterWeekViewEvent(
+        renderFlutterWeekViewEvent(
           title: 'Course 3',
-          description: 'A description 3',
+          description:
+              'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
+          backgroundColor: Colors.green,
           start: date.add(Duration(hours: 12, minutes: 30)),
           end: date.add(Duration(hours: 15)),
           onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
-        FlutterWeekViewEvent(
+        renderFlutterWeekViewEvent(
           title: 'Course 9',
-          description: 'A description 9',
+          description:
+              'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 17)),
           end: date.add(Duration(hours: 18, minutes: 30)),
           onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
         ),
-        FlutterWeekViewEvent(
+        renderFlutterWeekViewEvent(
           title: 'An event 7',
-          description: 'A description 7',
+          description:
+              'A description 7dadsdasdasaddsadas sandasjdhas dasdhaskjdnasd dahsldjasljd',
           start: date.add(Duration(hours: 22)),
           end: date.add(Duration(hours: 23)),
           onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
@@ -139,8 +222,8 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               child: TableCalendar<CalendarEvent>(
                 firstDay: getFirstDay(),
                 lastDay: getLastDay(),
-                daysOfWeekHeight: rSize(30),
-                rowHeight: rSize(60),
+                daysOfWeekHeight: rSize(20),
+                rowHeight: rSize(45),
                 daysOfWeekStyle: DaysOfWeekStyle(
                   weekdayStyle: Theme.of(context)
                       .textTheme
@@ -168,10 +251,12 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                       Icons.chevron_right,
                     ),
                   ),
-                  headerPadding:
-                      EdgeInsets.fromLTRB(0, rSize(20), 0, rSize(20)),
+                  headerPadding: EdgeInsets.symmetric(
+                    vertical: rSize(5),
+                    horizontal: 0,
+                  ),
                   formatButtonPadding: EdgeInsets.symmetric(
-                      horizontal: rSize(16), vertical: rSize(8)),
+                      horizontal: rSize(12), vertical: rSize(6)),
                   formatButtonDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(rSize(6)),
                     color: Theme.of(context).colorScheme.primary,
@@ -179,7 +264,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                   formatButtonTextStyle: Theme.of(context)
                       .textTheme
                       .subtitle1!
-                      .copyWith(color: Colors.white),
+                      .copyWith(color: Colors.white, fontSize: rSize(14)),
                   formatButtonVisible: true,
                   formatButtonShowsNext: false,
                   titleTextStyle: Theme.of(context)
@@ -197,9 +282,9 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 eventLoader: _getEventsForDay,
                 startingDayOfWeek: StartingDayOfWeek.sunday,
                 calendarStyle: CalendarStyle(
-                  cellMargin: EdgeInsets.all(rSize(6)),
+                  cellMargin: EdgeInsets.all(rSize(2)),
                   canMarkersOverflow: false,
-                  markerSize: rSize(6),
+                  markerSize: rSize(5),
                   markersAnchor: 1.5,
                   markersAutoAligned: true,
                   markersMaxCount: 1,
