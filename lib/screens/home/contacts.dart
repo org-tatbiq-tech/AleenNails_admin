@@ -16,8 +16,10 @@ class Contacts extends StatefulWidget {
 }
 
 class ContactsState extends State<Contacts> {
-  bool clickedCentreFAB = false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex = 0; //to handle which item is currently selected in the bottom app bar
+  bool clickedCentreFAB =
+      false; //boolean used to handle container animation which expands from the FAB
+  int selectedIndex =
+      0; //to handle which item is currently selected in the bottom app bar
   String text = "Contacts";
 
   //call this method on click of each bottom app bar item to update the screen
@@ -28,138 +30,48 @@ class ContactsState extends State<Contacts> {
     });
   }
 
-  Widget getContactName(Contact contact) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Wrap(
-        children: [
-          Icon(
-            FontAwesomeIcons.userAlt,
-            color: Theme.of(context).colorScheme.secondary,
-            size: rSize(22),
-          ),
-          Wrap(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-                child: Text(
-                  Languages.of(context)!.labelContactName + ':',
-                  style: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(25)),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-                child: Text(
-                  contact.contactName,
-                  style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(22)),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget getContactPhone(Contact contact) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Wrap(
-        children: [
-          Icon(
-            FontAwesomeIcons.phoneAlt,
-            color: Theme.of(context).colorScheme.secondary,
-            size: rSize(22),
-          ),
-          Wrap(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-                child: Text(
-                  Languages.of(context)!.labelContactPhone + ':',
-                  style: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(25)),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-                child: Text(
-                  contact.contactPhone,
-                  style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(22)),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget getContactAddress(Contact contact) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Wrap(
-        children: [
-          Icon(
-            FontAwesomeIcons.mapMarkedAlt,
-            color: Theme.of(context).colorScheme.secondary,
-            size: rSize(22),
-          ),
-          Wrap(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-                child: Text(
-                  Languages.of(context)!.labelContactAddress + ':',
-                  style: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(25)),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-                child: Text(
-                  contact.address,
-                  style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(22)),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget getContactCard(BuildContext context, Contact contact) {
     return Card(
-      elevation: 5,
-      child: Padding(
-        padding: EdgeInsets.all(7),
-        child: Stack(children: <Widget>[
-          Align(
-            alignment: Alignment.centerRight,
-            child: Stack(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 5),
-                  child: Column(
-                    children: <Widget>[
-                      getContactName(contact),
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                      getContactPhone(contact),
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                      getContactAddress(contact),
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ]),
+      elevation: 2,
+      margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+        rSize(15),
+      )),
+      child: ListTile(
+        subtitle: Text(
+          contact.contactPhone,
+          style: Theme.of(context)
+              .textTheme
+              .subtitle1
+              ?.copyWith(fontSize: rSize(16)),
+        ),
+        trailing: IconTheme(
+          data: Theme.of(context).primaryIconTheme,
+          child: Icon(
+            Icons.chevron_right,
+            size: rSize(25),
+          ),
+        ),
+        leading: CircleAvatar(
+          radius: rSize(28),
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          child: Text(
+            contact.contactName[0].toUpperCase() +
+                contact.contactName[1].toUpperCase(),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText2
+                ?.copyWith(fontSize: rSize(20)),
+          ),
+        ),
+        title: Text(
+          contact.contactName,
+          style: Theme.of(context)
+              .textTheme
+              .headline1
+              ?.copyWith(fontSize: rSize(20)),
+        ),
       ),
     );
   }
@@ -167,27 +79,31 @@ class ContactsState extends State<Contacts> {
   @override
   Widget build(BuildContext context) {
     Contact contact = Contact('Saeed', '0543103540', 'Haifa');
-    List<Contact> contacts = [contact, contact, contact, contact, contact, contact];
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-// scrollDirection: Axis.horizontal,
-              itemCount: contacts.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  width: double.maxFinite,
-                  child: getContactCard(context, contacts[index]),
-                );
-              },
+    List<Contact> contacts = [
+      contact,
+      contact,
+      contact,
+      contact,
+      contact,
+      contact
+    ];
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(
+              vertical: rSize(20),
+              horizontal: rSize(20),
             ),
+            itemCount: contacts.length,
+            itemBuilder: (context, index) {
+              return getContactCard(context, contacts[index]);
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
