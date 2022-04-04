@@ -70,47 +70,39 @@ class ThemeNotifier with ChangeNotifier {
             color: primaryFont,
             fontWeight: FontWeight.w500,
             fontFamily: GoogleFonts.aclonica().fontFamily,
-            height: rSize(1.4),
             fontSize: rSize(20)),
         subtitle1: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w300,
-            height: rSize(1.4),
             fontSize: rSize(16)),
         subtitle2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w300,
-            height: rSize(1.4),
             fontSize: rSize(16),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         bodyText1: TextStyle(
           color: primaryFont,
           fontWeight: FontWeight.w500,
-          height: rSize(1.4),
           fontSize: rSize(18),
           fontFamily: GoogleFonts.openSans().fontFamily,
         ),
         bodyText2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w500,
-            height: rSize(1.4),
             fontSize: rSize(18),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         headline1: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w700,
-            height: rSize(1.4),
             fontSize: rSize(22)),
         headline2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w700,
-            height: rSize(1.4),
             fontSize: rSize(22),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         caption: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w500,
-            height: rSize(1.4),
             fontSize: rSize(20)),
       ),
       colorScheme: const ColorScheme.light().copyWith(

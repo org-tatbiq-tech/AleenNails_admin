@@ -57,12 +57,10 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
     // the height of each row in the description
     double fontSize =
         Theme.of(context).textTheme.subtitle1?.fontSize ?? rSize(16);
-    double fontHeight =
-        Theme.of(context).textTheme.subtitle1?.height ?? rSize(1.4);
+    double fontHeight = Theme.of(context).textTheme.subtitle1?.height ?? 1.2;
 
     // This is the height of the title
-    double fontHeight2 =
-        Theme.of(context).textTheme.headline1?.height ?? rSize(1.4);
+    double fontHeight2 = Theme.of(context).textTheme.headline1?.height ?? 1.2;
     double fontSize2 =
         Theme.of(context).textTheme.headline1?.fontSize ?? rSize(22);
 
@@ -84,13 +82,15 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               .headline1
               ?.copyWith(color: event.backgroundColor),
         ),
-        Text(event.description,
-            maxLines: maxLines != 0 ? maxLines : 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1
-                ?.copyWith(color: event.backgroundColor)),
+        Expanded(
+          child: Text(event.description,
+              maxLines: maxLines != 0 ? maxLines : 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle1
+                  ?.copyWith(color: event.backgroundColor)),
+        ),
       ],
     );
   }
@@ -222,7 +222,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               child: TableCalendar<CalendarEvent>(
                 firstDay: getFirstDay(),
                 lastDay: getLastDay(),
-                daysOfWeekHeight: rSize(20),
+                daysOfWeekHeight: rSize(30),
                 rowHeight: rSize(45),
                 daysOfWeekStyle: DaysOfWeekStyle(
                   weekdayStyle: Theme.of(context)
