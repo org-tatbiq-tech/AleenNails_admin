@@ -1,32 +1,29 @@
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomIcon extends StatelessWidget {
-  final Widget? icon;
-  final Color? color;
-  final double containerSize;
+  final CustomIconProps customIconProps;
   const CustomIcon({
     Key? key,
-    required this.icon,
-    this.color,
-    this.containerSize = 40,
+    required this.customIconProps,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Color backgroundColor =
-        color ?? Theme.of(context).colorScheme.primaryContainer;
+        customIconProps.color ?? Theme.of(context).colorScheme.primaryContainer;
     return Container(
-        width: rSize(containerSize),
-        height: rSize(containerSize),
+        width: rSize(customIconProps.containerSize),
+        height: rSize(customIconProps.containerSize),
         decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(
-              rSize(10),
+              rSize(customIconProps.containerSize / 4),
             )),
         child: IconTheme(
           data: Theme.of(context).primaryIconTheme,
-          child: icon ?? const SizedBox(),
+          child: customIconProps.icon ?? const SizedBox(),
         ));
   }
 }

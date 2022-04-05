@@ -200,8 +200,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
           left: rSize(120),
           child: EaseInAnimation(
             onTap: () => {},
-            child: const CustomIcon(
-              icon: Icon(Icons.arrow_back),
+            child: CustomIcon(
+              customIconProps: CustomIconProps(
+                icon: Icon(Icons.arrow_back),
+              ),
             ),
           ),
         ),

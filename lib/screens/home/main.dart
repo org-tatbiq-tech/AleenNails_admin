@@ -1,4 +1,4 @@
-import 'package:appointments/screens/home/contacts.dart';
+import 'package:appointments/screens/home/contacts/contacts.dart';
 import 'package:appointments/screens/home/profile.dart';
 import 'package:appointments/screens/home/statistics.dart';
 import 'package:appointments/screens/home/timeline.dart';
@@ -29,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(withSearch: true),
       ),
@@ -37,7 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showBottomModal(
-            BottomModalProps(context: context, child: (Text('dasjdsakjlkjdaskjdalkjdak')), title: 'Modal Title'),
+            BottomModalProps(
+                context: context,
+                child: (Text('dasjdsakjlkjdaskjdalkjdak')),
+                title: 'Modal Title'),
           );
         },
         // tooltip: "Centre FAB",
@@ -48,8 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 4.0,
       ),
       bottomNavigationBar: BottomAppBar(
+        notchMargin: rSize(6),
         child: Container(
-          margin: const EdgeInsets.only(left: 12.0, right: 12.0),
+          margin: EdgeInsets.fromLTRB(
+            rSize(20),
+            rSize(10),
+            rSize(20),
+            0,
+          ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,8 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 child: Icon(
-                  Icons.home,
-                  size: rSize(40),
+                  FontAwesomeIcons.home,
+                  size: rSize(30),
                   color: _selectedPage == 0
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
@@ -75,8 +85,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 child: Icon(
-                  FontAwesomeIcons.addressBook,
-                  size: rSize(40),
+                  FontAwesomeIcons.solidAddressBook,
+                  size: rSize(30),
                   color: _selectedPage == 1
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
@@ -92,8 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 child: Icon(
-                  Icons.analytics,
-                  size: rSize(40),
+                  FontAwesomeIcons.chartBar,
+                  size: rSize(30),
                   color: _selectedPage == 2
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
@@ -106,8 +116,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 child: Icon(
-                  Icons.person,
-                  size: rSize(40),
+                  Icons.settings,
+                  size: rSize(35),
                   color: _selectedPage == 3
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
