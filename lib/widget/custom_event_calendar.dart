@@ -2,7 +2,6 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/calendar_view/flutter_week_view.dart';
-import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,6 +15,7 @@ class CustomEventCalendar extends StatefulWidget {
 class _CustomEventCalendarState extends State<CustomEventCalendar> {
   late final ValueNotifier<List<CalendarEvent>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.week;
+  DayViewController dayViewController = DayViewController();
   DateTime _focusedDay = kToday;
   DateTime? _selectedDay;
 
@@ -57,10 +57,10 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
     // the height of each row in the description
     double fontSize =
         Theme.of(context).textTheme.subtitle1?.fontSize ?? rSize(16);
-    double fontHeight = Theme.of(context).textTheme.subtitle1?.height ?? 1.2;
+    double fontHeight = Theme.of(context).textTheme.subtitle1?.height ?? 1.4;
 
     // This is the height of the title
-    double fontHeight2 = Theme.of(context).textTheme.headline1?.height ?? 1.2;
+    double fontHeight2 = Theme.of(context).textTheme.headline1?.height ?? 1.4;
     double fontSize2 =
         Theme.of(context).textTheme.headline1?.fontSize ?? rSize(22);
 
@@ -332,6 +332,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
           ),
           Expanded(
             child: DayView(
+              controller: dayViewController,
               hoursColumnStyle: HoursColumnStyle(
                 color: Theme.of(context).colorScheme.onBackground,
                 textStyle: Theme.of(context).textTheme.subtitle1,
@@ -345,12 +346,10 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 currentTimeCircleColor: Theme.of(context).colorScheme.secondary,
                 currentTimeRuleColor: Theme.of(context).colorScheme.secondary,
                 currentTimeRuleHeight: rSize(2),
-                hourRowHeight: rSize(80),
+                hourRowHeight: rSize(100),
               ),
-              initialTime: const HourMinute(hour: 7),
-              minimumTime: const HourMinute(hour: 5),
-              maximumTime: const HourMinute(hour: 24),
-              userZoomable: false,
+              minimumTime: const HourMinute(hour: 6),
+              userZoomable: true,
               date: kToday,
               events: getCourses(context),
             ),

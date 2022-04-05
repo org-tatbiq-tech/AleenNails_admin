@@ -2,6 +2,7 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/app_bar_painter.dart';
 import 'package:appointments/widget/custom_icon.dart';
+import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
@@ -74,18 +75,35 @@ class _CustomAppBarState extends State<CustomAppBar>
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         shadowColor: Colors.transparent,
         titleSpacing: 0,
+        leading: const SizedBox(
+          width: 0,
+          height: 0,
+        ),
+        leadingWidth: 0,
         title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              widget.customAppBarProps.leadingWidget != null
+              widget.customAppBarProps.leadingWidget
                   ? Padding(
                       padding: EdgeInsets.fromLTRB(rSize(15), 0, rSize(15), 0),
-                      child: CustomIcon(
-                          icon: widget.customAppBarProps.leadingWidget),
+                      child: EaseInAnimation(
+                        onTap: () => Navigator.pop(context),
+                        child: CustomIcon(
+                          customIconProps: CustomIconProps(
+                            color: Theme.of(context).colorScheme.primary,
+                            icon: IconTheme(
+                              data: Theme.of(context).iconTheme,
+                              child: const Icon(
+                                Icons.arrow_back,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
               Expanded(
                 child: Row(
                   mainAxisAlignment: widget.customAppBarProps.centerTitle
@@ -117,10 +135,12 @@ class _CustomAppBarState extends State<CustomAppBar>
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
                         child: CustomIcon(
-                          icon: IconTheme(
-                            data: Theme.of(context).primaryIconTheme,
-                            child: const Icon(
-                              Icons.search,
+                          customIconProps: CustomIconProps(
+                            icon: IconTheme(
+                              data: Theme.of(context).primaryIconTheme,
+                              child: const Icon(
+                                Icons.search,
+                              ),
                             ),
                           ),
                         ),
@@ -131,8 +151,10 @@ class _CustomAppBarState extends State<CustomAppBar>
               widget.customAppBarProps.customIcon != null
                   ? Padding(
                       padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
-                      child:
-                          CustomIcon(icon: widget.customAppBarProps.customIcon),
+                      child: CustomIcon(
+                          customIconProps: CustomIconProps(
+                        icon: widget.customAppBarProps.customIcon,
+                      )),
                     )
                   : Container(),
             ],

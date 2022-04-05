@@ -2,8 +2,8 @@ import 'package:appointments/widget/contact.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../localization/language/languages.dart';
-import '../../utils/layout.dart';
+import '../../../localization/language/languages.dart';
+import '../../../utils/layout.dart';
 
 //class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
 class Contacts extends StatefulWidget {
@@ -39,6 +39,7 @@ class ContactsState extends State<Contacts> {
         rSize(15),
       )),
       child: ListTile(
+        onTap: () => Navigator.pushNamed(context, '/contactDetails'),
         subtitle: Text(
           contact.contactPhone,
           style: Theme.of(context)

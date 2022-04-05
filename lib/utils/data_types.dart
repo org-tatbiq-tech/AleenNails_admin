@@ -67,19 +67,41 @@ class CustomTextButtonProps {
   });
 }
 
+class CustomIconProps {
+  final Widget? icon;
+  final Color? color;
+  final double containerSize;
+
+  CustomIconProps({
+    required this.icon,
+    this.color,
+    this.containerSize = 40,
+  });
+}
+
+class CustomAvatarProps {
+  final double radius;
+  final ImageProvider? backgroundImage;
+
+  CustomAvatarProps({
+    this.radius = 50,
+    this.backgroundImage,
+  });
+}
+
 class CustomAppBarProps {
   final String titleText;
   final Widget? titleWidget;
   final bool centerTitle;
   final Widget? customIcon;
   final bool withSearch;
-  final Widget? leadingWidget;
+  final bool leadingWidget;
   CustomAppBarProps(
       {this.titleText = 'Custom Title',
       this.titleWidget,
       this.centerTitle = true,
       this.customIcon,
-      this.leadingWidget,
+      this.leadingWidget = false,
       this.withSearch = false});
 }
 

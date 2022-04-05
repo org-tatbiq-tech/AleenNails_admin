@@ -1,4 +1,4 @@
-import 'package:appointments/screens/home/contacts.dart';
+import 'package:appointments/screens/home/contacts/contacts.dart';
 import 'package:appointments/screens/home/profile.dart';
 import 'package:appointments/screens/home/statistics.dart';
 import 'package:appointments/screens/home/timeline.dart';
