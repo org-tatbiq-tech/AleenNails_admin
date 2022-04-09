@@ -1,13 +1,12 @@
-import 'dart:isolate';
-
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom_expandable_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
-import 'package:appointments/widget/custom_silver_app_bar.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactDetails extends StatefulWidget {
   const ContactDetails({Key? key}) : super(key: key);
@@ -19,6 +18,208 @@ class ContactDetails extends StatefulWidget {
 class _ContactDetailsState extends State<ContactDetails> {
   @override
   Widget build(BuildContext context) {
+    _renderLastVisited() {
+      return Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: rSize(20),
+          vertical: rSize(10),
+        ),
+        child: Column(children: [
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Last Visited:',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      fontSize: rSize(18),
+                    ),
+              ),
+              SizedBox(
+                height: rSize(5),
+              ),
+              Text(
+                'Thursday 25-06-2020',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
+        ]),
+      );
+    }
+
+    _renderNotes() {
+      return Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: rSize(20),
+          vertical: rSize(10),
+        ),
+        child: Column(children: [
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Notes:',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      fontSize: rSize(18),
+                    ),
+              ),
+              SizedBox(
+                height: rSize(5),
+              ),
+              ReadMoreText(
+                'No notes was added dsakj dsakldsa sdjlkada sdjksladjas sdkasldjasld dsakdjsakldasjkldjasldjaslkdjlksadjalksdjalskjkldsjaklsdjklsdajlkdjas daskdjsadas ddkjsakljdklas dsakjdaskljd',
+                trimLength: 100,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: rSize(18),
+                    ),
+              ),
+            ],
+          ),
+        ]),
+      );
+    }
+
+    _renderStatics() {
+      return Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.onBackground,
+          border: Border.all(
+            color: Theme.of(context).colorScheme.primaryContainer,
+          ),
+          borderRadius: BorderRadius.circular(
+            rSize(20),
+          ),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: rSize(20),
+        ),
+        height: rSize(60),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: rSize(4),
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  'Bookings',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: rSize(18),
+                      ),
+                ),
+                Text(
+                  '1',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+            VerticalDivider(
+              endIndent: rSize(10),
+              indent: rSize(10),
+              thickness: rSize(1),
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: rSize(4),
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  'Finished',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: rSize(18),
+                      ),
+                ),
+                Text(
+                  '1',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+            VerticalDivider(
+              endIndent: rSize(10),
+              indent: rSize(10),
+              thickness: rSize(1),
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: rSize(4),
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  'Cancelled',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: rSize(18),
+                      ),
+                ),
+                Text(
+                  '1',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+            VerticalDivider(
+              endIndent: rSize(10),
+              indent: rSize(10),
+              thickness: rSize(1),
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: rSize(4),
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  'No-show',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: Theme.of(context).colorScheme.error,
+                        fontSize: rSize(18),
+                      ),
+                ),
+                Text(
+                  '1',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
     _renderActions() {
       return Row(
         children: [
@@ -64,6 +265,20 @@ class _ContactDetailsState extends State<ContactDetails> {
               ),
             ),
           ),
+          SizedBox(
+            width: rSize(10),
+          ),
+          EaseInAnimation(
+            onTap: () => {},
+            child: CustomIcon(
+              customIconProps: CustomIconProps(
+                icon: Icon(
+                  FontAwesomeIcons.calendarPlus,
+                  size: rSize(22),
+                ),
+              ),
+            ),
+          ),
         ],
       );
     }
@@ -89,6 +304,9 @@ class _ContactDetailsState extends State<ContactDetails> {
           horizontal: rSize(15),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               mainAxisSize: MainAxisSize.max,
@@ -101,7 +319,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                     rectangleShape: false,
                     circleShape: true,
                     editable: false,
-                    isMale: true,
+                    isMale: false,
                   ),
                 ),
                 SizedBox(
@@ -134,6 +352,18 @@ class _ContactDetailsState extends State<ContactDetails> {
               ],
             ),
             _renderActions(),
+            SizedBox(
+              height: rSize(24),
+            ),
+            _renderStatics(),
+            SizedBox(
+              height: rSize(24),
+            ),
+            _renderLastVisited(),
+            // SizedBox(
+            //   height: rSize(10),
+            // ),
+            _renderNotes(),
           ],
         ),
       ),
