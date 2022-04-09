@@ -14,8 +14,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Device.get().isIphoneX
-      ? Size.fromHeight(rSize(70))
-      : Size.fromHeight(rSize(55));
+      ? Size.fromHeight(rSize(customAppBarProps.barHeight))
+      : Size.fromHeight(rSize(customAppBarProps.barHeight - 15));
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -68,118 +68,174 @@ class _CustomAppBarState extends State<CustomAppBar>
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return Stack(children: [
-      AppBar(
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-        shadowColor: Colors.transparent,
-        titleSpacing: 0,
-        leading: const SizedBox(
-          width: 0,
-          height: 0,
-        ),
-        leadingWidth: 0,
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              widget.customAppBarProps.leadingWidget
-                  ? Padding(
-                      padding: EdgeInsets.fromLTRB(rSize(15), 0, rSize(15), 0),
-                      child: EaseInAnimation(
-                        onTap: () => Navigator.pop(context),
-                        child: CustomIcon(
-                          customIconProps: CustomIconProps(
-                            color: Theme.of(context).colorScheme.primary,
-                            icon: IconTheme(
-                              data: Theme.of(context).iconTheme,
-                              child: const Icon(
-                                Icons.arrow_back,
-                              ),
-                            ),
+    _getActions() {
+      if (!widget.customAppBarProps.withSearch &&
+          widget.customAppBarProps.customIcon == null) {
+        return SizedBox(
+          width: rSize(50),
+        );
+      }
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          widget.customAppBarProps.withSearch
+              ? GestureDetector(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
+                    child: CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: IconTheme(
+                          data: Theme.of(context).primaryIconTheme,
+                          child: const Icon(
+                            Icons.search,
                           ),
                         ),
                       ),
-                    )
-                  : const SizedBox(),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: widget.customAppBarProps.centerTitle
-                      ? MainAxisAlignment.center
-                      : MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    widget.customAppBarProps.titleWidget ??
-                        Text(widget.customAppBarProps.titleText,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline2
-                                ?.copyWith(
-                                    color:
-                                        Theme.of(context).colorScheme.primary)),
-                  ],
-                ),
-              )
-            ]),
-        actions: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              widget.customAppBarProps.withSearch
-                  ? GestureDetector(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
-                        child: CustomIcon(
-                          customIconProps: CustomIconProps(
-                            icon: IconTheme(
-                              data: Theme.of(context).primaryIconTheme,
-                              child: const Icon(
-                                Icons.search,
-                              ),
-                            ),
-                          ),
-                        ),
+                    ),
+                  ),
+                  onTapUp: onSearchTapUp,
+                )
+              : Container(),
+          widget.customAppBarProps.customIcon != null
+              ? EaseInAnimation(
+                  onTap: widget.customAppBarProps.customIconTap ?? () => {},
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
+                    child: CustomIcon(
+                        customIconProps: CustomIconProps(
+                      icon: IconTheme(
+                        child:
+                            widget.customAppBarProps.customIcon ?? Container(),
+                        data: Theme.of(context).primaryIconTheme,
                       ),
-                      onTapUp: onSearchTapUp,
-                    )
-                  : Container(),
-              widget.customAppBarProps.customIcon != null
-                  ? Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
-                      child: CustomIcon(
-                          customIconProps: CustomIconProps(
-                        icon: widget.customAppBarProps.customIcon,
-                      )),
-                    )
-                  : Container(),
-            ],
-          )
+                    )),
+                  ),
+                )
+              : Container(),
         ],
-      ),
-      AnimatedBuilder(
-        animation: _animation,
-        builder: (context, child) {
-          return CustomPaint(
-            painter: AppBarPainter(
-              containerHeight: widget.preferredSize.height,
-              center: Offset(rippleStartX, rippleStartY),
-              radius: _animation.value * screenWidth,
-              context: context,
-            ),
-          );
-        },
-      ),
-      isInSearchMode
-          ? (SearchBar(
-              onCancelSearch: cancelSearch,
-              onSearchQueryChanged: onSearchQueryChange,
-            ))
-          : (Container())
-    ]);
+      );
+    }
+
+    _getLeadingIcon() {
+      double actionsWidth = 0;
+      if (widget.customAppBarProps.withSearch) {
+        actionsWidth += 50;
+      }
+      if (widget.customAppBarProps.customIcon != null) {
+        actionsWidth += 50;
+      }
+      return widget.customAppBarProps.withBack
+          ? Padding(
+              padding: EdgeInsets.fromLTRB(rSize(15), 0, 0, 0),
+              child: EaseInAnimation(
+                onTap: () => Navigator.pop(context),
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    icon: IconTheme(
+                      data: Theme.of(context).primaryIconTheme,
+                      child: const Icon(
+                        Icons.arrow_back,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : SizedBox(
+              width: rSize(actionsWidth),
+            );
+    }
+
+    double screenWidth = MediaQuery.of(context).size.width;
+    return ClipPath(
+      clipper: widget.customAppBarProps.withClipPath
+          ? _AppBarClipper(childHeight: 10, isBig: false)
+          : null,
+      child: Stack(children: [
+        AppBar(
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+          shadowColor: Colors.transparent,
+          titleSpacing: 0,
+          leading: const SizedBox(
+            width: 0,
+            height: 0,
+          ),
+          leadingWidth: 0,
+          title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                _getLeadingIcon(),
+                Expanded(
+                  child: Wrap(
+                    alignment: widget.customAppBarProps.centerTitle,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    direction: Axis.horizontal,
+                    clipBehavior: Clip.none,
+                    children: [
+                      widget.customAppBarProps.titleWidget ??
+                          Text(widget.customAppBarProps.titleText,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary)),
+                    ],
+                  ),
+                )
+              ]),
+          actions: [
+            _getActions(),
+          ],
+        ),
+        AnimatedBuilder(
+          animation: _animation,
+          builder: (context, child) {
+            return CustomPaint(
+              painter: AppBarPainter(
+                containerHeight: widget.preferredSize.height,
+                center: Offset(rippleStartX, rippleStartY),
+                radius: _animation.value * screenWidth,
+                context: context,
+              ),
+            );
+          },
+        ),
+        isInSearchMode
+            ? (SearchBar(
+                onCancelSearch: cancelSearch,
+                onSearchQueryChanged: onSearchQueryChange,
+              ))
+            : (Container())
+      ]),
+    );
   }
+}
+
+class _AppBarClipper extends CustomClipper<Path> {
+  final bool isBig;
+  final double childHeight;
+
+  _AppBarClipper({required this.isBig, required this.childHeight});
+
+  @override
+  Path getClip(Size size) {
+    double height = isBig ? size.height - childHeight : size.height;
+    Path path = Path();
+
+    path.moveTo(0, height - 40);
+    path.quadraticBezierTo(size.width / 2, height, size.width, height - 40);
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }

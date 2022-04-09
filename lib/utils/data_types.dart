@@ -81,28 +81,64 @@ class CustomIconProps {
 
 class CustomAvatarProps {
   final double radius;
-  final ImageProvider? backgroundImage;
+  final bool editable;
+  final bool circleShape;
+  final bool rectangleShape;
+  final bool isMale;
+  final ImageProvider backgroundImage;
+  final VoidCallback? onTap;
 
   CustomAvatarProps({
     this.radius = 50,
-    this.backgroundImage,
+    this.editable = false,
+    this.isMale = false,
+    this.circleShape = false,
+    this.onTap,
+    this.rectangleShape = false,
+    this.backgroundImage = const AssetImage('assets/images/avatar_female.png'),
+  });
+}
+
+class CustomSilverAppBarProps {
+  final double expandedHeight;
+  final double safeAreaHeight;
+  final String titleText;
+  final Widget? titleWidget;
+  final bool centerTitle;
+  final Widget? customIcon;
+  final bool withBack;
+  CustomSilverAppBarProps({
+    required this.expandedHeight,
+    required this.safeAreaHeight,
+    this.titleText = 'Custom Title',
+    this.titleWidget,
+    this.centerTitle = true,
+    this.customIcon,
+    this.withBack = false,
   });
 }
 
 class CustomAppBarProps {
   final String titleText;
   final Widget? titleWidget;
-  final bool centerTitle;
-  final Widget? customIcon;
+  final WrapAlignment centerTitle;
+  final Icon? customIcon;
+  final VoidCallback? customIconTap;
   final bool withSearch;
-  final bool leadingWidget;
-  CustomAppBarProps(
-      {this.titleText = 'Custom Title',
-      this.titleWidget,
-      this.centerTitle = true,
-      this.customIcon,
-      this.leadingWidget = false,
-      this.withSearch = false});
+  final bool withBack;
+  final bool withClipPath;
+  final double barHeight;
+  CustomAppBarProps({
+    this.titleText = 'Custom Title',
+    this.titleWidget,
+    this.barHeight = 70,
+    this.centerTitle = WrapAlignment.center,
+    this.customIcon,
+    this.customIconTap,
+    this.withBack = false,
+    this.withSearch = false,
+    this.withClipPath = false,
+  });
 }
 
 class CustomButtonProps {
