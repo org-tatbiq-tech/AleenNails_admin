@@ -46,10 +46,14 @@ class _SearchBarState extends State<SearchBar>
     return SafeArea(
       top: true,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.fromLTRB(rSize(15), 0, 0, 0),

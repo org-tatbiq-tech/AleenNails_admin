@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   sizer: ^2.0.15
   table_calendar: ^3.0.4
-  font_awesome_flutter: ^9.2.0
+  font_awesome_flutter: ^10.1.0
   shared_preferences: ^2.0.13
   google_fonts: ^2.3.1
   provider: ^6.0.2
@@ -49,6 +49,8 @@ dependencies:
   firebase_auth: ^3.3.11
   flutter_secure_storage: ^5.0.2
   loading_indicator: ^3.0.3
+  simple_animations: ^4.0.1
+  supercharged: ^2.1.1
 #  flutter_week_view: ^1.2.1+1
 
 dev_dependencies:
