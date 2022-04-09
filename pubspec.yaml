@@ -51,6 +51,7 @@ dependencies:
   loading_indicator: ^3.0.3
   simple_animations: ^4.0.1
   supercharged: ^2.1.1
+  url_launcher: ^6.0.20
 #  flutter_week_view: ^1.2.1+1
 
 dev_dependencies:
