@@ -19,6 +19,55 @@ class ContactDetails extends StatefulWidget {
 class _ContactDetailsState extends State<ContactDetails> {
   @override
   Widget build(BuildContext context) {
+    _renderActions() {
+      return Row(
+        children: [
+          SizedBox(
+            width: rSize(120),
+          ),
+          EaseInAnimation(
+            onTap: () => {},
+            child: CustomIcon(
+              customIconProps: CustomIconProps(
+                icon: Icon(
+                  Icons.phone,
+                  size: rSize(24),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: rSize(10),
+          ),
+          EaseInAnimation(
+            onTap: () => {},
+            child: CustomIcon(
+              customIconProps: CustomIconProps(
+                icon: Icon(
+                  Icons.message,
+                  size: rSize(24),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: rSize(10),
+          ),
+          EaseInAnimation(
+            onTap: () => {},
+            child: CustomIcon(
+              customIconProps: CustomIconProps(
+                icon: Icon(
+                  Icons.email,
+                  size: rSize(24),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
@@ -35,39 +84,58 @@ class _ContactDetailsState extends State<ContactDetails> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Stack(
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CustomAvatar(
-                customAvatarProps: CustomAvatarProps(
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+          horizontal: rSize(15),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustomAvatar(
+                  customAvatarProps: CustomAvatarProps(
                     radius: rSize(100),
                     rectangleShape: false,
                     circleShape: true,
-                    editable: true,
-                    isMale: true),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'data',
-                    style: Theme.of(context).textTheme.bodyText1,
+                    editable: false,
+                    isMale: true,
                   ),
-                  Text(
-                    'data',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )
-                ],
-              )
-            ],
-          ),
-        ],
+                ),
+                SizedBox(
+                  width: rSize(20),
+                ),
+                Expanded(
+                  child: Wrap(
+                    direction: Axis.vertical,
+                    alignment: WrapAlignment.center,
+                    spacing: rSize(2),
+                    runSpacing: rSize(2),
+                    children: [
+                      Text(
+                        'Ahmad Manaa',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      Text(
+                        '0505800955',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      Text(
+                        'ahmadmnaa.b@gmail.com',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            _renderActions(),
+          ],
+        ),
       ),
     );
   }

@@ -45,7 +45,9 @@ class CustomAvatar extends StatelessWidget {
                       fit: BoxFit.contain,
                       color: Theme.of(context).colorScheme.primary,
                       alignment: Alignment.bottomCenter,
-                      image: customAvatarProps.backgroundImage,
+                      image: customAvatarProps.isMale
+                          ? const AssetImage('assets/images/avatar_male.png')
+                          : customAvatarProps.backgroundImage,
                     ),
                   ),
                 ],
