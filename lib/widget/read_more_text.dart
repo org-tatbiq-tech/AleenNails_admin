@@ -15,8 +15,8 @@ class ReadMoreText extends StatefulWidget {
     this.colorClickableText,
     this.trimLength = 240,
     this.trimLines = 2,
-    this.trimMode = TrimMode.LENGTH,
-    this.style,
+    this.trimMode = TrimMode.LINE,
+    this.customTextStyle,
     this.textAlign,
     this.textDirection,
     this.locale,
@@ -54,7 +54,7 @@ class ReadMoreText extends StatefulWidget {
   final String trimExpandedText;
   final String trimCollapsedText;
   final Color? colorClickableText;
-  final TextStyle? style;
+  final TextStyle? customTextStyle;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final Locale? locale;
@@ -83,10 +83,8 @@ class ReadMoreTextState extends State<ReadMoreText> {
   @override
   Widget build(BuildContext context) {
     final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(context);
-    TextStyle? effectiveTextStyle = widget.style;
-    if (widget.style?.inherit ?? false) {
-      effectiveTextStyle = defaultTextStyle.style.merge(widget.style);
-    }
+    TextStyle? effectiveTextStyle =
+        widget.customTextStyle ?? Theme.of(context).textTheme.bodyText1;
 
     final textAlign =
         widget.textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start;
@@ -97,7 +95,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
     final locale = widget.locale ?? Localizations.maybeLocaleOf(context);
 
     final colorClickableText =
-        widget.colorClickableText ?? Theme.of(context).accentColor;
+        widget.colorClickableText ?? Theme.of(context).colorScheme.primary;
     final _defaultLessStyle = widget.lessStyle ??
         effectiveTextStyle?.copyWith(color: colorClickableText);
     final _defaultMoreStyle = widget.moreStyle ??
@@ -115,7 +113,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
           ? widget.trimCollapsedText.isNotEmpty
               ? widget.delimiter
               : ''
-          : '',
+          : ' ',
       style: _defaultDelimiterStyle,
       recognizer: TapGestureRecognizer()..onTap = _onTapLink,
     );
@@ -175,7 +173,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
           linkLongerThanLine = true;
         }
 
-        var textSpan;
+        TextSpan textSpan;
         switch (widget.trimMode) {
           case TrimMode.LENGTH:
             if (widget.trimLength < widget.data.length) {
@@ -219,9 +217,7 @@ class ReadMoreTextState extends State<ReadMoreText> {
           textAlign: textAlign,
           textDirection: textDirection,
           softWrap: true,
-          //softWrap,
           overflow: TextOverflow.clip,
-          //overflow,
           textScaleFactor: textScaleFactor,
           text: textSpan,
         );

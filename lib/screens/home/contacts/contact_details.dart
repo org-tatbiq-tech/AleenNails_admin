@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/url_launch.dart';
+import 'package:appointments/widget/contact.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
-import 'package:appointments/widget/custom_expandable_text.dart';
+import 'package:appointments/widget/custom_text_button.dart';
+import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
@@ -17,76 +22,200 @@ class ContactDetails extends StatefulWidget {
 
 class _ContactDetailsState extends State<ContactDetails> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _renderLastVisited() {
-      return Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(20),
-          vertical: rSize(10),
-        ),
-        child: Column(children: [
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Last Visited:',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      fontSize: rSize(18),
-                    ),
-              ),
-              SizedBox(
-                height: rSize(5),
-              ),
-              Text(
-                'Thursday 25-06-2020',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ],
+    Contact contact = Contact('Saeed', '0543103540', 'Haifa');
+    List<Contact> contacts = [
+      contact,
+      contact,
+      contact,
+      contact,
+      contact,
+      contact
+    ];
+
+    Widget getAppointmentCard(BuildContext context, Contact contact) {
+      return Card(
+        color: Theme.of(context).cardTheme.color,
+        margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            rSize(15),
           ),
-        ]),
+        ),
+        child: ListTile(
+          onTap: () => Navigator.pushNamed(context, '/contactDetails'),
+          subtitle: Text(
+            contact.contactPhone,
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1
+                ?.copyWith(fontSize: rSize(16)),
+          ),
+          trailing: IconTheme(
+            data: Theme.of(context).primaryIconTheme,
+            child: Icon(
+              Icons.chevron_right,
+              size: rSize(25),
+            ),
+          ),
+          leading: CircleAvatar(
+            radius: rSize(28),
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            child: Text(
+              contact.contactName[0].toUpperCase() +
+                  contact.contactName[1].toUpperCase(),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  ?.copyWith(fontSize: rSize(20)),
+            ),
+          ),
+          title: Text(
+            contact.contactName,
+            style: Theme.of(context)
+                .textTheme
+                .headline1
+                ?.copyWith(fontSize: rSize(20)),
+          ),
+        ),
       );
     }
 
-    _renderNotes() {
-      return Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(20),
-          vertical: rSize(10),
-        ),
-        child: Column(children: [
-          Column(
+    _renderAppointments() {
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Notes:',
+                'Appointments',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2?.copyWith(
                       fontSize: rSize(18),
                     ),
               ),
-              SizedBox(
-                height: rSize(5),
-              ),
-              ReadMoreText(
-                'No notes was added dsakj dsakldsa sdjlkada sdjksladjas sdkasldjasld dsakdjsakldasjkldjasldjaslkdjlksadjalksdjalskjkldsjaklsdjklsdajlkdjas daskdjsadas ddkjsakljdklas dsakjdaskljd',
-                trimLength: 100,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+              CustomTextButton(
+                customTextButtonProps: CustomTextButtonProps(
+                  onTap: () => {},
+                  text: 'Show All',
+                  textStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
                       fontSize: rSize(18),
-                    ),
-              ),
+                      color: Theme.of(context).colorScheme.primary),
+                ),
+              )
             ],
           ),
-        ]),
+          SizedBox(
+            height: rSize(400),
+            child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(
+                vertical: rSize(20),
+                horizontal: rSize(20),
+              ),
+              itemCount: min(contacts.length, 3),
+              itemBuilder: (context, index) {
+                return getAppointmentCard(context, contacts[index]);
+              },
+            ),
+          ),
+        ],
       );
+    }
+
+    _renderBirthday() {
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Birthday',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                  fontSize: rSize(18),
+                ),
+          ),
+          SizedBox(
+            height: rSize(5),
+          ),
+          Text(
+            'Thursday 25-06-2020',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ],
+      );
+    }
+
+    _renderLastVisiting() {
+      return Column(children: [
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Last Visiting',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    fontSize: rSize(18),
+                  ),
+            ),
+            SizedBox(
+              height: rSize(5),
+            ),
+            Text(
+              'Thursday 25-06-2020',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+          ],
+        ),
+      ]);
+    }
+
+    _renderNotes() {
+      return Column(children: [
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Notes',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    fontSize: rSize(18),
+                  ),
+            ),
+            SizedBox(
+              height: rSize(5),
+            ),
+            const ReadMoreText(
+              'No notes was added dsakj dsakldsa sdjlkada sdjksladjas sdkasldjasld dsakdjsakldasjkldjasldjaslkdjlksadjalksdjalskjkldsjaklsdjklsdajlkdjas daskdjsadas ddkjsakljdklas dsakjdaskljd',
+              trimLines: 2,
+            ),
+          ],
+        ),
+      ]);
     }
 
     _renderStatics() {
@@ -227,7 +356,7 @@ class _ContactDetailsState extends State<ContactDetails> {
             width: rSize(120),
           ),
           EaseInAnimation(
-            onTap: () => {},
+            onTap: () => makePhoneCall('0505800955'),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
@@ -241,7 +370,7 @@ class _ContactDetailsState extends State<ContactDetails> {
             width: rSize(10),
           ),
           EaseInAnimation(
-            onTap: () => {},
+            onTap: () => sendSms('0505800955'),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
@@ -255,7 +384,7 @@ class _ContactDetailsState extends State<ContactDetails> {
             width: rSize(10),
           ),
           EaseInAnimation(
-            onTap: () => {},
+            onTap: () => sendMail('ahmadmnaa.b@gmail.com'),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
@@ -301,7 +430,7 @@ class _ContactDetailsState extends State<ContactDetails> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: rSize(15),
+          horizontal: rSize(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.max,
@@ -356,42 +485,35 @@ class _ContactDetailsState extends State<ContactDetails> {
               height: rSize(24),
             ),
             _renderStatics(),
-            SizedBox(
-              height: rSize(24),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: rSize(10),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: rSize(30),
+                  ),
+                  _renderBirthday(),
+                  SizedBox(
+                    height: rSize(24),
+                  ),
+                  _renderLastVisiting(),
+                  SizedBox(
+                    height: rSize(24),
+                  ),
+                  _renderNotes(),
+                  SizedBox(
+                    height: rSize(40),
+                  ),
+                  _renderAppointments(),
+                ],
+              ),
             ),
-            _renderLastVisited(),
-            // SizedBox(
-            //   height: rSize(10),
-            // ),
-            _renderNotes(),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget makeVideo({image}) {
-    return AspectRatio(
-      aspectRatio: 1.5 / 1,
-      child: Container(
-        margin: EdgeInsets.only(right: 20),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            image:
-                DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
-        child: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(begin: Alignment.bottomRight, colors: [
-            Colors.black.withOpacity(.9),
-            Colors.black.withOpacity(.3)
-          ])),
-          child: Align(
-            child: Icon(
-              Icons.play_arrow,
-              color: Colors.white,
-              size: 70,
-            ),
-          ),
         ),
       ),
     );

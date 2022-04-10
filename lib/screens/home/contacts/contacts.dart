@@ -88,23 +88,26 @@ class ContactsState extends State<Contacts> {
       contact,
       contact
     ];
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(
-              vertical: rSize(20),
-              horizontal: rSize(20),
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.symmetric(
+                vertical: rSize(20),
+                horizontal: rSize(20),
+              ),
+              itemCount: contacts.length,
+              itemBuilder: (context, index) {
+                return getContactCard(context, contacts[index]);
+              },
             ),
-            itemCount: contacts.length,
-            itemBuilder: (context, index) {
-              return getContactCard(context, contacts[index]);
-            },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

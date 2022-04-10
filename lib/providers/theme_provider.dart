@@ -41,9 +41,14 @@ class ThemeNotifier with ChangeNotifier {
       ),
       cardTheme: CardTheme(
           shadowColor: primary,
-          color: primaryWithAlpha3,
+          color: primaryWithAlpha2,
           elevation: 2,
-          clipBehavior: Clip.antiAlias),
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              rSize(15),
+            ),
+          )),
       iconTheme: IconThemeData(
         color: Colors.white,
         size: rSize(24),

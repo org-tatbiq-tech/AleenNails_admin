@@ -146,16 +146,16 @@ class CustomButtonProps {
   final VoidCallback onTap;
   final bool isPrimary;
   final bool capitalizeText;
-  final Color backgroundColor;
-  final Color textColor;
+  final Color? backgroundColor;
+  final Color? textColor;
   final bool isSecondary;
   CustomButtonProps({
     this.text = '',
     this.isPrimary = true,
     this.isSecondary = false,
     this.capitalizeText = true,
-    this.backgroundColor = Colors.white,
-    this.textColor = Colors.black,
+    this.backgroundColor,
+    this.textColor,
     required this.onTap,
   });
 }

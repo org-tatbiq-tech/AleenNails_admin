@@ -15,57 +15,52 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Color getButtonColor() {
       if (customButtonProps.isPrimary) {
-        return Theme.of(context).colorScheme.primary;
+        return customButtonProps.backgroundColor ??
+            Theme.of(context).colorScheme.primary;
       }
-      if (customButtonProps.isSecondary) {
-        return Theme.of(context).colorScheme.background;
-      }
-      return customButtonProps.backgroundColor;
+      return Theme.of(context).colorScheme.background;
     }
 
     Color getTextColor() {
       if (customButtonProps.isPrimary) {
-        return Theme.of(context).colorScheme.background;
+        return customButtonProps.textColor ??
+            Theme.of(context).colorScheme.background;
       }
-      if (customButtonProps.isSecondary) {
-        return Theme.of(context).colorScheme.primary;
-      }
-      return customButtonProps.textColor;
+      return customButtonProps.textColor ??
+          customButtonProps.backgroundColor ??
+          Theme.of(context).colorScheme.primary;
     }
 
     return EaseInAnimation(
       onTap: customButtonProps.onTap,
-      child: Material(
-        borderRadius: BorderRadius.circular(rSize(10)),
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(rSize(10)),
-              color: getButtonColor(),
-              border: Border.all(width: rSize(1), color: Theme.of(context).colorScheme.primary),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).shadowColor,
-                  offset: const Offset(0, 2),
-                  blurRadius: 6.0,
-                )
-              ]),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: rSize(16), vertical: rSize(10)),
-            child: customButtonProps.text.isNotEmpty
-                ? Text(
-                    customButtonProps.capitalizeText ? customButtonProps.text.toUpperCase() : customButtonProps.text,
-                    style: Theme.of(context).textTheme.button?.copyWith(
-                          color: getTextColor(),
-                        ),
-                  )
-                : Icon(
-                    Icons.favorite,
-                    size: rSize(20),
-                    color: Theme.of(context).colorScheme.onPrimary,
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(rSize(10)),
+            color: getButtonColor(),
+            border: Border.all(
+              width: rSize(1),
+              color: customButtonProps.backgroundColor ??
+                  Theme.of(context).colorScheme.primary,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Theme.of(context).shadowColor,
+                offset: const Offset(0, 2),
+                blurRadius: 6.0,
+              )
+            ]),
+        child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: rSize(16), vertical: rSize(10)),
+            child: Text(
+              customButtonProps.capitalizeText
+                  ? customButtonProps.text.toUpperCase()
+                  : customButtonProps.text,
+              style: Theme.of(context).textTheme.button?.copyWith(
+                    color: getTextColor(),
                   ),
-          ),
-        ),
+            )),
       ),
     );
   }
