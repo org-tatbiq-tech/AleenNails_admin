@@ -87,51 +87,54 @@ class _ContactDetailsState extends State<ContactDetails> {
     }
 
     _renderAppointments() {
-      return Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'Appointments',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      fontSize: rSize(18),
-                    ),
-              ),
-              CustomTextButton(
-                customTextButtonProps: CustomTextButtonProps(
-                  onTap: () => {},
-                  text: 'Show All',
-                  textStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: rSize(18),
-                      color: Theme.of(context).colorScheme.primary),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: rSize(400),
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              padding: EdgeInsets.symmetric(
-                vertical: rSize(20),
-                horizontal: rSize(20),
-              ),
-              itemCount: min(contacts.length, 3),
-              itemBuilder: (context, index) {
-                return getAppointmentCard(context, contacts[index]);
-              },
+      return SafeArea(
+        left: false,
+        right: false,
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Appointments',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                    fontSize: rSize(18),
+                  ),
             ),
-          ),
-        ],
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(
+                    top: rSize(20),
+                    left: rSize(20),
+                    right: rSize(20),
+                  ),
+                  itemCount: min(contacts.length, 3),
+                  itemBuilder: (context, index) {
+                    return getAppointmentCard(context, contacts[index]);
+                  },
+                ),
+                CustomTextButton(
+                  customTextButtonProps: CustomTextButtonProps(
+                    onTap: () => {},
+                    text: 'Show All',
+                    textStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: rSize(18),
+                        color: Theme.of(context).colorScheme.primary),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       );
     }
 
@@ -428,66 +431,73 @@ class _ContactDetailsState extends State<ContactDetails> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(20),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(20),
+            ),
+            child: Column(
               children: [
-                CustomAvatar(
-                  customAvatarProps: CustomAvatarProps(
-                    radius: rSize(100),
-                    rectangleShape: false,
-                    circleShape: true,
-                    editable: false,
-                    isMale: false,
-                  ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomAvatar(
+                      customAvatarProps: CustomAvatarProps(
+                        radius: rSize(100),
+                        rectangleShape: false,
+                        circleShape: true,
+                        editable: false,
+                        isMale: false,
+                      ),
+                    ),
+                    SizedBox(
+                      width: rSize(20),
+                    ),
+                    Expanded(
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        alignment: WrapAlignment.center,
+                        spacing: rSize(2),
+                        runSpacing: rSize(2),
+                        children: [
+                          Text(
+                            'Ahmad Manaa',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                          Text(
+                            '0505800955',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                          Text(
+                            'ahmadmnaa.b@gmail.com',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
+                _renderActions(),
                 SizedBox(
-                  width: rSize(20),
+                  height: rSize(24),
                 ),
-                Expanded(
-                  child: Wrap(
-                    direction: Axis.vertical,
-                    alignment: WrapAlignment.center,
-                    spacing: rSize(2),
-                    runSpacing: rSize(2),
-                    children: [
-                      Text(
-                        'Ahmad Manaa',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                      Text(
-                        '0505800955',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      Text(
-                        'ahmadmnaa.b@gmail.com',
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
-                  ),
-                ),
+                _renderStatics(),
               ],
             ),
-            _renderActions(),
-            SizedBox(
-              height: rSize(24),
-            ),
-            _renderStatics(),
-            Padding(
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
               padding: EdgeInsets.symmetric(
-                horizontal: rSize(10),
+                horizontal: rSize(30),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -513,8 +523,8 @@ class _ContactDetailsState extends State<ContactDetails> {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
