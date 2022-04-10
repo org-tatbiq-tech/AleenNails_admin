@@ -175,6 +175,9 @@ class LanguageHe extends Languages {
   @override
   String get labelCourseAttendees => "Course attendees";
 
+  @override
+  String get labelCourseGuide => "Course guide";
+
   /// ************ Contact details ************///
   @override
   String get contactDetails => "Contact details";

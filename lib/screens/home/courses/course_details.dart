@@ -18,7 +18,7 @@ class CourseDetails extends StatefulWidget {
 }
 
 class _CourseDetailsState extends State<CourseDetails> {
-  Course tempCourse = Course('course1ID', 'course name', 10);
+  Course tempCourse = Course('course1ID', 'course name', 10, 'Saeed');
 
   Widget _getCourseName(BuildContext context, Course course) {
     return Wrap(
@@ -110,6 +110,36 @@ class _CourseDetailsState extends State<CourseDetails> {
     );
   }
 
+  Widget _getCourseGuide(BuildContext context, Course course) {
+    return Wrap(
+      children: [
+        Icon(
+          FontAwesomeIcons.dumbbell,
+          color: Theme.of(context).colorScheme.secondary,
+          size: rSize(22),
+        ),
+        Wrap(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+              child: Text(
+                Languages.of(context)!.labelCourseGuide + ':',
+                style: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(25)),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+              child: Text(
+                course.guide,
+                style: Theme.of(context).textTheme.headline1?.copyWith(fontSize: rSize(22)),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget buildMainUI() {
     return CustomContainer(
       child: Container(
@@ -150,6 +180,10 @@ class _CourseDetailsState extends State<CourseDetails> {
                 height: rSize(20),
               ),
               _getCourseAttendees(context, tempCourse),
+              SizedBox(
+                height: rSize(20),
+              ),
+              _getCourseGuide(context, tempCourse),
               SizedBox(
                 height: rSize(20),
               )
