@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 // TODO: Ahmad add documentation in each of the classed below
 // Where it is used and how ?
@@ -41,6 +42,25 @@ class LiquidSwipeData {
     this.title = '',
     this.subTitle = '',
     this.description = '',
+  });
+}
+
+class ExpandableCalendarProps {
+  final DateTime focusedDay;
+  final DateTime? selectedDay;
+  final CalendarFormat calendarFormat;
+  List<CalendarEvent> Function(DateTime)? eventLoader;
+  void Function(DateTime, DateTime)? onDaySelected;
+  void Function(CalendarFormat)? onFormatChanged;
+  void Function(DateTime)? onPageChanged;
+  ExpandableCalendarProps({
+    required this.focusedDay,
+    this.selectedDay,
+    required this.calendarFormat,
+    this.eventLoader,
+    this.onDaySelected,
+    this.onFormatChanged,
+    this.onPageChanged,
   });
 }
 

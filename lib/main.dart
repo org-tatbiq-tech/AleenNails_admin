@@ -3,6 +3,7 @@ import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/theme_provider.dart';
+import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/contacts/contact_details.dart';
 import 'package:appointments/screens/home/courses/course_details.dart';
 import 'package:appointments/screens/home/main.dart';
@@ -109,6 +110,8 @@ class StudiosApp extends StatelessWidget {
                                 const RegisterMobileScreen(),
                             '/register/otpConfirmation': (context) =>
                                 const RegisterOTPScreen(),
+                            '/newAppointment': (context) =>
+                                const NewAppointment(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,

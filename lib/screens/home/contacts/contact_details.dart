@@ -40,7 +40,6 @@ class _ContactDetailsState extends State<ContactDetails> {
 
     Widget getAppointmentCard(BuildContext context, Contact contact) {
       return Card(
-        color: Theme.of(context).cardTheme.color,
         margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
@@ -48,7 +47,14 @@ class _ContactDetailsState extends State<ContactDetails> {
           ),
         ),
         child: ListTile(
-          onTap: () => Navigator.pushNamed(context, '/contactDetails'),
+          minLeadingWidth: rSize(40),
+          minVerticalPadding: rSize(14),
+          onTap: () => {},
+          contentPadding: EdgeInsets.symmetric(
+            vertical: rSize(0),
+            horizontal: rSize(20),
+          ),
+          horizontalTitleGap: rSize(10),
           subtitle: Text(
             contact.contactPhone,
             style: Theme.of(context)
@@ -56,31 +62,38 @@ class _ContactDetailsState extends State<ContactDetails> {
                 .subtitle1
                 ?.copyWith(fontSize: rSize(16)),
           ),
-          trailing: IconTheme(
-            data: Theme.of(context).primaryIconTheme,
-            child: Icon(
-              Icons.chevron_right,
-              size: rSize(25),
-            ),
+          trailing: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconTheme(
+                data: Theme.of(context).primaryIconTheme,
+                child: Icon(
+                  Icons.chevron_right,
+                  size: rSize(25),
+                ),
+              ),
+            ],
           ),
-          leading: CircleAvatar(
-            radius: rSize(28),
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-            child: Text(
-              contact.contactName[0].toUpperCase() +
-                  contact.contactName[1].toUpperCase(),
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyText2
-                  ?.copyWith(fontSize: rSize(20)),
-            ),
+          leading: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomAvatar(
+                customAvatarProps: CustomAvatarProps(
+                  radius: rSize(30),
+                  rectangleShape: true,
+                ),
+              ),
+            ],
           ),
           title: Text(
             contact.contactName,
-            style: Theme.of(context)
-                .textTheme
-                .headline1
-                ?.copyWith(fontSize: rSize(20)),
+            style: Theme.of(context).textTheme.headline1?.copyWith(
+                  fontSize: rSize(20),
+                ),
           ),
         ),
       );
@@ -401,7 +414,7 @@ class _ContactDetailsState extends State<ContactDetails> {
             width: rSize(10),
           ),
           EaseInAnimation(
-            onTap: () => {},
+            onTap: () => {Navigator.pushNamed(context, '/newAppointment')},
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
