@@ -87,6 +87,28 @@ class CustomTextButtonProps {
   });
 }
 
+class Contact {
+  String name;
+  String phone;
+  String address;
+
+  Contact(
+    this.name,
+    this.phone,
+    this.address,
+  );
+}
+
+class ContactCardProps {
+  final Contact contactDetails;
+  final bool withNavigation;
+
+  ContactCardProps({
+    required this.contactDetails,
+    this.withNavigation = true,
+  });
+}
+
 class CustomIconProps {
   final Widget? icon;
   final Color? color;

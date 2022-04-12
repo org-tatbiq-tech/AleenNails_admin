@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/url_launch.dart';
-import 'package:appointments/widget/contact.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -56,7 +55,7 @@ class _ContactDetailsState extends State<ContactDetails> {
           ),
           horizontalTitleGap: rSize(10),
           subtitle: Text(
-            contact.contactPhone,
+            contact.phone,
             style: Theme.of(context)
                 .textTheme
                 .subtitle1
@@ -90,7 +89,7 @@ class _ContactDetailsState extends State<ContactDetails> {
             ],
           ),
           title: Text(
-            contact.contactName,
+            contact.name,
             style: Theme.of(context).textTheme.headline1?.copyWith(
                   fontSize: rSize(20),
                 ),
