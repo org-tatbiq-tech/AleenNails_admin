@@ -99,6 +99,16 @@ class Contact {
   );
 }
 
+class CustomAccordionSectionProps {
+  final Widget header;
+  final Widget content;
+
+  CustomAccordionSectionProps({
+    required this.header,
+    required this.content,
+  });
+}
+
 class ContactCardProps {
   final Contact contactDetails;
   final bool withNavigation;

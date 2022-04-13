@@ -5,9 +5,9 @@ class EaseInAnimation extends StatefulWidget {
   final Function onTap;
   final Duration duration;
   final double beginAnimation;
-  final bool isDisabled;
+  bool isDisabled;
   final Curve curve;
-  const EaseInAnimation(
+  EaseInAnimation(
       {Key? key,
       required this.child,
       required this.onTap,

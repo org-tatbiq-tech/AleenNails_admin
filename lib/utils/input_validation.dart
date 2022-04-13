@@ -1,3 +1,5 @@
+import 'package:get/utils.dart';
+
 fullNameValidation(String fullName) {
   if (fullName.isEmpty) {
     return 'Full Name can not be empty!';
@@ -22,7 +24,7 @@ emailValidation(String email) {
   if (email.isEmpty) {
     return 'Email can not be empty!';
   }
-  if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(email)) {
+  if (!GetUtils.isEmail(email)) {
     return 'Please enter valid email! example: hello@hello.com';
   }
   return null;
