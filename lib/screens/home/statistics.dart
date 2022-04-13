@@ -1,9 +1,78 @@
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_container.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:graphic/graphic.dart';
+import 'package:intl/intl.dart';
 
-//class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
+import '../../widget/rounded_drop_down.dart';
+
+const timePeriods = ["7-Days", "1-Month", "6-Month", "Last-Year", "All"];
+const services = ["Sports", "Strategy", "Action", "Shooter", "Other"];
+
+// Services data
+const basicData = [
+  {'service': 'Sports', 'sold': 275},
+  {'service': 'Strategy', 'sold': 115},
+  {'service': 'Action', 'sold': 120},
+  {'service': 'Shooter', 'sold': 350},
+  {'service': 'Other', 'sold': 150},
+];
+
+final _monthDayFormat = DateFormat('MM-dd');
+
+class TimeSeriesSales {
+  final DateTime time;
+  final int sales;
+
+  TimeSeriesSales(this.time, this.sales);
+}
+
+final timeSeriesSales = [
+  TimeSeriesSales(DateTime(2017, 9, 19), 5),
+  TimeSeriesSales(DateTime(2017, 9, 26), 25),
+  TimeSeriesSales(DateTime(2017, 10, 3), 100),
+  TimeSeriesSales(DateTime(2017, 10, 10), 75),
+];
+
+List<Figure> centralPieLabel(
+  Offset anchor,
+  List<Tuple> selectedTuples,
+) {
+  final tuple = selectedTuples.last;
+
+  final titleSpan = TextSpan(
+    text: tuple['service'].toString() + '\n',
+    style: const TextStyle(
+      fontSize: 14,
+      color: Colors.black87,
+    ),
+  );
+
+  final valueSpan = TextSpan(
+    text: tuple['sold'].toString(),
+    style: const TextStyle(
+      fontSize: 28,
+      color: Colors.black87,
+    ),
+  );
+
+  final painter = TextPainter(
+    text: TextSpan(children: [titleSpan, valueSpan]),
+    // textDirection: TextDirection.ltr,
+    textAlign: TextAlign.center,
+  );
+  painter.layout();
+
+  final paintPoint = getPaintPoint(
+    const Offset(175, 150),
+    painter.width,
+    painter.height,
+    Alignment.center,
+  );
+
+  return [TextFigure(painter, paintPoint)];
+}
+
 class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
 
@@ -13,124 +82,245 @@ class Statistics extends StatefulWidget {
   }
 }
 
-/// Sample ordinal data type.
-class OrdinalSales {
-  final String year;
-  final int sales;
-
-  OrdinalSales(this.year, this.sales);
-}
-
-/// Sample linear data type.
-class LinearSales {
-  final int year;
-  final int sales;
-
-  LinearSales(this.year, this.sales);
-}
-
 class StatisticsState extends State<Statistics> {
-  bool clickedCentreFAB = false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex = 0; //to handle which item is currently selected in the bottom app bar
-  String text = "Statistics";
-  List<charts.Series<dynamic, String>> seriesList = _createSampleData();
-  List<charts.Series<dynamic, int>> seriesPieList = _createPieSampleData();
-  final bool animate = false;
+  String selectedBarChartTimePeriod = timePeriods[0];
+  String selectedPieChartTimePeriod = timePeriods[0];
+  String selectedLineChartTimePeriod = timePeriods[0];
+  String selectedLineChartService = services[0];
 
-  //call this method on click of each bottom app bar item to update the screen
-  void updateTabSelection(int index, String buttonText) {
-    setState(() {
-      selectedIndex = index;
-      text = buttonText;
-    });
-  }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createPieSampleData() {
-    final data = [
-      new LinearSales(0, 100),
-      new LinearSales(1, 75),
-      new LinearSales(2, 25),
-      new LinearSales(3, 5),
-    ];
-
-    return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
-      )
-    ];
-  }
-
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<OrdinalSales, String>> _createSampleData() {
-    final data = [
-      new OrdinalSales('2014', 5),
-      new OrdinalSales('2015', 25),
-      new OrdinalSales('2016', 100),
-      new OrdinalSales('2017', 75),
-    ];
-
-    return [
-      new charts.Series<OrdinalSales, String>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (OrdinalSales sales, _) => sales.year,
-        measureFn: (OrdinalSales sales, _) => sales.sales,
-        data: data,
-      )
-    ];
-  }
-
-  BarChartGroupData generateGroupData(int x, int y) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(toY: y.toDouble()),
+  Widget getServicesHistogram(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Services histogram',
+              style: TextStyle(
+                fontSize: rSize(20),
+              ),
+            ),
+            Flexible(
+              child: RoundedDropDown(
+                value: selectedBarChartTimePeriod,
+                hint: "Select period",
+                items: timePeriods.map((String item) {
+                  return DropdownMenuItem(
+                    value: item,
+                    child: Text(item),
+                  );
+                }).toList(),
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedBarChartTimePeriod = newValue;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        Flexible(
+          child: Container(
+            margin: EdgeInsets.all(10),
+            child: Chart(
+              data: basicData,
+              variables: {
+                'service': Variable(
+                  accessor: (Map map) => map['service'] as String,
+                ),
+                'sold': Variable(
+                  accessor: (Map map) => map['sold'] as num,
+                ),
+              },
+              elements: [
+                IntervalElement(
+                  label: LabelAttr(encoder: (tuple) => Label(tuple['sold'].toString())),
+                  elevation: ElevationAttr(value: 0, updaters: {
+                    'tap': {true: (_) => 5}
+                  }),
+                  color: ColorAttr(value: Defaults.primaryColor, updaters: {
+                    'tap': {false: (color) => color.withAlpha(100)}
+                  }),
+                )
+              ],
+              axes: [
+                Defaults.horizontalAxis,
+                Defaults.verticalAxis,
+              ],
+              selections: {
+                'hover': PointSelection(
+                  dim: Dim.x,
+                  on: {GestureType.hover},
+                  clear: {GestureType.mouseExit},
+                )
+              },
+              tooltip: TooltipGuide(),
+              crosshair: CrosshairGuide(),
+            ),
+          ),
+        ),
       ],
     );
   }
 
-  Widget getSalesBarChart(BuildContext context) {
-    return BarChart(
-      BarChartData(
-        titlesData: FlTitlesData(
-            topTitles: AxisTitles(
-              axisNameWidget: Text('Title'),
+  Widget getServicesPieChart(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Services pie chart',
+              style: TextStyle(
+                fontSize: rSize(20),
+              ),
             ),
-            bottomTitles: AxisTitles(
-              axisNameWidget: Text('Date'),
-            )),
-        barGroups: [
-          generateGroupData(1, 10),
-          generateGroupData(2, 18),
-          generateGroupData(3, 4),
-          generateGroupData(4, 11),
-        ],
-        barTouchData: BarTouchData(
-            enabled: true,
-            handleBuiltInTouches: false,
-            touchCallback: (event, response) {
-              print('touched');
-            },
-            mouseCursorResolver: (event, response) {
-              return response == null || response.spot == null ? MouseCursor.defer : SystemMouseCursors.click;
-            }),
-      ),
+            Flexible(
+              child: RoundedDropDown(
+                value: selectedPieChartTimePeriod,
+                hint: "Select period",
+                items: timePeriods.map((String item) {
+                  return DropdownMenuItem(
+                    value: item,
+                    child: Text(item),
+                  );
+                }).toList(),
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedPieChartTimePeriod = newValue;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        Flexible(
+          child: Container(
+            margin: const EdgeInsets.only(top: 10),
+            child: Chart(
+              data: basicData,
+              variables: {
+                'service': Variable(
+                  accessor: (Map map) => map['service'] as String,
+                ),
+                'sold': Variable(
+                  accessor: (Map map) => map['sold'] as num,
+                ),
+              },
+              transforms: [
+                Proportion(
+                  variable: 'sold',
+                  as: 'percent',
+                )
+              ],
+              elements: [
+                IntervalElement(
+                  position: Varset('percent') / Varset('service'),
+                  label: LabelAttr(
+                      encoder: (tuple) => Label(
+                            tuple['sold'].toString(),
+                            LabelStyle(style: Defaults.runeStyle),
+                          )),
+                  color: ColorAttr(variable: 'service', values: Defaults.colors10),
+                  modifiers: [StackModifier()],
+                )
+              ],
+              coord: PolarCoord(transposed: true, dimCount: 1),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  Widget getBarChart(BuildContext context) {
-    return charts.BarChart(
-      seriesList,
-      animate: animate,
+  Widget getServicesLineChart(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Services line chart',
+              style: TextStyle(
+                fontSize: rSize(20),
+              ),
+            ),
+            Flexible(
+              child: RoundedDropDown(
+                value: selectedLineChartTimePeriod,
+                hint: "Select period",
+                items: timePeriods.map((String item) {
+                  return DropdownMenuItem(
+                    value: item,
+                    child: Text(item),
+                  );
+                }).toList(),
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedLineChartTimePeriod = newValue;
+                  });
+                },
+              ),
+            ),
+            Flexible(
+              child: RoundedDropDown(
+                value: selectedLineChartService,
+                hint: "Select service",
+                items: services.map((String item) {
+                  return DropdownMenuItem(
+                    value: item,
+                    child: Text(item),
+                  );
+                }).toList(),
+                onChanged: (String newValue) {
+                  setState(() {
+                    selectedLineChartService = newValue;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
+        Flexible(
+          child: Container(
+            margin: const EdgeInsets.only(top: 10),
+            width: 350,
+            height: 300,
+            child: Chart(
+              data: timeSeriesSales,
+              variables: {
+                'time': Variable(
+                  accessor: (TimeSeriesSales datum) => datum.time,
+                  scale: TimeScale(
+                    formatter: (time) => _monthDayFormat.format(time),
+                  ),
+                ),
+                'sales': Variable(
+                  accessor: (TimeSeriesSales datum) => datum.sales,
+                ),
+              },
+              elements: [
+                LineElement(shape: ShapeAttr(value: BasicLineShape(dash: [5, 2])))
+              ],
+              coord: RectCoord(color: const Color(0xffdddddd)),
+              axes: [
+                Defaults.horizontalAxis,
+                Defaults.verticalAxis,
+              ],
+              selections: {
+                'touchMove': PointSelection(
+                  on: {GestureType.scaleUpdate, GestureType.tapDown, GestureType.longPressMoveUpdate},
+                  dim: Dim.x,
+                )
+              },
+              tooltip: TooltipGuide(
+                followPointer: [false, true],
+                align: Alignment.topLeft,
+                offset: const Offset(-20, -20),
+              ),
+              crosshair: CrosshairGuide(followPointer: [false, true]),
+            ),
+          ),
+        ),
+      ],
     );
-  }
-
-  Widget getPieChart(BuildContext context) {
-    return charts.PieChart(seriesPieList, animate: animate);
   }
 
   @override
@@ -144,8 +334,8 @@ class StatisticsState extends State<Statistics> {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: AspectRatio(
-                    aspectRatio: 2,
-                    child: getSalesBarChart(context),
+                    aspectRatio: 1.5,
+                    child: getServicesHistogram(context),
                   ),
                 ),
               ),
@@ -153,8 +343,8 @@ class StatisticsState extends State<Statistics> {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: AspectRatio(
-                    aspectRatio: 2,
-                    child: getBarChart(context),
+                    aspectRatio: 1.5,
+                    child: getServicesPieChart(context),
                   ),
                 ),
               ),
@@ -162,26 +352,14 @@ class StatisticsState extends State<Statistics> {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: AspectRatio(
-                    aspectRatio: 3,
-                    child: getPieChart(context),
+                    aspectRatio: 1.5,
+                    child: getServicesLineChart(context),
                   ),
                 ),
               ),
             ],
           ),
         ),
-        //this is the code for the widget container that comes from behind the floating action button (FAB)
-        Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 250),
-            //if clickedCentreFAB == true, the first parameter is used. If it's false, the second.
-            height: clickedCentreFAB ? MediaQuery.of(context).size.height : 0.0,
-            width: clickedCentreFAB ? MediaQuery.of(context).size.height : 0,
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(clickedCentreFAB ? 0.0 : 350.0), color: Colors.red),
-          ),
-        )
       ],
     );
   }
