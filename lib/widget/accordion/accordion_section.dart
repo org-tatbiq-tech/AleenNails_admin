@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:appointments/widget/accrodion/accordion.dart';
-import 'package:appointments/widget/accrodion/controllers.dart';
+import 'package:appointments/widget/accordion/accordion.dart';
+import 'package:appointments/widget/accordion/controllers.dart';
 
 class AccordionSection extends StatelessWidget with CommonParams {
   final SectionController sectionCtrl = SectionController();
@@ -145,6 +145,7 @@ class AccordionSection extends StatelessWidget with CommonParams {
             isDisabled: isDisabled,
             beginAnimation: 0.99,
             onTap: () {
+              print(isDisabled);
               listCtrl.updateSections(uniqueKey);
               _playHapticFeedback(_isOpen);
 
@@ -175,8 +176,12 @@ class AccordionSection extends StatelessWidget with CommonParams {
               padding: headerPadding,
               decoration: BoxDecoration(
                 color: (_isOpen
-                        ? headerBackgroundColorOpened
-                        : headerBackgroundColor) ??
+                        ? isDisabled
+                            ? lighten(headerBackgroundColorOpened!)
+                            : headerBackgroundColorOpened
+                        : isDisabled
+                            ? lighten(headerBackgroundColor!)
+                            : headerBackgroundColor) ??
                     Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(_borderRadius),

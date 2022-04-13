@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:appointments/animations/fade_animation.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/url_launch.dart';
@@ -178,8 +179,9 @@ class _ContactDetailsState extends State<ContactDetails> {
     }
 
     _renderLastVisiting() {
-      return Column(children: [
-        Column(
+      return FadeAnimation(
+        delay: 0.2,
+        child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -203,7 +205,7 @@ class _ContactDetailsState extends State<ContactDetails> {
             ),
           ],
         ),
-      ]);
+      );
     }
 
     _renderNotes() {

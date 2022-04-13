@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:appointments/widget/accrodion/accordion_section.dart';
-import 'package:appointments/widget/accrodion/controllers.dart';
+import 'package:appointments/widget/accordion/accordion_section.dart';
+import 'package:appointments/widget/accordion/controllers.dart';
 
 class Accordion extends StatelessWidget with CommonParams {
   final List<AccordionSection> children;
@@ -12,7 +12,6 @@ class Accordion extends StatelessWidget with CommonParams {
   final bool disableScrolling;
   static bool sectionAnimation = true;
   final listCtrl = Get.put(ListController());
-  
 
   Accordion({
     Key? key,
@@ -108,6 +107,7 @@ class Accordion extends StatelessWidget with CommonParams {
           child: AccordionSection(
             key: key,
             index: index,
+            isDisabled: child.isDisabled,
             isOpen: child.isOpen,
             scrollIntoViewOfItems: scrollIntoViewOfItems,
             headerBackgroundColor:

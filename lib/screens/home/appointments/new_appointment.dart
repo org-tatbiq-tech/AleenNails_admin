@@ -1,9 +1,9 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/accrodion/accordion.dart';
-import 'package:appointments/widget/accrodion/accordion_section.dart';
-import 'package:appointments/widget/accrodion/controllers.dart';
+import 'package:appointments/widget/accordion/accordion.dart';
+import 'package:appointments/widget/accordion/accordion_section.dart';
+import 'package:appointments/widget/accordion/controllers.dart';
 import 'package:appointments/widget/contact_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/expandable_calendar.dart';
@@ -25,6 +25,7 @@ class _NewAppointmentState extends State<NewAppointment> {
   DateTime _focusedDay = kToday;
   Contact? selectedContact;
   DateTime? _selectedDay;
+  int _index = 0;
   List<String> slots = [
     '11:00',
     '12:00',
@@ -65,6 +66,41 @@ class _NewAppointmentState extends State<NewAppointment> {
 
   @override
   Widget build(BuildContext context) {
+    Widget _builderStep() {
+      return Container(
+        margin: EdgeInsets.only(top: 10),
+        child: Stepper(
+          steps: [
+            Step(
+              title: Text("First"),
+              content: Text("This is our first example."),
+            ),
+            Step(
+              title: Text("Second"),
+              content: Text("This is our second example."),
+            ),
+            Step(
+              title: Text("Third"),
+              content: Text("This is our third example."),
+            ),
+            Step(
+              title: Text("Forth"),
+              content: Text("This is our forth example."),
+            ),
+          ],
+          currentStep: _index,
+          onStepTapped: (index) {
+            setState(() {
+              _index = index;
+            });
+          },
+          // controlsBuilder: (BuildContext context,
+          //         {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) =>
+          //     Container(),
+        ),
+      );
+    }
+
     _renderAccordionSection({
       required Widget header,
       required Widget content,
@@ -76,10 +112,12 @@ class _NewAppointmentState extends State<NewAppointment> {
       return AccordionSection(
         index: index,
         isOpen: isOpen,
+        isDisabled: isDisabled,
         leftIcon: leftIcon,
         header: header,
         content: content,
-        isDisabled: isDisabled,
+        contentBorderWidth: 0,
+        contentHorizontalPadding: 0,
       );
     }
 
@@ -267,22 +305,20 @@ class _NewAppointmentState extends State<NewAppointment> {
               padding: EdgeInsets.symmetric(
                   horizontal: rSize(15), vertical: rSize(20)),
               child: Accordion(
-                contentBorderWidth: 0,
                 maxOpenSections: 1,
                 contentBorderColor: Theme.of(context).colorScheme.primary,
-                contentBackgroundColor:
-                    Theme.of(context).colorScheme.background,
+                contentBackgroundColor: lighten(
+                    Theme.of(context).colorScheme.primaryContainer, 0.06),
                 headerBackgroundColor:
-                    Theme.of(context).colorScheme.onBackground,
+                    Theme.of(context).colorScheme.primaryContainer,
                 headerBackgroundColorOpened:
-                    Theme.of(context).colorScheme.onBackground,
-                contentHorizontalPadding: rSize(0),
+                    Theme.of(context).colorScheme.primaryContainer,
                 headerPadding: EdgeInsets.symmetric(
                   vertical: rSize(10),
                   horizontal: rSize(10),
                 ),
-                sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
-                sectionClosingHapticFeedback: SectionHapticFeedback.light,
+                sectionOpeningHapticFeedback: SectionHapticFeedback.selection,
+                sectionClosingHapticFeedback: SectionHapticFeedback.selection,
                 rightIcon: IconTheme(
                   data: Theme.of(context).primaryIconTheme,
                   child: Icon(
@@ -302,14 +338,14 @@ class _NewAppointmentState extends State<NewAppointment> {
                         size: rSize(26),
                       ),
                     ),
-                    isDisabled: false,
                     isOpen: false,
+                    isDisabled: true,
                   ),
                   _renderAccordionSection(
                     index: 1,
                     header: _renderServicesHeader(),
                     content: _renderServicesBody(),
-                    isDisabled: false,
+                    isDisabled: true,
                     isOpen: false,
                   ),
                   _renderAccordionSection(
