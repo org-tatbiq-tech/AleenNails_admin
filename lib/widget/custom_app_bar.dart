@@ -213,7 +213,7 @@ class _CustomAppBarState extends State<CustomAppBar>
           builder: (context, child) {
             return CustomPaint(
               painter: AppBarPainter(
-                containerHeight: widget.preferredSize.height,
+                containerHeight: rSize(widget.customAppBarProps.barHeight),
                 center: Offset(rippleStartX, rippleStartY),
                 radius: _animation.value * screenWidth,
                 context: context,
@@ -236,15 +236,19 @@ class _AppBarClipper extends CustomClipper<Path> {
   final bool isBig;
   final double childHeight;
 
-  _AppBarClipper({required this.isBig, required this.childHeight});
+  _AppBarClipper({
+    required this.isBig,
+    required this.childHeight,
+  });
 
   @override
   Path getClip(Size size) {
-    double height = isBig ? size.height - childHeight : size.height;
+    double height = isBig ? size.height - rSize(childHeight) : size.height;
     Path path = Path();
 
-    path.moveTo(0, height - 40);
-    path.quadraticBezierTo(size.width / 2, height, size.width, height - 40);
+    path.moveTo(0, height - rSize(40));
+    path.quadraticBezierTo(
+        size.width / 2, height, size.width, height - rSize(40));
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
 
