@@ -387,7 +387,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                 radius: rSize(100),
                 rectangleShape: false,
                 circleShape: true,
-                editable: false,
+                enable: false,
                 isMale: false,
               ),
             ),

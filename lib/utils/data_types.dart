@@ -113,6 +113,20 @@ class Service {
   });
 }
 
+enum Status {
+  approved,
+  declined,
+  cancelled,
+  waiting,
+}
+
+class CustomStatusProps {
+  Status status;
+  CustomStatusProps({
+    required this.status,
+  });
+}
+
 class CustomAccordionSectionProps {
   final Widget header;
   final Widget content;
@@ -163,17 +177,19 @@ class CustomIconProps {
 
 class CustomAvatarProps {
   final double radius;
-  final bool editable;
+  final bool enable;
   final bool circleShape;
   final bool rectangleShape;
   final bool isMale;
+  final bool editable;
   final ImageProvider backgroundImage;
-  final VoidCallback? onTap;
+  final Function? onTap;
 
   CustomAvatarProps({
     this.radius = 50,
-    this.editable = false,
+    this.enable = false,
     this.isMale = false,
+    this.editable = false,
     this.circleShape = false,
     this.onTap,
     this.rectangleShape = false,

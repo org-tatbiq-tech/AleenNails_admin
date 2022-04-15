@@ -4,6 +4,7 @@ import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/url_launch.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom_status.dart';
 import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
@@ -105,7 +106,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         children: [
           FadeAnimation(
             positionType: PositionType.right,
-            delay: 0.9,
+            delay: 0.6,
             child: Text(
               'Services ($servicesLength)',
               maxLines: 1,
@@ -128,7 +129,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               itemBuilder: (context, index) {
                 return FadeAnimation(
                   positionType: PositionType.top,
-                  delay: 1 + index.toDouble() * 0.3,
+                  delay: 0.8 + index.toDouble() * 0.3,
                   child: getAppointmentCard(context, services[index]),
                 );
               },
@@ -228,8 +229,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               customAvatarProps: CustomAvatarProps(
                 radius: rSize(130),
                 rectangleShape: false,
+                enable: true,
+                onTap: () => {
+                  Navigator.pushNamed(context, '/contactDetails'),
+                },
                 circleShape: true,
-                editable: false,
                 isMale: false,
               ),
             ),
@@ -267,76 +271,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    _renderActions() {
-      return Row(
-        children: [
-          SizedBox(
-            width: rSize(120),
-          ),
-          EaseInAnimation(
-            onTap: () => makePhoneCall('0505800955'),
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: Icon(
-                  Icons.phone,
-                  size: rSize(24),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: rSize(10),
-          ),
-          EaseInAnimation(
-            onTap: () => sendSms('0505800955'),
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: Icon(
-                  Icons.message,
-                  size: rSize(24),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: rSize(10),
-          ),
-          EaseInAnimation(
-            onTap: () => sendMail('ahmadmnaa.b@gmail.com'),
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: Icon(
-                  Icons.email,
-                  size: rSize(24),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: rSize(10),
-          ),
-          EaseInAnimation(
-            onTap: () => {Navigator.pushNamed(context, '/newAppointment')},
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: Icon(
-                  FontAwesomeIcons.calendarPlus,
-                  size: rSize(22),
-                ),
-              ),
-            ),
-          ),
-        ],
-      );
-    }
-
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Appointment ',
+          titleText: 'Appointment Details',
           withBack: true,
-          withSearch: true,
-          // withSearch: true,
           barHeight: 120,
           withClipPath: true,
           customIcon: Icon(
@@ -373,7 +312,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   ),
                   FadeAnimation(
                     positionType: PositionType.right,
-                    delay: 0.8,
+                    delay: 0.3,
+                    child: CustomStatus(
+                      customStatusProps:
+                          CustomStatusProps(status: Status.waiting),
+                    ),
+                  ),
+                  SizedBox(
+                    height: rSize(30),
+                  ),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.5,
                     child: _renderNotes(),
                   ),
                   SizedBox(

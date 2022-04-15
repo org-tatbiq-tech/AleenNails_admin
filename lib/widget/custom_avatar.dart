@@ -14,8 +14,8 @@ class CustomAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EaseInAnimation(
-      isDisabled: !customAvatarProps.editable,
-      onTap: () => {customAvatarProps.onTap},
+      isDisabled: !customAvatarProps.enable,
+      onTap: customAvatarProps.onTap ?? () => {},
       child: SizedBox(
         width: customAvatarProps.radius,
         height: customAvatarProps.rectangleShape
