@@ -70,7 +70,7 @@ class CustomAvatar extends StatelessWidget {
                     right: 0,
                     child: CustomIcon(
                       customIconProps: CustomIconProps(
-                        color: Theme.of(context).colorScheme.primary,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         containerSize: customAvatarProps.radius * 0.3,
                         icon: IconTheme(
                           data: Theme.of(context).iconTheme,

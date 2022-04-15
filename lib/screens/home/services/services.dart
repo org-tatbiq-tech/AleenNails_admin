@@ -1,47 +1,34 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/widget/contact_card.dart';
+import 'package:appointments/widget/service_card.dart';
 import 'package:flutter/material.dart';
 import '../../../utils/layout.dart';
 
 //class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
-class Contacts extends StatefulWidget {
-  const Contacts({Key? key}) : super(key: key);
+class Services extends StatefulWidget {
+  const Services({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return ContactsState();
+    return ServicesState();
   }
 }
 
-class ContactsState extends State<Contacts> {
-  bool clickedCentreFAB =
-      false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex =
-      0; //to handle which item is currently selected in the bottom app bar
-  String text = "Contacts";
-
-  //call this method on click of each bottom app bar item to update the screen
-  void updateTabSelection(int index, String buttonText) {
-    setState(() {
-      selectedIndex = index;
-      text = buttonText;
-    });
-  }
-
+class ServicesState extends State<Services> {
   @override
   Widget build(BuildContext context) {
-    Contact contact = Contact(
+    Service service = Service(
       name: 'Saeed',
-      phone: '0543103540',
-      address: 'Haifa',
+      duration: '0543103540',
+      price: 45,
     );
-    List<Contact> contacts = [
-      contact,
-      contact,
-      contact,
-      contact,
-      contact,
-      contact
+    List<Service> services = [
+      service,
+      service,
+      service,
+      service,
+      service,
+      service
     ];
     return Container(
       color: Theme.of(context).colorScheme.background,
@@ -55,11 +42,11 @@ class ContactsState extends State<Contacts> {
                 vertical: rSize(20),
                 horizontal: rSize(20),
               ),
-              itemCount: contacts.length,
+              itemCount: services.length,
               itemBuilder: (context, index) {
-                return ContactCard(
-                  contactCardProps: ContactCardProps(
-                    contactDetails: contacts[index],
+                return ServiceCard(
+                  contactCardProps: ServiceCardProps(
+                    serviceDetails: services[index],
                   ),
                 );
               },

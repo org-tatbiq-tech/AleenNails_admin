@@ -59,7 +59,7 @@ class _SearchBarState extends State<SearchBar>
                 padding: EdgeInsets.fromLTRB(rSize(15), 0, 0, 0),
                 child: CustomIcon(
                   customIconProps: CustomIconProps(
-                    color: Theme.of(context).colorScheme.primary,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     icon: EaseInAnimation(
                       child: IconTheme(
                         data: Theme.of(context).iconTheme,

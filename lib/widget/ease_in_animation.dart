@@ -31,8 +31,8 @@ class _EaseInAnimationState extends State<EaseInAnimation>
 
     controller = AnimationController(
       vsync: this,
-      lowerBound: 0.0,
-      upperBound: 1.0,
+      lowerBound: 0,
+      upperBound: 1,
       duration: widget.duration,
     );
     controller.value = 1;
@@ -42,7 +42,6 @@ class _EaseInAnimationState extends State<EaseInAnimation>
     ).animate(
       CurvedAnimation(
         parent: controller,
-        // curve: Curves.elasticOut,
         curve: widget.curve,
       ),
     );

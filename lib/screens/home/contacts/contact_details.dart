@@ -28,7 +28,11 @@ class _ContactDetailsState extends State<ContactDetails> {
 
   @override
   Widget build(BuildContext context) {
-    Contact contact = Contact('Saeed', '0543103540', 'Haifa');
+    Contact contact = Contact(
+      name: 'Saeed',
+      phone: '0543103540',
+      address: 'Haifa',
+    );
     List<Contact> contacts = [
       contact,
       contact,
@@ -56,7 +60,7 @@ class _ContactDetailsState extends State<ContactDetails> {
           ),
           horizontalTitleGap: rSize(10),
           subtitle: Text(
-            contact.phone,
+            contact.phone!,
             style: Theme.of(context)
                 .textTheme
                 .subtitle1
@@ -90,7 +94,7 @@ class _ContactDetailsState extends State<ContactDetails> {
             ],
           ),
           title: Text(
-            contact.name,
+            contact.name!,
             style: Theme.of(context).textTheme.headline1?.copyWith(
                   fontSize: rSize(20),
                 ),
@@ -109,13 +113,17 @@ class _ContactDetailsState extends State<ContactDetails> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Appointments',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontSize: rSize(18),
-                  ),
+            FadeAnimation(
+              positionType: PositionType.right,
+              delay: 0.9,
+              child: Text(
+                'Appointments',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      fontSize: rSize(18),
+                    ),
+              ),
             ),
             Column(
               mainAxisSize: MainAxisSize.max,
@@ -132,7 +140,10 @@ class _ContactDetailsState extends State<ContactDetails> {
                   ),
                   itemCount: min(contacts.length, 3),
                   itemBuilder: (context, index) {
-                    return getAppointmentCard(context, contacts[index]);
+                    return FadeAnimation(
+                        positionType: PositionType.top,
+                        delay: 1 + index.toDouble() * 0.3,
+                        child: getAppointmentCard(context, contacts[index]));
                   },
                 ),
                 CustomTextButton(
@@ -179,32 +190,29 @@ class _ContactDetailsState extends State<ContactDetails> {
     }
 
     _renderLastVisiting() {
-      return FadeAnimation(
-        delay: 0.2,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Last Visiting',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontSize: rSize(18),
-                  ),
-            ),
-            SizedBox(
-              height: rSize(5),
-            ),
-            Text(
-              'Thursday 25-06-2020',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ],
-        ),
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Last Visiting',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                  fontSize: rSize(18),
+                ),
+          ),
+          SizedBox(
+            height: rSize(5),
+          ),
+          Text(
+            'Thursday 25-06-2020',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+        ],
       );
     }
 
@@ -366,6 +374,57 @@ class _ContactDetailsState extends State<ContactDetails> {
       );
     }
 
+    _renderHeader() {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FadeAnimation(
+            delay: 0.1,
+            child: CustomAvatar(
+              customAvatarProps: CustomAvatarProps(
+                radius: rSize(100),
+                rectangleShape: false,
+                circleShape: true,
+                editable: false,
+                isMale: false,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: rSize(20),
+          ),
+          FadeAnimation(
+            delay: 0.1,
+            positionType: PositionType.left,
+            child: Wrap(
+              direction: Axis.vertical,
+              alignment: WrapAlignment.center,
+              spacing: rSize(2),
+              runSpacing: rSize(2),
+              children: [
+                Text(
+                  'Ahmad Manaa',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                Text(
+                  '0505800955',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                Text(
+                  'ahmadmnaa.b@gmail.com',
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
     _renderActions() {
       return Row(
         children: [
@@ -418,10 +477,9 @@ class _ContactDetailsState extends State<ContactDetails> {
             onTap: () => {Navigator.pushNamed(context, '/newAppointment')},
             child: CustomIcon(
               customIconProps: CustomIconProps(
-                icon: Icon(
-                  FontAwesomeIcons.calendarPlus,
-                  size: rSize(22),
-                ),
+                withPadding: true,
+                path: 'assets/icons/calendar_plus.png',
+                icon: null,
               ),
             ),
           ),
@@ -456,54 +514,20 @@ class _ContactDetailsState extends State<ContactDetails> {
             ),
             child: Column(
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomAvatar(
-                      customAvatarProps: CustomAvatarProps(
-                        radius: rSize(100),
-                        rectangleShape: false,
-                        circleShape: true,
-                        editable: false,
-                        isMale: false,
-                      ),
-                    ),
-                    SizedBox(
-                      width: rSize(20),
-                    ),
-                    Expanded(
-                      child: Wrap(
-                        direction: Axis.vertical,
-                        alignment: WrapAlignment.center,
-                        spacing: rSize(2),
-                        runSpacing: rSize(2),
-                        children: [
-                          Text(
-                            'Ahmad Manaa',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                          Text(
-                            '0505800955',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          Text(
-                            'ahmadmnaa.b@gmail.com',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                _renderHeader(),
+                FadeAnimation(
+                  positionType: PositionType.bottom,
+                  delay: 0.4,
+                  child: _renderActions(),
                 ),
-                _renderActions(),
                 SizedBox(
                   height: rSize(24),
                 ),
-                _renderStatics(),
+                FadeAnimation(
+                  positionType: PositionType.top,
+                  delay: 0.5,
+                  child: _renderStatics(),
+                ),
               ],
             ),
           ),
@@ -521,15 +545,27 @@ class _ContactDetailsState extends State<ContactDetails> {
                   SizedBox(
                     height: rSize(30),
                   ),
-                  _renderBirthday(),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.6,
+                    child: _renderBirthday(),
+                  ),
                   SizedBox(
                     height: rSize(24),
                   ),
-                  _renderLastVisiting(),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.7,
+                    child: _renderLastVisiting(),
+                  ),
                   SizedBox(
                     height: rSize(24),
                   ),
-                  _renderNotes(),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.8,
+                    child: _renderNotes(),
+                  ),
                   SizedBox(
                     height: rSize(40),
                   ),

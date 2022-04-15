@@ -88,15 +88,29 @@ class CustomTextButtonProps {
 }
 
 class Contact {
-  String name;
-  String phone;
-  String address;
+  String? name;
+  String? phone;
+  String? address;
 
-  Contact(
+  Contact({
     this.name,
     this.phone,
     this.address,
-  );
+  });
+}
+
+class Service {
+  String? name;
+  String? duration;
+  double? price;
+  String? notes;
+
+  Service({
+    this.name,
+    this.duration,
+    this.price,
+    this.notes,
+  });
 }
 
 class CustomAccordionSectionProps {
@@ -106,6 +120,16 @@ class CustomAccordionSectionProps {
   CustomAccordionSectionProps({
     required this.header,
     required this.content,
+  });
+}
+
+class ServiceCardProps {
+  final Service serviceDetails;
+  final bool withNavigation;
+
+  ServiceCardProps({
+    required this.serviceDetails,
+    this.withNavigation = true,
   });
 }
 
@@ -121,13 +145,19 @@ class ContactCardProps {
 
 class CustomIconProps {
   final Widget? icon;
-  final Color? color;
+  final Color? backgroundColor;
   final double containerSize;
+  final String path;
+  final Color? iconColor;
+  final bool withPadding;
 
   CustomIconProps({
     required this.icon,
-    this.color,
+    this.backgroundColor,
     this.containerSize = 40,
+    this.path = '',
+    this.iconColor,
+    this.withPadding = false,
   });
 }
 

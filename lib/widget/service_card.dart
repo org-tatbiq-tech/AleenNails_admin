@@ -2,9 +2,9 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
 
-class ContactCard extends StatelessWidget {
-  ContactCardProps contactCardProps;
-  ContactCard({
+class ServiceCard extends StatelessWidget {
+  ServiceCardProps contactCardProps;
+  ServiceCard({
     Key? key,
     required this.contactCardProps,
   }) : super(key: key);
@@ -22,7 +22,7 @@ class ContactCard extends StatelessWidget {
         enabled: contactCardProps.withNavigation,
         onTap: () => Navigator.pushNamed(context, '/contactDetails'),
         subtitle: Text(
-          contactCardProps.contactDetails.phone!,
+          contactCardProps.serviceDetails.duration!,
           style: Theme.of(context)
               .textTheme
               .subtitle1
@@ -39,8 +39,8 @@ class ContactCard extends StatelessWidget {
           radius: rSize(28),
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           child: Text(
-            contactCardProps.contactDetails.name![0].toUpperCase() +
-                contactCardProps.contactDetails.name![1].toUpperCase(),
+            contactCardProps.serviceDetails.name![0].toUpperCase() +
+                contactCardProps.serviceDetails.name![1].toUpperCase(),
             style: Theme.of(context)
                 .textTheme
                 .bodyText2
@@ -48,7 +48,7 @@ class ContactCard extends StatelessWidget {
           ),
         ),
         title: Text(
-          contactCardProps.contactDetails.name!,
+          contactCardProps.serviceDetails.name!,
           style: Theme.of(context)
               .textTheme
               .headline1

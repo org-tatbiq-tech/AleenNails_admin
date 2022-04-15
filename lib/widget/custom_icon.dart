@@ -11,19 +11,36 @@ class CustomIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColor =
-        customIconProps.color ?? Theme.of(context).colorScheme.primaryContainer;
+    Color backgroundColor = customIconProps.backgroundColor ??
+        Theme.of(context).colorScheme.primaryContainer;
     return Container(
-        width: rSize(customIconProps.containerSize),
-        height: rSize(customIconProps.containerSize),
-        decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(
-              rSize(customIconProps.containerSize / 4),
-            )),
-        child: IconTheme(
-          data: Theme.of(context).primaryIconTheme,
-          child: customIconProps.icon ?? const SizedBox(),
-        ));
+      width: rSize(customIconProps.containerSize),
+      height: rSize(customIconProps.containerSize),
+      decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(
+            rSize(customIconProps.containerSize / 4),
+          )),
+      child: customIconProps.path.isEmpty
+          ? IconTheme(
+              data: Theme.of(context).primaryIconTheme.copyWith(
+                    color: customIconProps.iconColor,
+                  ),
+              child: customIconProps.icon ?? const SizedBox(),
+            )
+          : Padding(
+              padding: EdgeInsets.all(rSize(
+                customIconProps.withPadding
+                    ? customIconProps.containerSize * 0.15
+                    : 0,
+              )),
+              child: Image.asset(
+                customIconProps.path,
+                fit: BoxFit.cover,
+                color: customIconProps.iconColor ??
+                    Theme.of(context).colorScheme.primary,
+              ),
+            ),
+    );
   }
 }

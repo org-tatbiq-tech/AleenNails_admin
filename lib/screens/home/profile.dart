@@ -1,4 +1,8 @@
+import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../../utils/data_types.dart';
 
 //class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
 class Profile extends StatefulWidget {
@@ -11,38 +15,74 @@ class Profile extends StatefulWidget {
 }
 
 class ProfileState extends State<Profile> {
-  bool clickedCentreFAB = false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex = 0; //to handle which item is currently selected in the bottom app bar
-  String text = "Profile";
-
-  //call this method on click of each bottom app bar item to update the screen
-  void updateTabSelection(int index, String buttonText) {
-    setState(() {
-      selectedIndex = index;
-      text = buttonText;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          child: Text('Profile'),
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: rSize(30),
         ),
-        //this is the code for the widget container that comes from behind the floating action button (FAB)
-        Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 250),
-            //if clickedCentreFAB == true, the first parameter is used. If it's false, the second.
-            height: clickedCentreFAB ? MediaQuery.of(context).size.height : 0.0,
-            width: clickedCentreFAB ? MediaQuery.of(context).size.height : 0,
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(clickedCentreFAB ? 0.0 : 350.0), color: Colors.red),
-          ),
-        )
-      ],
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CustomButton(
+              customButtonProps: CustomButtonProps(
+                onTap: () => {},
+                text: 'Services',
+                isPrimary: true,
+                isSecondary: true,
+              ),
+            ),
+            SizedBox(
+              height: rSize(20),
+            ),
+            CustomButton(
+              customButtonProps: CustomButtonProps(
+                onTap: () => {},
+                text: 'Services',
+                isPrimary: true,
+                isSecondary: true,
+              ),
+            ),
+            SizedBox(
+              height: rSize(20),
+            ),
+            CustomButton(
+              customButtonProps: CustomButtonProps(
+                onTap: () => {},
+                text: 'Services',
+                isPrimary: true,
+                isSecondary: true,
+              ),
+            ),
+            SizedBox(
+              height: rSize(20),
+            ),
+            CustomButton(
+              customButtonProps: CustomButtonProps(
+                onTap: () => {},
+                text: 'Services',
+                isPrimary: true,
+                isSecondary: true,
+              ),
+            ),
+            SizedBox(
+              height: rSize(20),
+            ),
+            CustomButton(
+              customButtonProps: CustomButtonProps(
+                onTap: () => {},
+                text: 'Services',
+                isPrimary: true,
+                isSecondary: true,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

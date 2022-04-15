@@ -38,7 +38,8 @@ class CustomSilverAppBar extends SliverPersistentHeaderDelegate {
                             onTap: () => Navigator.pop(context),
                             child: CustomIcon(
                               customIconProps: CustomIconProps(
-                                color: Theme.of(context).colorScheme.primary,
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primary,
                                 icon: IconTheme(
                                   data: Theme.of(context).iconTheme,
                                   child: const Icon(

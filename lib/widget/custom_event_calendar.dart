@@ -147,7 +147,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 19)),
           end: date.add(Duration(hours: 22)),
-          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+          onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
         ),
         renderFlutterWeekViewEvent(
           title: 'Course 2',
@@ -155,7 +155,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 23, minutes: 30)),
           end: date.add(Duration(hours: 24)),
-          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+          onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
         ),
         renderFlutterWeekViewEvent(
           title: 'Course 3',
@@ -163,7 +163,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 17)),
           end: date.add(Duration(hours: 18, minutes: 30)),
-          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+          onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
         ),
         renderFlutterWeekViewEvent(
           title: 'An event 5',
@@ -171,7 +171,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 20)),
           end: date.add(Duration(hours: 21)),
-          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+          onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
         ),
       ],
       'day2': [
@@ -182,7 +182,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
           backgroundColor: Colors.green,
           start: date.add(Duration(hours: 12, minutes: 30)),
           end: date.add(Duration(hours: 15)),
-          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+          onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
         ),
         renderFlutterWeekViewEvent(
           title: 'Course 9',
@@ -190,7 +190,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
           start: date.add(Duration(hours: 17)),
           end: date.add(Duration(hours: 18, minutes: 30)),
-          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+          onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
         ),
         renderFlutterWeekViewEvent(
           title: 'An event 7',
@@ -198,7 +198,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
               'A description 7dadsdasdasaddsadas sandasjdhas dasdhaskjdnasd dahsldjasljd',
           start: date.add(Duration(hours: 22)),
           end: date.add(Duration(hours: 23)),
-          onTap: () => Navigator.pushNamed(context, '/home/courseDetails'),
+          onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
         ),
       ],
     };

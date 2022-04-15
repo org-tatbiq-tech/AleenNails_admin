@@ -3,9 +3,9 @@ import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/theme_provider.dart';
+import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/contacts/contact_details.dart';
-import 'package:appointments/screens/home/courses/course_details.dart';
 import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
@@ -96,8 +96,6 @@ class StudiosApp extends StatelessWidget {
                           home: getInitScreen(context, auth.data),
                           routes: {
                             '/home': (context) => const HomeScreen(),
-                            '/home/courseDetails': (context) =>
-                                const CourseDetails(),
                             '/loginScreen': (context) => const LoginScreen(),
                             '/contactDetails': (context) =>
                                 const ContactDetails(),
@@ -112,6 +110,9 @@ class StudiosApp extends StatelessWidget {
                                 const RegisterOTPScreen(),
                             '/newAppointment': (context) =>
                                 const NewAppointment(),
+                            '/appointmentDetails': (context) =>
+                                const AppointmentDetails(),
+
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,
