@@ -69,11 +69,9 @@ class _CustomAppBarState extends State<CustomAppBar>
   @override
   Widget build(BuildContext context) {
     _getActions() {
-      if (!widget.customAppBarProps.withSearch &&
-          widget.customAppBarProps.customIcon == null) {
-        return SizedBox(
-          width: rSize(50),
-        );
+      double actionWidth = 0;
+      if (widget.customAppBarProps.withBack) {
+        actionWidth += 50;
       }
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,22 +124,32 @@ class _CustomAppBarState extends State<CustomAppBar>
       if (widget.customAppBarProps.customIcon != null) {
         actionsWidth += 50;
       }
+      if (widget.customAppBarProps.withBack) {
+        actionsWidth -= 50;
+      }
       return widget.customAppBarProps.withBack
-          ? Padding(
-              padding: EdgeInsets.fromLTRB(rSize(15), 0, 0, 0),
-              child: EaseInAnimation(
-                onTap: () => Navigator.pop(context),
-                child: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    icon: IconTheme(
-                      data: Theme.of(context).primaryIconTheme,
-                      child: const Icon(
-                        Icons.arrow_back,
+          ? Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(rSize(15), 0, 0, 0),
+                  child: EaseInAnimation(
+                    onTap: () => Navigator.pop(context),
+                    child: CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: IconTheme(
+                          data: Theme.of(context).primaryIconTheme,
+                          child: const Icon(
+                            Icons.arrow_back,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(
+                  width: rSize(actionsWidth),
+                ),
+              ],
             )
           : SizedBox(
               width: rSize(actionsWidth),

@@ -333,8 +333,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Appointment Details',
+          titleText: 'Appointment ',
           withBack: true,
+          withSearch: true,
           // withSearch: true,
           barHeight: 120,
           withClipPath: true,
