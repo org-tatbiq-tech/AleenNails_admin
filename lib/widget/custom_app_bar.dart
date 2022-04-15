@@ -15,7 +15,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Device.get().isIphoneX
       ? Size.fromHeight(rSize(customAppBarProps.barHeight))
-      : Size.fromHeight(rSize(customAppBarProps.barHeight - 15));
+      : Size.fromHeight(rSize(customAppBarProps.barHeight));
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -161,73 +161,76 @@ class _CustomAppBarState extends State<CustomAppBar>
       clipper: widget.customAppBarProps.withClipPath
           ? _AppBarClipper(childHeight: 10, isBig: false)
           : null,
-      child: Stack(children: [
-        AppBar(
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-          shadowColor: Colors.transparent,
-          bottom: PreferredSize(
-            child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              height: widget.customAppBarProps.withBorder ? rSize(1) : 0,
-            ),
-            preferredSize: const Size.fromHeight(0),
-          ),
-          titleSpacing: 0,
-          leading: const SizedBox(
-            width: 0,
-            height: 0,
-          ),
-          leadingWidth: 0,
-          title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                _getLeadingIcon(),
-                Expanded(
-                  child: Wrap(
-                    alignment: widget.customAppBarProps.centerTitle,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    direction: Axis.horizontal,
-                    clipBehavior: Clip.none,
-                    children: [
-                      widget.customAppBarProps.titleWidget ??
-                          Text(widget.customAppBarProps.titleText,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2
-                                  ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary)),
-                    ],
-                  ),
-                )
-              ]),
-          actions: [
-            _getActions(),
-          ],
-        ),
-        AnimatedBuilder(
-          animation: _animation,
-          builder: (context, child) {
-            return CustomPaint(
-              painter: AppBarPainter(
-                containerHeight: rSize(widget.customAppBarProps.barHeight),
-                center: Offset(rippleStartX, rippleStartY),
-                radius: _animation.value * screenWidth,
-                context: context,
+      child: Stack(
+        children: [
+          AppBar(
+            backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+            shadowColor: Colors.transparent,
+            bottom: PreferredSize(
+              child: Container(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                height: widget.customAppBarProps.withBorder ? rSize(1) : 0,
               ),
-            );
-          },
-        ),
-        isInSearchMode
-            ? (SearchBar(
-                onCancelSearch: cancelSearch,
-                onSearchQueryChanged: onSearchQueryChange,
-              ))
-            : (Container())
-      ]),
+              preferredSize: const Size.fromHeight(0),
+            ),
+            titleSpacing: 0,
+            leading: const SizedBox(
+              width: 0,
+              height: 0,
+            ),
+            leadingWidth: 0,
+            title: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  _getLeadingIcon(),
+                  Expanded(
+                    child: Wrap(
+                      alignment: widget.customAppBarProps.centerTitle,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      direction: Axis.horizontal,
+                      clipBehavior: Clip.none,
+                      children: [
+                        widget.customAppBarProps.titleWidget ??
+                            Text(widget.customAppBarProps.titleText,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2
+                                    ?.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary)),
+                      ],
+                    ),
+                  )
+                ]),
+            actions: [
+              _getActions(),
+            ],
+          ),
+          AnimatedBuilder(
+            animation: _animation,
+            builder: (context, child) {
+              return CustomPaint(
+                painter: AppBarPainter(
+                  containerHeight: rSize(widget.customAppBarProps.barHeight),
+                  center: Offset(rippleStartX, rippleStartY),
+                  radius: _animation.value * screenWidth,
+                  context: context,
+                ),
+              );
+            },
+          ),
+          isInSearchMode
+              ? (SearchBar(
+                  barHeight: widget.customAppBarProps.barHeight,
+                  onCancelSearch: cancelSearch,
+                  onSearchQueryChanged: onSearchQueryChange,
+                ))
+              : (Container())
+        ],
+      ),
     );
   }
 }

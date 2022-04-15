@@ -230,7 +230,7 @@ class CustomAppBarProps {
   CustomAppBarProps({
     this.titleText = 'Custom Title',
     this.titleWidget,
-    this.barHeight = 70,
+    this.barHeight = 60,
     this.centerTitle = WrapAlignment.center,
     this.customIcon,
     this.customIconTap,

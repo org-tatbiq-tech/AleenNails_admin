@@ -1,15 +1,12 @@
 import 'package:appointments/animations/fade_animation.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/utils/url_launch.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
 import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
-import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppointmentDetails extends StatefulWidget {
   const AppointmentDetails({Key? key}) : super(key: key);
@@ -276,7 +273,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         customAppBarProps: CustomAppBarProps(
           titleText: 'Appointment Details',
           withBack: true,
-          barHeight: 120,
+          barHeight: 110,
           withClipPath: true,
           customIcon: Icon(
             Icons.edit,

@@ -7,19 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 
 class SearchBar extends StatefulWidget implements PreferredSizeWidget {
-  const SearchBar({
-    Key? key,
-    required this.onCancelSearch,
-    required this.onSearchQueryChanged,
-  }) : super(key: key);
+  const SearchBar(
+      {Key? key,
+      required this.onCancelSearch,
+      required this.onSearchQueryChanged,
+      required this.barHeight})
+      : super(key: key);
 
   final VoidCallback onCancelSearch;
   final Function(String) onSearchQueryChanged;
+  final double barHeight;
 
   @override
   Size get preferredSize => Device.get().isIphoneX
-      ? Size.fromHeight(rSize(70))
-      : Size.fromHeight(rSize(55));
+      ? Size.fromHeight(barHeight)
+      : Size.fromHeight(barHeight - 15);
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -49,7 +51,7 @@ class _SearchBarState extends State<SearchBar>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
+        children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

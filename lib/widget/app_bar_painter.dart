@@ -21,7 +21,6 @@ class AppBarPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint circlePainter = Paint();
-
     circlePainter.color = Theme.of(context).colorScheme.primaryContainer;
     canvas.clipRect(
         Rect.fromLTWH(0, 0, screenWidth, containerHeight + statusBarHeight));
