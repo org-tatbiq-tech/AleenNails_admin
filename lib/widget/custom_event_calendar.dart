@@ -42,6 +42,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
+        _calendarFormat = CalendarFormat.week;
       });
 
       _selectedEvents.value = _getEventsForDay(selectedDay);

@@ -209,6 +209,7 @@ class CustomAppBarProps {
   final bool withSearch;
   final bool withBack;
   final bool withClipPath;
+  final bool withBorder;
   final double barHeight;
   CustomAppBarProps({
     this.titleText = 'Custom Title',
@@ -220,6 +221,7 @@ class CustomAppBarProps {
     this.withBack = false,
     this.withSearch = false,
     this.withClipPath = false,
+    this.withBorder = false,
   });
 }
 

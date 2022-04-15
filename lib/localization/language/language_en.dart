@@ -16,7 +16,8 @@ class LanguageEn extends Languages {
   String get sent => "Sent!";
 
   @override
-  String get successSent => "Reset email sent successfully. Please check you email!";
+  String get successSent =>
+      "Reset email sent successfully. Please check you email!";
 
   @override
   String get submit => "submit";
@@ -96,7 +97,8 @@ class LanguageEn extends Languages {
   String get labelRegisterNow => "Register now!";
 
   @override
-  String get labelEnterLoginDetails => "Please enter the details below to continue";
+  String get labelEnterLoginDetails =>
+      "Please enter the details below to continue";
 
   @override
   String get labelUserName => "User name";
@@ -109,7 +111,8 @@ class LanguageEn extends Languages {
   String get labelFPassword => "Password?";
 
   @override
-  String get labelFMessage => "Do not worry! it happens.\nPlease enter email associated with your account";
+  String get labelFMessage =>
+      "Do not worry! it happens.\nPlease enter email associated with your account";
 
   /// ************ Registration labels ************///
   @override
@@ -141,10 +144,12 @@ class LanguageEn extends Languages {
   String get labelMobileNumber => 'Mobile number';
 
   @override
-  String get labelEnterOTP => "Please enter your Mobile number for OTP Authentication";
+  String get labelEnterOTP =>
+      "Please enter your Mobile number for OTP Authentication";
 
   @override
-  String get labelMobileCodeSent => "Please check your phone, verification code sent";
+  String get labelMobileCodeSent =>
+      "Please check your phone, verification code sent";
 
   @override
   String get labelChange => "Change";
@@ -190,4 +195,10 @@ class LanguageEn extends Languages {
 
   @override
   String get labelContactAddress => "Address";
+
+  /// ************ Calendar labels ************///
+  @override
+  String get monthLabel => "Month";
+  @override
+  String get weekLabel => "Week";
 }

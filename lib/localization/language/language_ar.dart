@@ -16,7 +16,8 @@ class LanguageAr extends Languages {
   String get sent => "أُرسل!";
 
   @override
-  String get successSent => "تم ارسال بريد لاستعادة كلمة السر بنجاح, من فضلك تحقق من بريدك!";
+  String get successSent =>
+      "تم ارسال بريد لاستعادة كلمة السر بنجاح, من فضلك تحقق من بريدك!";
 
   @override
   String get submit => "إرسال";
@@ -93,7 +94,8 @@ class LanguageAr extends Languages {
   String get labelRegisterNow => "سجّل الان!";
 
   @override
-  String get labelEnterLoginDetails => "Please enter the details below to continue";
+  String get labelEnterLoginDetails =>
+      "Please enter the details below to continue";
 
   @override
   String get labelUserName => "User name";
@@ -141,10 +143,12 @@ class LanguageAr extends Languages {
   String get labelMobileNumber => 'Mobile number';
 
   @override
-  String get labelEnterOTP => "Please enter your Mobile number for OTP Authentication";
+  String get labelEnterOTP =>
+      "Please enter your Mobile number for OTP Authentication";
 
   @override
-  String get labelMobileCodeSent => "يرجى التحقق من هاتفك ، تم إرسال رقم التحقق";
+  String get labelMobileCodeSent =>
+      "يرجى التحقق من هاتفك ، تم إرسال رقم التحقق";
 
   @override
   String get labelChange => "تغير";
@@ -190,4 +194,10 @@ class LanguageAr extends Languages {
 
   @override
   String get labelContactAddress => "Address";
+
+  /// ************ Calendar labels ************///
+  @override
+  String get monthLabel => "month";
+  @override
+  String get weekLabel => "week";
 }

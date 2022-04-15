@@ -1,3 +1,4 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
@@ -19,6 +20,10 @@ class ExpandableCalendar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 0, rSize(15)),
         child: TableCalendar<CalendarEvent>(
+          availableCalendarFormats: {
+            CalendarFormat.month: Languages.of(context)!.monthLabel,
+            CalendarFormat.week: Languages.of(context)!.weekLabel,
+          },
           firstDay: getFirstDay(),
           lastDay: getLastDay(),
           daysOfWeekHeight: rSize(30),

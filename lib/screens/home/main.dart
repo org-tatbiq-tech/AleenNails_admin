@@ -31,7 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(withSearch: true),
+        customAppBarProps: CustomAppBarProps(
+          withSearch: _selectedPage == 1 ? true : false,
+          withBorder: _selectedPage == 0 ? true : false,
+        ),
       ),
       body: screens[_selectedPage],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

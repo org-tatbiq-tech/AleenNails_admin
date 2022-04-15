@@ -157,6 +157,13 @@ class _CustomAppBarState extends State<CustomAppBar>
         AppBar(
           backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           shadowColor: Colors.transparent,
+          bottom: PreferredSize(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              height: widget.customAppBarProps.withBorder ? rSize(1) : 0,
+            ),
+            preferredSize: const Size.fromHeight(0),
+          ),
           titleSpacing: 0,
           leading: const SizedBox(
             width: 0,

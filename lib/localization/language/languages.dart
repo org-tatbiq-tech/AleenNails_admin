@@ -136,4 +136,9 @@ abstract class Languages {
   String get labelContactPhone;
 
   String get labelContactAddress;
+
+  /// ************ Calendar labels ************///
+
+  String get monthLabel;
+  String get weekLabel;
 }
