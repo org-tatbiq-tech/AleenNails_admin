@@ -41,10 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showBottomModal(
-            BottomModalProps(
-                context: context,
-                child: (Text('dasjdsakjlkjdaskjdalkjdak')),
-                title: 'Modal Title'),
+            BottomModalProps(context: context, child: (Text('dasjdsakjlkjdaskjdalkjdak')), title: 'Modal Title'),
           );
         },
         // tooltip: "Centre FAB",
@@ -55,13 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 4.0,
       ),
       bottomNavigationBar: BottomAppBar(
-        notchMargin: rSize(6),
+        notchMargin: rSize(10),
         child: Container(
           margin: EdgeInsets.fromLTRB(
             rSize(20),
             rSize(10),
             rSize(20),
-            0,
+            rSize(20),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -75,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Icon(
                   FontAwesomeIcons.home,
-                  size: rSize(30),
+                  size: rSize(35),
                   color: _selectedPage == 0
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
@@ -89,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Icon(
                   FontAwesomeIcons.solidAddressBook,
-                  size: rSize(30),
+                  size: rSize(35),
                   color: _selectedPage == 1
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
@@ -106,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Icon(
                   FontAwesomeIcons.chartBar,
-                  size: rSize(30),
+                  size: rSize(35),
                   color: _selectedPage == 2
                       ? Theme.of(context).colorScheme.secondary
                       : Theme.of(context).colorScheme.primary,
