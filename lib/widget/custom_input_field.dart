@@ -114,11 +114,8 @@ class CustomInputField extends StatelessWidget {
           constraints: BoxConstraints(
             maxHeight: rSize(50),
           ),
-          contentPadding: EdgeInsets.fromLTRB(
-            rSize(20),
-            rSize(20),
-            rSize(20),
-            rSize(20),
+          contentPadding: EdgeInsets.all(
+            rSize(15),
           ),
           filled: true,
           floatingLabelBehavior: customInputFieldProps.isSearch
