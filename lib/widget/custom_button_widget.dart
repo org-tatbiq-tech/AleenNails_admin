@@ -32,7 +32,7 @@ class CustomButton extends StatelessWidget {
     }
 
     return EaseInAnimation(
-      beginAnimation: 0.99,
+      beginAnimation: customButtonProps.beginAnimation,
       onTap: customButtonProps.onTap,
       child: Container(
         alignment: Alignment.center,

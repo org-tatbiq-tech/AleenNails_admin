@@ -265,6 +265,7 @@ class CustomButtonProps {
   final Color? backgroundColor;
   final Color? textColor;
   final bool isSecondary;
+  final double beginAnimation;
   CustomButtonProps({
     this.text = '',
     this.isPrimary = true,
@@ -272,6 +273,7 @@ class CustomButtonProps {
     this.capitalizeText = true,
     this.backgroundColor,
     this.textColor,
+    this.beginAnimation = 0.99,
     required this.onTap,
   });
 }
@@ -325,17 +327,36 @@ class BottomModalProps {
   String secondaryButtonText;
   bool centerTitle;
   Duration duration;
+  VoidCallback? primaryAction;
 
-  BottomModalProps(
-      {required this.context,
-      required this.child,
-      this.isDismissible = true,
-      this.enableDrag = false,
-      this.showDragPen = false,
-      this.title = 'Header Title',
-      this.primaryButtonText = 'primary',
-      this.secondaryButtonText = 'secondary',
-      this.centerTitle = false,
-      this.duration = const Duration(milliseconds: 350),
-      this.footerButton = ModalFooter.none});
+  BottomModalProps({
+    required this.context,
+    required this.child,
+    this.isDismissible = true,
+    this.enableDrag = false,
+    this.showDragPen = false,
+    this.title = 'Header Title',
+    this.primaryButtonText = 'primary',
+    this.secondaryButtonText = 'secondary',
+    this.centerTitle = false,
+    this.duration = const Duration(milliseconds: 350),
+    this.footerButton = ModalFooter.none,
+    this.primaryAction,
+  });
+}
+
+class PickerTimeRangeModalProps {
+  BuildContext context;
+  DateTime? startTimeValue;
+  DateTime? endTimeValue;
+  DateTime? endTimeMinValue;
+  VoidCallback? primaryAction;
+
+  PickerTimeRangeModalProps({
+    required this.context,
+    this.startTimeValue,
+    this.endTimeValue,
+    this.endTimeMinValue,
+    this.primaryAction,
+  });
 }

@@ -17,14 +17,19 @@ void showBottomModal(BottomModalProps bottomModalProps) {
               customButtonProps: CustomButtonProps(
                 onTap: () => {Navigator.pop(context)},
                 text: bottomModalProps.secondaryButtonText,
+                isPrimary: false,
                 isSecondary: true,
               ),
             ),
             CustomButton(
                 customButtonProps: CustomButtonProps(
-              onTap: () => {Navigator.pop(context)},
+              onTap: () => {
+                Navigator.pop(context),
+                bottomModalProps.primaryAction!(),
+              },
               text: bottomModalProps.primaryButtonText,
               isPrimary: true,
+              isSecondary: false,
             )),
           ]);
     }
@@ -101,10 +106,11 @@ void showBottomModal(BottomModalProps bottomModalProps) {
                   : const SizedBox(),
               Padding(
                 padding: EdgeInsets.all(rSize(25)),
-                child: Flexible(
-                  child: bottomModalProps.child,
-                  fit: FlexFit.loose,
-                ),
+                child: bottomModalProps.child,
+                // child: Flexible(
+                //   child: bottomModalProps.child,
+                //   fit: FlexFit.tight,
+                // ),
               ),
               renderFooterModal(context)
             ],

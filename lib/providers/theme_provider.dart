@@ -72,10 +72,11 @@ class ThemeNotifier with ChangeNotifier {
       ),
       textTheme: TextTheme(
         button: TextStyle(
-            color: primaryFont,
-            fontWeight: FontWeight.w500,
-            fontFamily: GoogleFonts.aclonica().fontFamily,
-            fontSize: rSize(20)),
+          color: primaryFont,
+          fontWeight: FontWeight.w500,
+          fontSize: rSize(18),
+          fontFamily: GoogleFonts.openSans().fontFamily,
+        ),
         subtitle1: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w300,
