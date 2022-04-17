@@ -70,7 +70,7 @@ showPickerTimeRangeModal(PickerTimeRangeModalProps pickerTimeRangeModalProps) {
 
   showBottomModal(
     BottomModalProps(
-      title: 'Select Time',
+      title: pickerTimeRangeModalProps.title,
       centerTitle: true,
       enableDrag: false,
       isDismissible: false,
@@ -84,25 +84,44 @@ showPickerTimeRangeModal(PickerTimeRangeModalProps pickerTimeRangeModalProps) {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Text(
-            'Start Time',
-            style: Theme.of(context).textTheme.bodyText2,
-          ),
-          SizedBox(
-            height: rSize(10),
-          ),
+          pickerTimeRangeModalProps.startTimeLabel.isNotEmpty
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      pickerTimeRangeModalProps.startTimeLabel,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                    SizedBox(
+                      height: rSize(10),
+                    ),
+                  ],
+                )
+              : const SizedBox(),
           startTimePicker.makePicker(),
           SizedBox(
             height: rSize(10),
           ),
-          Text(
-            'End Time',
-            style: Theme.of(context).textTheme.bodyText2,
-          ),
-          SizedBox(
-            height: rSize(10),
-          ),
-          endTimePicker.makePicker()
+          pickerTimeRangeModalProps.pickerTimeRangType ==
+                  PickerTimeRangType.range
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    pickerTimeRangeModalProps.endTimeLabel.isNotEmpty
+                        ? Text(
+                            pickerTimeRangeModalProps.endTimeLabel,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          )
+                        : const SizedBox(),
+                    SizedBox(
+                      height: rSize(10),
+                    ),
+                    endTimePicker.makePicker(),
+                  ],
+                )
+              : const SizedBox(),
         ],
       ),
     ),

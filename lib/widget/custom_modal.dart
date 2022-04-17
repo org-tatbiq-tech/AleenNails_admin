@@ -15,11 +15,11 @@ void showBottomModal(BottomModalProps bottomModalProps) {
           children: [
             CustomButton(
               customButtonProps: CustomButtonProps(
-                onTap: () => {Navigator.pop(context)},
-                text: bottomModalProps.secondaryButtonText,
-                isPrimary: false,
-                isSecondary: true,
-              ),
+                  onTap: () => {Navigator.pop(context)},
+                  text: bottomModalProps.secondaryButtonText,
+                  isPrimary: false,
+                  isSecondary: true,
+                  beginAnimation: 0.95),
             ),
             CustomButton(
                 customButtonProps: CustomButtonProps(
@@ -27,6 +27,7 @@ void showBottomModal(BottomModalProps bottomModalProps) {
                 Navigator.pop(context),
                 bottomModalProps.primaryAction!(),
               },
+              beginAnimation: 0.95,
               text: bottomModalProps.primaryButtonText,
               isPrimary: true,
               isSecondary: false,
@@ -42,6 +43,7 @@ void showBottomModal(BottomModalProps bottomModalProps) {
             CustomButton(
                 customButtonProps: CustomButtonProps(
               onTap: () => {Navigator.pop(context)},
+              beginAnimation: 0.95,
               text: bottomModalProps.primaryButtonText,
               isPrimary: true,
             )),
@@ -56,6 +58,7 @@ void showBottomModal(BottomModalProps bottomModalProps) {
             CustomButton(
               customButtonProps: CustomButtonProps(
                 onTap: () => {Navigator.pop(context)},
+                beginAnimation: 0.95,
                 text: bottomModalProps.secondaryButtonText,
                 isSecondary: true,
               ),

@@ -345,17 +345,30 @@ class BottomModalProps {
   });
 }
 
+enum PickerTimeRangType {
+  single,
+  range,
+}
+
 class PickerTimeRangeModalProps {
   BuildContext context;
   DateTime? startTimeValue;
   DateTime? endTimeValue;
+  String startTimeLabel;
+  String endTimeLabel;
+  String title;
   DateTime? endTimeMinValue;
+  PickerTimeRangType pickerTimeRangType;
   VoidCallback? primaryAction;
 
   PickerTimeRangeModalProps({
     required this.context,
     this.startTimeValue,
     this.endTimeValue,
+    this.title = '',
+    this.startTimeLabel = '',
+    this.endTimeLabel = '',
+    this.pickerTimeRangType = PickerTimeRangType.single,
     this.endTimeMinValue,
     this.primaryAction,
   });

@@ -36,6 +36,9 @@ class CustomButton extends StatelessWidget {
       onTap: customButtonProps.onTap,
       child: Container(
         alignment: Alignment.center,
+        constraints: BoxConstraints(
+          minWidth: rSize(100),
+        ),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(rSize(10)),
             color: getButtonColor(),
@@ -48,7 +51,7 @@ class CustomButton extends StatelessWidget {
               BoxShadow(
                 color: Theme.of(context).shadowColor,
                 offset: const Offset(0, 2),
-                blurRadius: 6.0,
+                blurRadius: 3.0,
               )
             ]),
         child: Padding(

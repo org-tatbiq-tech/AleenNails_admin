@@ -104,20 +104,25 @@ class ProfileState extends State<Profile> {
             ),
             CustomIconButton(
               customIconButtonProps: CustomIconButtonProps(
-                  onTap: () => {
-                        showPickerTimeRangeModal(
-                          PickerTimeRangeModalProps(
-                            context: context,
-                            primaryAction: () => {
-                              print('ahshdaskldaslkdkdlasdaslk'),
-                            },
-                          ),
-                        )
+                onTap: () => {
+                  showPickerTimeRangeModal(
+                    PickerTimeRangeModalProps(
+                      context: context,
+                      startTimeLabel: 'Start Time',
+                      endTimeLabel: 'End Time',
+                      title: 'Select Time',
+                      pickerTimeRangType: PickerTimeRangType.range,
+                      primaryAction: () => {
+                        print('ahshdaskldaslkdkdlasdaslk'),
                       },
-                  animationDelay: 0.9,
-                  iconPath: 'assets/icons/customer-support.png',
-                  positionType: PositionType.bottom,
-                  text: 'Customer Support Chat'),
+                    ),
+                  ),
+                },
+                animationDelay: 0.9,
+                iconPath: 'assets/icons/customer-support.png',
+                positionType: PositionType.bottom,
+                text: 'Customer Support Chat',
+              ),
             ),
           ],
         ),
