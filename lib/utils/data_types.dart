@@ -1,3 +1,4 @@
+import 'package:appointments/animations/fade_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -238,6 +239,21 @@ class CustomAppBarProps {
     this.withSearch = false,
     this.withClipPath = false,
     this.withBorder = false,
+  });
+}
+
+class CustomIconButtonProps {
+  final String text;
+  final String iconPath;
+  final double animationDelay;
+  final PositionType positionType;
+  final VoidCallback onTap;
+  CustomIconButtonProps({
+    this.text = '',
+    this.iconPath = 'assets/icons/calendar_plus.png',
+    this.animationDelay = 0,
+    this.positionType = PositionType.right,
+    required this.onTap,
   });
 }
 

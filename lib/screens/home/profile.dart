@@ -1,5 +1,9 @@
+import 'package:appointments/animations/fade_animation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:appointments/widget/custom_icon.dart';
+import 'package:appointments/widget/custom_icon_button.dart';
+import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/data_types.dart';
@@ -28,57 +32,57 @@ class ProfileState extends State<Profile> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomButton(
-              customButtonProps: CustomButtonProps(
-                onTap: () => {},
-                text: 'Services',
-                isPrimary: true,
-                isSecondary: true,
-              ),
+            CustomIconButton(
+              customIconButtonProps: CustomIconButtonProps(
+                  onTap: () => {},
+                  animationDelay: 0.1,
+                  iconPath: 'assets/icons/growth.png',
+                  positionType: PositionType.bottom,
+                  text: 'Marketing'),
             ),
             SizedBox(
               height: rSize(20),
             ),
-            CustomButton(
-              customButtonProps: CustomButtonProps(
-                onTap: () => {},
-                text: 'Services',
-                isPrimary: true,
-                isSecondary: true,
-              ),
+            CustomIconButton(
+              customIconButtonProps: CustomIconButtonProps(
+                  onTap: () => {},
+                  animationDelay: 0.3,
+                  iconPath: 'assets/icons/rating.png',
+                  positionType: PositionType.bottom,
+                  text: 'Reviews & Ratings'),
             ),
             SizedBox(
               height: rSize(20),
             ),
-            CustomButton(
-              customButtonProps: CustomButtonProps(
-                onTap: () => {},
-                text: 'Services',
-                isPrimary: true,
-                isSecondary: true,
-              ),
+            CustomIconButton(
+              customIconButtonProps: CustomIconButtonProps(
+                  onTap: () => {},
+                  animationDelay: 0.5,
+                  iconPath: 'assets/icons/profile.png',
+                  positionType: PositionType.bottom,
+                  text: 'Profile'),
             ),
             SizedBox(
               height: rSize(20),
             ),
-            CustomButton(
-              customButtonProps: CustomButtonProps(
-                onTap: () => {},
-                text: 'Services',
-                isPrimary: true,
-                isSecondary: true,
-              ),
+            CustomIconButton(
+              customIconButtonProps: CustomIconButtonProps(
+                  onTap: () => {},
+                  animationDelay: 0.7,
+                  iconPath: 'assets/icons/settings.png',
+                  positionType: PositionType.bottom,
+                  text: 'Settings'),
             ),
             SizedBox(
               height: rSize(20),
             ),
-            CustomButton(
-              customButtonProps: CustomButtonProps(
-                onTap: () => {},
-                text: 'Services',
-                isPrimary: true,
-                isSecondary: true,
-              ),
+            CustomIconButton(
+              customIconButtonProps: CustomIconButtonProps(
+                  onTap: () => {},
+                  animationDelay: 0.9,
+                  iconPath: 'assets/icons/customer-support.png',
+                  positionType: PositionType.bottom,
+                  text: 'Customer Support Chat'),
             ),
           ],
         ),

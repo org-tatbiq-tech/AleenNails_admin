@@ -143,44 +143,49 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            IconTheme(
-              data: Theme.of(context).primaryIconTheme,
-              child: CustomIcon(
-                customIconProps: CustomIconProps(
-                  backgroundColor: Colors.transparent,
-                  path: 'assets/icons/calendar_time.png',
-                  icon: null,
+            FadeAnimation(
+              delay: 0.3,
+              positionType: PositionType.right,
+              child: IconTheme(
+                data: Theme.of(context).primaryIconTheme,
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    backgroundColor: Colors.transparent,
+                    path: 'assets/icons/calendar_time.png',
+                    icon: null,
+                  ),
                 ),
               ),
             ),
             SizedBox(
               width: rSize(10),
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Wed 13/02/2022',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline1?.copyWith(
-                        fontSize: rSize(18),
-                      ),
-                ),
-                // SizedBox(
-                //   height: rSize(2),
-                // ),
-                Text(
-                  '13:00 - 14:30',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                        fontSize: rSize(16),
-                      ),
-                ),
-              ],
+            FadeAnimation(
+              delay: 0.3,
+              positionType: PositionType.left,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Wed 13/02/2022',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.headline1?.copyWith(
+                          fontSize: rSize(18),
+                        ),
+                  ),
+                  Text(
+                    '13:00 - 14:30',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                          fontSize: rSize(16),
+                        ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -238,31 +243,35 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           SizedBox(
             width: rSize(20),
           ),
-          FadeAnimation(
-            delay: 0.1,
-            positionType: PositionType.left,
-            child: Wrap(
-              direction: Axis.vertical,
-              alignment: WrapAlignment.center,
-              spacing: rSize(2),
-              runSpacing: rSize(2),
-              children: [
-                Text(
+          Wrap(
+            direction: Axis.vertical,
+            alignment: WrapAlignment.center,
+            spacing: rSize(2),
+            runSpacing: rSize(2),
+            children: [
+              FadeAnimation(
+                delay: 0.1,
+                positionType: PositionType.left,
+                child: Text(
                   'Ahmad Manaa',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
-                Text(
+              ),
+              FadeAnimation(
+                delay: 0.1,
+                positionType: PositionType.left,
+                child: Text(
                   '0505800955',
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                SizedBox(
-                  height: rSize(10),
-                ),
-                _renderDate(),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              _renderDate(),
+            ],
           ),
         ],
       );
@@ -286,8 +295,18 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          FadeAnimation(
+            positionType: PositionType.bottom,
+            delay: 0.3,
+            child: CustomStatus(
+              customStatusProps: CustomStatusProps(status: Status.waiting),
+            ),
+          ),
+          SizedBox(
+            height: rSize(10),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: rSize(20),
@@ -304,17 +323,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: rSize(30),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.3,
-                    child: CustomStatus(
-                      customStatusProps:
-                          CustomStatusProps(status: Status.waiting),
-                    ),
-                  ),
                   SizedBox(
                     height: rSize(30),
                   ),

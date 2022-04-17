@@ -5,6 +5,7 @@ import 'package:appointments/screens/home/timeline.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showBottomModal(
-            BottomModalProps(context: context, child: (Text('dasjdsakjlkjdaskjdalkjdak')), title: 'Modal Title'),
+            BottomModalProps(
+                context: context,
+                child: (Text('dasjdsakjlkjdaskjdalkjdak')),
+                title: 'Modal Title'),
           );
         },
         // tooltip: "Centre FAB",
@@ -52,13 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 4.0,
       ),
       bottomNavigationBar: BottomAppBar(
-        notchMargin: rSize(10),
+        notchMargin: rSize(5),
+        shape: const CircularNotchedRectangle(),
         child: Container(
           margin: EdgeInsets.fromLTRB(
             rSize(20),
             rSize(10),
             rSize(20),
-            rSize(20),
+            rSize(0),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
@@ -70,12 +75,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     _selectedPage = 0;
                   });
                 },
-                child: Icon(
-                  FontAwesomeIcons.home,
-                  size: rSize(35),
-                  color: _selectedPage == 0
-                      ? Theme.of(context).colorScheme.secondary
-                      : Theme.of(context).colorScheme.primary,
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    iconColor: _selectedPage == 0
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.primary,
+                    icon: null,
+                    backgroundColor: Colors.transparent,
+                    path: 'assets/icons/home.png',
+                    containerSize: rSize(35),
+                  ),
                 ),
               ),
               EaseInAnimation(
@@ -84,12 +93,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     _selectedPage = 1;
                   });
                 },
-                child: Icon(
-                  FontAwesomeIcons.solidAddressBook,
-                  size: rSize(35),
-                  color: _selectedPage == 1
-                      ? Theme.of(context).colorScheme.secondary
-                      : Theme.of(context).colorScheme.primary,
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    iconColor: _selectedPage == 1
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.primary,
+                    icon: null,
+                    backgroundColor: Colors.transparent,
+                    path: 'assets/icons/contacts.png',
+                    containerSize: rSize(40),
+                  ),
                 ),
               ),
               SizedBox(
@@ -101,12 +114,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     _selectedPage = 2;
                   });
                 },
-                child: Icon(
-                  FontAwesomeIcons.chartBar,
-                  size: rSize(35),
-                  color: _selectedPage == 2
-                      ? Theme.of(context).colorScheme.secondary
-                      : Theme.of(context).colorScheme.primary,
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    iconColor: _selectedPage == 2
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.primary,
+                    icon: null,
+                    backgroundColor: Colors.transparent,
+                    path: 'assets/icons/statics.png',
+                    containerSize: rSize(35),
+                  ),
                 ),
               ),
               EaseInAnimation(
@@ -115,18 +132,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     _selectedPage = 3;
                   });
                 },
-                child: Icon(
-                  Icons.settings,
-                  size: rSize(35),
-                  color: _selectedPage == 3
-                      ? Theme.of(context).colorScheme.secondary
-                      : Theme.of(context).colorScheme.primary,
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    iconColor: _selectedPage == 3
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.primary,
+                    icon: null,
+                    backgroundColor: Colors.transparent,
+                    path: 'assets/icons/menu.png',
+                    containerSize: rSize(35),
+                  ),
                 ),
               ),
             ],
           ),
         ),
-        shape: const CircularNotchedRectangle(),
       ),
     );
   }
