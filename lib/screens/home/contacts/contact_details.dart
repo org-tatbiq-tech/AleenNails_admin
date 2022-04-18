@@ -11,7 +11,6 @@ import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactDetails extends StatefulWidget {
   const ContactDetails({Key? key}) : super(key: key);
@@ -492,7 +491,6 @@ class _ContactDetailsState extends State<ContactDetails> {
         customAppBarProps: CustomAppBarProps(
           titleText: 'Contact Details',
           withBack: true,
-          // withSearch: true,
           barHeight: 120,
           withClipPath: true,
           customIcon: Icon(

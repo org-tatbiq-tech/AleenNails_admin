@@ -25,7 +25,9 @@ void showBottomModal(BottomModalProps bottomModalProps) {
                 customButtonProps: CustomButtonProps(
               onTap: () => {
                 Navigator.pop(context),
-                bottomModalProps.primaryAction!(),
+                bottomModalProps.primaryAction != null
+                    ? bottomModalProps.primaryAction!()
+                    : () => {},
               },
               beginAnimation: 0.95,
               text: bottomModalProps.primaryButtonText,

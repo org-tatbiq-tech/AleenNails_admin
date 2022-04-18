@@ -289,6 +289,7 @@ class CustomInputFieldProps {
   final bool isConfirmPassword;
   final bool isPasswordVisible;
   final bool isSearch;
+  final bool isCurrency;
   final dynamic togglePassword;
   final String passwordToConfirm;
   final dynamic validator;
@@ -308,6 +309,7 @@ class CustomInputFieldProps {
     this.isSearch = false,
     this.isConfirmPassword = false,
     this.isPasswordVisible = false,
+    this.isCurrency = false,
     this.isDescription = false,
     this.passwordToConfirm = '',
     this.togglePassword,
@@ -327,7 +329,7 @@ class BottomModalProps {
   String secondaryButtonText;
   bool centerTitle;
   Duration duration;
-  VoidCallback? primaryAction;
+  Function? primaryAction;
 
   BottomModalProps({
     required this.context,
