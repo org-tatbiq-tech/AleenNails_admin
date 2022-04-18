@@ -1,11 +1,17 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 
 class CustomInputField extends StatelessWidget {
   final CustomInputFieldProps customInputFieldProps;
+  final CurrencyTextInputFormatter _formatter = CurrencyTextInputFormatter(
+    symbol: '₪',
+    decimalDigits: 1,
+    turnOffGrouping: false,
+  );
 
-  const CustomInputField({Key? key, required this.customInputFieldProps})
+  CustomInputField({Key? key, required this.customInputFieldProps})
       : super(key: key);
 
   @override
@@ -97,6 +103,7 @@ class CustomInputField extends StatelessWidget {
       elevation: 2,
       color: Colors.transparent,
       child: TextFormField(
+        inputFormatters: customInputFieldProps.isCurrency ? [_formatter] : [],
         maxLength: customInputFieldProps.maxLength,
         controller: customInputFieldProps.controller,
         obscureText: customInputFieldProps.isPassword &&

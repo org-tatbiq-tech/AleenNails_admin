@@ -7,6 +7,8 @@ import 'package:appointments/screens/home/appointments/appointment_details.dart'
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/contacts/contact_details.dart';
 import 'package:appointments/screens/home/main.dart';
+import 'package:appointments/screens/home/services/new_service.dart';
+import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
 import 'package:appointments/screens/register/main.dart';
@@ -112,7 +114,8 @@ class StudiosApp extends StatelessWidget {
                                 const NewAppointment(),
                             '/appointmentDetails': (context) =>
                                 const AppointmentDetails(),
-
+                            '/services': (context) => const Services(),
+                            '/newService': (context) => const NewService(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,
