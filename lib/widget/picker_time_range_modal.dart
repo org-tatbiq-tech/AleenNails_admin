@@ -4,7 +4,8 @@ import 'package:appointments/widget/custom_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
-showPickerTimeRangeModal(PickerTimeRangeModalProps pickerTimeRangeModalProps) {
+showPickerTimeRangeModal(
+    {required PickerTimeRangeModalProps pickerTimeRangeModalProps}) {
   BuildContext context = pickerTimeRangeModalProps.context;
   Picker startTimePicker = Picker(
     backgroundColor: Theme.of(context).colorScheme.background,

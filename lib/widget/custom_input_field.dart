@@ -133,7 +133,10 @@ class CustomInputField extends StatelessWidget {
             fontSize: rSize(18),
           ),
           suffixIcon: getSuffixIcon(),
-          prefixIconConstraints: BoxConstraints(minWidth: rSize(50)),
+          prefixIconConstraints: BoxConstraints(
+            maxWidth: rSize(200),
+            minWidth: rSize(40),
+          ),
           prefixIcon: !customInputFieldProps.isSearch
               ? customInputFieldProps.prefixIcon
               : IconTheme(

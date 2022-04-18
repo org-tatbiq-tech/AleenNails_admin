@@ -1,10 +1,12 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_container.dart';
 import 'package:appointments/widget/custom_input_field.dart';
+import 'package:appointments/widget/custom_input_field_button.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:appointments/widget/picker_time_range_modal.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NewService extends StatefulWidget {
   const NewService({Key? key}) : super(key: key);
@@ -57,7 +59,7 @@ class _NewServiceState extends State<NewService> {
           ),
         },
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 400),
+          duration: const Duration(milliseconds: 300),
           width: selectedColorIndex == index ? rSize(45) : rSize(40),
           height: rSize(40),
           margin: EdgeInsets.only(
@@ -105,7 +107,7 @@ class _NewServiceState extends State<NewService> {
                 ),
           ),
           SizedBox(
-            height: rSize(10),
+            height: rSize(15),
           ),
           SizedBox(
             height: rSize(40),
@@ -122,60 +124,130 @@ class _NewServiceState extends State<NewService> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: 'New Service',
-          withBack: true,
-          withClipPath: false,
-          customIcon: Icon(
-            Icons.save,
-            size: rSize(24),
+    return CustomContainer(
+      child: Scaffold(
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: 'New Service',
+            withBack: true,
+            withClipPath: false,
+            customIcon: Icon(
+              Icons.save,
+              size: rSize(24),
+            ),
+            customIconTap: () => {},
           ),
-          customIconTap: () => {},
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          CustomInputField(
-            customInputFieldProps: CustomInputFieldProps(
-              controller: _nameController,
-              // prefixIcon: IconTheme(
-              //   data: Theme.of(context).primaryIconTheme,
-              //   child: Icon(
-              //     FontAwesomeIcons.server,
-              //     size: rSize(20),
-              //   ),
-              // ),
-              labelText: 'Service Name',
-            ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: rSize(20)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    'Service Name',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          fontSize: rSize(18),
+                        ),
+                  ),
+                  SizedBox(
+                    height: rSize(10),
+                  ),
+                  CustomInputField(
+                    customInputFieldProps: CustomInputFieldProps(
+                      controller: _nameController,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: rSize(20),
+              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            'Price',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                Theme.of(context).textTheme.bodyText2?.copyWith(
+                                      fontSize: rSize(18),
+                                    ),
+                          ),
+                          SizedBox(
+                            height: rSize(10),
+                          ),
+                          CustomInputField(
+                            customInputFieldProps: CustomInputFieldProps(
+                              controller: _priceController,
+                              isCurrency: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: rSize(15),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Text(
+                            'Duration',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style:
+                                Theme.of(context).textTheme.bodyText2?.copyWith(
+                                      fontSize: rSize(18),
+                                    ),
+                          ),
+                          SizedBox(
+                            height: rSize(10),
+                          ),
+                          CustomInputFieldButton(
+                            text: '1h:10m',
+                            onTap: () => showPickerTimeRangeModal(
+                              pickerTimeRangeModalProps:
+                                  PickerTimeRangeModalProps(
+                                context: context,
+                                title: 'Duration',
+                                pickerTimeRangType: PickerTimeRangType.single,
+                                // primaryAction: () => print('object'),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+              SizedBox(
+                height: rSize(30),
+              ),
+              _renderServiceColors(),
+            ],
           ),
-          SizedBox(
-            height: rSize(20),
-          ),
-          CustomInputField(
-            customInputFieldProps: CustomInputFieldProps(
-              controller: _priceController,
-              // prefixIcon: IconTheme(
-              //   data: Theme.of(context).primaryIconTheme,
-              //   child: Icon(
-              //     FontAwesomeIcons.server,
-              //     size: rSize(20),
-              //   ),
-              // ),
-              isCurrency: true,
-              labelText: 'Price',
-            ),
-          ),
-          SizedBox(
-            height: rSize(20),
-          ),
-          _renderServiceColors(),
-        ],
+        ),
       ),
     );
   }

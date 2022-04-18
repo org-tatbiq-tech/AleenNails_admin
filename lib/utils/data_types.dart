@@ -329,7 +329,7 @@ class BottomModalProps {
   String secondaryButtonText;
   bool centerTitle;
   Duration duration;
-  VoidCallback? primaryAction;
+  Function? primaryAction;
 
   BottomModalProps({
     required this.context,
