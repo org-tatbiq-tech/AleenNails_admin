@@ -42,9 +42,10 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           showBottomModal(
             BottomModalProps(
-                context: context,
-                child: (Text('dasjdsakjlkjdaskjdalkjdak')),
-                title: 'Modal Title'),
+              context: context,
+              child: (Text('dasjdsakjlkjdaskjdalkjdak')),
+              title: 'Modal Title',
+            ),
           );
         },
         // tooltip: "Centre FAB",

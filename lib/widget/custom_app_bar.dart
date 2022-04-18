@@ -1,3 +1,4 @@
+import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/app_bar_painter.dart';
@@ -6,11 +7,14 @@ import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final CustomAppBarProps customAppBarProps;
-  const CustomAppBar({Key? key, required this.customAppBarProps})
-      : super(key: key);
+  const CustomAppBar({
+    Key? key,
+    required this.customAppBarProps,
+  }) : super(key: key);
 
   @override
   Size get preferredSize => Device.get().isIphoneX
@@ -21,8 +25,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   _CustomAppBarState createState() => _CustomAppBarState();
 }
 
-class _CustomAppBarState extends State<CustomAppBar>
-    with SingleTickerProviderStateMixin {
+class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderStateMixin {
   double rippleStartX = 0;
   double rippleStartY = 0;
   late AnimationController _controller;
@@ -32,8 +35,7 @@ class _CustomAppBarState extends State<CustomAppBar>
   @override
   initState() {
     super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 500));
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _controller.addStatusListener(animationStatusListener);
   }
@@ -63,7 +65,8 @@ class _CustomAppBarState extends State<CustomAppBar>
   }
 
   onSearchQueryChange(String query) {
-    print('search $query');
+    final appData = Provider.of<AppData>(context, listen: false);
+    appData.getFiltered(query);
   }
 
   @override
@@ -104,8 +107,7 @@ class _CustomAppBarState extends State<CustomAppBar>
                     child: CustomIcon(
                         customIconProps: CustomIconProps(
                       icon: IconTheme(
-                        child:
-                            widget.customAppBarProps.customIcon ?? Container(),
+                        child: widget.customAppBarProps.customIcon ?? Container(),
                         data: Theme.of(context).primaryIconTheme,
                       ),
                     )),
@@ -156,10 +158,15 @@ class _CustomAppBarState extends State<CustomAppBar>
             );
     }
 
+    final TextEditingController _filter = new TextEditingController();
+
     double screenWidth = MediaQuery.of(context).size.width;
     return ClipPath(
       clipper: widget.customAppBarProps.withClipPath
-          ? _AppBarClipper(childHeight: 10, isBig: false)
+          ? _AppBarClipper(
+              childHeight: 10,
+              isBig: false,
+            )
           : null,
       child: Stack(
         children: [
@@ -193,14 +200,12 @@ class _CustomAppBarState extends State<CustomAppBar>
                       clipBehavior: Clip.none,
                       children: [
                         widget.customAppBarProps.titleWidget ??
-                            Text(widget.customAppBarProps.titleText,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2
-                                    ?.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary)),
+                            Text(
+                              widget.customAppBarProps.titleText,
+                              style: Theme.of(context).textTheme.headline2?.copyWith(
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                            ),
                       ],
                     ),
                   )
@@ -250,8 +255,7 @@ class _AppBarClipper extends CustomClipper<Path> {
     Path path = Path();
 
     path.moveTo(0, height - rSize(40));
-    path.quadraticBezierTo(
-        size.width / 2, height, size.width, height - rSize(40));
+    path.quadraticBezierTo(size.width / 2, height, size.width, height - rSize(40));
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
 

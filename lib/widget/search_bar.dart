@@ -7,11 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 
 class SearchBar extends StatefulWidget implements PreferredSizeWidget {
-  const SearchBar(
-      {Key? key,
-      required this.onCancelSearch,
-      required this.onSearchQueryChanged,
-      required this.barHeight})
+  const SearchBar({Key? key, required this.onCancelSearch, required this.onSearchQueryChanged, required this.barHeight})
       : super(key: key);
 
   final VoidCallback onCancelSearch;
@@ -19,16 +15,13 @@ class SearchBar extends StatefulWidget implements PreferredSizeWidget {
   final double barHeight;
 
   @override
-  Size get preferredSize => Device.get().isIphoneX
-      ? Size.fromHeight(barHeight)
-      : Size.fromHeight(barHeight - 15);
+  Size get preferredSize => Device.get().isIphoneX ? Size.fromHeight(barHeight) : Size.fromHeight(barHeight - 15);
 
   @override
   _SearchBarState createState() => _SearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar>
-    with SingleTickerProviderStateMixin {
+class _SearchBarState extends State<SearchBar> with SingleTickerProviderStateMixin {
   String searchQuery = '';
   final TextEditingController _searchFieldController = TextEditingController();
 
@@ -40,7 +33,9 @@ class _SearchBarState extends State<SearchBar>
   @override
   void initState() {
     super.initState();
-    _searchFieldController.addListener(() => setState(() {}));
+    _searchFieldController.addListener(() => setState(() {
+          widget.onSearchQueryChanged(_searchFieldController.text);
+        }));
   }
 
   @override
@@ -79,9 +74,10 @@ class _SearchBarState extends State<SearchBar>
                   padding: EdgeInsets.fromLTRB(rSize(20), 0, rSize(20), 0),
                   child: CustomInputField(
                     customInputFieldProps: CustomInputFieldProps(
-                        controller: _searchFieldController,
-                        isSearch: true,
-                        labelText: 'Search...'),
+                      controller: _searchFieldController,
+                      isSearch: true,
+                      labelText: 'Search...',
+                    ),
                   ),
                 ),
               )
