@@ -1,4 +1,5 @@
 import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_container.dart';
@@ -18,6 +19,8 @@ class NewService extends StatefulWidget {
 class _NewServiceState extends State<NewService> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  DateTime durationValue = kToday;
   int selectedColorIndex = 0;
 
   @override
@@ -25,6 +28,7 @@ class _NewServiceState extends State<NewService> {
     super.initState();
     _nameController.addListener(() => setState(() {}));
     _priceController.addListener(() => setState(() {}));
+    _descriptionController.addListener(() => setState(() {}));
   }
 
   @override
@@ -32,6 +36,7 @@ class _NewServiceState extends State<NewService> {
     super.dispose();
     _nameController.dispose();
     _priceController.dispose();
+    _descriptionController.dispose();
   }
 
   @override
@@ -140,7 +145,9 @@ class _NewServiceState extends State<NewService> {
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: rSize(20)),
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(30),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,14 +233,20 @@ class _NewServiceState extends State<NewService> {
                             height: rSize(10),
                           ),
                           CustomInputFieldButton(
-                            text: '1h:10m',
+                            text: getDateTimeFormat(
+                              dateTime: durationValue,
+                              format: 'HH:mm',
+                            ),
                             onTap: () => showPickerTimeRangeModal(
                               pickerTimeRangeModalProps:
                                   PickerTimeRangeModalProps(
                                 context: context,
                                 title: 'Duration',
+                                startTimeValue: durationValue,
                                 pickerTimeRangType: PickerTimeRangType.single,
-                                // primaryAction: () => print('object'),
+                                primaryAction: (DateTime x) => setState(() {
+                                  durationValue = x;
+                                }),
                               ),
                             ),
                           ),
@@ -245,6 +258,36 @@ class _NewServiceState extends State<NewService> {
                 height: rSize(30),
               ),
               _renderServiceColors(),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    'Notes',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          fontSize: rSize(18),
+                        ),
+                  ),
+                  SizedBox(
+                    height: rSize(10),
+                  ),
+                  SizedBox(
+                    height: rSize(120),
+                    child: CustomInputField(
+                      customInputFieldProps: CustomInputFieldProps(
+                        controller: _descriptionController,
+                        isDescription: true,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

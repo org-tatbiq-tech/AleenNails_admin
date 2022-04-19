@@ -361,7 +361,7 @@ class PickerTimeRangeModalProps {
   String title;
   DateTime? endTimeMinValue;
   PickerTimeRangType pickerTimeRangType;
-  VoidCallback? primaryAction;
+  Function? primaryAction;
 
   PickerTimeRangeModalProps({
     required this.context,

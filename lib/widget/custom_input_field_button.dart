@@ -19,7 +19,7 @@ class CustomInputFieldButton extends StatelessWidget {
       child: Container(
         alignment: Alignment.centerLeft,
         padding: EdgeInsets.symmetric(
-          horizontal: rSize(10),
+          horizontal: rSize(15),
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(

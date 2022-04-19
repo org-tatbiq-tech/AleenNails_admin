@@ -4,8 +4,9 @@ import 'package:appointments/widget/custom_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 
-showPickerTimeRangeModal(
-    {required PickerTimeRangeModalProps pickerTimeRangeModalProps}) {
+showPickerTimeRangeModal({
+  required PickerTimeRangeModalProps pickerTimeRangeModalProps,
+}) {
   BuildContext context = pickerTimeRangeModalProps.context;
   Picker startTimePicker = Picker(
     backgroundColor: Theme.of(context).colorScheme.background,
@@ -21,8 +22,12 @@ showPickerTimeRangeModal(
       hourSuffix: 'h',
       value: pickerTimeRangeModalProps.startTimeValue,
     ),
+    onSelect: (Picker picker, int int, List<int> list) => {
+      // print(getTimeFormat((picker.adapter as DateTimePickerAdapter).value)),
+    },
     onConfirm: (Picker picker, List value) {
-      print((picker.adapter as DateTimePickerAdapter).value);
+      pickerTimeRangeModalProps
+          .primaryAction!((picker.adapter as DateTimePickerAdapter).value);
     },
   );
 
@@ -43,31 +48,17 @@ showPickerTimeRangeModal(
       minValue: pickerTimeRangeModalProps.endTimeMinValue,
     ),
     onSelect: (Picker picker, int int, List<int> list) => {
-      print(picker),
-      print(int),
-      print(list),
+      // print(picker),
+      // print(int),
+      // print(list),
     },
     onConfirm: (Picker picker, List value) {
-      print((picker.adapter as DateTimePickerAdapter).value);
+      print(value);
+      // pickerTimeRangeModalProps
+      //     .primaryAction!((picker.adapter as DateTimePickerAdapter).value);
     },
   );
 // ps.onConfirm(ps, ps.selecteds);
-  List<Widget> actions = [
-    TextButton(
-      onPressed: () {
-        Navigator.pop(context);
-      },
-      child: Text('cancel'),
-    ),
-    TextButton(
-      onPressed: () {
-        Navigator.pop(context);
-        // ps.onConfirm(ps, ps.selecteds);
-        // pe.onConfirm(pe, pe.selecteds);
-      },
-      child: Text('Confirm'),
-    )
-  ];
 
   showBottomModal(
     BottomModalProps(
@@ -79,7 +70,12 @@ showPickerTimeRangeModal(
       secondaryButtonText: 'Cancel',
       footerButton: ModalFooter.both,
       showDragPen: false,
-      primaryAction: pickerTimeRangeModalProps.primaryAction,
+      primaryAction: () => {
+        startTimePicker.onConfirm!(
+          startTimePicker,
+          startTimePicker.selecteds,
+        )
+      },
       context: context,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
