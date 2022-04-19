@@ -21,7 +21,8 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin {
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _userEmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -41,16 +42,22 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 1500));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1500));
 
-    _leftContentAnimation = Tween(begin: 0.0, end: 100)
-        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0, 0.3, curve: Curves.linear)));
+    _leftContentAnimation = Tween(begin: 0.0, end: 100).animate(CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0, 0.3, curve: Curves.linear)));
 
-    _rightContentAnimation = Tween(begin: 0.0, end: 1.0)
-        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0.3, 1, curve: Curves.linear)));
+    _rightContentAnimation = Tween(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.3, 1, curve: Curves.linear)));
     _userEmailController.addListener(() => setState(() {}));
-    _rightContentAnimation = Tween(begin: 0.0, end: 1.0)
-        .animate(CurvedAnimation(parent: _controller, curve: const Interval(0.3, 1, curve: Curves.linear)));
+    _rightContentAnimation = Tween(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(
+            parent: _controller,
+            curve: const Interval(0.3, 1, curve: Curves.linear)));
     _passwordController.addListener(() => setState(() {}));
     _controller.forward();
     _controller.addListener(() {
@@ -119,9 +126,11 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                   });
                 },
                 checkColor: Theme.of(context).colorScheme.onBackground,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(3)),
                 splashRadius: 0,
-                side: BorderSide(color: Theme.of(context).colorScheme.secondary),
+                side:
+                    BorderSide(color: Theme.of(context).colorScheme.secondary),
                 activeColor: Theme.of(context).colorScheme.secondary),
           ),
         ),
@@ -167,7 +176,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                         fontSize: rSize(50),
                         letterSpacing: rSize(50),
                         shadows: [
-                          BoxShadow(offset: const Offset(4, 4), spreadRadius: 1, color: Theme.of(context).shadowColor)
+                          BoxShadow(
+                              offset: const Offset(4, 4),
+                              spreadRadius: 1,
+                              color: Theme.of(context).shadowColor)
                         ],
                         color: Theme.of(context).colorScheme.primary),
                   ),
@@ -197,7 +209,10 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Image(image: AssetImage('assets/images/logo.png'), width: rSize(250), fit: BoxFit.cover),
+                      Image(
+                          image: AssetImage('assets/images/logo.png'),
+                          width: rSize(250),
+                          fit: BoxFit.cover),
                       SizedBox(
                         height: rSize(40),
                       ),

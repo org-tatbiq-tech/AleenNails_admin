@@ -22,6 +22,7 @@ class _NewServiceState extends State<NewService> {
   final TextEditingController _descriptionController = TextEditingController();
   DateTime durationValue = kToday;
   int selectedColorIndex = 0;
+  bool isEnabled = false;
 
   @override
   void initState() {
@@ -54,7 +55,7 @@ class _NewServiceState extends State<NewService> {
       color5,
     ];
 
-    Widget _createColorCard(index) {
+    Widget _colorCard(index) {
       return EaseInAnimation(
         onTap: () => {
           setState(
@@ -122,7 +123,213 @@ class _NewServiceState extends State<NewService> {
               ),
               scrollDirection: Axis.horizontal,
               itemCount: colors.length,
-              itemBuilder: (context, index) => _createColorCard(index),
+              itemBuilder: (context, index) => _colorCard(index),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget _renderPermissions() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            'Permissions',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                  fontSize: rSize(18),
+                ),
+          ),
+          // SizedBox(
+          //   height: rSize(10),
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                'Allow Clients to Book Online',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                      fontSize: rSize(18),
+                    ),
+              ),
+              Switch(
+                onChanged: (bool value) {
+                  setState(() {
+                    isEnabled = value;
+                  });
+                },
+                activeColor: Theme.of(context).colorScheme.primary,
+                value: isEnabled,
+              ),
+            ],
+          )
+        ],
+      );
+    }
+
+    Widget _renderMedia() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            'Media',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                  fontSize: rSize(18),
+                ),
+          ),
+          SizedBox(
+            height: rSize(10),
+          ),
+          SizedBox(
+            height: rSize(120),
+            child: CustomInputField(
+              customInputFieldProps: CustomInputFieldProps(
+                controller: _descriptionController,
+                isDescription: true,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget _renderDescription() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            'Service Description',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                  fontSize: rSize(18),
+                ),
+          ),
+          SizedBox(
+            height: rSize(10),
+          ),
+          SizedBox(
+            height: rSize(120),
+            child: CustomInputField(
+              customInputFieldProps: CustomInputFieldProps(
+                controller: _descriptionController,
+                isDescription: true,
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget _renderPriceDuration() {
+      return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    'Price',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          fontSize: rSize(18),
+                        ),
+                  ),
+                  SizedBox(
+                    height: rSize(10),
+                  ),
+                  CustomInputField(
+                    customInputFieldProps: CustomInputFieldProps(
+                      controller: _priceController,
+                      isCurrency: true,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: rSize(15),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    'Duration',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                          fontSize: rSize(18),
+                        ),
+                  ),
+                  SizedBox(
+                    height: rSize(10),
+                  ),
+                  CustomInputFieldButton(
+                    text: getDateTimeFormat(
+                      dateTime: durationValue,
+                      format: 'HH:mm',
+                    ),
+                    onTap: () => showPickerTimeRangeModal(
+                      pickerTimeRangeModalProps: PickerTimeRangeModalProps(
+                        context: context,
+                        title: 'Duration',
+                        startTimeValue: durationValue,
+                        pickerTimeRangType: PickerTimeRangType.single,
+                        primaryAction: (DateTime x) => setState(() {
+                          durationValue = x;
+                        }),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]);
+    }
+
+    Widget _renderServiceName() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            'Service Name',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                  fontSize: rSize(18),
+                ),
+          ),
+          SizedBox(
+            height: rSize(10),
+          ),
+          CustomInputField(
+            customInputFieldProps: CustomInputFieldProps(
+              controller: _nameController,
             ),
           ),
         ],
@@ -144,116 +351,21 @@ class _NewServiceState extends State<NewService> {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: Padding(
+        body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
             horizontal: rSize(30),
+            vertical: rSize(40),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    'Service Name',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: rSize(18),
-                        ),
-                  ),
-                  SizedBox(
-                    height: rSize(10),
-                  ),
-                  CustomInputField(
-                    customInputFieldProps: CustomInputFieldProps(
-                      controller: _nameController,
-                    ),
-                  ),
-                ],
-              ),
+              _renderServiceName(),
               SizedBox(
                 height: rSize(20),
               ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            'Price',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style:
-                                Theme.of(context).textTheme.bodyText2?.copyWith(
-                                      fontSize: rSize(18),
-                                    ),
-                          ),
-                          SizedBox(
-                            height: rSize(10),
-                          ),
-                          CustomInputField(
-                            customInputFieldProps: CustomInputFieldProps(
-                              controller: _priceController,
-                              isCurrency: true,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: rSize(15),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Text(
-                            'Duration',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style:
-                                Theme.of(context).textTheme.bodyText2?.copyWith(
-                                      fontSize: rSize(18),
-                                    ),
-                          ),
-                          SizedBox(
-                            height: rSize(10),
-                          ),
-                          CustomInputFieldButton(
-                            text: getDateTimeFormat(
-                              dateTime: durationValue,
-                              format: 'HH:mm',
-                            ),
-                            onTap: () => showPickerTimeRangeModal(
-                              pickerTimeRangeModalProps:
-                                  PickerTimeRangeModalProps(
-                                context: context,
-                                title: 'Duration',
-                                startTimeValue: durationValue,
-                                pickerTimeRangType: PickerTimeRangType.single,
-                                primaryAction: (DateTime x) => setState(() {
-                                  durationValue = x;
-                                }),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ]),
+              _renderPriceDuration(),
               SizedBox(
                 height: rSize(30),
               ),
@@ -261,33 +373,15 @@ class _NewServiceState extends State<NewService> {
               SizedBox(
                 height: rSize(30),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    'Notes',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: rSize(18),
-                        ),
-                  ),
-                  SizedBox(
-                    height: rSize(10),
-                  ),
-                  SizedBox(
-                    height: rSize(120),
-                    child: CustomInputField(
-                      customInputFieldProps: CustomInputFieldProps(
-                        controller: _descriptionController,
-                        isDescription: true,
-                      ),
-                    ),
-                  ),
-                ],
+              _renderDescription(),
+              SizedBox(
+                height: rSize(30),
               ),
+              _renderMedia(),
+              SizedBox(
+                height: rSize(30),
+              ),
+              _renderPermissions(),
             ],
           ),
         ),
