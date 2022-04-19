@@ -64,150 +64,153 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CustomContainer(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: rSize(_leftContentAnimation.value.toDouble()),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    tileMode: TileMode.decal,
-                    colors: [
-                      Theme.of(context).colorScheme.primaryContainer,
-                      Theme.of(context).colorScheme.onBackground,
-                    ],
-                  ),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    RotatedBox(
-                      quarterTurns: -1,
-                      child: Text(
-                        Languages.of(context)!.labelPassword,
-                        style: Theme.of(context).textTheme.headline2?.copyWith(
-                            fontSize: rSize(50),
-                            letterSpacing: rSize(50),
-                            shadows: [
-                              BoxShadow(
-                                  offset: const Offset(4, 4),
-                                  spreadRadius: 1,
-                                  color: Theme.of(context).shadowColor)
-                            ],
-                            color: Theme.of(context).colorScheme.primary),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: rSize(20)),
+    return Scaffold(
+      body: Stack(
+        children: [
+          CustomContainer(
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: rSize(_leftContentAnimation.value.toDouble()),
                   decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.background,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Theme.of(context).shadowColor,
-                          offset: const Offset(0, 0),
-                          blurRadius: 5,
-                        ),
-                      ]),
-                  child: Opacity(
-                    opacity: _rightContentAnimation.value,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Image(
-                            image:
-                                const AssetImage('assets/images/password.png'),
-                            width: rSize(250),
-                            fit: BoxFit.cover),
-                        SizedBox(
-                          height: rSize(40),
-                        ),
-                        Wrap(
-                          spacing: rSize(5),
-                          runSpacing: rSize(15),
-                          alignment: WrapAlignment.center,
-                          runAlignment: WrapAlignment.center,
-                          children: [
-                            Text(
-                              Languages.of(context)!.labelForgotPassword,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1
-                                  ?.copyWith(fontSize: rSize(28)),
-                            ),
-                            Text(
-                              Languages.of(context)!.labelFMessage,
-                              style: Theme.of(context).textTheme.subtitle1,
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: rSize(40),
-                        ),
-                        CustomInputField(
-                          customInputFieldProps: CustomInputFieldProps(
-                            controller: _emailController,
-                            prefixIcon: IconTheme(
-                              data: Theme.of(context).primaryIconTheme,
-                              child: Icon(
-                                FontAwesomeIcons.userAlt,
-                                size: rSize(20),
-                              ),
-                            ),
-                            labelText: Languages.of(context)!.labelEmail,
-                            validator: validateEmail,
-                          ),
-                        ),
-                        SizedBox(
-                          height: rSize(40),
-                        ),
-                        CustomButton(
-                          customButtonProps: CustomButtonProps(
-                            onTap: () => {
-                              Navigator.pushReplacementNamed(
-                                  context, '/loginScreen'),
-                            },
-                            text: Languages.of(context)!.submit,
-                            isPrimary: true,
-                          ),
-                        ),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      tileMode: TileMode.decal,
+                      colors: [
+                        Theme.of(context).colorScheme.primaryContainer,
+                        Theme.of(context).colorScheme.onBackground,
                       ],
                     ),
                   ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      RotatedBox(
+                        quarterTurns: -1,
+                        child: Text(
+                          Languages.of(context)!.labelPassword,
+                          style:
+                              Theme.of(context).textTheme.headline2?.copyWith(
+                                  fontSize: rSize(50),
+                                  letterSpacing: rSize(50),
+                                  shadows: [
+                                    BoxShadow(
+                                        offset: const Offset(4, 4),
+                                        spreadRadius: 1,
+                                        color: Theme.of(context).shadowColor)
+                                  ],
+                                  color: Theme.of(context).colorScheme.primary),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            ],
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: rSize(20)),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.background,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Theme.of(context).shadowColor,
+                            offset: const Offset(0, 0),
+                            blurRadius: 5,
+                          ),
+                        ]),
+                    child: Opacity(
+                      opacity: _rightContentAnimation.value,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image(
+                              image: const AssetImage(
+                                  'assets/images/password.png'),
+                              width: rSize(250),
+                              fit: BoxFit.cover),
+                          SizedBox(
+                            height: rSize(40),
+                          ),
+                          Wrap(
+                            spacing: rSize(5),
+                            runSpacing: rSize(15),
+                            alignment: WrapAlignment.center,
+                            runAlignment: WrapAlignment.center,
+                            children: [
+                              Text(
+                                Languages.of(context)!.labelForgotPassword,
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    ?.copyWith(fontSize: rSize(28)),
+                              ),
+                              Text(
+                                Languages.of(context)!.labelFMessage,
+                                style: Theme.of(context).textTheme.subtitle1,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: rSize(40),
+                          ),
+                          CustomInputField(
+                            customInputFieldProps: CustomInputFieldProps(
+                              controller: _emailController,
+                              prefixIcon: IconTheme(
+                                data: Theme.of(context).primaryIconTheme,
+                                child: Icon(
+                                  FontAwesomeIcons.userAlt,
+                                  size: rSize(20),
+                                ),
+                              ),
+                              labelText: Languages.of(context)!.labelEmail,
+                              validator: validateEmail,
+                            ),
+                          ),
+                          SizedBox(
+                            height: rSize(40),
+                          ),
+                          CustomButton(
+                            customButtonProps: CustomButtonProps(
+                              onTap: () => {
+                                Navigator.pushReplacementNamed(
+                                    context, '/loginScreen'),
+                              },
+                              text: Languages.of(context)!.submit,
+                              isPrimary: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-        Positioned(
-          top: rSize(_backArrowAnimation.value.toDouble()),
-          left: rSize(120),
-          child: EaseInAnimation(
-            onTap: () => {},
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: Icon(Icons.arrow_back),
+          Positioned(
+            top: rSize(_backArrowAnimation.value.toDouble()),
+            left: rSize(120),
+            child: EaseInAnimation(
+              onTap: () => {Navigator.pop(context)},
+              child: CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: Icon(Icons.arrow_back),
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

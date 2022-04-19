@@ -132,8 +132,8 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: CustomContainer(
+    return Scaffold(
+      body: CustomContainer(
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,

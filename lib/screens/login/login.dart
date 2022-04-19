@@ -144,182 +144,185 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: rSize(_leftContentAnimation.value.toDouble()),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                tileMode: TileMode.decal,
-                colors: [
-                  Theme.of(context).colorScheme.primaryContainer,
-                  Theme.of(context).colorScheme.onBackground,
-                ],
-              ),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                RotatedBox(
-                  quarterTurns: -1,
-                  child: Text(
-                    Languages.of(context)!.labelLogin,
-                    style: Theme.of(context).textTheme.headline2?.copyWith(
-                        fontSize: rSize(50),
-                        letterSpacing: rSize(50),
-                        shadows: [
-                          BoxShadow(
-                              offset: const Offset(4, 4),
-                              spreadRadius: 1,
-                              color: Theme.of(context).shadowColor)
-                        ],
-                        color: Theme.of(context).colorScheme.primary),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: rSize(20)),
+    return Scaffold(
+      body: CustomContainer(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: rSize(_leftContentAnimation.value.toDouble()),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.background,
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).shadowColor,
-                    offset: const Offset(0, 0),
-                    blurRadius: 5,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  tileMode: TileMode.decal,
+                  colors: [
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.onBackground,
+                  ],
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  RotatedBox(
+                    quarterTurns: -1,
+                    child: Text(
+                      Languages.of(context)!.labelLogin,
+                      style: Theme.of(context).textTheme.headline2?.copyWith(
+                          fontSize: rSize(50),
+                          letterSpacing: rSize(50),
+                          shadows: [
+                            BoxShadow(
+                                offset: const Offset(4, 4),
+                                spreadRadius: 1,
+                                color: Theme.of(context).shadowColor)
+                          ],
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
                   ),
                 ],
               ),
-              child: Form(
-                key: _formKey,
-                child: Opacity(
-                  opacity: _rightContentAnimation.value,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image(
-                          image: AssetImage('assets/images/logo.png'),
-                          width: rSize(250),
-                          fit: BoxFit.cover),
-                      SizedBox(
-                        height: rSize(40),
-                      ),
-                      Wrap(
-                        children: [
-                          Text(
-                            Languages.of(context)!.labelEnterLoginDetails,
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: rSize(40),
-                      ),
-                      CustomInputField(
-                        customInputFieldProps: CustomInputFieldProps(
-                          controller: _userEmailController,
-                          prefixIcon: IconTheme(
-                            data: Theme.of(context).primaryIconTheme,
-                            child: Icon(
-                              FontAwesomeIcons.userAlt,
-                              size: rSize(20),
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: rSize(20)),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).shadowColor,
+                      offset: const Offset(0, 0),
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Opacity(
+                    opacity: _rightContentAnimation.value,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image(
+                            image: AssetImage('assets/images/logo.png'),
+                            width: rSize(250),
+                            fit: BoxFit.cover),
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        Wrap(
+                          children: [
+                            Text(
+                              Languages.of(context)!.labelEnterLoginDetails,
+                              style: Theme.of(context).textTheme.subtitle1,
                             ),
-                          ),
-                          labelText: Languages.of(context)!.labelUserName,
-                          validator: validateNotEmpty,
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                      CustomInputField(
-                        customInputFieldProps: CustomInputFieldProps(
-                          controller: _passwordController,
-                          isPassword: true,
-                          isPasswordVisible: _isPasswordVisible,
-                          togglePassword: _togglePassword,
-                          labelText: Languages.of(context)!.labelPassword,
-                          prefixIcon: IconTheme(
-                            data: Theme.of(context).primaryIconTheme,
-                            child: Icon(
-                              FontAwesomeIcons.lock,
-                              size: rSize(20),
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        CustomInputField(
+                          customInputFieldProps: CustomInputFieldProps(
+                            controller: _userEmailController,
+                            prefixIcon: IconTheme(
+                              data: Theme.of(context).primaryIconTheme,
+                              child: Icon(
+                                FontAwesomeIcons.userAlt,
+                                size: rSize(20),
+                              ),
                             ),
+                            labelText: Languages.of(context)!.labelUserName,
+                            validator: validateNotEmpty,
                           ),
-                          validator: validateNotEmpty,
                         ),
-                      ),
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CustomTextButton(
-                              customTextButtonProps: CustomTextButtonProps(
-                            text: Languages.of(context)!.labelForgotPassword,
-                            textColor: Theme.of(context).colorScheme.primary,
-                            fontSize: rSize(16),
-                            onTap: () => {
-                              Navigator.pushNamed(context, '/forgetPassword'),
-                            },
-                          ))
-                        ],
-                      ),
-                      SizedBox(
-                        height: rSize(40),
-                      ),
-                      CustomButton(
-                        customButtonProps: CustomButtonProps(
-                          onTap: () => {validateAndLogin(context)},
-                          text: Languages.of(context)!.labelLogin,
-                          isPrimary: true,
+                        SizedBox(
+                          height: rSize(20),
                         ),
-                      ),
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            Languages.of(context)!.labelNoAccount,
-                            style: Theme.of(context).textTheme.subtitle1,
+                        CustomInputField(
+                          customInputFieldProps: CustomInputFieldProps(
+                            controller: _passwordController,
+                            isPassword: true,
+                            isPasswordVisible: _isPasswordVisible,
+                            togglePassword: _togglePassword,
+                            labelText: Languages.of(context)!.labelPassword,
+                            prefixIcon: IconTheme(
+                              data: Theme.of(context).primaryIconTheme,
+                              child: Icon(
+                                FontAwesomeIcons.lock,
+                                size: rSize(20),
+                              ),
+                            ),
+                            validator: validateNotEmpty,
                           ),
-                          CustomTextButton(
-                            customTextButtonProps: CustomTextButtonProps(
-                              text: Languages.of(context)!.labelRegisterNow,
+                        ),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CustomTextButton(
+                                customTextButtonProps: CustomTextButtonProps(
+                              text: Languages.of(context)!.labelForgotPassword,
                               textColor: Theme.of(context).colorScheme.primary,
+                              fontSize: rSize(16),
                               onTap: () => {
-                                Navigator.pushNamed(context, '/register'),
+                                Navigator.pushNamed(context, '/forgetPassword'),
                               },
+                            ))
+                          ],
+                        ),
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        CustomButton(
+                          customButtonProps: CustomButtonProps(
+                            onTap: () => {validateAndLogin(context)},
+                            text: Languages.of(context)!.labelLogin,
+                            isPrimary: true,
+                          ),
+                        ),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              Languages.of(context)!.labelNoAccount,
+                              style: Theme.of(context).textTheme.subtitle1,
                             ),
-                          )
-                        ],
-                      ),
-                    ],
+                            CustomTextButton(
+                              customTextButtonProps: CustomTextButtonProps(
+                                text: Languages.of(context)!.labelRegisterNow,
+                                textColor:
+                                    Theme.of(context).colorScheme.primary,
+                                onTap: () => {
+                                  Navigator.pushNamed(context, '/register'),
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

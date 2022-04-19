@@ -2,12 +2,12 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_container.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:appointments/widget/custom_input_field_button.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/picker_time_range_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class NewService extends StatefulWidget {
   const NewService({Key? key}) : super(key: key);
@@ -17,16 +17,20 @@ class NewService extends StatefulWidget {
 }
 
 class _NewServiceState extends State<NewService> {
+  final ItemScrollController itemScrollController = ItemScrollController();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  DateTime durationValue = kToday;
+  DateTime? durationValue;
   int selectedColorIndex = 0;
   bool isEnabled = false;
 
   @override
   void initState() {
     super.initState();
+    itemPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {}));
     _priceController.addListener(() => setState(() {}));
     _descriptionController.addListener(() => setState(() {}));
@@ -38,6 +42,15 @@ class _NewServiceState extends State<NewService> {
     _nameController.dispose();
     _priceController.dispose();
     _descriptionController.dispose();
+  }
+
+  _scrollToIndex(index, colors) {
+    itemScrollController.scrollTo(
+      alignment: index / (colors.length + 1),
+      index: index,
+      curve: Curves.easeInOutCubic,
+      duration: const Duration(milliseconds: 300),
+    );
   }
 
   @override
@@ -53,11 +66,17 @@ class _NewServiceState extends State<NewService> {
       color3,
       color4,
       color5,
+      color1,
+      color2,
+      color3,
+      color4,
+      color5,
     ];
 
     Widget _colorCard(index) {
       return EaseInAnimation(
         onTap: () => {
+          _scrollToIndex(index, colors),
           setState(
             () => {
               selectedColorIndex = index,
@@ -66,7 +85,7 @@ class _NewServiceState extends State<NewService> {
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          width: selectedColorIndex == index ? rSize(45) : rSize(40),
+          width: rSize(40),
           height: rSize(40),
           margin: EdgeInsets.only(
             right: rSize(15),
@@ -112,14 +131,17 @@ class _NewServiceState extends State<NewService> {
                   fontSize: rSize(18),
                 ),
           ),
+          // SizedBox(
+          //   height: rSize(15),
+          // ),
           SizedBox(
-            height: rSize(15),
-          ),
-          SizedBox(
-            height: rSize(40),
-            child: ListView.builder(
+            height: rSize(60),
+            child: ScrollablePositionedList.builder(
+              itemScrollController: itemScrollController,
+              itemPositionsListener: itemPositionsListener,
               padding: EdgeInsets.symmetric(
                 horizontal: rSize(20),
+                vertical: rSize(10),
               ),
               scrollDirection: Axis.horizontal,
               itemCount: colors.length,
@@ -144,9 +166,6 @@ class _NewServiceState extends State<NewService> {
                   fontSize: rSize(18),
                 ),
           ),
-          // SizedBox(
-          //   height: rSize(10),
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,14 +179,20 @@ class _NewServiceState extends State<NewService> {
                       fontSize: rSize(18),
                     ),
               ),
-              Switch(
-                onChanged: (bool value) {
-                  setState(() {
-                    isEnabled = value;
-                  });
-                },
-                activeColor: Theme.of(context).colorScheme.primary,
-                value: isEnabled,
+              SizedBox(
+                width: rSize(90),
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: Switch(
+                    onChanged: (bool value) {
+                      setState(() {
+                        isEnabled = value;
+                      });
+                    },
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    value: isEnabled,
+                  ),
+                ),
               ),
             ],
           )
@@ -336,7 +361,13 @@ class _NewServiceState extends State<NewService> {
       );
     }
 
-    return CustomContainer(
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(

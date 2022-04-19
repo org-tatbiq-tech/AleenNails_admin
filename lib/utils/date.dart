@@ -49,7 +49,7 @@ String getDateTimeFormat({
   String format = 'HH-mm',
 }) {
   final _dateFormat = DateFormat(format);
-  return _dateFormat.format(dateTime!);
+  return dateTime != null ? _dateFormat.format(dateTime) : '';
 }
 
 final kToday = DateTime.now();

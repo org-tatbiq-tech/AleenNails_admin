@@ -52,129 +52,131 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: rSize(_leftContentAnimation.value.toDouble()),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                tileMode: TileMode.decal,
-                colors: [
-                  Theme.of(context).colorScheme.primaryContainer,
-                  Theme.of(context).colorScheme.onBackground,
+    return Scaffold(
+      body: CustomContainer(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: rSize(_leftContentAnimation.value.toDouble()),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  tileMode: TileMode.decal,
+                  colors: [
+                    Theme.of(context).colorScheme.primaryContainer,
+                    Theme.of(context).colorScheme.onBackground,
+                  ],
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  RotatedBox(
+                    quarterTurns: -1,
+                    child: Text(
+                      Languages.of(context)!.labelRegister,
+                      style: Theme.of(context).textTheme.headline2?.copyWith(
+                          fontSize: rSize(50),
+                          letterSpacing: rSize(50),
+                          shadows: [
+                            BoxShadow(
+                                offset: const Offset(4, 4),
+                                spreadRadius: 1,
+                                color: Theme.of(context).shadowColor)
+                          ],
+                          color: Theme.of(context).colorScheme.primary),
+                    ),
+                  ),
                 ],
               ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                RotatedBox(
-                  quarterTurns: -1,
-                  child: Text(
-                    Languages.of(context)!.labelRegister,
-                    style: Theme.of(context).textTheme.headline2?.copyWith(
-                        fontSize: rSize(50),
-                        letterSpacing: rSize(50),
-                        shadows: [
-                          BoxShadow(
-                              offset: const Offset(4, 4),
-                              spreadRadius: 1,
-                              color: Theme.of(context).shadowColor)
-                        ],
-                        color: Theme.of(context).colorScheme.primary),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).shadowColor,
-                      offset: const Offset(0, 0),
-                      blurRadius: 5,
-                    ),
-                  ]),
-              child: Opacity(
-                opacity: _rightContentAnimation.value,
-                child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      IconTheme(
-                        data: Theme.of(context).primaryIconTheme,
-                        child: Icon(
-                          FontAwesomeIcons.android,
-                          size: rSize(100),
-                        ),
-                      ),
-                      Wrap(
-                        spacing: rSize(5),
-                        runSpacing: rSize(15),
-                        alignment: WrapAlignment.center,
-                        runAlignment: WrapAlignment.center,
-                        children: [
-                          Text(
-                            Languages.of(context)!.labelMobileNumber,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline1
-                                ?.copyWith(fontSize: rSize(28)),
-                          ),
-                          Text(
-                            Languages.of(context)!.labelEnterOTP,
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: rSize(40),
-                      ),
-                      CustomInputField(
-                        customInputFieldProps: CustomInputFieldProps(
-                          controller: _mobileController,
-                          keyboardType: TextInputType.phone,
-                          prefixIcon: IconTheme(
-                            data: Theme.of(context).primaryIconTheme,
-                            child: Icon(
-                              FontAwesomeIcons.mobileAlt,
-                              size: rSize(20),
-                            ),
-                          ),
-                          labelText: Languages.of(context)!.labelMobileNumber,
-                        ),
-                      ),
-                      SizedBox(
-                        height: rSize(40),
-                      ),
-                      CustomButton(
-                        customButtonProps: CustomButtonProps(
-                          onTap: () => {
-                            Navigator.pushNamed(
-                                context, '/register/otpConfirmation'),
-                          },
-                          text: Languages.of(context)!.labelContinue,
-                          isPrimary: true,
-                        ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: rSize(20)),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).shadowColor,
+                        offset: const Offset(0, 0),
+                        blurRadius: 5,
                       ),
                     ]),
+                child: Opacity(
+                  opacity: _rightContentAnimation.value,
+                  child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconTheme(
+                          data: Theme.of(context).primaryIconTheme,
+                          child: Icon(
+                            FontAwesomeIcons.android,
+                            size: rSize(100),
+                          ),
+                        ),
+                        Wrap(
+                          spacing: rSize(5),
+                          runSpacing: rSize(15),
+                          alignment: WrapAlignment.center,
+                          runAlignment: WrapAlignment.center,
+                          children: [
+                            Text(
+                              Languages.of(context)!.labelMobileNumber,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1
+                                  ?.copyWith(fontSize: rSize(28)),
+                            ),
+                            Text(
+                              Languages.of(context)!.labelEnterOTP,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        CustomInputField(
+                          customInputFieldProps: CustomInputFieldProps(
+                            controller: _mobileController,
+                            keyboardType: TextInputType.phone,
+                            prefixIcon: IconTheme(
+                              data: Theme.of(context).primaryIconTheme,
+                              child: Icon(
+                                FontAwesomeIcons.mobileAlt,
+                                size: rSize(20),
+                              ),
+                            ),
+                            labelText: Languages.of(context)!.labelMobileNumber,
+                          ),
+                        ),
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        CustomButton(
+                          customButtonProps: CustomButtonProps(
+                            onTap: () => {
+                              Navigator.pushNamed(
+                                  context, '/register/otpConfirmation'),
+                            },
+                            text: Languages.of(context)!.labelContinue,
+                            isPrimary: true,
+                          ),
+                        ),
+                      ]),
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
