@@ -1,6 +1,7 @@
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomInputFieldButton extends StatelessWidget {
   final String text;
@@ -39,9 +40,23 @@ class CustomInputFieldButton extends StatelessWidget {
         ),
         width: double.infinity,
         height: rSize(50),
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.caption,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              text,
+              style: Theme.of(context).textTheme.caption,
+            ),
+            IconTheme(
+              data: Theme.of(context).primaryIconTheme,
+              child: Icon(
+                FontAwesomeIcons.chevronDown,
+                size: rSize(15),
+              ),
+            ),
+          ],
         ),
       ),
     );

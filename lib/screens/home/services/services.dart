@@ -59,7 +59,7 @@ class ServicesState extends State<Services> {
               itemCount: services.length,
               itemBuilder: (context, index) {
                 return ServiceCard(
-                  contactCardProps: ServiceCardProps(
+                  serviceCardProps: ServiceCardProps(
                     serviceDetails: services[index],
                   ),
                 );

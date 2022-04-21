@@ -60,7 +60,7 @@ class BusinessDetails extends StatelessWidget {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/place_holder.png',
                 positionType: PositionType.bottom,
-                text: 'Location',
+                text: 'Business Location',
               ),
             ),
           ],

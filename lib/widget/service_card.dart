@@ -4,10 +4,10 @@ import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
-  ServiceCardProps contactCardProps;
+  ServiceCardProps serviceCardProps;
   ServiceCard({
     Key? key,
-    required this.contactCardProps,
+    required this.serviceCardProps,
   }) : super(key: key);
 
   @override
@@ -25,10 +25,12 @@ class ServiceCard extends StatelessWidget {
           vertical: 0,
         ),
         minVerticalPadding: 0,
-        enabled: contactCardProps.withNavigation,
-        onTap: () => {},
+        enabled: serviceCardProps.withNavigation,
+        onTap: () => {
+          Navigator.pushNamed(context, '/serviceDetails'),
+        },
         subtitle: Text(
-          contactCardProps.serviceDetails.duration!,
+          serviceCardProps.serviceDetails.duration!,
           style: Theme.of(context)
               .textTheme
               .subtitle1
@@ -38,7 +40,7 @@ class ServiceCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              getStringPrice(contactCardProps.serviceDetails.price!),
+              getStringPrice(serviceCardProps.serviceDetails.price!),
               style: Theme.of(context).textTheme.headline1?.copyWith(
                     fontSize: rSize(18),
                   ),
@@ -59,14 +61,14 @@ class ServiceCard extends StatelessWidget {
         leading: Container(
           width: rSize(3),
           decoration: BoxDecoration(
-              color: contactCardProps.serviceDetails.color ??
+              color: serviceCardProps.serviceDetails.color ??
                   Theme.of(context).colorScheme.primary,
               borderRadius: BorderRadius.circular(
                 rSize(2),
               )),
         ),
         title: Text(
-          contactCardProps.serviceDetails.name!,
+          serviceCardProps.serviceDetails.name!,
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(18),
               ),

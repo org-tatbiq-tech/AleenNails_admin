@@ -249,6 +249,7 @@ class _CustomAppBarState extends State<CustomAppBar>
                                   ?.copyWith(
                                     color:
                                         Theme.of(context).colorScheme.primary,
+                                    fontSize: rSize(22),
                                   ),
                             ),
                       ],

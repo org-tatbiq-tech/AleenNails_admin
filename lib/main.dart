@@ -16,6 +16,7 @@ import 'package:appointments/screens/home/profile/business_logo.dart';
 import 'package:appointments/screens/home/profile/business_workplace_photos.dart';
 import 'package:appointments/screens/home/profile/profile_Images.dart';
 import 'package:appointments/screens/home/services/new_service.dart';
+import 'package:appointments/screens/home/services/service_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
@@ -125,6 +126,8 @@ class StudiosApp extends StatelessWidget {
                                 const AppointmentDetails(),
                             '/services': (context) => const Services(),
                             '/newService': (context) => const NewService(),
+                            '/serviceDetails': (context) =>
+                                const ServiceDetails(),
                             '/businessInfo': (context) => const BusinessInfo(),
                             '/businessDetails': (context) =>
                                 const BusinessDetails(),

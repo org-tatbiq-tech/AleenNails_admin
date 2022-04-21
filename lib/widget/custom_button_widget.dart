@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
         return customButtonProps.backgroundColor ??
             Theme.of(context).colorScheme.primary;
       }
-      return Theme.of(context).colorScheme.background;
+      return Colors.transparent;
     }
 
     Color getBorderColor() {
