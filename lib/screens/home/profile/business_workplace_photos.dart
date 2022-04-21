@@ -73,7 +73,7 @@ class BusinessWorkplacePhotos extends StatelessWidget {
                       icon: null,
                       backgroundColor: Colors.transparent,
                       path: 'assets/icons/camera.png',
-                      containerSize: rSize(40),
+                      containerSize: 40,
                     ),
                   ),
                   SizedBox(

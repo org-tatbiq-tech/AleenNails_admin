@@ -38,22 +38,28 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: screens[_selectedPage],
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showBottomModal(
-            bottomModalProps: BottomModalProps(
-              context: context,
-              child: (Text('dasjdsakjlkjdaskjdalkjdak')),
-              title: 'Modal Title',
+      floatingActionButton: SizedBox(
+        width: rSize(60),
+        height: rSize(60),
+        child: FittedBox(
+          child: FloatingActionButton(
+            onPressed: () {
+              showBottomModal(
+                bottomModalProps: BottomModalProps(
+                  context: context,
+                  child: (Text('dasjdsakjlkjdaskjdalkjdak')),
+                  title: 'Modal Title',
+                ),
+              );
+            },
+            // tooltip: "Centre FAB",
+            child: Container(
+              margin: const EdgeInsets.all(15.0),
+              child: const Icon(Icons.add),
             ),
-          );
-        },
-        // tooltip: "Centre FAB",
-        child: Container(
-          margin: const EdgeInsets.all(15.0),
-          child: const Icon(Icons.add),
+            elevation: 4.0,
+          ),
         ),
-        elevation: 4.0,
       ),
       bottomNavigationBar: BottomAppBar(
         notchMargin: rSize(5),
@@ -83,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: null,
                     backgroundColor: Colors.transparent,
                     path: 'assets/icons/home.png',
-                    containerSize: rSize(35),
+                    containerSize: 35,
                   ),
                 ),
               ),
@@ -101,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: null,
                     backgroundColor: Colors.transparent,
                     path: 'assets/icons/contacts.png',
-                    containerSize: rSize(40),
+                    containerSize: 35,
                   ),
                 ),
               ),
@@ -122,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: null,
                     backgroundColor: Colors.transparent,
                     path: 'assets/icons/statics.png',
-                    containerSize: rSize(35),
+                    containerSize: 35,
                   ),
                 ),
               ),
@@ -140,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: null,
                     backgroundColor: Colors.transparent,
                     path: 'assets/icons/menu.png',
-                    containerSize: rSize(35),
+                    containerSize: 35,
                   ),
                 ),
               ),

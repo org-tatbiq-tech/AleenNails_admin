@@ -45,7 +45,7 @@ class BusinessCoverPhoto extends StatelessWidget {
                       icon: null,
                       backgroundColor: Colors.transparent,
                       path: 'assets/icons/camera.png',
-                      containerSize: rSize(80),
+                      containerSize: 80,
                     ),
                   ),
                   SizedBox(

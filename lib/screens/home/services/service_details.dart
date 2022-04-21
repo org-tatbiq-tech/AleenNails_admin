@@ -144,7 +144,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                         icon: null,
                         backgroundColor: Colors.transparent,
                         path: 'assets/icons/camera.png',
-                        containerSize: rSize(40),
+                        containerSize: 40,
                       ),
                     ),
                     SizedBox(
@@ -295,7 +295,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                       customIconProps: CustomIconProps(
                         icon: null,
                         path: 'assets/icons/question.png',
-                        containerSize: rSize(25),
+                        containerSize: 25,
                         backgroundColor: Colors.transparent,
                         iconColor: Theme.of(context).colorScheme.primary,
                       ),
@@ -369,7 +369,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                   customIconProps: CustomIconProps(
                     icon: null,
                     path: 'assets/icons/question.png',
-                    containerSize: rSize(25),
+                    containerSize: 25,
                     backgroundColor: Colors.transparent,
                     iconColor: Theme.of(context).colorScheme.primary,
                   ),

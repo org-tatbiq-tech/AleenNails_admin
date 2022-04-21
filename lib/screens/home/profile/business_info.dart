@@ -85,7 +85,7 @@ class BusinessInfoState extends State<BusinessInfo> {
                       icon: null,
                       path: 'assets/icons/facebook.png',
                       backgroundColor: Colors.transparent,
-                      containerSize: rSize(30),
+                      containerSize: 30,
                     ),
                   ),
                   SizedBox(
@@ -126,7 +126,7 @@ class BusinessInfoState extends State<BusinessInfo> {
                       icon: null,
                       path: 'assets/icons/instagram.png',
                       backgroundColor: Colors.transparent,
-                      containerSize: rSize(30),
+                      containerSize: 30,
                     ),
                   ),
                   SizedBox(
@@ -167,7 +167,7 @@ class BusinessInfoState extends State<BusinessInfo> {
                       icon: null,
                       path: 'assets/icons/internet.png',
                       backgroundColor: Colors.transparent,
-                      containerSize: rSize(30),
+                      containerSize: 30,
                     ),
                   ),
                   SizedBox(

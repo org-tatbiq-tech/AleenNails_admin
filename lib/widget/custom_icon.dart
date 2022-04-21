@@ -29,11 +29,13 @@ class CustomIcon extends StatelessWidget {
               child: customIconProps.icon ?? const SizedBox(),
             )
           : Padding(
-              padding: EdgeInsets.all(rSize(
-                customIconProps.withPadding
-                    ? customIconProps.containerSize * 0.15
-                    : 0,
-              )),
+              padding: EdgeInsets.all(
+                rSize(
+                  customIconProps.withPadding
+                      ? customIconProps.containerSize * 0.15
+                      : 0,
+                ),
+              ),
               child: Image.asset(
                 customIconProps.path,
                 fit: BoxFit.cover,

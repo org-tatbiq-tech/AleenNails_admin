@@ -22,43 +22,40 @@ class BusinessLogo extends StatelessWidget {
           )
         },
         beginAnimation: 0.98,
-        child: Padding(
-          padding: EdgeInsets.only(right: rSize(20)),
-          child: DottedBorder(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
-            borderType: BorderType.Circle,
-            dashPattern: [rSize(6), rSize(4)],
-            strokeWidth: rSize(1),
-            radius: Radius.circular(
-              rSize(10),
-            ),
-            child: SizedBox(
-              width: rSize(160),
-              height: rSize(160),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  CustomIcon(
-                    customIconProps: CustomIconProps(
-                      icon: null,
-                      backgroundColor: Colors.transparent,
-                      path: 'assets/icons/camera.png',
-                      containerSize: rSize(70),
-                    ),
+        child: DottedBorder(
+          color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
+          borderType: BorderType.Circle,
+          dashPattern: [rSize(6), rSize(4)],
+          strokeWidth: rSize(1),
+          radius: Radius.circular(
+            rSize(10),
+          ),
+          child: SizedBox(
+            width: rSize(160),
+            height: rSize(160),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                CustomIcon(
+                  customIconProps: CustomIconProps(
+                    icon: null,
+                    backgroundColor: Colors.transparent,
+                    path: 'assets/icons/camera.png',
+                    containerSize: 70,
                   ),
-                  SizedBox(
-                    height: rSize(2),
-                  ),
-                  Text(
-                    'Add Logo',
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          fontSize: rSize(14),
-                        ),
-                  )
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: rSize(2),
+                ),
+                Text(
+                  'Add Logo',
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        fontSize: rSize(14),
+                      ),
+                )
+              ],
             ),
           ),
         ),
@@ -92,7 +89,9 @@ class BusinessLogo extends StatelessWidget {
             SizedBox(
               height: rSize(180),
             ),
-            _renderBusinessLogo(),
+            Center(
+              child: _renderBusinessLogo(),
+            ),
           ],
         ),
       ),

@@ -44,7 +44,7 @@ class CustomIconButton extends StatelessWidget {
                     icon: null,
                     backgroundColor: Colors.transparent,
                     path: customIconButtonProps.iconPath,
-                    containerSize: rSize(32),
+                    containerSize: 32,
                   ),
                 ),
               ),
