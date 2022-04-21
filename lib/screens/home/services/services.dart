@@ -1,5 +1,4 @@
 import 'package:appointments/utils/data_types.dart';
-import 'package:appointments/widget/contact_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +19,8 @@ class ServicesState extends State<Services> {
   @override
   Widget build(BuildContext context) {
     Service service = Service(
-      name: 'Saeed',
-      duration: '0543103540',
+      name: 'Service Name',
+      duration: '1h 25m',
       price: 45,
     );
     List<Service> services = [
@@ -47,30 +46,27 @@ class ServicesState extends State<Services> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
-        color: Theme.of(context).colorScheme.background,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.symmetric(
-                  vertical: rSize(30),
-                  horizontal: rSize(20),
-                ),
-                itemCount: services.length,
-                itemBuilder: (context, index) {
-                  return ServiceCard(
-                    contactCardProps: ServiceCardProps(
-                      serviceDetails: services[index],
-                    ),
-                  );
-                },
+      body: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.symmetric(
+                vertical: rSize(30),
+                horizontal: rSize(20),
               ),
+              itemCount: services.length,
+              itemBuilder: (context, index) {
+                return ServiceCard(
+                  contactCardProps: ServiceCardProps(
+                    serviceDetails: services[index],
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

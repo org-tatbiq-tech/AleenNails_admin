@@ -5,7 +5,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../utils/layout.dart';
 
-void showBottomModal(BottomModalProps bottomModalProps) {
+void showBottomModal({
+  required BottomModalProps bottomModalProps,
+}) {
   Widget renderFooterModal(BuildContext context) {
     if (bottomModalProps.footerButton == ModalFooter.both) {
       return Row(
@@ -75,9 +77,9 @@ void showBottomModal(BottomModalProps bottomModalProps) {
     bounce: false,
     duration: bottomModalProps.duration,
     isDismissible: bottomModalProps.isDismissible,
-    animationCurve: Curves.easeIn,
-    barrierColor:
-        Theme.of(bottomModalProps.context).colorScheme.outline.withOpacity(0.5),
+    // animationCurve: Curves.easeIn,
+    // barrierColor:
+    //     Theme.of(bottomModalProps.context).colorScheme.primary.withOpacity(0.2),
     enableDrag: bottomModalProps.enableDrag,
     topRadius: Radius.circular(rSize(40)),
     context: bottomModalProps.context,

@@ -48,5 +48,9 @@
 			<string>https</string>
 			<string>http</string>
 		</array>
+		<key>NSCameraUsageDescription</key>
+		<string>Access camera</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Library</string>
 	</dict>
 </plist>

@@ -73,7 +73,7 @@ class ThemeNotifier with ChangeNotifier {
       textTheme: TextTheme(
         button: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: rSize(18),
           fontFamily: GoogleFonts.openSans().fontFamily,
         ),

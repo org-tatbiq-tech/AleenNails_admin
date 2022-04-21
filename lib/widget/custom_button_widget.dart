@@ -48,19 +48,20 @@ class CustomButton extends StatelessWidget {
           minWidth: rSize(100),
         ),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(rSize(10)),
-            color: getButtonColor(),
-            border: Border.all(
-              width: rSize(1),
-              color: getBorderColor(),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).shadowColor,
-                offset: const Offset(0, 2),
-                blurRadius: 3.0,
-              )
-            ]),
+          borderRadius: BorderRadius.circular(rSize(10)),
+          color: getButtonColor(),
+          border: Border.all(
+            width: rSize(1),
+            color: getBorderColor(),
+          ),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Theme.of(context).shadowColor,
+          //     offset: const Offset(0, 2),
+          //     blurRadius: 3.0,
+          //   )
+          // ],
+        ),
         child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: rSize(16), vertical: rSize(10)),

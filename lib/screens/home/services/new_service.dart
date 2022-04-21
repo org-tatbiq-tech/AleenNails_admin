@@ -2,10 +2,15 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:appointments/widget/custom_input_field_button.dart';
+import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:appointments/widget/custom_image_picker.dart';
+import 'package:appointments/widget/image_picker_modal.dart';
 import 'package:appointments/widget/picker_time_range_modal.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -17,23 +22,27 @@ class NewService extends StatefulWidget {
 }
 
 class _NewServiceState extends State<NewService> {
-  final ItemScrollController itemScrollController = ItemScrollController();
-  final ItemPositionsListener itemPositionsListener =
+  final ItemScrollController colorScrollController = ItemScrollController();
+  final ItemPositionsListener colorPositionsListener =
       ItemPositionsListener.create();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _messageToClientController =
+      TextEditingController();
+
   DateTime? durationValue;
   int selectedColorIndex = 0;
-  bool isEnabled = false;
+  bool isEnabled = true;
 
   @override
   void initState() {
     super.initState();
-    itemPositionsListener.itemPositions.addListener(() {});
+    colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {}));
     _priceController.addListener(() => setState(() {}));
     _descriptionController.addListener(() => setState(() {}));
+    _messageToClientController.addListener(() => setState(() {}));
   }
 
   @override
@@ -42,10 +51,11 @@ class _NewServiceState extends State<NewService> {
     _nameController.dispose();
     _priceController.dispose();
     _descriptionController.dispose();
+    _messageToClientController.dispose();
   }
 
   _scrollToIndex(index, colors) {
-    itemScrollController.scrollTo(
+    colorScrollController.scrollTo(
       alignment: index / (colors.length + 1),
       index: index,
       curve: Curves.easeInOutCubic,
@@ -60,6 +70,7 @@ class _NewServiceState extends State<NewService> {
     Color color3 = Color.fromARGB(255, 209, 156, 187);
     Color color4 = Color.fromARGB(255, 110, 155, 161);
     Color color5 = Color.fromARGB(255, 240, 193, 176);
+    List<Color> mediaList = [];
     List<Color> colors = [
       color1,
       color2,
@@ -72,6 +83,89 @@ class _NewServiceState extends State<NewService> {
       color4,
       color5,
     ];
+
+    List<Widget> _mediaCards() {
+      List<Widget> widgetList = mediaList.map((item) {
+        return EaseInAnimation(
+          beginAnimation: 0.98,
+          onTap: () => {},
+          child: Container(
+            width: rSize(100),
+            height: rSize(100),
+            margin: EdgeInsets.only(
+              right: rSize(15),
+            ),
+            decoration: BoxDecoration(
+              // color: Colors.red,
+              borderRadius: BorderRadius.all(
+                Radius.circular(
+                  rSize(10),
+                ),
+              ),
+            ),
+            child: Image.asset(
+              'assets/images/avatar_female.png',
+              alignment: Alignment.center,
+              fit: BoxFit.contain,
+            ),
+          ),
+        );
+      }).toList();
+      widgetList.insert(
+        0,
+        EaseInAnimation(
+          onTap: () => {
+            showImagePickerModal(
+                imagePickerModalProps: ImagePickerModalProps(
+              context: context,
+            ))
+          },
+          beginAnimation: 0.98,
+          child: Padding(
+            padding: EdgeInsets.only(right: rSize(20)),
+            child: DottedBorder(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              borderType: BorderType.RRect,
+              dashPattern: [rSize(6), rSize(4)],
+              strokeWidth: rSize(1),
+              radius: Radius.circular(
+                rSize(10),
+              ),
+              child: SizedBox(
+                width: rSize(100),
+                height: rSize(100),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: null,
+                        backgroundColor: Colors.transparent,
+                        path: 'assets/icons/camera.png',
+                        containerSize: rSize(40),
+                      ),
+                    ),
+                    SizedBox(
+                      height: rSize(2),
+                    ),
+                    Text(
+                      'Add Media',
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            fontSize: rSize(12),
+                          ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+
+      return widgetList;
+    }
 
     Widget _colorCard(index) {
       return EaseInAnimation(
@@ -131,14 +225,11 @@ class _NewServiceState extends State<NewService> {
                   fontSize: rSize(18),
                 ),
           ),
-          // SizedBox(
-          //   height: rSize(15),
-          // ),
           SizedBox(
             height: rSize(60),
             child: ScrollablePositionedList.builder(
-              itemScrollController: itemScrollController,
-              itemPositionsListener: itemPositionsListener,
+              itemScrollController: colorScrollController,
+              itemPositionsListener: colorPositionsListener,
               padding: EdgeInsets.symmetric(
                 horizontal: rSize(20),
                 vertical: rSize(10),
@@ -179,23 +270,126 @@ class _NewServiceState extends State<NewService> {
                       fontSize: rSize(18),
                     ),
               ),
-              SizedBox(
-                width: rSize(90),
-                child: FittedBox(
-                  fit: BoxFit.fill,
-                  child: Switch(
-                    onChanged: (bool value) {
-                      setState(() {
-                        isEnabled = value;
-                      });
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  EaseInAnimation(
+                    onTap: () => {
+                      showBottomModal(
+                        bottomModalProps: BottomModalProps(
+                          context: context,
+                          enableDrag: true,
+                          // showDragPen: true,
+                          centerTitle: true,
+                          title: 'Allow Clients to Book Online',
+                          child: Text(
+                            'If switched off clients will not be able to book this Service using the app. You will have to manually add appointments to your calendar.',
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                      )
                     },
-                    activeColor: Theme.of(context).colorScheme.primary,
-                    value: isEnabled,
+                    child: CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: null,
+                        path: 'assets/icons/question.png',
+                        containerSize: rSize(25),
+                        backgroundColor: Colors.transparent,
+                        iconColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: rSize(10),
+                  ),
+                  Transform.scale(
+                    scale: rSize(1.4),
+                    alignment: Alignment.center,
+                    child: Switch(
+                      onChanged: (bool value) {
+                        setState(() {
+                          isEnabled = value;
+                        });
+                      },
+                      splashRadius: 0,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      inactiveThumbColor:
+                          Theme.of(context).colorScheme.onBackground,
+                      inactiveTrackColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      value: isEnabled,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          )
+        ],
+      );
+    }
+
+    Widget _renderMessageToClient() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                'Message to Client',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      fontSize: rSize(18),
+                    ),
+              ),
+              EaseInAnimation(
+                onTap: () => {
+                  showBottomModal(
+                    bottomModalProps: BottomModalProps(
+                      context: context,
+                      enableDrag: true,
+                      // showDragPen: true,
+                      centerTitle: true,
+                      title: 'Message to Client',
+                      child: Text(
+                        'This message will be sent to your client before the appointment. E.g Please do not eat 1 hour before the appointment.',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ),
+                  )
+                },
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    icon: null,
+                    path: 'assets/icons/question.png',
+                    containerSize: rSize(25),
+                    backgroundColor: Colors.transparent,
+                    iconColor: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
             ],
-          )
+          ),
+          SizedBox(
+            height: rSize(5),
+          ),
+          SizedBox(
+            height: rSize(120),
+            child: CustomInputField(
+              customInputFieldProps: CustomInputFieldProps(
+                controller: _messageToClientController,
+                isDescription: true,
+                keyboardType: TextInputType.multiline,
+              ),
+            ),
+          ),
         ],
       );
     }
@@ -214,16 +408,14 @@ class _NewServiceState extends State<NewService> {
                   fontSize: rSize(18),
                 ),
           ),
-          SizedBox(
-            height: rSize(10),
-          ),
-          SizedBox(
-            height: rSize(120),
-            child: CustomInputField(
-              customInputFieldProps: CustomInputFieldProps(
-                controller: _descriptionController,
-                isDescription: true,
-              ),
+          SingleChildScrollView(
+            padding: EdgeInsets.only(
+              // horizontal: rSize(20),
+              top: rSize(15),
+            ),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: _mediaCards(),
             ),
           ),
         ],
@@ -245,13 +437,16 @@ class _NewServiceState extends State<NewService> {
                 ),
           ),
           SizedBox(
-            height: rSize(10),
+            height: rSize(5),
           ),
           SizedBox(
             height: rSize(120),
             child: CustomInputField(
               customInputFieldProps: CustomInputFieldProps(
+                hintText:
+                    'Example: This relaxing service included an herbal soak.',
                 controller: _descriptionController,
+                keyboardType: TextInputType.multiline,
                 isDescription: true,
               ),
             ),
@@ -281,11 +476,12 @@ class _NewServiceState extends State<NewService> {
                         ),
                   ),
                   SizedBox(
-                    height: rSize(10),
+                    height: rSize(5),
                   ),
                   CustomInputField(
                     customInputFieldProps: CustomInputFieldProps(
                       controller: _priceController,
+                      keyboardType: TextInputType.number,
                       isCurrency: true,
                     ),
                   ),
@@ -310,7 +506,7 @@ class _NewServiceState extends State<NewService> {
                         ),
                   ),
                   SizedBox(
-                    height: rSize(10),
+                    height: rSize(5),
                   ),
                   CustomInputFieldButton(
                     text: getDateTimeFormat(
@@ -350,11 +546,12 @@ class _NewServiceState extends State<NewService> {
                 ),
           ),
           SizedBox(
-            height: rSize(10),
+            height: rSize(5),
           ),
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _nameController,
+              keyboardType: TextInputType.text,
             ),
           ),
         ],
@@ -398,19 +595,23 @@ class _NewServiceState extends State<NewService> {
               ),
               _renderPriceDuration(),
               SizedBox(
-                height: rSize(30),
+                height: rSize(20),
               ),
               _renderServiceColors(),
               SizedBox(
-                height: rSize(30),
+                height: rSize(20),
               ),
               _renderDescription(),
               SizedBox(
-                height: rSize(30),
+                height: rSize(20),
               ),
               _renderMedia(),
               SizedBox(
                 height: rSize(30),
+              ),
+              _renderMessageToClient(),
+              SizedBox(
+                height: rSize(20),
               ),
               _renderPermissions(),
             ],

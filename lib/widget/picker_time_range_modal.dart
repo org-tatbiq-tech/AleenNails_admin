@@ -61,7 +61,7 @@ showPickerTimeRangeModal({
 // ps.onConfirm(ps, ps.selecteds);
 
   showBottomModal(
-    BottomModalProps(
+    bottomModalProps: BottomModalProps(
       title: pickerTimeRangeModalProps.title,
       centerTitle: true,
       enableDrag: false,

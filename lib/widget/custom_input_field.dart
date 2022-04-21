@@ -121,8 +121,9 @@ class CustomInputField extends StatelessWidget {
           constraints: BoxConstraints(
             maxHeight: rSize(50),
           ),
-          contentPadding: EdgeInsets.all(
-            rSize(15),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: rSize(20),
+            vertical: rSize(10),
           ),
           filled: true,
           floatingLabelBehavior: customInputFieldProps.isSearch
@@ -147,12 +148,17 @@ class CustomInputField extends StatelessWidget {
                 ),
           hintText: customInputFieldProps.hintText,
           isDense: false,
-          labelText: customInputFieldProps.isDescription
+          labelText: customInputFieldProps.isDescription ||
+                  customInputFieldProps.hintText.isNotEmpty
               ? null
               : customInputFieldProps.labelText,
           hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-                fontSize: rSize(18),
-                color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
+                fontSize: rSize(16),
+                color: Theme.of(context)
+                    .textTheme
+                    .subtitle1!
+                    .color
+                    ?.withOpacity(0.6),
               ),
           floatingLabelStyle: Theme.of(context).textTheme.bodyText1,
           labelStyle: Theme.of(context).textTheme.bodyText1,

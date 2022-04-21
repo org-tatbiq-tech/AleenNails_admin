@@ -6,6 +6,7 @@ import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
+import 'package:appointments/screens/home/business_details.dart';
 import 'package:appointments/screens/home/contacts/contact_details.dart';
 import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/home/services/new_service.dart';
@@ -33,7 +34,8 @@ void main() {
         ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider<LocaleData>(create: (_) => LocaleData()),
         ChangeNotifierProvider<AppData>(create: (_) => AppData()),
-        ChangeNotifierProvider<AuthenticationState>(create: (_) => AuthenticationState())
+        ChangeNotifierProvider<AuthenticationState>(
+            create: (_) => AuthenticationState())
       ],
       child: StudiosApp(),
     ),
@@ -100,16 +102,25 @@ class StudiosApp extends StatelessWidget {
                           routes: {
                             '/home': (context) => const HomeScreen(),
                             '/loginScreen': (context) => const LoginScreen(),
-                            '/contactDetails': (context) => const ContactDetails(),
-                            '/forgetPassword': (context) => const ForgetPasswordScreen(),
+                            '/contactDetails': (context) =>
+                                const ContactDetails(),
+                            '/forgetPassword': (context) =>
+                                const ForgetPasswordScreen(),
                             // '/resetPassword': (context) => const ResetPasswordScreen(),
-                            '/register': (context) => const RegisterMainScreen(),
-                            '/register/registerMobile': (context) => const RegisterMobileScreen(),
-                            '/register/otpConfirmation': (context) => const RegisterOTPScreen(),
-                            '/newAppointment': (context) => const NewAppointment(),
-                            '/appointmentDetails': (context) => const AppointmentDetails(),
+                            '/register': (context) =>
+                                const RegisterMainScreen(),
+                            '/register/registerMobile': (context) =>
+                                const RegisterMobileScreen(),
+                            '/register/otpConfirmation': (context) =>
+                                const RegisterOTPScreen(),
+                            '/newAppointment': (context) =>
+                                const NewAppointment(),
+                            '/appointmentDetails': (context) =>
+                                const AppointmentDetails(),
                             '/services': (context) => const Services(),
                             '/newService': (context) => const NewService(),
+                            '/businessDetails': (context) =>
+                                const BusinessDetails(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,
@@ -122,8 +133,10 @@ class StudiosApp extends StatelessWidget {
                           ],
                           localeResolutionCallback: (locale, supportedLocales) {
                             for (var supportedLocale in supportedLocales) {
-                              if (supportedLocale.languageCode == locale?.languageCode &&
-                                  supportedLocale.countryCode == locale?.countryCode) {
+                              if (supportedLocale.languageCode ==
+                                      locale?.languageCode &&
+                                  supportedLocale.countryCode ==
+                                      locale?.countryCode) {
                                 return supportedLocale;
                               }
                             }

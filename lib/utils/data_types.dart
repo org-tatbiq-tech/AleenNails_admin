@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appointments/animations/fade_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -105,12 +107,14 @@ class Service {
   String? duration;
   double? price;
   String? notes;
+  Color? color;
 
   Service({
     this.name,
     this.duration,
     this.price,
     this.notes,
+    this.color,
   });
 }
 
@@ -317,6 +321,15 @@ class CustomInputFieldProps {
   });
 }
 
+class CustomImagePickerProps {
+  bool isGallery;
+  bool cropImage;
+  CustomImagePickerProps({
+    this.isGallery = true,
+    this.cropImage = true,
+  });
+}
+
 class BottomModalProps {
   BuildContext context;
   Widget child;
@@ -337,7 +350,7 @@ class BottomModalProps {
     this.isDismissible = true,
     this.enableDrag = false,
     this.showDragPen = false,
-    this.title = 'Header Title',
+    this.title = '',
     this.primaryButtonText = 'primary',
     this.secondaryButtonText = 'secondary',
     this.centerTitle = false,
@@ -350,6 +363,15 @@ class BottomModalProps {
 enum PickerTimeRangType {
   single,
   range,
+}
+
+class ImagePickerModalProps {
+  BuildContext context;
+  String title;
+  ImagePickerModalProps({
+    required this.context,
+    this.title = '',
+  });
 }
 
 class PickerTimeRangeModalProps {

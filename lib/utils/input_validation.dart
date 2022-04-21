@@ -52,3 +52,7 @@ confirmPasswordValidation(String password, String confirmPassword) {
   }
   return null;
 }
+
+String getStringPrice(double price) {
+  return '₪ ' + price.toString();
+}

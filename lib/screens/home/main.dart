@@ -1,5 +1,5 @@
 import 'package:appointments/screens/home/contacts/contacts.dart';
-import 'package:appointments/screens/home/profile.dart';
+import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/statistics.dart';
 import 'package:appointments/screens/home/timeline.dart';
 import 'package:appointments/utils/data_types.dart';
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     TimeLine(),
     Contacts(),
     Statistics(),
-    Profile(),
+    More(),
   ];
 
   @override
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showBottomModal(
-            BottomModalProps(
+            bottomModalProps: BottomModalProps(
               context: context,
               child: (Text('dasjdsakjlkjdaskjdalkjdak')),
               title: 'Modal Title',

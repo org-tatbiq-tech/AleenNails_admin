@@ -62,6 +62,10 @@ dependencies:
   after_layout: ^1.1.0
   scrollable_positioned_list: ^0.2.3
   scroll_to_index: ^2.1.1
+  dotted_border: ^2.0.0+2
+  image_picker: ^0.8.5
+  image_cropper: ^1.5.1
+  permission_handler: ^9.2.0
 #  flutter_week_view: ^1.2.1+1
 
 dev_dependencies:

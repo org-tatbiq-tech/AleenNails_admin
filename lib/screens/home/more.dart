@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import '../../utils/data_types.dart';
 
 //class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
-class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+class More extends StatefulWidget {
+  const More({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return ProfileState();
+    return MoreState();
   }
 }
 
-class ProfileState extends State<Profile> {
+class MoreState extends State<More> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,7 +60,31 @@ class ProfileState extends State<Profile> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/services.png',
                 positionType: PositionType.bottom,
-                text: 'Services',
+                text: 'Services Setup',
+              ),
+            ),
+            SizedBox(
+              height: rSize(20),
+            ),
+            CustomIconButton(
+              customIconButtonProps: CustomIconButtonProps(
+                onTap: () => {Navigator.pushNamed(context, '/services')},
+                animationDelay: 0.5,
+                iconPath: 'assets/icons/services.png',
+                positionType: PositionType.bottom,
+                text: 'Schedule Management',
+              ),
+            ),
+            SizedBox(
+              height: rSize(20),
+            ),
+            CustomIconButton(
+              customIconButtonProps: CustomIconButtonProps(
+                onTap: () => {Navigator.pushNamed(context, '/businessDetails')},
+                animationDelay: 0.5,
+                iconPath: 'assets/icons/profile.png',
+                positionType: PositionType.bottom,
+                text: 'Business Details',
               ),
             ),
             SizedBox(
@@ -72,7 +96,7 @@ class ProfileState extends State<Profile> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/profile.png',
                 positionType: PositionType.bottom,
-                text: 'Profile',
+                text: 'Booking Setting',
               ),
             ),
             SizedBox(
@@ -84,7 +108,7 @@ class ProfileState extends State<Profile> {
                 animationDelay: 0.7,
                 iconPath: 'assets/icons/settings.png',
                 positionType: PositionType.bottom,
-                text: 'Settings',
+                text: 'Personal Settings',
               ),
             ),
             SizedBox(
