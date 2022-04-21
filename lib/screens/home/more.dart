@@ -1,12 +1,9 @@
 import 'package:appointments/animations/fade_animation.dart';
+import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_icon_button.dart';
-import 'package:appointments/widget/picker_time_range_modal.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/data_types.dart';
-
-//class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
 class More extends StatefulWidget {
   const More({Key? key}) : super(key: key);
 

@@ -3,6 +3,7 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/app_bar_painter.dart';
 import 'package:appointments/widget/custom_icon.dart';
+import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/search_bar.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   _CustomAppBarState createState() => _CustomAppBarState();
 }
 
-class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderStateMixin {
+class _CustomAppBarState extends State<CustomAppBar>
+    with SingleTickerProviderStateMixin {
   double rippleStartX = 0;
   double rippleStartY = 0;
   late AnimationController _controller;
@@ -35,7 +37,8 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
   @override
   initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     _controller.addStatusListener(animationStatusListener);
   }
@@ -73,7 +76,10 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     _getActions() {
       double actionWidth = 0;
-      if (widget.customAppBarProps.withBack) {
+      if (widget.customAppBarProps.withBack &&
+          (widget.customAppBarProps.customIcon == null &&
+              !widget.customAppBarProps.withSearch &&
+              !widget.customAppBarProps.withSave)) {
         actionWidth += 50;
       }
       return Row(
@@ -81,6 +87,31 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          widget.customAppBarProps.withSave
+              ? EaseInAnimation(
+                  onTap: widget.customAppBarProps.saveTap ?? () => {},
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      right: rSize(10),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: rSize(12),
+                      vertical: rSize(10),
+                    ),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(
+                          rSize(10),
+                        )),
+                    child: Text(
+                      'Save',
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                    ),
+                  ),
+                )
+              : Container(),
           widget.customAppBarProps.withSearch
               ? GestureDetector(
                   child: Padding(
@@ -107,13 +138,17 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
                     child: CustomIcon(
                         customIconProps: CustomIconProps(
                       icon: IconTheme(
-                        child: widget.customAppBarProps.customIcon ?? Container(),
+                        child:
+                            widget.customAppBarProps.customIcon ?? Container(),
                         data: Theme.of(context).primaryIconTheme,
                       ),
                     )),
                   ),
                 )
               : Container(),
+          SizedBox(
+            width: actionWidth,
+          )
         ],
       );
     }
@@ -126,7 +161,13 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
       if (widget.customAppBarProps.customIcon != null) {
         actionsWidth += 50;
       }
-      if (widget.customAppBarProps.withBack) {
+      if (widget.customAppBarProps.withSave) {
+        actionsWidth += 50;
+      }
+      if (widget.customAppBarProps.withBack &&
+          (widget.customAppBarProps.customIcon != null ||
+              widget.customAppBarProps.withSearch ||
+              widget.customAppBarProps.withSave)) {
         actionsWidth -= 50;
       }
       return widget.customAppBarProps.withBack
@@ -202,8 +243,12 @@ class _CustomAppBarState extends State<CustomAppBar> with SingleTickerProviderSt
                         widget.customAppBarProps.titleWidget ??
                             Text(
                               widget.customAppBarProps.titleText,
-                              style: Theme.of(context).textTheme.headline2?.copyWith(
-                                    color: Theme.of(context).colorScheme.primary,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                             ),
                       ],
@@ -255,7 +300,8 @@ class _AppBarClipper extends CustomClipper<Path> {
     Path path = Path();
 
     path.moveTo(0, height - rSize(40));
-    path.quadraticBezierTo(size.width / 2, height, size.width, height - rSize(40));
+    path.quadraticBezierTo(
+        size.width / 2, height, size.width, height - rSize(40));
     path.lineTo(size.width, 0);
     path.lineTo(0, 0);
 

@@ -6,9 +6,15 @@ import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
-import 'package:appointments/screens/home/business_details.dart';
+import 'package:appointments/screens/home/profile/business_address.dart';
+import 'package:appointments/screens/home/profile/business_cover_photo.dart';
+import 'package:appointments/screens/home/profile/business_info.dart';
 import 'package:appointments/screens/home/contacts/contact_details.dart';
 import 'package:appointments/screens/home/main.dart';
+import 'package:appointments/screens/home/profile/business_details.dart';
+import 'package:appointments/screens/home/profile/business_logo.dart';
+import 'package:appointments/screens/home/profile/business_workplace_photos.dart';
+import 'package:appointments/screens/home/profile/profile_Images.dart';
 import 'package:appointments/screens/home/services/new_service.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/login/forget_password.dart';
@@ -119,8 +125,18 @@ class StudiosApp extends StatelessWidget {
                                 const AppointmentDetails(),
                             '/services': (context) => const Services(),
                             '/newService': (context) => const NewService(),
+                            '/businessInfo': (context) => const BusinessInfo(),
                             '/businessDetails': (context) =>
                                 const BusinessDetails(),
+                            '/profileImages': (context) =>
+                                const ProfileImages(),
+                            '/businessLogo': (context) => const BusinessLogo(),
+                            '/businessCoverPhoto': (context) =>
+                                const BusinessCoverPhoto(),
+                            '/businessWorkplacePhotos': (context) =>
+                                const BusinessWorkplacePhotos(),
+                            '/businessAddress': (context) =>
+                                const BusinessAddress(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,

@@ -7,7 +7,6 @@ import 'package:appointments/widget/custom_input_field.dart';
 import 'package:appointments/widget/custom_input_field_button.dart';
 import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
-import 'package:appointments/widget/custom_image_picker.dart';
 import 'package:appointments/widget/image_picker_modal.dart';
 import 'package:appointments/widget/picker_time_range_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -570,12 +569,10 @@ class _NewServiceState extends State<NewService> {
           customAppBarProps: CustomAppBarProps(
             titleText: 'New Service',
             withBack: true,
-            withClipPath: false,
-            customIcon: Icon(
-              Icons.save,
-              size: rSize(24),
-            ),
-            customIconTap: () => {},
+            // withClipPath: true,
+            withSave: true,
+            // barHeight: 70,
+            saveTap: () => {},
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,

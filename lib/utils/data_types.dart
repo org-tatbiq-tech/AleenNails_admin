@@ -229,17 +229,21 @@ class CustomAppBarProps {
   final VoidCallback? customIconTap;
   final bool withSearch;
   final bool withBack;
+  final bool withSave;
+  final VoidCallback? saveTap;
   final bool withClipPath;
   final bool withBorder;
   final double barHeight;
   CustomAppBarProps({
     this.titleText = 'Custom Title',
     this.titleWidget,
-    this.barHeight = 60,
+    this.barHeight = 65,
     this.centerTitle = WrapAlignment.center,
     this.customIcon,
     this.customIconTap,
+    this.saveTap,
     this.withBack = false,
+    this.withSave = false,
     this.withSearch = false,
     this.withClipPath = false,
     this.withBorder = false,
