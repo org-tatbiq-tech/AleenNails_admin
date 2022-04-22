@@ -1,5 +1,6 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class ContactCard extends StatelessWidget {
@@ -11,22 +12,20 @@ class ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-        rSize(15),
-      )),
-      child: ListTile(
-        enabled: contactCardProps.withNavigation,
+    return CustomListTile(
+      customListTileProps: CustomListTileProps(
         onTap: () => Navigator.pushNamed(context, '/contactDetails'),
-        subtitle: Text(
+        title: Text(
+          contactCardProps.contactDetails.name!,
+          style: Theme.of(context).textTheme.headline1?.copyWith(
+                fontSize: rSize(18),
+              ),
+        ),
+        subTitle: Text(
           contactCardProps.contactDetails.phone!,
-          style: Theme.of(context)
-              .textTheme
-              .subtitle1
-              ?.copyWith(fontSize: rSize(16)),
+          style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                fontSize: rSize(16),
+              ),
         ),
         trailing: IconTheme(
           data: Theme.of(context).primaryIconTheme,
@@ -36,7 +35,7 @@ class ContactCard extends StatelessWidget {
           ),
         ),
         leading: CircleAvatar(
-          radius: rSize(28),
+          radius: rSize(25),
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           child: Text(
             contactCardProps.contactDetails.name![0].toUpperCase() +
@@ -46,13 +45,6 @@ class ContactCard extends StatelessWidget {
                 .bodyText2
                 ?.copyWith(fontSize: rSize(20)),
           ),
-        ),
-        title: Text(
-          contactCardProps.contactDetails.name!,
-          style: Theme.of(context)
-              .textTheme
-              .headline1
-              ?.copyWith(fontSize: rSize(20)),
         ),
       ),
     );

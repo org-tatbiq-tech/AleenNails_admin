@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:appointments/animations/fade_animation.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -159,6 +160,29 @@ class ContactCardProps {
   ContactCardProps({
     required this.contactDetails,
     this.withNavigation = true,
+  });
+}
+
+class CustomListTileProps {
+  final Widget? trailing;
+  final Widget? leading;
+  final Widget? title;
+  final Widget? subTitle;
+  final EdgeInsets? contentPadding;
+  final bool enabled;
+  final Function? onTap;
+  final double? minLeadingWidth;
+  final double? height;
+  CustomListTileProps({
+    this.trailing,
+    this.leading,
+    this.title,
+    this.subTitle,
+    this.contentPadding,
+    this.enabled = true,
+    this.onTap,
+    this.minLeadingWidth,
+    this.height,
   });
 }
 

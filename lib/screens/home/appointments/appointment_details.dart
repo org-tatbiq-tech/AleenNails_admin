@@ -6,6 +6,7 @@ import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
 import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
+import 'package:appointments/widget/service_card.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentDetails extends StatefulWidget {
@@ -127,7 +128,10 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 return FadeAnimation(
                   positionType: PositionType.top,
                   delay: 0.8 + index.toDouble() * 0.3,
-                  child: getAppointmentCard(context, services[index]),
+                  child: ServiceCard(
+                    serviceCardProps:
+                        ServiceCardProps(serviceDetails: services[index]),
+                  ),
                 );
               },
             ),
