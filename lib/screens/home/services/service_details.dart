@@ -84,6 +84,51 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       color5,
     ];
 
+    _deleteService() {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: 'Delete',
+          secondaryButtonText: 'Back',
+          deleteCancelModal: true,
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/trash.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: rSize(80),
+                  contentPadding: rSize(20),
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                'Delete this service?',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                'Action can not be undone',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     List<Widget> _mediaCards() {
       List<Widget> widgetList = mediaList.map((item) {
         return EaseInAnimation(
@@ -621,12 +666,14 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 ),
                 child: CustomButton(
                   customButtonProps: CustomButtonProps(
-                    onTap: () => {},
-                    text: 'Remove Service',
+                    onTap: () => {
+                      _deleteService(),
+                    },
+                    text: 'Delete Service',
                     isPrimary: true,
                     // isSecondary: true,
                     textColor: Colors.white,
-                    backgroundColor: Colors.red,
+                    backgroundColor: Theme.of(context).colorScheme.error,
                   ),
                 ),
               )

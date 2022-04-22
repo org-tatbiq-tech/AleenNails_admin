@@ -3,7 +3,10 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/custom_status.dart';
+import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/service_card.dart';
@@ -25,8 +28,10 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   Widget build(BuildContext context) {
     Service service = Service(
+      id: '12304042032',
       name: 'Service Name',
       duration: '2 Hours',
+      createdByBusiness: true,
       price: 25,
     );
     List<Service> services = [
@@ -34,64 +39,139 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       service,
     ];
 
-    Widget getAppointmentCard(BuildContext context, Service service) {
-      return Card(
-        margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            rSize(15),
+    _cancelAppointment() {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: 'Cancel',
+          secondaryButtonText: 'Back',
+          deleteCancelModal: true,
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/cancel.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: rSize(80),
+                  contentPadding: rSize(20),
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                'Cancel this appointment?',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                'Action can not be undone',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
           ),
         ),
-        child: ListTile(
-          minLeadingWidth: rSize(40),
-          minVerticalPadding: rSize(14),
-          onTap: () => {},
-          contentPadding: EdgeInsets.symmetric(
-            vertical: rSize(0),
-            horizontal: rSize(20),
-          ),
-          horizontalTitleGap: rSize(10),
-          subtitle: Text(
-            service.duration!,
+      );
+    }
+
+    _renderFooter(Service service) {
+      return FadeAnimation(
+          positionType: PositionType.top,
+          delay: 1,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              EaseInAnimation(
+                onTap: () => _cancelAppointment(),
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    icon: null,
+                    containerSize: rSize(50),
+                    contentPadding: rSize(12),
+                    withPadding: true,
+                    borderColor: Theme.of(context).colorScheme.primary,
+                    backgroundColor: Colors.transparent,
+                    iconColor: Theme.of(context).colorScheme.error,
+                    // backgroundColor: Colors.transparent,
+                    path: 'assets/icons/cancel.png',
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: rSize(10),
+              ),
+              Expanded(
+                child: CustomButton(
+                  customButtonProps: CustomButtonProps(
+                    onTap: () => {},
+                    text: 'Book Again',
+                    isPrimary: false,
+                    isSecondary: true,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: rSize(10),
+              ),
+              Expanded(
+                child: CustomButton(
+                  customButtonProps: CustomButtonProps(
+                    onTap: () => {},
+                    text: 'Checkout',
+                    isPrimary: true,
+                    isSecondary: false,
+                  ),
+                ),
+              ),
+            ],
+          ));
+    }
+
+    Widget renderAppointmentID(Service service) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            'ID: ' + service.id!,
             style: Theme.of(context)
                 .textTheme
                 .subtitle1
                 ?.copyWith(fontSize: rSize(16)),
           ),
-          trailing: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconTheme(
-                data: Theme.of(context).primaryIconTheme,
-                child: Icon(
-                  Icons.chevron_right,
-                  size: rSize(25),
-                ),
-              ),
-            ],
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(4),
+            ),
+            child: Icon(
+              Icons.circle,
+              size: rSize(8),
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
-          leading: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CustomAvatar(
-                customAvatarProps: CustomAvatarProps(
-                  radius: rSize(30),
-                  rectangleShape: true,
-                ),
-              ),
-            ],
+          Text(
+            service.createdByBusiness
+                ? 'Created by Business'
+                : 'Created by Client',
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1
+                ?.copyWith(fontSize: rSize(16)),
           ),
-          title: Text(
-            service.name!,
-            style: Theme.of(context).textTheme.headline1?.copyWith(
-                  fontSize: rSize(20),
-                ),
-          ),
-        ),
+        ],
       );
     }
 
@@ -296,56 +376,73 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          FadeAnimation(
-            positionType: PositionType.bottom,
-            delay: 0.3,
-            child: CustomStatus(
-              customStatusProps: CustomStatusProps(status: Status.waiting),
+      body: SafeArea(
+        top: false,
+        left: false,
+        right: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FadeAnimation(
+              positionType: PositionType.bottom,
+              delay: 0.3,
+              child: CustomStatus(
+                customStatusProps: CustomStatusProps(status: Status.waiting),
+              ),
             ),
-          ),
-          SizedBox(
-            height: rSize(10),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: rSize(20),
+            SizedBox(
+              height: rSize(10),
             ),
-            child: _renderHeader(),
-          ),
-          Expanded(
-            child: Padding(
+            FadeAnimation(
+              positionType: PositionType.bottom,
+              delay: 0.3,
+              child: renderAppointmentID(service),
+            ),
+            SizedBox(
+              height: rSize(20),
+            ),
+            Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: rSize(30),
+                horizontal: rSize(20),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: rSize(30),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.5,
-                    child: _renderNotes(),
-                  ),
-                  SizedBox(
-                    height: rSize(40),
-                  ),
-                  Expanded(
-                    child: _renderServices(),
-                  ),
-                ],
+              child: _renderHeader(),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: rSize(30),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: rSize(30),
+                    ),
+                    FadeAnimation(
+                      positionType: PositionType.right,
+                      delay: 0.5,
+                      child: _renderNotes(),
+                    ),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    Expanded(
+                      child: _renderServices(),
+                    ),
+                    SizedBox(
+                      height: rSize(20),
+                    ),
+                    _renderFooter(service),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -104,18 +104,22 @@ class Contact {
 }
 
 class Service {
+  String? id;
   String? name;
   String? duration;
   double? price;
   String? notes;
   Color? color;
+  bool createdByBusiness;
 
   Service({
+    this.id,
     this.name,
     this.duration,
     this.price,
     this.notes,
     this.color,
+    this.createdByBusiness = false,
   });
 }
 
@@ -192,15 +196,18 @@ class CustomIconProps {
   final double containerSize;
   final String path;
   final Color? iconColor;
+  final Color? borderColor;
   final bool withPadding;
-
+  final double? contentPadding;
   CustomIconProps({
     required this.icon,
     this.backgroundColor,
     this.containerSize = 40,
     this.path = '',
     this.iconColor,
+    this.borderColor,
     this.withPadding = false,
+    this.contentPadding,
   });
 }
 
@@ -295,6 +302,7 @@ class CustomButtonProps {
   final bool isPrimary;
   final bool capitalizeText;
   final Color? backgroundColor;
+  final Color? borderColor;
   final Color? textColor;
   final bool isSecondary;
   final double beginAnimation;
@@ -304,6 +312,7 @@ class CustomButtonProps {
     this.isSecondary = false,
     this.capitalizeText = true,
     this.backgroundColor,
+    this.borderColor,
     this.textColor,
     this.beginAnimation = 0.99,
     required this.onTap,
@@ -362,6 +371,7 @@ class BottomModalProps {
   BuildContext context;
   Widget child;
   bool isDismissible;
+  bool deleteCancelModal;
   bool enableDrag;
   bool showDragPen;
   ModalFooter footerButton;
@@ -378,6 +388,7 @@ class BottomModalProps {
     this.isDismissible = true,
     this.enableDrag = false,
     this.showDragPen = false,
+    this.deleteCancelModal = false,
     this.title = '',
     this.primaryButtonText = 'primary',
     this.secondaryButtonText = 'secondary',

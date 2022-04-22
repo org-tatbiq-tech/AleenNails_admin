@@ -33,6 +33,15 @@ void showBottomModal({
               },
               beginAnimation: 0.95,
               text: bottomModalProps.primaryButtonText,
+              borderColor: bottomModalProps.deleteCancelModal
+                  ? Theme.of(context).colorScheme.error
+                  : null,
+              textColor: bottomModalProps.deleteCancelModal
+                  ? Theme.of(context).colorScheme.error
+                  : null,
+              backgroundColor: bottomModalProps.deleteCancelModal
+                  ? Colors.transparent
+                  : null,
               isPrimary: true,
               isSecondary: false,
             )),
@@ -119,7 +128,12 @@ void showBottomModal({
                 //   fit: FlexFit.tight,
                 // ),
               ),
-              renderFooterModal(context)
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: rSize(25),
+                ),
+                child: renderFooterModal(context),
+              )
             ],
           ),
         ),

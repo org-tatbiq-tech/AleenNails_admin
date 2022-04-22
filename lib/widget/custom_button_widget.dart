@@ -23,10 +23,12 @@ class CustomButton extends StatelessWidget {
 
     Color getBorderColor() {
       if (customButtonProps.isPrimary) {
-        return customButtonProps.backgroundColor ??
+        return customButtonProps.borderColor ??
+            customButtonProps.backgroundColor ??
             Theme.of(context).colorScheme.background;
       }
-      return Theme.of(context).colorScheme.primary;
+      return customButtonProps.borderColor ??
+          Theme.of(context).colorScheme.primary;
     }
 
     Color getTextColor() {

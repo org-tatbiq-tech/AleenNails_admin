@@ -17,6 +17,13 @@ class CustomIcon extends StatelessWidget {
       width: rSize(customIconProps.containerSize),
       height: rSize(customIconProps.containerSize),
       decoration: BoxDecoration(
+          border: customIconProps.borderColor != null
+              ? Border.all(
+                  width: rSize(1),
+                  color: customIconProps.borderColor ??
+                      Theme.of(context).colorScheme.primary,
+                )
+              : null,
           color: backgroundColor,
           borderRadius: BorderRadius.circular(
             rSize(customIconProps.containerSize / 4),
@@ -32,7 +39,8 @@ class CustomIcon extends StatelessWidget {
               padding: EdgeInsets.all(
                 rSize(
                   customIconProps.withPadding
-                      ? customIconProps.containerSize * 0.15
+                      ? customIconProps.contentPadding ??
+                          customIconProps.containerSize * 0.15
                       : 0,
                 ),
               ),
