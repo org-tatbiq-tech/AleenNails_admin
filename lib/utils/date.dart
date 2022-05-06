@@ -45,11 +45,29 @@ DateTime getLastDay({int years = 0, int months = 3, int days = 0}) {
 }
 
 String getDateTimeFormat({
+  bool isDayOfWeek = false,
   DateTime? dateTime,
   String format = 'HH-mm',
 }) {
   final _dateFormat = DateFormat(format);
-  return dateTime != null ? _dateFormat.format(dateTime) : '';
+  return dateTime != null
+      ? isDayOfWeek
+          ? getDayOfWeek(dateTime, _dateFormat)
+          : _dateFormat.format(dateTime)
+      : '';
+}
+
+String getDayOfWeek(DateTime dateTime, DateFormat dateFormat) {
+  if (dateTime == kToday) {
+    return 'Today';
+  } else if (dateTime == kYesterday) {
+    return 'Yesterday';
+  } else if (dateTime == kTomorrow) {
+    return 'Tomorrow';
+  }
+  return dateFormat.format(dateTime);
 }
 
 final kToday = DateTime.now();
+final kYesterday = DateTime(kToday.year, kToday.month, kToday.day - 1);
+final kTomorrow = DateTime(kToday.year, kToday.month, kToday.day + 1);

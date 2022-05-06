@@ -7,7 +7,13 @@ import '../../../utils/layout.dart';
 
 //class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
 class Services extends StatefulWidget {
-  const Services({Key? key}) : super(key: key);
+  bool selectionMode;
+  Function? onTap;
+  Services({
+    Key? key,
+    this.selectionMode = false,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -51,7 +57,12 @@ class ServicesState extends State<Services> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: rSize(10),
+                );
+              },
               padding: EdgeInsets.symmetric(
                 vertical: rSize(30),
                 horizontal: rSize(20),
@@ -60,7 +71,11 @@ class ServicesState extends State<Services> {
               itemBuilder: (context, index) {
                 return ServiceCard(
                   serviceCardProps: ServiceCardProps(
+                    withNavigation: !widget.selectionMode,
+                    onTap: widget.onTap,
                     serviceDetails: services[index],
+                    title: service.name ?? '',
+                    subTitle: services[index].duration ?? '',
                   ),
                 );
               },

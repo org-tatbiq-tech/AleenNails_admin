@@ -6,6 +6,10 @@ import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
+import 'package:appointments/screens/home/checkout/amount_selection.dart';
+import 'package:appointments/screens/home/checkout/checkout_details.dart';
+import 'package:appointments/screens/home/checkout/discount_selection.dart';
+import 'package:appointments/screens/home/contacts/contacts.dart';
 import 'package:appointments/screens/home/profile/business_address.dart';
 import 'package:appointments/screens/home/profile/business_cover_photo.dart';
 import 'package:appointments/screens/home/profile/business_info.dart';
@@ -15,9 +19,14 @@ import 'package:appointments/screens/home/profile/business_details.dart';
 import 'package:appointments/screens/home/profile/business_logo.dart';
 import 'package:appointments/screens/home/profile/business_workplace_photos.dart';
 import 'package:appointments/screens/home/profile/profile_Images.dart';
+import 'package:appointments/screens/home/schedule_management/day_details.dart';
+import 'package:appointments/screens/home/schedule_management/individual_schedule.dart';
+import 'package:appointments/screens/home/schedule_management/working_days.dart';
+import 'package:appointments/screens/home/schedule_managment/schedule_managment.dart';
 import 'package:appointments/screens/home/services/new_service.dart';
 import 'package:appointments/screens/home/services/service_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
+import 'package:appointments/screens/home/settings/booking_settings.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
 import 'package:appointments/screens/register/main.dart';
@@ -109,6 +118,7 @@ class StudiosApp extends StatelessWidget {
                           routes: {
                             '/home': (context) => const HomeScreen(),
                             '/loginScreen': (context) => const LoginScreen(),
+                            '/contacts': (context) => const Contacts(),
                             '/contactDetails': (context) =>
                                 const ContactDetails(),
                             '/forgetPassword': (context) =>
@@ -124,7 +134,13 @@ class StudiosApp extends StatelessWidget {
                                 const NewAppointment(),
                             '/appointmentDetails': (context) =>
                                 const AppointmentDetails(),
-                            '/services': (context) => const Services(),
+                            '/checkoutDetails': (context) =>
+                                const CheckoutDetails(),
+                            '/discountSelection': (context) =>
+                                const DiscountSelection(),
+                            '/amountSelection': (context) =>
+                                const AmountSelection(),
+                            '/services': (context) => Services(),
                             '/newService': (context) => const NewService(),
                             '/serviceDetails': (context) =>
                                 const ServiceDetails(),
@@ -140,6 +156,14 @@ class StudiosApp extends StatelessWidget {
                                 const BusinessWorkplacePhotos(),
                             '/businessAddress': (context) =>
                                 const BusinessAddress(),
+                            '/scheduleManagement': (context) =>
+                                const ScheduleManagement(),
+                            '/individualSchedule': (context) =>
+                                const IndividualSchedule(),
+                            '/workingDays': (context) => const WorkingDays(),
+                            '/dayDetails': (context) => const DayDetails(),
+                            '/bookingSettings': (context) =>
+                                const BookingsSettings(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,

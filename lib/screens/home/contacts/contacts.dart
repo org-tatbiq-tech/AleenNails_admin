@@ -28,7 +28,12 @@ class ContactsState extends State<Contacts> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: rSize(10),
+                    );
+                  },
                   padding: EdgeInsets.symmetric(
                     vertical: rSize(20),
                     horizontal: rSize(20),

@@ -43,7 +43,7 @@ class CustomListTile extends StatelessWidget {
       isDisabled: !customListTileProps.enabled,
       child: Card(
         elevation: 2,
-        margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
+        // margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             rSize(10),

@@ -15,18 +15,27 @@ class ServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
-        onTap: () => Navigator.pushNamed(context, '/serviceDetails'),
+        enabled: serviceCardProps.enabled,
+        onTap: serviceCardProps.onTap ??
+            () => Navigator.pushNamed(context, '/serviceDetails'),
         title: Text(
-          serviceCardProps.serviceDetails.name!,
+          serviceCardProps.title,
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(18),
               ),
         ),
-        subTitle: Text(
-          serviceCardProps.serviceDetails.duration!,
-          style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                fontSize: rSize(16),
-              ),
+        subTitle: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              serviceCardProps.subTitle,
+              style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    fontSize: rSize(16),
+                  ),
+            ),
+          ],
         ),
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
@@ -47,13 +56,15 @@ class ServiceCard extends StatelessWidget {
                 SizedBox(
                   width: rSize(5),
                 ),
-                IconTheme(
-                  data: Theme.of(context).primaryIconTheme,
-                  child: Icon(
-                    Icons.chevron_right,
-                    size: rSize(25),
-                  ),
-                ),
+                serviceCardProps.withNavigation
+                    ? IconTheme(
+                        data: Theme.of(context).primaryIconTheme,
+                        child: Icon(
+                          Icons.chevron_right,
+                          size: rSize(25),
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ],

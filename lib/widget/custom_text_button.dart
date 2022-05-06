@@ -19,7 +19,7 @@ class CustomTextButton extends StatelessWidget {
         children: [
           customTextButtonProps.withIcon
               ? Padding(
-                  padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
+                  padding: EdgeInsets.fromLTRB(0, 0, rSize(5), 0),
                   child: customTextButtonProps.icon,
                 )
               : const SizedBox(),

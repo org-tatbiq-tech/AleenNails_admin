@@ -103,7 +103,9 @@ class CustomInputField extends StatelessWidget {
       elevation: 2,
       color: Colors.transparent,
       child: TextFormField(
-        inputFormatters: customInputFieldProps.isCurrency ? [_formatter] : [],
+        inputFormatters: customInputFieldProps.isCurrency
+            ? [_formatter]
+            : customInputFieldProps.inputFormatters ?? [],
         maxLength: customInputFieldProps.maxLength,
         controller: customInputFieldProps.controller,
         obscureText: customInputFieldProps.isPassword &&

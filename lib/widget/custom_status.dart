@@ -13,7 +13,7 @@ class CustomStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     _getStatusColor() {
       switch (customStatusProps.status) {
-        case Status.approved:
+        case Status.confirmed:
           return Colors.green;
         case Status.cancelled:
           return Colors.red;
@@ -33,21 +33,18 @@ class CustomStatus extends StatelessWidget {
           0.3,
         ),
         borderRadius: BorderRadius.circular(
-          rSize(10),
+          rSize(customStatusProps.fontSize / 1.5),
         ),
-        boxShadow: [
-          BoxShadow(),
-        ],
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: rSize(15),
-          vertical: rSize(6),
+          horizontal: rSize(customStatusProps.fontSize / 1.1),
+          vertical: rSize(customStatusProps.fontSize / 2),
         ),
         child: Text(
           customStatusProps.status.name.toUpperCase(),
           style: Theme.of(context).textTheme.headline1?.copyWith(
-                fontSize: rSize(18),
+                fontSize: rSize(customStatusProps.fontSize),
                 color: _getStatusColor(),
               ),
         ),

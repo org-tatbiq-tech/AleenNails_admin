@@ -37,7 +37,7 @@ class _EaseInAnimationState extends State<EaseInAnimation>
     );
     controller.value = 1;
     easeInAnimation = Tween(
-      begin: widget.beginAnimation,
+      begin: widget.isDisabled ? 1.0 : widget.beginAnimation,
       end: 1.0,
     ).animate(
       CurvedAnimation(

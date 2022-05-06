@@ -6,9 +6,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CustomInputFieldButton extends StatelessWidget {
   final String text;
   final Function? onTap;
+  final double fontSize;
   const CustomInputFieldButton({
     Key? key,
     this.text = '',
+    this.fontSize = 20,
     this.onTap,
   }) : super(key: key);
 
@@ -34,8 +36,9 @@ class CustomInputFieldButton extends StatelessWidget {
             )
           ],
           border: Border.all(
-              width: rSize(1),
-              color: Theme.of(context).colorScheme.onBackground),
+            width: rSize(1),
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
           color: Theme.of(context).colorScheme.onBackground,
         ),
         width: double.infinity,
@@ -47,7 +50,10 @@ class CustomInputFieldButton extends StatelessWidget {
           children: [
             Text(
               text,
-              style: Theme.of(context).textTheme.caption,
+              style: Theme.of(context)
+                  .textTheme
+                  .caption
+                  ?.copyWith(fontSize: rSize(fontSize)),
             ),
             IconTheme(
               data: Theme.of(context).primaryIconTheme,

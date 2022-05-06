@@ -54,5 +54,5 @@ confirmPasswordValidation(String password, String confirmPassword) {
 }
 
 String getStringPrice(double price) {
-  return '₪ ' + price.toString();
+  return '₪ ' + price.toStringAsFixed(2);
 }

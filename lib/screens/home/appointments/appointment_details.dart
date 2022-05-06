@@ -1,5 +1,7 @@
 import 'package:appointments/animations/fade_animation.dart';
 import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/utils/date.dart';
+import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
@@ -11,6 +13,7 @@ import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class AppointmentDetails extends StatefulWidget {
   const AppointmentDetails({Key? key}) : super(key: key);
@@ -30,7 +33,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
     Service service = Service(
       id: '12304042032',
       name: 'Service Name',
-      duration: '2 Hours',
+      duration: '2h',
+      startTime: kToday,
+      endTime: DateTime(kToday.year, kToday.month, kToday.day, kToday.hour + 1),
       createdByBusiness: true,
       price: 25,
     );
@@ -84,6 +89,58 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
+    _renderAmount(Service service) {
+      return FadeAnimation(
+        positionType: PositionType.top,
+        delay: 1.3,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Total'.toUpperCase(),
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: rSize(14),
+                      ),
+                ),
+                Text(
+                  getStringPrice(10.6),
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontSize: rSize(24),
+                      ),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Due To'.toUpperCase(),
+                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        fontSize: rSize(14),
+                      ),
+                ),
+                Text(
+                  getStringPrice(10.6),
+                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        fontSize: rSize(24),
+                      ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    }
+
     _renderFooter(Service service) {
       return FadeAnimation(
           positionType: PositionType.top,
@@ -128,7 +185,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               Expanded(
                 child: CustomButton(
                   customButtonProps: CustomButtonProps(
-                    onTap: () => {},
+                    onTap: () => {
+                      Navigator.pushNamed(context, '/checkoutDetails'),
+                    },
                     text: 'Checkout',
                     isPrimary: true,
                     isSecondary: false,
@@ -159,7 +218,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             child: Icon(
               Icons.circle,
               size: rSize(8),
-              color: Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
           Text(
@@ -195,7 +254,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               // physics: const NeverScrollableScrollPhysics(),
               // shrinkWrap: true,
               padding: EdgeInsets.only(
@@ -209,9 +268,27 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   positionType: PositionType.top,
                   delay: 0.8 + index.toDouble() * 0.3,
                   child: ServiceCard(
-                    serviceCardProps:
-                        ServiceCardProps(serviceDetails: services[index]),
+                    serviceCardProps: ServiceCardProps(
+                      serviceDetails: services[index],
+                      title: services[index].name ?? '',
+                      subTitle: getDateTimeFormat(
+                              dateTime: services[index].startTime,
+                              format: 'HH:mm') +
+                          ' - ' +
+                          getDateTimeFormat(
+                              dateTime: services[index].endTime,
+                              format: 'HH:mm') +
+                          ' - ' +
+                          (services[index].duration ?? ''),
+                      withNavigation: false,
+                      enabled: false,
+                    ),
                   ),
+                );
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: rSize(10),
                 );
               },
             ),
@@ -435,6 +512,10 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     ),
                     SizedBox(
                       height: rSize(20),
+                    ),
+                    _renderAmount(service),
+                    SizedBox(
+                      height: rSize(10),
                     ),
                     _renderFooter(service),
                   ],

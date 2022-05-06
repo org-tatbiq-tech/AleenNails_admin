@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appointments/animations/fade_animation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -53,10 +54,12 @@ class ExpandableCalendarProps {
   final DateTime focusedDay;
   final DateTime? selectedDay;
   final CalendarFormat calendarFormat;
+  final Map<CalendarFormat, String>? availableCalendarFormats;
   List<CalendarEvent> Function(DateTime)? eventLoader;
   void Function(DateTime, DateTime)? onDaySelected;
   void Function(CalendarFormat)? onFormatChanged;
   void Function(DateTime)? onPageChanged;
+  final bool formatButtonVisible;
   ExpandableCalendarProps({
     required this.focusedDay,
     this.selectedDay,
@@ -65,6 +68,8 @@ class ExpandableCalendarProps {
     this.onDaySelected,
     this.onFormatChanged,
     this.onPageChanged,
+    this.availableCalendarFormats,
+    this.formatButtonVisible = true,
   });
 }
 
@@ -91,6 +96,20 @@ class CustomTextButtonProps {
   });
 }
 
+class WorkingDay {
+  String title;
+  DateTime startTime;
+  DateTime endTime;
+  bool isEnable;
+
+  WorkingDay({
+    required this.title,
+    required this.startTime,
+    required this.endTime,
+    this.isEnable = true,
+  });
+}
+
 class Contact {
   String? name;
   String? phone;
@@ -107,6 +126,8 @@ class Service {
   String? id;
   String? name;
   String? duration;
+  DateTime? startTime;
+  DateTime? endTime;
   double? price;
   String? notes;
   Color? color;
@@ -116,6 +137,8 @@ class Service {
     this.id,
     this.name,
     this.duration,
+    this.startTime,
+    this.endTime,
     this.price,
     this.notes,
     this.color,
@@ -124,7 +147,7 @@ class Service {
 }
 
 enum Status {
-  approved,
+  confirmed,
   declined,
   cancelled,
   waiting,
@@ -132,8 +155,10 @@ enum Status {
 
 class CustomStatusProps {
   Status status;
+  double fontSize;
   CustomStatusProps({
     required this.status,
+    this.fontSize = 18,
   });
 }
 
@@ -150,10 +175,18 @@ class CustomAccordionSectionProps {
 class ServiceCardProps {
   final Service serviceDetails;
   final bool withNavigation;
+  final bool enabled;
+  final String subTitle;
+  final String title;
+  final Function? onTap;
 
   ServiceCardProps({
     required this.serviceDetails,
     this.withNavigation = true,
+    this.enabled = true,
+    this.subTitle = '',
+    this.title = '',
+    this.onTap,
   });
 }
 
@@ -187,6 +220,19 @@ class CustomListTileProps {
     this.onTap,
     this.minLeadingWidth,
     this.height,
+  });
+}
+
+class CustomSlidableProps {
+  final String groupTag;
+  final Widget child;
+  final Function? deleteAction;
+  ValueKey key;
+  CustomSlidableProps({
+    this.groupTag = 'groupTag',
+    required this.child,
+    this.deleteAction,
+    this.key = const ValueKey(0),
   });
 }
 
@@ -256,7 +302,7 @@ class CustomAppBarProps {
   final String titleText;
   final Widget? titleWidget;
   final WrapAlignment centerTitle;
-  final Icon? customIcon;
+  final Widget? customIcon;
   final VoidCallback? customIconTap;
   final bool withSearch;
   final bool withBack;
@@ -324,6 +370,7 @@ class CustomInputFieldProps {
   final String hintText;
   final String errorText;
   final TextEditingController controller;
+  List<TextInputFormatter>? inputFormatters;
   final bool isDescription;
   final int? maxLength;
   final bool isPassword;
@@ -344,6 +391,7 @@ class CustomInputFieldProps {
     this.errorText = '',
     this.prefixIcon,
     this.maxLength,
+    this.inputFormatters,
     this.icon = Icons.person,
     this.keyboardType = TextInputType.text,
     this.isPassword = false,
@@ -416,6 +464,8 @@ class ImagePickerModalProps {
 class PickerTimeRangeModalProps {
   BuildContext context;
   DateTime? startTimeValue;
+  String? minuteSuffix;
+  String? hourSuffix;
   DateTime? endTimeValue;
   String startTimeLabel;
   String endTimeLabel;
@@ -429,10 +479,26 @@ class PickerTimeRangeModalProps {
     this.startTimeValue,
     this.endTimeValue,
     this.title = '',
+    this.minuteSuffix,
+    this.hourSuffix,
     this.startTimeLabel = '',
     this.endTimeLabel = '',
     this.pickerTimeRangType = PickerTimeRangType.single,
     this.endTimeMinValue,
+    this.primaryAction,
+  });
+}
+
+class WheelPickerModalProps {
+  BuildContext context;
+  String title;
+  Function? primaryAction;
+  List<dynamic> pickerData;
+
+  WheelPickerModalProps({
+    required this.context,
+    this.title = '',
+    required this.pickerData,
     this.primaryAction,
   });
 }

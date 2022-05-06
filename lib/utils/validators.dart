@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 /// general validation utils
 /// Empty names, strict structure, ....
 
@@ -14,8 +16,31 @@ bool validateEmail(String email) {
   if (validateNotEmpty(email)) {
     return false;
   }
-  if (RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email)) {
+  if (RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(email)) {
     return true;
   }
   return false;
+}
+
+class LimitRangeTextInputFormatter extends TextInputFormatter {
+  LimitRangeTextInputFormatter(this.min, this.max) : assert(min < max);
+
+  final int min;
+  final int max;
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    var value = int.tryParse(newValue.text);
+    if (value != null) {
+      if (value < min) {
+        return TextEditingValue(text: min.toString());
+      } else if (value > max) {
+        return TextEditingValue(text: max.toString());
+      }
+    }
+    return newValue;
+  }
 }

@@ -10,7 +10,7 @@ showPickerTimeRangeModal({
   BuildContext context = pickerTimeRangeModalProps.context;
   Picker startTimePicker = Picker(
     backgroundColor: Theme.of(context).colorScheme.background,
-    looping: false,
+    looping: true,
     textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
           color: Theme.of(context).colorScheme.primary,
         ),
@@ -18,8 +18,8 @@ showPickerTimeRangeModal({
     adapter: DateTimePickerAdapter(
       type: PickerDateTimeType.kHM,
       minuteInterval: 5,
-      minuteSuffix: 'm',
-      hourSuffix: 'h',
+      minuteSuffix: pickerTimeRangeModalProps.minuteSuffix,
+      hourSuffix: pickerTimeRangeModalProps.hourSuffix,
       value: pickerTimeRangeModalProps.startTimeValue,
     ),
     onSelect: (Picker picker, int int, List<int> list) => {
@@ -34,7 +34,7 @@ showPickerTimeRangeModal({
   Picker endTimePicker = Picker(
     containerColor: Colors.transparent,
     backgroundColor: Colors.transparent,
-    looping: false,
+    looping: true,
     hideHeader: true,
     textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
           color: Theme.of(context).colorScheme.primary,

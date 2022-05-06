@@ -118,20 +118,20 @@ class _LoginScreenState extends State<LoginScreen>
           child: Transform.scale(
             scale: 1,
             child: Checkbox(
-                materialTapTargetSize: MaterialTapTargetSize.padded,
-                value: _rememberMeValue,
-                onChanged: (newValue) {
-                  setState(() {
-                    _rememberMeValue = newValue!;
-                  });
-                },
-                checkColor: Theme.of(context).colorScheme.onBackground,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(3)),
-                splashRadius: 0,
-                side:
-                    BorderSide(color: Theme.of(context).colorScheme.secondary),
-                activeColor: Theme.of(context).colorScheme.secondary),
+              materialTapTargetSize: MaterialTapTargetSize.padded,
+              value: _rememberMeValue,
+              onChanged: (newValue) {
+                setState(() {
+                  _rememberMeValue = newValue!;
+                });
+              },
+              checkColor: Theme.of(context).colorScheme.onBackground,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(3)),
+              splashRadius: 0,
+              side: BorderSide(color: Theme.of(context).colorScheme.secondary),
+              activeColor: Theme.of(context).colorScheme.secondary,
+            ),
           ),
         ),
         Text(
@@ -271,14 +271,18 @@ class _LoginScreenState extends State<LoginScreen>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CustomTextButton(
-                                customTextButtonProps: CustomTextButtonProps(
-                              text: Languages.of(context)!.labelForgotPassword,
-                              textColor: Theme.of(context).colorScheme.primary,
-                              fontSize: rSize(16),
-                              onTap: () => {
-                                Navigator.pushNamed(context, '/forgetPassword'),
-                              },
-                            ))
+                              customTextButtonProps: CustomTextButtonProps(
+                                text:
+                                    Languages.of(context)!.labelForgotPassword,
+                                textColor:
+                                    Theme.of(context).colorScheme.primary,
+                                fontSize: rSize(16),
+                                onTap: () => {
+                                  Navigator.pushNamed(
+                                      context, '/forgetPassword'),
+                                },
+                              ),
+                            )
                           ],
                         ),
                         SizedBox(

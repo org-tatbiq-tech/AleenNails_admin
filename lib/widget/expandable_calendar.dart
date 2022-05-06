@@ -20,10 +20,12 @@ class ExpandableCalendar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 0, rSize(15)),
         child: TableCalendar<CalendarEvent>(
-          availableCalendarFormats: {
-            CalendarFormat.month: Languages.of(context)!.monthLabel,
-            CalendarFormat.week: Languages.of(context)!.weekLabel,
-          },
+          availableCalendarFormats:
+              expandableCalendarProps.availableCalendarFormats ??
+                  {
+                    CalendarFormat.month: Languages.of(context)!.monthLabel,
+                    CalendarFormat.week: Languages.of(context)!.weekLabel,
+                  },
           firstDay: getFirstDay(),
           lastDay: getLastDay(),
           daysOfWeekHeight: rSize(30),
@@ -67,7 +69,7 @@ class ExpandableCalendar extends StatelessWidget {
                 .textTheme
                 .subtitle1!
                 .copyWith(color: Colors.white, fontSize: rSize(14)),
-            formatButtonVisible: true,
+            formatButtonVisible: expandableCalendarProps.formatButtonVisible,
             formatButtonShowsNext: false,
             titleTextStyle: Theme.of(context)
                 .textTheme

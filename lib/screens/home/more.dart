@@ -65,7 +65,8 @@ class MoreState extends State<More> {
             ),
             CustomIconButton(
               customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {Navigator.pushNamed(context, '/services')},
+                onTap: () =>
+                    {Navigator.pushNamed(context, '/scheduleManagement')},
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/services.png',
                 positionType: PositionType.bottom,
@@ -89,11 +90,11 @@ class MoreState extends State<More> {
             ),
             CustomIconButton(
               customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {},
+                onTap: () => {Navigator.pushNamed(context, '/bookingSettings')},
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/profile.png',
                 positionType: PositionType.bottom,
-                text: 'Booking Setting',
+                text: 'Booking Settings',
               ),
             ),
             SizedBox(
