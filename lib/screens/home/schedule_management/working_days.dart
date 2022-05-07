@@ -19,7 +19,7 @@ class _WorkingDaysState extends State<WorkingDays> {
 
   List<WorkingDay> workingDayList = [
     WorkingDay(
-        title: 'Sunday', startTime: kToday, endTime: kToday, isEnable: false),
+        title: 'Sunday', startTime: kToday, endTime: kToday, isDayOff: false),
     WorkingDay(title: 'Monday', startTime: kToday, endTime: kToday),
     WorkingDay(title: 'Tuesday', startTime: kToday, endTime: kToday),
     WorkingDay(title: 'Wednesday', startTime: kToday, endTime: kToday),
@@ -110,7 +110,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                 ),
               ),
               Expanded(
-                child: workingDay.isEnable
+                child: workingDay.isDayOff
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

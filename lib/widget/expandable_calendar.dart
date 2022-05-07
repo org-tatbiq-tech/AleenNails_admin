@@ -15,8 +15,11 @@ class ExpandableCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 1,
       margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(0),
+      ),
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 0, rSize(15)),
         child: TableCalendar<CalendarEvent>(
@@ -26,8 +29,8 @@ class ExpandableCalendar extends StatelessWidget {
                     CalendarFormat.month: Languages.of(context)!.monthLabel,
                     CalendarFormat.week: Languages.of(context)!.weekLabel,
                   },
-          firstDay: getFirstDay(),
-          lastDay: getLastDay(),
+          firstDay: expandableCalendarProps.firstDay ?? getFirstDay(),
+          lastDay: expandableCalendarProps.lastDay ?? getLastDay(),
           daysOfWeekHeight: rSize(30),
           rowHeight: rSize(45),
           daysOfWeekStyle: DaysOfWeekStyle(
@@ -80,8 +83,6 @@ class ExpandableCalendar extends StatelessWidget {
           focusedDay: expandableCalendarProps.focusedDay,
           selectedDayPredicate: (day) =>
               isSameDay(expandableCalendarProps.selectedDay, day),
-          // rangeStartDay: _rangeStart,
-          // rangeEndDay: _rangeEnd,
           calendarFormat: expandableCalendarProps.calendarFormat,
           rangeSelectionMode: RangeSelectionMode.disabled,
           eventLoader: expandableCalendarProps.eventLoader,
@@ -104,10 +105,9 @@ class ExpandableCalendar extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
               shape: BoxShape.circle,
             ),
-            disabledTextStyle: Theme.of(context)
-                .textTheme
-                .bodyText1!
-                .copyWith(color: Theme.of(context).colorScheme.outline),
+            disabledTextStyle: Theme.of(context).textTheme.bodyText1!.copyWith(
+                  color: Theme.of(context).colorScheme.outline.withOpacity(0.7),
+                ),
             defaultTextStyle: Theme.of(context).textTheme.bodyText1!,
             weekendTextStyle: Theme.of(context).textTheme.bodyText1!,
             outsideTextStyle: Theme.of(context).textTheme.bodyText1!,

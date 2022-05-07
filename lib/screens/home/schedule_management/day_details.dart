@@ -13,9 +13,11 @@ import 'package:rolling_switch/rolling_switch.dart';
 
 class DayDetails extends StatefulWidget {
   final String dayTile;
+  final bool isIndividual;
   const DayDetails({
     Key? key,
     this.dayTile = '',
+    this.isIndividual = false,
   }) : super(key: key);
 
   @override
@@ -24,7 +26,8 @@ class DayDetails extends StatefulWidget {
 
 class _DayDetailsState extends State<DayDetails> {
   DateTime? durationValue;
-  bool isWorking = false;
+  bool _isWorking = false;
+  bool _isChanged = false;
   @override
   Widget build(BuildContext context) {
     Widget _renderSwitch() {
@@ -40,10 +43,11 @@ class _DayDetailsState extends State<DayDetails> {
               width: rSize(160),
               height: rSize(60),
               circularColor: Theme.of(context).colorScheme.background,
-              initialState: isWorking,
+              initialState: _isWorking,
               onChanged: (bool state) {
                 setState(() {
-                  isWorking = state;
+                  _isWorking = state;
+                  _isChanged = true;
                 });
               },
               rollingInfoRight: RollingWidgetInfo(
@@ -229,19 +233,21 @@ class _DayDetailsState extends State<DayDetails> {
             children: [
               _renderSwitch(),
               SizedBox(
-                height: rSize(20),
+                height: widget.isIndividual ? 0 : rSize(20),
               ),
-              Text(
-                'Set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day',
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                      fontSize: rSize(14),
+              widget.isIndividual
+                  ? const SizedBox()
+                  : Text(
+                      'Set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day',
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                            fontSize: rSize(14),
+                          ),
                     ),
-              ),
               Expanded(
                 child: AnimatedSwitcher(
                   reverseDuration: const Duration(milliseconds: 400),
                   duration: const Duration(milliseconds: 400),
-                  child: isWorking
+                  child: _isWorking
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -260,12 +266,41 @@ class _DayDetailsState extends State<DayDetails> {
                       : const SizedBox(),
                 ),
               ),
-              CustomButton(
-                customButtonProps: CustomButtonProps(
-                  text: 'OK',
-                  onTap: (() => Navigator.pop(context)),
-                ),
-              ),
+              widget.isIndividual
+                  ? Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: CustomButton(
+                            customButtonProps: CustomButtonProps(
+                              isDisabled: !_isChanged,
+                              text: 'Reset',
+                              isPrimary: false,
+                              isSecondary: true,
+                              onTap: (() => Navigator.pop(context)),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: rSize(20),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: CustomButton(
+                            customButtonProps: CustomButtonProps(
+                              text: 'Save',
+                              onTap: (() => Navigator.pop(context)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : CustomButton(
+                      customButtonProps: CustomButtonProps(
+                        text: 'OK',
+                        onTap: (() => Navigator.pop(context)),
+                      ),
+                    ),
             ],
           ),
         ),

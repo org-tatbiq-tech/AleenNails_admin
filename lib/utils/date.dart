@@ -34,6 +34,30 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
   );
 }
 
+DateTime addDays({
+  DateTime? fromDate,
+  int days = 0,
+}) {
+  fromDate = fromDate ?? kToday;
+  return DateTime(kToday.year, kToday.month, kToday.day + days);
+}
+
+DateTime addMonths({
+  DateTime? fromDate,
+  int months = 0,
+}) {
+  fromDate = fromDate ?? kToday;
+  return DateTime(kToday.year, kToday.month + months, kToday.day);
+}
+
+DateTime addYears({
+  DateTime? fromDate,
+  int years = 0,
+}) {
+  fromDate = fromDate ?? kToday;
+  return DateTime(kToday.year + years, kToday.month, kToday.day);
+}
+
 DateTime getFirstDay({int years = 0, int months = 3, int days = 0}) {
   return DateTime(
       kToday.year - years, kToday.month - months, kToday.day - days);
@@ -49,11 +73,11 @@ String getDateTimeFormat({
   DateTime? dateTime,
   String format = 'HH-mm',
 }) {
-  final _dateFormat = DateFormat(format);
+  final dateFormat = DateFormat(format);
   return dateTime != null
       ? isDayOfWeek
-          ? getDayOfWeek(dateTime, _dateFormat)
-          : _dateFormat.format(dateTime)
+          ? getDayOfWeek(dateTime, dateFormat)
+          : dateFormat.format(dateTime)
       : '';
 }
 

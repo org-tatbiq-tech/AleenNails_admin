@@ -74,42 +74,42 @@ class ThemeNotifier with ChangeNotifier {
         button: TextStyle(
           color: primaryFont,
           fontWeight: FontWeight.w600,
-          fontSize: rSize(18),
+          fontSize: rSize(16),
           fontFamily: GoogleFonts.openSans().fontFamily,
         ),
         subtitle1: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w300,
-            fontSize: rSize(16)),
+            fontSize: rSize(14)),
         subtitle2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w300,
-            fontSize: rSize(16),
+            fontSize: rSize(14),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         bodyText1: TextStyle(
           color: primaryFont,
           fontWeight: FontWeight.w500,
-          fontSize: rSize(18),
+          fontSize: rSize(16),
           fontFamily: GoogleFonts.openSans().fontFamily,
         ),
         bodyText2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w500,
-            fontSize: rSize(18),
+            fontSize: rSize(16),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         headline1: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w700,
-            fontSize: rSize(22)),
+            fontSize: rSize(20)),
         headline2: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w700,
-            fontSize: rSize(22),
+            fontSize: rSize(20),
             fontFamily: GoogleFonts.aclonica().fontFamily),
         caption: TextStyle(
             color: primaryFont,
             fontWeight: FontWeight.w500,
-            fontSize: rSize(20)),
+            fontSize: rSize(18)),
       ),
       colorScheme: const ColorScheme.light().copyWith(
         primaryContainer: primaryWithAlpha1,

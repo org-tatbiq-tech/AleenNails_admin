@@ -15,6 +15,10 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Color getButtonColor() {
       if (customButtonProps.isPrimary) {
+        if (customButtonProps.isDisabled) {
+          return customButtonProps.backgroundColor?.withOpacity(0.5) ??
+              Theme.of(context).colorScheme.primary.withOpacity(0.5);
+        }
         return customButtonProps.backgroundColor ??
             Theme.of(context).colorScheme.primary;
       }
@@ -44,6 +48,7 @@ class CustomButton extends StatelessWidget {
     return EaseInAnimation(
       beginAnimation: customButtonProps.beginAnimation,
       onTap: customButtonProps.onTap,
+      isDisabled: customButtonProps.isDisabled,
       child: Container(
         alignment: Alignment.center,
         constraints: BoxConstraints(
@@ -54,7 +59,9 @@ class CustomButton extends StatelessWidget {
           color: getButtonColor(),
           border: Border.all(
             width: rSize(1),
-            color: getBorderColor(),
+            color: customButtonProps.isDisabled
+                ? getBorderColor().withOpacity(0.5)
+                : getBorderColor(),
           ),
           // boxShadow: [
           //   BoxShadow(
@@ -72,7 +79,9 @@ class CustomButton extends StatelessWidget {
                   ? customButtonProps.text.toUpperCase()
                   : customButtonProps.text,
               style: Theme.of(context).textTheme.button?.copyWith(
-                    color: getTextColor(),
+                    color: customButtonProps.isDisabled
+                        ? getTextColor().withOpacity(0.5)
+                        : getTextColor(),
                   ),
             )),
       ),

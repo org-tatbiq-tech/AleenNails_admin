@@ -194,7 +194,7 @@ packages:
       name: flutter_lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "2.0.1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -300,7 +300,7 @@ packages:
       name: graphic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.4"
+    version: "0.10.3"
   http:
     dependency: transitive
     description:
@@ -321,7 +321,21 @@ packages:
       name: image_cropper
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.1"
+    version: "2.0.1"
+  image_cropper_for_web:
+    dependency: transitive
+    description:
+      name: image_cropper_for_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
+  image_cropper_platform_interface:
+    dependency: transitive
+    description:
+      name: image_cropper_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   image_picker:
     dependency: "direct main"
     description:
@@ -377,7 +391,7 @@ packages:
       name: lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "2.0.0"
   liquid_swipe:
     dependency: "direct main"
     description:
@@ -594,7 +608,7 @@ packages:
       name: scrollable_positioned_list
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.3"
+    version: "0.3.2"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -839,5 +853,5 @@ packages:
     source: hosted
     version: "0.2.0+1"
 sdks:
-  dart: ">=2.17.0-0 <3.0.0"
-  flutter: ">=2.10.0"
+  dart: ">=2.17.0-206.0.dev <3.0.0"
+  flutter: ">=2.12.0"

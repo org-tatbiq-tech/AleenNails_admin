@@ -24,7 +24,7 @@ Future<File?> CustomImagePicker({
   return null;
 }
 
-Future<File?> _cropImage(File imageFile) async =>
+Future<CroppedFile?> _cropImage(File imageFile) async =>
     await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),

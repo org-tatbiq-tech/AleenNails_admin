@@ -4,6 +4,7 @@ import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/calendar_view/flutter_week_view.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/expandable_calendar.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DayViewController dayViewController = DayViewController();
   DateTime _focusedDay = kToday;
-  DateTime? _selectedDay;
+  DateTime? _selectedDay = kToday;
 
   List<CalendarEvent> _getEventsForDay(DateTime day) {
     return kEvents[day] ?? [];
@@ -46,15 +47,20 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
           context,
           MaterialPageRoute(
             builder: (context) => DayDetails(
-              dayTile: workingDay.title,
+              isIndividual: true,
+              dayTile: getDateTimeFormat(
+                dateTime: _selectedDay,
+                format: 'EEE, dd MMM yyyy',
+              ),
             ),
           ),
         )
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(10),
-          vertical: rSize(10),
+        padding: EdgeInsets.only(
+          top: rSize(10),
+          left: rSize(10),
+          right: rSize(10),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -62,40 +68,55 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: Text(
-                workingDay.title,
-                style: Theme.of(context).textTheme.bodyText2,
+              flex: 1,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    workingDay.title,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                  SizedBox(
+                    height: rSize(5),
+                  ),
+                  workingDay.subTitle.isNotEmpty
+                      ? Text(
+                          workingDay.subTitle,
+                          style: Theme.of(context).textTheme.subtitle1,
+                        )
+                      : const SizedBox(),
+                ],
               ),
             ),
             Expanded(
-              child: workingDay.isEnable
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          getDateTimeFormat(dateTime: workingDay.startTime),
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                        const Text(' - '),
-                        Text(
-                          getDateTimeFormat(dateTime: workingDay.startTime),
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          'Closed',
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ],
+              flex: 2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    getDateTimeFormat(
+                      dateTime: workingDay.startTime,
+                      format: 'HH:mm',
                     ),
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Text(
+                    ' - ',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  Text(
+                    getDateTimeFormat(
+                      dateTime: workingDay.startTime,
+                      format: 'HH:mm',
+                    ),
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ],
+              ),
             ),
             IconTheme(
               data: Theme.of(context).primaryIconTheme,
@@ -138,6 +159,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
               selectedDay: _selectedDay,
               calendarFormat: _calendarFormat,
               formatButtonVisible: false,
+              firstDay: kToday,
               eventLoader: _getEventsForDay,
               onDaySelected: _onDaySelected,
               onPageChanged: (focusedDay) {
@@ -153,16 +175,78 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
               // availableCalendarFormats: {},
             ),
           ),
-          _renderDay(
-            workingDay: WorkingDay(
-              title: getDateTimeFormat(
-                dateTime: kToday,
-                format: 'DDDD-MM-YYYY',
-              ),
-              startTime: kToday,
-              endTime: kToday,
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(15),
             ),
-          )
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  height: rSize(30),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: null,
+                        path: 'assets/icons/tab_hand.png',
+                        containerSize: rSize(30),
+                        backgroundColor: Colors.transparent,
+                      ),
+                    ),
+                    SizedBox(
+                      width: rSize(5),
+                    ),
+                    Text(
+                      'Adjust opening hours for any day independently.',
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          ?.copyWith(fontSize: rSize(14)),
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primaryContainer
+                      .withOpacity(0.7),
+                  height: rSize(30),
+                  thickness: rSize(1),
+                ),
+                _renderDay(
+                  workingDay: WorkingDay(
+                    selectedDate: _selectedDay,
+                    title: getDateTimeFormat(
+                      dateTime: _selectedDay,
+                      format: 'EEEE',
+                    ),
+                    subTitle: getDateTimeFormat(
+                      isDayOfWeek: true,
+                      dateTime: _selectedDay,
+                      format: 'dd-MMM-yyyy',
+                    ),
+                    startTime: kToday,
+                    endTime: kToday,
+                  ),
+                ),
+                Divider(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .primaryContainer
+                      .withOpacity(0.5),
+                  height: rSize(30),
+                  thickness: rSize(1),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

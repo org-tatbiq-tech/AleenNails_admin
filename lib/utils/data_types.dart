@@ -53,6 +53,8 @@ class LiquidSwipeData {
 class ExpandableCalendarProps {
   final DateTime focusedDay;
   final DateTime? selectedDay;
+  final DateTime? firstDay;
+  final DateTime? lastDay;
   final CalendarFormat calendarFormat;
   final Map<CalendarFormat, String>? availableCalendarFormats;
   List<CalendarEvent> Function(DateTime)? eventLoader;
@@ -63,6 +65,8 @@ class ExpandableCalendarProps {
   ExpandableCalendarProps({
     required this.focusedDay,
     this.selectedDay,
+    this.firstDay,
+    this.lastDay,
     required this.calendarFormat,
     this.eventLoader,
     this.onDaySelected,
@@ -98,15 +102,19 @@ class CustomTextButtonProps {
 
 class WorkingDay {
   String title;
+  String subTitle;
+  DateTime? selectedDate;
   DateTime startTime;
   DateTime endTime;
-  bool isEnable;
+  bool isDayOff;
 
   WorkingDay({
     required this.title,
+    this.subTitle = '',
     required this.startTime,
     required this.endTime,
-    this.isEnable = true,
+    this.selectedDate,
+    this.isDayOff = true,
   });
 }
 
@@ -346,6 +354,7 @@ class CustomButtonProps {
   final String text;
   final VoidCallback onTap;
   final bool isPrimary;
+  final bool isDisabled;
   final bool capitalizeText;
   final Color? backgroundColor;
   final Color? borderColor;
@@ -357,6 +366,7 @@ class CustomButtonProps {
     this.isPrimary = true,
     this.isSecondary = false,
     this.capitalizeText = true,
+    this.isDisabled = false,
     this.backgroundColor,
     this.borderColor,
     this.textColor,
