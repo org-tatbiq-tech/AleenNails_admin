@@ -56,16 +56,18 @@ class BusinessInfoState extends State<BusinessInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Social Media',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
-          ),
-          SizedBox(
-            height: rSize(10),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(10),
+            ),
+            child: Text(
+              'Social Media',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
@@ -197,16 +199,18 @@ class BusinessInfoState extends State<BusinessInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Business Description',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
-          ),
-          SizedBox(
-            height: rSize(5),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(10),
+            ),
+            child: Text(
+              'Business Description',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(120),
@@ -229,16 +233,18 @@ class BusinessInfoState extends State<BusinessInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Email Address',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
-          ),
-          SizedBox(
-            height: rSize(5),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(10),
+            ),
+            child: Text(
+              'Email Address',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
@@ -256,16 +262,18 @@ class BusinessInfoState extends State<BusinessInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Phone Number',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
-          ),
-          SizedBox(
-            height: rSize(5),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(10),
+            ),
+            child: Text(
+              'Phone Number',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
@@ -283,16 +291,18 @@ class BusinessInfoState extends State<BusinessInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Business Name',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
-          ),
-          SizedBox(
-            height: rSize(5),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(10),
+            ),
+            child: Text(
+              'Business Name',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
@@ -326,7 +336,7 @@ class BusinessInfoState extends State<BusinessInfo> {
         body: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
             horizontal: rSize(30),
-            vertical: rSize(40),
+            vertical: rSize(20),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.max,

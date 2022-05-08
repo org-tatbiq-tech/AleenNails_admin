@@ -116,8 +116,10 @@ void showBottomModal({
                           bottomModalProps.showDragPen ? rSize(30) : rSize(15),
                           rSize(30),
                           rSize(15)),
-                      child: Text(bottomModalProps.title,
-                          style: Theme.of(context).textTheme.headline2),
+                      child: Text(
+                        bottomModalProps.title,
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
                     )
                   : const SizedBox(),
               Padding(

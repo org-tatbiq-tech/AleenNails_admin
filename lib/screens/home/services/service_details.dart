@@ -262,13 +262,17 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Service Color',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Service Color',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(60),
@@ -298,9 +302,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             'Permissions',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -311,9 +313,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 'Allow Clients to Book Online',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: rSize(18),
-                    ),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -386,13 +386,18 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text(
-                'Message to Client',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      fontSize: rSize(18),
-                    ),
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: rSize(5),
+                  left: rSize(10),
+                  right: rSize(10),
+                ),
+                child: Text(
+                  'Message to Client',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
               ),
               EaseInAnimation(
                 onTap: () => {
@@ -445,13 +450,17 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Media',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Media',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SingleChildScrollView(
             padding: EdgeInsets.only(
@@ -473,13 +482,18 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Service Description',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Service Description',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(5),
@@ -512,13 +526,18 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    'Price',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: rSize(18),
-                        ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: rSize(5),
+                      left: rSize(10),
+                      right: rSize(10),
+                    ),
+                    child: Text(
+                      'Price',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                   ),
                   SizedBox(
                     height: rSize(5),
@@ -542,13 +561,18 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    'Duration',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: rSize(18),
-                        ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: rSize(5),
+                      left: rSize(10),
+                      right: rSize(10),
+                    ),
+                    child: Text(
+                      'Duration',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                   ),
                   SizedBox(
                     height: rSize(5),
@@ -582,13 +606,18 @@ class _ServiceDetailsState extends State<ServiceDetails> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Service Name',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Service Name',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(5),
@@ -638,7 +667,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               ),
               _renderPriceDuration(),
               SizedBox(
-                height: rSize(20),
+                height: rSize(30),
               ),
               _renderServiceColors(),
               SizedBox(
@@ -646,7 +675,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               ),
               _renderDescription(),
               SizedBox(
-                height: rSize(20),
+                height: rSize(30),
               ),
               _renderMedia(),
               SizedBox(

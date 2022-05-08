@@ -104,8 +104,8 @@ class _CustomAppBarState extends State<CustomAppBar>
                           rSize(10),
                         )),
                     child: Text(
-                      'Save',
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      'Save'.toUpperCase(),
+                      style: Theme.of(context).textTheme.button?.copyWith(
                             color: Theme.of(context).colorScheme.primary,
                           ),
                     ),
@@ -114,6 +114,7 @@ class _CustomAppBarState extends State<CustomAppBar>
               : Container(),
           widget.customAppBarProps.withSearch
               ? GestureDetector(
+                  onTapUp: onSearchTapUp,
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, rSize(10), 0),
                     child: CustomIcon(
@@ -127,7 +128,6 @@ class _CustomAppBarState extends State<CustomAppBar>
                       ),
                     ),
                   ),
-                  onTapUp: onSearchTapUp,
                 )
               : Container(),
           widget.customAppBarProps.customIcon != null
@@ -249,7 +249,6 @@ class _CustomAppBarState extends State<CustomAppBar>
                                   ?.copyWith(
                                     color:
                                         Theme.of(context).colorScheme.primary,
-                                    fontSize: rSize(22),
                                   ),
                             ),
                       ],

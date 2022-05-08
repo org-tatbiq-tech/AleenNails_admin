@@ -13,7 +13,7 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return EaseInAnimation(
-      beginAnimation: 0.98,
+      beginAnimation: 0.99,
       onTap: customIconButtonProps.onTap,
       child: Container(
         decoration: BoxDecoration(
@@ -44,7 +44,7 @@ class CustomIconButton extends StatelessWidget {
                     icon: null,
                     backgroundColor: Colors.transparent,
                     path: customIconButtonProps.iconPath,
-                    containerSize: 32,
+                    containerSize: 25,
                   ),
                 ),
               ),

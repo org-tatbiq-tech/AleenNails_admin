@@ -18,14 +18,19 @@ class ContactCard extends StatelessWidget {
         title: Text(
           contactCardProps.contactDetails.name!,
           style: Theme.of(context).textTheme.headline1?.copyWith(
-                fontSize: rSize(18),
-              ),
-        ),
-        subTitle: Text(
-          contactCardProps.contactDetails.phone!,
-          style: Theme.of(context).textTheme.subtitle1?.copyWith(
                 fontSize: rSize(16),
               ),
+        ),
+        subTitle: Padding(
+          padding: EdgeInsets.only(
+            top: rSize(2),
+          ),
+          child: Text(
+            contactCardProps.contactDetails.phone!,
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  fontSize: rSize(14),
+                ),
+          ),
         ),
         trailing: IconTheme(
           data: Theme.of(context).primaryIconTheme,
@@ -40,10 +45,7 @@ class ContactCard extends StatelessWidget {
           child: Text(
             contactCardProps.contactDetails.name![0].toUpperCase() +
                 contactCardProps.contactDetails.name![1].toUpperCase(),
-            style: Theme.of(context)
-                .textTheme
-                .bodyText2
-                ?.copyWith(fontSize: rSize(20)),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
         ),
       ),

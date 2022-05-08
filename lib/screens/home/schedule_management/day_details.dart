@@ -107,11 +107,11 @@ class _DayDetailsState extends State<DayDetails> {
             customTextButtonProps: CustomTextButtonProps(
               text: 'Add Break',
               textColor: Theme.of(context).colorScheme.primary,
-              fontSize: rSize(18),
+              fontSize: rSize(16),
               withIcon: true,
               icon: Icon(
                 FontAwesomeIcons.plus,
-                size: rSize(18),
+                size: rSize(16),
                 color: Theme.of(context).colorScheme.primary,
               ),
               onTap: () => {},
@@ -133,16 +133,18 @@ class _DayDetailsState extends State<DayDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text(
-                  'Start',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontSize: rSize(16),
-                      ),
-                ),
-                SizedBox(
-                  height: rSize(5),
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(10),
+                    left: rSize(10),
+                    right: rSize(10),
+                  ),
+                  child: Text(
+                    'Start',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                 ),
                 CustomInputFieldButton(
                   text: getDateTimeFormat(
@@ -173,16 +175,16 @@ class _DayDetailsState extends State<DayDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text(
-                  'End',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontSize: rSize(16),
-                      ),
-                ),
-                SizedBox(
-                  height: rSize(5),
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(10),
+                    left: rSize(10),
+                    right: rSize(10),
+                  ),
+                  child: Text('End',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2),
                 ),
                 CustomInputFieldButton(
                   text: getDateTimeFormat(

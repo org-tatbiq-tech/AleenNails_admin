@@ -52,16 +52,18 @@ class _WorkingDaysState extends State<WorkingDays> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            Text(
-              'Business Hours Note',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontSize: rSize(18),
-                  ),
-            ),
-            SizedBox(
-              height: rSize(5),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: rSize(10),
+                left: rSize(10),
+                right: rSize(10),
+              ),
+              child: Text(
+                'Business Hours Note',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
             ),
             SizedBox(
               height: rSize(120),

@@ -144,21 +144,21 @@ class _BookingsSettingsState extends State<BookingsSettings> {
         children: [
           Text(
             'Booking Rules',
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+            style: Theme.of(context).textTheme.bodyText2,
           ),
           SizedBox(
             height: rSize(20),
           ),
-          Text(
-            'Booking Window',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: rSize(16),
-                ),
-          ),
-          SizedBox(
-            height: rSize(10),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(10),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Booking Window',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
           CustomInputFieldButton(
             text: bookingWindowPickerdata[0],
@@ -176,14 +176,14 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           SizedBox(
             height: rSize(20),
           ),
-          Text(
-            'Future Booking Window',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: rSize(16),
-                ),
-          ),
-          SizedBox(
-            height: rSize(10),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(10),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text('Future Booking Window',
+                style: Theme.of(context).textTheme.bodyText1),
           ),
           CustomInputFieldButton(
             fontSize: 16,
@@ -201,14 +201,14 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           SizedBox(
             height: rSize(20),
           ),
-          Text(
-            'Rescheduling',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  fontSize: rSize(16),
-                ),
-          ),
-          SizedBox(
-            height: rSize(10),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(10),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text('Rescheduling',
+                style: Theme.of(context).textTheme.bodyText1),
           ),
           CustomInputFieldButton(
             fontSize: 16,
@@ -243,18 +243,14 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                 children: [
                   Text(
                     'Automatically confirm bookings',
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: rSize(18),
-                        ),
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                   SizedBox(
                     height: rSize(10),
                   ),
                   Text(
                     'When you turn on automatic confirmations, you save time and make it easier for your clients to book. we recommends it.',
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          fontSize: rSize(14),
-                        ),
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ],
               ),

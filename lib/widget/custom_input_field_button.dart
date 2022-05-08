@@ -10,7 +10,7 @@ class CustomInputFieldButton extends StatelessWidget {
   const CustomInputFieldButton({
     Key? key,
     this.text = '',
-    this.fontSize = 20,
+    this.fontSize = 18,
     this.onTap,
   }) : super(key: key);
 
