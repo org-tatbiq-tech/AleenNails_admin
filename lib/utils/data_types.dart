@@ -166,7 +166,7 @@ class CustomStatusProps {
   double fontSize;
   CustomStatusProps({
     required this.status,
-    this.fontSize = 18,
+    this.fontSize = 16,
   });
 }
 

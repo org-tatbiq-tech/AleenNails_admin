@@ -105,15 +105,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               children: [
                 Text(
                   'Total'.toUpperCase(),
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(14),
-                      ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
                   getStringPrice(10.6),
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontSize: rSize(24),
-                      ),
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ],
             ),
@@ -124,15 +120,11 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               children: [
                 Text(
                   'Due To'.toUpperCase(),
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(14),
-                      ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
                   getStringPrice(10.6),
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontSize: rSize(24),
-                      ),
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ],
             ),
@@ -205,11 +197,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            'ID: ' + service.id!,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1
-                ?.copyWith(fontSize: rSize(16)),
+            'ID: ${service.id!}',
+            style: Theme.of(context).textTheme.bodyText1,
           ),
           Padding(
             padding: EdgeInsets.symmetric(
@@ -217,7 +206,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             ),
             child: Icon(
               Icons.circle,
-              size: rSize(8),
+              size: rSize(6),
               color: Theme.of(context).textTheme.bodyText1!.color,
             ),
           ),
@@ -225,10 +214,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             service.createdByBusiness
                 ? 'Created by Business'
                 : 'Created by Client',
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1
-                ?.copyWith(fontSize: rSize(16)),
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       );
@@ -248,9 +234,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               'Services ($servicesLength)',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontSize: rSize(18),
-                  ),
+              style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
           Expanded(
@@ -333,17 +317,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     'Wed 13/02/2022',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.headline1?.copyWith(
-                          fontSize: rSize(18),
-                        ),
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                   Text(
                     '13:00 - 14:30',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          fontSize: rSize(16),
-                        ),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
               ),
@@ -364,9 +344,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               'Notes',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontSize: rSize(18),
-                  ),
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
               height: rSize(5),
@@ -429,7 +407,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 ),
               ),
               SizedBox(
-                height: rSize(10),
+                height: rSize(15),
               ),
               _renderDate(),
             ],

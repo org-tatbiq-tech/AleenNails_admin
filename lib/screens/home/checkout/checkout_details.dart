@@ -113,7 +113,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
         delay: 0.5,
         child: Padding(
           padding: EdgeInsets.only(
-            bottom: rSize(10),
+            bottom: rSize(5),
           ),
           child: CustomSlidable(
             customSlidableProps: CustomSlidableProps(
@@ -241,7 +241,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
               Text(
                 'Discount',
                 style: Theme.of(context).textTheme.headline1?.copyWith(
-                      fontSize: rSize(18),
+                      fontSize: rSize(16),
                     ),
               ),
               Column(
@@ -252,7 +252,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                   Text(
                     getStringPrice(10),
                     style: Theme.of(context).textTheme.headline1?.copyWith(
-                          fontSize: rSize(18),
+                          fontSize: rSize(16),
                         ),
                   ),
                   SizedBox(
@@ -260,9 +260,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                   ),
                   Text(
                     discount,
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          fontSize: rSize(16),
-                        ),
+                    style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ],
               ),
@@ -309,9 +307,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                 ),
                 Text(
                   'Add Item',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(14),
-                      ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 SizedBox(
                   width: rSize(20),
@@ -335,9 +331,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                 ),
                 Text(
                   'Discount',
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(14),
-                      ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ],
             ),
@@ -348,15 +342,11 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
               children: [
                 Text(
                   'Total'.toUpperCase(),
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(14),
-                      ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
                   getStringPrice(50),
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontSize: rSize(24),
-                      ),
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ],
             ),
@@ -494,24 +484,15 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                   Text(
                     getDateTimeFormat(
                         dateTime: kToday, format: 'EEEE', isDayOfWeek: true),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(fontSize: rSize(16)),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
                     getDateTimeFormat(dateTime: kToday, format: 'dd'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline1
-                        ?.copyWith(fontSize: rSize(20)),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                   Text(
                     getDateTimeFormat(dateTime: kToday, format: 'HH:mm'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1
-                        ?.copyWith(fontSize: rSize(16)),
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
               ),
@@ -545,11 +526,8 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                           height: rSize(5),
                         ),
                         Text(
-                          'ID: ' + service.id!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              ?.copyWith(fontSize: rSize(12)),
+                          'ID: ${service.id!}',
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ],
                     ),

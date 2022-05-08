@@ -151,7 +151,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              bottom: rSize(10),
+              bottom: rSize(5),
               left: rSize(10),
               right: rSize(10),
             ),
@@ -178,7 +178,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              bottom: rSize(10),
+              bottom: rSize(5),
               left: rSize(10),
               right: rSize(10),
             ),
@@ -203,7 +203,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              bottom: rSize(10),
+              bottom: rSize(5),
               left: rSize(10),
               right: rSize(10),
             ),

@@ -119,9 +119,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                 'Appointments',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      fontSize: rSize(18),
-                    ),
+                style: Theme.of(context).textTheme.bodyText2,
               ),
             ),
             Column(
@@ -149,9 +147,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                   customTextButtonProps: CustomTextButtonProps(
                     onTap: () => {},
                     text: 'Show All',
-                    textStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(18),
-                        color: Theme.of(context).colorScheme.primary),
+                    textColor: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ],
@@ -167,16 +163,16 @@ class _ContactDetailsState extends State<ContactDetails> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Birthday',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
-          ),
-          SizedBox(
-            height: rSize(5),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+            ),
+            child: Text(
+              'Birthday',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           Text(
             'Thursday 25-06-2020',
@@ -194,16 +190,16 @@ class _ContactDetailsState extends State<ContactDetails> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Last Visiting',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
-          ),
-          SizedBox(
-            height: rSize(5),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+            ),
+            child: Text(
+              'Last Visiting',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           Text(
             'Thursday 25-06-2020',
@@ -222,16 +218,16 @@ class _ContactDetailsState extends State<ContactDetails> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Notes',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontSize: rSize(18),
-                  ),
-            ),
-            SizedBox(
-              height: rSize(5),
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: rSize(5),
+              ),
+              child: Text(
+                'Notes',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
             ),
             const ReadMoreText(
               'No notes was added dsakj dsakldsa sdjlkada sdjksladjas sdkasldjasld dsakdjsakldasjkldjasldjaslkdjlksadjalksdjalskjkldsjaklsdjklsdajlkdjas daskdjsadas ddkjsakljdklas dsakjdaskljd',
@@ -272,9 +268,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                   'Bookings',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(18),
-                      ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
                   '1',
@@ -299,9 +293,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                   'Finished',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(18),
-                      ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
                   '1',
@@ -326,9 +318,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                   'Cancelled',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        fontSize: rSize(18),
-                      ),
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
                   '1',
@@ -355,7 +345,6 @@ class _ContactDetailsState extends State<ContactDetails> {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
                         color: Theme.of(context).colorScheme.error,
-                        fontSize: rSize(18),
                       ),
                 ),
                 Text(

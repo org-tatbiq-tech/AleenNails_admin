@@ -54,7 +54,7 @@ class _WorkingDaysState extends State<WorkingDays> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                bottom: rSize(10),
+                bottom: rSize(5),
                 left: rSize(10),
                 right: rSize(10),
               ),

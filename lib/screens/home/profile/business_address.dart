@@ -43,13 +43,18 @@ class BusinessAddressState extends State<BusinessAddress> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Map Location',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(5),
+            ),
+            child: Text(
+              'Map Location',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(5),
@@ -70,13 +75,18 @@ class BusinessAddressState extends State<BusinessAddress> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Zip Code',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(5),
+            ),
+            child: Text(
+              'Zip Code',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(5),
@@ -97,13 +107,18 @@ class BusinessAddressState extends State<BusinessAddress> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'City',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(5),
+            ),
+            child: Text(
+              'City',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(5),
@@ -124,13 +139,18 @@ class BusinessAddressState extends State<BusinessAddress> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Street Address & Number',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(5),
+            ),
+            child: Text(
+              'Street Address & Number',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(5),

@@ -60,7 +60,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             padding: EdgeInsets.only(
               left: rSize(10),
               right: rSize(10),
-              bottom: rSize(10),
+              bottom: rSize(5),
             ),
             child: Text(
               'Social Media',
@@ -203,7 +203,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             padding: EdgeInsets.only(
               left: rSize(10),
               right: rSize(10),
-              bottom: rSize(10),
+              bottom: rSize(5),
             ),
             child: Text(
               'Business Description',
@@ -237,7 +237,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             padding: EdgeInsets.only(
               left: rSize(10),
               right: rSize(10),
-              bottom: rSize(10),
+              bottom: rSize(5),
             ),
             child: Text(
               'Email Address',
@@ -266,7 +266,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             padding: EdgeInsets.only(
               left: rSize(10),
               right: rSize(10),
-              bottom: rSize(10),
+              bottom: rSize(5),
             ),
             child: Text(
               'Phone Number',
@@ -295,7 +295,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             padding: EdgeInsets.only(
               left: rSize(10),
               right: rSize(10),
-              bottom: rSize(10),
+              bottom: rSize(5),
             ),
             child: Text(
               'Business Name',

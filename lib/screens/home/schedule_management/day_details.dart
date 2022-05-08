@@ -135,7 +135,7 @@ class _DayDetailsState extends State<DayDetails> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: rSize(10),
+                    bottom: rSize(5),
                     left: rSize(10),
                     right: rSize(10),
                   ),
@@ -177,7 +177,7 @@ class _DayDetailsState extends State<DayDetails> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: rSize(10),
+                    bottom: rSize(5),
                     left: rSize(10),
                     right: rSize(10),
                   ),
