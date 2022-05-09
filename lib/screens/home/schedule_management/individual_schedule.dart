@@ -49,6 +49,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
             builder: (context) => DayDetails(
               isIndividual: true,
               dayTile: getDateTimeFormat(
+                isDayOfWeek: true,
                 dateTime: _selectedDay,
                 format: 'EEE, dd MMM yyyy',
               ),
@@ -63,8 +64,8 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
           right: rSize(10),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
@@ -79,7 +80,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                   SizedBox(
-                    height: rSize(5),
+                    height: rSize(2),
                   ),
                   workingDay.subTitle.isNotEmpty
                       ? Text(
@@ -185,7 +186,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 SizedBox(
-                  height: rSize(30),
+                  height: rSize(20),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,

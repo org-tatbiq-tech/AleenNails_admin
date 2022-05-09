@@ -216,13 +216,18 @@ class _NewServiceState extends State<NewService> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Service Color',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Service Color',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(60),
@@ -248,13 +253,16 @@ class _NewServiceState extends State<NewService> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Permissions',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+            ),
+            child: Text(
+              'Permissions',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -265,9 +273,7 @@ class _NewServiceState extends State<NewService> {
                 'Allow Clients to Book Online',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: rSize(18),
-                    ),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -340,13 +346,18 @@ class _NewServiceState extends State<NewService> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text(
-                'Message to Client',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      fontSize: rSize(18),
-                    ),
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: rSize(5),
+                  left: rSize(10),
+                  right: rSize(10),
+                ),
+                child: Text(
+                  'Message to Client',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
               ),
               EaseInAnimation(
                 onTap: () => {
@@ -399,13 +410,17 @@ class _NewServiceState extends State<NewService> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Media',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Media',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SingleChildScrollView(
             padding: EdgeInsets.only(
@@ -427,16 +442,18 @@ class _NewServiceState extends State<NewService> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Service Description',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
-          ),
-          SizedBox(
-            height: rSize(5),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Service Description',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(120),
@@ -466,16 +483,18 @@ class _NewServiceState extends State<NewService> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    'Price',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: rSize(18),
-                        ),
-                  ),
-                  SizedBox(
-                    height: rSize(5),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: rSize(5),
+                      left: rSize(10),
+                      right: rSize(10),
+                    ),
+                    child: Text(
+                      'Price',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                   ),
                   CustomInputField(
                     customInputFieldProps: CustomInputFieldProps(
@@ -496,16 +515,18 @@ class _NewServiceState extends State<NewService> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    'Duration',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                          fontSize: rSize(18),
-                        ),
-                  ),
-                  SizedBox(
-                    height: rSize(5),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: rSize(5),
+                      left: rSize(10),
+                      right: rSize(10),
+                    ),
+                    child: Text(
+                      'Duration',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
                   ),
                   CustomInputFieldButton(
                     text: getDateTimeFormat(
@@ -536,13 +557,18 @@ class _NewServiceState extends State<NewService> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Service Name',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                  fontSize: rSize(18),
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Service Name',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
           SizedBox(
             height: rSize(5),

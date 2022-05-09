@@ -170,6 +170,19 @@ class CustomStatusProps {
   });
 }
 
+class EmptyListImageProps {
+  String title;
+  String iconPath;
+  double bottomWidgetPosition;
+  Widget? bottomWidget;
+  EmptyListImageProps({
+    this.title = '',
+    this.bottomWidgetPosition = -170,
+    this.bottomWidget,
+    this.iconPath = 'assets/icons/statics.png',
+  });
+}
+
 class CustomAccordionSectionProps {
   final Widget header;
   final Widget content;

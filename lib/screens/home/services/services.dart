@@ -1,5 +1,7 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_text_button.dart';
+import 'package:appointments/widget/empty_list_image.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -30,12 +32,12 @@ class ServicesState extends State<Services> {
       price: 45,
     );
     List<Service> services = [
-      service,
-      service,
-      service,
-      service,
-      service,
-      service
+      // service,
+      // service,
+      // service,
+      // service,
+      // service,
+      // service
     ];
     return Scaffold(
       appBar: CustomAppBar(
@@ -55,32 +57,60 @@ class ServicesState extends State<Services> {
       body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            child: ListView.separated(
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: rSize(10),
-                );
-              },
-              padding: EdgeInsets.symmetric(
-                vertical: rSize(30),
-                horizontal: rSize(20),
-              ),
-              itemCount: services.length,
-              itemBuilder: (context, index) {
-                return ServiceCard(
-                  serviceCardProps: ServiceCardProps(
-                    withNavigation: !widget.selectionMode,
-                    onTap: widget.onTap,
-                    serviceDetails: services[index],
-                    title: service.name ?? '',
-                    subTitle: services[index].duration ?? '',
+          services.isNotEmpty
+              ? Expanded(
+                  child: ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: rSize(10),
+                    );
+                  },
+                  padding: EdgeInsets.symmetric(
+                    vertical: rSize(30),
+                    horizontal: rSize(20),
                   ),
-                );
-              },
-            ),
-          ),
+                  itemCount: services.length,
+                  itemBuilder: (context, index) {
+                    return ServiceCard(
+                      serviceCardProps: ServiceCardProps(
+                        withNavigation: !widget.selectionMode,
+                        onTap: widget.onTap,
+                        serviceDetails: services[index],
+                        title: service.name ?? '',
+                        subTitle: services[index].duration ?? '',
+                      ),
+                    );
+                  },
+                ))
+              : Padding(
+                  padding: EdgeInsets.only(
+                    top: rSize(250),
+                  ),
+                  child: EmptyListImage(
+                    emptyListImageProps: EmptyListImageProps(
+                      title: 'No services added yet',
+                      iconPath: 'assets/icons/services.png',
+                      bottomWidgetPosition: 10,
+                      bottomWidget: CustomTextButton(
+                        customTextButtonProps: CustomTextButtonProps(
+                          onTap: () => {
+                            Navigator.pushNamed(context, '/newService'),
+                          },
+                          text: 'Add New Service',
+                          textColor: Theme.of(context).colorScheme.primary,
+                          withIcon: true,
+                          icon: Icon(
+                            FontAwesomeIcons.plus,
+                            size: rSize(16),
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
         ],
       ),
     );

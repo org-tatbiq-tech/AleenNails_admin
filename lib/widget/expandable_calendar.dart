@@ -34,14 +34,12 @@ class ExpandableCalendar extends StatelessWidget {
           daysOfWeekHeight: rSize(30),
           rowHeight: rSize(45),
           daysOfWeekStyle: DaysOfWeekStyle(
-            weekdayStyle: Theme.of(context)
-                .textTheme
-                .subtitle2!
-                .copyWith(color: Theme.of(context).colorScheme.outline),
-            weekendStyle: Theme.of(context)
-                .textTheme
-                .subtitle2!
-                .copyWith(color: Theme.of(context).colorScheme.outline),
+            weekdayStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
+            weekendStyle: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
           ),
           headerStyle: HeaderStyle(
             leftChevronIcon: IconTheme(
@@ -74,10 +72,9 @@ class ExpandableCalendar extends StatelessWidget {
                 .copyWith(color: Colors.white, fontSize: rSize(14)),
             formatButtonVisible: expandableCalendarProps.formatButtonVisible,
             formatButtonShowsNext: false,
-            titleTextStyle: Theme.of(context)
-                .textTheme
-                .headline2!
-                .copyWith(color: Theme.of(context).colorScheme.outline),
+            titleTextStyle: Theme.of(context).textTheme.headline2!.copyWith(
+                  color: Theme.of(context).colorScheme.outline,
+                ),
             titleCentered: false,
           ),
           focusedDay: expandableCalendarProps.focusedDay,
