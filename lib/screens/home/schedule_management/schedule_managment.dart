@@ -44,7 +44,7 @@ class ScheduleManagementState extends State<ScheduleManagement> {
                 animationDelay: 0.1,
                 iconPath: 'assets/icons/growth.png',
                 positionType: PositionType.bottom,
-                text: 'Open Calendar',
+                title: 'Open Calendar',
               ),
             ),
             SizedBox(
@@ -56,7 +56,7 @@ class ScheduleManagementState extends State<ScheduleManagement> {
                 animationDelay: 0.3,
                 iconPath: 'assets/icons/rating.png',
                 positionType: PositionType.bottom,
-                text: 'Working Days',
+                title: 'Working Days',
               ),
             ),
             SizedBox(
@@ -64,11 +64,11 @@ class ScheduleManagementState extends State<ScheduleManagement> {
             ),
             CustomIconButton(
               customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {},
+                onTap: () => {Navigator.pushNamed(context, '/unavailability')},
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/services.png',
                 positionType: PositionType.bottom,
-                text: 'Unavailability',
+                title: 'Unavailability',
               ),
             ),
           ],

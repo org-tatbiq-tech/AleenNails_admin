@@ -53,8 +53,8 @@ class CustomIconButton extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(
-                  horizontal: rSize(10),
-                  vertical: rSize(12),
+                  horizontal: rSize(20),
+                  vertical: rSize(10),
                 ),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
@@ -63,7 +63,7 @@ class CustomIconButton extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  customIconButtonProps.text,
+                  customIconButtonProps.title,
                   style: Theme.of(context).textTheme.bodyText2?.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                       ),

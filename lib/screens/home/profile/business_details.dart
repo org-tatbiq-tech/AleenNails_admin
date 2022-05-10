@@ -36,7 +36,7 @@ class BusinessDetails extends StatelessWidget {
                 animationDelay: 0.1,
                 iconPath: 'assets/icons/home_outline.png',
                 positionType: PositionType.bottom,
-                text: 'Business Name & Info',
+                title: 'Business Name & Info',
               ),
             ),
             SizedBox(
@@ -48,7 +48,7 @@ class BusinessDetails extends StatelessWidget {
                 animationDelay: 0.3,
                 iconPath: 'assets/icons/images.png',
                 positionType: PositionType.bottom,
-                text: 'Profile Images',
+                title: 'Profile Images',
               ),
             ),
             SizedBox(
@@ -60,7 +60,7 @@ class BusinessDetails extends StatelessWidget {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/place_holder.png',
                 positionType: PositionType.bottom,
-                text: 'Business Location',
+                title: 'Business Location',
               ),
             ),
           ],

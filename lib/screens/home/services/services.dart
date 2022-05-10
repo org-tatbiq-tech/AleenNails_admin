@@ -91,7 +91,7 @@ class ServicesState extends State<Services> {
                   child: EmptyListImage(
                     emptyListImageProps: EmptyListImageProps(
                       title: 'No services added yet',
-                      iconPath: 'assets/icons/services.png',
+                      iconPath: 'assets/icons/menu.png',
                       bottomWidgetPosition: 10,
                       bottomWidget: CustomTextButton(
                         customTextButtonProps: CustomTextButtonProps(

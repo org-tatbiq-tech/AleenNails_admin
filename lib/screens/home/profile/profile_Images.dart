@@ -45,7 +45,7 @@ class ProfileImages extends StatelessWidget {
                 animationDelay: 0.1,
                 iconPath: 'assets/icons/logo-design.png',
                 positionType: PositionType.bottom,
-                text: 'Logo',
+                title: 'Logo',
               ),
             ),
             SizedBox(
@@ -58,7 +58,7 @@ class ProfileImages extends StatelessWidget {
                 animationDelay: 0.3,
                 iconPath: 'assets/icons/image.png',
                 positionType: PositionType.bottom,
-                text: 'Cover Photo',
+                title: 'Cover Photo',
               ),
             ),
             SizedBox(
@@ -71,7 +71,7 @@ class ProfileImages extends StatelessWidget {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/images.png',
                 positionType: PositionType.bottom,
-                text: 'Workplace Photos',
+                title: 'Workplace Photos',
               ),
             ),
           ],

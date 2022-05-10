@@ -1,3 +1,4 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
@@ -140,15 +141,6 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
           titleText: 'Opening Calendar',
           withBack: true,
           withBorder: true,
-          // customIconTap: () => {_getSettingInfo()},
-          // customIcon: CustomIcon(
-          //   customIconProps: CustomIconProps(
-          //     icon: null,
-          //     path: 'assets/icons/question.png',
-          //     contentPadding: rSize(8),
-          //     withPadding: true,
-          //   ),
-          // ),
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -159,6 +151,9 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
               calendarFormat: _calendarFormat,
+              availableCalendarFormats: {
+                CalendarFormat.month: Languages.of(context)!.monthLabel
+              },
               formatButtonVisible: false,
               firstDay: kToday,
               eventLoader: _getEventsForDay,
