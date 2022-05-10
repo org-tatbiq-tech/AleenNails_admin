@@ -466,7 +466,7 @@ class _ContactDetailsState extends State<ContactDetails> {
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 withPadding: true,
-                path: 'assets/icons/calendar_plus.png',
+                path: 'assets/icons/calendar_plus_full.png',
                 icon: null,
               ),
             ),
@@ -480,7 +480,7 @@ class _ContactDetailsState extends State<ContactDetails> {
         customAppBarProps: CustomAppBarProps(
           titleText: 'Contact Details',
           withBack: true,
-          barHeight: 120,
+          barHeight: 110,
           withClipPath: true,
           customIcon: Icon(
             Icons.edit,

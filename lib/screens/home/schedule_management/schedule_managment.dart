@@ -42,7 +42,7 @@ class ScheduleManagementState extends State<ScheduleManagement> {
                 onTap: () =>
                     {Navigator.pushNamed(context, '/individualSchedule')},
                 animationDelay: 0.1,
-                iconPath: 'assets/icons/growth.png',
+                iconPath: 'assets/icons/calendar.png',
                 positionType: PositionType.bottom,
                 title: 'Open Calendar',
               ),
@@ -54,7 +54,7 @@ class ScheduleManagementState extends State<ScheduleManagement> {
               customIconButtonProps: CustomIconButtonProps(
                 onTap: () => {Navigator.pushNamed(context, '/workingDays')},
                 animationDelay: 0.3,
-                iconPath: 'assets/icons/rating.png',
+                iconPath: 'assets/icons/calendar_time.png',
                 positionType: PositionType.bottom,
                 title: 'Working Days',
               ),
@@ -66,7 +66,7 @@ class ScheduleManagementState extends State<ScheduleManagement> {
               customIconButtonProps: CustomIconButtonProps(
                 onTap: () => {Navigator.pushNamed(context, '/unavailability')},
                 animationDelay: 0.5,
-                iconPath: 'assets/icons/services.png',
+                iconPath: 'assets/icons/calendar_x.png',
                 positionType: PositionType.bottom,
                 title: 'Unavailability',
               ),

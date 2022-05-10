@@ -11,13 +11,29 @@ Color primaryWithAlpha3 = const Color(0xFFf6eef7);
 Color primaryFont = const Color(0xFF311b36);
 Color primaryFontWithAlpha1 = const Color(0xFF63376c);
 
+// Color primary = const Color(0xFF00ced1);
+// Color secondary = const Color(0xFF6cb55c);
+// Color primaryWithAlpha1 = const Color(0xFF99ebec);
+// Color primaryWithAlpha2 = const Color(0xFFccf5f5);
+// Color primaryWithAlpha3 = const Color(0xFFe5fafa);
+// Color primaryFont = const Color(0xFF003d3e);
+// Color primaryFontWithAlpha1 = const Color(0xFF006768);
+
+// Color primary = const Color(0xFF66ccff);
+// Color secondary = const Color(0xFF6cb55c);
+// Color primaryWithAlpha1 = const Color(0xFFc1eaff);
+// Color primaryWithAlpha2 = const Color(0xFFe0f4ff);
+// Color primaryWithAlpha3 = const Color(0xFFeff9ff);
+// Color primaryFont = const Color(0xFF1E3D4C);
+// Color primaryFontWithAlpha1 = const Color(0xFF33667f);
+
 class ThemeNotifier with ChangeNotifier {
   /// Dark theme data definition
   final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primarySwatch: Colors.red,
     primaryColor: Colors.red,
-    shadowColor: Colors.lightBlue,
+    shadowColor: Colors.black,
     colorScheme: const ColorScheme.dark()
         .copyWith(primary: Colors.red, secondary: Colors.pink),
     backgroundColor: Colors.red,
