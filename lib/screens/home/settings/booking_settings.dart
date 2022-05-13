@@ -55,7 +55,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
   ];
   @override
   Widget build(BuildContext context) {
-    _getSettingInfo() {
+    getSettingInfo() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -136,7 +136,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
       );
     }
 
-    Widget _renderBookingRules() {
+    Widget renderBookingRules() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +227,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
       );
     }
 
-    Widget _renderSwitch() {
+    Widget renderSwitch() {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -304,7 +304,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
             withBack: true,
             barHeight: 110,
             withClipPath: true,
-            customIconTap: () => {_getSettingInfo()},
+            customIconTap: () => {getSettingInfo()},
             customIcon: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: null,
@@ -338,11 +338,11 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                   SizedBox(
                     height: rSize(10),
                   ),
-                  _renderSwitch(),
+                  renderSwitch(),
                   SizedBox(
                     height: rSize(40),
                   ),
-                  _renderBookingRules(),
+                  renderBookingRules(),
                 ],
               )),
               Row(

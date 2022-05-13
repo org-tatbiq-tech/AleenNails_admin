@@ -32,12 +32,12 @@ class ServicesState extends State<Services> {
       price: 45,
     );
     List<Service> services = [
-      // service,
-      // service,
-      // service,
-      // service,
-      // service,
-      // service
+      service,
+      service,
+      service,
+      service,
+      service,
+      service
     ];
     return Scaffold(
       appBar: CustomAppBar(

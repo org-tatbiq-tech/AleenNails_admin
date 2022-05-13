@@ -16,7 +16,7 @@ showPickerTimeRangeModal({
         ),
     hideHeader: true,
     adapter: DateTimePickerAdapter(
-      type: PickerDateTimeType.kHM,
+      type: PickerDateTimeType.kMDYHM,
       minuteInterval: 5,
       minuteSuffix: pickerTimeRangeModalProps.minuteSuffix,
       hourSuffix: pickerTimeRangeModalProps.hourSuffix,

@@ -9,11 +9,11 @@ import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/checkout/amount_selection.dart';
 import 'package:appointments/screens/home/checkout/checkout_details.dart';
 import 'package:appointments/screens/home/checkout/discount_selection.dart';
-import 'package:appointments/screens/home/contacts/contacts.dart';
+import 'package:appointments/screens/home/clients/client_details.dart';
+import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/profile/business_address.dart';
 import 'package:appointments/screens/home/profile/business_cover_photo.dart';
 import 'package:appointments/screens/home/profile/business_info.dart';
-import 'package:appointments/screens/home/contacts/contact_details.dart';
 import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/home/profile/business_details.dart';
 import 'package:appointments/screens/home/profile/business_logo.dart';
@@ -119,9 +119,9 @@ class StudiosApp extends StatelessWidget {
                           routes: {
                             '/home': (context) => const HomeScreen(),
                             '/loginScreen': (context) => const LoginScreen(),
-                            '/contacts': (context) => const Contacts(),
-                            '/contactDetails': (context) =>
-                                const ContactDetails(),
+                            '/clients': (context) => const Clients(),
+                            '/clientDetails': (context) =>
+                                const ClientDetails(),
                             '/forgetPassword': (context) =>
                                 const ForgetPasswordScreen(),
                             // '/resetPassword': (context) => const ResetPasswordScreen(),

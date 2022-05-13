@@ -1,4 +1,4 @@
-import 'package:appointments/screens/home/contacts/contacts.dart';
+import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/statistics.dart';
 import 'package:appointments/screens/home/timeline.dart';
@@ -21,19 +21,37 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedPage = 0;
   final screens = [
     TimeLine(),
-    Contacts(),
+    Clients(),
     Statistics(),
     More(),
   ];
+
+  getPageTitle() {
+    switch (_selectedPage) {
+      case 0:
+        return 'Home';
+      case 1:
+        return 'Clients';
+      case 2:
+        return 'Statics';
+      case 3:
+        return 'More';
+      default:
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
           withSearch: _selectedPage == 1 ? true : false,
           withBorder: _selectedPage == 0 ? true : false,
+          withClipPath: _selectedPage == 3 ? true : false,
+          barHeight: _selectedPage == 3 ? 100 : 70,
+          titleText: getPageTitle(),
         ),
       ),
       body: screens[_selectedPage],
@@ -48,16 +66,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 bottomModalProps: BottomModalProps(
                   context: context,
                   child: (Text('dasjdsakjlkjdaskjdalkjdak')),
-                  title: 'Modal Title',
+                  showDragPen: true,
+                  enableDrag: true,
+                  // title: 'Modal Title',
                 ),
               );
             },
-            // tooltip: "Centre FAB",
-            child: Container(
-              margin: const EdgeInsets.all(15.0),
-              child: const Icon(Icons.add),
-            ),
             elevation: 4.0,
+            // tooltip: "Centre FAB",
+            child: const Icon(Icons.add),
           ),
         ),
       ),

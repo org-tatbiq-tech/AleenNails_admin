@@ -1,13 +1,15 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/accordion/accordion.dart';
-import 'package:appointments/widget/accordion/accordion_section.dart';
-import 'package:appointments/widget/accordion/controllers.dart';
 import 'package:appointments/widget/contact_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/expandable_calendar.dart';
-import 'package:appointments/widget/slot_card.dart';
+import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:appointments/widget/custom_input_field_button.dart';
+import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:appointments/widget/picker_date_time_modal.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -20,249 +22,224 @@ class NewAppointment extends StatefulWidget {
 }
 
 class _NewAppointmentState extends State<NewAppointment> {
-  late final ValueNotifier<List<CalendarEvent>> _selectedEvents;
-  CalendarFormat _calendarFormat = CalendarFormat.week;
-  DateTime _focusedDay = kToday;
+  DateTime? startDateTime;
+  DateTime? startDateTimeTemp;
+  DateTime? endTime;
+  DateTime? endTimeTemp;
+  DateTime? endTimeMin;
   Contact? selectedContact;
-  DateTime? _selectedDay;
-  int _index = 0;
-  List<String> slots = [
-    '11:00',
-    '12:00',
-    '13:00',
-    '14:30',
-    '15:00',
-    '16:00',
-    '17:00',
-    '18:00'
-  ];
+  Service? selectedService;
+  bool isButtonDisabled = true;
+
   @override
   void initState() {
     super.initState();
-    _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
   @override
   void dispose() {
-    _selectedEvents.dispose();
     super.dispose();
-  }
-
-  List<CalendarEvent> _getEventsForDay(DateTime day) {
-    return kEvents[day] ?? [];
-  }
-
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    if (!isSameDay(_selectedDay, selectedDay)) {
-      setState(() {
-        _selectedDay = selectedDay;
-        _focusedDay = focusedDay;
-      });
-
-      _selectedEvents.value = _getEventsForDay(selectedDay);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Widget _builderStep() {
-      return Container(
-        margin: EdgeInsets.only(top: 10),
-        child: Stepper(
-          steps: [
-            Step(
-              title: Text("First"),
-              content: Text("This is our first example."),
-            ),
-            Step(
-              title: Text("Second"),
-              content: Text("This is our second example."),
-            ),
-            Step(
-              title: Text("Third"),
-              content: Text("This is our third example."),
-            ),
-            Step(
-              title: Text("Forth"),
-              content: Text("This is our forth example."),
-            ),
-          ],
-          currentStep: _index,
-          onStepTapped: (index) {
-            setState(() {
-              _index = index;
-            });
-          },
-          // controlsBuilder: (BuildContext context,
-          //         {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) =>
-          //     Container(),
-        ),
-      );
-    }
-
-    _renderAccordionSection({
-      required Widget header,
-      required Widget content,
-      Widget? leftIcon,
-      int index = 0,
-      bool isDisabled = false,
-      bool isOpen = false,
-    }) {
-      return AccordionSection(
-        index: index,
-        isOpen: isOpen,
-        isDisabled: isDisabled,
-        leftIcon: leftIcon,
-        header: header,
-        content: content,
-        contentBorderWidth: 0,
-        contentHorizontalPadding: 0,
-      );
-    }
-
-    _renderSlotsHeader() {
-      return Text(
-        'Available Slots'.toUpperCase(),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.headline1?.copyWith(
-              fontSize: rSize(18),
-              color: Theme.of(context).colorScheme.primary,
-            ),
-      );
-    }
-
-    _renderSlotsBody(List<String> item) {
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: rSize(60),
-        ),
-        child: Center(
-          child: SizedBox(
-            height: rSize(50),
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.symmetric(
-                horizontal: rSize(10),
-              ),
-              itemCount: slots.length,
-              itemBuilder: (context, index) {
-                return SlotCard(
-                  item: slots[index],
-                );
-              },
-            ),
-          ),
-        ),
-      );
-    }
-
-    _renderServicesHeader() {
-      return Row(
+    Widget renderServicePicker() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'choose your services'.toUpperCase(),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headline1?.copyWith(
-                  fontSize: rSize(18),
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Service',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
           ),
-          // EaseInAnimation(
-          //   onTap: () => {},
-          //   child: IconTheme(
-          //     data: Theme.of(context).primaryIconTheme,
-          //     child: Icon(
-          //       FontAwesomeIcons.plus,
-          //       size: rSize(20),
-          //     ),
-          //   ),
-          // ),
+          CustomInputFieldButton(
+            text: selectedService?.name ?? 'Choose Service',
+            onTap: () => Navigator.pushNamed(context, '/services'),
+          ),
         ],
       );
     }
 
-    _renderServicesBody() {
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: rSize(100),
-        ),
-        child: selectedContact != null
-            ? ContactCard(
-                contactCardProps: ContactCardProps(
-                  withNavigation: false,
-                  contactDetails: selectedContact!,
-                ),
-              )
-            : Center(
-                child: Text(
-                  'No Services Selected',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              ),
-      );
-    }
-
-    _renderClientHeader() {
+    Widget renderTimePicker() {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            'Choose your client'.toUpperCase(),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.headline1?.copyWith(
-                  fontSize: rSize(18),
-                  color: Theme.of(context).colorScheme.primary,
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                    left: rSize(10),
+                    right: rSize(10),
+                  ),
+                  child: Text(
+                    'Start Date & Time',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                 ),
+                CustomInputFieldButton(
+                  text: getDateTimeFormat(
+                    isDayOfWeek: true,
+                    dateTime: startDateTime,
+                    format: 'dd MMM yyyy • HH:mm',
+                  ),
+                  onTap: () => showPickerDateTimeModal(
+                    pickerDateTimeModalProps: PickerDateTimeModalProps(
+                      context: context,
+                      minimumDate: DateTime.now(),
+                      initialDateTime: startDateTime,
+                      title: 'Start Date & Time',
+                      onDateTimeChanged: (DateTime value) => {
+                        setState(() {
+                          startDateTimeTemp = value;
+                        }),
+                      },
+                      primaryAction: () => {
+                        setState(() {
+                          startDateTime = startDateTimeTemp;
+                          endTimeMin = startDateTimeTemp;
+                        }),
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          // EaseInAnimation(
-          //   onTap: () => {},
-          //   child: IconTheme(
-          //     data: Theme.of(context).primaryIconTheme,
-          //     child: Icon(
-          //       selectedContact != null
-          //           ? FontAwesomeIcons.userPen
-          //           : FontAwesomeIcons.userPlus,
-          //       size: rSize(20),
-          //     ),
-          //   ),
-          // ),
+          SizedBox(
+            width: rSize(20),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                    left: rSize(10),
+                    right: rSize(10),
+                  ),
+                  child: Text('End',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2),
+                ),
+                CustomInputFieldButton(
+                  text: getDateTimeFormat(
+                    dateTime: endTime,
+                    format: 'HH:mm',
+                  ),
+                  onTap: () => showPickerDateTimeModal(
+                    pickerDateTimeModalProps: PickerDateTimeModalProps(
+                      mode: CupertinoDatePickerMode.time,
+                      context: context,
+                      initialDateTime: endTime ?? endTimeMin,
+                      minimumDate: endTimeMin,
+                      title: 'End Time',
+                      onDateTimeChanged: (DateTime value) => {
+                        setState(() {
+                          endTimeTemp = value;
+                        }),
+                      },
+                      primaryAction: () => {
+                        setState(() {
+                          endTime = endTimeTemp;
+                        }),
+                      },
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       );
     }
 
-    _renderClientBody() {
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          minHeight: rSize(100),
-        ),
-        child: selectedContact != null
-            ? ContactCard(
-                contactCardProps: ContactCardProps(
-                  withNavigation: false,
-                  contactDetails: selectedContact!,
+    renderClient(Contact? contact) {
+      return contact == null
+          ? EaseInAnimation(
+              beginAnimation: 0.99,
+              onTap: () => {Navigator.pushNamed(context, '/clients')},
+              child: DottedBorder(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                borderType: BorderType.RRect,
+                dashPattern: [rSize(6), rSize(4)],
+                strokeWidth: rSize(1),
+                radius: Radius.circular(
+                  rSize(10),
                 ),
-              )
-            : Center(
-                child: Text(
-                  'No Client Selected',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(20),
+                    vertical: rSize(10),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomAvatar(
+                        customAvatarProps: CustomAvatarProps(
+                          enable: false,
+                          circleShape: true,
+                        ),
+                      ),
+                      SizedBox(
+                        width: rSize(15),
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Select a client or leave empty for walk-in',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                      SizedBox(
+                        width: rSize(10),
+                      ),
+                      IconTheme(
+                        data: Theme.of(context).primaryIconTheme,
+                        child: Icon(
+                          Icons.chevron_right,
+                          size: rSize(25),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-      );
+            )
+          : ContactCard(
+              contactCardProps: ContactCardProps(
+                contactDetails: Contact(
+                  name: 'Ahmad Manaa',
+                  phone: '0505800955',
+                ),
+              ),
+            );
     }
 
     return Scaffold(
@@ -270,96 +247,50 @@ class _NewAppointmentState extends State<NewAppointment> {
         customAppBarProps: CustomAppBarProps(
           titleText: 'New Appointment',
           withBack: true,
-          withClipPath: false,
-          customIcon: Icon(
-            FontAwesomeIcons.calendarPlus,
-            size: rSize(22),
-          ),
-          customIconTap: () => {},
+          withClipPath: true,
+          barHeight: 110,
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        children: [
-          ExpandableCalendar(
-            expandableCalendarProps: ExpandableCalendarProps(
-              focusedDay: _focusedDay,
-              selectedDay: _selectedDay,
-              calendarFormat: _calendarFormat,
-              eventLoader: _getEventsForDay,
-              onDaySelected: _onDaySelected,
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-              },
-              onFormatChanged: (format) {
-                if (_calendarFormat != format) {
-                  setState(() {
-                    _calendarFormat = format;
-                  });
-                }
-              },
-            ),
+      body: SafeArea(
+        top: false,
+        left: false,
+        right: false,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(30),
           ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: rSize(15), vertical: rSize(20)),
-              child: Accordion(
-                maxOpenSections: 1,
-                contentBorderColor: Theme.of(context).colorScheme.primary,
-                contentBackgroundColor: lighten(
-                    Theme.of(context).colorScheme.primaryContainer, 0.06),
-                headerBackgroundColor:
-                    Theme.of(context).colorScheme.primaryContainer,
-                headerBackgroundColorOpened:
-                    Theme.of(context).colorScheme.primaryContainer,
-                headerPadding: EdgeInsets.symmetric(
-                  vertical: rSize(10),
-                  horizontal: rSize(10),
-                ),
-                sectionOpeningHapticFeedback: SectionHapticFeedback.selection,
-                sectionClosingHapticFeedback: SectionHapticFeedback.selection,
-                rightIcon: IconTheme(
-                  data: Theme.of(context).primaryIconTheme,
-                  child: Icon(
-                    FontAwesomeIcons.chevronDown,
-                    size: rSize(16),
-                  ),
-                ),
-                children: [
-                  _renderAccordionSection(
-                    index: 0,
-                    header: _renderClientHeader(),
-                    content: _renderClientBody(),
-                    leftIcon: IconTheme(
-                      data: Theme.of(context).primaryIconTheme,
-                      child: Icon(
-                        Icons.person,
-                        size: rSize(26),
-                      ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: rSize(40),
                     ),
-                    isOpen: false,
-                    isDisabled: true,
-                  ),
-                  _renderAccordionSection(
-                    index: 1,
-                    header: _renderServicesHeader(),
-                    content: _renderServicesBody(),
-                    isDisabled: true,
-                    isOpen: false,
-                  ),
-                  _renderAccordionSection(
-                    index: 2,
-                    header: _renderSlotsHeader(),
-                    content: _renderSlotsBody(slots),
-                    isDisabled: false,
-                    isOpen: true,
-                  )
-                ],
+                    renderClient(null),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    renderServicePicker(),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    renderTimePicker(),
+                  ],
+                ),
               ),
-            ),
+              CustomButton(
+                customButtonProps: CustomButtonProps(
+                  onTap: () => {},
+                  text: 'Save',
+                  isPrimary: true,
+                  isDisabled: isButtonDisabled,
+                ),
+              )
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

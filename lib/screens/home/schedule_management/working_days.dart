@@ -19,11 +19,35 @@ class _WorkingDaysState extends State<WorkingDays> {
 
   List<WorkingDay> workingDayList = [
     WorkingDay(
-        title: 'Sunday', startTime: kToday, endTime: kToday, isDayOff: false),
-    WorkingDay(title: 'Monday', startTime: kToday, endTime: kToday),
-    WorkingDay(title: 'Tuesday', startTime: kToday, endTime: kToday),
-    WorkingDay(title: 'Wednesday', startTime: kToday, endTime: kToday),
-    WorkingDay(title: 'Thursday', startTime: kToday, endTime: kToday),
+        title: 'Sunday', startTime: kToday, endTime: kToday, isDayOff: true),
+    WorkingDay(
+        title: 'Monday', startTime: kToday, endTime: kToday, isDayOff: true),
+    WorkingDay(
+      title: 'Tuesday',
+      startTime: kToday,
+      endTime: kToday,
+      breaks: [
+        WorkingDayBreak(startTime: kToday, endTime: kToday),
+        WorkingDayBreak(startTime: kToday, endTime: kToday),
+      ],
+    ),
+    WorkingDay(
+      title: 'Wednesday',
+      startTime: kToday,
+      endTime: kToday,
+      breaks: [
+        WorkingDayBreak(startTime: kToday, endTime: kToday),
+      ],
+    ),
+    WorkingDay(
+      title: 'Thursday',
+      startTime: kToday,
+      endTime: kToday,
+      breaks: [
+        WorkingDayBreak(startTime: kToday, endTime: kToday),
+        WorkingDayBreak(startTime: kToday, endTime: kToday),
+      ],
+    ),
     WorkingDay(title: 'Friday', startTime: kToday, endTime: kToday),
     WorkingDay(title: 'Saturday', startTime: kToday, endTime: kToday),
   ];
@@ -42,7 +66,37 @@ class _WorkingDaysState extends State<WorkingDays> {
 
   @override
   Widget build(BuildContext context) {
-    Widget _renderDescription() {
+    List<Widget> getBreakForWorkingDay(WorkingDay workingDay) {
+      List<Widget> widgetList = workingDay.breaks != null
+          ? workingDay.breaks!.map((workingDay) {
+              return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      'Break: ',
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    Text(
+                      getDateTimeFormat(dateTime: workingDay.startTime),
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    Text(
+                      ' - ',
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                    Text(
+                      getDateTimeFormat(dateTime: workingDay.endTime),
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ]);
+            }).toList()
+          : [];
+      return widgetList;
+    }
+
+    Widget renderDescription() {
       return Padding(
         padding: EdgeInsets.only(
           top: rSize(40),
@@ -82,7 +136,7 @@ class _WorkingDaysState extends State<WorkingDays> {
       );
     }
 
-    _renderDay({required WorkingDay workingDay}) {
+    renderDay({required WorkingDay workingDay}) {
       return EaseInAnimation(
         beginAnimation: 1,
         onTap: () => {
@@ -112,25 +166,38 @@ class _WorkingDaysState extends State<WorkingDays> {
                 ),
               ),
               Expanded(
-                child: workingDay.isDayOff
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
+                child: !workingDay.isDayOff
+                    ? Column(
                         children: [
-                          Text(
-                            getDateTimeFormat(dateTime: workingDay.startTime),
-                            style: Theme.of(context).textTheme.bodyText1,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Text(
+                                getDateTimeFormat(
+                                    dateTime: workingDay.startTime),
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                              Text(
+                                ' - ',
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                              Text(
+                                getDateTimeFormat(
+                                    dateTime: workingDay.startTime),
+                                style: Theme.of(context).textTheme.bodyText1,
+                              ),
+                            ],
                           ),
-                          const Text(' - '),
-                          Text(
-                            getDateTimeFormat(dateTime: workingDay.startTime),
-                            style: Theme.of(context).textTheme.bodyText1,
+                          SizedBox(
+                            height: workingDay.breaks != null ? rSize(6) : 0,
                           ),
+                          ...getBreakForWorkingDay(workingDay),
                         ],
                       )
                     : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -185,7 +252,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                   // physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (BuildContext context, int index) {
                     return index == workingDayList.length
-                        ? _renderDescription()
+                        ? renderDescription()
                         : index == 0
                             ? const SizedBox()
                             : Divider(
@@ -203,7 +270,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                     if (index == 0 || index == workingDayList.length + 1) {
                       return Container(); // zero height: not visible
                     }
-                    return _renderDay(
+                    return renderDay(
                       workingDay: workingDayList[index - 1],
                     );
                   },

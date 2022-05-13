@@ -1,4 +1,3 @@
-import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
@@ -6,8 +5,8 @@ import 'package:appointments/widget/calendar_view/flutter_week_view.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:appointments/widget/custom_input_field_button.dart';
-import 'package:appointments/widget/expandable_calendar.dart';
-import 'package:appointments/widget/picker_time_range_modal.dart';
+import 'package:appointments/widget/picker_date_time_modal.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -21,25 +20,21 @@ class Unavailability extends StatefulWidget {
 class _UnavailabilityState extends State<Unavailability> {
   final TextEditingController _descriptionController = TextEditingController();
 
-  CalendarFormat _calendarFormat = CalendarFormat.week;
   DayViewController dayViewController = DayViewController();
-  DateTime? durationValue;
-  DateTime _focusedDay = kToday;
+  DateTime? startDateTime;
+  DateTime? startDateTimeTemp;
+
+  DateTime? endTime;
+  DateTime? endTimeTemp;
+  DateTime? endTimeMin;
+
   DateTime? _selectedDay = kToday;
 
-  List<CalendarEvent> _getEventsForDay(DateTime day) {
-    return kEvents[day] ?? [];
-  }
-
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+  void onDaySelected(DateTime selectedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _selectedDay = selectedDay;
-        _focusedDay = focusedDay;
-        _calendarFormat = CalendarFormat.week;
       });
-
-      // _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
@@ -89,13 +84,14 @@ class _UnavailabilityState extends State<Unavailability> {
     );
   }
 
-  Widget _renderTimePicker() {
+  Widget renderTimePicker() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
         Expanded(
+          flex: 2,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +104,7 @@ class _UnavailabilityState extends State<Unavailability> {
                   right: rSize(10),
                 ),
                 child: Text(
-                  'Start',
+                  'Start Date & Time',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -116,18 +112,26 @@ class _UnavailabilityState extends State<Unavailability> {
               ),
               CustomInputFieldButton(
                 text: getDateTimeFormat(
-                  dateTime: durationValue,
-                  format: 'HH:mm',
+                  dateTime: startDateTime,
+                  format: 'dd MMM yyyy • HH:mm',
                 ),
-                onTap: () => showPickerTimeRangeModal(
-                  pickerTimeRangeModalProps: PickerTimeRangeModalProps(
+                onTap: () => showPickerDateTimeModal(
+                  pickerDateTimeModalProps: PickerDateTimeModalProps(
                     context: context,
-                    title: 'Start Time',
-                    startTimeValue: durationValue,
-                    pickerTimeRangType: PickerTimeRangType.single,
-                    primaryAction: (DateTime x) => setState(() {
-                      durationValue = x;
-                    }),
+                    minimumDate: DateTime.now(),
+                    initialDateTime: startDateTime,
+                    title: 'Start Date & Time',
+                    onDateTimeChanged: (DateTime value) => {
+                      setState(() {
+                        startDateTimeTemp = value;
+                      }),
+                    },
+                    primaryAction: () => {
+                      setState(() {
+                        startDateTime = startDateTimeTemp;
+                        endTimeMin = startDateTimeTemp;
+                      }),
+                    },
                   ),
                 ),
               ),
@@ -156,18 +160,26 @@ class _UnavailabilityState extends State<Unavailability> {
               ),
               CustomInputFieldButton(
                 text: getDateTimeFormat(
-                  dateTime: durationValue,
+                  dateTime: endTime,
                   format: 'HH:mm',
                 ),
-                onTap: () => showPickerTimeRangeModal(
-                  pickerTimeRangeModalProps: PickerTimeRangeModalProps(
+                onTap: () => showPickerDateTimeModal(
+                  pickerDateTimeModalProps: PickerDateTimeModalProps(
+                    mode: CupertinoDatePickerMode.time,
                     context: context,
+                    initialDateTime: endTime ?? endTimeMin,
+                    minimumDate: endTimeMin,
                     title: 'End Time',
-                    startTimeValue: durationValue,
-                    pickerTimeRangType: PickerTimeRangType.single,
-                    primaryAction: (DateTime x) => setState(() {
-                      durationValue = x;
-                    }),
+                    onDateTimeChanged: (DateTime value) => {
+                      setState(() {
+                        endTimeTemp = value;
+                      }),
+                    },
+                    primaryAction: () => {
+                      setState(() {
+                        endTime = endTimeTemp;
+                      }),
+                    },
                   ),
                 ),
               ),
@@ -192,9 +204,11 @@ class _UnavailabilityState extends State<Unavailability> {
           customAppBarProps: CustomAppBarProps(
             titleText: 'Unavailability',
             withBack: true,
-            withBorder: true,
-            saveTap: () => {},
+            withBorder: false,
+            barHeight: 110,
+            withClipPath: true,
             withSave: true,
+            saveTap: () => {},
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -204,31 +218,9 @@ class _UnavailabilityState extends State<Unavailability> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ExpandableCalendar(
-                expandableCalendarProps: ExpandableCalendarProps(
-                  focusedDay: _focusedDay,
-                  selectedDay: _selectedDay,
-                  calendarFormat: _calendarFormat,
-                  formatButtonVisible: true,
-                  firstDay: kToday,
-                  eventLoader: _getEventsForDay,
-                  onDaySelected: _onDaySelected,
-                  onPageChanged: (focusedDay) {
-                    _focusedDay = focusedDay;
-                  },
-                  onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() {
-                        _calendarFormat = format;
-                      });
-                    }
-                  },
-                  // availableCalendarFormats: {},
-                ),
-              ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: rSize(15),
+                  horizontal: rSize(30),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -238,9 +230,9 @@ class _UnavailabilityState extends State<Unavailability> {
                     SizedBox(
                       height: rSize(30),
                     ),
-                    _renderTimePicker(),
+                    renderTimePicker(),
                     SizedBox(
-                      height: rSize(40),
+                      height: rSize(30),
                     ),
                     _renderReason(),
                   ],

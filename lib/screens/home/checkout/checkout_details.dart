@@ -370,7 +370,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
       );
     }
 
-    _appointmentServices() {
+    appointmentServices() {
       List<Widget> widgetList = services.map((Service service) {
         return Container(
           margin: EdgeInsets.symmetric(
@@ -399,11 +399,11 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
       return widgetList;
     }
 
-    _renderClient(Contact? contact) {
+    renderClient(Contact? contact) {
       return contact == null
           ? EaseInAnimation(
               beginAnimation: 0.99,
-              onTap: () => {Navigator.pushNamed(context, '/contacts')},
+              onTap: () => {Navigator.pushNamed(context, '/clients')},
               child: DottedBorder(
                 color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
                 borderType: BorderType.RRect,
@@ -464,7 +464,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
             );
     }
 
-    _renderAppointment() {
+    renderAppointment() {
       return Card(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -509,7 +509,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: _appointmentServices(),
+                      children: appointmentServices(),
                     ),
                     SizedBox(
                       width: rSize(50),
@@ -575,14 +575,14 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                       ),
                       FadeAnimation(
                         delay: 0,
-                        child: _renderClient(null),
+                        child: renderClient(null),
                       ),
                       SizedBox(
                         height: rSize(20),
                       ),
                       FadeAnimation(
                         delay: 0.3,
-                        child: _renderAppointment(),
+                        child: renderAppointment(),
                       ),
                       SizedBox(
                         height: rSize(20),

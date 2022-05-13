@@ -14,7 +14,7 @@ class ContactCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
-        onTap: () => Navigator.pushNamed(context, '/contactDetails'),
+        onTap: () => Navigator.pushNamed(context, '/clientDetails'),
         title: Text(
           contactCardProps.contactDetails.name!,
           style: Theme.of(context).textTheme.headline1?.copyWith(

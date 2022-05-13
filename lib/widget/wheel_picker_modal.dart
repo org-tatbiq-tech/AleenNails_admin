@@ -10,7 +10,7 @@ showWheelPickerModal({
   BuildContext context = wheelPickerModalProps.context;
   Picker wheelPicker = Picker(
     backgroundColor: Theme.of(context).colorScheme.background,
-    looping: true,
+    looping: wheelPickerModalProps.looping,
     textStyle: Theme.of(context).textTheme.bodyText2?.copyWith(
           color: Theme.of(context).colorScheme.primary,
         ),

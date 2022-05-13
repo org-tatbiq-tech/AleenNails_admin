@@ -1,7 +1,5 @@
-import 'dart:io';
-
 import 'package:appointments/animations/fade_animation.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -100,6 +98,16 @@ class CustomTextButtonProps {
   });
 }
 
+class WorkingDayBreak {
+  DateTime startTime;
+  DateTime endTime;
+
+  WorkingDayBreak({
+    required this.startTime,
+    required this.endTime,
+  });
+}
+
 class WorkingDay {
   String title;
   String subTitle;
@@ -107,6 +115,7 @@ class WorkingDay {
   DateTime startTime;
   DateTime endTime;
   bool isDayOff;
+  List<WorkingDayBreak>? breaks;
 
   WorkingDay({
     required this.title,
@@ -114,7 +123,8 @@ class WorkingDay {
     required this.startTime,
     required this.endTime,
     this.selectedDate,
-    this.isDayOff = true,
+    this.breaks,
+    this.isDayOff = false,
   });
 }
 
@@ -154,6 +164,22 @@ class Service {
   });
 }
 
+class Appointment {
+  String? id;
+  List<Service> services;
+  DateTime date;
+  double totalPrice;
+  Status status;
+
+  Appointment({
+    this.id,
+    this.services = const [],
+    required this.date,
+    this.totalPrice = 0,
+    required this.status,
+  });
+}
+
 enum Status {
   confirmed,
   declined,
@@ -190,6 +216,22 @@ class CustomAccordionSectionProps {
   CustomAccordionSectionProps({
     required this.header,
     required this.content,
+  });
+}
+
+class AppointmentCardProps {
+  final Appointment appointmentDetails;
+  final bool withNavigation;
+  final bool enabled;
+  final Function? onTap;
+  double height;
+
+  AppointmentCardProps({
+    required this.appointmentDetails,
+    this.withNavigation = true,
+    this.enabled = true,
+    this.onTap,
+    this.height = 100,
   });
 }
 
@@ -484,6 +526,34 @@ class ImagePickerModalProps {
   });
 }
 
+class PickerDateTimeModalProps {
+  BuildContext context;
+  String title;
+  double? height;
+  bool use24hFormat;
+  Function onDateTimeChanged;
+  Function? primaryAction;
+  DateTime? initialDateTime;
+  DateTime? minimumDate;
+  DateTime? maximumDate;
+  int minuteInterval;
+  CupertinoDatePickerMode mode;
+
+  PickerDateTimeModalProps({
+    required this.context,
+    this.title = '',
+    this.height,
+    this.use24hFormat = true,
+    required this.onDateTimeChanged,
+    this.primaryAction,
+    this.initialDateTime,
+    this.minimumDate,
+    this.maximumDate,
+    this.minuteInterval = 1,
+    this.mode = CupertinoDatePickerMode.dateAndTime,
+  });
+}
+
 class PickerTimeRangeModalProps {
   BuildContext context;
   DateTime? startTimeValue;
@@ -516,12 +586,14 @@ class WheelPickerModalProps {
   BuildContext context;
   String title;
   Function? primaryAction;
+  bool looping;
   List<dynamic> pickerData;
 
   WheelPickerModalProps({
     required this.context,
     this.title = '',
     required this.pickerData,
+    this.looping = false,
     this.primaryAction,
   });
 }

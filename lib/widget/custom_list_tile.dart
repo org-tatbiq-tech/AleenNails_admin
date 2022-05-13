@@ -17,7 +17,7 @@ class CustomListTile extends StatelessWidget {
     }
 
     Widget renderLeading() {
-      return (customListTileProps.leading ?? SizedBox());
+      return (customListTileProps.leading ?? const SizedBox());
     }
 
     Widget renderMain() {
@@ -50,7 +50,7 @@ class CustomListTile extends StatelessWidget {
           ),
         ),
         child: Container(
-          height: customListTileProps.height ?? rSize(70),
+          height: customListTileProps.height,
           padding: customListTileProps.contentPadding ??
               EdgeInsets.symmetric(
                 horizontal: rSize(20),
@@ -58,7 +58,7 @@ class CustomListTile extends StatelessWidget {
               ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               renderLeading(),

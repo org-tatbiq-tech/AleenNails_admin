@@ -15,6 +15,7 @@ class ServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
+        height: rSize(70),
         enabled: serviceCardProps.enabled,
         onTap: serviceCardProps.onTap ??
             () => Navigator.pushNamed(context, '/serviceDetails'),

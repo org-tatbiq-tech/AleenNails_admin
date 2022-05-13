@@ -19,12 +19,14 @@ class MoreState extends State<More> {
     return Container(
       color: Theme.of(context).colorScheme.background,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(30),
+        padding: EdgeInsets.only(
+          left: rSize(30),
+          right: rSize(30),
+          top: rSize(120),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CustomIconButton(

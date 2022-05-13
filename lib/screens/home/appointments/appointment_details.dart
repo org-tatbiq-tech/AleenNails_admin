@@ -239,8 +239,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           ),
           Expanded(
             child: ListView.separated(
-              // physics: const NeverScrollableScrollPhysics(),
-              // shrinkWrap: true,
               padding: EdgeInsets.only(
                 top: rSize(20),
                 left: rSize(20),
@@ -255,15 +253,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     serviceCardProps: ServiceCardProps(
                       serviceDetails: services[index],
                       title: services[index].name ?? '',
-                      subTitle: getDateTimeFormat(
-                              dateTime: services[index].startTime,
-                              format: 'HH:mm') +
-                          ' - ' +
-                          getDateTimeFormat(
-                              dateTime: services[index].endTime,
-                              format: 'HH:mm') +
-                          ' - ' +
-                          (services[index].duration ?? ''),
+                      subTitle:
+                          '${getDateTimeFormat(dateTime: services[index].startTime, format: 'HH:mm')} - ${getDateTimeFormat(dateTime: services[index].endTime, format: 'HH:mm')} - ${services[index].duration ?? ''}',
                       withNavigation: false,
                       enabled: false,
                     ),
@@ -372,7 +363,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 rectangleShape: false,
                 enable: true,
                 onTap: () => {
-                  Navigator.pushNamed(context, '/contactDetails'),
+                  Navigator.pushNamed(context, '/clientDetails'),
                 },
                 circleShape: true,
                 isMale: false,

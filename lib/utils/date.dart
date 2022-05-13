@@ -71,7 +71,7 @@ DateTime getLastDay({int years = 0, int months = 3, int days = 0}) {
 String getDateTimeFormat({
   bool isDayOfWeek = false,
   DateTime? dateTime,
-  String format = 'HH-mm',
+  String format = 'HH:mm',
 }) {
   final dateFormat = DateFormat(format);
   return dateTime != null

@@ -2,8 +2,11 @@ import 'dart:math';
 
 import 'package:appointments/animations/fade_animation.dart';
 import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/utils/date.dart';
+import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/url_launch.dart';
+import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -12,14 +15,14 @@ import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
-class ContactDetails extends StatefulWidget {
-  const ContactDetails({Key? key}) : super(key: key);
+class ClientDetails extends StatefulWidget {
+  const ClientDetails({Key? key}) : super(key: key);
 
   @override
-  _ContactDetailsState createState() => _ContactDetailsState();
+  _ClientDetailsState createState() => _ClientDetailsState();
 }
 
-class _ContactDetailsState extends State<ContactDetails> {
+class _ClientDetailsState extends State<ClientDetails> {
   @override
   void initState() {
     super.initState();
@@ -27,82 +30,31 @@ class _ContactDetailsState extends State<ContactDetails> {
 
   @override
   Widget build(BuildContext context) {
-    Contact contact = Contact(
-      name: 'Saeed',
-      phone: '0543103540',
-      address: 'Haifa',
-    );
-    List<Contact> contacts = [
-      contact,
-      contact,
-      contact,
-      contact,
-      contact,
-      contact
+    Appointment appointment1 = Appointment(
+        services: [Service()],
+        date: kToday,
+        id: '123231321132',
+        totalPrice: 30,
+        status: Status.confirmed);
+    Appointment appointment2 = Appointment(
+        services: [Service(), Service()],
+        date: kToday,
+        id: '12321132',
+        totalPrice: 40,
+        status: Status.cancelled);
+    Appointment appointment3 = Appointment(
+        services: [Service()],
+        date: kToday,
+        id: '1232113122',
+        totalPrice: 100,
+        status: Status.waiting);
+    List<Appointment> appointments = [
+      appointment1,
+      appointment2,
+      appointment3,
     ];
 
-    Widget getAppointmentCard(BuildContext context, Contact contact) {
-      return Card(
-        margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(
-            rSize(15),
-          ),
-        ),
-        child: ListTile(
-          minLeadingWidth: rSize(40),
-          minVerticalPadding: rSize(14),
-          onTap: () => {},
-          contentPadding: EdgeInsets.symmetric(
-            vertical: rSize(0),
-            horizontal: rSize(20),
-          ),
-          horizontalTitleGap: rSize(10),
-          subtitle: Text(
-            contact.phone!,
-            style: Theme.of(context)
-                .textTheme
-                .subtitle1
-                ?.copyWith(fontSize: rSize(16)),
-          ),
-          trailing: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconTheme(
-                data: Theme.of(context).primaryIconTheme,
-                child: Icon(
-                  Icons.chevron_right,
-                  size: rSize(25),
-                ),
-              ),
-            ],
-          ),
-          leading: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CustomAvatar(
-                customAvatarProps: CustomAvatarProps(
-                  radius: rSize(30),
-                  rectangleShape: true,
-                ),
-              ),
-            ],
-          ),
-          title: Text(
-            contact.name!,
-            style: Theme.of(context).textTheme.headline1?.copyWith(
-                  fontSize: rSize(20),
-                ),
-          ),
-        ),
-      );
-    }
-
-    _renderAppointments() {
+    renderAppointments() {
       return SafeArea(
         left: false,
         right: false,
@@ -116,7 +68,7 @@ class _ContactDetailsState extends State<ContactDetails> {
               positionType: PositionType.right,
               delay: 0.9,
               child: Text(
-                'Appointments',
+                'Appointments'.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2,
@@ -127,7 +79,12 @@ class _ContactDetailsState extends State<ContactDetails> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ListView.builder(
+                ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: rSize(10),
+                    );
+                  },
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   padding: EdgeInsets.only(
@@ -135,12 +92,18 @@ class _ContactDetailsState extends State<ContactDetails> {
                     left: rSize(20),
                     right: rSize(20),
                   ),
-                  itemCount: min(contacts.length, 3),
+                  itemCount: min(appointments.length, 3),
                   itemBuilder: (context, index) {
                     return FadeAnimation(
                         positionType: PositionType.top,
                         delay: 1 + index.toDouble() * 0.3,
-                        child: getAppointmentCard(context, contacts[index]));
+                        child: AppointmentCard(
+                          appointmentCardProps: AppointmentCardProps(
+                            enabled: false,
+                            withNavigation: false,
+                            appointmentDetails: appointments[index],
+                          ),
+                        ));
                   },
                 ),
                 CustomTextButton(
@@ -157,7 +120,7 @@ class _ContactDetailsState extends State<ContactDetails> {
       );
     }
 
-    _renderBirthday() {
+    renderBirthday() {
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -168,50 +131,149 @@ class _ContactDetailsState extends State<ContactDetails> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Birthday',
+              'Birthday'.toUpperCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
           Text(
             'Thursday 25-06-2020',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyText2,
           ),
         ],
       );
     }
 
-    _renderLastVisiting() {
-      return Column(
+    renderLastVisit() {
+      return Row(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: rSize(5),
-            ),
-            child: Text(
-              'Last Visiting',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                  ),
+                  child: Text(
+                    'Last Visit'.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+                Text(
+                  'Thursday 25-06-2020',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
             ),
           ),
-          Text(
-            'Thursday 25-06-2020',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText1,
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                  ),
+                  child: Text(
+                    'Trusted Client'.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+                Text(
+                  'No',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
           ),
         ],
       );
     }
 
-    _renderNotes() {
+    renderTotalRevenue() {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                  ),
+                  child: Text(
+                    'Total Revenue'.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+                Text(
+                  getStringPrice(0),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                  ),
+                  child: Text(
+                    'Discount'.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+                Text(
+                  '0%',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
+    renderNotes() {
       return Column(children: [
         Column(
           mainAxisSize: MainAxisSize.max,
@@ -223,7 +285,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                 bottom: rSize(5),
               ),
               child: Text(
-                'Notes',
+                'Notes'.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2,
@@ -238,7 +300,7 @@ class _ContactDetailsState extends State<ContactDetails> {
       ]);
     }
 
-    _renderStatics() {
+    renderStatics() {
       return Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onBackground,
@@ -246,11 +308,11 @@ class _ContactDetailsState extends State<ContactDetails> {
             color: Theme.of(context).colorScheme.primaryContainer,
           ),
           borderRadius: BorderRadius.circular(
-            rSize(20),
+            rSize(10),
           ),
         ),
         padding: EdgeInsets.symmetric(
-          horizontal: rSize(20),
+          horizontal: rSize(10),
         ),
         height: rSize(60),
         child: Row(
@@ -265,7 +327,57 @@ class _ContactDetailsState extends State<ContactDetails> {
               direction: Axis.vertical,
               children: [
                 Text(
-                  'Bookings',
+                  'Appointments'.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                Text(
+                  '1',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+            // VerticalDivider(
+            //   endIndent: rSize(10),
+            //   indent: rSize(10),
+            //   thickness: rSize(1),
+            // ),
+            // Wrap(
+            //   alignment: WrapAlignment.center,
+            //   crossAxisAlignment: WrapCrossAlignment.center,
+            //   spacing: rSize(4),
+            //   direction: Axis.vertical,
+            //   children: [
+            //     Text(
+            //       'Finished'.toUpperCase(),
+            //       maxLines: 1,
+            //       overflow: TextOverflow.ellipsis,
+            //       style: Theme.of(context).textTheme.bodyText1,
+            //     ),
+            //     Text(
+            //       '1',
+            //       maxLines: 1,
+            //       overflow: TextOverflow.ellipsis,
+            //       style: Theme.of(context).textTheme.bodyText2,
+            //     ),
+            //   ],
+            // ),
+            VerticalDivider(
+              endIndent: rSize(10),
+              indent: rSize(10),
+              thickness: rSize(1),
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: rSize(4),
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  'Cancellation'.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText1,
@@ -290,57 +402,7 @@ class _ContactDetailsState extends State<ContactDetails> {
               direction: Axis.vertical,
               children: [
                 Text(
-                  'Finished',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  '1',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              ],
-            ),
-            VerticalDivider(
-              endIndent: rSize(10),
-              indent: rSize(10),
-              thickness: rSize(1),
-            ),
-            Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: rSize(4),
-              direction: Axis.vertical,
-              children: [
-                Text(
-                  'Cancelled',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  '1',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              ],
-            ),
-            VerticalDivider(
-              endIndent: rSize(10),
-              indent: rSize(10),
-              thickness: rSize(1),
-            ),
-            Wrap(
-              alignment: WrapAlignment.center,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              spacing: rSize(4),
-              direction: Axis.vertical,
-              children: [
-                Text(
-                  'No-show',
+                  'No-show'.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText1?.copyWith(
@@ -362,7 +424,7 @@ class _ContactDetailsState extends State<ContactDetails> {
       );
     }
 
-    _renderHeader() {
+    renderHeader() {
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -413,7 +475,7 @@ class _ContactDetailsState extends State<ContactDetails> {
       );
     }
 
-    _renderActions() {
+    renderActions() {
       return Row(
         children: [
           SizedBox(
@@ -478,7 +540,7 @@ class _ContactDetailsState extends State<ContactDetails> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Contact Details',
+          titleText: 'Client Details',
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -501,11 +563,11 @@ class _ContactDetailsState extends State<ContactDetails> {
             ),
             child: Column(
               children: [
-                _renderHeader(),
+                renderHeader(),
                 FadeAnimation(
                   positionType: PositionType.bottom,
                   delay: 0.4,
-                  child: _renderActions(),
+                  child: renderActions(),
                 ),
                 SizedBox(
                   height: rSize(24),
@@ -513,7 +575,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                 FadeAnimation(
                   positionType: PositionType.top,
                   delay: 0.5,
-                  child: _renderStatics(),
+                  child: renderStatics(),
                 ),
               ],
             ),
@@ -535,7 +597,7 @@ class _ContactDetailsState extends State<ContactDetails> {
                   FadeAnimation(
                     positionType: PositionType.right,
                     delay: 0.6,
-                    child: _renderBirthday(),
+                    child: renderBirthday(),
                   ),
                   SizedBox(
                     height: rSize(24),
@@ -543,7 +605,15 @@ class _ContactDetailsState extends State<ContactDetails> {
                   FadeAnimation(
                     positionType: PositionType.right,
                     delay: 0.7,
-                    child: _renderLastVisiting(),
+                    child: renderLastVisit(),
+                  ),
+                  SizedBox(
+                    height: rSize(24),
+                  ),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.7,
+                    child: renderTotalRevenue(),
                   ),
                   SizedBox(
                     height: rSize(24),
@@ -551,12 +621,12 @@ class _ContactDetailsState extends State<ContactDetails> {
                   FadeAnimation(
                     positionType: PositionType.right,
                     delay: 0.8,
-                    child: _renderNotes(),
+                    child: renderNotes(),
                   ),
                   SizedBox(
                     height: rSize(40),
                   ),
-                  _renderAppointments(),
+                  renderAppointments(),
                 ],
               ),
             ),

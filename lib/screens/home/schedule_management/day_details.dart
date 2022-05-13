@@ -3,13 +3,12 @@ import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
-import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_input_field_button.dart';
 import 'package:appointments/widget/custom_text_button.dart';
-import 'package:appointments/widget/picker_time_range_modal.dart';
+import 'package:appointments/widget/picker_date_time_modal.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:rolling_switch/rolling_switch.dart';
 
 class DayDetails extends StatefulWidget {
   final String dayTile;
@@ -28,69 +27,76 @@ class _DayDetailsState extends State<DayDetails> {
   DateTime? durationValue;
   bool _isWorking = false;
   bool _isChanged = false;
+  DateTime? startTime;
+  DateTime? startTimeTemp;
+  DateTime? endTime;
+  DateTime? endTimeTemp;
+  DateTime? endTimeMin;
+
   @override
   Widget build(BuildContext context) {
-    Widget _renderSwitch() {
+    Widget renderSwitch() {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Transform.scale(
-            scale: 0.7,
-            child: RollingSwitch.widget(
-              innerSize: rSize(50),
-              width: rSize(160),
-              height: rSize(60),
-              circularColor: Theme.of(context).colorScheme.background,
-              initialState: _isWorking,
-              onChanged: (bool state) {
-                setState(() {
-                  _isWorking = state;
-                  _isChanged = true;
-                });
-              },
-              rollingInfoRight: RollingWidgetInfo(
-                icon: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    icon: null,
-                    backgroundColor: Colors.transparent,
-                    path: 'assets/icons/check.png',
-                    containerSize: 30,
-                  ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Working on this day?',
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
-                text: Text(
-                  'Open',
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        color: Theme.of(context).colorScheme.background,
-                      ),
-                ),
-                backgroundColor: Theme.of(context).colorScheme.primary,
-              ),
-              rollingInfoLeft: RollingWidgetInfo(
-                icon: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    icon: null,
-                    backgroundColor: Colors.transparent,
-                    path: 'assets/icons/close.png',
-                    containerSize: 30,
-                  ),
-                ),
-                text: Text(
-                  'Closed',
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                ),
-                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-              ),
+              ],
             ),
+          ),
+          SizedBox(
+            width: rSize(20),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                width: rSize(70),
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: Switch(
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    splashRadius: 0,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    inactiveTrackColor:
+                        Theme.of(context).colorScheme.primaryContainer,
+                    inactiveThumbColor:
+                        Theme.of(context).colorScheme.background,
+                    value: _isWorking,
+                    onChanged: (bool state) {
+                      setState(() {
+                        _isWorking = state;
+                        _isChanged = true;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              Text(
+                _isWorking ? 'Open' : 'Closed',
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      fontSize: rSize(12),
+                    ),
+              ),
+            ],
           ),
         ],
       );
     }
 
-    Widget _renderBreaks() {
+    Widget renderBreaks() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,18 +154,26 @@ class _DayDetailsState extends State<DayDetails> {
                 ),
                 CustomInputFieldButton(
                   text: getDateTimeFormat(
-                    dateTime: durationValue,
+                    dateTime: startTime,
                     format: 'HH:mm',
                   ),
-                  onTap: () => showPickerTimeRangeModal(
-                    pickerTimeRangeModalProps: PickerTimeRangeModalProps(
+                  onTap: () => showPickerDateTimeModal(
+                    pickerDateTimeModalProps: PickerDateTimeModalProps(
+                      mode: CupertinoDatePickerMode.time,
                       context: context,
+                      initialDateTime: startTime,
                       title: 'Start Time',
-                      startTimeValue: durationValue,
-                      pickerTimeRangType: PickerTimeRangType.single,
-                      primaryAction: (DateTime x) => setState(() {
-                        durationValue = x;
-                      }),
+                      onDateTimeChanged: (DateTime value) => {
+                        setState(() {
+                          startTimeTemp = value;
+                        }),
+                      },
+                      primaryAction: () => {
+                        setState(() {
+                          startTime = startTimeTemp;
+                          endTimeMin = startTimeTemp;
+                        }),
+                      },
                     ),
                   ),
                 ),
@@ -188,18 +202,26 @@ class _DayDetailsState extends State<DayDetails> {
                 ),
                 CustomInputFieldButton(
                   text: getDateTimeFormat(
-                    dateTime: durationValue,
+                    dateTime: endTime,
                     format: 'HH:mm',
                   ),
-                  onTap: () => showPickerTimeRangeModal(
-                    pickerTimeRangeModalProps: PickerTimeRangeModalProps(
+                  onTap: () => showPickerDateTimeModal(
+                    pickerDateTimeModalProps: PickerDateTimeModalProps(
+                      mode: CupertinoDatePickerMode.time,
                       context: context,
+                      minimumDate: endTimeMin,
+                      initialDateTime: endTime ?? endTimeMin,
                       title: 'End Time',
-                      startTimeValue: durationValue,
-                      pickerTimeRangType: PickerTimeRangType.single,
-                      primaryAction: (DateTime x) => setState(() {
-                        durationValue = x;
-                      }),
+                      onDateTimeChanged: (DateTime value) => {
+                        setState(() {
+                          endTimeTemp = value;
+                        }),
+                      },
+                      primaryAction: () => {
+                        setState(() {
+                          endTime = endTimeTemp;
+                        }),
+                      },
                     ),
                   ),
                 ),
@@ -233,7 +255,7 @@ class _DayDetailsState extends State<DayDetails> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              _renderSwitch(),
+              renderSwitch(),
               SizedBox(
                 height: widget.isIndividual ? 0 : rSize(20),
               ),
@@ -256,13 +278,14 @@ class _DayDetailsState extends State<DayDetails> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             SizedBox(
-                              height: rSize(40),
+                              height:
+                                  widget.isIndividual ? rSize(20) : rSize(40),
                             ),
                             _renderTimePicker(),
                             SizedBox(
                               height: rSize(40),
                             ),
-                            _renderBreaks(),
+                            renderBreaks(),
                           ],
                         )
                       : const SizedBox(),

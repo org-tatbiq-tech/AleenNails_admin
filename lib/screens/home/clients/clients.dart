@@ -6,17 +6,16 @@ import 'package:provider/provider.dart';
 
 import '../../../utils/layout.dart';
 
-//class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
-class Contacts extends StatefulWidget {
-  const Contacts({Key? key}) : super(key: key);
+class Clients extends StatefulWidget {
+  const Clients({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return ContactsState();
+    return ClientsState();
   }
 }
 
-class ContactsState extends State<Contacts> {
+class ClientsState extends State<Clients> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppData>(
