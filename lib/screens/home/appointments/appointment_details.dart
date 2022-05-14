@@ -13,7 +13,6 @@ import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 class AppointmentDetails extends StatefulWidget {
   const AppointmentDetails({Key? key}) : super(key: key);

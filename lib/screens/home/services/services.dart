@@ -27,7 +27,7 @@ class ServicesState extends State<Services> {
   @override
   Widget build(BuildContext context) {
     Service service = Service(
-      name: 'Service Name',
+      name: 'Service Name with long name what to be look',
       duration: '1h 25m',
       price: 45,
     );
@@ -76,7 +76,7 @@ class ServicesState extends State<Services> {
                     return ServiceCard(
                       serviceCardProps: ServiceCardProps(
                         withNavigation: !widget.selectionMode,
-                        onTap: widget.onTap,
+                        onTap: () => widget.onTap!(services[index]),
                         serviceDetails: services[index],
                         title: service.name ?? '',
                         subTitle: services[index].duration ?? '',

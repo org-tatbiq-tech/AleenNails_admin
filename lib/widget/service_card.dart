@@ -21,6 +21,8 @@ class ServiceCard extends StatelessWidget {
             () => Navigator.pushNamed(context, '/serviceDetails'),
         title: Text(
           serviceCardProps.title,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(16),
               ),

@@ -1,5 +1,7 @@
+import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
+import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/contact_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
@@ -11,8 +13,6 @@ import 'package:appointments/widget/picker_date_time_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class NewAppointment extends StatefulWidget {
   const NewAppointment({Key? key}) : super(key: key);
@@ -29,7 +29,6 @@ class _NewAppointmentState extends State<NewAppointment> {
   DateTime? endTimeMin;
   Contact? selectedContact;
   Service? selectedService;
-  bool isButtonDisabled = true;
 
   @override
   void initState() {
@@ -39,6 +38,20 @@ class _NewAppointmentState extends State<NewAppointment> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  onServiceTap(Service service) {
+    setState(() {
+      selectedService = service;
+    });
+    Navigator.pop(context);
+  }
+
+  isButtonDisabled() {
+    if (selectedService != null) {
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -64,7 +77,62 @@ class _NewAppointmentState extends State<NewAppointment> {
           ),
           CustomInputFieldButton(
             text: selectedService?.name ?? 'Choose Service',
-            onTap: () => Navigator.pushNamed(context, '/services'),
+            height: selectedService != null ? 70 : 50,
+            textWidget: selectedService != null
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      VerticalDivider(
+                        color: selectedService!.color ??
+                            Theme.of(context).colorScheme.primary,
+                        width: rSize(4),
+                        endIndent: rSize(8),
+                        thickness: rSize(3),
+                        indent: rSize(8),
+                      ),
+                      SizedBox(
+                        width: rSize(15),
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              selectedService?.name ?? '',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                            Text(
+                              selectedService?.duration ?? '',
+                              style: Theme.of(context).textTheme.bodyText1,
+                            )
+                          ],
+                        ),
+                      ),
+                      Text(
+                        getStringPrice(selectedService?.price ?? 0),
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      SizedBox(
+                        width: rSize(20),
+                      ),
+                    ],
+                  )
+                : null,
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Services(
+                  selectionMode: true,
+                  onTap: (Service service) => {onServiceTap(service)},
+                ),
+              ),
+            ),
           ),
         ],
       );
@@ -217,9 +285,6 @@ class _NewAppointmentState extends State<NewAppointment> {
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
-                      SizedBox(
-                        width: rSize(10),
-                      ),
                       IconTheme(
                         data: Theme.of(context).primaryIconTheme,
                         child: Icon(
@@ -282,10 +347,12 @@ class _NewAppointmentState extends State<NewAppointment> {
               ),
               CustomButton(
                 customButtonProps: CustomButtonProps(
-                  onTap: () => {},
+                  onTap: () => {
+                    Navigator.pop(context),
+                  },
                   text: 'Save',
                   isPrimary: true,
-                  isDisabled: isButtonDisabled,
+                  isDisabled: isButtonDisabled(),
                 ),
               )
             ],

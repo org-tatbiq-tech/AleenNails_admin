@@ -67,53 +67,52 @@ class _ClientDetailsState extends State<ClientDetails> {
             FadeAnimation(
               positionType: PositionType.right,
               delay: 0.9,
-              child: Text(
-                'Appointments'.toUpperCase(),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'Appointments'.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                  CustomTextButton(
+                    customTextButtonProps: CustomTextButtonProps(
+                      onTap: () => {},
+                      text: 'Show All',
+                      textColor: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      height: rSize(10),
-                    );
-                  },
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(
-                    top: rSize(20),
-                    left: rSize(20),
-                    right: rSize(20),
-                  ),
-                  itemCount: min(appointments.length, 3),
-                  itemBuilder: (context, index) {
-                    return FadeAnimation(
-                        positionType: PositionType.top,
-                        delay: 1 + index.toDouble() * 0.3,
-                        child: AppointmentCard(
-                          appointmentCardProps: AppointmentCardProps(
-                            enabled: false,
-                            withNavigation: false,
-                            appointmentDetails: appointments[index],
-                          ),
-                        ));
-                  },
-                ),
-                CustomTextButton(
-                  customTextButtonProps: CustomTextButtonProps(
-                    onTap: () => {},
-                    text: 'Show All',
-                    textColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ],
+            ListView.separated(
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(
+                  height: rSize(10),
+                );
+              },
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              padding: EdgeInsets.only(
+                top: rSize(20),
+                left: rSize(20),
+                right: rSize(20),
+              ),
+              itemCount: min(appointments.length, 3),
+              itemBuilder: (context, index) {
+                return FadeAnimation(
+                    positionType: PositionType.top,
+                    delay: 1 + index.toDouble() * 0.3,
+                    child: AppointmentCard(
+                      appointmentCardProps: AppointmentCardProps(
+                        enabled: false,
+                        withNavigation: false,
+                        appointmentDetails: appointments[index],
+                      ),
+                    ),);
+              },
             ),
           ],
         ),
@@ -311,13 +310,13 @@ class _ClientDetailsState extends State<ClientDetails> {
             rSize(10),
           ),
         ),
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(10),
-        ),
+        // padding: EdgeInsets.symmetric(
+        //   horizontal: rSize(0),
+        // ),
         height: rSize(60),
         child: Row(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Wrap(
@@ -330,7 +329,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   'Appointments'.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
                   '1',
@@ -340,31 +339,6 @@ class _ClientDetailsState extends State<ClientDetails> {
                 ),
               ],
             ),
-            // VerticalDivider(
-            //   endIndent: rSize(10),
-            //   indent: rSize(10),
-            //   thickness: rSize(1),
-            // ),
-            // Wrap(
-            //   alignment: WrapAlignment.center,
-            //   crossAxisAlignment: WrapCrossAlignment.center,
-            //   spacing: rSize(4),
-            //   direction: Axis.vertical,
-            //   children: [
-            //     Text(
-            //       'Finished'.toUpperCase(),
-            //       maxLines: 1,
-            //       overflow: TextOverflow.ellipsis,
-            //       style: Theme.of(context).textTheme.bodyText1,
-            //     ),
-            //     Text(
-            //       '1',
-            //       maxLines: 1,
-            //       overflow: TextOverflow.ellipsis,
-            //       style: Theme.of(context).textTheme.bodyText2,
-            //     ),
-            //   ],
-            // ),
             VerticalDivider(
               endIndent: rSize(10),
               indent: rSize(10),
@@ -380,7 +354,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   'Cancellation'.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
                   '1',
@@ -405,7 +379,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   'No-show'.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
                         color: Theme.of(context).colorScheme.error,
                       ),
                 ),
