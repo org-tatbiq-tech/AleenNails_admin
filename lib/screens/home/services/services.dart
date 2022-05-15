@@ -76,7 +76,9 @@ class ServicesState extends State<Services> {
                     return ServiceCard(
                       serviceCardProps: ServiceCardProps(
                         withNavigation: !widget.selectionMode,
-                        onTap: () => widget.onTap!(services[index]),
+                        onTap: widget.onTap != null
+                            ? widget.onTap!(services[index])
+                            : null,
                         serviceDetails: services[index],
                         title: service.name ?? '',
                         subTitle: services[index].duration ?? '',

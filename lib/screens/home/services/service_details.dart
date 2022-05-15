@@ -84,7 +84,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       color5,
     ];
 
-    _deleteService() {
+    deleteService() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -212,7 +212,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       return widgetList;
     }
 
-    Widget _colorCard(index) {
+    Widget colorCard(index) {
       return EaseInAnimation(
         onTap: () => {
           _scrollToIndex(index, colors),
@@ -256,7 +256,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       );
     }
 
-    Widget _renderServiceColors() {
+    Widget renderServiceColors() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -285,14 +285,14 @@ class _ServiceDetailsState extends State<ServiceDetails> {
               ),
               scrollDirection: Axis.horizontal,
               itemCount: colors.length,
-              itemBuilder: (context, index) => _colorCard(index),
+              itemBuilder: (context, index) => colorCard(index),
             ),
           ),
         ],
       );
     }
 
-    Widget _renderPermissions() {
+    Widget renderPermissions() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -375,7 +375,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       );
     }
 
-    Widget _renderMessageToClient() {
+    Widget renderMessageToClient() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -444,7 +444,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       );
     }
 
-    Widget _renderMedia() {
+    Widget renderMedia() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -476,7 +476,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       );
     }
 
-    Widget _renderDescription() {
+    Widget renderDescription() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -514,7 +514,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
       );
     }
 
-    Widget _renderPriceDuration() {
+    Widget renderPriceDuration() {
       return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -600,7 +600,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
           ]);
     }
 
-    Widget _renderServiceName() {
+    Widget renderServiceName() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -661,31 +661,31 @@ class _ServiceDetailsState extends State<ServiceDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              _renderServiceName(),
+              renderServiceName(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderPriceDuration(),
+              renderPriceDuration(),
               SizedBox(
                 height: rSize(30),
               ),
-              _renderServiceColors(),
+              renderServiceColors(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderDescription(),
+              renderDescription(),
               SizedBox(
                 height: rSize(30),
               ),
-              _renderMedia(),
+              renderMedia(),
               SizedBox(
                 height: rSize(30),
               ),
-              _renderMessageToClient(),
+              renderMessageToClient(),
               SizedBox(
                 height: rSize(30),
               ),
-              _renderPermissions(),
+              renderPermissions(),
               SizedBox(
                 height: rSize(30),
               ),
@@ -696,7 +696,7 @@ class _ServiceDetailsState extends State<ServiceDetails> {
                 child: CustomButton(
                   customButtonProps: CustomButtonProps(
                     onTap: () => {
-                      _deleteService(),
+                      deleteService(),
                     },
                     text: 'Delete Service',
                     isPrimary: true,

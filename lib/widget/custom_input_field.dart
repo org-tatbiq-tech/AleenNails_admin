@@ -96,12 +96,14 @@ class CustomInputField extends StatelessWidget {
       }
     }
 
-    return Material(
-      borderRadius: BorderRadius.circular(
-        rSize(10),
-      ),
+    return Card(
+      clipBehavior: Clip.none,
       elevation: 2,
-      color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          rSize(10),
+        ),
+      ),
       child: TextFormField(
         inputFormatters: customInputFieldProps.isCurrency
             ? [_formatter]
@@ -194,7 +196,7 @@ class CustomInputField extends StatelessWidget {
               rSize(10),
             ),
             borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Colors.transparent,
               width: rSize(1),
             ),
           ),

@@ -30,7 +30,7 @@ class ClientsState extends State<Clients> {
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
-                      height: rSize(10),
+                      height: rSize(15),
                     );
                   },
                   padding: EdgeInsets.symmetric(

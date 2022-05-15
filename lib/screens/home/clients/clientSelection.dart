@@ -3,6 +3,7 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import '../../../utils/layout.dart';
 
@@ -31,6 +32,13 @@ class ClientSelectionState extends State<ClientSelection> {
               withBack: true,
               withSearch: true,
               withClipPath: false,
+              customIcon: Icon(
+                FontAwesomeIcons.plus,
+                size: rSize(24),
+              ),
+              customIconTap: () => {
+                Navigator.pushNamed(context, '/newClient'),
+              },
             ),
           ),
           backgroundColor: Theme.of(context).colorScheme.background,
@@ -42,7 +50,7 @@ class ClientSelectionState extends State<ClientSelection> {
                 child: ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
-                      height: rSize(10),
+                      height: rSize(15),
                     );
                   },
                   padding: EdgeInsets.symmetric(

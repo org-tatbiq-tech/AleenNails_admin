@@ -25,52 +25,43 @@ class CustomInputFieldButton extends StatelessWidget {
     return EaseInAnimation(
       beginAnimation: 0.98,
       onTap: onTap ?? () => {},
-      child: Container(
-        alignment: Alignment.centerLeft,
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(15),
-        ),
-        decoration: BoxDecoration(
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             rSize(10),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context).shadowColor,
-              offset: const Offset(0, 1),
-              blurRadius: 2,
-            )
-          ],
-          border: Border.all(
-            width: rSize(1),
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
-          color: Theme.of(context).colorScheme.onBackground,
         ),
-        width: double.infinity,
-        height: withDefaultHeight ? rSize(height) : null,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: textWidget ??
-                  Text(
-                    text,
-                    style: Theme.of(context).textTheme.caption?.copyWith(
-                          fontSize: rSize(fontSize),
-                        ),
-                  ),
-            ),
-            IconTheme(
-              data: Theme.of(context).primaryIconTheme,
-              child: Icon(
-                FontAwesomeIcons.chevronDown,
-                size: rSize(15),
+        child: Container(
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(15),
+          ),
+          width: double.infinity,
+          height: withDefaultHeight ? rSize(height) : null,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: textWidget ??
+                    Text(
+                      text,
+                      style: Theme.of(context).textTheme.caption?.copyWith(
+                            fontSize: rSize(fontSize),
+                          ),
+                    ),
               ),
-            ),
-          ],
+              IconTheme(
+                data: Theme.of(context).primaryIconTheme,
+                child: Icon(
+                  FontAwesomeIcons.chevronDown,
+                  size: rSize(15),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
