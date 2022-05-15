@@ -41,16 +41,20 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                       image: AssetImage(data[index].image),
                       width: double.infinity,
                       height: double.infinity,
-                      fit: BoxFit.cover)
+                      fit: BoxFit.cover,
+                    )
                   : const SizedBox(),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: rSize(40)),
-                width: double.infinity,
+                // padding: EdgeInsets.symmetric(horizontal: rSize(40)),
+                // width: double.infinity,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Theme.of(context).colorScheme.primaryContainer.withOpacity(0.2),
-                      Theme.of(context).colorScheme.primaryContainer.withOpacity(1),
+                      Theme.of(context)
+                          .colorScheme
+                          .onBackground
+                          .withOpacity(0.5),
+                      Theme.of(context).colorScheme.onBackground.withOpacity(1),
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -69,64 +73,84 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       data[index].title.isNotEmpty
-                          ? Text(
-                              data[index].title,
-                              style: Theme.of(context).textTheme.headline2?.copyWith(fontSize: rSize(35)),
-                            )
+                          ? Text(data[index].title,
+                              style: Theme.of(context).textTheme.headline2)
                           : const SizedBox(),
                       SizedBox(
                         height: rSize(20),
                       ),
                       data[index].subTitle.isNotEmpty
-                          ? Text(
-                              data[index].subTitle,
-                              style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: rSize(25)),
-                            )
+                          ? Text(data[index].subTitle,
+                              style: Theme.of(context).textTheme.bodyText2)
                           : const SizedBox(),
                       SizedBox(
                         height: rSize(10),
                       ),
                       data[index].description.isNotEmpty
-                          ? Text(
-                              data[index].description,
-                              style: Theme.of(context).textTheme.subtitle2?.copyWith(fontSize: rSize(15)),
-                            )
+                          ? Text(data[index].description,
+                              style: Theme.of(context).textTheme.subtitle2)
                           : const SizedBox(),
                       SizedBox(
                         height: rSize(60),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          AnimatedSmoothIndicator(
-                            duration: const Duration(milliseconds: 400),
-                            activeIndex: liquidController.currentPage,
-                            count: data.length,
-                            effect: WormEffect(
-                                type: WormType.thin,
-                                spacing: rSize(16),
-                                dotWidth: rSize(16),
-                                dotHeight: rSize(16),
-                                dotColor: Theme.of(context).colorScheme.background,
-                                activeDotColor: Theme.of(context).colorScheme.primary),
-                            onDotClicked: (index) {
-                              liquidController.jumpToPage(page: index);
-                            },
-                          ),
-                          liquidController.currentPage == data.length - 1
-                              ? CustomButton(
-                                  customButtonProps: CustomButtonProps(
-                                      isPrimary: true,
-                                      capitalizeText: false,
-                                      onTap: () => liquidController.jumpToPage(page: data.length - 1),
-                                      text: "Start"))
-                              : CustomTextButton(
-                                  customTextButtonProps: CustomTextButtonProps(
-                                      onTap: () => liquidController.jumpToPage(page: data.length - 1),
-                                      text: "Skip to End")),
-                        ],
+                      SizedBox(
+                        height: rSize(50),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            AnimatedSmoothIndicator(
+                              duration: const Duration(milliseconds: 400),
+                              activeIndex: liquidController.currentPage,
+                              count: data.length,
+                              effect: WormEffect(
+                                  type: WormType.thin,
+                                  spacing: rSize(16),
+                                  dotWidth: rSize(16),
+                                  dotHeight: rSize(16),
+                                  dotColor:
+                                      Theme.of(context).colorScheme.background,
+                                  activeDotColor:
+                                      Theme.of(context).colorScheme.primary),
+                              onDotClicked: (index) {
+                                liquidController.jumpToPage(page: index);
+                              },
+                            ),
+                            AnimatedSwitcher(
+                              reverseDuration:
+                                  const Duration(milliseconds: 400),
+                              duration: const Duration(milliseconds: 400),
+                              child: liquidController.currentPage ==
+                                      data.length - 1
+                                  ? CustomButton(
+                                      key: const ValueKey(0),
+                                      customButtonProps: CustomButtonProps(
+                                        isPrimary: true,
+                                        onTap: () => {
+                                          Navigator.pushNamed(
+                                              context, '/loginScreen')
+                                        },
+                                        text: "Start",
+                                      ),
+                                    )
+                                  : CustomButton(
+                                      key: const ValueKey(1),
+                                      customButtonProps: CustomButtonProps(
+                                        isPrimary: false,
+                                        onTap: () => liquidController
+                                            .jumpToPage(page: data.length - 1),
+                                        isSecondary: true,
+                                        backgroundColor: Colors.transparent,
+                                        textColor: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        text: "Skip to End",
+                                      ),
+                                    ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -135,22 +159,6 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
             ],
           );
         },
-        // positionSlideIcon: 0.75,
-        // slideIconWidget: liquidController.currentPage != data.length - 1
-        //     ? Padding(
-        //         padding: EdgeInsets.symmetric(horizontal: rSize(30)),
-        //         child: Container(
-        //           padding: EdgeInsets.symmetric(
-        //               vertical: rSize(15), horizontal: rSize(15)),
-        //           decoration: BoxDecoration(
-        //               borderRadius: BorderRadius.circular(rSize(15)),
-        //               color: Theme.of(context).colorScheme.primary),
-        //           child: IconTheme(
-        //               data: Theme.of(context).iconTheme,
-        //               child: const Icon(FontAwesomeIcons.arrowLeft)),
-        //         ),
-        //       )
-        //     : SizedBox(),
         onPageChangeCallback: pageChangeCallback,
         waveType: WaveType.liquidReveal,
         liquidController: liquidController,

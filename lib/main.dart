@@ -28,6 +28,7 @@ import 'package:appointments/screens/home/services/new_service.dart';
 import 'package:appointments/screens/home/services/service_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/home/settings/booking_settings.dart';
+import 'package:appointments/screens/landing/landing.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
 import 'package:appointments/screens/register/main.dart';
@@ -79,7 +80,7 @@ class StudiosApp extends StatelessWidget {
   }
 
   Widget getInitScreen(BuildContext context, isLoggedIn) {
-    return const LoginScreen();
+    return const Landing();
     // if (isLoggedIn == true) {
     //   return const HomePage();
     // }
@@ -117,6 +118,7 @@ class StudiosApp extends StatelessWidget {
                           theme: theme.getTheme(),
                           home: getInitScreen(context, auth.data),
                           routes: {
+                            '/landing': (context) => const Landing(),
                             '/home': (context) => const HomeScreen(),
                             '/loginScreen': (context) => const LoginScreen(),
                             '/clients': (context) => const Clients(),

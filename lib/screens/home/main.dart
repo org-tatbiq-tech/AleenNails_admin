@@ -5,6 +5,7 @@ import 'package:appointments/screens/home/timeline.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
@@ -40,6 +41,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Widget getModalBody() {
+    return Column(
+      children: [
+        CustomButton(
+          customButtonProps: CustomButtonProps(
+            onTap: () => {},
+            text: 'New Appointment',
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
               showBottomModal(
                 bottomModalProps: BottomModalProps(
                   context: context,
-                  child: (Text('dasjdsakjlkjdaskjdalkjdak')),
+                  child: getModalBody(),
                   showDragPen: true,
                   enableDrag: true,
                   // title: 'Modal Title',

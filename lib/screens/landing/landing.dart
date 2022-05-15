@@ -11,13 +11,11 @@ class Landing extends StatefulWidget {
 }
 
 class _LandingState extends State<Landing> {
-  late List<LiquidSwipeData> _data;
   @override
-  void initState() {
-    super.initState();
-    setState(
-      () {
-        _data = [
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomLiquidSwipe(
+        liquidSwipeDataList: [
           LiquidSwipeData(
             image: "assets/images/swiper-1.jpg",
             title: Languages.of(context)!.swiper1Title,
@@ -42,16 +40,7 @@ class _LandingState extends State<Landing> {
             subTitle: Languages.of(context)!.swiper4SubTitle,
             description: Languages.of(context)!.swiper4Desc,
           ),
-        ];
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomLiquidSwipe(
-        liquidSwipeDataList: _data,
+        ],
       ),
     );
   }
