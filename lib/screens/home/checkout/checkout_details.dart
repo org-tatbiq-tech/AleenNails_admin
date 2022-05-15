@@ -1,11 +1,12 @@
 import 'package:appointments/animations/fade_animation.dart';
+import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/close_slidable_on_tab.dart';
-import 'package:appointments/widget/contact_card.dart';
+import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
@@ -19,7 +20,6 @@ import 'package:appointments/widget/over_popup.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 class CheckoutDetails extends StatefulWidget {
   const CheckoutDetails({Key? key}) : super(key: key);
@@ -45,6 +45,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
     13,
     14,
   ];
+  Client? selectedClient;
 
   // final SlidableController slidableController = SlidableController();
 
@@ -59,6 +60,13 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
       ];
       chargeWidgetList = _addServicesList();
     });
+  }
+
+  onClientTap(Client client) {
+    setState(() {
+      selectedClient = client;
+    });
+    Navigator.pop(context);
   }
 
   _removeService() {
@@ -169,9 +177,6 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                               ),
                             ),
                           )
-                          // Navigator.pushNamed(context, '/services', arguments: {
-                          //   {selectionMode: true}
-                          // }),
                         }),
                   ),
                 ),
@@ -399,11 +404,18 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
       return widgetList;
     }
 
-    renderClient(Contact? contact) {
-      return contact == null
+    renderClient() {
+      return selectedClient == null
           ? EaseInAnimation(
               beginAnimation: 0.99,
-              onTap: () => {Navigator.pushNamed(context, '/clients')},
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ClientSelection(
+                    onTap: (Client client) => {onClientTap(client)},
+                  ),
+                ),
+              ),
               child: DottedBorder(
                 color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
                 borderType: BorderType.RRect,
@@ -439,9 +451,6 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
-                      SizedBox(
-                        width: rSize(10),
-                      ),
                       IconTheme(
                         data: Theme.of(context).primaryIconTheme,
                         child: Icon(
@@ -454,12 +463,16 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                 ),
               ),
             )
-          : ContactCard(
-              contactCardProps: ContactCardProps(
-                contactDetails: Contact(
-                  name: 'Ahmad Manaa',
-                  phone: '0505800955',
-                ),
+          : ClientCard(
+              clientCardProps: ClientCardProps(
+                withNavigation: false,
+                withDelete: true,
+                onCloseTap: () => {
+                  setState(() {
+                    selectedClient = null;
+                  })
+                },
+                contactDetails: selectedClient!,
               ),
             );
     }
@@ -575,7 +588,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                       ),
                       FadeAnimation(
                         delay: 0,
-                        child: renderClient(null),
+                        child: renderClient(),
                       ),
                       SizedBox(
                         height: rSize(20),

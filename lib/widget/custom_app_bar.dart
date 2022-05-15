@@ -3,7 +3,6 @@ import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/app_bar_painter.dart';
 import 'package:appointments/widget/custom_icon.dart';
-import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/search_bar.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +73,7 @@ class _CustomAppBarState extends State<CustomAppBar>
 
   @override
   Widget build(BuildContext context) {
-    _getActions() {
+    getActions() {
       double actionWidth = 0;
       if (widget.customAppBarProps.withBack &&
           (widget.customAppBarProps.customIcon == null &&
@@ -138,9 +137,9 @@ class _CustomAppBarState extends State<CustomAppBar>
                     child: CustomIcon(
                         customIconProps: CustomIconProps(
                       icon: IconTheme(
+                        data: Theme.of(context).primaryIconTheme,
                         child:
                             widget.customAppBarProps.customIcon ?? Container(),
-                        data: Theme.of(context).primaryIconTheme,
                       ),
                     )),
                   ),
@@ -153,7 +152,7 @@ class _CustomAppBarState extends State<CustomAppBar>
       );
     }
 
-    _getLeadingIcon() {
+    getLeadingIcon() {
       double actionsWidth = 0;
       if (widget.customAppBarProps.withSearch) {
         actionsWidth += 50;
@@ -199,8 +198,6 @@ class _CustomAppBarState extends State<CustomAppBar>
             );
     }
 
-    final TextEditingController _filter = new TextEditingController();
-
     double screenWidth = MediaQuery.of(context).size.width;
     return ClipPath(
       clipper: widget.customAppBarProps.withClipPath
@@ -215,11 +212,11 @@ class _CustomAppBarState extends State<CustomAppBar>
             backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             shadowColor: Colors.transparent,
             bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(0),
               child: Container(
                 color: Theme.of(context).colorScheme.primaryContainer,
                 height: widget.customAppBarProps.withBorder ? rSize(1) : 0,
               ),
-              preferredSize: const Size.fromHeight(0),
             ),
             titleSpacing: 0,
             leading: const SizedBox(
@@ -232,7 +229,7 @@ class _CustomAppBarState extends State<CustomAppBar>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  _getLeadingIcon(),
+                  getLeadingIcon(),
                   Expanded(
                     child: Wrap(
                       alignment: widget.customAppBarProps.centerTitle,
@@ -256,7 +253,7 @@ class _CustomAppBarState extends State<CustomAppBar>
                   )
                 ]),
             actions: [
-              _getActions(),
+              getActions(),
             ],
           ),
           AnimatedBuilder(

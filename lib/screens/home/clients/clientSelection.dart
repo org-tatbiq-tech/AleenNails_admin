@@ -1,28 +1,40 @@
 import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/widget/client_card.dart';
+import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../utils/layout.dart';
 
-class Clients extends StatefulWidget {
-  const Clients({Key? key}) : super(key: key);
+class ClientSelection extends StatefulWidget {
+  Function? onTap;
+  ClientSelection({
+    Key? key,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return ClientsState();
+    return ClientSelectionState();
   }
 }
 
-class ClientsState extends State<Clients> {
+class ClientSelectionState extends State<ClientSelection> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppData>(
       builder: (context, appData, _) {
-        return Container(
-          color: Theme.of(context).colorScheme.background,
-          child: Column(
+        return Scaffold(
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText: 'Select a Client',
+              withBack: true,
+              withSearch: true,
+              withClipPath: false,
+            ),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -41,6 +53,10 @@ class ClientsState extends State<Clients> {
                   itemBuilder: (context, index) {
                     return ClientCard(
                       clientCardProps: ClientCardProps(
+                        onTap: () => widget.onTap!(
+                          appData.filteredContacts[index],
+                        ),
+                        withNavigation: false,
                         contactDetails: appData.filteredContacts[index],
                       ),
                     );

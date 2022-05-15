@@ -3,21 +3,28 @@ import 'package:flutter/cupertino.dart';
 import '../utils/data_types.dart';
 
 class AppData extends ChangeNotifier {
-  List<Contact> allContacts = [];
-  List<Contact> filteredContacts = [];
+  List<Client> allContacts = [];
+  List<Client> filteredContacts = [];
   AppData() {
-    Contact contact = Contact(
+    Client contact = Client(
       name: 'Saeed',
       phone: '0543103540',
       address: 'Haifa',
     );
-    Contact contact2 = Contact(
+    Client contact2 = Client(
       name: 'Ahmad',
       phone: '058955005',
       address: 'Bagdad',
     );
     allContacts = [contact, contact2, contact, contact2, contact, contact2];
-    filteredContacts = [contact, contact2, contact, contact2, contact, contact2];
+    filteredContacts = [
+      contact,
+      contact2,
+      contact,
+      contact2,
+      contact,
+      contact2
+    ];
   }
 
   List<String> contacts_ = [

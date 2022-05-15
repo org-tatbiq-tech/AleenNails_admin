@@ -1,9 +1,10 @@
+import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/contact_card.dart';
+import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
@@ -27,7 +28,7 @@ class _NewAppointmentState extends State<NewAppointment> {
   DateTime? endTime;
   DateTime? endTimeTemp;
   DateTime? endTimeMin;
-  Contact? selectedContact;
+  Client? selectedClient;
   Service? selectedService;
 
   @override
@@ -43,6 +44,13 @@ class _NewAppointmentState extends State<NewAppointment> {
   onServiceTap(Service service) {
     setState(() {
       selectedService = service;
+    });
+    Navigator.pop(context);
+  }
+
+  onClientTap(Client client) {
+    setState(() {
+      selectedClient = client;
     });
     Navigator.pop(context);
   }
@@ -245,11 +253,18 @@ class _NewAppointmentState extends State<NewAppointment> {
       );
     }
 
-    renderClient(Contact? contact) {
-      return contact == null
+    renderClient() {
+      return selectedClient == null
           ? EaseInAnimation(
               beginAnimation: 0.99,
-              onTap: () => {Navigator.pushNamed(context, '/clients')},
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ClientSelection(
+                    onTap: (Client client) => {onClientTap(client)},
+                  ),
+                ),
+              ),
               child: DottedBorder(
                 color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
                 borderType: BorderType.RRect,
@@ -297,12 +312,16 @@ class _NewAppointmentState extends State<NewAppointment> {
                 ),
               ),
             )
-          : ContactCard(
-              contactCardProps: ContactCardProps(
-                contactDetails: Contact(
-                  name: 'Ahmad Manaa',
-                  phone: '0505800955',
-                ),
+          : ClientCard(
+              clientCardProps: ClientCardProps(
+                withNavigation: false,
+                withDelete: true,
+                onCloseTap: () => {
+                  setState(() {
+                    selectedClient = null;
+                  })
+                },
+                contactDetails: selectedClient!,
               ),
             );
     }
@@ -333,7 +352,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                     SizedBox(
                       height: rSize(40),
                     ),
-                    renderClient(null),
+                    renderClient(),
                     SizedBox(
                       height: rSize(40),
                     ),

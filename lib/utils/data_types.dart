@@ -128,12 +128,12 @@ class WorkingDay {
   });
 }
 
-class Contact {
+class Client {
   String? name;
   String? phone;
   String? address;
 
-  Contact({
+  Client({
     this.name,
     this.phone,
     this.address,
@@ -253,13 +253,21 @@ class ServiceCardProps {
   });
 }
 
-class ContactCardProps {
-  final Contact contactDetails;
+class ClientCardProps {
+  final Client contactDetails;
   final bool withNavigation;
+  final bool withDelete;
+  final bool enabled;
+  final Function? onTap;
+  final Function? onCloseTap;
 
-  ContactCardProps({
+  ClientCardProps({
     required this.contactDetails,
     this.withNavigation = true,
+    this.withDelete = false,
+    this.enabled = true,
+    this.onTap,
+    this.onCloseTap,
   });
 }
 
