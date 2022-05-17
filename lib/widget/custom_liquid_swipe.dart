@@ -1,7 +1,6 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
-import 'package:appointments/widget/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:liquid_swipe/liquid_swipe.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -170,9 +169,9 @@ class _CustomLiquidSwipe extends State<CustomLiquidSwipe> {
     );
   }
 
-  pageChangeCallback(int lpage) {
+  pageChangeCallback(int page) {
     setState(() {
-      page = lpage;
+      page = page;
     });
   }
 }
