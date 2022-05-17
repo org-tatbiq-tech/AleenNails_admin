@@ -16,16 +16,14 @@ showWheelPickerModal({
         ),
     itemExtent: rSize(40),
     hideHeader: true,
+    selecteds: [wheelPickerModalProps.selected],
     adapter: PickerDataAdapter(
       pickerdata: wheelPickerModalProps.pickerData,
     ),
-    onSelect: (Picker picker, int int, List<int> list) => {
-      // print(getTimeFormat((picker.adapter as DateTimePickerAdapter).value)),
-    },
+    onSelect: (Picker picker, int int, List<int> list) => {},
     onConfirm: (Picker picker, List value) {
       wheelPickerModalProps.primaryAction != null
-          ? wheelPickerModalProps
-              .primaryAction!((picker.adapter as DateTimePickerAdapter).value)
+          ? wheelPickerModalProps.primaryAction!((value))
           : () => {};
     },
   );

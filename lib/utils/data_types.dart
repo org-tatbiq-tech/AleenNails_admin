@@ -596,6 +596,7 @@ class WheelPickerModalProps {
   Function? primaryAction;
   bool looping;
   List<dynamic> pickerData;
+  int selected;
 
   WheelPickerModalProps({
     required this.context,
@@ -603,5 +604,6 @@ class WheelPickerModalProps {
     required this.pickerData,
     this.looping = false,
     this.primaryAction,
+    this.selected = 0,
   });
 }

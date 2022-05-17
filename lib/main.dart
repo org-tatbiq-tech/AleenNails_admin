@@ -11,6 +11,9 @@ import 'package:appointments/screens/home/checkout/checkout_details.dart';
 import 'package:appointments/screens/home/checkout/discount_selection.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
+import 'package:appointments/screens/home/personal_settings/language_settings.dart';
+import 'package:appointments/screens/home/personal_settings/notifiacation_settings.dart';
+import 'package:appointments/screens/home/personal_settings/personal_settings.dart';
 import 'package:appointments/screens/home/profile/business_address.dart';
 import 'package:appointments/screens/home/profile/business_cover_photo.dart';
 import 'package:appointments/screens/home/profile/business_info.dart';
@@ -169,6 +172,12 @@ class StudiosApp extends StatelessWidget {
                             '/dayDetails': (context) => const DayDetails(),
                             '/bookingSettings': (context) =>
                                 const BookingsSettings(),
+                            '/personalSettings': (context) =>
+                                const PersonalSettings(),
+                            '/notificationSettings': (context) =>
+                                const NotificationSettings(),
+                            '/languageSettings': (context) =>
+                                const LanguageSettings(),
                             // '/registerProfile': (context) => const RegisterProfileScreen(),
                           },
                           locale: localeProv.locale,

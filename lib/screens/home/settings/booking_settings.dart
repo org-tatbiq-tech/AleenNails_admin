@@ -18,6 +18,10 @@ class BookingsSettings extends StatefulWidget {
 class _BookingsSettingsState extends State<BookingsSettings> {
   bool isEnabled = false;
 
+  int selectedBookingWindowPicker = 0;
+  int selectedFutureBookingPickerdata = 0;
+  int selectedReschedulingPickerdata = 0;
+
   List<String> bookingWindowPickerdata = [
     'No less than 15 minutes in advance',
     'No less than 30 minutes in advance',
@@ -151,7 +155,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              bottom: rSize(10),
+              bottom: rSize(5),
               left: rSize(10),
               right: rSize(10),
             ),
@@ -161,7 +165,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
             ),
           ),
           CustomInputFieldButton(
-            text: bookingWindowPickerdata[0],
+            text: bookingWindowPickerdata[selectedBookingWindowPicker],
             fontSize: 16,
             onTap: () => {
               showWheelPickerModal(
@@ -169,6 +173,12 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                   context: context,
                   pickerData: bookingWindowPickerdata,
                   title: 'Booking Window',
+                  selected: selectedBookingWindowPicker,
+                  primaryAction: (value) => {
+                    setState(() {
+                      selectedBookingWindowPicker = value[0];
+                    })
+                  },
                 ),
               )
             },
@@ -178,22 +188,30 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              bottom: rSize(10),
+              bottom: rSize(5),
               left: rSize(10),
               right: rSize(10),
             ),
-            child: Text('Future Booking Window',
-                style: Theme.of(context).textTheme.bodyText1),
+            child: Text(
+              'Future Booking Window',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
           CustomInputFieldButton(
             fontSize: 16,
-            text: futureBookingPickerdata[0],
+            text: futureBookingPickerdata[selectedFutureBookingPickerdata],
             onTap: () => {
               showWheelPickerModal(
                 wheelPickerModalProps: WheelPickerModalProps(
                   context: context,
                   pickerData: futureBookingPickerdata,
                   title: 'Future Booking Window',
+                  selected: selectedFutureBookingPickerdata,
+                  primaryAction: (value) => {
+                    setState(() {
+                      selectedFutureBookingPickerdata = value[0];
+                    })
+                  },
                 ),
               )
             },
@@ -203,22 +221,30 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              bottom: rSize(10),
+              bottom: rSize(5),
               left: rSize(10),
               right: rSize(10),
             ),
-            child: Text('Rescheduling',
-                style: Theme.of(context).textTheme.bodyText1),
+            child: Text(
+              'Rescheduling',
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
           ),
           CustomInputFieldButton(
             fontSize: 16,
-            text: reschedulingPickerdata[0],
+            text: reschedulingPickerdata[selectedReschedulingPickerdata],
             onTap: () => {
               showWheelPickerModal(
                 wheelPickerModalProps: WheelPickerModalProps(
                   context: context,
                   pickerData: reschedulingPickerdata,
                   title: 'Rescheduling',
+                  selected: selectedReschedulingPickerdata,
+                  primaryAction: (value) => {
+                    setState(() {
+                      selectedReschedulingPickerdata = value[0];
+                    })
+                  },
                 ),
               )
             },

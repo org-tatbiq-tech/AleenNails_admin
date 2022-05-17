@@ -23,7 +23,7 @@ class CustomListTile extends StatelessWidget {
     Widget renderMain() {
       return Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: rSize(20),
+          horizontal: customListTileProps.leading != null ? rSize(20) : 0,
         ),
         child: (Column(
           mainAxisSize: MainAxisSize.max,

@@ -43,7 +43,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       service,
     ];
 
-    _cancelAppointment() {
+    cancelAppointment() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -88,7 +88,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    _renderAmount(Service service) {
+    renderAmount(Service service) {
       return FadeAnimation(
         positionType: PositionType.top,
         delay: 1.3,
@@ -142,7 +142,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             mainAxisSize: MainAxisSize.max,
             children: [
               EaseInAnimation(
-                onTap: () => _cancelAppointment(),
+                onTap: () => cancelAppointment(),
                 child: CustomIcon(
                   customIconProps: CustomIconProps(
                     icon: null,
@@ -481,7 +481,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                     SizedBox(
                       height: rSize(20),
                     ),
-                    _renderAmount(service),
+                    renderAmount(service),
                     SizedBox(
                       height: rSize(10),
                     ),

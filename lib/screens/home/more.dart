@@ -104,7 +104,8 @@ class MoreState extends State<More> {
             ),
             CustomIconButton(
               customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {},
+                onTap: () =>
+                    {Navigator.pushNamed(context, '/personalSettings')},
                 animationDelay: 0.7,
                 iconPath: 'assets/icons/setting_hand.png',
                 positionType: PositionType.bottom,
