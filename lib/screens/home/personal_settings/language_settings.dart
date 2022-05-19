@@ -1,6 +1,7 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class LanguageSettings extends StatefulWidget {
@@ -12,6 +13,14 @@ class LanguageSettings extends StatefulWidget {
 
 class _LanguageSettingsState extends State<LanguageSettings> {
   int _value = 0;
+  int _oldValue = 0;
+
+  bool isButtonDisabled() {
+    if (_value == _oldValue) {
+      return true;
+    }
+    return false;
+  }
 
   Widget renderLanguage({
     required String name,
@@ -52,26 +61,48 @@ class _LanguageSettingsState extends State<LanguageSettings> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(30),
-          vertical: rSize(20),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              'Select your Application Language',
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            SizedBox(
-              height: rSize(20),
-            ),
-            renderLanguage(name: 'English', value: 0),
-            renderLanguage(name: 'Arabic', value: 1),
-            renderLanguage(name: 'Hebrew', value: 2),
-          ],
+      body: SafeArea(
+        top: false,
+        right: false,
+        left: false,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: rSize(30),
+            right: rSize(30),
+            top: rSize(20),
+          ),
+          child: Column(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Select your Application Language',
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                    SizedBox(
+                      height: rSize(20),
+                    ),
+                    renderLanguage(name: 'English', value: 0),
+                    renderLanguage(name: 'Arabic', value: 1),
+                    renderLanguage(name: 'Hebrew', value: 2),
+                  ],
+                ),
+              ),
+              CustomButton(
+                customButtonProps: CustomButtonProps(
+                  onTap: () => {
+                    Navigator.pop(context),
+                  },
+                  text: 'Save',
+                  isPrimary: true,
+                  isDisabled: isButtonDisabled(),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

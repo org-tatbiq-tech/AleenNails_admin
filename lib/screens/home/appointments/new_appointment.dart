@@ -137,7 +137,7 @@ class _NewAppointmentState extends State<NewAppointment> {
               MaterialPageRoute(
                 builder: (context) => Services(
                   selectionMode: true,
-                  onTap: (Service service) => {onServiceTap(service)},
+                  onTap: (Service service) => onServiceTap(service),
                 ),
               ),
             ),
@@ -350,7 +350,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: rSize(40),
+                      height: rSize(20),
                     ),
                     renderClient(),
                     SizedBox(

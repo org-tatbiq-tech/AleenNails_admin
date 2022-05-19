@@ -7,11 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../utils/layout.dart';
 
-//class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
 class Services extends StatefulWidget {
-  bool selectionMode;
-  Function? onTap;
-  Services({
+  final bool selectionMode;
+  final Function? onTap;
+  const Services({
     Key? key,
     this.selectionMode = false,
     this.onTap,
@@ -77,7 +76,7 @@ class ServicesState extends State<Services> {
                       serviceCardProps: ServiceCardProps(
                         withNavigation: !widget.selectionMode,
                         onTap: widget.onTap != null
-                            ? widget.onTap!(services[index])
+                            ? () => widget.onTap!(services[index])
                             : null,
                         serviceDetails: services[index],
                         title: service.name ?? '',

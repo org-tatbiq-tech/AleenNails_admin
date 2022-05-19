@@ -35,7 +35,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                'Send me psh notifications (this device)',
+                'Send me push notifications (this device)',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText1,

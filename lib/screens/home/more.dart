@@ -29,18 +29,18 @@ class MoreState extends State<More> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CustomIconButton(
-              customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {},
-                animationDelay: 0.1,
-                iconPath: 'assets/icons/growth.png',
-                positionType: PositionType.bottom,
-                title: 'Marketing',
-              ),
-            ),
-            SizedBox(
-              height: rSize(20),
-            ),
+            // CustomIconButton(
+            //   customIconButtonProps: CustomIconButtonProps(
+            //     onTap: () => {},
+            //     animationDelay: 0.1,
+            //     iconPath: 'assets/icons/growth.png',
+            //     positionType: PositionType.bottom,
+            //     title: 'Marketing',
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: rSize(20),
+            // ),
             CustomIconButton(
               customIconButtonProps: CustomIconButtonProps(
                 onTap: () => {},
@@ -112,18 +112,18 @@ class MoreState extends State<More> {
                 title: 'Personal Settings',
               ),
             ),
-            SizedBox(
-              height: rSize(20),
-            ),
-            CustomIconButton(
-              customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {},
-                animationDelay: 0.9,
-                iconPath: 'assets/icons/customer-support.png',
-                positionType: PositionType.bottom,
-                title: 'Customer Support Chat',
-              ),
-            ),
+            // SizedBox(
+            //   height: rSize(20),
+            // ),
+            // CustomIconButton(
+            //   customIconButtonProps: CustomIconButtonProps(
+            //     onTap: () => {},
+            //     animationDelay: 0.9,
+            //     iconPath: 'assets/icons/customer-support.png',
+            //     positionType: PositionType.bottom,
+            //     title: 'Customer Support Chat',
+            //   ),
+            // ),
           ],
         ),
       ),
