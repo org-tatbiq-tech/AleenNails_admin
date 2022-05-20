@@ -18,6 +18,7 @@ class BusinessCoverPhoto extends StatelessWidget {
           showImagePickerModal(
             imagePickerModalProps: ImagePickerModalProps(
               context: context,
+              saveImage: () => {},
             ),
           )
         },

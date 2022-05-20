@@ -19,19 +19,30 @@ Future<File?> CustomImagePicker({
     return File(pickedFile.path);
   } else {
     final file = File(pickedFile.path);
-    _cropImage(file);
+    _cropImage(file, customImagePickerProps);
   }
   return null;
 }
 
-Future<CroppedFile?> _cropImage(File imageFile) async =>
+Future<CroppedFile?> _cropImage(
+        File imageFile, CustomImagePickerProps customImagePickerProps) async =>
     await ImageCropper().cropImage(
       sourcePath: imageFile.path,
       aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
-      aspectRatioPresets: [CropAspectRatioPreset.square],
+      aspectRatioPresets: [CropAspectRatioPreset.original],
       compressQuality: 70,
       compressFormat: ImageCompressFormat.png,
-      cropStyle: CropStyle.rectangle,
+      cropStyle: customImagePickerProps.cropStyle,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: customImagePickerProps.cropperTitle ?? 'Cropper Title',
+        ),
+        IOSUiSettings(
+          title: customImagePickerProps.cropperTitle,
+          cancelButtonTitle: 'Cancel',
+          doneButtonTitle: 'Done',
+        ),
+      ],
     );
 
 _permissionStatus() async {

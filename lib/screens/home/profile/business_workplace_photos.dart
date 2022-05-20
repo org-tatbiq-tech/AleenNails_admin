@@ -49,6 +49,7 @@ class BusinessWorkplacePhotos extends StatelessWidget {
             showImagePickerModal(
                 imagePickerModalProps: ImagePickerModalProps(
               context: context,
+              saveImage: () => {},
             ))
           },
           beginAnimation: 0.98,

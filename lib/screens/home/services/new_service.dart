@@ -115,9 +115,11 @@ class _NewServiceState extends State<NewService> {
         EaseInAnimation(
           onTap: () => {
             showImagePickerModal(
-                imagePickerModalProps: ImagePickerModalProps(
-              context: context,
-            ))
+              imagePickerModalProps: ImagePickerModalProps(
+                context: context,
+                saveImage: () => {},
+              ),
+            )
           },
           beginAnimation: 0.98,
           child: Padding(

@@ -6,18 +6,26 @@ import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/image_picker_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 
-class BusinessLogo extends StatelessWidget {
+class BusinessLogo extends StatefulWidget {
   const BusinessLogo({Key? key}) : super(key: key);
 
   @override
+  State<BusinessLogo> createState() => _BusinessLogoState();
+}
+
+class _BusinessLogoState extends State<BusinessLogo> {
+  @override
   Widget build(BuildContext context) {
-    Widget _renderBusinessLogo() {
+    Widget renderBusinessLogo() {
       return EaseInAnimation(
         onTap: () => {
           showImagePickerModal(
             imagePickerModalProps: ImagePickerModalProps(
               context: context,
+              cropStyle: CropStyle.circle,
+              saveImage: () => {},
             ),
           )
         },
@@ -90,7 +98,7 @@ class BusinessLogo extends StatelessWidget {
               height: rSize(180),
             ),
             Center(
-              child: _renderBusinessLogo(),
+              child: renderBusinessLogo(),
             ),
           ],
         ),

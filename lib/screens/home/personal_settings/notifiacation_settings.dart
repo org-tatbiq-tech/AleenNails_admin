@@ -13,10 +13,10 @@ class NotificationSettings extends StatefulWidget {
 }
 
 class _NotificationSettingsState extends State<NotificationSettings> {
+  bool _isEnabled = false;
+
   @override
   Widget build(BuildContext context) {
-    bool isEnabled = true;
-
     Widget renderMyNotification() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -40,22 +40,25 @@ class _NotificationSettingsState extends State<NotificationSettings> {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
-              Transform.scale(
-                scale: rSize(1.4),
-                alignment: Alignment.center,
-                child: Switch(
-                  onChanged: (bool value) {
-                    setState(() {
-                      isEnabled = value;
-                    });
-                  },
-                  splashRadius: 0,
-                  activeColor: Theme.of(context).colorScheme.primary,
-                  inactiveThumbColor:
-                      Theme.of(context).colorScheme.onBackground,
-                  inactiveTrackColor:
-                      Theme.of(context).colorScheme.primaryContainer,
-                  value: isEnabled,
+              SizedBox(
+                width: rSize(70),
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: Switch(
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    splashRadius: 0,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    inactiveTrackColor:
+                        Theme.of(context).colorScheme.primaryContainer,
+                    inactiveThumbColor:
+                        Theme.of(context).colorScheme.background,
+                    value: _isEnabled,
+                    onChanged: (bool state) {
+                      setState(() {
+                        _isEnabled = state;
+                      });
+                    },
+                  ),
                 ),
               ),
             ],

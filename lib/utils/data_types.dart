@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 // TODO: Ahmad add documentation in each of the classed below
@@ -482,9 +483,15 @@ class CustomInputFieldProps {
 class CustomImagePickerProps {
   bool isGallery;
   bool cropImage;
+  CropStyle cropStyle;
+  Function saveImage;
+  String? cropperTitle;
   CustomImagePickerProps({
     this.isGallery = true,
     this.cropImage = true,
+    this.cropStyle = CropStyle.rectangle,
+    required this.saveImage,
+    this.cropperTitle,
   });
 }
 
@@ -528,9 +535,17 @@ enum PickerTimeRangType {
 class ImagePickerModalProps {
   BuildContext context;
   String title;
+  CropStyle cropStyle;
+  bool cropImage;
+  Function saveImage;
+  String? cropperTitle;
   ImagePickerModalProps({
     required this.context,
     this.title = '',
+    this.cropStyle = CropStyle.rectangle,
+    this.cropImage = true,
+    required this.saveImage,
+    this.cropperTitle,
   });
 }
 

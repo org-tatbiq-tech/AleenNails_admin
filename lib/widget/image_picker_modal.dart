@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
@@ -10,24 +12,32 @@ showImagePickerModal({
 }) {
   BuildContext context = imagePickerModalProps.context;
 
-  Future _libraryClicked() async {
+  Future libraryClicked() async {
     Navigator.pop(context);
-    final file = await CustomImagePicker(
+    File? file = await CustomImagePicker(
       customImagePickerProps: CustomImagePickerProps(
         isGallery: true,
-        cropImage: true,
+        cropImage: imagePickerModalProps.cropImage,
+        cropStyle: imagePickerModalProps.cropStyle,
+        saveImage: imagePickerModalProps.saveImage,
+        cropperTitle: imagePickerModalProps.cropperTitle,
       ),
     );
+    return file;
   }
 
-  Future _cameraClicked() async {
+  Future cameraClicked() async {
     Navigator.pop(context);
-    final file = await CustomImagePicker(
+    File? file = await CustomImagePicker(
       customImagePickerProps: CustomImagePickerProps(
         isGallery: false,
-        cropImage: true,
+        cropImage: imagePickerModalProps.cropImage,
+        cropStyle: imagePickerModalProps.cropStyle,
+        saveImage: imagePickerModalProps.saveImage,
+        cropperTitle: imagePickerModalProps.cropperTitle,
       ),
     );
+    return file;
   }
 
   showBottomModal(
@@ -53,7 +63,7 @@ showImagePickerModal({
             ),
             CustomButton(
               customButtonProps: CustomButtonProps(
-                onTap: () => {_cameraClicked()},
+                onTap: () => {cameraClicked()},
                 isPrimary: true,
                 isSecondary: false,
                 text: 'Take a Photo',
@@ -64,7 +74,7 @@ showImagePickerModal({
             ),
             CustomButton(
               customButtonProps: CustomButtonProps(
-                onTap: () => {_libraryClicked()},
+                onTap: () => {libraryClicked()},
                 isPrimary: true,
                 isSecondary: false,
                 text: 'Choose From Library',
