@@ -54,9 +54,7 @@ class BusinessCoverPhoto extends StatelessWidget {
                   ),
                   Text(
                     'Add Cover Photo',
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          fontSize: rSize(16),
-                        ),
+                    style: Theme.of(context).textTheme.bodyText2,
                   )
                 ],
               ),
@@ -88,7 +86,7 @@ class BusinessCoverPhoto extends StatelessWidget {
           children: [
             Text(
               'Your cover photo is the first thing that your customers seen on your profile. Add a photo to give them  insight into what you are all about',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
               height: rSize(180),

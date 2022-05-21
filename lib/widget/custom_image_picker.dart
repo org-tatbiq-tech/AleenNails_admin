@@ -5,7 +5,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<File?> CustomImagePicker({
+Future<File?> customImagePicker({
   required CustomImagePickerProps customImagePickerProps,
 }) async {
   _permissionStatus();
@@ -19,7 +19,12 @@ Future<File?> CustomImagePicker({
     return File(pickedFile.path);
   } else {
     final file = File(pickedFile.path);
-    _cropImage(file, customImagePickerProps);
+    CroppedFile? croppedImage = await _cropImage(file, customImagePickerProps);
+    if (croppedImage != null) {
+      customImagePickerProps.saveImage(
+        File(croppedImage.path),
+      );
+    }
   }
   return null;
 }

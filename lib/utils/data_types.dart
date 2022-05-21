@@ -336,7 +336,7 @@ class CustomAvatarProps {
   final bool rectangleShape;
   final bool isMale;
   final bool editable;
-  final ImageProvider backgroundImage;
+  final ImageProvider? backgroundImage;
   final Function? onTap;
 
   CustomAvatarProps({
@@ -347,7 +347,7 @@ class CustomAvatarProps {
     this.circleShape = false,
     this.onTap,
     this.rectangleShape = false,
-    this.backgroundImage = const AssetImage('assets/images/avatar_female.png'),
+    this.backgroundImage,
   });
 }
 

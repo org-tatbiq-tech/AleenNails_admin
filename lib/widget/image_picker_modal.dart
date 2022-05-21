@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
@@ -14,7 +13,7 @@ showImagePickerModal({
 
   Future libraryClicked() async {
     Navigator.pop(context);
-    File? file = await CustomImagePicker(
+    File? file = await customImagePicker(
       customImagePickerProps: CustomImagePickerProps(
         isGallery: true,
         cropImage: imagePickerModalProps.cropImage,
@@ -28,7 +27,7 @@ showImagePickerModal({
 
   Future cameraClicked() async {
     Navigator.pop(context);
-    File? file = await CustomImagePicker(
+    File? file = await customImagePicker(
       customImagePickerProps: CustomImagePickerProps(
         isGallery: false,
         cropImage: imagePickerModalProps.cropImage,
@@ -42,9 +41,7 @@ showImagePickerModal({
 
   showBottomModal(
     bottomModalProps: BottomModalProps(
-      // title: '',
       context: context,
-      // centerTitle: true,
       enableDrag: true,
       showDragPen: true,
       isDismissible: true,

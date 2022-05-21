@@ -27,31 +27,6 @@ class CustomAvatar extends StatelessWidget {
           children: [
             Container(
               clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: Wrap(
-                direction: Axis.horizontal,
-                alignment: WrapAlignment.end,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  SizedBox(
-                      width: customAvatarProps.radius - rSize(4),
-                      height: customAvatarProps.radius * 0.1),
-                  Opacity(
-                    opacity: 0.6,
-                    child: Image(
-                      width: customAvatarProps.radius - rSize(4),
-                      height: customAvatarProps.rectangleShape
-                          ? customAvatarProps.radius * 1.2
-                          : customAvatarProps.radius,
-                      fit: BoxFit.contain,
-                      color: Theme.of(context).colorScheme.primary,
-                      alignment: Alignment.bottomCenter,
-                      image: customAvatarProps.isMale
-                          ? const AssetImage('assets/images/avatar_male.png')
-                          : customAvatarProps.backgroundImage,
-                    ),
-                  ),
-                ],
-              ),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.onBackground,
                 border: Border.all(
@@ -63,20 +38,59 @@ class CustomAvatar extends StatelessWidget {
                     ? BorderRadius.circular(customAvatarProps.radius / 2)
                     : BorderRadius.circular(customAvatarProps.radius / 4),
               ),
+              child: Wrap(
+                direction: Axis.horizontal,
+                alignment: WrapAlignment.end,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  SizedBox(
+                    width: customAvatarProps.radius - rSize(4),
+                    height: customAvatarProps.backgroundImage == null
+                        ? customAvatarProps.radius * 0.1
+                        : null,
+                  ),
+                  customAvatarProps.backgroundImage == null
+                      ? Opacity(
+                          opacity: 0.6,
+                          child: Image(
+                            width: customAvatarProps.radius - rSize(4),
+                            height: customAvatarProps.rectangleShape
+                                ? customAvatarProps.radius * 1.2
+                                : customAvatarProps.radius,
+                            fit: BoxFit.contain,
+                            color: Theme.of(context).colorScheme.primary,
+                            alignment: Alignment.bottomCenter,
+                            image: customAvatarProps.isMale
+                                ? const AssetImage(
+                                    'assets/images/avatar_male.png')
+                                : const AssetImage(
+                                    'assets/images/avatar_female.png'),
+                          ))
+                      : Image(
+                          width: customAvatarProps.radius - rSize(4),
+                          height: customAvatarProps.rectangleShape
+                              ? customAvatarProps.radius * 1.2
+                              : customAvatarProps.radius,
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                          image: customAvatarProps.backgroundImage!,
+                        ),
+                ],
+              ),
             ),
             customAvatarProps.editable
                 ? Positioned(
-                    bottom: 0,
+                    bottom: rSize(10),
                     right: 0,
                     child: CustomIcon(
                       customIconProps: CustomIconProps(
                         backgroundColor: Theme.of(context).colorScheme.primary,
-                        containerSize: customAvatarProps.radius * 0.3,
+                        containerSize: customAvatarProps.radius * 0.25,
                         icon: IconTheme(
                           data: Theme.of(context).iconTheme,
                           child: Icon(
                             Icons.edit,
-                            size: customAvatarProps.radius * 0.2,
+                            size: customAvatarProps.radius * 0.15,
                           ),
                         ),
                       ),
