@@ -204,6 +204,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: rSize(30),
+          vertical: rSize(20),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.max,

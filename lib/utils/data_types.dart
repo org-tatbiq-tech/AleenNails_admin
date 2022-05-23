@@ -243,6 +243,7 @@ class ServiceCardProps {
   final String subTitle;
   final String title;
   final Function? onTap;
+  final int? dragIndex;
 
   ServiceCardProps({
     required this.serviceDetails,
@@ -251,6 +252,7 @@ class ServiceCardProps {
     this.subTitle = '',
     this.title = '',
     this.onTap,
+    this.dragIndex,
   });
 }
 
@@ -282,6 +284,7 @@ class CustomListTileProps {
   final Function? onTap;
   final double? minLeadingWidth;
   final double? height;
+  final double marginBottom;
   CustomListTileProps({
     this.trailing,
     this.leading,
@@ -292,6 +295,7 @@ class CustomListTileProps {
     this.onTap,
     this.minLeadingWidth,
     this.height,
+    this.marginBottom = 0,
   });
 }
 

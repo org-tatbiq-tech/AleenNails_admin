@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -25,19 +26,56 @@ class Services extends StatefulWidget {
 class ServicesState extends State<Services> {
   @override
   Widget build(BuildContext context) {
-    Service service = Service(
-      name: 'Service Name with long name what to be look',
-      duration: '1h 25m',
-      price: 45,
+    Service service1 = Service(
+      name: 'Service Name 1',
+      duration: '1h 30m',
+      price: 20,
+      id: '1',
+    );
+    Service service2 = Service(
+      name: 'Service Name 2',
+      duration: '2h 30m',
+      price: 80,
+      id: '2',
+    );
+    Service service3 = Service(
+      name: 'Service Name 3',
+      duration: '0h 30m',
+      price: 100,
+      id: '3',
+    );
+    Service service4 = Service(
+      name: 'Service Name 4',
+      duration: '1h 0m',
+      price: 120,
+      id: '4',
     );
     List<Service> services = [
-      service,
-      service,
-      service,
-      service,
-      service,
-      service
+      service1,
+      service2,
+      service3,
+      service4,
     ];
+
+    Widget proxyDecorator(
+        Widget child, int index, Animation<double> animation) {
+      return AnimatedBuilder(
+        animation: animation,
+        builder: (BuildContext context, Widget? child) {
+          final double animValue = Curves.easeInOut.transform(animation.value);
+          final double elevation = lerpDouble(0, 6, animValue)!;
+          return Material(
+            borderRadius: BorderRadius.circular(rSize(10)),
+            elevation: elevation,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            shadowColor: Theme.of(context).shadowColor,
+            child: child,
+          );
+        },
+        child: child,
+      );
+    }
+
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
@@ -60,26 +98,30 @@ class ServicesState extends State<Services> {
         children: [
           services.isNotEmpty
               ? Expanded(
-                  child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      height: rSize(10),
-                    );
+                  child: ReorderableListView.builder(
+                  buildDefaultDragHandles: false,
+                  onReorder: (oldIndex, newIndex) {
+                    if (newIndex > oldIndex) newIndex--;
+                    final Service service = services.removeAt(oldIndex);
+                    services.insert(newIndex, service);
                   },
+                  proxyDecorator: proxyDecorator,
                   padding: EdgeInsets.symmetric(
-                    vertical: rSize(30),
-                    horizontal: rSize(20),
+                    vertical: rSize(40),
+                    horizontal: rSize(30),
                   ),
                   itemCount: services.length,
                   itemBuilder: (context, index) {
                     return ServiceCard(
+                      key: ValueKey(services[index].id),
                       serviceCardProps: ServiceCardProps(
                         withNavigation: !widget.selectionMode,
+                        dragIndex: index,
                         onTap: widget.onTap != null
                             ? () => widget.onTap!(services[index])
                             : null,
                         serviceDetails: services[index],
-                        title: service.name ?? '',
+                        title: services[index].name ?? '',
                         subTitle: services[index].duration ?? '',
                       ),
                     );

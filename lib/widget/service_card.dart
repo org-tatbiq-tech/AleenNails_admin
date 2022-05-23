@@ -1,12 +1,14 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_list_tile.dart';
+import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
-  ServiceCardProps serviceCardProps;
-  ServiceCard({
+  final ServiceCardProps serviceCardProps;
+  const ServiceCard({
     Key? key,
     required this.serviceCardProps,
   }) : super(key: key);
@@ -16,6 +18,7 @@ class ServiceCard extends StatelessWidget {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
         height: rSize(70),
+        marginBottom: 15,
         enabled: serviceCardProps.enabled,
         onTap: serviceCardProps.onTap ??
             () => Navigator.pushNamed(context, '/serviceDetails'),
@@ -70,11 +73,39 @@ class ServiceCard extends StatelessWidget {
             ),
           ],
         ),
-        leading: VerticalDivider(
-          color: serviceCardProps.serviceDetails.color ??
-              Theme.of(context).colorScheme.primary,
-          width: rSize(4),
-          thickness: rSize(4),
+        leading: Row(
+          children: [
+            serviceCardProps.dragIndex != null
+                ? ReorderableDelayedDragStartListener(
+                    index: serviceCardProps.dragIndex!,
+                    child: EaseInAnimation(
+                      onTap: () => {},
+                      child: Row(
+                        children: [
+                          CustomIcon(
+                            customIconProps: CustomIconProps(
+                              icon: null,
+                              backgroundColor: Colors.transparent,
+                              path: 'assets/icons/drag_hand.png',
+                              withPadding: false,
+                              containerSize: 30,
+                            ),
+                          ),
+                          SizedBox(
+                            width: rSize(15),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            VerticalDivider(
+              color: serviceCardProps.serviceDetails.color ??
+                  Theme.of(context).colorScheme.primary,
+              width: rSize(3),
+              thickness: rSize(3),
+            ),
+          ],
         ),
       ),
     );

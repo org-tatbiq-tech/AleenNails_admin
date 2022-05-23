@@ -23,7 +23,7 @@ class CustomListTile extends StatelessWidget {
     Widget renderMain() {
       return Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: customListTileProps.leading != null ? rSize(20) : 0,
+          horizontal: customListTileProps.leading != null ? rSize(15) : 0,
         ),
         child: (Column(
           mainAxisSize: MainAxisSize.max,
@@ -43,7 +43,8 @@ class CustomListTile extends StatelessWidget {
       isDisabled: !customListTileProps.enabled,
       child: Card(
         elevation: 2,
-        // margin: EdgeInsets.fromLTRB(0, 0, 0, rSize(20)),
+        margin:
+            EdgeInsets.only(bottom: rSize(customListTileProps.marginBottom)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             rSize(10),
@@ -53,11 +54,11 @@ class CustomListTile extends StatelessWidget {
           height: customListTileProps.height,
           padding: customListTileProps.contentPadding ??
               EdgeInsets.symmetric(
-                horizontal: rSize(20),
+                horizontal: rSize(16),
                 vertical: rSize(10),
               ),
           child: Row(
-            mainAxisSize: MainAxisSize.max,
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
