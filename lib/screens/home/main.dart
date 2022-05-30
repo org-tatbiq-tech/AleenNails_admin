@@ -44,10 +44,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getModalBody() {
     return Column(
       children: [
+        SizedBox(
+          height: rSize(10),
+        ),
         CustomButton(
           customButtonProps: CustomButtonProps(
             onTap: () => {},
             text: 'New Appointment',
+          ),
+        ),
+        SizedBox(
+          height: rSize(10),
+        ),
+        CustomButton(
+          customButtonProps: CustomButtonProps(
+            onTap: () => {},
+            text: 'Add Unavailability',
           ),
         ),
       ],

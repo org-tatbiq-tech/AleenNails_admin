@@ -56,15 +56,16 @@ class ThemeNotifier with ChangeNotifier {
         thickness: rSize(1),
       ),
       cardTheme: CardTheme(
-          shadowColor: primary,
-          color: primaryWithAlpha2,
-          elevation: 2,
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              rSize(15),
-            ),
-          )),
+        shadowColor: primaryFontWithAlpha1,
+        color: primaryWithAlpha2,
+        elevation: 2,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            rSize(15),
+          ),
+        ),
+      ),
       iconTheme: IconThemeData(
         color: Colors.white,
         size: rSize(24),

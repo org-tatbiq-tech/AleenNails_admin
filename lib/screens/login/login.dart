@@ -86,10 +86,9 @@ class _LoginScreenState extends State<LoginScreen>
 
   Future<void> validateAndLogin(BuildContext context) async {
     /// To remove till next //
-    Navigator.pushReplacementNamed(context, '/home');
-    return;
+    // Navigator.pushReplacementNamed(context, '/home');
+    // return;
 
-    ///
     final form = _formKey.currentState;
     final authState = Provider.of<AuthenticationState>(context, listen: false);
     if (form!.validate()) {

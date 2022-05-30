@@ -1,5 +1,6 @@
 import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/decorated_input_border.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 
@@ -96,109 +97,130 @@ class CustomInputField extends StatelessWidget {
       }
     }
 
-    return Card(
-      clipBehavior: Clip.none,
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          rSize(10),
+    return TextFormField(
+      inputFormatters: customInputFieldProps.isCurrency
+          ? [_formatter]
+          : customInputFieldProps.inputFormatters ?? [],
+      maxLength: customInputFieldProps.maxLength,
+      controller: customInputFieldProps.controller,
+      obscureText: customInputFieldProps.isPassword &&
+          !customInputFieldProps.isPasswordVisible,
+      cursorColor: Theme.of(context).colorScheme.primary,
+      style: Theme.of(context).textTheme.caption,
+      maxLines: customInputFieldProps.isDescription ? 5 : 1,
+      keyboardType: customInputFieldProps.keyboardType,
+      validator: customInputFieldProps.isConfirmPassword
+          ? (value) => customInputFieldProps.validator(
+              value, customInputFieldProps.passwordToConfirm)
+          : customInputFieldProps.validator != null
+              ? (value) => customInputFieldProps.validator(value)
+              : null,
+      decoration: InputDecoration(
+        alignLabelWithHint: true,
+        // constraints: BoxConstraints(
+        //   maxHeight: rSize(50),
+        // ),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: rSize(20),
+          vertical: rSize(10),
         ),
-      ),
-      child: TextFormField(
-        inputFormatters: customInputFieldProps.isCurrency
-            ? [_formatter]
-            : customInputFieldProps.inputFormatters ?? [],
-        maxLength: customInputFieldProps.maxLength,
-        controller: customInputFieldProps.controller,
-        obscureText: customInputFieldProps.isPassword &&
-            !customInputFieldProps.isPasswordVisible,
-        cursorColor: Theme.of(context).colorScheme.primary,
-        style: Theme.of(context).textTheme.caption,
-        maxLines: customInputFieldProps.isDescription ? 5 : 1,
-        keyboardType: customInputFieldProps.keyboardType,
-        validator: customInputFieldProps.isConfirmPassword
-            ? (value) => customInputFieldProps.validator(
-                value, customInputFieldProps.passwordToConfirm)
-            : (value) => customInputFieldProps.validator(context, value),
-        decoration: InputDecoration(
-          alignLabelWithHint: true,
-          constraints: BoxConstraints(
-            maxHeight: rSize(50),
-          ),
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: rSize(20),
-            vertical: rSize(10),
-          ),
-          filled: true,
-          floatingLabelBehavior: customInputFieldProps.isSearch
-              ? FloatingLabelBehavior.never
-              : FloatingLabelBehavior.auto,
-          fillColor: Theme.of(context).colorScheme.onBackground,
-          errorStyle: TextStyle(
-            fontSize: rSize(18),
-          ),
-          suffixIcon: getSuffixIcon(),
-          prefixIconConstraints: BoxConstraints(
-            maxWidth: rSize(200),
-            minWidth: rSize(40),
-          ),
-          prefixIcon: !customInputFieldProps.isSearch
-              ? customInputFieldProps.prefixIcon
-              : IconTheme(
-                  data: Theme.of(context).primaryIconTheme,
-                  child: const Icon(
-                    Icons.search,
-                  ),
+        filled: true,
+        floatingLabelBehavior: customInputFieldProps.isSearch
+            ? FloatingLabelBehavior.never
+            : FloatingLabelBehavior.auto,
+        fillColor: Theme.of(context).colorScheme.onBackground,
+        errorStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+              color: Theme.of(context).colorScheme.error,
+            ),
+        suffixIcon: getSuffixIcon(),
+        prefixIconConstraints: BoxConstraints(
+          maxWidth: rSize(200),
+          minWidth: rSize(40),
+        ),
+        prefixIcon: !customInputFieldProps.isSearch
+            ? customInputFieldProps.prefixIcon
+            : IconTheme(
+                data: Theme.of(context).primaryIconTheme,
+                child: const Icon(
+                  Icons.search,
                 ),
-          hintText: customInputFieldProps.hintText,
-          isDense: false,
-          labelText: customInputFieldProps.isDescription ||
-                  customInputFieldProps.hintText.isNotEmpty
-              ? null
-              : customInputFieldProps.labelText,
-          hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
-                fontSize: rSize(16),
-                color: Theme.of(context)
-                    .textTheme
-                    .subtitle1!
-                    .color
-                    ?.withOpacity(0.6),
               ),
-          floatingLabelStyle: Theme.of(context).textTheme.bodyText1,
-          labelStyle: Theme.of(context).textTheme.bodyText1,
-          floatingLabelAlignment: FloatingLabelAlignment.start,
-          errorMaxLines: 1,
-          errorBorder: OutlineInputBorder(
+        hintText: customInputFieldProps.hintText,
+        isDense: false,
+        labelText: customInputFieldProps.isDescription ||
+                customInputFieldProps.hintText.isNotEmpty
+            ? null
+            : customInputFieldProps.labelText,
+        hintStyle: Theme.of(context).textTheme.subtitle1?.copyWith(
+              fontSize: rSize(16),
+              color: Theme.of(context)
+                  .textTheme
+                  .subtitle1!
+                  .color
+                  ?.withOpacity(0.6),
+            ),
+        floatingLabelStyle: Theme.of(context).textTheme.bodyText1,
+        labelStyle: Theme.of(context).textTheme.bodyText1,
+        floatingLabelAlignment: FloatingLabelAlignment.start,
+        errorMaxLines: 1,
+        errorBorder: DecoratedInputBorder(
+          child: OutlineInputBorder(
             borderRadius: BorderRadius.circular(rSize(10)),
             borderSide: BorderSide(
-              color: Colors.red,
+              color: Theme.of(context).colorScheme.error,
               width: rSize(1),
             ),
           ),
-          focusedErrorBorder: OutlineInputBorder(
+          shadow: BoxShadow(
+            color: Theme.of(context).shadowColor,
+            offset: const Offset(0, 2),
+            blurRadius: 3,
+            spreadRadius: -3,
+          ),
+        ),
+        focusedErrorBorder: DecoratedInputBorder(
+          child: OutlineInputBorder(
             borderRadius: BorderRadius.circular(rSize(10)),
             borderSide: BorderSide(
-              color: Colors.red,
+              color: Theme.of(context).colorScheme.error,
               width: rSize(1),
             ),
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              rSize(10),
-            ),
+          shadow: BoxShadow(
+            color: Theme.of(context).shadowColor,
+            offset: const Offset(0, 2),
+            blurRadius: 3,
+            spreadRadius: -3,
+          ),
+        ),
+        focusedBorder: DecoratedInputBorder(
+          child: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(rSize(10)),
             borderSide: BorderSide(
               color: Theme.of(context).colorScheme.primary,
               width: rSize(1),
             ),
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(
-              rSize(10),
-            ),
+          shadow: BoxShadow(
+            color: Theme.of(context).shadowColor,
+            offset: const Offset(0, 2),
+            blurRadius: 3,
+            spreadRadius: -3,
+          ),
+        ),
+        enabledBorder: DecoratedInputBorder(
+          child: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(rSize(10)),
             borderSide: BorderSide(
               color: Colors.transparent,
               width: rSize(1),
             ),
+          ),
+          shadow: BoxShadow(
+            color: Theme.of(context).shadowColor,
+            offset: const Offset(0, 2),
+            blurRadius: 3,
+            spreadRadius: -3,
           ),
         ),
       ),
