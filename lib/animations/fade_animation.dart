@@ -20,7 +20,7 @@ class FadeAnimation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _getPositionStart() {
+    getPositionStart() {
       switch (positionType) {
         case PositionType.left:
           return Offset(rSize(30), 0);
@@ -42,7 +42,7 @@ class FadeAnimation extends StatelessWidget {
       )
       ..add(
         AnimationType.translateX,
-        Tween(begin: _getPositionStart(), end: const Offset(1, 1)),
+        Tween(begin: getPositionStart(), end: const Offset(1, 1)),
         const Duration(milliseconds: 500),
       );
 

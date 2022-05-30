@@ -12,7 +12,7 @@ import 'package:appointments/screens/home/checkout/discount_selection.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/personal_settings/language_settings.dart';
-import 'package:appointments/screens/home/personal_settings/notifiacation_settings.dart';
+import 'package:appointments/screens/home/personal_settings/notification_settings.dart';
 import 'package:appointments/screens/home/personal_settings/personal_settings.dart';
 import 'package:appointments/screens/home/profile/business_address.dart';
 import 'package:appointments/screens/home/profile/business_cover_photo.dart';
@@ -24,7 +24,7 @@ import 'package:appointments/screens/home/profile/business_workplace_photos.dart
 import 'package:appointments/screens/home/profile/profile_Images.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/screens/home/schedule_management/individual_schedule.dart';
-import 'package:appointments/screens/home/schedule_management/schedule_managment.dart';
+import 'package:appointments/screens/home/schedule_management/schedule_management.dart';
 import 'package:appointments/screens/home/schedule_management/unavailability.dart';
 import 'package:appointments/screens/home/schedule_management/working_days.dart';
 import 'package:appointments/screens/home/services/new_service.dart';
@@ -146,7 +146,7 @@ class StudiosApp extends StatelessWidget {
                                 const DiscountSelection(),
                             '/amountSelection': (context) =>
                                 const AmountSelection(),
-                            '/services': (context) => Services(),
+                            '/services': (context) => const Services(),
                             '/newService': (context) => const NewService(),
                             '/serviceDetails': (context) =>
                                 const ServiceDetails(),

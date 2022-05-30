@@ -30,14 +30,14 @@ String getLangName(String code) {
 const String prefSelectedLanguageCode = "SelectedLanguageCode";
 
 Future<Locale> saveLocale(String languageCode) async {
-  SharedPreferences _prefs = await SharedPreferences.getInstance();
-  await _prefs.setString(prefSelectedLanguageCode, languageCode);
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  await pref.setString(prefSelectedLanguageCode, languageCode);
   return _locale(languageCode);
 }
 
 Future<Locale> loadLocale() async {
-  SharedPreferences _prefs = await SharedPreferences.getInstance();
-  String languageCode = _prefs.getString(prefSelectedLanguageCode) ?? en;
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  String languageCode = pref.getString(prefSelectedLanguageCode) ?? en;
   return _locale(languageCode);
 }
 

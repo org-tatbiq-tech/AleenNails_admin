@@ -1,4 +1,3 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
@@ -83,7 +82,7 @@ class _NewServiceState extends State<NewService> {
       color5,
     ];
 
-    List<Widget> _mediaCards() {
+    List<Widget> mediaCards() {
       List<Widget> widgetList = mediaList.map((item) {
         return EaseInAnimation(
           beginAnimation: 0.98,
@@ -168,7 +167,7 @@ class _NewServiceState extends State<NewService> {
       return widgetList;
     }
 
-    Widget _colorCard(index) {
+    Widget colorCard(index) {
       return EaseInAnimation(
         onTap: () => {
           _scrollToIndex(index, colors),
@@ -212,7 +211,7 @@ class _NewServiceState extends State<NewService> {
       );
     }
 
-    Widget _renderServiceColors() {
+    Widget renderServiceColors() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +241,7 @@ class _NewServiceState extends State<NewService> {
               ),
               scrollDirection: Axis.horizontal,
               itemCount: colors.length,
-              itemBuilder: (context, index) => _colorCard(index),
+              itemBuilder: (context, index) => colorCard(index),
             ),
           ),
         ],
@@ -337,7 +336,7 @@ class _NewServiceState extends State<NewService> {
       );
     }
 
-    Widget _renderMessageToClient() {
+    Widget renderMessageToClient() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -431,14 +430,14 @@ class _NewServiceState extends State<NewService> {
             ),
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: _mediaCards(),
+              children: mediaCards(),
             ),
           ),
         ],
       );
     }
 
-    Widget _renderDescription() {
+    Widget renderDescription() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -473,7 +472,7 @@ class _NewServiceState extends State<NewService> {
       );
     }
 
-    Widget _renderPriceDuration() {
+    Widget renderPriceDuration() {
       return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -553,7 +552,7 @@ class _NewServiceState extends State<NewService> {
           ]);
     }
 
-    Widget _renderServiceName() {
+    Widget renderServiceName() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -614,19 +613,19 @@ class _NewServiceState extends State<NewService> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              _renderServiceName(),
+              renderServiceName(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderPriceDuration(),
+              renderPriceDuration(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderServiceColors(),
+              renderServiceColors(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderDescription(),
+              renderDescription(),
               SizedBox(
                 height: rSize(20),
               ),
@@ -634,7 +633,7 @@ class _NewServiceState extends State<NewService> {
               SizedBox(
                 height: rSize(30),
               ),
-              _renderMessageToClient(),
+              renderMessageToClient(),
               SizedBox(
                 height: rSize(20),
               ),
