@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:appointments/utils/data_types.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -55,4 +54,19 @@ _permissionStatus() async {
   if (status.isPermanentlyDenied) return openAppSettings();
   status = await Permission.camera.request();
   if (status.isDenied) return;
+}
+
+class CustomImagePickerProps {
+  bool isGallery;
+  bool cropImage;
+  CropStyle cropStyle;
+  Function saveImage;
+  String? cropperTitle;
+  CustomImagePickerProps({
+    this.isGallery = true,
+    this.cropImage = true,
+    this.cropStyle = CropStyle.rectangle,
+    required this.saveImage,
+    this.cropperTitle,
+  });
 }

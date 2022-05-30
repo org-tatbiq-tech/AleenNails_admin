@@ -1,8 +1,8 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/decorated_input_border.dart';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomInputField extends StatelessWidget {
   final CustomInputFieldProps customInputFieldProps;
@@ -226,4 +226,45 @@ class CustomInputField extends StatelessWidget {
       ),
     );
   }
+}
+
+class CustomInputFieldProps {
+  final String labelText;
+  final String hintText;
+  final String errorText;
+  final TextEditingController controller;
+  List<TextInputFormatter>? inputFormatters;
+  final bool isDescription;
+  final int? maxLength;
+  final bool isPassword;
+  final bool isConfirmPassword;
+  final bool isPasswordVisible;
+  final bool isSearch;
+  final bool isCurrency;
+  final dynamic togglePassword;
+  final String passwordToConfirm;
+  final dynamic validator;
+  final IconData icon;
+  final Widget? prefixIcon;
+  final dynamic keyboardType;
+  CustomInputFieldProps({
+    required this.controller,
+    this.labelText = '',
+    this.hintText = '',
+    this.errorText = '',
+    this.prefixIcon,
+    this.maxLength,
+    this.inputFormatters,
+    this.icon = Icons.person,
+    this.keyboardType = TextInputType.text,
+    this.isPassword = false,
+    this.isSearch = false,
+    this.isConfirmPassword = false,
+    this.isPasswordVisible = false,
+    this.isCurrency = false,
+    this.isDescription = false,
+    this.passwordToConfirm = '',
+    this.togglePassword,
+    this.validator,
+  });
 }

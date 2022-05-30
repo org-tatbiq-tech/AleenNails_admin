@@ -54,3 +54,24 @@ class CustomIcon extends StatelessWidget {
     );
   }
 }
+
+class CustomIconProps {
+  final Widget? icon;
+  final Color? backgroundColor;
+  final double containerSize;
+  final String path;
+  final Color? iconColor;
+  final Color? borderColor;
+  final bool withPadding;
+  final double? contentPadding;
+  CustomIconProps({
+    required this.icon,
+    this.backgroundColor,
+    this.containerSize = 40,
+    this.path = '',
+    this.iconColor,
+    this.borderColor,
+    this.withPadding = false,
+    this.contentPadding,
+  });
+}

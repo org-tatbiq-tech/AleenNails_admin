@@ -72,3 +72,28 @@ class CustomListTile extends StatelessWidget {
     );
   }
 }
+
+class CustomListTileProps {
+  final Widget? trailing;
+  final Widget? leading;
+  final Widget? title;
+  final Widget? subTitle;
+  final EdgeInsets? contentPadding;
+  final bool enabled;
+  final Function? onTap;
+  final double? minLeadingWidth;
+  final double? height;
+  final double marginBottom;
+  CustomListTileProps({
+    this.trailing,
+    this.leading,
+    this.title,
+    this.subTitle,
+    this.contentPadding,
+    this.enabled = true,
+    this.onTap,
+    this.minLeadingWidth,
+    this.height,
+    this.marginBottom = 0,
+  });
+}

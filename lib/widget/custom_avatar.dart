@@ -1,4 +1,3 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
@@ -102,4 +101,26 @@ class CustomAvatar extends StatelessWidget {
       ),
     );
   }
+}
+
+class CustomAvatarProps {
+  final double radius;
+  final bool enable;
+  final bool circleShape;
+  final bool rectangleShape;
+  final bool isMale;
+  final bool editable;
+  final ImageProvider? backgroundImage;
+  final Function? onTap;
+
+  CustomAvatarProps({
+    this.radius = 50,
+    this.enable = false,
+    this.isMale = false,
+    this.editable = false,
+    this.circleShape = false,
+    this.onTap,
+    this.rectangleShape = false,
+    this.backgroundImage,
+  });
 }

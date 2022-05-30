@@ -1,4 +1,3 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
@@ -87,4 +86,29 @@ class CustomButton extends StatelessWidget {
       ),
     );
   }
+}
+
+class CustomButtonProps {
+  final String text;
+  final VoidCallback onTap;
+  final bool isPrimary;
+  final bool isDisabled;
+  final bool capitalizeText;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final Color? textColor;
+  final bool isSecondary;
+  final double beginAnimation;
+  CustomButtonProps({
+    this.text = '',
+    this.isPrimary = true,
+    this.isSecondary = false,
+    this.capitalizeText = true,
+    this.isDisabled = false,
+    this.backgroundColor,
+    this.borderColor,
+    this.textColor,
+    this.beginAnimation = 0.99,
+    required this.onTap,
+  });
 }

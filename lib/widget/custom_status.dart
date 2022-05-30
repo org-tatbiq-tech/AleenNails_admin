@@ -52,3 +52,19 @@ class CustomStatus extends StatelessWidget {
     );
   }
 }
+
+class CustomStatusProps {
+  Status status;
+  double fontSize;
+  CustomStatusProps({
+    required this.status,
+    this.fontSize = 16,
+  });
+}
+
+enum Status {
+  confirmed,
+  declined,
+  cancelled,
+  waiting,
+}

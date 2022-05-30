@@ -1,4 +1,3 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
@@ -6,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class CustomSlidable extends StatelessWidget {
-  CustomSlidableProps customSlidableProps;
-  CustomSlidable({
+  final CustomSlidableProps customSlidableProps;
+  const CustomSlidable({
     Key? key,
     required this.customSlidableProps,
   }) : super(key: key);
@@ -60,4 +59,17 @@ class CustomSlidable extends StatelessWidget {
       child: customSlidableProps.child,
     );
   }
+}
+
+class CustomSlidableProps {
+  final String groupTag;
+  final Widget child;
+  final Function? deleteAction;
+  ValueKey key;
+  CustomSlidableProps({
+    this.groupTag = 'groupTag',
+    required this.child,
+    this.deleteAction,
+    this.key = const ValueKey(0),
+  });
 }

@@ -9,6 +9,7 @@ import 'package:appointments/utils/url_launch.dart';
 import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom_status.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
@@ -103,15 +104,16 @@ class _ClientDetailsState extends State<ClientDetails> {
               itemCount: min(appointments.length, 3),
               itemBuilder: (context, index) {
                 return FadeAnimation(
-                    positionType: PositionType.top,
-                    delay: 1 + index.toDouble() * 0.3,
-                    child: AppointmentCard(
-                      appointmentCardProps: AppointmentCardProps(
-                        enabled: false,
-                        withNavigation: false,
-                        appointmentDetails: appointments[index],
-                      ),
-                    ),);
+                  positionType: PositionType.top,
+                  delay: 1 + index.toDouble() * 0.3,
+                  child: AppointmentCard(
+                    appointmentCardProps: AppointmentCardProps(
+                      enabled: false,
+                      withNavigation: false,
+                      appointmentDetails: appointments[index],
+                    ),
+                  ),
+                );
               },
             ),
           ],

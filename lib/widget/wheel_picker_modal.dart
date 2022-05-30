@@ -55,3 +55,21 @@ showWheelPickerModal({
     ),
   );
 }
+
+class WheelPickerModalProps {
+  BuildContext context;
+  String title;
+  Function? primaryAction;
+  bool looping;
+  List<dynamic> pickerData;
+  int selected;
+
+  WheelPickerModalProps({
+    required this.context,
+    this.title = '',
+    required this.pickerData,
+    this.looping = false,
+    this.primaryAction,
+    this.selected = 0,
+  });
+}

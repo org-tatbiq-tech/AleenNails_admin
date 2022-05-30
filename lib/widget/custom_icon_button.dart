@@ -76,3 +76,18 @@ class CustomIconButton extends StatelessWidget {
     );
   }
 }
+
+class CustomIconButtonProps {
+  final String title;
+  final String iconPath;
+  final double animationDelay;
+  final PositionType positionType;
+  final VoidCallback onTap;
+  CustomIconButtonProps({
+    this.title = '',
+    this.iconPath = 'assets/icons/calendar_plus.png',
+    this.animationDelay = 0,
+    this.positionType = PositionType.right,
+    required this.onTap,
+  });
+}

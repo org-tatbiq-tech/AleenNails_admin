@@ -7,8 +7,8 @@ import 'package:appointments/widget/custom_status.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentCard extends StatelessWidget {
-  AppointmentCardProps appointmentCardProps;
-  AppointmentCard({
+  final AppointmentCardProps appointmentCardProps;
+  const AppointmentCard({
     Key? key,
     required this.appointmentCardProps,
   }) : super(key: key);
@@ -136,4 +136,20 @@ class AppointmentCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class AppointmentCardProps {
+  final Appointment appointmentDetails;
+  final bool withNavigation;
+  final bool enabled;
+  final Function? onTap;
+  double height;
+
+  AppointmentCardProps({
+    required this.appointmentDetails,
+    this.withNavigation = true,
+    this.enabled = true,
+    this.onTap,
+    this.height = 100,
+  });
 }

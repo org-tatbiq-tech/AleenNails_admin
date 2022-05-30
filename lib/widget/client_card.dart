@@ -72,3 +72,21 @@ class ClientCard extends StatelessWidget {
     );
   }
 }
+
+class ClientCardProps {
+  final Client contactDetails;
+  final bool withNavigation;
+  final bool withDelete;
+  final bool enabled;
+  final Function? onTap;
+  final Function? onCloseTap;
+
+  ClientCardProps({
+    required this.contactDetails,
+    this.withNavigation = true,
+    this.withDelete = false,
+    this.enabled = true,
+    this.onTap,
+    this.onCloseTap,
+  });
+}

@@ -126,3 +126,30 @@ class ExpandableCalendar extends StatelessWidget {
     );
   }
 }
+
+class ExpandableCalendarProps {
+  final DateTime focusedDay;
+  final DateTime? selectedDay;
+  final DateTime? firstDay;
+  final DateTime? lastDay;
+  final CalendarFormat calendarFormat;
+  final Map<CalendarFormat, String>? availableCalendarFormats;
+  List<CalendarEvent> Function(DateTime)? eventLoader;
+  void Function(DateTime, DateTime)? onDaySelected;
+  void Function(CalendarFormat)? onFormatChanged;
+  void Function(DateTime)? onPageChanged;
+  final bool formatButtonVisible;
+  ExpandableCalendarProps({
+    required this.focusedDay,
+    this.selectedDay,
+    this.firstDay,
+    this.lastDay,
+    required this.calendarFormat,
+    this.eventLoader,
+    this.onDaySelected,
+    this.onFormatChanged,
+    this.onPageChanged,
+    this.availableCalendarFormats,
+    this.formatButtonVisible = true,
+  });
+}

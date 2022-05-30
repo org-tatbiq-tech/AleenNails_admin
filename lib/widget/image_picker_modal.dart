@@ -5,6 +5,7 @@ import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_image_picker.dart';
 import 'package:appointments/widget/custom_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 showImagePickerModal({
   required ImagePickerModalProps imagePickerModalProps,
@@ -95,4 +96,21 @@ showImagePickerModal({
       ),
     ),
   );
+}
+
+class ImagePickerModalProps {
+  BuildContext context;
+  String title;
+  CropStyle cropStyle;
+  bool cropImage;
+  Function saveImage;
+  String? cropperTitle;
+  ImagePickerModalProps({
+    required this.context,
+    this.title = '',
+    this.cropStyle = CropStyle.rectangle,
+    this.cropImage = true,
+    required this.saveImage,
+    this.cropperTitle,
+  });
 }

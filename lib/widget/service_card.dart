@@ -111,3 +111,23 @@ class ServiceCard extends StatelessWidget {
     );
   }
 }
+
+class ServiceCardProps {
+  final Service serviceDetails;
+  final bool withNavigation;
+  final bool enabled;
+  final String subTitle;
+  final String title;
+  final Function? onTap;
+  final int? dragIndex;
+
+  ServiceCardProps({
+    required this.serviceDetails,
+    this.withNavigation = true,
+    this.enabled = true,
+    this.subTitle = '',
+    this.title = '',
+    this.onTap,
+    this.dragIndex,
+  });
+}

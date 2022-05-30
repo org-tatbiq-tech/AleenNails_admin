@@ -124,3 +124,36 @@ showPickerTimeRangeModal({
     ),
   );
 }
+
+class PickerTimeRangeModalProps {
+  BuildContext context;
+  DateTime? startTimeValue;
+  String? minuteSuffix;
+  String? hourSuffix;
+  DateTime? endTimeValue;
+  String startTimeLabel;
+  String endTimeLabel;
+  String title;
+  DateTime? endTimeMinValue;
+  PickerTimeRangType pickerTimeRangType;
+  Function? primaryAction;
+
+  PickerTimeRangeModalProps({
+    required this.context,
+    this.startTimeValue,
+    this.endTimeValue,
+    this.title = '',
+    this.minuteSuffix,
+    this.hourSuffix,
+    this.startTimeLabel = '',
+    this.endTimeLabel = '',
+    this.pickerTimeRangType = PickerTimeRangType.single,
+    this.endTimeMinValue,
+    this.primaryAction,
+  });
+}
+
+enum PickerTimeRangType {
+  single,
+  range,
+}

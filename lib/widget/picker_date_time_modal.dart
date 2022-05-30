@@ -54,3 +54,31 @@ showPickerDateTimeModal({
     ),
   );
 }
+
+class PickerDateTimeModalProps {
+  BuildContext context;
+  String title;
+  double? height;
+  bool use24hFormat;
+  Function onDateTimeChanged;
+  Function? primaryAction;
+  DateTime? initialDateTime;
+  DateTime? minimumDate;
+  DateTime? maximumDate;
+  int minuteInterval;
+  CupertinoDatePickerMode mode;
+
+  PickerDateTimeModalProps({
+    required this.context,
+    this.title = '',
+    this.height,
+    this.use24hFormat = true,
+    required this.onDateTimeChanged,
+    this.primaryAction,
+    this.initialDateTime,
+    this.minimumDate,
+    this.maximumDate,
+    this.minuteInterval = 1,
+    this.mode = CupertinoDatePickerMode.dateAndTime,
+  });
+}

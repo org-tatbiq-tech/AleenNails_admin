@@ -156,3 +156,35 @@ void showBottomModal({
     ),
   );
 }
+
+class BottomModalProps {
+  BuildContext context;
+  Widget child;
+  bool isDismissible;
+  bool deleteCancelModal;
+  bool enableDrag;
+  bool showDragPen;
+  ModalFooter footerButton;
+  String title;
+  String primaryButtonText;
+  String secondaryButtonText;
+  bool centerTitle;
+  Duration duration;
+  Function? primaryAction;
+
+  BottomModalProps({
+    required this.context,
+    required this.child,
+    this.isDismissible = true,
+    this.enableDrag = false,
+    this.showDragPen = false,
+    this.deleteCancelModal = false,
+    this.title = '',
+    this.primaryButtonText = 'primary',
+    this.secondaryButtonText = 'secondary',
+    this.centerTitle = false,
+    this.duration = const Duration(milliseconds: 350),
+    this.footerButton = ModalFooter.none,
+    this.primaryAction,
+  });
+}

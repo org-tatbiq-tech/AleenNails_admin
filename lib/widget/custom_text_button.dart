@@ -1,7 +1,7 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomTextButton extends StatelessWidget {
   final CustomTextButtonProps customTextButtonProps;
@@ -34,4 +34,27 @@ class CustomTextButton extends StatelessWidget {
       ),
     );
   }
+}
+
+class CustomTextButtonProps {
+  final String text;
+  final Color? textColor;
+  final double? fontSize;
+  final Icon icon;
+  final bool withIcon;
+  final VoidCallback onTap;
+  final TextStyle? textStyle;
+  CustomTextButtonProps({
+    this.text = '',
+    this.textColor,
+    this.fontSize,
+    this.withIcon = false,
+    this.textStyle,
+    this.icon = const Icon(
+      FontAwesomeIcons.plus,
+      color: Colors.green,
+      size: 3,
+    ),
+    required this.onTap,
+  });
 }
