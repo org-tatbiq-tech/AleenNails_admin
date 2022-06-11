@@ -1,4 +1,4 @@
-import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/data_types/components.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
@@ -17,7 +17,7 @@ class AppointmentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     appointmentServices() {
       List<Widget> widgetList = appointmentCardProps.appointmentDetails.services
-          .map((Service service) {
+          .map((AppointmentService service) {
         return Container(
           margin: EdgeInsets.symmetric(
             vertical: rSize(5),
@@ -26,7 +26,7 @@ class AppointmentCard extends StatelessWidget {
           child: Row(
             children: [
               VerticalDivider(
-                color: service.color ?? Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.primary,
                 width: rSize(2),
                 thickness: rSize(2),
               ),
@@ -77,7 +77,7 @@ class AppointmentCard extends StatelessWidget {
               children: [
                 Text(
                   getStringPrice(
-                    appointmentCardProps.appointmentDetails.totalPrice,
+                    appointmentCardProps.appointmentDetails.totalCost,
                   ),
                   style: Theme.of(context).textTheme.headline1?.copyWith(
                         fontSize: rSize(16),

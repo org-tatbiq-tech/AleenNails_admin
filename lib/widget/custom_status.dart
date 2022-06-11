@@ -1,4 +1,4 @@
-import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
 
@@ -60,11 +60,4 @@ class CustomStatusProps {
     required this.status,
     this.fontSize = 16,
   });
-}
-
-enum Status {
-  confirmed,
-  declined,
-  cancelled,
-  waiting,
 }

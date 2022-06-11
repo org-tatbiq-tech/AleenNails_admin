@@ -1,4 +1,4 @@
-import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/data_types/components.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_icon.dart';
@@ -52,7 +52,7 @@ class ServiceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  getStringPrice(serviceCardProps.serviceDetails.price!),
+                  getStringPrice(serviceCardProps.serviceDetails.cost!),
                   style: Theme.of(context).textTheme.headline1?.copyWith(
                         fontSize: rSize(16),
                       ),
@@ -100,8 +100,7 @@ class ServiceCard extends StatelessWidget {
                   )
                 : const SizedBox(),
             VerticalDivider(
-              color: serviceCardProps.serviceDetails.color ??
-                  Theme.of(context).colorScheme.primary,
+              color: Theme.of(context).colorScheme.primary,
               width: rSize(3),
               thickness: rSize(3),
             ),
@@ -113,7 +112,7 @@ class ServiceCard extends StatelessWidget {
 }
 
 class ServiceCardProps {
-  final Service serviceDetails;
+  final AppointmentService serviceDetails;
   final bool withNavigation;
   final bool enabled;
   final String subTitle;

@@ -1,5 +1,4 @@
 import 'package:appointments/providers/app_data.dart';
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/app_bar_painter.dart';
 import 'package:appointments/widget/custom_icon.dart';

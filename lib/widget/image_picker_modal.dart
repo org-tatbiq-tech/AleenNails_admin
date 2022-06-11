@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:appointments/utils/data_types.dart';
+
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_image_picker.dart';

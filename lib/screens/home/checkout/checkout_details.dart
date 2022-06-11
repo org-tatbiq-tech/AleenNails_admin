@@ -1,21 +1,22 @@
 import 'package:appointments/animations/fade_animation.dart';
+import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/close_slidable_on_tab.dart';
 import 'package:appointments/widget/client_card.dart';
+import 'package:appointments/widget/close_slidable_on_tab.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/custom_slide_able.dart';
 import 'package:appointments/widget/custom_status.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
-import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/over_popup.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -31,16 +32,16 @@ class CheckoutDetails extends StatefulWidget {
 class _CheckoutDetailsState extends State<CheckoutDetails> {
   List<Widget> chargeWidgetList = [];
   GlobalKey addItemButtonKey = GlobalKey();
-  Service service = Service(
-    id: '12304042032',
-    name: 'Service Name',
-    duration: '2h',
-    startTime: kToday,
-    endTime: DateTime(kToday.year, kToday.month, kToday.day, kToday.hour + 1),
-    createdByBusiness: true,
-    price: 25,
+  AppointmentService service = AppointmentService(
+    'id',
+    'service1',
+    DateTime.now(),
+    DateTime.now(),
+    const Duration(hours: 1),
+    100.00,
+    Colors.red.toString(),
   );
-  List<Service> services = [];
+  List<AppointmentService> services = [];
   List<double> discounts = [
     13,
     14,
@@ -115,7 +116,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
   }
 
   List<Widget> _addServicesList() {
-    List<Widget> widgetList = services.map((Service service) {
+    List<Widget> widgetList = services.map((AppointmentService service) {
       return FadeAnimation(
         positionType: PositionType.top,
         delay: 0.5,
@@ -201,7 +202,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
         }));
   }
 
-  _addService(Service service) {
+  _addService(AppointmentService service) {
     Widget serviceWidget = FadeAnimation(
       positionType: PositionType.top,
       delay: 0,
@@ -211,7 +212,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
           withNavigation: false,
           enabled: false,
           title: service.name ?? '',
-          subTitle: service.duration ?? '',
+          subTitle: service.duration.toString() ?? '',
         ),
       ),
     );
@@ -280,7 +281,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
 
   @override
   Widget build(BuildContext context) {
-    _renderAmount(Service service) {
+    _renderAmount() {
       return FadeAnimation(
         positionType: PositionType.top,
         delay: 1.3,
@@ -360,7 +361,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
       );
     }
 
-    _renderFooter(Service service) {
+    _renderFooter() {
       return FadeAnimation(
         positionType: PositionType.top,
         delay: 1,
@@ -376,7 +377,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
     }
 
     appointmentServices() {
-      List<Widget> widgetList = services.map((Service service) {
+      List<Widget> widgetList = services.map((AppointmentService service) {
         return Container(
           margin: EdgeInsets.symmetric(
             vertical: rSize(5),
@@ -385,7 +386,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
           child: Row(
             children: [
               VerticalDivider(
-                color: service.color ?? Theme.of(context).colorScheme.primary,
+                color: Theme.of(context).colorScheme.primary,
                 width: rSize(2),
                 thickness: rSize(2),
               ),
@@ -393,7 +394,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                 width: rSize(10),
               ),
               Text(
-                service.name!,
+                service.name,
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ],
@@ -610,11 +611,11 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                       SizedBox(
                         height: rSize(20),
                       ),
-                      _renderAmount(service),
+                      _renderAmount(),
                       SizedBox(
                         height: rSize(10),
                       ),
-                      _renderFooter(service),
+                      _renderFooter(),
                     ],
                   ),
                 ),

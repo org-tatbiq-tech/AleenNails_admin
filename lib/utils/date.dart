@@ -1,7 +1,9 @@
 import 'dart:collection';
+
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'data_types.dart';
+
+import '../data_types/macros.dart';
 
 /// Using a [LinkedHashMap] is highly recommended if you decide to use a map.
 final kEvents = LinkedHashMap<DateTime, List<CalendarEvent>>(

@@ -1,18 +1,21 @@
 import 'package:appointments/animations/fade_animation.dart';
-import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_modal.dart';
 import 'package:appointments/widget/custom_status.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/read_more_text.dart';
-import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppointmentDetails extends StatefulWidget {
   const AppointmentDetails({Key? key}) : super(key: key);
@@ -29,20 +32,6 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
 
   @override
   Widget build(BuildContext context) {
-    Service service = Service(
-      id: '12304042032',
-      name: 'Service Name',
-      duration: '2h',
-      startTime: kToday,
-      endTime: DateTime(kToday.year, kToday.month, kToday.day, kToday.hour + 1),
-      createdByBusiness: true,
-      price: 25,
-    );
-    List<Service> services = [
-      service,
-      service,
-    ];
-
     cancelAppointment() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
@@ -88,7 +77,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    renderAmount(Service service) {
+    renderAmount(Appointment appointment) {
       return FadeAnimation(
         positionType: PositionType.top,
         delay: 1.3,
@@ -132,7 +121,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    _renderFooter(Service service) {
+    _renderFooter(Appointment appointment) {
       return FadeAnimation(
           positionType: PositionType.top,
           delay: 1,
@@ -189,14 +178,14 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
           ));
     }
 
-    Widget renderAppointmentID(Service service) {
+    Widget renderAppointmentID(Appointment appointment) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            'ID: ${service.id!}',
+            'ID: ${appointment.id}',
             style: Theme.of(context).textTheme.bodyText1,
           ),
           Padding(
@@ -210,17 +199,16 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
             ),
           ),
           Text(
-            service.createdByBusiness
-                ? 'Created by Business'
-                : 'Created by Client',
+            appointment.creator,
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],
       );
     }
 
-    _renderServices() {
-      String servicesLength = services.length.toString();
+    _renderServices(Appointment appointment) {
+      String servicesLength = appointment.services.length.toString();
+      var services = appointment.services;
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -425,72 +413,74 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
         top: false,
         left: false,
         right: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            FadeAnimation(
-              positionType: PositionType.bottom,
-              delay: 0.3,
-              child: CustomStatus(
-                customStatusProps: CustomStatusProps(status: Status.waiting),
+        child: Consumer<AppData>(
+          builder: (context, appData, _) => Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              FadeAnimation(
+                positionType: PositionType.bottom,
+                delay: 0.3,
+                child: CustomStatus(
+                  customStatusProps: CustomStatusProps(status: Status.waiting),
+                ),
               ),
-            ),
-            SizedBox(
-              height: rSize(10),
-            ),
-            FadeAnimation(
-              positionType: PositionType.bottom,
-              delay: 0.3,
-              child: renderAppointmentID(service),
-            ),
-            SizedBox(
-              height: rSize(20),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: rSize(20),
+              SizedBox(
+                height: rSize(10),
               ),
-              child: _renderHeader(),
-            ),
-            Expanded(
-              child: Padding(
+              FadeAnimation(
+                positionType: PositionType.bottom,
+                delay: 0.3,
+                child: renderAppointmentID(appData.selectedAppointment),
+              ),
+              SizedBox(
+                height: rSize(20),
+              ),
+              Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: rSize(30),
+                  horizontal: rSize(20),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: rSize(30),
-                    ),
-                    FadeAnimation(
-                      positionType: PositionType.right,
-                      delay: 0.5,
-                      child: _renderNotes(),
-                    ),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    Expanded(
-                      child: _renderServices(),
-                    ),
-                    SizedBox(
-                      height: rSize(20),
-                    ),
-                    renderAmount(service),
-                    SizedBox(
-                      height: rSize(10),
-                    ),
-                    _renderFooter(service),
-                  ],
+                child: _renderHeader(),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(30),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: rSize(30),
+                      ),
+                      FadeAnimation(
+                        positionType: PositionType.right,
+                        delay: 0.5,
+                        child: _renderNotes(),
+                      ),
+                      SizedBox(
+                        height: rSize(40),
+                      ),
+                      Expanded(
+                        child: _renderServices(appData.selectedAppointment),
+                      ),
+                      SizedBox(
+                        height: rSize(20),
+                      ),
+                      renderAmount(appData.selectedAppointment),
+                      SizedBox(
+                        height: rSize(10),
+                      ),
+                      _renderFooter(appData.selectedAppointment),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
