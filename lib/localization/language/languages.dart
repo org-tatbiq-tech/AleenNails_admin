@@ -113,7 +113,13 @@ abstract class Languages {
 
   String get validPhone;
 
-  String get emptyContact;
+  String get emptyUser;
+
+  String get emptyPassword;
+
+  String get emptyEmail;
+
+  String get passwordMismatch;
 
   String get emptyAddress;
 

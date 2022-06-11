@@ -161,7 +161,16 @@ class LanguageAr extends Languages {
   String get validPhone => 'الرجاء إدخال رقم الهاتف بشكل صحيح!';
 
   @override
-  String get emptyContact => 'لا يمكن أن يكون اسم جهة الاتصال فارغًا!';
+  String get emptyUser => 'لا يمكن أن يكون اسم جهة الاتصال فارغًا!';
+
+  @override
+  String get emptyEmail => 'Email can not be empty';
+
+  @override
+  String get emptyPassword => 'Password can not be empty';
+
+  @override
+  String get passwordMismatch => 'Passwords mismatch';
 
   @override
   String get emptyAddress => 'لا يمكن أن يكون العنوان فارغًا!';

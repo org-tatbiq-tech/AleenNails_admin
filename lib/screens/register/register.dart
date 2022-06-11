@@ -1,33 +1,36 @@
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/providers/auth_state.dart';
+import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/utils/secure_storage.dart';
-import 'package:appointments/utils/validators.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_container.dart';
 import 'package:appointments/widget/custom_input_field.dart';
-import 'package:appointments/widget/custom_loading.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+import '../../providers/auth_state.dart';
+import '../../widget/custom_loading.dart';
+
+class RegisterMainScreen extends StatefulWidget {
+  const RegisterMainScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterMainScreen> createState() => _RegisterMainScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _RegisterMainScreenState extends State<RegisterMainScreen>
     with SingleTickerProviderStateMixin {
-  final TextEditingController _userEmailController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _repeatPasswordController =
+      TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _rememberMeValue = false;
 
   bool _isPasswordVisible = false;
+  bool _isRepeatPasswordVisible = false;
   late Animation _leftContentAnimation;
   late Animation _rightContentAnimation;
   late AnimationController _controller;
@@ -35,6 +38,12 @@ class _LoginScreenState extends State<LoginScreen>
   void _togglePassword() {
     setState(() {
       _isPasswordVisible = !_isPasswordVisible;
+    });
+  }
+
+  void _toggleRepeatPassword() {
+    setState(() {
+      _isRepeatPasswordVisible = !_isRepeatPasswordVisible;
     });
   }
 
@@ -52,12 +61,10 @@ class _LoginScreenState extends State<LoginScreen>
         CurvedAnimation(
             parent: _controller,
             curve: const Interval(0.3, 1, curve: Curves.linear)));
-    _userEmailController.addListener(() => setState(() {}));
-    _rightContentAnimation = Tween(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-            parent: _controller,
-            curve: const Interval(0.3, 1, curve: Curves.linear)));
+    _userNameController.addListener(() => setState(() {}));
     _passwordController.addListener(() => setState(() {}));
+    _repeatPasswordController.addListener(() => setState(() {}));
+    _emailController.addListener(() => setState(() {}));
     _controller.forward();
     _controller.addListener(() {
       setState(() {});
@@ -68,14 +75,14 @@ class _LoginScreenState extends State<LoginScreen>
   void dispose() {
     super.dispose();
     _controller.dispose();
-    _userEmailController.dispose();
+    _userNameController.dispose();
     _passwordController.dispose();
+    _repeatPasswordController.dispose();
+    _emailController.dispose();
   }
 
   void errorCallback(FirebaseAuthException e) {
     Navigator.pop(context);
-
-    /// TODO: Add flash
     // showErrorFlash(
     //   errorTitle: Languages.of(context)!.error,
     //   errorBody: e.message.toString(),
@@ -83,61 +90,21 @@ class _LoginScreenState extends State<LoginScreen>
     // );
   }
 
-  Future<void> validateAndLogin(BuildContext context) async {
-    /// To remove till next //
-    // Navigator.pushReplacementNamed(context, '/home');
-    // return;
+  void validateAndRegister() async {
     final form = _formKey.currentState;
     final authState = Provider.of<AuthenticationState>(context, listen: false);
     if (form!.validate()) {
       showLoaderDialog(context);
-      final UserCredential? user = await authState.signInWithEmailAndPassword(
-          _userEmailController.text, _passwordController.text, errorCallback);
-      final userData = user?.user;
-      if (userData != null) {
-        if (_rememberMeValue) {
-          UserSecureStorage.setAutoLogin('true');
-        } else {
-          UserSecureStorage.deleteAutoLogin();
-        }
-        Navigator.pushReplacementNamed(context, '/home');
+      final UserCredential? user = await authState.registerAccount(
+        _emailController.text,
+        _userNameController.text,
+        _passwordController.text,
+        errorCallback,
+      );
+      if (user?.user != null) {
+        Navigator.pushNamed(context, '/register/registerMobile');
       }
     }
-  }
-
-  Widget _buildRememberCheckBox() {
-    // TODO: Ahmad to design
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 10,
-          child: Transform.scale(
-            scale: 1,
-            child: Checkbox(
-              materialTapTargetSize: MaterialTapTargetSize.padded,
-              value: _rememberMeValue,
-              onChanged: (newValue) {
-                setState(() {
-                  _rememberMeValue = newValue!;
-                });
-              },
-              checkColor: Theme.of(context).colorScheme.onBackground,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(3)),
-              splashRadius: 0,
-              side: BorderSide(color: Theme.of(context).colorScheme.secondary),
-              activeColor: Theme.of(context).colorScheme.secondary,
-            ),
-          ),
-        ),
-        Text(
-          Languages.of(context)!.labelRememberMe,
-          style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 12),
-        ),
-      ],
-    );
   }
 
   @override
@@ -146,8 +113,8 @@ class _LoginScreenState extends State<LoginScreen>
       body: CustomContainer(
         child: Row(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               width: rSize(_leftContentAnimation.value.toDouble()),
@@ -170,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen>
                   RotatedBox(
                     quarterTurns: -1,
                     child: Text(
-                      Languages.of(context)!.labelLogin,
+                      Languages.of(context)!.labelRegister,
                       style: Theme.of(context).textTheme.headline2?.copyWith(
                           fontSize: rSize(50),
                           letterSpacing: rSize(50),
@@ -190,15 +157,14 @@ class _LoginScreenState extends State<LoginScreen>
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: rSize(20)),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).shadowColor,
-                      offset: const Offset(0, 0),
-                      blurRadius: 5,
-                    ),
-                  ],
-                ),
+                    color: Theme.of(context).colorScheme.background,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).shadowColor,
+                        offset: const Offset(0, 0),
+                        blurRadius: 5,
+                      ),
+                    ]),
                 child: Form(
                   key: _formKey,
                   child: Opacity(
@@ -209,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image(
-                            image: AssetImage('assets/images/logo.png'),
+                            image: const AssetImage('assets/images/logo.png'),
                             width: rSize(250),
                             fit: BoxFit.cover),
                         SizedBox(
@@ -228,16 +194,34 @@ class _LoginScreenState extends State<LoginScreen>
                         ),
                         CustomInputField(
                           customInputFieldProps: CustomInputFieldProps(
-                            controller: _userEmailController,
+                            controller: _userNameController,
                             prefixIcon: IconTheme(
                               data: Theme.of(context).primaryIconTheme,
                               child: Icon(
-                                FontAwesomeIcons.userAlt,
+                                FontAwesomeIcons.user,
                                 size: rSize(20),
                               ),
                             ),
                             labelText: Languages.of(context)!.labelUserName,
-                            validator: validateNotEmpty,
+                            validator: fullNameValidation,
+                          ),
+                        ),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        CustomInputField(
+                          customInputFieldProps: CustomInputFieldProps(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            prefixIcon: IconTheme(
+                              data: Theme.of(context).primaryIconTheme,
+                              child: Icon(
+                                Icons.email,
+                                size: rSize(22),
+                              ),
+                            ),
+                            labelText: Languages.of(context)!.labelEmail,
+                            validator: emailValidation,
                           ),
                         ),
                         SizedBox(
@@ -257,30 +241,66 @@ class _LoginScreenState extends State<LoginScreen>
                                 size: rSize(20),
                               ),
                             ),
-                            validator: validateNotEmpty,
+                            validator: passwordValidation,
                           ),
                         ),
                         SizedBox(
                           height: rSize(20),
                         ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        CustomInputField(
+                          customInputFieldProps: CustomInputFieldProps(
+                            controller: _repeatPasswordController,
+                            isPassword: true,
+                            isPasswordVisible: _isRepeatPasswordVisible,
+                            togglePassword: _toggleRepeatPassword,
+                            passwordToConfirm: _passwordController.text,
+                            isConfirmPassword: true,
+                            labelText: Languages.of(context)!.labelRepeatPass,
+                            prefixIcon: IconTheme(
+                              data: Theme.of(context).primaryIconTheme,
+                              child: Icon(
+                                FontAwesomeIcons.lock,
+                                size: rSize(20),
+                              ),
+                            ),
+                            validator: confirmPasswordValidation,
+                          ),
+                        ),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        Wrap(
+                          spacing: rSize(5),
+                          runSpacing: rSize(5),
+                          alignment: WrapAlignment.start,
+                          runAlignment: WrapAlignment.start,
                           children: [
+                            Text(
+                              Languages.of(context)!
+                                  .labelRegistrationConfirmMsg,
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
                             CustomTextButton(
                               customTextButtonProps: CustomTextButtonProps(
                                 text:
-                                    Languages.of(context)!.labelForgotPassword,
+                                    Languages.of(context)!.labelTermsConditions,
                                 textColor:
                                     Theme.of(context).colorScheme.primary,
-                                fontSize: rSize(16),
-                                onTap: () => {
-                                  Navigator.pushNamed(
-                                      context, '/forgetPassword'),
-                                },
+                                onTap: () => {},
                               ),
-                            )
+                            ),
+                            Text(
+                              '&',
+                              style: Theme.of(context).textTheme.subtitle1,
+                            ),
+                            CustomTextButton(
+                              customTextButtonProps: CustomTextButtonProps(
+                                text: Languages.of(context)!.labelPrivacyPolicy,
+                                textColor:
+                                    Theme.of(context).colorScheme.primary,
+                                onTap: () => {},
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -289,9 +309,9 @@ class _LoginScreenState extends State<LoginScreen>
                         CustomButton(
                           customButtonProps: CustomButtonProps(
                             onTap: () => {
-                              validateAndLogin(context),
+                              validateAndRegister(),
                             },
-                            text: Languages.of(context)!.labelLogin,
+                            text: Languages.of(context)!.labelRegister,
                             isPrimary: true,
                           ),
                         ),
@@ -304,19 +324,18 @@ class _LoginScreenState extends State<LoginScreen>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              Languages.of(context)!.labelNoAccount,
+                              Languages.of(context)!.labelAlreadyHaveAcc,
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             CustomTextButton(
-                              customTextButtonProps: CustomTextButtonProps(
-                                text: Languages.of(context)!.labelRegisterNow,
-                                textColor:
-                                    Theme.of(context).colorScheme.primary,
-                                onTap: () => {
-                                  Navigator.pushNamed(context, '/register'),
-                                },
-                              ),
-                            )
+                                customTextButtonProps: CustomTextButtonProps(
+                              text: Languages.of(context)!.labelLogin,
+                              textColor: Theme.of(context).colorScheme.primary,
+                              onTap: () => {
+                                Navigator.pushReplacementNamed(
+                                    context, '/loginScreen'),
+                              },
+                            ))
                           ],
                         ),
                       ],
@@ -324,7 +343,7 @@ class _LoginScreenState extends State<LoginScreen>
                   ),
                 ),
               ),
-            ),
+            )
           ],
         ),
       ),

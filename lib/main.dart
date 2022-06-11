@@ -11,14 +11,14 @@ import 'package:appointments/screens/home/checkout/checkout_details.dart';
 import 'package:appointments/screens/home/checkout/discount_selection.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
+import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/home/personal_settings/language_settings.dart';
 import 'package:appointments/screens/home/personal_settings/notification_settings.dart';
 import 'package:appointments/screens/home/personal_settings/personal_settings.dart';
 import 'package:appointments/screens/home/profile/business_address.dart';
 import 'package:appointments/screens/home/profile/business_cover_photo.dart';
-import 'package:appointments/screens/home/profile/business_info.dart';
-import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/home/profile/business_details.dart';
+import 'package:appointments/screens/home/profile/business_info.dart';
 import 'package:appointments/screens/home/profile/business_logo.dart';
 import 'package:appointments/screens/home/profile/business_workplace_photos.dart';
 import 'package:appointments/screens/home/profile/profile_Images.dart';
@@ -34,9 +34,9 @@ import 'package:appointments/screens/home/settings/booking_settings.dart';
 import 'package:appointments/screens/landing/landing.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
-import 'package:appointments/screens/register/main.dart';
 import 'package:appointments/screens/register/mobile.dart';
 import 'package:appointments/screens/register/otp.dart';
+import 'package:appointments/screens/register/register.dart';
 import 'package:appointments/utils/secure_storage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -58,13 +58,13 @@ void main() {
         ChangeNotifierProvider<AuthenticationState>(
             create: (_) => AuthenticationState())
       ],
-      child: StudiosApp(),
+      child: AppointmentsApp(),
     ),
   );
 }
 
-class StudiosApp extends StatelessWidget {
-  StudiosApp({Key? key}) : super(key: key);
+class AppointmentsApp extends StatelessWidget {
+  AppointmentsApp({Key? key}) : super(key: key);
 
   void initApp() {}
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp(

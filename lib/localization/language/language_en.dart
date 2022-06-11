@@ -162,7 +162,16 @@ class LanguageEn extends Languages {
   String get validPhone => 'Please enter valid phone number!';
 
   @override
-  String get emptyContact => 'Contact name can not be empty';
+  String get emptyUser => 'Contact name can not be empty';
+
+  @override
+  String get emptyEmail => 'Email can not be empty';
+
+  @override
+  String get emptyPassword => 'Password can not be empty';
+
+  @override
+  String get passwordMismatch => 'Passwords mismatch';
 
   @override
   String get emptyAddress => 'Address can not be empty';

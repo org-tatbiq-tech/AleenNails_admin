@@ -160,7 +160,16 @@ class LanguageHe extends Languages {
   String get validPhone => 'נא להזין מספר טלפון חוקי!';
 
   @override
-  String get emptyContact => 'שם איש הקשר לא יכול להיות ריק!';
+  String get emptyUser => 'שם איש הקשר לא יכול להיות ריק!';
+
+  @override
+  String get emptyEmail => 'Email can not be empty';
+
+  @override
+  String get emptyPassword => 'Password can not be empty';
+
+  @override
+  String get passwordMismatch => 'Passwords mismatch';
 
   @override
   String get emptyAddress => 'הכתובת לא יכולה להיות ריקה!';

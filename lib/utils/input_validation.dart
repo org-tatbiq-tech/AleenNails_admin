@@ -15,7 +15,7 @@ mobileValidation(String mobile) {
     return 'Mobile can not be empty!';
   }
   if (!RegExp("^(?:05)?[0-9]{8}").hasMatch(mobile)) {
-    return 'Please Enter a valid Email.';
+    return 'Please Enter a valid phone number.';
   }
   return null;
 }
