@@ -28,7 +28,7 @@ class CustomButton extends StatelessWidget {
       if (customButtonProps.isPrimary) {
         return customButtonProps.borderColor ??
             customButtonProps.backgroundColor ??
-            Theme.of(context).colorScheme.background;
+            Theme.of(context).colorScheme.primary;
       }
       return customButtonProps.borderColor ??
           Theme.of(context).colorScheme.primary;
@@ -62,13 +62,14 @@ class CustomButton extends StatelessWidget {
                 ? getBorderColor().withOpacity(0.5)
                 : getBorderColor(),
           ),
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Theme.of(context).shadowColor,
-          //     offset: const Offset(0, 2),
-          //     blurRadius: 3.0,
-          //   )
-          // ],
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).shadowColor,
+              offset: const Offset(0, 2),
+              blurRadius: 3,
+              spreadRadius: -3,
+            ),
+          ],
         ),
         child: Padding(
             padding: EdgeInsets.symmetric(

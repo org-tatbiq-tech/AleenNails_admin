@@ -210,9 +210,10 @@ class _LoginScreenState extends State<LoginScreen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image(
-                            image: AssetImage('assets/images/logo.png'),
-                            width: rSize(250),
-                            fit: BoxFit.cover),
+                          image: AssetImage('assets/images/logo.png'),
+                          width: rSize(250),
+                          fit: BoxFit.cover,
+                        ),
                         SizedBox(
                           height: rSize(40),
                         ),

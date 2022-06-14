@@ -17,13 +17,6 @@ class CalendarEvent {
   String toString() => title;
 }
 
-enum ModalFooter {
-  primaryButton,
-  secondaryButton,
-  both,
-  none,
-}
-
 class LiquidSwipeData {
   /// Add documentation here
   /// ...

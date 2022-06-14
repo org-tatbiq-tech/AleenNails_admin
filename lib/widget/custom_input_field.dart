@@ -131,11 +131,12 @@ class CustomInputField extends StatelessWidget {
         fillColor: Theme.of(context).colorScheme.onBackground,
         errorStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
               color: Theme.of(context).colorScheme.error,
+              fontSize: rSize(14),
             ),
         suffixIcon: getSuffixIcon(),
         prefixIconConstraints: BoxConstraints(
           maxWidth: rSize(200),
-          minWidth: rSize(40),
+          minWidth: rSize(50),
         ),
         prefixIcon: !customInputFieldProps.isSearch
             ? customInputFieldProps.prefixIcon
@@ -159,7 +160,9 @@ class CustomInputField extends StatelessWidget {
                   .color
                   ?.withOpacity(0.6),
             ),
-        floatingLabelStyle: Theme.of(context).textTheme.bodyText1,
+        floatingLabelStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
         labelStyle: Theme.of(context).textTheme.bodyText1,
         floatingLabelAlignment: FloatingLabelAlignment.start,
         errorMaxLines: 1,

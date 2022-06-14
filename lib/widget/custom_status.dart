@@ -1,10 +1,9 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomStatus extends StatelessWidget {
-  CustomStatusProps customStatusProps;
-  CustomStatus({
+  final CustomStatusProps customStatusProps;
+  const CustomStatus({
     Key? key,
     required this.customStatusProps,
   }) : super(key: key);
