@@ -1,6 +1,6 @@
+import 'package:appointments/data_types/components.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
@@ -93,8 +93,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       VerticalDivider(
-                        color: selectedService!.color ??
-                            Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.primary,
                         width: rSize(4),
                         endIndent: rSize(8),
                         thickness: rSize(3),
@@ -116,14 +115,14 @@ class _NewAppointmentState extends State<NewAppointment> {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                             Text(
-                              selectedService?.duration ?? '',
+                              selectedService?.duration.toString() ?? '',
                               style: Theme.of(context).textTheme.bodyText1,
                             )
                           ],
                         ),
                       ),
                       Text(
-                        getStringPrice(selectedService?.price ?? 0),
+                        getStringPrice(selectedService?.cost ?? 0),
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                       SizedBox(

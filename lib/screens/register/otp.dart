@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_container.dart';
@@ -11,7 +10,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class RegisterOTPScreen extends StatefulWidget {
-  const RegisterOTPScreen({Key? key}) : super(key: key);
+  final String mobileNumber;
+
+  const RegisterOTPScreen({Key? key, this.mobileNumber = ''}) : super(key: key);
 
   @override
   State<RegisterOTPScreen> createState() => _RegisterOTPScreenState();
@@ -236,7 +237,7 @@ class _RegisterOTPScreenState extends State<RegisterOTPScreen>
                                   crossAxisAlignment: WrapCrossAlignment.center,
                                   children: [
                                     Text(
-                                      '0505800955',
+                                      widget.mobileNumber,
                                       style: Theme.of(context)
                                           .textTheme
                                           .headline1

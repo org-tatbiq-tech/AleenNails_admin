@@ -1,10 +1,8 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BusinessInfo extends StatefulWidget {
   const BusinessInfo({Key? key}) : super(key: key);

@@ -1,5 +1,5 @@
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';

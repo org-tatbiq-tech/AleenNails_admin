@@ -1,4 +1,4 @@
-import 'package:appointments/utils/data_types.dart';
+import 'package:appointments/data_types/components.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_list_tile.dart';
 import 'package:appointments/widget/ease_in_animation.dart';

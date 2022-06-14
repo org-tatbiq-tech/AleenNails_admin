@@ -1,4 +1,3 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/calendar_view/flutter_week_view.dart';

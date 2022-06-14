@@ -1,12 +1,9 @@
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validators.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_input_field.dart';
-import 'package:appointments/widget/custom_input_field_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

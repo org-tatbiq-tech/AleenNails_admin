@@ -1,11 +1,13 @@
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:appointments/widget/custom_container.dart';
 import 'package:appointments/widget/custom_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../utils/input_validation.dart';
+import 'otp.dart';
 
 class RegisterMobileScreen extends StatefulWidget {
   const RegisterMobileScreen({Key? key}) : super(key: key);
@@ -17,6 +19,7 @@ class RegisterMobileScreen extends StatefulWidget {
 class _RegisterMobileScreenState extends State<RegisterMobileScreen>
     with SingleTickerProviderStateMixin {
   final TextEditingController _mobileController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late Animation _leftContentAnimation;
   late Animation _rightContentAnimation;
@@ -48,6 +51,20 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen>
     super.dispose();
     _controller.dispose();
     _mobileController.dispose();
+  }
+
+  void validateAndSend() {
+    final form = _formKey.currentState;
+    if (form!.validate()) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          settings: const RouteSettings(name: '/form'),
+          builder: (context) => RegisterOTPScreen(
+            mobileNumber: _mobileController.text,
+          ),
+        ),
+      );
+    }
   }
 
   @override
@@ -108,70 +125,74 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen>
                         blurRadius: 5,
                       ),
                     ]),
-                child: Opacity(
-                  opacity: _rightContentAnimation.value,
-                  child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconTheme(
-                          data: Theme.of(context).primaryIconTheme,
-                          child: Icon(
-                            FontAwesomeIcons.android,
-                            size: rSize(100),
+                child: Form(
+                  key: _formKey,
+                  child: Opacity(
+                    opacity: _rightContentAnimation.value,
+                    child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          IconTheme(
+                            data: Theme.of(context).primaryIconTheme,
+                            child: Icon(
+                              FontAwesomeIcons.android,
+                              size: rSize(100),
+                            ),
                           ),
-                        ),
-                        Wrap(
-                          spacing: rSize(5),
-                          runSpacing: rSize(15),
-                          alignment: WrapAlignment.center,
-                          runAlignment: WrapAlignment.center,
-                          children: [
-                            Text(
-                              Languages.of(context)!.labelMobileNumber,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline1
-                                  ?.copyWith(fontSize: rSize(28)),
-                            ),
-                            Text(
-                              Languages.of(context)!.labelEnterOTP,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: rSize(40),
-                        ),
-                        CustomInputField(
-                          customInputFieldProps: CustomInputFieldProps(
-                            controller: _mobileController,
-                            keyboardType: TextInputType.phone,
-                            prefixIcon: IconTheme(
-                              data: Theme.of(context).primaryIconTheme,
-                              child: Icon(
-                                FontAwesomeIcons.mobileAlt,
-                                size: rSize(20),
+                          Wrap(
+                            spacing: rSize(5),
+                            runSpacing: rSize(15),
+                            alignment: WrapAlignment.center,
+                            runAlignment: WrapAlignment.center,
+                            children: [
+                              Text(
+                                Languages.of(context)!.labelMobileNumber,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline1
+                                    ?.copyWith(fontSize: rSize(28)),
                               ),
+                              Text(
+                                Languages.of(context)!.labelEnterOTP,
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: rSize(40),
+                          ),
+                          CustomInputField(
+                            customInputFieldProps: CustomInputFieldProps(
+                              controller: _mobileController,
+                              keyboardType: TextInputType.phone,
+                              prefixIcon: IconTheme(
+                                data: Theme.of(context).primaryIconTheme,
+                                child: Icon(
+                                  FontAwesomeIcons.mobileRetro,
+                                  size: rSize(20),
+                                ),
+                              ),
+                              labelText:
+                                  Languages.of(context)!.labelMobileNumber,
+                              validator: mobileValidation,
                             ),
-                            labelText: Languages.of(context)!.labelMobileNumber,
                           ),
-                        ),
-                        SizedBox(
-                          height: rSize(40),
-                        ),
-                        CustomButton(
-                          customButtonProps: CustomButtonProps(
-                            onTap: () => {
-                              Navigator.pushNamed(
-                                  context, '/register/otpConfirmation'),
-                            },
-                            text: Languages.of(context)!.labelContinue,
-                            isPrimary: true,
+                          SizedBox(
+                            height: rSize(40),
                           ),
-                        ),
-                      ]),
+                          CustomButton(
+                            customButtonProps: CustomButtonProps(
+                              onTap: () => {
+                                validateAndSend(),
+                              },
+                              text: Languages.of(context)!.labelContinue,
+                              isPrimary: true,
+                            ),
+                          ),
+                        ]),
+                  ),
                 ),
               ),
             )

@@ -1,20 +1,20 @@
 import 'dart:math';
 
 import 'package:appointments/animations/fade_animation.dart';
-import 'package:appointments/utils/data_types.dart';
-import 'package:appointments/utils/date.dart';
+import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/url_launch.dart';
 import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
-import 'package:appointments/widget/custom_status.dart';
-import 'package:appointments/widget/custom_text_button.dart';
-import 'package:appointments/widget/read_more_text.dart';
 import 'package:appointments/widget/custom_icon.dart';
+import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:appointments/widget/read_more_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClientDetails extends StatefulWidget {
   const ClientDetails({Key? key}) : super(key: key);
@@ -31,28 +31,12 @@ class _ClientDetailsState extends State<ClientDetails> {
 
   @override
   Widget build(BuildContext context) {
-    Appointment appointment1 = Appointment(
-        services: [Service()],
-        date: kToday,
-        id: '123231321132',
-        totalPrice: 30,
-        status: Status.confirmed);
-    Appointment appointment2 = Appointment(
-        services: [Service(), Service()],
-        date: kToday,
-        id: '12321132',
-        totalPrice: 40,
-        status: Status.cancelled);
-    Appointment appointment3 = Appointment(
-        services: [Service()],
-        date: kToday,
-        id: '1232113122',
-        totalPrice: 100,
-        status: Status.waiting);
+    final appData = Provider.of<AppData>(context, listen: false);
+
     List<Appointment> appointments = [
-      appointment1,
-      appointment2,
-      appointment3,
+      appData.selectedAppointment,
+      appData.selectedAppointment,
+      appData.selectedAppointment,
     ];
 
     renderAppointments() {

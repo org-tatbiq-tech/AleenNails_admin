@@ -1,21 +1,25 @@
+import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../utils/data_types.dart';
+/// App data is a provider which holds and manages all application data
+/// in addition, the interaction between widgets through notifications.
 
 class AppData extends ChangeNotifier {
+  ///************* appointments *************///
+  late Appointment selectedAppointment;
+  bool isSelectedAppointmentLoaded = false;
+
+  ///************* Services *************///
+  late Service selectedService;
+  bool isSelectedServiceLoaded = false;
+
   List<Client> allContacts = [];
   List<Client> filteredContacts = [];
   AppData() {
-    Client contact = Client(
-      name: 'Saeed',
-      phone: '0543103540',
-      address: 'Haifa',
-    );
-    Client contact2 = Client(
-      name: 'Ahmad',
-      phone: '058955005',
-      address: 'Bagdad',
-    );
+    Client contact = Client('10', 'Saeed', '0543103540', 'Haifa', 'email');
+    Client contact2 = Client('19129', 'Ahmad', '058955005', 'Bagdad', '1');
     allContacts = [contact, contact2, contact, contact2, contact, contact2];
     filteredContacts = [
       contact,
@@ -25,6 +29,28 @@ class AppData extends ChangeNotifier {
       contact,
       contact2
     ];
+    selectedAppointment = Appointment(
+        'id',
+        Status.waiting,
+        'business',
+        'Ahmad Manna',
+        '0505800955',
+        '919',
+        DateTime.now(),
+        DateTime.now(),
+        'nothing', []);
+
+    selectedService = Service(
+      'id',
+      'service1',
+      100.00,
+      const Duration(hours: 1),
+      Colors.red.toString(),
+      'desc',
+      'imageFBS',
+      'Message',
+      false,
+    );
   }
 
   List<String> contacts_ = [
@@ -45,7 +71,7 @@ class AppData extends ChangeNotifier {
 
   void getFiltered(String filter) {
     filteredContacts = allContacts.where((element) {
-      String result = element.name!.toLowerCase();
+      String result = element.name.toLowerCase();
       String input = filter.toLowerCase();
       return result.contains(input);
     }).toList();

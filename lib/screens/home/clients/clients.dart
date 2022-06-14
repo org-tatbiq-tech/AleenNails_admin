@@ -1,5 +1,4 @@
 import 'package:appointments/providers/app_data.dart';
-import 'package:appointments/utils/data_types.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
