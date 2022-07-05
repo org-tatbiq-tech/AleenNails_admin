@@ -1,15 +1,31 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 /// App data is a provider which holds and manages all application data
 /// in addition, the interaction between widgets through notifications.
 
+///*************************** Naming **********************************///
+const appointmentCollection = 'appointments';
+const clientsCollection = 'clients';
+const servicesCollection = 'services';
+
 class AppData extends ChangeNotifier {
+  ///*************************** Firestore **********************************///
+  final FirebaseFirestore _fs = FirebaseFirestore.instance;
+  final FirebaseAuth _fa = FirebaseAuth.instance;
+
   ///************* appointments *************///
   late Appointment selectedAppointment;
   bool isSelectedAppointmentLoaded = false;
+
+  Future<void> submitNewAppointment(Appointment newAppointment) async {
+    /// Submitting new appointment in appointments list
+    CollectionReference appointments = _fs.collection(appointmentCollection);
+    appointments.add(newAppointment.toJson());
+  }
 
   ///************* Services *************///
   late Service selectedService;
@@ -30,15 +46,17 @@ class AppData extends ChangeNotifier {
       contact2
     ];
     selectedAppointment = Appointment(
-        'id',
-        Status.waiting,
-        'business',
-        'Ahmad Manna',
-        '0505800955',
-        '919',
-        DateTime.now(),
-        DateTime.now(),
-        'nothing', []);
+      'id',
+      Status.waiting,
+      'business',
+      'Ahmad Manna',
+      '0505800955',
+      '919',
+      DateTime.now(),
+      DateTime.now(),
+      'nothing',
+      [],
+    );
 
     selectedService = Service(
       'id',

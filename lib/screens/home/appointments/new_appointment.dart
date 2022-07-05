@@ -1,4 +1,6 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/date.dart';
@@ -12,8 +14,10 @@ import 'package:appointments/widget/custom_input_field_button.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/picker_date_time_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NewAppointment extends StatefulWidget {
   const NewAppointment({Key? key}) : super(key: key);
@@ -60,6 +64,36 @@ class _NewAppointmentState extends State<NewAppointment> {
       return false;
     }
     return true;
+  }
+
+  saveAppointment() {
+    /// need to add validation
+    final appData = Provider.of<AppData>(context, listen: false);
+
+    AppointmentService appointmentService = AppointmentService(
+      selectedService!.id,
+      selectedService!.name,
+      startDateTime!,
+      (startDateTime!).add(selectedService!.duration),
+      selectedService!.duration,
+      selectedService!.cost,
+      selectedService!.colorID,
+    );
+
+    Appointment newAppointment = Appointment(
+      'id',
+      Status.waiting,
+      (FirebaseAuth.instance.currentUser?.displayName).toString(),
+      (selectedClient?.name).toString(),
+      (selectedClient?.phone).toString(),
+      (selectedClient?.id).toString(),
+      DateTime.now(),
+      startDateTime!,
+      '',
+      [appointmentService],
+    );
+    appData.submitNewAppointment(newAppointment);
+    Navigator.pop(context);
   }
 
   @override
@@ -365,9 +399,7 @@ class _NewAppointmentState extends State<NewAppointment> {
               ),
               CustomButton(
                 customButtonProps: CustomButtonProps(
-                  onTap: () => {
-                    Navigator.pop(context),
-                  },
+                  onTap: () => {saveAppointment()},
                   text: 'Save',
                   isPrimary: true,
                   isDisabled: isButtonDisabled(),

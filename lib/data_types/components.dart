@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'macros.dart';
 
 /// Data components
@@ -48,6 +50,17 @@ class AppointmentService {
     this.cost,
     this.colorID,
   );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'startTime': Timestamp.fromDate(startTime),
+      'endTime': Timestamp.fromDate(endTime),
+      'cost': cost,
+      'colorID': colorID,
+    };
+  }
 }
 
 /// Appointment holds all required data to define, understand and explain
@@ -58,7 +71,7 @@ class Appointment {
   String creator; // Appointment creator (which admin/worker/...)
   String clientName; // Client full name
   String clientPhone; // Client phone number
-  String clientId; // Client database ID
+  String clientDocID; // Client database ID
   DateTime creationDate; // Appointment creation date (date and time)
   DateTime date; // Appointment date (date and time)
   String notes; // Appointment detailed notes
@@ -70,7 +83,7 @@ class Appointment {
     this.creator,
     this.clientName,
     this.clientPhone,
-    this.clientId,
+    this.clientDocID,
     this.creationDate,
     this.date,
     this.notes,
@@ -79,6 +92,20 @@ class Appointment {
 
   double get totalCost {
     return services.fold<double>(0, (sum, item) => sum + item.cost);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status.toString(),
+      'creator': creator,
+      'clientName': clientName,
+      'clientDocID': clientDocID,
+      'clientPhone': clientPhone,
+      'creationDate': Timestamp.fromDate(creationDate),
+      'date': Timestamp.fromDate(date),
+      'notes': notes,
+      'services': services.map((service) => service.toJson()).toList(),
+    };
   }
 }
 
