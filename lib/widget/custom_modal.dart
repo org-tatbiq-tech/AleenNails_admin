@@ -1,4 +1,3 @@
-import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/widget/custom_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -187,4 +186,11 @@ class BottomModalProps {
     this.footerButton = ModalFooter.none,
     this.primaryAction,
   });
+}
+
+enum ModalFooter {
+  primaryButton,
+  secondaryButton,
+  both,
+  none,
 }

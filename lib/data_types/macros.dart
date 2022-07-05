@@ -15,13 +15,6 @@ class CalendarEvent {
   String toString() => title;
 }
 
-enum ModalFooter {
-  primaryButton,
-  secondaryButton,
-  both,
-  none,
-}
-
 class LiquidSwipeData {
   final Color gradientStart;
   final Color gradientEnd;
