@@ -1,4 +1,4 @@
-import 'package:appointments/animations/fade_animation.dart';
+import 'package:common_widgets/fade_animation.dart';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';

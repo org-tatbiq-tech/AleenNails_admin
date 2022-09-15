@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:appointments/animations/fade_animation.dart';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/utils/input_validation.dart';
@@ -13,6 +12,7 @@ import 'package:appointments/widget/custom_icon.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/ease_in_animation.dart';
 import 'package:appointments/widget/read_more_text.dart';
+import 'package:common_widgets/fade_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

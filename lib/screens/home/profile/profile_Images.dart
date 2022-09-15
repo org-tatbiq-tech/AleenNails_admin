@@ -1,4 +1,4 @@
-import 'package:appointments/animations/fade_animation.dart';
+import 'package:common_widgets/fade_animation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_app_bar.dart';
 import 'package:appointments/widget/custom_icon_button.dart';

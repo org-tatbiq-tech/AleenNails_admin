@@ -1,4 +1,4 @@
-import 'package:appointments/animations/fade_animation.dart';
+import 'package:common_widgets/fade_animation.dart';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/app_data.dart';
@@ -239,9 +239,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   child: ServiceCard(
                     serviceCardProps: ServiceCardProps(
                       serviceDetails: services[index],
-                      title: services[index].name ?? '',
+                      title: services[index].name,
                       subTitle:
-                          '${getDateTimeFormat(dateTime: services[index].startTime, format: 'HH:mm')} - ${getDateTimeFormat(dateTime: services[index].endTime, format: 'HH:mm')} - ${services[index].duration ?? ''}',
+                          '${getDateTimeFormat(dateTime: services[index].startTime, format: 'HH:mm')} - ${getDateTimeFormat(dateTime: services[index].endTime, format: 'HH:mm')} - ${services[index].duration}',
                       withNavigation: false,
                       enabled: false,
                     ),
