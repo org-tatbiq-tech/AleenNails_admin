@@ -286,7 +286,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
 
   @override
   Widget build(BuildContext context) {
-    _renderAmount() {
+    renderAmount() {
       return FadeAnimation(
         positionType: PositionType.top,
         delay: 1.3,
@@ -616,7 +616,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                       SizedBox(
                         height: rSize(20),
                       ),
-                      _renderAmount(),
+                      renderAmount(),
                       SizedBox(
                         height: rSize(10),
                       ),

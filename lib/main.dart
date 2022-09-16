@@ -38,6 +38,7 @@ import 'package:appointments/screens/register/mobile.dart';
 import 'package:appointments/screens/register/otp.dart';
 import 'package:appointments/screens/register/register.dart';
 import 'package:appointments/utils/secure_storage.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -208,8 +209,8 @@ class AppointmentsApp extends StatelessWidget {
             ),
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(),
+        return CustomLoadingIndicator(
+          customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
         );
       },
     );

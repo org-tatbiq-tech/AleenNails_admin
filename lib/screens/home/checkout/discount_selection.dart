@@ -1,11 +1,11 @@
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:appointments/utils/validators.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 
 import 'package:common_widgets/custom_icon.dart';
 
 import 'package:common_widgets/custom_input_field.dart';
+import 'package:common_widgets/utils/validators.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

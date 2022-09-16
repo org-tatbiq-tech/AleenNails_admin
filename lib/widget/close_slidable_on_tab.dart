@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class CloseSlidableOnTap extends StatelessWidget {
+  final Widget child;
+  SlidableController? controller;
+
   CloseSlidableOnTap({
     Key? key,
     required this.child,
   }) : super(key: key);
-
-  final Widget child;
-  SlidableController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,6 @@ class CloseSlidableOnTap extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           onTap: () => {
             Slidable.of(context)?.close(),
-            print(controller?.close()),
           },
           child: SlidableAutoCloseBehavior(
             child: child,
