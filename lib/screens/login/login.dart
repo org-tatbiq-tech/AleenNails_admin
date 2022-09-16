@@ -3,9 +3,11 @@ import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/secure_storage.dart';
 import 'package:appointments/utils/validators.dart';
-import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:common_widgets/custom_button_widget.dart';
+
 import 'package:appointments/widget/custom_container.dart';
-import 'package:appointments/widget/custom_input_field.dart';
+import 'package:common_widgets/custom_input_field.dart';
+
 import 'package:appointments/widget/custom_loading.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';

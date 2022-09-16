@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/custom_modal.dart';
+import 'package:common_widgets/custom_modal.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -15,24 +15,6 @@ class CalendarEvent {
   String toString() => title;
 }
 
-class LiquidSwipeData {
-  final Color gradientStart;
-  final Color gradientEnd;
-  final String image;
-  final String title;
-  final String subTitle;
-  final String description;
-
-  LiquidSwipeData({
-    this.gradientStart = Colors.white,
-    this.gradientEnd = Colors.white,
-    required this.image,
-    this.title = '',
-    this.subTitle = '',
-    this.description = '',
-  });
-}
-
 class WorkingDayBreak {
   DateTime startTime;
   DateTime endTime;

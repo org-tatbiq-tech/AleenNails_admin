@@ -1,11 +1,12 @@
-import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_button_widget.dart';
-import 'package:appointments/widget/custom_icon.dart';
-import 'package:appointments/widget/custom_input_field_button.dart';
-import 'package:appointments/widget/custom_modal.dart';
-import 'package:appointments/widget/wheel_picker_modal.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_button_widget.dart';
+
+import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_modal.dart';
+
+import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/wheel_picker_modal.dart';
 import 'package:flutter/material.dart';
 
 class BookingsSettings extends StatefulWidget {

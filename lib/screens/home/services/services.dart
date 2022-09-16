@@ -1,9 +1,10 @@
 import 'dart:ui';
 
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+
 import 'package:appointments/widget/custom_text_button.dart';
-import 'package:appointments/widget/empty_list_image.dart';
+import 'package:common_widgets/empty_list_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

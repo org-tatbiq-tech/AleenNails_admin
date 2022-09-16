@@ -1,8 +1,10 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:common_widgets/custom_button_widget.dart';
+
 import 'package:appointments/widget/custom_container.dart';
-import 'package:appointments/widget/custom_input_field.dart';
+import 'package:common_widgets/custom_input_field.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

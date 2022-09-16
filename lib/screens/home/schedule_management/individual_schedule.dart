@@ -4,9 +4,12 @@ import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/calendar_view/flutter_week_view.dart';
-import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_icon.dart';
-import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+
+import 'package:common_widgets/custom_icon.dart';
+
+import 'package:common_widgets/ease_in_animation.dart';
+
 import 'package:appointments/widget/expandable_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';

@@ -3,11 +3,16 @@ import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/statistics.dart';
 import 'package:appointments/screens/home/timeline.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_button_widget.dart';
-import 'package:appointments/widget/custom_icon.dart';
-import 'package:appointments/widget/custom_modal.dart';
-import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+
+import 'package:common_widgets/custom_button_widget.dart';
+
+import 'package:common_widgets/custom_icon.dart';
+
+import 'package:common_widgets/custom_modal.dart';
+
+import 'package:common_widgets/ease_in_animation.dart';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

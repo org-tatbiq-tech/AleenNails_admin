@@ -1,7 +1,9 @@
 import 'package:common_widgets/fade_animation.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/custom_app_bar.dart';
-import 'package:appointments/widget/custom_icon_button.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+
+import 'package:common_widgets/custom_icon_button.dart';
+
 import 'package:flutter/material.dart';
 
 class ScheduleManagement extends StatefulWidget {

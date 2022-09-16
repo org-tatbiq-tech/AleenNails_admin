@@ -3,29 +3,13 @@ import 'package:appointments/utils/storage_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-Color primary = const Color(0xFFA55CB5);
-Color secondary = const Color(0xFF6cb55c);
-Color primaryWithAlpha1 = const Color(0xFFdbbde1);
-Color primaryWithAlpha2 = const Color(0xFFeddef0);
-Color primaryWithAlpha3 = const Color(0xFFf6eef7);
-Color primaryFont = const Color(0xFF311b36);
-Color primaryFontWithAlpha1 = const Color(0xFF63376c);
-
-// Color primary = const Color(0xFF00ced1);
-// Color secondary = const Color(0xFF6cb55c);
-// Color primaryWithAlpha1 = const Color(0xFF99ebec);
-// Color primaryWithAlpha2 = const Color(0xFFccf5f5);
-// Color primaryWithAlpha3 = const Color(0xFFe5fafa);
-// Color primaryFont = const Color(0xFF003d3e);
-// Color primaryFontWithAlpha1 = const Color(0xFF006768);
-
-// Color primary = const Color(0xFF66ccff);
-// Color secondary = const Color(0xFF6cb55c);
-// Color primaryWithAlpha1 = const Color(0xFFc1eaff);
-// Color primaryWithAlpha2 = const Color(0xFFe0f4ff);
-// Color primaryWithAlpha3 = const Color(0xFFeff9ff);
-// Color primaryFont = const Color(0xFF1E3D4C);
-// Color primaryFontWithAlpha1 = const Color(0xFF33667f);
+Color primary = const Color(0xFFb76e79);
+Color secondary = const Color(0xFF6eb7ac);
+Color primaryWithAlpha1 = const Color(0xFFd3a8ae);
+Color primaryWithAlpha2 = const Color(0xFFe2c5c9);
+Color primaryWithAlpha3 = const Color(0xFFf0e2e4);
+Color primaryFont = const Color(0xFF362124);
+Color primaryFontWithAlpha1 = const Color(0xFF5b373c);
 
 class ThemeNotifier with ChangeNotifier {
   /// Dark theme data definition

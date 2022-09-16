@@ -1,6 +1,5 @@
-import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/widget/custom_liquid_swipe.dart';
+import 'package:common_widgets/custom_liquid_swipe.dart';
 import 'package:flutter/material.dart';
 
 class Landing extends StatefulWidget {

@@ -1,9 +1,11 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/custom_button_widget.dart';
+import 'package:common_widgets/custom_button_widget.dart';
+
 import 'package:appointments/widget/custom_container.dart';
-import 'package:appointments/widget/custom_input_field.dart';
+import 'package:common_widgets/custom_input_field.dart';
+
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

@@ -8,15 +8,20 @@ import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/close_slidable_on_tab.dart';
-import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+
 import 'package:appointments/widget/custom_avatar.dart';
-import 'package:appointments/widget/custom_button_widget.dart';
-import 'package:appointments/widget/custom_icon.dart';
-import 'package:appointments/widget/custom_modal.dart';
+import 'package:common_widgets/custom_button_widget.dart';
+
+import 'package:common_widgets/custom_icon.dart';
+
+import 'package:common_widgets/custom_modal.dart';
+
 import 'package:appointments/widget/custom_slide_able.dart';
 import 'package:appointments/widget/custom_status.dart';
 import 'package:appointments/widget/custom_text_button.dart';
-import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:common_widgets/ease_in_animation.dart';
+
 import 'package:appointments/widget/over_popup.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:dotted_border/dotted_border.dart';

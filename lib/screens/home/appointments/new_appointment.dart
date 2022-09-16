@@ -7,11 +7,15 @@ import 'package:appointments/utils/date.dart';
 import 'package:appointments/utils/input_validation.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/client_card.dart';
-import 'package:appointments/widget/custom_app_bar.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+
 import 'package:appointments/widget/custom_avatar.dart';
-import 'package:appointments/widget/custom_button_widget.dart';
-import 'package:appointments/widget/custom_input_field_button.dart';
-import 'package:appointments/widget/ease_in_animation.dart';
+import 'package:common_widgets/custom_button_widget.dart';
+
+import 'package:common_widgets/custom_input_field_button.dart';
+
+import 'package:common_widgets/ease_in_animation.dart';
+
 import 'package:appointments/widget/picker_date_time_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
