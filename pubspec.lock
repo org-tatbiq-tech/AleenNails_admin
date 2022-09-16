@@ -114,14 +114,14 @@ packages:
     source: hosted
     version: "1.0.5"
   currency_text_input_formatter:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: currency_text_input_formatter
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.7"
   dotted_border:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: dotted_border
       url: "https://pub.dartlang.org"
@@ -224,7 +224,7 @@ packages:
     source: hosted
     version: "1.5.1"
   flutter_device_type:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_device_type
       url: "https://pub.dartlang.org"
@@ -243,7 +243,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_picker
       url: "https://pub.dartlang.org"
@@ -358,7 +358,7 @@ packages:
     source: hosted
     version: "4.0.1"
   image_cropper:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: image_cropper
       url: "https://pub.dartlang.org"
@@ -379,7 +379,7 @@ packages:
     source: hosted
     version: "3.0.2"
   image_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
@@ -435,14 +435,14 @@ packages:
     source: hosted
     version: "2.0.0"
   liquid_swipe:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: liquid_swipe
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
   loading_indicator:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: loading_indicator
       url: "https://pub.dartlang.org"
@@ -484,7 +484,7 @@ packages:
     source: hosted
     version: "2.0.0"
   modal_bottom_sheet:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: modal_bottom_sheet
       url: "https://pub.dartlang.org"
@@ -644,20 +644,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  rolling_switch:
-    dependency: "direct main"
-    description:
-      name: rolling_switch
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.2"
-  scroll_to_index:
-    dependency: "direct main"
-    description:
-      name: scroll_to_index
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.1"
   scrollable_positioned_list:
     dependency: "direct main"
     description:
@@ -722,7 +708,7 @@ packages:
     source: hosted
     version: "2.1.1"
   simple_animations:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: simple_animations
       url: "https://pub.dartlang.org"
@@ -748,7 +734,7 @@ packages:
     source: sdk
     version: "0.0.99"
   smooth_page_indicator:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: smooth_page_indicator
       url: "https://pub.dartlang.org"
