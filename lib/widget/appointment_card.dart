@@ -34,7 +34,7 @@ class AppointmentCard extends StatelessWidget {
                 width: rSize(10),
               ),
               Text(
-                service.name ?? 'Service Name',
+                service.name,
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ],
