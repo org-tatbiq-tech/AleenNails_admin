@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Color primary = const Color(0xFFb76e79);
-Color secondary = const Color(0xFF6eb7ac);
+Color secondary = const Color(0xFFa8d3cd);
 Color primaryWithAlpha1 = const Color(0xFFd3a8ae);
 Color primaryWithAlpha2 = const Color(0xFFe2c5c9);
 Color primaryWithAlpha3 = const Color(0xFFf0e2e4);
-Color primaryFont = const Color(0xFF362124);
-Color primaryFontWithAlpha1 = const Color(0xFF5b373c);
+Color primaryFont = const Color(0xFF492c30);
+Color primaryFontWithAlpha1 = const Color(0xFF6d4248);
 
 class ThemeNotifier with ChangeNotifier {
   /// Dark theme data definition

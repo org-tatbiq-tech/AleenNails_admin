@@ -105,37 +105,36 @@ class _LoginScreenState extends State<LoginScreen>
     }
   }
 
-  Widget _buildRememberCheckBox() {
-    // TODO: Ahmad to design
+  Widget buildRememberCheckBox() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          width: 10,
-          child: Transform.scale(
-            scale: 1,
+          width: rSize(40),
+          child: FittedBox(
             child: Checkbox(
-              materialTapTargetSize: MaterialTapTargetSize.padded,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               value: _rememberMeValue,
               onChanged: (newValue) {
                 setState(() {
                   _rememberMeValue = newValue!;
                 });
               },
-              checkColor: Theme.of(context).colorScheme.onBackground,
+              checkColor: Theme.of(context).colorScheme.secondary,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(3)),
+                borderRadius: BorderRadius.circular(rSize(4)),
+              ),
               splashRadius: 0,
-              side: BorderSide(color: Theme.of(context).colorScheme.secondary),
-              activeColor: Theme.of(context).colorScheme.secondary,
+              side: BorderSide(color: Theme.of(context).colorScheme.primary),
+              activeColor: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),
         Text(
           Languages.of(context)!.labelRememberMe,
-          style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 12),
-        ),
+          style: Theme.of(context).textTheme.bodyText1,
+        )
       ],
     );
   }
@@ -210,17 +209,21 @@ class _LoginScreenState extends State<LoginScreen>
                       children: [
                         Image(
                           image: AssetImage('assets/images/logo.png'),
-                          width: rSize(250),
+                          width: rSize(200),
                           fit: BoxFit.cover,
                         ),
                         SizedBox(
                           height: rSize(40),
                         ),
                         Wrap(
+                          direction: Axis.horizontal,
                           children: [
                             Text(
                               Languages.of(context)!.labelEnterLoginDetails,
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.copyWith(fontSize: rSize(18)),
                             ),
                           ],
                         ),
@@ -262,7 +265,7 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         ),
                         SizedBox(
-                          height: rSize(20),
+                          height: rSize(15),
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
@@ -275,7 +278,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     Languages.of(context)!.labelForgotPassword,
                                 textColor:
                                     Theme.of(context).colorScheme.primary,
-                                fontSize: rSize(16),
+                                // fontSize: rSize(16),
                                 onTap: () => {
                                   Navigator.pushNamed(
                                       context, '/forgetPassword'),
@@ -284,6 +287,10 @@ class _LoginScreenState extends State<LoginScreen>
                             )
                           ],
                         ),
+                        SizedBox(
+                          height: rSize(10),
+                        ),
+                        buildRememberCheckBox(),
                         SizedBox(
                           height: rSize(40),
                         ),
@@ -301,7 +308,7 @@ class _LoginScreenState extends State<LoginScreen>
                         ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(

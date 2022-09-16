@@ -83,11 +83,11 @@ class AppointmentsApp extends StatelessWidget {
   }
 
   Widget getInitScreen(BuildContext context, isLoggedIn) {
-    // return const Landing();
+    return const Landing();
     // if (isLoggedIn == true) {
     //   return const HomePage();
     // }
-    return const LoginScreen();
+    // return const LoginScreen();
   }
 
   @override
