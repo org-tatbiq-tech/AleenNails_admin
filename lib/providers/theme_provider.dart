@@ -1,5 +1,5 @@
-import 'package:appointments/utils/layout.dart';
-import 'package:appointments/utils/storage_manager.dart';
+import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

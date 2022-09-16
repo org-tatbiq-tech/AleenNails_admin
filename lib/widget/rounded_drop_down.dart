@@ -1,4 +1,4 @@
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class RoundedDropDown extends StatelessWidget {
@@ -9,7 +9,12 @@ class RoundedDropDown extends StatelessWidget {
   final Function onChanged;
 
   const RoundedDropDown(
-      {Key? key, this.value, this.hint = '', required this.items, required this.onChanged, this.errorText = ''})
+      {Key? key,
+      this.value,
+      this.hint = '',
+      required this.items,
+      required this.onChanged,
+      this.errorText = ''})
       : super(key: key);
 
   @override
@@ -24,15 +29,22 @@ class RoundedDropDown extends StatelessWidget {
             borderRadius: BorderRadius.circular(rSize(2)),
           ),
           child: Padding(
-            padding: EdgeInsets.fromLTRB(rSize(2), rSize(1), rSize(2), rSize(1)),
+            padding:
+                EdgeInsets.fromLTRB(rSize(2), rSize(1), rSize(2), rSize(1)),
             child: DropdownButton(
               value: value,
               hint: Text(
                 hint,
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(fontSize: rSize(12)),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle1
+                    ?.copyWith(fontSize: rSize(12)),
                 overflow: TextOverflow.ellipsis,
               ),
-              style: Theme.of(context).textTheme.bodyText1?.copyWith(fontSize: rSize(12)),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1
+                  ?.copyWith(fontSize: rSize(12)),
               items: items,
               onChanged: (item) {
                 onChanged(item);

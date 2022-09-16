@@ -1,4 +1,4 @@
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 
 import 'package:common_widgets/custom_input_field.dart';
@@ -38,7 +38,7 @@ class BusinessAddressState extends State<BusinessAddress> {
 
   @override
   Widget build(BuildContext context) {
-    Widget _renderMapLocation() {
+    Widget renderMapLocation() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,7 +70,7 @@ class BusinessAddressState extends State<BusinessAddress> {
       );
     }
 
-    Widget _renderZipCode() {
+    Widget renderZipCode() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +102,7 @@ class BusinessAddressState extends State<BusinessAddress> {
       );
     }
 
-    Widget _renderCity() {
+    Widget renderCity() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +134,7 @@ class BusinessAddressState extends State<BusinessAddress> {
       );
     }
 
-    Widget _renderStreet() {
+    Widget renderStreet() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -197,19 +197,19 @@ class BusinessAddressState extends State<BusinessAddress> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _renderStreet(),
+              renderStreet(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderCity(),
+              renderCity(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderZipCode(),
+              renderZipCode(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderMapLocation(),
+              renderMapLocation(),
             ],
           ),
         ),

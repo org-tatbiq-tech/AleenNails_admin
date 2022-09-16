@@ -1,13 +1,11 @@
-import 'package:appointments/utils/date.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:common_widgets/custom_button_widget.dart';
-
 import 'package:common_widgets/custom_input_field_button.dart';
-
 import 'package:appointments/widget/custom_text_button.dart';
-import 'package:appointments/widget/picker_date_time_modal.dart';
+import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -129,7 +127,7 @@ class _DayDetailsState extends State<DayDetails> {
       );
     }
 
-    Widget _renderTimePicker() {
+    Widget renderTimePicker() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,7 +281,7 @@ class _DayDetailsState extends State<DayDetails> {
                               height:
                                   widget.isIndividual ? rSize(20) : rSize(40),
                             ),
-                            _renderTimePicker(),
+                            renderTimePicker(),
                             SizedBox(
                               height: rSize(40),
                             ),

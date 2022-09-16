@@ -1,4 +1,4 @@
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:appointments/widget/custom_container.dart';
 import 'package:flutter/material.dart';
 import 'package:graphic/graphic.dart';
@@ -133,7 +133,8 @@ class StatisticsState extends State<Statistics> {
               },
               elements: [
                 IntervalElement(
-                  label: LabelAttr(encoder: (tuple) => Label(tuple['sold'].toString())),
+                  label: LabelAttr(
+                      encoder: (tuple) => Label(tuple['sold'].toString())),
                   elevation: ElevationAttr(value: 0, updaters: {
                     'tap': {true: (_) => 5}
                   }),
@@ -219,7 +220,8 @@ class StatisticsState extends State<Statistics> {
                             tuple['sold'].toString(),
                             LabelStyle(style: Defaults.runeStyle),
                           )),
-                  color: ColorAttr(variable: 'service', values: Defaults.colors10),
+                  color:
+                      ColorAttr(variable: 'service', values: Defaults.colors10),
                   modifiers: [StackModifier()],
                 )
               ],
@@ -297,7 +299,8 @@ class StatisticsState extends State<Statistics> {
                 ),
               },
               elements: [
-                LineElement(shape: ShapeAttr(value: BasicLineShape(dash: [5, 2])))
+                LineElement(
+                    shape: ShapeAttr(value: BasicLineShape(dash: [5, 2])))
               ],
               coord: RectCoord(color: const Color(0xffdddddd)),
               axes: [
@@ -306,7 +309,11 @@ class StatisticsState extends State<Statistics> {
               ],
               selections: {
                 'touchMove': PointSelection(
-                  on: {GestureType.scaleUpdate, GestureType.tapDown, GestureType.longPressMoveUpdate},
+                  on: {
+                    GestureType.scaleUpdate,
+                    GestureType.tapDown,
+                    GestureType.longPressMoveUpdate
+                  },
                   dim: Dim.x,
                 )
               },

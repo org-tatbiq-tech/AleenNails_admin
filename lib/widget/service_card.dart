@@ -1,12 +1,9 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/utils/input_validation.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_icon.dart';
-
 import 'package:common_widgets/custom_list_tile.dart';
-
 import 'package:common_widgets/ease_in_animation.dart';
-
 import 'package:flutter/material.dart';
 
 class ServiceCard extends StatelessWidget {
@@ -55,7 +52,7 @@ class ServiceCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  getStringPrice(serviceCardProps.serviceDetails.cost!),
+                  getStringPrice(serviceCardProps.serviceDetails.cost),
                   style: Theme.of(context).textTheme.headline1?.copyWith(
                         fontSize: rSize(16),
                       ),

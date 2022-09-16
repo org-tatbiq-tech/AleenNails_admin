@@ -1,9 +1,8 @@
 import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/widget/client_card.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../utils/layout.dart';
 
 class Clients extends StatefulWidget {
   const Clients({Key? key}) : super(key: key);

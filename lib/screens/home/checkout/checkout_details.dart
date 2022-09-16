@@ -3,9 +3,9 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
-import 'package:appointments/utils/date.dart';
-import 'package:appointments/utils/input_validation.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/close_slidable_on_tab.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -136,7 +136,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
               child: ServiceCard(
                 serviceCardProps: ServiceCardProps(
                   serviceDetails: service,
-                  title: service.name ?? '',
+                  title: service.name,
                   subTitle: getDateTimeFormat(
                       dateTime: service.startTime,
                       format: 'EEE, MMM dd, yyyy, HH:mm'),
@@ -161,7 +161,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
     //Todo: Show the popup
     Navigator.of(context).push(PageRouteBuilder(
         opaque: false,
-        transitionDuration: Duration(seconds: 0),
+        transitionDuration: const Duration(seconds: 0),
         pageBuilder: (context, animation1, animation2) {
           return OverPopupPage(
             showOffset: tapLocationOffset,
@@ -216,8 +216,8 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
           serviceDetails: service,
           withNavigation: false,
           enabled: false,
-          title: service.name ?? '',
-          subTitle: service.duration.toString() ?? '',
+          title: service.name,
+          subTitle: service.duration.toString(),
         ),
       ),
     );
@@ -545,7 +545,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                           height: rSize(5),
                         ),
                         Text(
-                          'ID: ${service.id!}',
+                          'ID: ${service.id}',
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ],

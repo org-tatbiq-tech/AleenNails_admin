@@ -1,19 +1,16 @@
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/utils/input_validation.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_button_widget.dart';
-
 import 'package:appointments/widget/custom_container.dart';
 import 'package:common_widgets/custom_input_field.dart';
-
 import 'package:appointments/widget/custom_text_button.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/auth_state.dart';
-import '../../widget/custom_loading.dart';
 
 class RegisterMainScreen extends StatefulWidget {
   const RegisterMainScreen({Key? key}) : super(key: key);

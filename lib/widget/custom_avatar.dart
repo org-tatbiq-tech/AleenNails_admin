@@ -1,4 +1,4 @@
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_icon.dart';
 
 import 'package:common_widgets/ease_in_animation.dart';

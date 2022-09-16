@@ -1,4 +1,4 @@
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 
 import 'package:common_widgets/custom_icon.dart';
@@ -15,7 +15,7 @@ class BusinessCoverPhoto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _renderBusinessCoverPhoto() {
+    Widget renderBusinessCoverPhoto() {
       return EaseInAnimation(
         onTap: () => {
           showImagePickerModal(
@@ -94,7 +94,7 @@ class BusinessCoverPhoto extends StatelessWidget {
             SizedBox(
               height: rSize(180),
             ),
-            _renderBusinessCoverPhoto(),
+            renderBusinessCoverPhoto(),
           ],
         ),
       ),

@@ -1,5 +1,5 @@
-import 'package:appointments/utils/date.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';

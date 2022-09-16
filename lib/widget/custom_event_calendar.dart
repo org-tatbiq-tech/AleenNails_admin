@@ -1,9 +1,9 @@
 import 'package:appointments/data_types/macros.dart';
-import 'package:appointments/utils/date.dart';
-import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/calendar_view/flutter_week_view.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:appointments/widget/expandable_calendar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CustomEventCalendar extends StatefulWidget {
@@ -34,7 +34,8 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
   }
 
   List<CalendarEvent> _getEventsForDay(DateTime day) {
-    return kEvents[day] ?? [];
+    // return kEvents[day] ?? [];
+    return [];
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {

@@ -1,5 +1,5 @@
-import 'package:appointments/utils/input_validation.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:appointments/utils/validators.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 

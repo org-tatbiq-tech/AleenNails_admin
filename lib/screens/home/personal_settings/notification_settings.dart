@@ -1,5 +1,5 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 
 import 'package:common_widgets/custom_list_tile.dart';

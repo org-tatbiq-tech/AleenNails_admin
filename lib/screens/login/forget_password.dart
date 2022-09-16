@@ -1,5 +1,5 @@
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:appointments/utils/validators.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 

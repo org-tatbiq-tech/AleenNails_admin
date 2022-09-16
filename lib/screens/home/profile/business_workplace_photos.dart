@@ -1,4 +1,4 @@
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 
 import 'package:common_widgets/custom_icon.dart';
@@ -21,7 +21,7 @@ class BusinessWorkplacePhotos extends StatelessWidget {
       // Colors.red,
     ];
 
-    List<Widget> _mediaCards() {
+    List<Widget> mediaCards() {
       List<Widget> widgetList = mediaList.map((item) {
         return EaseInAnimation(
           beginAnimation: 0.98,
@@ -99,13 +99,13 @@ class BusinessWorkplacePhotos extends StatelessWidget {
       return widgetList;
     }
 
-    Widget _renderMedia() {
+    Widget renderMedia() {
       return Wrap(
         alignment: WrapAlignment.start,
         crossAxisAlignment: WrapCrossAlignment.start,
         runSpacing: rSize(30),
         spacing: rSize(30),
-        children: _mediaCards(),
+        children: mediaCards(),
       );
     }
 
@@ -136,7 +136,7 @@ class BusinessWorkplacePhotos extends StatelessWidget {
             SizedBox(
               height: rSize(40),
             ),
-            _renderMedia(),
+            renderMedia(),
           ],
         ),
       ),

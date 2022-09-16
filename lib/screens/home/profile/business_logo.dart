@@ -1,19 +1,11 @@
 import 'dart:io';
-
-import 'package:appointments/data_types/macros.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:common_widgets/custom_button_widget.dart';
-
 import 'package:common_widgets/custom_icon.dart';
-
 import 'package:common_widgets/custom_modal.dart';
-
 import 'package:common_widgets/ease_in_animation.dart';
-
 import 'package:common_widgets/image_picker_modal.dart';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';

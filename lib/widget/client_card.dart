@@ -1,5 +1,5 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 
 import 'package:common_widgets/ease_in_animation.dart';
@@ -20,7 +20,7 @@ class ClientCard extends StatelessWidget {
         onTap: clientCardProps.onTap ??
             () => Navigator.pushNamed(context, '/clientDetails'),
         title: Text(
-          clientCardProps.contactDetails.name!,
+          clientCardProps.contactDetails.name,
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(16),
               ),
@@ -30,7 +30,7 @@ class ClientCard extends StatelessWidget {
             top: rSize(2),
           ),
           child: Text(
-            clientCardProps.contactDetails.phone!,
+            clientCardProps.contactDetails.phone,
             style: Theme.of(context).textTheme.subtitle1?.copyWith(
                   fontSize: rSize(14),
                 ),
@@ -65,8 +65,8 @@ class ClientCard extends StatelessWidget {
           radius: rSize(25),
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           child: Text(
-            clientCardProps.contactDetails.name![0].toUpperCase() +
-                clientCardProps.contactDetails.name![1].toUpperCase(),
+            clientCardProps.contactDetails.name[0].toUpperCase() +
+                clientCardProps.contactDetails.name[1].toUpperCase(),
             style: Theme.of(context).textTheme.bodyText2,
           ),
         ),

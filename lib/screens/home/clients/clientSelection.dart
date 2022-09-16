@@ -1,12 +1,10 @@
 import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-
-import '../../../utils/layout.dart';
 
 class ClientSelection extends StatefulWidget {
   Function? onTap;
