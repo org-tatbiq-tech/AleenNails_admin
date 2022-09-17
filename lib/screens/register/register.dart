@@ -174,18 +174,24 @@ class _RegisterMainScreenState extends State<RegisterMainScreen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image(
-                            image: const AssetImage(
-                                'assets/images/aleen-logo-2.png'),
-                            width: rSize(250),
-                            fit: BoxFit.cover),
+                          image: const AssetImage(
+                            'assets/images/main_logo.png',
+                          ),
+                          width: rSize(250),
+                          fit: BoxFit.cover,
+                        ),
                         SizedBox(
                           height: rSize(40),
                         ),
                         Wrap(
+                          direction: Axis.horizontal,
                           children: [
                             Text(
                               Languages.of(context)!.labelEnterLoginDetails,
-                              style: Theme.of(context).textTheme.subtitle1,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.copyWith(fontSize: rSize(18)),
                             ),
                           ],
                         ),

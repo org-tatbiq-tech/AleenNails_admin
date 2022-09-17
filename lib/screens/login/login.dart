@@ -208,7 +208,7 @@ class _LoginScreenState extends State<LoginScreen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image(
-                          image: AssetImage('assets/images/aleen-logo-2.png'),
+                          image: AssetImage('assets/images/main_logo.png'),
                           width: rSize(200),
                           fit: BoxFit.cover,
                         ),
