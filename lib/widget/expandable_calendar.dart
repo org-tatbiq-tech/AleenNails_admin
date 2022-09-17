@@ -23,6 +23,7 @@ class ExpandableCalendar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 0, rSize(15)),
         child: TableCalendar<CalendarEvent>(
+          headerVisible: true,
           availableCalendarFormats:
               expandableCalendarProps.availableCalendarFormats ??
                   {
