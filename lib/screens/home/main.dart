@@ -73,9 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
           withSearch: _selectedPage == 1 ? true : false,
+          isLogoMode: _selectedPage == 3 ? true : false,
+          logoHeight: rSize(75),
           withBorder: _selectedPage == 0 ? true : false,
           withClipPath: _selectedPage == 3 ? true : false,
-          barHeight: _selectedPage == 3 ? 100 : 70,
+          barHeight: _selectedPage == 3 ? 120 : 70,
           titleText: getPageTitle(),
         ),
       ),
