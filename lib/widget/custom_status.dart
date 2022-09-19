@@ -17,11 +17,11 @@ class CustomStatus extends StatelessWidget {
         case Status.confirmed:
           return successPrimaryColor;
         case Status.cancelled:
-          return warningPrimaryColor;
+          return errorPrimaryColor;
         case Status.declined:
           return errorPrimaryColor;
         case Status.waiting:
-          return informationPrimaryColor;
+          return warningPrimaryColor;
         default:
           return informationPrimaryColor;
       }
@@ -31,7 +31,7 @@ class CustomStatus extends StatelessWidget {
       decoration: BoxDecoration(
         color: lighten(
           getStatusColor(),
-          0.3,
+          0.22,
         ),
         borderRadius: BorderRadius.circular(
           rSize(customStatusProps.fontSize / 1.5),

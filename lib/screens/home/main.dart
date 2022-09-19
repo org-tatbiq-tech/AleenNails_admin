@@ -128,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CustomIcon(
                   customIconProps: CustomIconProps(
                     iconColor: _selectedPage == 0
-                        ? Theme.of(context).colorScheme.secondary
+                        ? darken(Theme.of(context).colorScheme.secondary, 0.2)
                         : Theme.of(context).colorScheme.primary,
                     icon: null,
                     backgroundColor: Colors.transparent,
@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CustomIcon(
                   customIconProps: CustomIconProps(
                     iconColor: _selectedPage == 1
-                        ? Theme.of(context).colorScheme.secondary
+                        ? darken(Theme.of(context).colorScheme.secondary, 0.2)
                         : Theme.of(context).colorScheme.primary,
                     icon: null,
                     backgroundColor: Colors.transparent,
@@ -171,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CustomIcon(
                   customIconProps: CustomIconProps(
                     iconColor: _selectedPage == 2
-                        ? Theme.of(context).colorScheme.secondary
+                        ? darken(Theme.of(context).colorScheme.secondary, 0.2)
                         : Theme.of(context).colorScheme.primary,
                     icon: null,
                     backgroundColor: Colors.transparent,
@@ -191,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: CustomIcon(
                   customIconProps: CustomIconProps(
                     iconColor: _selectedPage == 3
-                        ? Theme.of(context).colorScheme.secondary
+                        ? darken(Theme.of(context).colorScheme.secondary, 0.2)
                         : Theme.of(context).colorScheme.primary,
                     icon: null,
                     backgroundColor: Colors.transparent,

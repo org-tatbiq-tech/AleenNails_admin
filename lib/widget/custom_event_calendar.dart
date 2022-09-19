@@ -123,7 +123,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
         borderRadius: BorderRadius.circular(
           rSize(10),
         ),
-        color: lighten(backgroundColor, 0.35),
+        color: lighten(backgroundColor, 0.3),
       ),
       start: start,
       end: end,
@@ -131,9 +131,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
     );
   }
 
-  List<FlutterWeekViewEvent> getCourses(BuildContext context) {
-    print(_focusedDay);
-    // return courses[_selectedDay]!;
+  List<FlutterWeekViewEvent> getAppointments() {
     DateTime now = DateTime.now();
     DateTime date =
         DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
@@ -141,7 +139,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
     if (_focusedDay.day % 2 == 0) {
       day = 'day2';
     }
-    Map<String, List<FlutterWeekViewEvent>> courses = {
+    Map<String, List<FlutterWeekViewEvent>> appointments = {
       'day1': [
         renderFlutterWeekViewEvent(
           title: 'Course 1',
@@ -204,7 +202,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
         ),
       ],
     };
-    return courses[day]!.toList();
+    return appointments[day]!.toList();
   }
 
   DateTime date =
@@ -266,7 +264,7 @@ class _CustomEventCalendarState extends State<CustomEventCalendar> {
                 textStyle: Theme.of(context).textTheme.bodyText2,
                 textAlignment: Alignment.center,
               ),
-              events: getCourses(context),
+              events: getAppointments(),
             ),
           ),
         ],

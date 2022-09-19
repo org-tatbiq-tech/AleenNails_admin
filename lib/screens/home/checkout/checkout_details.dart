@@ -12,17 +12,11 @@ import 'package:common_widgets/custom_app_bar.dart';
 
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
-
 import 'package:common_widgets/custom_icon.dart';
-
 import 'package:common_widgets/custom_modal.dart';
-
 import 'package:appointments/widget/custom_slide_able.dart';
 import 'package:appointments/widget/custom_status.dart';
-import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
-
-import 'package:appointments/widget/over_popup.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -159,52 +153,15 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
     final tapLocationOffset = renderBox.localToGlobal(Offset.zero);
     final Size buttonSize = renderBox.size;
     //Todo: Show the popup
-    Navigator.of(context).push(PageRouteBuilder(
-        opaque: false,
-        transitionDuration: const Duration(seconds: 0),
-        pageBuilder: (context, animation1, animation2) {
-          return OverPopupPage(
-            showOffset: tapLocationOffset,
-            buttonSize: buttonSize,
-            child: Row(
-              children: [
-                CustomTextButton(
-                  customTextButtonProps: CustomTextButtonProps(
-                    text: 'Service',
-                    textColor: Theme.of(context).colorScheme.primary,
-                    onTap: (() => {
-                          Navigator.pop(context),
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Services(
-                                selectionMode: true,
-                                onTap: () => {Navigator.pop(context)},
-                              ),
-                            ),
-                          )
-                        }),
-                  ),
-                ),
-                VerticalDivider(
-                  thickness: rSize(1),
-                  width: rSize(40),
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                ),
-                CustomTextButton(
-                  customTextButtonProps: CustomTextButtonProps(
-                    text: 'Amount',
-                    textColor: Theme.of(context).colorScheme.primary,
-                    onTap: (() => {
-                          Navigator.pop(context),
-                          Navigator.pushNamed(context, '/amountSelection'),
-                        }),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }));
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Services(
+          selectionMode: true,
+          onTap: () => {Navigator.pop(context)},
+        ),
+      ),
+    );
   }
 
   _addService(AppointmentService service) {
@@ -317,7 +274,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                   width: rSize(10),
                 ),
                 Text(
-                  'Add Item',
+                  'Add Service',
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 SizedBox(
