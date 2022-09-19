@@ -9,6 +9,7 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -79,6 +80,13 @@ class _HomeScreenState extends State<HomeScreen> {
           withClipPath: _selectedPage == 3 ? true : false,
           barHeight: _selectedPage == 3 ? 120 : 70,
           titleText: getPageTitle(),
+          customIcon: _selectedPage == 0
+              ? Icon(
+                  FontAwesomeIcons.bell,
+                  size: rSize(24),
+                )
+              : null,
+          customIconTap: () => {Navigator.pushNamed(context, '/newService')},
         ),
       ),
       body: screens[_selectedPage],
