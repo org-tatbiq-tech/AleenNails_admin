@@ -91,6 +91,48 @@ class AppointmentsApp extends StatelessWidget {
     return const LoginScreen();
   }
 
+  Map<String, Widget Function(BuildContext)> getRoutes(BuildContext context) {
+    /// Supported routes for Navigator
+
+    return {
+      '/landing': (context) => const Landing(),
+      '/home': (context) => const HomeScreen(),
+      '/loginScreen': (context) => const LoginScreen(),
+      '/clients': (context) => const Clients(),
+      '/clientDetails': (context) => const ClientDetails(),
+      '/forgetPassword': (context) => const ForgetPasswordScreen(),
+      // '/resetPassword': (context) => const ResetPasswordScreen(),
+      '/register': (context) => const RegisterMainScreen(),
+      '/register/registerMobile': (context) => const RegisterMobileScreen(),
+      '/register/otpConfirmation': (context) => const RegisterOTPScreen(),
+      '/newAppointment': (context) => const NewAppointment(),
+      '/appointmentDetails': (context) => const AppointmentDetails(),
+      '/checkoutDetails': (context) => const CheckoutDetails(),
+      '/discountSelection': (context) => const DiscountSelection(),
+      '/amountSelection': (context) => const AmountSelection(),
+      '/services': (context) => const Services(),
+      '/newService': (context) => const NewService(),
+      '/serviceDetails': (context) => const ServiceDetails(),
+      '/businessInfo': (context) => const BusinessInfo(),
+      '/businessDetails': (context) => const BusinessDetails(),
+      '/profileImages': (context) => const ProfileImages(),
+      '/businessLogo': (context) => const BusinessLogo(),
+      '/businessCoverPhoto': (context) => const BusinessCoverPhoto(),
+      '/businessWorkplacePhotos': (context) => const BusinessWorkplacePhotos(),
+      '/businessAddress': (context) => const BusinessAddress(),
+      '/scheduleManagement': (context) => const ScheduleManagement(),
+      '/individualSchedule': (context) => const IndividualSchedule(),
+      '/unavailability': (context) => const Unavailability(),
+      '/workingDays': (context) => const WorkingDays(),
+      '/dayDetails': (context) => const DayDetails(),
+      '/bookingSettings': (context) => const BookingsSettings(),
+      '/personalSettings': (context) => const PersonalSettings(),
+      '/notificationSettings': (context) => const NotificationSettings(),
+      '/languageSettings': (context) => const LanguageSettings(),
+      // '/registerProfile': (context) => const RegisterProfileScreen(),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -121,66 +163,7 @@ class AppointmentsApp extends StatelessWidget {
                           debugShowCheckedModeBanner: false,
                           theme: theme.getTheme(),
                           home: getInitScreen(context, auth.data),
-                          routes: {
-                            '/landing': (context) => const Landing(),
-                            '/home': (context) => const HomeScreen(),
-                            '/loginScreen': (context) => const LoginScreen(),
-                            '/clients': (context) => const Clients(),
-                            '/clientDetails': (context) =>
-                                const ClientDetails(),
-                            '/forgetPassword': (context) =>
-                                const ForgetPasswordScreen(),
-                            // '/resetPassword': (context) => const ResetPasswordScreen(),
-                            '/register': (context) =>
-                                const RegisterMainScreen(),
-                            '/register/registerMobile': (context) =>
-                                const RegisterMobileScreen(),
-                            '/register/otpConfirmation': (context) =>
-                                const RegisterOTPScreen(),
-                            '/newAppointment': (context) =>
-                                const NewAppointment(),
-                            '/appointmentDetails': (context) =>
-                                const AppointmentDetails(),
-                            '/checkoutDetails': (context) =>
-                                const CheckoutDetails(),
-                            '/discountSelection': (context) =>
-                                const DiscountSelection(),
-                            '/amountSelection': (context) =>
-                                const AmountSelection(),
-                            '/services': (context) => const Services(),
-                            '/newService': (context) => const NewService(),
-                            '/serviceDetails': (context) =>
-                                const ServiceDetails(),
-                            '/businessInfo': (context) => const BusinessInfo(),
-                            '/businessDetails': (context) =>
-                                const BusinessDetails(),
-                            '/profileImages': (context) =>
-                                const ProfileImages(),
-                            '/businessLogo': (context) => const BusinessLogo(),
-                            '/businessCoverPhoto': (context) =>
-                                const BusinessCoverPhoto(),
-                            '/businessWorkplacePhotos': (context) =>
-                                const BusinessWorkplacePhotos(),
-                            '/businessAddress': (context) =>
-                                const BusinessAddress(),
-                            '/scheduleManagement': (context) =>
-                                const ScheduleManagement(),
-                            '/individualSchedule': (context) =>
-                                const IndividualSchedule(),
-                            '/unavailability': (context) =>
-                                const Unavailability(),
-                            '/workingDays': (context) => const WorkingDays(),
-                            '/dayDetails': (context) => const DayDetails(),
-                            '/bookingSettings': (context) =>
-                                const BookingsSettings(),
-                            '/personalSettings': (context) =>
-                                const PersonalSettings(),
-                            '/notificationSettings': (context) =>
-                                const NotificationSettings(),
-                            '/languageSettings': (context) =>
-                                const LanguageSettings(),
-                            // '/registerProfile': (context) => const RegisterProfileScreen(),
-                          },
+                          routes: getRoutes(context),
                           locale: localeProv.locale,
                           supportedLocales: supportedLocale,
                           localizationsDelegates: const [
