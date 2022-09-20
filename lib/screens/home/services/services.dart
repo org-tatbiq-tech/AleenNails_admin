@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/widget/service_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/empty_list_image.dart';
@@ -30,9 +31,6 @@ class ServicesState extends State<Services> {
     final appData = Provider.of<AppData>(context, listen: false);
 
     List<Service> services = [
-      appData.selectedService,
-      appData.selectedService,
-      appData.selectedService,
       appData.selectedService,
     ];
 
@@ -75,64 +73,64 @@ class ServicesState extends State<Services> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // services.isNotEmpty
-          // ? Expanded(
-          //     child: ReorderableListView.builder(
-          //     buildDefaultDragHandles: false,
-          //     onReorder: (oldIndex, newIndex) {
-          //       if (newIndex > oldIndex) newIndex--;
-          //       final Service service = services.removeAt(oldIndex);
-          //       services.insert(newIndex, service);
-          //     },
-          //     proxyDecorator: proxyDecorator,
-          //     padding: EdgeInsets.symmetric(
-          //       vertical: rSize(40),
-          //       horizontal: rSize(30),
-          //     ),
-          //     itemCount: services.length,
-          //     itemBuilder: (context, index) {
-          //       return ServiceCard(
-          //         key: ValueKey(services[index].id),
-          //         serviceCardProps: ServiceCardProps(
-          //           withNavigation: !widget.selectionMode,
-          //           dragIndex: index,
-          //           onTap: widget.onTap != null
-          //               ? () => widget.onTap!(services[index])
-          //               : null,
-          //           serviceDetails: services[index],
-          //           title: services[index].name ?? '',
-          //           subTitle: services[index].duration.toString() ?? '',
-          //         ),
-          //       );
-          //     },
-          //   ))
-          Padding(
-            padding: EdgeInsets.only(
-              top: rSize(250),
-            ),
-            child: EmptyListImage(
-              emptyListImageProps: EmptyListImageProps(
-                title: 'No services added yet',
-                iconPath: 'assets/icons/menu.png',
-                bottomWidgetPosition: 10,
-                bottomWidget: CustomTextButton(
-                  customTextButtonProps: CustomTextButtonProps(
-                    onTap: () => {
-                      Navigator.pushNamed(context, '/newService'),
-                    },
-                    text: 'Add New Service',
-                    textColor: Theme.of(context).colorScheme.primary,
-                    withIcon: true,
-                    icon: Icon(
-                      FontAwesomeIcons.plus,
-                      size: rSize(16),
-                      color: Theme.of(context).colorScheme.primary,
+          services.isNotEmpty
+              ? Expanded(
+                  child: ReorderableListView.builder(
+                  buildDefaultDragHandles: false,
+                  onReorder: (oldIndex, newIndex) {
+                    if (newIndex > oldIndex) newIndex--;
+                    final Service service = services.removeAt(oldIndex);
+                    services.insert(newIndex, service);
+                  },
+                  proxyDecorator: proxyDecorator,
+                  padding: EdgeInsets.symmetric(
+                    vertical: rSize(40),
+                    horizontal: rSize(30),
+                  ),
+                  itemCount: services.length,
+                  itemBuilder: (context, index) {
+                    return ServiceCard(
+                      key: ValueKey(services[index].id),
+                      serviceCardProps: ServiceCardProps(
+                        withNavigation: !widget.selectionMode,
+                        dragIndex: index,
+                        onTap: widget.onTap != null
+                            ? () => widget.onTap!(services[index])
+                            : null,
+                        serviceDetails: services[index],
+                        title: services[index].name,
+                        subTitle: services[index].duration.toString(),
+                      ),
+                    );
+                  },
+                ))
+              : Padding(
+                  padding: EdgeInsets.only(
+                    top: rSize(250),
+                  ),
+                  child: EmptyListImage(
+                    emptyListImageProps: EmptyListImageProps(
+                      title: 'No services added yet',
+                      iconPath: 'assets/icons/menu.png',
+                      bottomWidgetPosition: 10,
+                      bottomWidget: CustomTextButton(
+                        customTextButtonProps: CustomTextButtonProps(
+                          onTap: () => {
+                            Navigator.pushNamed(context, '/newService'),
+                          },
+                          text: 'Add New Service',
+                          textColor: Theme.of(context).colorScheme.primary,
+                          withIcon: true,
+                          icon: Icon(
+                            FontAwesomeIcons.plus,
+                            size: rSize(16),
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
         ],
       ),
     );

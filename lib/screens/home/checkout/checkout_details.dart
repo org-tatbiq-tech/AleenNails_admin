@@ -1,3 +1,4 @@
+import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
@@ -127,8 +128,8 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
             customSlidableProps: CustomSlidableProps(
               groupTag: 'checkoutDetails',
               deleteAction: () => _removeService(),
-              child: ServiceCard(
-                serviceCardProps: ServiceCardProps(
+              child: AppointmentServiceCard(
+                appointmentServiceCardProps: AppointmentServiceCardProps(
                   serviceDetails: service,
                   title: service.name,
                   subTitle: getDateTimeFormat(
@@ -168,8 +169,8 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
     Widget serviceWidget = FadeAnimation(
       positionType: PositionType.top,
       delay: 0,
-      child: ServiceCard(
-        serviceCardProps: ServiceCardProps(
+      child: AppointmentServiceCard(
+        appointmentServiceCardProps: AppointmentServiceCardProps(
           serviceDetails: service,
           withNavigation: false,
           enabled: false,

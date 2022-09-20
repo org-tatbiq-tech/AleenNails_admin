@@ -125,3 +125,13 @@ class Client {
     this.email,
   );
 }
+
+class NotificationData {
+  String id;
+  String name;
+
+  NotificationData(
+    this.id,
+    this.name,
+  );
+}

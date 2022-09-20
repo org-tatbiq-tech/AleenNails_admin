@@ -1,3 +1,4 @@
+import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
@@ -21,10 +22,10 @@ class AppointmentDetails extends StatefulWidget {
   const AppointmentDetails({Key? key}) : super(key: key);
 
   @override
-  _AppointmentDetailsState createState() => _AppointmentDetailsState();
+  AppointmentDetailsState createState() => AppointmentDetailsState();
 }
 
-class _AppointmentDetailsState extends State<AppointmentDetails> {
+class AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   void initState() {
     super.initState();
@@ -121,7 +122,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    _renderFooter(Appointment appointment) {
+    renderFooter(Appointment appointment) {
       return FadeAnimation(
           positionType: PositionType.top,
           delay: 1,
@@ -206,9 +207,9 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    _renderServices(Appointment appointment) {
+    renderServices(Appointment appointment) {
       String servicesLength = appointment.services.length.toString();
-      var services = appointment.services;
+      List<AppointmentService> services = appointment.services;
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -236,8 +237,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 return FadeAnimation(
                   positionType: PositionType.top,
                   delay: 0.8 + index.toDouble() * 0.3,
-                  child: ServiceCard(
-                    serviceCardProps: ServiceCardProps(
+                  child: AppointmentServiceCard(
+                    appointmentServiceCardProps: AppointmentServiceCardProps(
                       serviceDetails: services[index],
                       title: services[index].name,
                       subTitle:
@@ -259,7 +260,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    _renderDate() {
+    renderDate() {
       return Column(children: [
         Row(
           mainAxisSize: MainAxisSize.max,
@@ -311,7 +312,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
       ]);
     }
 
-    _renderNotes() {
+    renderNotes() {
       return Column(children: [
         Column(
           mainAxisSize: MainAxisSize.max,
@@ -387,7 +388,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
               SizedBox(
                 height: rSize(15),
               ),
-              _renderDate(),
+              renderDate(),
             ],
           ),
         ],
@@ -459,13 +460,13 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                       FadeAnimation(
                         positionType: PositionType.right,
                         delay: 0.5,
-                        child: _renderNotes(),
+                        child: renderNotes(),
                       ),
                       SizedBox(
                         height: rSize(40),
                       ),
                       Expanded(
-                        child: _renderServices(appData.selectedAppointment),
+                        child: renderServices(appData.selectedAppointment),
                       ),
                       SizedBox(
                         height: rSize(20),
@@ -474,7 +475,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                       SizedBox(
                         height: rSize(10),
                       ),
-                      _renderFooter(appData.selectedAppointment),
+                      renderFooter(appData.selectedAppointment),
                     ],
                   ),
                 ),
