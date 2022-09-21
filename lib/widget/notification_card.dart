@@ -1,9 +1,7 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:common_widgets/utils/input_validation.dart';
+import 'package:appointments/widget/custom_avatar.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_list_tile.dart';
-import 'package:common_widgets/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
 class NotificationCard extends StatelessWidget {
@@ -17,11 +15,10 @@ class NotificationCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
-        height: rSize(70),
         marginBottom: 15,
         enabled: notificationCardProps.enabled,
         onTap: notificationCardProps.onTap ??
-            () => Navigator.pushNamed(context, '/serviceDetails'),
+            () => Navigator.pushNamed(context, '/notificationDetails'),
         title: Text(
           notificationCardProps.title,
           maxLines: 1,
@@ -51,15 +48,6 @@ class NotificationCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Text(
-                //   getStringPrice(notificationCardProps.notificationDetails.name),
-                //   style: Theme.of(context).textTheme.headline1?.copyWith(
-                //         fontSize: rSize(16),
-                //       ),
-                // ),
-                // SizedBox(
-                //   width: rSize(5),
-                // ),
                 notificationCardProps.withNavigation
                     ? IconTheme(
                         data: Theme.of(context).primaryIconTheme,
@@ -75,35 +63,13 @@ class NotificationCard extends StatelessWidget {
         ),
         leading: Row(
           children: [
-            notificationCardProps.dragIndex != null
-                ? ReorderableDelayedDragStartListener(
-                    index: notificationCardProps.dragIndex!,
-                    child: EaseInAnimation(
-                      onTap: () => {},
-                      child: Row(
-                        children: [
-                          CustomIcon(
-                            customIconProps: CustomIconProps(
-                              icon: null,
-                              backgroundColor: Colors.transparent,
-                              path: 'assets/icons/drag_hand.png',
-                              withPadding: false,
-                              containerSize: 30,
-                            ),
-                          ),
-                          SizedBox(
-                            width: rSize(15),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
-            VerticalDivider(
-              color: Theme.of(context).colorScheme.primary,
-              width: rSize(3),
-              thickness: rSize(3),
-            ),
+            CustomAvatar(
+              customAvatarProps: CustomAvatarProps(
+                enable: true,
+                onTap: () => Navigator.pushNamed(context, '/clientDetails'),
+                circleShape: true,
+              ),
+            )
           ],
         ),
       ),
@@ -118,7 +84,6 @@ class NotificationCardProps {
   final String subTitle;
   final String title;
   final Function? onTap;
-  final int? dragIndex;
 
   NotificationCardProps({
     required this.notificationDetails,
@@ -127,6 +92,5 @@ class NotificationCardProps {
     this.subTitle = '',
     this.title = '',
     this.onTap,
-    this.dragIndex,
   });
 }

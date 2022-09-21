@@ -17,7 +17,6 @@ class ServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
-        height: rSize(70),
         marginBottom: 15,
         enabled: serviceCardProps.enabled,
         onTap: serviceCardProps.onTap ??

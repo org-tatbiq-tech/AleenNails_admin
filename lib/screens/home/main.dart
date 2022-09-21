@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: rSize(24),
                 )
               : null,
-          customIconTap: () => {Navigator.pushNamed(context, '/newService')},
+          customIconTap: () => {Navigator.pushNamed(context, '/notifications')},
         ),
       ),
       body: screens[_selectedPage],

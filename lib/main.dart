@@ -12,6 +12,7 @@ import 'package:appointments/screens/home/checkout/discount_selection.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/main.dart';
+import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/personal_settings/language_settings.dart';
 import 'package:appointments/screens/home/personal_settings/notification_settings.dart';
 import 'package:appointments/screens/home/personal_settings/personal_settings.dart';
@@ -129,6 +130,7 @@ class AppointmentsApp extends StatelessWidget {
       '/personalSettings': (context) => const PersonalSettings(),
       '/notificationSettings': (context) => const NotificationSettings(),
       '/languageSettings': (context) => const LanguageSettings(),
+      '/notifications': (context) => const Notifications(),
       // '/registerProfile': (context) => const RegisterProfileScreen(),
     };
   }

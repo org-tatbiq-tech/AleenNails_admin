@@ -14,7 +14,9 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
-  List<NotificationData> notifications = [];
+  List<NotificationData> notifications = [
+    NotificationData('id', 'name'),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,13 +24,12 @@ class _NotificationsState extends State<Notifications> {
         customAppBarProps: CustomAppBarProps(
           titleText: 'Notifications',
           withBack: true,
-          withSearch: true,
           withClipPath: false,
           customIcon: Icon(
             FontAwesomeIcons.rotateLeft,
             size: rSize(24),
           ),
-          customIconTap: () => {Navigator.pushNamed(context, '/newService')},
+          customIconTap: () => {},
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -39,15 +40,7 @@ class _NotificationsState extends State<Notifications> {
         children: [
           notifications.isNotEmpty
               ? Expanded(
-                  child: ReorderableListView.builder(
-                  buildDefaultDragHandles: false,
-                  onReorder: (oldIndex, newIndex) {
-                    if (newIndex > oldIndex) newIndex--;
-                    final NotificationData notificationData =
-                        notifications.removeAt(oldIndex);
-                    notifications.insert(newIndex, notificationData);
-                  },
-                  // proxyDecorator: proxyDecorator,
+                  child: ListView.builder(
                   padding: EdgeInsets.symmetric(
                     vertical: rSize(40),
                     horizontal: rSize(30),
@@ -58,7 +51,6 @@ class _NotificationsState extends State<Notifications> {
                       key: ValueKey(notifications[index].id),
                       notificationCardProps: NotificationCardProps(
                         withNavigation: true,
-                        dragIndex: index,
                         onTap: () => {},
                         notificationDetails: notifications[index],
                         title: notifications[index].name,
