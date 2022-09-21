@@ -8,19 +8,17 @@ import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:appointments/widget/custom_avatar.dart';
-import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class NewAppointment extends StatefulWidget {
@@ -153,7 +151,7 @@ class _NewAppointmentState extends State<NewAppointment> {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
@@ -165,23 +163,31 @@ class _NewAppointmentState extends State<NewAppointment> {
                 selectedServices.isNotEmpty
                     ? CustomTextButton(
                         customTextButtonProps: CustomTextButtonProps(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Services(
-                                selectionMode: true,
-                                onTap: (Service service) =>
-                                    onServiceTap(service),
-                              ),
+                            onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Services(
+                                      selectionMode: true,
+                                      onTap: (Service service) =>
+                                          onServiceTap(service),
+                                    ),
+                                  ),
+                                ),
+                            text: 'Add Service',
+                            fontSize: rSize(14),
+                            textColor: darken(
+                              Theme.of(context).colorScheme.secondary,
+                              0.2,
                             ),
-                          ),
-                          text: 'Add Another Service',
-                          fontSize: rSize(14),
-                          textColor: darken(
-                            Theme.of(context).colorScheme.secondary,
-                            0.2,
-                          ),
-                        ),
+                            withIcon: true,
+                            icon: Icon(
+                              FontAwesomeIcons.plus,
+                              color: darken(
+                                Theme.of(context).colorScheme.secondary,
+                                0.2,
+                              ),
+                              size: rSize(14),
+                            )),
                       )
                     : const SizedBox()
               ],
@@ -290,25 +296,6 @@ class _NewAppointmentState extends State<NewAppointment> {
                     dateTime: endTime,
                     format: 'HH:mm',
                   ),
-                  // onTap: () => showPickerDateTimeModal(
-                  //   pickerDateTimeModalProps: PickerDateTimeModalProps(
-                  //     mode: CupertinoDatePickerMode.time,
-                  //     context: context,
-                  //     initialDateTime: endTime ?? endTimeMin,
-                  //     minimumDate: endTimeMin,
-                  //     title: 'End Time',
-                  //     onDateTimeChanged: (DateTime value) => {
-                  //       setState(() {
-                  //         endTimeTemp = value;
-                  //       }),
-                  //     },
-                  //     primaryAction: () => {
-                  //       setState(() {
-                  //         endTime = endTimeTemp;
-                  //       }),
-                  //     },
-                  //   ),
-                  // ),
                 ),
               ],
             ),
@@ -444,6 +431,8 @@ class _NewAppointmentState extends State<NewAppointment> {
             withBack: true,
             withClipPath: true,
             barHeight: 110,
+            withSave: true,
+            saveTap: () => {saveAppointment()},
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -465,35 +454,27 @@ class _NewAppointmentState extends State<NewAppointment> {
                       SizedBox(
                         height: rSize(40),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: renderServicePicker(),
-                      ),
+                      renderServicePicker(),
                       SizedBox(
                         height: rSize(40),
                       ),
                       renderTimePicker(),
-                      SizedBox(
-                        height: rSize(0),
-                      ),
                       renderNote(),
+                      // SizedBox(
+                      //   height: rSize(40),
+                      // ),
+                      // CustomButton(
+                      //   customButtonProps: CustomButtonProps(
+                      //     onTap: () => {saveAppointment()},
+                      //     text: 'Save',
+                      //     isPrimary: true,
+                      //     isDisabled: isButtonDisabled(),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: rSize(30),
-                ),
-                child: CustomButton(
-                  customButtonProps: CustomButtonProps(
-                    onTap: () => {saveAppointment()},
-                    text: 'Save',
-                    isPrimary: true,
-                    isDisabled: isButtonDisabled(),
-                  ),
-                ),
-              )
             ],
           ),
         ),
