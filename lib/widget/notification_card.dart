@@ -21,7 +21,7 @@ class NotificationCard extends StatelessWidget {
             () => Navigator.pushNamed(context, '/notificationDetails'),
         title: Text(
           notificationCardProps.title,
-          maxLines: 1,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(16),

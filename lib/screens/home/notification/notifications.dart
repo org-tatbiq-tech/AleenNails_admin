@@ -15,7 +15,11 @@ class Notifications extends StatefulWidget {
 
 class _NotificationsState extends State<Notifications> {
   List<NotificationData> notifications = [
-    NotificationData('id', 'name'),
+    NotificationData(
+      'id',
+      'Here will be the description of the notification',
+      DateTime.now(),
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class _NotificationsState extends State<Notifications> {
           withBack: true,
           withClipPath: false,
           customIcon: Icon(
-            FontAwesomeIcons.rotateLeft,
+            Icons.refresh,
             size: rSize(24),
           ),
           customIconTap: () => {},
@@ -53,8 +57,8 @@ class _NotificationsState extends State<Notifications> {
                         withNavigation: true,
                         onTap: () => {},
                         notificationDetails: notifications[index],
-                        title: notifications[index].name,
-                        subTitle: notifications[index].name,
+                        title: notifications[index].description,
+                        subTitle: notifications[index].creationDate.toString(),
                       ),
                     );
                   },

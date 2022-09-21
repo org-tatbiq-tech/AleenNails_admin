@@ -128,10 +128,12 @@ class Client {
 
 class NotificationData {
   String id;
-  String name;
+  String description;
+  DateTime creationDate;
 
   NotificationData(
     this.id,
-    this.name,
+    this.description,
+    this.creationDate,
   );
 }
