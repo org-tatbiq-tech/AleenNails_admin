@@ -73,23 +73,38 @@ class ServiceCard extends StatelessWidget {
             ),
           ],
         ),
-        leading: serviceCardProps.dragIndex != null
-            ? ReorderableDelayedDragStartListener(
-                index: serviceCardProps.dragIndex!,
-                child: EaseInAnimation(
-                  onTap: () => {},
-                  child: CustomIcon(
-                    customIconProps: CustomIconProps(
-                      icon: null,
-                      backgroundColor: Colors.transparent,
-                      path: 'assets/icons/drag_hand.png',
-                      withPadding: false,
-                      containerSize: 30,
+        leading: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            VerticalDivider(
+              // color: Color(serviceCardProps.serviceDetails.colorID),
+              color: Colors.red,
+              width: rSize(4),
+              endIndent: rSize(8),
+              thickness: rSize(3),
+              indent: rSize(8),
+            ),
+            serviceCardProps.dragIndex != null
+                ? ReorderableDelayedDragStartListener(
+                    index: serviceCardProps.dragIndex!,
+                    child: EaseInAnimation(
+                      onTap: () => {},
+                      child: CustomIcon(
+                        customIconProps: CustomIconProps(
+                          icon: null,
+                          backgroundColor: Colors.transparent,
+                          path: 'assets/icons/drag_hand.png',
+                          withPadding: false,
+                          containerSize: 30,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )
-            : const SizedBox(),
+                  )
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }

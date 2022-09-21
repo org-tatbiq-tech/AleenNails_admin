@@ -63,7 +63,7 @@ class AppData extends ChangeNotifier {
       'service1',
       100.00,
       const Duration(hours: 1),
-      Colors.red.toString(),
+      0xFFb733,
       'desc',
       'imageFBS',
       'Message',

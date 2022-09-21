@@ -76,34 +76,35 @@ class ServicesState extends State<Services> {
           services.isNotEmpty
               ? Expanded(
                   child: ReorderableListView.builder(
-                  buildDefaultDragHandles: false,
-                  onReorder: (oldIndex, newIndex) {
-                    if (newIndex > oldIndex) newIndex--;
-                    final Service service = services.removeAt(oldIndex);
-                    services.insert(newIndex, service);
-                  },
-                  proxyDecorator: proxyDecorator,
-                  padding: EdgeInsets.symmetric(
-                    vertical: rSize(40),
-                    horizontal: rSize(30),
+                    buildDefaultDragHandles: false,
+                    onReorder: (oldIndex, newIndex) {
+                      if (newIndex > oldIndex) newIndex--;
+                      final Service service = services.removeAt(oldIndex);
+                      services.insert(newIndex, service);
+                    },
+                    proxyDecorator: proxyDecorator,
+                    padding: EdgeInsets.symmetric(
+                      vertical: rSize(40),
+                      horizontal: rSize(30),
+                    ),
+                    itemCount: services.length,
+                    itemBuilder: (context, index) {
+                      return ServiceCard(
+                        key: ValueKey(services[index].id),
+                        serviceCardProps: ServiceCardProps(
+                          withNavigation: !widget.selectionMode,
+                          dragIndex: index,
+                          onTap: widget.onTap != null
+                              ? () => widget.onTap!(services[index])
+                              : null,
+                          serviceDetails: services[index],
+                          title: services[index].name,
+                          subTitle: services[index].duration.toString(),
+                        ),
+                      );
+                    },
                   ),
-                  itemCount: services.length,
-                  itemBuilder: (context, index) {
-                    return ServiceCard(
-                      key: ValueKey(services[index].id),
-                      serviceCardProps: ServiceCardProps(
-                        withNavigation: !widget.selectionMode,
-                        dragIndex: index,
-                        onTap: widget.onTap != null
-                            ? () => widget.onTap!(services[index])
-                            : null,
-                        serviceDetails: services[index],
-                        title: services[index].name,
-                        subTitle: services[index].duration.toString(),
-                      ),
-                    );
-                  },
-                ))
+                )
               : Padding(
                   padding: EdgeInsets.only(
                     top: rSize(250),

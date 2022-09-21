@@ -3,6 +3,10 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
+import 'package:appointments/widget/custom_slide_able.dart';
+import 'package:appointments/widget/custom_text_button.dart';
+import 'package:appointments/widget/service_card.dart';
+import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -27,29 +31,39 @@ class NewAppointment extends StatefulWidget {
 }
 
 class _NewAppointmentState extends State<NewAppointment> {
+  final TextEditingController _descriptionController = TextEditingController();
+
   DateTime? startDateTime;
   DateTime? startDateTimeTemp;
   DateTime? endTime;
   DateTime? endTimeTemp;
   DateTime? endTimeMin;
   Client? selectedClient;
-  Service? selectedService;
+  List<Service> selectedServices = [];
 
   @override
   void initState() {
     super.initState();
+    _descriptionController.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
     super.dispose();
+    _descriptionController.dispose();
   }
 
   onServiceTap(Service service) {
     setState(() {
-      selectedService = service;
+      selectedServices.add(service);
     });
     Navigator.pop(context);
+  }
+
+  removeService(Service service) {
+    setState(() {
+      selectedServices.removeWhere((item) => item == service);
+    });
   }
 
   onClientTap(Client client) {
@@ -60,7 +74,7 @@ class _NewAppointmentState extends State<NewAppointment> {
   }
 
   isButtonDisabled() {
-    if (selectedService != null) {
+    if (selectedServices != null) {
       return false;
     }
     return true;
@@ -69,16 +83,20 @@ class _NewAppointmentState extends State<NewAppointment> {
   saveAppointment() {
     /// need to add validation
     final appData = Provider.of<AppData>(context, listen: false);
+    List<AppointmentService> appointmentServices = [];
 
-    AppointmentService appointmentService = AppointmentService(
-      selectedService!.id,
-      selectedService!.name,
-      startDateTime!,
-      (startDateTime!).add(selectedService!.duration),
-      selectedService!.duration,
-      selectedService!.cost,
-      selectedService!.colorID,
-    );
+    selectedServices.forEach((element) {
+      AppointmentService appointmentService = AppointmentService(
+        element.id,
+        element.name,
+        startDateTime!,
+        (startDateTime!).add(element.duration),
+        element.duration,
+        element.cost,
+        element.colorID,
+      );
+      appointmentServices.add(appointmentService);
+    });
 
     Appointment newAppointment = Appointment(
       'id',
@@ -90,10 +108,33 @@ class _NewAppointmentState extends State<NewAppointment> {
       DateTime.now(),
       startDateTime!,
       '',
-      [appointmentService],
+      appointmentServices,
     );
     appData.submitNewAppointment(newAppointment);
     Navigator.pop(context);
+  }
+
+  renderServices() {
+    List<Widget> widgetList = selectedServices.map((Service service) {
+      return CustomSlidable(
+        customSlidableProps: CustomSlidableProps(
+          groupTag: 'newAppointment',
+          deleteAction: () => removeService(service),
+          child: ServiceCard(
+            // key: ValueKey(service.id),
+            serviceCardProps: ServiceCardProps(
+              withNavigation: false,
+              enabled: false,
+              serviceDetails: service,
+              title: service.name,
+              subTitle: service.duration.toString(),
+            ),
+          ),
+        ),
+      );
+    }).toList();
+
+    return widgetList;
   }
 
   @override
@@ -106,75 +147,65 @@ class _NewAppointmentState extends State<NewAppointment> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              bottom: rSize(5),
+              bottom: rSize(10),
               left: rSize(10),
               right: rSize(10),
             ),
-            child: Text(
-              'Service',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-          ),
-          CustomInputFieldButton(
-            text: selectedService?.name ?? 'Choose Service',
-            height: selectedService != null ? 70 : 50,
-            textWidget: selectedService != null
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      VerticalDivider(
-                        color: Theme.of(context).colorScheme.primary,
-                        width: rSize(4),
-                        endIndent: rSize(8),
-                        thickness: rSize(3),
-                        indent: rSize(8),
-                      ),
-                      SizedBox(
-                        width: rSize(15),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              selectedService?.name ?? '',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                            Text(
-                              selectedService?.duration.toString() ?? '',
-                              style: Theme.of(context).textTheme.bodyText1,
-                            )
-                          ],
-                        ),
-                      ),
-                      Text(
-                        getStringPrice(selectedService?.cost ?? 0),
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                      SizedBox(
-                        width: rSize(20),
-                      ),
-                    ],
-                  )
-                : null,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Services(
-                  selectionMode: true,
-                  onTap: (Service service) => onServiceTap(service),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Services',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
-              ),
+                selectedServices.isNotEmpty
+                    ? CustomTextButton(
+                        customTextButtonProps: CustomTextButtonProps(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Services(
+                                selectionMode: true,
+                                onTap: (Service service) =>
+                                    onServiceTap(service),
+                              ),
+                            ),
+                          ),
+                          text: 'Add Another Service',
+                          fontSize: rSize(14),
+                          textColor: darken(
+                            Theme.of(context).colorScheme.secondary,
+                            0.2,
+                          ),
+                        ),
+                      )
+                    : const SizedBox()
+              ],
             ),
           ),
+          selectedServices.isEmpty
+              ? CustomInputFieldButton(
+                  text: 'Choose Service',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Services(
+                        selectionMode: true,
+                        onTap: (Service service) => onServiceTap(service),
+                      ),
+                    ),
+                  ),
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: renderServices(),
+                ),
         ],
       );
     }
@@ -259,25 +290,25 @@ class _NewAppointmentState extends State<NewAppointment> {
                     dateTime: endTime,
                     format: 'HH:mm',
                   ),
-                  onTap: () => showPickerDateTimeModal(
-                    pickerDateTimeModalProps: PickerDateTimeModalProps(
-                      mode: CupertinoDatePickerMode.time,
-                      context: context,
-                      initialDateTime: endTime ?? endTimeMin,
-                      minimumDate: endTimeMin,
-                      title: 'End Time',
-                      onDateTimeChanged: (DateTime value) => {
-                        setState(() {
-                          endTimeTemp = value;
-                        }),
-                      },
-                      primaryAction: () => {
-                        setState(() {
-                          endTime = endTimeTemp;
-                        }),
-                      },
-                    ),
-                  ),
+                  // onTap: () => showPickerDateTimeModal(
+                  //   pickerDateTimeModalProps: PickerDateTimeModalProps(
+                  //     mode: CupertinoDatePickerMode.time,
+                  //     context: context,
+                  //     initialDateTime: endTime ?? endTimeMin,
+                  //     minimumDate: endTimeMin,
+                  //     title: 'End Time',
+                  //     onDateTimeChanged: (DateTime value) => {
+                  //       setState(() {
+                  //         endTimeTemp = value;
+                  //       }),
+                  //     },
+                  //     primaryAction: () => {
+                  //       setState(() {
+                  //         endTime = endTimeTemp;
+                  //       }),
+                  //     },
+                  //   ),
+                  // ),
                 ),
               ],
             ),
@@ -359,50 +390,108 @@ class _NewAppointmentState extends State<NewAppointment> {
             );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: 'New Appointment',
-          withBack: true,
-          withClipPath: true,
-          barHeight: 110,
+    Widget renderNote() {
+      return Padding(
+        padding: EdgeInsets.only(
+          top: rSize(40),
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        top: false,
-        left: false,
-        right: false,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: rSize(5),
+                left: rSize(10),
+                right: rSize(10),
+              ),
+              child: Text(
+                'Notes',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+            ),
+            SizedBox(
+              height: rSize(120),
+              child: CustomInputField(
+                customInputFieldProps: CustomInputFieldProps(
+                  controller: _descriptionController,
+                  // hintText:
+                  //     'Short description of your business working hours (recommended)',
+                  isDescription: true,
+                  keyboardType: TextInputType.multiline,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: 'New Appointment',
+            withBack: true,
+            withClipPath: true,
+            barHeight: 110,
           ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: SafeArea(
+          top: false,
+          left: false,
+          right: false,
           child: Column(
             children: [
               Expanded(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: rSize(20),
-                    ),
-                    renderClient(),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    renderServicePicker(),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    renderTimePicker(),
-                  ],
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(30),
+                    vertical: rSize(20),
+                  ),
+                  child: Column(
+                    children: [
+                      renderClient(),
+                      SizedBox(
+                        height: rSize(40),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: renderServicePicker(),
+                      ),
+                      SizedBox(
+                        height: rSize(40),
+                      ),
+                      renderTimePicker(),
+                      SizedBox(
+                        height: rSize(0),
+                      ),
+                      renderNote(),
+                    ],
+                  ),
                 ),
               ),
-              CustomButton(
-                customButtonProps: CustomButtonProps(
-                  onTap: () => {saveAppointment()},
-                  text: 'Save',
-                  isPrimary: true,
-                  isDisabled: isButtonDisabled(),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: rSize(30),
+                ),
+                child: CustomButton(
+                  customButtonProps: CustomButtonProps(
+                    onTap: () => {saveAppointment()},
+                    text: 'Save',
+                    isPrimary: true,
+                    isDisabled: isButtonDisabled(),
+                  ),
                 ),
               )
             ],

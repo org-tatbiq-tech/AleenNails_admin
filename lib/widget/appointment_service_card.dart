@@ -1,9 +1,7 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_list_tile.dart';
-import 'package:common_widgets/ease_in_animation.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentServiceCard extends StatelessWidget {
@@ -71,6 +69,21 @@ class AppointmentServiceCard extends StatelessWidget {
                       )
                     : const SizedBox(),
               ],
+            ),
+          ],
+        ),
+        leading: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            VerticalDivider(
+              // color: Color(serviceCardProps.serviceDetails.colorID),
+              color: Colors.red,
+              width: rSize(4),
+              endIndent: rSize(8),
+              thickness: rSize(3),
+              indent: rSize(8),
             ),
           ],
         ),

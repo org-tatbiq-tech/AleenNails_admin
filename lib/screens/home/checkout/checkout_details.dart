@@ -39,7 +39,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
     DateTime.now(),
     const Duration(hours: 1),
     100.00,
-    Colors.red.toString(),
+    0xFFb733,
   );
   List<AppointmentService> services = [];
   List<double> discounts = [

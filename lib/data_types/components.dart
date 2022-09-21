@@ -11,7 +11,7 @@ class Service {
   String name; // Service name
   double cost; // Service cost
   Duration duration; // Service time duration (2 hours, 1.5 hours,...)
-  String colorID; // Service hex color (color.hex/color.toString())
+  int colorID; // Service hex color (color.hex/color.toString())
   String desc; // Service description
   String imageFBS; // Firebsae storage image id
   String notMessage; // Service notification message
@@ -39,7 +39,7 @@ class AppointmentService {
   DateTime endTime; // Service ending time
   Duration duration; // service duration
   double cost; // Service cost
-  String colorID; // Service color ID (hex or color.toString())
+  int colorID; // Service color ID (hex or color.toString())
 
   AppointmentService(
     this.id,
