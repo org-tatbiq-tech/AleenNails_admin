@@ -49,7 +49,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         CustomButton(
           customButtonProps: CustomButtonProps(
-            onTap: () => {},
+            onTap: () => {
+              Navigator.pop(context),
+              Navigator.of(context).pushNamed('/newAppointment'),
+            },
             text: 'New Appointment',
           ),
         ),
@@ -58,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         CustomButton(
           customButtonProps: CustomButtonProps(
-            onTap: () => {},
+            onTap: () => {
+              Navigator.pop(context),
+              Navigator.of(context).pushNamed('/unavailability'),
+            },
             text: 'Add Unavailability',
           ),
         ),

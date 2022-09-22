@@ -1,3 +1,4 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_icon_button.dart';
 
@@ -47,7 +48,7 @@ class MoreState extends State<More> {
                 animationDelay: 0.3,
                 iconPath: 'assets/icons/rating.png',
                 positionType: PositionType.bottom,
-                title: 'Reviews & Ratings',
+                title: Languages.of(context)!.reviewRatingLabel,
               ),
             ),
             SizedBox(
@@ -59,7 +60,7 @@ class MoreState extends State<More> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/menu.png',
                 positionType: PositionType.bottom,
-                title: 'Services Setup',
+                title: Languages.of(context)!.serviceSetupLabel,
               ),
             ),
             SizedBox(
@@ -72,7 +73,7 @@ class MoreState extends State<More> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/calendar_time.png',
                 positionType: PositionType.bottom,
-                title: 'Schedule Management',
+                title: Languages.of(context)!.scheduleManagementLabel,
               ),
             ),
             SizedBox(
@@ -84,7 +85,7 @@ class MoreState extends State<More> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/profile.png',
                 positionType: PositionType.bottom,
-                title: 'Business Details',
+                title: Languages.of(context)!.businessDetailsLabel,
               ),
             ),
             SizedBox(
@@ -96,7 +97,7 @@ class MoreState extends State<More> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/settings.png',
                 positionType: PositionType.bottom,
-                title: 'Booking Settings',
+                title: Languages.of(context)!.bookingSettingsLabel,
               ),
             ),
             SizedBox(
@@ -109,7 +110,7 @@ class MoreState extends State<More> {
                 animationDelay: 0.7,
                 iconPath: 'assets/icons/setting_hand.png',
                 positionType: PositionType.bottom,
-                title: 'Personal Settings',
+                title: Languages.of(context)!.personalSettingsLabel,
               ),
             ),
             // SizedBox(

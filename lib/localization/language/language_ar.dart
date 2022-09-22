@@ -209,4 +209,18 @@ class LanguageAr extends Languages {
   String get monthLabel => "month";
   @override
   String get weekLabel => "week";
+
+  /// ************ Settings labels ************///
+  @override
+  String get reviewRatingLabel => "Reviews & Ratings";
+  @override
+  String get serviceSetupLabel => "Services Setup";
+  @override
+  String get scheduleManagementLabel => "Schedule Management";
+  @override
+  String get businessDetailsLabel => "Business Details";
+  @override
+  String get bookingSettingsLabel => "Booking Settings";
+  @override
+  String get personalSettingsLabel => "Personal Settings";
 }

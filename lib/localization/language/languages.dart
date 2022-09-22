@@ -147,4 +147,12 @@ abstract class Languages {
 
   String get monthLabel;
   String get weekLabel;
+
+  /// ************ Settings labels ************///
+  String get reviewRatingLabel;
+  String get serviceSetupLabel;
+  String get scheduleManagementLabel;
+  String get businessDetailsLabel;
+  String get bookingSettingsLabel;
+  String get personalSettingsLabel;
 }

@@ -3,7 +3,7 @@ import 'languages.dart';
 class LanguageEn extends Languages {
   /// ************ App labels ************///
   @override
-  String get appName => "Studios";
+  String get appName => "Aleen Nails";
 
   /// ************ Common labels ************///
   @override
@@ -210,4 +210,18 @@ class LanguageEn extends Languages {
   String get monthLabel => "Month";
   @override
   String get weekLabel => "Week";
+
+  /// ************ Settings labels ************///
+  @override
+  String get reviewRatingLabel => "Reviews & Ratings";
+  @override
+  String get serviceSetupLabel => "Services Setup";
+  @override
+  String get scheduleManagementLabel => "Schedule Management";
+  @override
+  String get businessDetailsLabel => "Business Details";
+  @override
+  String get bookingSettingsLabel => "Booking Settings";
+  @override
+  String get personalSettingsLabel => "Personal Settings";
 }
