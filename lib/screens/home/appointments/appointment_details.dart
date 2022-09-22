@@ -13,7 +13,6 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:appointments/widget/custom_status.dart';
 import 'package:common_widgets/ease_in_animation.dart';
-import 'package:appointments/widget/service_card.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

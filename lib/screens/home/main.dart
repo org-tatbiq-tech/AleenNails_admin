@@ -1,5 +1,6 @@
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
+import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/statistics.dart';
 import 'package:appointments/screens/home/timeline.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final screens = [
     TimeLine(),
     Clients(),
-    Statistics(),
+    Notifications(),
     More(),
   ];
 
@@ -34,10 +35,25 @@ class _HomeScreenState extends State<HomeScreen> {
       case 1:
         return 'Clients';
       case 2:
-        return 'Statics';
+        return 'Notifications';
       case 3:
         return 'More';
       default:
+    }
+  }
+
+  double getBarHeight() {
+    switch (_selectedPage) {
+      case 0:
+        return 50;
+      case 1:
+        return 70;
+      case 2:
+        return 70;
+      case 3:
+        return 120;
+      default:
+        return 70;
     }
   }
 
@@ -84,15 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
           logoHeight: rSize(75),
           withBorder: _selectedPage == 0 ? true : false,
           withClipPath: _selectedPage == 3 ? true : false,
-          barHeight: _selectedPage == 3 ? 120 : 70,
+          barHeight: getBarHeight(),
           titleText: getPageTitle(),
-          customIcon: _selectedPage == 0
+          customIcon: _selectedPage == 2
               ? Icon(
-                  FontAwesomeIcons.bell,
+                  Icons.refresh,
                   size: rSize(24),
                 )
               : null,
-          customIconTap: () => {Navigator.pushNamed(context, '/notifications')},
+          customIconTap: () => {},
         ),
       ),
       body: screens[_selectedPage],
@@ -189,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         : Theme.of(context).colorScheme.primary,
                     icon: null,
                     backgroundColor: Colors.transparent,
-                    path: 'assets/icons/statics.png',
+                    path: 'assets/icons/bell_full.png',
                     withPadding: true,
                     contentPadding: 2,
                     containerSize: 35,
