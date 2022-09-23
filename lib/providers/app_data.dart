@@ -34,40 +34,51 @@ class AppData extends ChangeNotifier {
   List<Client> allContacts = [];
   List<Client> filteredContacts = [];
   AppData() {
-    Client contact = Client('10', 'Saeed', '0543103540', 'Haifa', 'email');
-    Client contact2 = Client('19129', 'Ahmad', '058955005', 'Bagdad', '1');
+    Client contact = Client(
+      id: '10',
+      fullName: 'Saeed',
+      phone: '0543103540',
+      address: 'Haifa',
+      creationDate: DateTime.now(),
+      email: 'das@gma.com',
+    );
+    Client contact2 = Client(
+      id: '101',
+      fullName: 'Ahmad',
+      phone: '05431233540',
+      address: 'Israel',
+      email: 'adjsa@fm.com',
+      creationDate: DateTime.now(),
+    );
     allContacts = [contact, contact2, contact, contact2, contact, contact2];
     filteredContacts = [
       contact,
       contact2,
-      contact,
-      contact2,
-      contact,
-      contact2
     ];
     selectedAppointment = Appointment(
-      'id',
-      Status.waiting,
-      'business',
-      'Ahmad Manna',
-      '0505800955',
-      '919',
-      DateTime.now(),
-      DateTime.now(),
-      'nothing',
-      [],
+      id: 'id',
+      clientName: 'ahmad',
+      clientDocID: '123231',
+      clientPhone: '0505800955',
+      creationDate: DateTime.now(),
+      creator: 'Business',
+      date: DateTime.now(),
+      paymentStatus: PaymentStatus.paid,
+      services: [],
+      status: Status.confirmed,
+      notes: 'No notes',
     );
 
     selectedService = Service(
-      'id',
-      'service1',
-      100.00,
-      const Duration(hours: 1),
-      0xFFb733,
-      'desc',
-      'imageFBS',
-      'Message',
-      false,
+      id: 'id',
+      name: 'service1',
+      cost: 100.00,
+      duration: const Duration(hours: 1),
+      colorID: 0xFFb733,
+      description: 'desc',
+      imageFBS: ['imageFBS'],
+      noteMessage: 'Message',
+      onlineBooking: false,
     );
   }
 
@@ -89,7 +100,7 @@ class AppData extends ChangeNotifier {
 
   void getFiltered(String filter) {
     filteredContacts = allContacts.where((element) {
-      String result = element.name.toLowerCase();
+      String result = element.fullName.toLowerCase();
       String input = filter.toLowerCase();
       return result.contains(input);
     }).toList();

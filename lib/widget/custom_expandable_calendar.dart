@@ -5,10 +5,10 @@ import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class ExpandableCalendar extends StatelessWidget {
-  final ExpandableCalendarProps expandableCalendarProps;
-  const ExpandableCalendar({
-    required this.expandableCalendarProps,
+class CustomExpandableCalendar extends StatelessWidget {
+  final CustomExpandableCalendarProps customExpandableCalendarProps;
+  const CustomExpandableCalendar({
+    required this.customExpandableCalendarProps,
     Key? key,
   }) : super(key: key);
 
@@ -25,13 +25,13 @@ class ExpandableCalendar extends StatelessWidget {
         child: TableCalendar<CalendarEvent>(
           headerVisible: true,
           availableCalendarFormats:
-              expandableCalendarProps.availableCalendarFormats ??
+              customExpandableCalendarProps.availableCalendarFormats ??
                   {
                     CalendarFormat.month: Languages.of(context)!.monthLabel,
                     CalendarFormat.week: Languages.of(context)!.weekLabel,
                   },
-          firstDay: expandableCalendarProps.firstDay ?? getFirstDay(),
-          lastDay: expandableCalendarProps.lastDay ?? getLastDay(),
+          firstDay: customExpandableCalendarProps.firstDay ?? getFirstDay(),
+          lastDay: customExpandableCalendarProps.lastDay ?? getLastDay(),
           daysOfWeekHeight: rSize(30),
           rowHeight: rSize(45),
           daysOfWeekStyle: DaysOfWeekStyle(
@@ -71,19 +71,20 @@ class ExpandableCalendar extends StatelessWidget {
                 .textTheme
                 .subtitle1!
                 .copyWith(color: Colors.white, fontSize: rSize(14)),
-            formatButtonVisible: expandableCalendarProps.formatButtonVisible,
+            formatButtonVisible:
+                customExpandableCalendarProps.formatButtonVisible,
             formatButtonShowsNext: false,
             titleTextStyle: Theme.of(context).textTheme.headline2!.copyWith(
                   color: Theme.of(context).colorScheme.outline,
                 ),
             titleCentered: false,
           ),
-          focusedDay: expandableCalendarProps.focusedDay,
+          focusedDay: customExpandableCalendarProps.focusedDay,
           selectedDayPredicate: (day) =>
-              isSameDay(expandableCalendarProps.selectedDay, day),
-          calendarFormat: expandableCalendarProps.calendarFormat,
+              isSameDay(customExpandableCalendarProps.selectedDay, day),
+          calendarFormat: customExpandableCalendarProps.calendarFormat,
           rangeSelectionMode: RangeSelectionMode.disabled,
-          eventLoader: expandableCalendarProps.eventLoader,
+          eventLoader: customExpandableCalendarProps.eventLoader,
           startingDayOfWeek: StartingDayOfWeek.sunday,
           calendarStyle: CalendarStyle(
             cellMargin: EdgeInsets.all(rSize(2)),
@@ -119,16 +120,16 @@ class ExpandableCalendar extends StatelessWidget {
               shape: BoxShape.circle,
             ),
           ),
-          onDaySelected: expandableCalendarProps.onDaySelected,
-          onFormatChanged: expandableCalendarProps.onFormatChanged,
-          onPageChanged: expandableCalendarProps.onPageChanged,
+          onDaySelected: customExpandableCalendarProps.onDaySelected,
+          onFormatChanged: customExpandableCalendarProps.onFormatChanged,
+          onPageChanged: customExpandableCalendarProps.onPageChanged,
         ),
       ),
     );
   }
 }
 
-class ExpandableCalendarProps {
+class CustomExpandableCalendarProps {
   final DateTime focusedDay;
   final DateTime? selectedDay;
   final DateTime? firstDay;
@@ -140,7 +141,7 @@ class ExpandableCalendarProps {
   void Function(CalendarFormat)? onFormatChanged;
   void Function(DateTime)? onPageChanged;
   final bool formatButtonVisible;
-  ExpandableCalendarProps({
+  CustomExpandableCalendarProps({
     required this.focusedDay,
     this.selectedDay,
     this.firstDay,

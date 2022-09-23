@@ -20,7 +20,7 @@ class ClientCard extends StatelessWidget {
         onTap: clientCardProps.onTap ??
             () => Navigator.pushNamed(context, '/clientDetails'),
         title: Text(
-          clientCardProps.contactDetails.name,
+          clientCardProps.contactDetails.fullName,
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(16),
               ),
@@ -65,8 +65,8 @@ class ClientCard extends StatelessWidget {
           radius: rSize(25),
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           child: Text(
-            clientCardProps.contactDetails.name[0].toUpperCase() +
-                clientCardProps.contactDetails.name[1].toUpperCase(),
+            clientCardProps.contactDetails.fullName[0].toUpperCase() +
+                clientCardProps.contactDetails.fullName[1].toUpperCase(),
             style: Theme.of(context).textTheme.bodyText2,
           ),
         ),

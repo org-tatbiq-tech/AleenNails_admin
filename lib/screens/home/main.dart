@@ -1,7 +1,6 @@
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
-import 'package:appointments/screens/home/statistics.dart';
 import 'package:appointments/screens/home/timeline.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -10,7 +9,6 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -21,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedPage = 0;
+  bool _isListView = false;
   final screens = [
     TimeLine(),
     Clients(),
@@ -44,16 +43,49 @@ class _HomeScreenState extends State<HomeScreen> {
 
   double getBarHeight() {
     switch (_selectedPage) {
-      case 0:
-        return 50;
-      case 1:
-        return 70;
-      case 2:
-        return 70;
       case 3:
         return 120;
       default:
         return 70;
+    }
+  }
+
+  Widget? getCustomIcon() {
+    switch (_selectedPage) {
+      case 0:
+        if (_isListView) {
+          return Icon(
+            Icons.list,
+            size: rSize(26),
+          );
+        }
+        return Icon(
+          Icons.calendar_today,
+          size: rSize(24),
+        );
+
+      case 2:
+        return Icon(
+          Icons.refresh,
+          size: rSize(24),
+        );
+      default:
+        return null;
+    }
+  }
+
+  getCustomIconTap() {
+    switch (_selectedPage) {
+      case 0:
+        return () => {
+              setState(() {
+                _isListView = !_isListView;
+              }),
+            };
+      case 2:
+        return () => {};
+      default:
+        return null;
     }
   }
 
@@ -102,13 +134,8 @@ class _HomeScreenState extends State<HomeScreen> {
           withClipPath: _selectedPage == 3 ? true : false,
           barHeight: getBarHeight(),
           titleText: getPageTitle(),
-          customIcon: _selectedPage == 2
-              ? Icon(
-                  Icons.refresh,
-                  size: rSize(24),
-                )
-              : null,
-          customIconTap: () => {},
+          customIcon: getCustomIcon(),
+          customIconTap: getCustomIconTap(),
         ),
       ),
       body: screens[_selectedPage],

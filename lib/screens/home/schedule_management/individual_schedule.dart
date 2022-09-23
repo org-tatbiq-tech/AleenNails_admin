@@ -6,7 +6,7 @@ import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/ease_in_animation.dart';
-import 'package:appointments/widget/expandable_calendar.dart';
+import 'package:appointments/widget/custom_expandable_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -147,8 +147,8 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         children: [
-          ExpandableCalendar(
-            expandableCalendarProps: ExpandableCalendarProps(
+          CustomExpandableCalendar(
+            customExpandableCalendarProps: CustomExpandableCalendarProps(
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
               calendarFormat: _calendarFormat,

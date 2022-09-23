@@ -32,14 +32,14 @@ class CheckoutDetails extends StatefulWidget {
 class _CheckoutDetailsState extends State<CheckoutDetails> {
   List<Widget> chargeWidgetList = [];
   GlobalKey addItemButtonKey = GlobalKey();
+
   AppointmentService service = AppointmentService(
-    'id',
-    'service1',
-    DateTime.now(),
-    DateTime.now(),
-    const Duration(hours: 1),
-    100.00,
-    0xFFb733,
+    id: 'id',
+    name: 'service1',
+    startTime: DateTime.now(),
+    duration: const Duration(hours: 1),
+    cost: 100.00,
+    colorID: 0xFFb733,
   );
   List<AppointmentService> services = [];
   List<double> discounts = [

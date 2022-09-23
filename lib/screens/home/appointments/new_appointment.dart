@@ -3,9 +3,9 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
+import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_slide_able.dart';
 import 'package:appointments/widget/custom_text_button.dart';
-import 'package:appointments/widget/service_card.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -16,7 +16,6 @@ import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +36,7 @@ class _NewAppointmentState extends State<NewAppointment> {
   DateTime? endTimeTemp;
   DateTime? endTimeMin;
   Client? selectedClient;
-  List<Service> selectedServices = [];
+  List<AppointmentService> selectedServices = [];
 
   @override
   void initState() {
@@ -52,13 +51,21 @@ class _NewAppointmentState extends State<NewAppointment> {
   }
 
   onServiceTap(Service service) {
+    AppointmentService appointmentService = AppointmentService(
+      id: service.id,
+      name: service.name,
+      startTime: DateTime.now(),
+      duration: service.duration,
+      cost: service.cost,
+      colorID: service.colorID,
+    );
     setState(() {
-      selectedServices.add(service);
+      selectedServices.add(appointmentService);
     });
     Navigator.pop(context);
   }
 
-  removeService(Service service) {
+  removeService(AppointmentService service) {
     setState(() {
       selectedServices.removeWhere((item) => item == service);
     });
@@ -83,44 +90,46 @@ class _NewAppointmentState extends State<NewAppointment> {
     final appData = Provider.of<AppData>(context, listen: false);
     List<AppointmentService> appointmentServices = [];
 
-    selectedServices.forEach((element) {
+    for (var element in selectedServices) {
       AppointmentService appointmentService = AppointmentService(
-        element.id,
-        element.name,
-        startDateTime!,
-        (startDateTime!).add(element.duration),
-        element.duration,
-        element.cost,
-        element.colorID,
+        id: element.id,
+        name: element.name,
+        startTime: startDateTime!,
+        duration: element.duration,
+        cost: element.cost,
+        colorID: element.colorID,
       );
       appointmentServices.add(appointmentService);
-    });
+    }
 
     Appointment newAppointment = Appointment(
-      'id',
-      Status.waiting,
-      (FirebaseAuth.instance.currentUser?.displayName).toString(),
-      (selectedClient?.name).toString(),
-      (selectedClient?.phone).toString(),
-      (selectedClient?.id).toString(),
-      DateTime.now(),
-      startDateTime!,
-      '',
-      appointmentServices,
+      id: 'id',
+      clientName: 'ahmad',
+      clientDocID: '123231',
+      clientPhone: '0505800955',
+      creationDate: DateTime.now(),
+      creator: 'Business',
+      date: DateTime.now(),
+      paymentStatus: PaymentStatus.paid,
+      services: selectedServices,
+      status: Status.confirmed,
+      notes: 'No notes',
     );
+
     appData.submitNewAppointment(newAppointment);
     Navigator.pop(context);
   }
 
   renderServices() {
-    List<Widget> widgetList = selectedServices.map((Service service) {
+    List<Widget> widgetList =
+        selectedServices.map((AppointmentService service) {
       return CustomSlidable(
         customSlidableProps: CustomSlidableProps(
           groupTag: 'newAppointment',
           deleteAction: () => removeService(service),
-          child: ServiceCard(
+          child: AppointmentServiceCard(
             // key: ValueKey(service.id),
-            serviceCardProps: ServiceCardProps(
+            appointmentServiceCardProps: AppointmentServiceCardProps(
               withNavigation: false,
               enabled: false,
               serviceDetails: service,
