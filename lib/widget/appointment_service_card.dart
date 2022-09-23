@@ -15,7 +15,6 @@ class AppointmentServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
-        height: rSize(70),
         marginBottom: 15,
         enabled: appointmentServiceCardProps.enabled,
         onTap: appointmentServiceCardProps.onTap ??
@@ -72,20 +71,15 @@ class AppointmentServiceCard extends StatelessWidget {
             ),
           ],
         ),
-        leading: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            VerticalDivider(
-              // color: Color(serviceCardProps.serviceDetails.colorID),
-              color: Colors.red,
-              width: rSize(4),
-              endIndent: rSize(8),
-              thickness: rSize(3),
-              indent: rSize(8),
-            ),
-          ],
+        leading: SizedBox(
+          height: rSize(40),
+          child: VerticalDivider(
+            color: Color(appointmentServiceCardProps.serviceDetails.colorID),
+            width: rSize(4),
+            endIndent: rSize(2),
+            thickness: rSize(2),
+            indent: rSize(2),
+          ),
         ),
       ),
     );

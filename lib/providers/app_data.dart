@@ -74,7 +74,7 @@ class AppData extends ChangeNotifier {
       name: 'service1',
       cost: 100.00,
       duration: const Duration(hours: 1),
-      colorID: 0xFFb733,
+      colorID: 0xFF38713B,
       description: 'desc',
       imageFBS: ['imageFBS'],
       noteMessage: 'Message',

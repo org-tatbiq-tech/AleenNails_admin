@@ -39,7 +39,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
     startTime: DateTime.now(),
     duration: const Duration(hours: 1),
     cost: 100.00,
-    colorID: 0xFFb733,
+    colorID: 0xFF38713B,
   );
   List<AppointmentService> services = [];
   List<double> discounts = [
@@ -345,7 +345,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
           margin: EdgeInsets.symmetric(
             vertical: rSize(5),
           ),
-          height: rSize(18),
+          height: rSize(20),
           child: Row(
             children: [
               VerticalDivider(
