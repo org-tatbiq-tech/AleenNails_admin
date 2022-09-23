@@ -1,22 +1,18 @@
+import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/services_mgr.dart';
+import 'package:appointments/widget/picker_time_range_modal.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_input_field.dart';
+import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_modal.dart';
+import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/custom_app_bar.dart';
-
-import 'package:common_widgets/custom_icon.dart';
-
-import 'package:common_widgets/custom_input_field.dart';
-
-import 'package:common_widgets/custom_input_field_button.dart';
-
-import 'package:common_widgets/custom_modal.dart';
-
-import 'package:common_widgets/ease_in_animation.dart';
-
-import 'package:common_widgets/image_picker_modal.dart';
-
-import 'package:appointments/widget/picker_time_range_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class NewService extends StatefulWidget {
@@ -36,9 +32,9 @@ class _NewServiceState extends State<NewService> {
   final TextEditingController _messageToClientController =
       TextEditingController();
 
-  DateTime? durationValue;
+  Duration durationValue = Duration(minutes: 90);
   int selectedColorIndex = 0;
-  bool isEnabled = true;
+  bool onlineBooking = true;
 
   @override
   void initState() {
@@ -323,7 +319,7 @@ class _NewServiceState extends State<NewService> {
                     child: Switch(
                       onChanged: (bool value) {
                         setState(() {
-                          isEnabled = value;
+                          onlineBooking = value;
                         });
                       },
                       splashRadius: 0,
@@ -332,7 +328,7 @@ class _NewServiceState extends State<NewService> {
                           Theme.of(context).colorScheme.onBackground,
                       inactiveTrackColor:
                           Theme.of(context).colorScheme.primaryContainer,
-                      value: isEnabled,
+                      value: onlineBooking,
                     ),
                   ),
                 ],
@@ -508,7 +504,7 @@ class _NewServiceState extends State<NewService> {
                     customInputFieldProps: CustomInputFieldProps(
                       controller: _priceController,
                       keyboardType: TextInputType.number,
-                      isCurrency: true,
+                      isCurrency: false,
                     ),
                   ),
                 ],
@@ -538,21 +534,22 @@ class _NewServiceState extends State<NewService> {
                   ),
                   CustomInputFieldButton(
                     text: getDateTimeFormat(
-                      dateTime: durationValue,
+                      // dateTime: durationValue,
                       format: 'HH:mm',
                     ),
                     onTap: () => showPickerTimeRangeModal(
                       pickerTimeRangeModalProps: PickerTimeRangeModalProps(
                         context: context,
                         title: 'Duration',
-                        startTimeValue: durationValue,
+                        // startTimeValue: durationValue,
                         pickerTimeRangType: PickerTimeRangType.single,
-                        primaryAction: (DateTime x) => setState(() {
-                          durationValue = x;
-                        }),
+                        // primaryAction: (DateTime x) => setState(() {
+                        //   durationValue = x;
+                        // },
                       ),
                     ),
                   ),
+                  // ),
                 ],
               ),
             ),
@@ -591,6 +588,23 @@ class _NewServiceState extends State<NewService> {
       );
     }
 
+    saveService() {
+      final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
+      Service newService = Service(
+        id: '',
+        name: _nameController.text,
+        cost: double.parse(_priceController.text),
+        duration: durationValue,
+        colorID: colors[selectedColorIndex].value,
+        onlineBooking: onlineBooking,
+        description: _descriptionController.text,
+        noteMessage: _messageToClientController.text,
+      );
+
+      servicesMgr.submitNewService(newService);
+      Navigator.pop(context);
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -606,7 +620,7 @@ class _NewServiceState extends State<NewService> {
             // withClipPath: true,
             withSave: true,
             // barHeight: 70,
-            saveTap: () => {},
+            saveTap: () => {saveService()},
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,

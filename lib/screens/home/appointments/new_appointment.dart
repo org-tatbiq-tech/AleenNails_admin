@@ -1,20 +1,20 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
-import 'package:appointments/providers/app_data.dart';
+import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
+import 'package:appointments/widget/client_card.dart';
+import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_slide_able.dart';
 import 'package:appointments/widget/custom_text_button.dart';
-import 'package:common_widgets/custom_input_field.dart';
-import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/layout.dart';
-import 'package:appointments/widget/client_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-import 'package:appointments/widget/custom_avatar.dart';
+import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,7 +28,7 @@ class NewAppointment extends StatefulWidget {
 }
 
 class _NewAppointmentState extends State<NewAppointment> {
-  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _notesController = TextEditingController();
 
   DateTime? startDateTime;
   DateTime? startDateTimeTemp;
@@ -41,13 +41,13 @@ class _NewAppointmentState extends State<NewAppointment> {
   @override
   void initState() {
     super.initState();
-    _descriptionController.addListener(() => setState(() {}));
+    _notesController.addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
     super.dispose();
-    _descriptionController.dispose();
+    _notesController.dispose();
   }
 
   onServiceTap(Service service) {
@@ -87,36 +87,37 @@ class _NewAppointmentState extends State<NewAppointment> {
 
   saveAppointment() {
     /// need to add validation
-    final appData = Provider.of<AppData>(context, listen: false);
+    final appointmentsMgr =
+        Provider.of<AppointmentsMgr>(context, listen: false);
     List<AppointmentService> appointmentServices = [];
 
-    for (var element in selectedServices) {
+    for (var service in selectedServices) {
       AppointmentService appointmentService = AppointmentService(
-        id: element.id,
-        name: element.name,
+        id: service.id,
+        name: service.name,
         startTime: startDateTime!,
-        duration: element.duration,
-        cost: element.cost,
-        colorID: element.colorID,
+        duration: service.duration,
+        cost: service.cost,
+        colorID: service.colorID,
       );
       appointmentServices.add(appointmentService);
     }
 
     Appointment newAppointment = Appointment(
-      id: 'id',
-      clientName: 'ahmad',
-      clientDocID: '123231',
-      clientPhone: '0505800955',
+      id: '',
+      clientName: selectedClient!.fullName,
+      clientDocID: selectedClient!.id,
+      clientPhone: selectedClient!.phone,
       creationDate: DateTime.now(),
       creator: 'Business',
-      date: DateTime.now(),
-      paymentStatus: PaymentStatus.paid,
+      date: startDateTime!,
+      paymentStatus: PaymentStatus.unpaid,
       services: selectedServices,
       status: Status.confirmed,
-      notes: 'No notes',
+      notes: _notesController.text,
     );
 
-    appData.submitNewAppointment(newAppointment);
+    appointmentsMgr.submitNewAppointment(newAppointment);
     Navigator.pop(context);
   }
 
@@ -413,7 +414,7 @@ class _NewAppointmentState extends State<NewAppointment> {
               height: rSize(120),
               child: CustomInputField(
                 customInputFieldProps: CustomInputFieldProps(
-                  controller: _descriptionController,
+                  controller: _notesController,
                   // hintText:
                   //     'Short description of your business working hours (recommended)',
                   isDescription: true,
@@ -469,17 +470,6 @@ class _NewAppointmentState extends State<NewAppointment> {
                       ),
                       renderTimePicker(),
                       renderNote(),
-                      // SizedBox(
-                      //   height: rSize(40),
-                      // ),
-                      // CustomButton(
-                      //   customButtonProps: CustomButtonProps(
-                      //     onTap: () => {saveAppointment()},
-                      //     text: 'Save',
-                      //     isPrimary: true,
-                      //     isDisabled: isButtonDisabled(),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),

@@ -1,8 +1,11 @@
 import 'package:appointments/localization/localizations_delegate.dart';
 import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/app_data.dart';
+import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_state.dart';
+import 'package:appointments/providers/clients.dart';
 import 'package:appointments/providers/langs.dart';
+import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
@@ -56,9 +59,13 @@ void main() {
       providers: [
         ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider<LocaleData>(create: (_) => LocaleData()),
-        ChangeNotifierProvider<AppData>(create: (_) => AppData()),
         ChangeNotifierProvider<AuthenticationState>(
-            create: (_) => AuthenticationState())
+            create: (_) => AuthenticationState()),
+        ChangeNotifierProvider<AppointmentsMgr>(
+            create: (_) => AppointmentsMgr()),
+        ChangeNotifierProvider<ServicesMgr>(create: (_) => ServicesMgr()),
+        ChangeNotifierProvider<ClientsMgr>(create: (_) => ClientsMgr()),
+        ChangeNotifierProvider<AppData>(create: (_) => AppData()),
       ],
       child: AppointmentsApp(),
     ),

@@ -34,7 +34,7 @@ class Service {
       'id': id,
       'name': name,
       'cost': cost,
-      'duration': duration,
+      'duration': duration.toString(),
       'colorID': colorID,
       'description': description,
       'imageFBS': imageFBS,
