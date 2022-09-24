@@ -31,7 +31,6 @@ class Service {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'name': name,
       'cost': cost,
       'duration': duration.inMinutes.toString(),

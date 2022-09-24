@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:appointments/data_types/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,17 +12,59 @@ import 'package:flutter/material.dart';
 const servicesCollection = 'services';
 
 class ServicesMgr extends ChangeNotifier {
-  ///*************************** Firestore **********************************///
+  ///************************* Firestore *******************************///
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
   final FirebaseAuth _fa = FirebaseAuth.instance;
 
-  ///************* services *************///
-  late Appointment selectedService;
+  ///************************* Services *******************************///
+  List<Service> _services = []; // Holds all DB services
+  bool initialized = false; // Don't download services unless required
+  StreamSubscription<QuerySnapshot>? _servicesSub;
+
+  List<Service> get services {
+    print('getting services');
+    if (!initialized) {
+      initialized = true;
+      print('not initialized');
+      downloadServices();
+    }
+    return _services;
+  }
+
+  Future<void> downloadServices() async {
+    /// Download services from DB
+    // query preparation
+
+    var query = _fs
+        .collection(servicesCollection)
+        .orderBy('priority', descending: true);
+
+    _servicesSub = query.snapshots().listen(
+      (snapshot) async {
+        _services = [];
+        if (snapshot.docs.isEmpty) {
+          // No data to show - notifying listeners for empty services list.
+          notifyListeners();
+          return;
+        }
+
+        // Services collection has data to show
+        for (var document in snapshot.docs) {
+          var data = document.data();
+          data['id'] = document.id;
+          _services.add(Service.fromJson(data));
+        }
+        notifyListeners();
+      },
+    );
+  }
+
+  late Service selectedService;
   bool isSelectedServiceLoaded = false;
 
   Future<void> submitNewService(Service newService) async {
     /// Submitting new service - update DB
-    CollectionReference services = _fs.collection(servicesCollection);
-    services.add(newService.toJson());
+    CollectionReference servicesColl = _fs.collection(servicesCollection);
+    servicesColl.add(newService.toJson());
   }
 }
