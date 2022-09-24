@@ -10,6 +10,7 @@ import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -71,11 +72,17 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       _messageToClientController.text = widget.service!.noteMessage ?? '';
       selectedHoursIdx = hoursData.indexWhere(
           (element) => element == (widget.service!.duration.inHours.toInt()));
+      selectedHours =
+          selectedHoursIdx > 0 ? hoursData[selectedHoursIdx] : hoursData[0];
       selectedMinutesIdx = minutesData.indexWhere((element) =>
           element ==
           (widget.service!.duration.inMinutes.remainder(60).toInt()));
+      selectedMinutes = selectedMinutesIdx > 0
+          ? minutesData[selectedMinutesIdx]
+          : minutesData[0];
       selectedColorIdx = colors
           .indexWhere((element) => element.value == (widget.service!.colorID));
+      onlineBooking = widget.service!.onlineBooking;
     }
     colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {}));
@@ -360,6 +367,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     }
 
     deleteService() {
+      final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
+      servicesMgr.deleteService(widget.service!);
+      Navigator.pop(context);
+    }
+
+    showDeleteServiceModal() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -368,6 +381,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           secondaryButtonText: 'Back',
           deleteCancelModal: true,
           footerButton: ModalFooter.both,
+          primaryAction: () => deleteService(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -414,7 +428,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         child: CustomButton(
           customButtonProps: CustomButtonProps(
             onTap: () => {
-              deleteService(),
+              showDeleteServiceModal(),
             },
             text: 'Delete Service',
             isPrimary: true,
@@ -495,7 +509,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       );
     }
 
-    Widget _renderMedia() {
+    Widget renderMedia() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -688,18 +702,43 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
     saveService() {
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
-      Service newService = Service(
-        id: '',
-        name: _nameController.text,
-        cost: double.parse(_priceController.text),
-        duration: Duration(hours: selectedHours, minutes: selectedMinutes),
-        colorID: colors[selectedColorIdx].value,
-        onlineBooking: onlineBooking,
-        description: _descriptionController.text,
-        noteMessage: _messageToClientController.text,
-      );
+      if (widget.service == null) {
+        Service newService = Service(
+          id: '',
+          name: _nameController.text,
+          cost: double.parse(_priceController.text),
+          duration: Duration(hours: selectedHours, minutes: selectedMinutes),
+          colorID: colors[selectedColorIdx].value,
+          onlineBooking: onlineBooking,
+          description: _descriptionController.text,
+          noteMessage: _messageToClientController.text,
+        );
 
-      servicesMgr.submitNewService(newService);
+        servicesMgr.submitNewService(newService);
+        showSuccessFlash(
+          context: context,
+          successTitle: 'Submitted!',
+          successBody: 'Service was uploaded to DB successfully!',
+        );
+      } else {
+        // update
+        Service updatedService = Service(
+          id: widget.service!.id,
+          name: _nameController.text,
+          cost: double.parse(_priceController.text),
+          duration: Duration(hours: selectedHours, minutes: selectedMinutes),
+          colorID: colors[selectedColorIdx].value,
+          onlineBooking: onlineBooking,
+          description: _descriptionController.text,
+          noteMessage: _messageToClientController.text,
+        );
+        servicesMgr.updateService(updatedService);
+        showSuccessFlash(
+          context: context,
+          successTitle: 'Updated!',
+          successBody: 'Service was Updated successfully!',
+        );
+      }
       Navigator.pop(context);
     }
 
@@ -715,10 +754,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           customAppBarProps: CustomAppBarProps(
             titleText: 'New Service',
             withBack: true,
-            // withClipPath: true,
             withSave: true,
-            // barHeight: 70,
-            saveTap: () => {saveService()},
+            saveTap: () => saveService(),
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -748,7 +785,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               SizedBox(
                 height: rSize(20),
               ),
-              _renderMedia(),
+              renderMedia(),
               SizedBox(
                 height: rSize(30),
               ),

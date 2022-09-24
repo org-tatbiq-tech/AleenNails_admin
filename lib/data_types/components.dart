@@ -16,6 +16,7 @@ class Service {
   List<String>? imageFBS; // List of firebase storage image id
   String? noteMessage; // Service notification message
   bool onlineBooking; // Whether this service allows online booking or not
+  int? priority;
 
   Service({
     required this.id,
@@ -27,6 +28,7 @@ class Service {
     this.imageFBS,
     this.noteMessage,
     required this.onlineBooking,
+    this.priority,
   });
 
   Map<String, dynamic> toJson() {
@@ -39,18 +41,22 @@ class Service {
       'imageFBS': imageFBS,
       'noteMessage': noteMessage,
       'onlineBooking': onlineBooking,
+      'priority': priority,
     };
   }
 
   factory Service.fromJson(Map<String, dynamic> doc) {
     return Service(
-        id: doc["id"],
-        name: doc["name"],
-        cost: doc['cost'],
-        duration: Duration(minutes: int.parse(doc['duration'])),
-        colorID: doc['colorID'],
-        noteMessage: doc['noteMessage'],
-        onlineBooking: doc['onlineBooking']);
+      id: doc["id"],
+      name: doc["name"],
+      cost: doc['cost'],
+      duration: Duration(minutes: int.parse(doc['duration'])),
+      colorID: doc['colorID'],
+      description: doc['description'],
+      noteMessage: doc['noteMessage'],
+      onlineBooking: doc['onlineBooking'],
+      priority: doc['priority'],
+    );
   }
 }
 

@@ -67,4 +67,17 @@ class ServicesMgr extends ChangeNotifier {
     data['priority'] = services.length;
     servicesColl.add(data);
   }
+
+  Future<void> updateService(Service updatedService) async {
+    /// Update existing service - update DB
+    CollectionReference servicesColl = _fs.collection(servicesCollection);
+    var data = updatedService.toJson();
+    servicesColl.doc(updatedService.id).update(data);
+  }
+
+  Future<void> deleteService(Service serviceToDelete) async {
+    /// delete existing service - update DB
+    CollectionReference servicesColl = _fs.collection(servicesCollection);
+    servicesColl.doc(serviceToDelete.id).delete();
+  }
 }
