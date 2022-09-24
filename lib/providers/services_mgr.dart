@@ -22,10 +22,8 @@ class ServicesMgr extends ChangeNotifier {
   StreamSubscription<QuerySnapshot>? _servicesSub;
 
   List<Service> get services {
-    print('getting services');
     if (!initialized) {
       initialized = true;
-      print('not initialized');
       downloadServices();
     }
     return _services;

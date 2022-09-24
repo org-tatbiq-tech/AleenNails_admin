@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
+import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -46,13 +47,6 @@ class ServicesState extends State<Services> {
         },
         child: child,
       );
-    }
-
-    String durationToFormat({required Duration duration, String format = ''}) {
-      String hours = duration.inHours.toString().padLeft(0, '2');
-      String minutes =
-          duration.inMinutes.remainder(60).toString().padLeft(2, '0');
-      return "${hours}:${minutes}";
     }
 
     return Scaffold(

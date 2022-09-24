@@ -1,5 +1,6 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
+import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/duration_picker_modal.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -8,8 +9,6 @@ import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
-import 'package:common_widgets/picker_date_time_modal.dart';
-import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
@@ -540,9 +539,11 @@ class _NewServiceState extends State<NewService> {
                     ),
                   ),
                   CustomInputFieldButton(
-                    text: getDateTimeFormat(
-                      // dateTime: durationValue,
-                      format: 'HH:mm',
+                    text: durationToFormat(
+                      duration: Duration(
+                        hours: selectedHours,
+                        minutes: selectedMinutes,
+                      ),
                     ),
                     onTap: () => showDurationPickerModal(
                       durationPickerModalProps: DurationPickerModalProps(
