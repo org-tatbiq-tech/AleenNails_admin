@@ -1,10 +1,12 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/widget/custom_avatar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -12,7 +14,6 @@ import 'package:common_widgets/utils/validators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class NewClient extends StatefulWidget {
   final Service? service;
@@ -379,6 +380,32 @@ class _NewClientState extends State<NewClient> {
       );
     }
 
+    Widget renderAvatar() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          CustomAvatar(
+            customAvatarProps: CustomAvatarProps(
+                radius: rSize(100),
+                editable: true,
+                circleShape: false,
+                rectangleShape: true,
+                enable: true,
+                onTap: () => {
+                      showImagePickerModal(
+                        imagePickerModalProps: ImagePickerModalProps(
+                          context: context,
+                          saveImage: () => {},
+                        ),
+                      )
+                    }),
+          ),
+        ],
+      );
+    }
+
     saveClient() {
       Navigator.pop(context);
     }
@@ -410,6 +437,10 @@ class _NewClientState extends State<NewClient> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
+              renderAvatar(),
+              SizedBox(
+                height: rSize(20),
+              ),
               renderClientName(),
               SizedBox(
                 height: rSize(20),
