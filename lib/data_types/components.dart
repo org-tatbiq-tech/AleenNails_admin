@@ -42,6 +42,17 @@ class Service {
       'onlineBooking': onlineBooking,
     };
   }
+
+  factory Service.fromJson(Map<String, dynamic> doc) {
+    return Service(
+        id: doc["id"],
+        name: doc["name"],
+        cost: doc['cost'],
+        duration: Duration(minutes: int.parse(doc['duration'])),
+        colorID: doc['colorID'],
+        noteMessage: doc['noteMessage'],
+        onlineBooking: doc['onlineBooking']);
+  }
 }
 
 /// Appointment service - holds partial details on service pin particular
@@ -74,7 +85,19 @@ class AppointmentService {
       'startTime': Timestamp.fromDate(startTime),
       'cost': cost,
       'colorID': colorID,
+      'duration': duration.inMinutes.toString(),
     };
+  }
+
+  factory AppointmentService.fromJson(Map<String, dynamic> doc) {
+    return AppointmentService(
+      id: doc['id'],
+      name: doc['name'],
+      startTime: doc['startTime'].toDate(),
+      cost: doc['cost'],
+      colorID: doc['colorID'],
+      duration: Duration(minutes: doc['duration']),
+    );
   }
 }
 
@@ -133,10 +156,32 @@ class Appointment {
       'date': Timestamp.fromDate(date),
       'notes': notes,
       'services': services.map((service) => service.toJson()).toList(),
-      'total': totalCost,
       'paymentStatus': paymentStatus.toString(),
-      'duration': totalDurationInMins.toString(),
     };
+  }
+
+  factory Appointment.fromJson(Map<String, dynamic> doc) {
+    List<AppointmentService> loadServicesFromDoc(
+        List<Map<String, dynamic>> docServices) {
+      List<AppointmentService> services = [];
+      for (Map<String, dynamic> s in docServices) {
+        services.add(AppointmentService.fromJson(s));
+      }
+      return services;
+    }
+
+    return Appointment(
+        id: doc["id"],
+        status: doc["status"],
+        creator: doc['creator'],
+        clientName: doc['clientName'],
+        clientDocID: doc['clientDocID'],
+        clientPhone: doc['clientPhone'],
+        creationDate: doc['creationDate'].toDate(),
+        notes: doc['notes'],
+        date: doc['date'].toDate(),
+        services: loadServicesFromDoc(doc['services']),
+        paymentStatus: doc['paymentStatus']);
   }
 }
 
