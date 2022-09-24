@@ -63,6 +63,8 @@ class ServicesMgr extends ChangeNotifier {
   Future<void> submitNewService(Service newService) async {
     /// Submitting new service - update DB
     CollectionReference servicesColl = _fs.collection(servicesCollection);
-    servicesColl.add(newService.toJson());
+    var data = newService.toJson();
+    data['priority'] = services.length;
+    servicesColl.add(data);
   }
 }

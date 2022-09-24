@@ -31,8 +31,7 @@ import 'package:appointments/screens/home/schedule_management/individual_schedul
 import 'package:appointments/screens/home/schedule_management/schedule_management.dart';
 import 'package:appointments/screens/home/schedule_management/unavailability.dart';
 import 'package:appointments/screens/home/schedule_management/working_days.dart';
-import 'package:appointments/screens/home/services/new_service.dart';
-import 'package:appointments/screens/home/services/service_details.dart';
+import 'package:appointments/screens/home/services/service.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/home/settings/booking_settings.dart';
 import 'package:appointments/screens/landing/landing.dart';
@@ -119,8 +118,7 @@ class AppointmentsApp extends StatelessWidget {
       '/discountSelection': (context) => const DiscountSelection(),
       '/amountSelection': (context) => const AmountSelection(),
       '/services': (context) => const Services(),
-      '/newService': (context) => const NewService(),
-      '/serviceDetails': (context) => const ServiceDetails(),
+      '/newService': (context) => const ServiceWidget(),
       '/businessInfo': (context) => const BusinessInfo(),
       '/businessDetails': (context) => const BusinessDetails(),
       '/profileImages': (context) => const ProfileImages(),

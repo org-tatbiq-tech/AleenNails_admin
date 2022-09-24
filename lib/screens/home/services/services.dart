@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
+import 'package:appointments/screens/home/services/service.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/service_card.dart';
@@ -46,6 +47,15 @@ class ServicesState extends State<Services> {
           );
         },
         child: child,
+      );
+    }
+
+    navigateToService(Service service) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ServiceWidget(service: service),
+        ),
       );
     }
 
@@ -95,7 +105,8 @@ class ServicesState extends State<Services> {
                             onTap: widget.onTap != null
                                 ? () =>
                                     widget.onTap!(servicesMgr.services[index])
-                                : null,
+                                : () => navigateToService(
+                                    servicesMgr.services[index]),
                             serviceDetails: servicesMgr.services[index],
                             title: servicesMgr.services[index].name,
                             subTitle: durationToFormat(

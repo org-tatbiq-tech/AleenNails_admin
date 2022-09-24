@@ -3,6 +3,7 @@ import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/duration_picker_modal.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
@@ -11,19 +12,19 @@ import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
-class NewService extends StatefulWidget {
-  const NewService({Key? key}) : super(key: key);
+class ServiceWidget extends StatefulWidget {
+  final Service? service;
+  const ServiceWidget({Key? key, this.service}) : super(key: key);
 
   @override
-  State<NewService> createState() => _NewServiceState();
+  State<ServiceWidget> createState() => _ServiceWidgetState();
 }
 
-class _NewServiceState extends State<NewService> {
+class _ServiceWidgetState extends State<ServiceWidget> {
   final ItemScrollController colorScrollController = ItemScrollController();
   final ItemPositionsListener colorPositionsListener =
       ItemPositionsListener.create();
@@ -33,18 +34,49 @@ class _NewServiceState extends State<NewService> {
   final TextEditingController _messageToClientController =
       TextEditingController();
 
-  int selectedColorIndex = 0;
+  int selectedColorIdx = 0;
   bool onlineBooking = true;
 
   List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
   List<int> minutesData = [0, 15, 30, 45];
 
   int selectedHours = 0;
+  int selectedHoursIdx = 0;
   int selectedMinutes = 0;
+  int selectedMinutesIdx = 0;
+
+  Color color1 = Color.fromARGB(255, 204, 136, 218);
+  Color color2 = Color.fromARGB(255, 195, 107, 156);
+  Color color3 = Color.fromARGB(255, 209, 156, 187);
+  Color color4 = Color.fromARGB(255, 110, 155, 161);
+  Color color5 = Color.fromARGB(255, 240, 193, 176);
+  List<Color> mediaList = [];
+  List<Color> colors = [];
 
   @override
   void initState() {
     super.initState();
+    colors = [
+      color1,
+      color2,
+      color3,
+      color4,
+      color5,
+    ];
+
+    if (widget.service != null) {
+      _nameController.text = widget.service!.name;
+      _priceController.text = widget.service!.cost.toString();
+      _descriptionController.text = widget.service!.description ?? '';
+      _messageToClientController.text = widget.service!.noteMessage ?? '';
+      selectedHoursIdx = hoursData.indexWhere(
+          (element) => element == (widget.service!.duration.inHours.toInt()));
+      selectedMinutesIdx = minutesData.indexWhere((element) =>
+          element ==
+          (widget.service!.duration.inMinutes.remainder(60).toInt()));
+      selectedColorIdx = colors
+          .indexWhere((element) => element.value == (widget.service!.colorID));
+    }
     colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {}));
     _priceController.addListener(() => setState(() {}));
@@ -72,25 +104,6 @@ class _NewServiceState extends State<NewService> {
 
   @override
   Widget build(BuildContext context) {
-    Color color1 = Color.fromARGB(255, 204, 136, 218);
-    Color color2 = Color.fromARGB(255, 195, 107, 156);
-    Color color3 = Color.fromARGB(255, 209, 156, 187);
-    Color color4 = Color.fromARGB(255, 110, 155, 161);
-    Color color5 = Color.fromARGB(255, 240, 193, 176);
-    List<Color> mediaList = [];
-    List<Color> colors = [
-      color1,
-      color2,
-      color3,
-      color4,
-      color5,
-      color1,
-      color2,
-      color3,
-      color4,
-      color5,
-    ];
-
     List<Widget> mediaCards() {
       List<Widget> widgetList = mediaList.map((item) {
         return EaseInAnimation(
@@ -182,7 +195,7 @@ class _NewServiceState extends State<NewService> {
           _scrollToIndex(index, colors),
           setState(
             () => {
-              selectedColorIndex = index,
+              selectedColorIdx = index,
             },
           ),
         },
@@ -204,7 +217,7 @@ class _NewServiceState extends State<NewService> {
             ],
             border: Border.all(
               width: rSize(2),
-              color: selectedColorIndex == index
+              color: selectedColorIdx == index
                   ? darken(
                       Theme.of(context).colorScheme.primary,
                     )
@@ -250,6 +263,7 @@ class _NewServiceState extends State<NewService> {
               ),
               scrollDirection: Axis.horizontal,
               itemCount: colors.length,
+              initialScrollIndex: selectedColorIdx,
               itemBuilder: (context, index) => colorCard(index),
             ),
           ),
@@ -257,7 +271,7 @@ class _NewServiceState extends State<NewService> {
       );
     }
 
-    Widget _renderPermissions() {
+    Widget renderPermissions() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,6 +356,73 @@ class _NewServiceState extends State<NewService> {
             ],
           )
         ],
+      );
+    }
+
+    deleteService() {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: 'Delete',
+          secondaryButtonText: 'Back',
+          deleteCancelModal: true,
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/trash.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: rSize(80),
+                  contentPadding: rSize(20),
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                'Delete this service?',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                'Action can not be undone',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    Widget renderFooter() {
+      return Padding(
+        padding: EdgeInsets.only(
+          right: rSize(20),
+          left: rSize(20),
+          top: rSize(40),
+        ),
+        child: CustomButton(
+          customButtonProps: CustomButtonProps(
+            onTap: () => {
+              deleteService(),
+            },
+            text: 'Delete Service',
+            isPrimary: true,
+            // isSecondary: true,
+            textColor: Colors.white,
+            backgroundColor: Theme.of(context).colorScheme.error,
+          ),
+        ),
       );
     }
 
@@ -548,8 +629,10 @@ class _NewServiceState extends State<NewService> {
                     onTap: () => showDurationPickerModal(
                       durationPickerModalProps: DurationPickerModalProps(
                         context: context,
-                        hoursData: [0, 1, 2, 3, 4, 5, 6, 7],
-                        minutesData: [0, 15, 30, 45],
+                        hoursData: hoursData,
+                        minutesData: minutesData,
+                        selectedHours: selectedHoursIdx,
+                        selectedMinutes: selectedMinutesIdx,
                         primaryButtonText: 'Save',
                         secondaryButtonText: 'Cancel',
                         saveMinutes: (value) => {
@@ -610,7 +693,7 @@ class _NewServiceState extends State<NewService> {
         name: _nameController.text,
         cost: double.parse(_priceController.text),
         duration: Duration(hours: selectedHours, minutes: selectedMinutes),
-        colorID: colors[selectedColorIndex].value,
+        colorID: colors[selectedColorIdx].value,
         onlineBooking: onlineBooking,
         description: _descriptionController.text,
         noteMessage: _messageToClientController.text,
@@ -673,7 +756,8 @@ class _NewServiceState extends State<NewService> {
               SizedBox(
                 height: rSize(20),
               ),
-              _renderPermissions(),
+              renderPermissions(),
+              widget.service != null ? renderFooter() : const SizedBox(),
             ],
           ),
         ),
