@@ -1,6 +1,6 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
-import 'package:appointments/widget/picker_time_range_modal.dart';
+import 'package:appointments/widget/duration_picker_modal.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
@@ -8,9 +8,11 @@ import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
+import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -32,9 +34,14 @@ class _NewServiceState extends State<NewService> {
   final TextEditingController _messageToClientController =
       TextEditingController();
 
-  Duration durationValue = Duration(minutes: 90);
   int selectedColorIndex = 0;
   bool onlineBooking = true;
+
+  List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
+  List<int> minutesData = [0, 15, 30, 45];
+
+  int selectedHours = 0;
+  int selectedMinutes = 0;
 
   @override
   void initState() {
@@ -504,7 +511,7 @@ class _NewServiceState extends State<NewService> {
                     customInputFieldProps: CustomInputFieldProps(
                       controller: _priceController,
                       keyboardType: TextInputType.number,
-                      isCurrency: false,
+                      isCurrency: true,
                     ),
                   ),
                 ],
@@ -537,19 +544,26 @@ class _NewServiceState extends State<NewService> {
                       // dateTime: durationValue,
                       format: 'HH:mm',
                     ),
-                    onTap: () => showPickerTimeRangeModal(
-                      pickerTimeRangeModalProps: PickerTimeRangeModalProps(
+                    onTap: () => showDurationPickerModal(
+                      durationPickerModalProps: DurationPickerModalProps(
                         context: context,
-                        title: 'Duration',
-                        // startTimeValue: durationValue,
-                        pickerTimeRangType: PickerTimeRangType.single,
-                        // primaryAction: (DateTime x) => setState(() {
-                        //   durationValue = x;
-                        // },
+                        hoursData: [0, 1, 2, 3, 4, 5, 6, 7],
+                        minutesData: [0, 15, 30, 45],
+                        primaryButtonText: 'Save',
+                        secondaryButtonText: 'Cancel',
+                        saveMinutes: (value) => {
+                          setState(() {
+                            selectedMinutes = minutesData[value];
+                          })
+                        },
+                        saveHours: (value) => {
+                          setState(() {
+                            selectedHours = hoursData[value];
+                          })
+                        },
                       ),
                     ),
                   ),
-                  // ),
                 ],
               ),
             ),
@@ -594,7 +608,7 @@ class _NewServiceState extends State<NewService> {
         id: '',
         name: _nameController.text,
         cost: double.parse(_priceController.text),
-        duration: durationValue,
+        duration: Duration(hours: selectedHours, minutes: selectedMinutes),
         colorID: colors[selectedColorIndex].value,
         onlineBooking: onlineBooking,
         description: _descriptionController.text,
