@@ -24,7 +24,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
   @override
   void initState() {
     super.initState();
-    _discountController.selection = TextSelection(
+    _discountController.selection = const TextSelection(
       baseOffset: 0,
       extentOffset: 1,
     );

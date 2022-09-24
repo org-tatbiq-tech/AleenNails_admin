@@ -9,6 +9,7 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -64,6 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
           size: rSize(24),
         );
 
+      case 1:
+        return Icon(
+          FontAwesomeIcons.plus,
+          size: rSize(20),
+        );
+
       case 2:
         return Icon(
           Icons.refresh,
@@ -82,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 _isListView = !_isListView;
               }),
             };
+      case 1:
+        return () => {Navigator.pushNamed(context, '/newClient')};
       case 2:
         return () => {};
       default:

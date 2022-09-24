@@ -14,6 +14,7 @@ import 'package:appointments/screens/home/checkout/checkout_details.dart';
 import 'package:appointments/screens/home/checkout/discount_selection.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
+import 'package:appointments/screens/home/clients/new_client.dart';
 import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/personal_settings/language_settings.dart';
@@ -107,6 +108,7 @@ class AppointmentsApp extends StatelessWidget {
       '/loginScreen': (context) => const LoginScreen(),
       '/clients': (context) => const Clients(),
       '/clientDetails': (context) => const ClientDetails(),
+      '/newClient': (context) => const NewClient(),
       '/forgetPassword': (context) => const ForgetPasswordScreen(),
       // '/resetPassword': (context) => const ResetPasswordScreen(),
       '/register': (context) => const RegisterMainScreen(),
