@@ -1,13 +1,15 @@
 import 'dart:ui';
+
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/empty_list_image.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
 import '../../../providers/app_data.dart';
 
 class Services extends StatefulWidget {
@@ -51,6 +53,13 @@ class ServicesState extends State<Services> {
         },
         child: child,
       );
+    }
+
+    String durationToFormat({required Duration duration, String format = ''}) {
+      String hours = duration.inHours.toString().padLeft(0, '2');
+      String minutes =
+          duration.inMinutes.remainder(60).toString().padLeft(2, '0');
+      return "${hours}:${minutes}";
     }
 
     return Scaffold(
@@ -99,7 +108,8 @@ class ServicesState extends State<Services> {
                               : null,
                           serviceDetails: services[index],
                           title: services[index].name,
-                          subTitle: services[index].duration.toString(),
+                          subTitle: durationToFormat(
+                              duration: services[index].duration),
                         ),
                       );
                     },

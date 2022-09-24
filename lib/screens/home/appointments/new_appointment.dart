@@ -33,8 +33,6 @@ class _NewAppointmentState extends State<NewAppointment> {
   DateTime? startDateTime;
   DateTime? startDateTimeTemp;
   DateTime? endTime;
-  DateTime? endTimeTemp;
-  DateTime? endTimeMin;
   Client? selectedClient;
   List<AppointmentService> selectedServices = [];
 
@@ -272,7 +270,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                       primaryAction: () => {
                         setState(() {
                           startDateTime = startDateTimeTemp;
-                          endTimeMin = startDateTimeTemp;
+                          // endTime = startDateTime.add();
                         }),
                       },
                     ),
