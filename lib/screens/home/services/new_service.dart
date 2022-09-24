@@ -34,13 +34,14 @@ class _NewServiceState extends State<NewService> {
   final TextEditingController _messageToClientController =
       TextEditingController();
 
-  DateTime durationValueTime = DateTime.now();
-  DateTime durationValueTimeTemp = DateTime.now();
-
-  Duration durationValue = Duration(minutes: 90);
-
   int selectedColorIndex = 0;
   bool onlineBooking = true;
+
+  List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
+  List<int> minutesData = [0, 15, 30, 45];
+
+  int selectedHours = 0;
+  int selectedMinutes = 0;
 
   @override
   void initState() {
@@ -550,6 +551,16 @@ class _NewServiceState extends State<NewService> {
                         minutesData: [0, 15, 30, 45],
                         primaryButtonText: 'Save',
                         secondaryButtonText: 'Cancel',
+                        saveMinutes: (value) => {
+                          setState(() {
+                            selectedMinutes = minutesData[value];
+                          })
+                        },
+                        saveHours: (value) => {
+                          setState(() {
+                            selectedHours = hoursData[value];
+                          })
+                        },
                       ),
                     ),
                   ),
@@ -597,7 +608,7 @@ class _NewServiceState extends State<NewService> {
         id: '',
         name: _nameController.text,
         cost: double.parse(_priceController.text),
-        duration: durationValue,
+        duration: Duration(hours: selectedHours, minutes: selectedMinutes),
         colorID: colors[selectedColorIndex].value,
         onlineBooking: onlineBooking,
         description: _descriptionController.text,

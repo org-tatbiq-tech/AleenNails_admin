@@ -36,9 +36,7 @@ showDurationPickerModal({
     ),
     onSelect: (Picker picker, int int, List<int> list) => {},
     onConfirm: (Picker picker, List value) {
-      durationPickerModalProps.primaryAction != null
-          ? durationPickerModalProps.primaryAction!((value))
-          : () => {};
+      durationPickerModalProps.saveHours(value[0]);
     },
   );
   Picker minutesPicker = Picker(
@@ -70,9 +68,7 @@ showDurationPickerModal({
     ),
     onSelect: (Picker picker, int int, List<int> list) => {},
     onConfirm: (Picker picker, List value) {
-      durationPickerModalProps.primaryAction != null
-          ? durationPickerModalProps.primaryAction!((value))
-          : () => {};
+      durationPickerModalProps.saveMinutes(value[0]);
     },
   );
 
@@ -91,6 +87,10 @@ showDurationPickerModal({
         hoursPicker.onConfirm!(
           hoursPicker,
           hoursPicker.selecteds,
+        ),
+        minutesPicker.onConfirm!(
+          minutesPicker,
+          minutesPicker.selecteds,
         )
       },
       child: Row(
@@ -118,7 +118,8 @@ showDurationPickerModal({
 class DurationPickerModalProps {
   BuildContext context;
   String title;
-  Function? primaryAction;
+  Function saveMinutes;
+  Function saveHours;
   bool looping;
   List<dynamic> hoursData;
   List<dynamic> minutesData;
@@ -133,7 +134,8 @@ class DurationPickerModalProps {
     required this.hoursData,
     required this.minutesData,
     this.looping = false,
-    this.primaryAction,
+    required this.saveMinutes,
+    required this.saveHours,
     this.selectedHours = 0,
     this.selectedMinutes = 0,
     required this.primaryButtonText,
