@@ -300,6 +300,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                       style: Theme.of(context).textTheme.bodyText2),
                 ),
                 CustomInputFieldButton(
+                  isDisabled: true,
                   text: getDateTimeFormat(
                     dateTime: endTime,
                     format: 'HH:mm',

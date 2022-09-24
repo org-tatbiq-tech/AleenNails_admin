@@ -1,6 +1,6 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
-import 'package:appointments/widget/picker_time_range_modal.dart';
+import 'package:appointments/widget/duration_picker_modal.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
@@ -8,9 +8,11 @@ import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
+import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -32,7 +34,11 @@ class _NewServiceState extends State<NewService> {
   final TextEditingController _messageToClientController =
       TextEditingController();
 
+  DateTime durationValueTime = DateTime.now();
+  DateTime durationValueTimeTemp = DateTime.now();
+
   Duration durationValue = Duration(minutes: 90);
+
   int selectedColorIndex = 0;
   bool onlineBooking = true;
 
@@ -504,7 +510,7 @@ class _NewServiceState extends State<NewService> {
                     customInputFieldProps: CustomInputFieldProps(
                       controller: _priceController,
                       keyboardType: TextInputType.number,
-                      isCurrency: false,
+                      isCurrency: true,
                     ),
                   ),
                 ],
@@ -537,19 +543,16 @@ class _NewServiceState extends State<NewService> {
                       // dateTime: durationValue,
                       format: 'HH:mm',
                     ),
-                    onTap: () => showPickerTimeRangeModal(
-                      pickerTimeRangeModalProps: PickerTimeRangeModalProps(
+                    onTap: () => showDurationPickerModal(
+                      durationPickerModalProps: DurationPickerModalProps(
                         context: context,
-                        title: 'Duration',
-                        // startTimeValue: durationValue,
-                        pickerTimeRangType: PickerTimeRangType.single,
-                        // primaryAction: (DateTime x) => setState(() {
-                        //   durationValue = x;
-                        // },
+                        hoursData: [0, 1, 2, 3, 4, 5, 6, 7],
+                        minutesData: [0, 15, 30, 45],
+                        primaryButtonText: 'Save',
+                        secondaryButtonText: 'Cancel',
                       ),
                     ),
                   ),
-                  // ),
                 ],
               ),
             ),
