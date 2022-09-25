@@ -1,8 +1,8 @@
-import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CustomExpandableCalendar extends StatelessWidget {
@@ -22,7 +22,7 @@ class CustomExpandableCalendar extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 0, rSize(15)),
-        child: TableCalendar<CalendarEvent>(
+        child: TableCalendar<FlutterWeekViewEvent>(
           headerVisible: true,
           availableCalendarFormats:
               customExpandableCalendarProps.availableCalendarFormats ??
@@ -136,7 +136,7 @@ class CustomExpandableCalendarProps {
   final DateTime? lastDay;
   final CalendarFormat calendarFormat;
   final Map<CalendarFormat, String>? availableCalendarFormats;
-  List<CalendarEvent> Function(DateTime)? eventLoader;
+  List<FlutterWeekViewEvent> Function(DateTime)? eventLoader;
   void Function(DateTime, DateTime)? onDaySelected;
   void Function(CalendarFormat)? onFormatChanged;
   void Function(DateTime)? onPageChanged;

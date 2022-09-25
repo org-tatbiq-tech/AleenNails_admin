@@ -24,7 +24,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
   DateTime _focusedDay = kToday;
   DateTime? _selectedDay = kToday;
 
-  List<CalendarEvent> _getEventsForDay(DateTime day) {
+  List<FlutterWeekViewEvent> _getEventsForDay(DateTime day) {
     // return kEvents[day] ?? [];
     return [];
   }
