@@ -1,5 +1,4 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_day_view.dart';
 import 'package:appointments/widget/custom_expandable_calendar.dart';
@@ -107,12 +106,11 @@ class TimeLineState extends State<TimeLine> {
   renderFlutterWeekViewEvent({
     required String title,
     String? description,
-    Color? backgroundColor,
+    required Color backgroundColor,
     required DateTime start,
     required DateTime end,
     VoidCallback? onTap,
   }) {
-    backgroundColor = backgroundColor ?? Colors.red;
     return FlutterWeekViewEvent(
       eventTextBuilder: eventTextBuilder,
       padding: EdgeInsets.symmetric(
@@ -145,6 +143,7 @@ class TimeLineState extends State<TimeLine> {
             'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
         start: date.add(Duration(hours: 19)),
         end: date.add(Duration(hours: 22)),
+        backgroundColor: Colors.green,
         onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
       ),
       renderFlutterWeekViewEvent(
@@ -153,6 +152,7 @@ class TimeLineState extends State<TimeLine> {
             'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
         start: date.add(Duration(hours: 23, minutes: 30)),
         end: date.add(Duration(hours: 24)),
+        backgroundColor: Colors.red,
         onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
       ),
       renderFlutterWeekViewEvent(
@@ -161,6 +161,7 @@ class TimeLineState extends State<TimeLine> {
             'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
         start: date.add(Duration(hours: 17)),
         end: date.add(Duration(hours: 18, minutes: 30)),
+        backgroundColor: Colors.green,
         onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
       ),
       renderFlutterWeekViewEvent(
@@ -169,11 +170,12 @@ class TimeLineState extends State<TimeLine> {
             'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
         start: date.add(Duration(hours: 20)),
         end: date.add(Duration(hours: 21)),
+        backgroundColor: Colors.brown,
         onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
       ),
     ];
 
-    return appointments.toList();
+    return appointments;
   }
 
   @override
