@@ -70,7 +70,14 @@ class ServicesState extends State<Services> {
             FontAwesomeIcons.plus,
             size: rSize(24),
           ),
-          customIconTap: () => {Navigator.pushNamed(context, '/newService')},
+          customIconTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ServiceWidget(),
+              ),
+            ),
+          },
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -128,7 +135,12 @@ class ServicesState extends State<Services> {
                         bottomWidget: CustomTextButton(
                           customTextButtonProps: CustomTextButtonProps(
                             onTap: () => {
-                              Navigator.pushNamed(context, '/newService'),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const ServiceWidget(),
+                                ),
+                              ),
                             },
                             text: 'Add New Service',
                             textColor: Theme.of(context).colorScheme.primary,
