@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/formats.dart';
+import 'package:appointments/widget/custom_color_picker.dart';
 import 'package:appointments/widget/duration_picker_modal.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -35,7 +36,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   final TextEditingController _messageToClientController =
       TextEditingController();
 
-  int selectedColorIdx = 0;
+  Color selectedColor = Colors.green;
+  Color selectedColorTemp = Colors.green;
   bool onlineBooking = true;
 
   List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
@@ -46,24 +48,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   int selectedMinutes = 0;
   int selectedMinutesIdx = 0;
 
-  Color color1 = Color.fromARGB(255, 204, 136, 218);
-  Color color2 = Color.fromARGB(255, 195, 107, 156);
-  Color color3 = Color.fromARGB(255, 209, 156, 187);
-  Color color4 = Color.fromARGB(255, 110, 155, 161);
-  Color color5 = Color.fromARGB(255, 240, 193, 176);
   List<Color> mediaList = [];
-  List<Color> colors = [];
 
   @override
   void initState() {
     super.initState();
-    colors = [
-      color1,
-      color2,
-      color3,
-      color4,
-      color5,
-    ];
 
     if (widget.service != null) {
       _nameController.text = widget.service!.name;
@@ -80,9 +69,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       selectedMinutes = selectedMinutesIdx > 0
           ? minutesData[selectedMinutesIdx]
           : minutesData[0];
-      selectedColorIdx = colors
-          .indexWhere((element) => element.value == (widget.service!.colorID));
       onlineBooking = widget.service!.onlineBooking;
+      selectedColor = Color(widget.service!.colorID);
+      selectedColorTemp = Color(widget.service!.colorID);
     }
     colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {}));
@@ -196,50 +185,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       return widgetList;
     }
 
-    Widget colorCard(index) {
-      return EaseInAnimation(
-        onTap: () => {
-          _scrollToIndex(index, colors),
-          setState(
-            () => {
-              selectedColorIdx = index,
-            },
-          ),
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          width: rSize(40),
-          height: rSize(40),
-          margin: EdgeInsets.only(
-            right: rSize(15),
-          ),
-          decoration: BoxDecoration(
-            color: colors[index],
-            boxShadow: [
-              BoxShadow(
-                color: Theme.of(context).shadowColor,
-                blurRadius: 3,
-                offset: const Offset(0, 1),
-              ),
-            ],
-            border: Border.all(
-              width: rSize(2),
-              color: selectedColorIdx == index
-                  ? darken(
-                      Theme.of(context).colorScheme.primary,
-                    )
-                  : colors[index],
-            ),
-            borderRadius: BorderRadius.all(
-              Radius.circular(
-                rSize(20),
-              ),
-            ),
-          ),
-        ),
-      );
-    }
-
     Widget renderServiceColors() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -259,21 +204,30 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               style: Theme.of(context).textTheme.bodyText2,
             ),
           ),
-          SizedBox(
-            height: rSize(60),
-            child: ScrollablePositionedList.builder(
-              itemScrollController: colorScrollController,
-              itemPositionsListener: colorPositionsListener,
-              padding: EdgeInsets.symmetric(
-                horizontal: rSize(20),
-                vertical: rSize(10),
+          EaseInAnimation(
+            onTap: () => showColorPicker(
+              colorPickerProps: ColorPickerProps(
+                context: context,
+                pickerColor: selectedColor,
+                onColorChanged: (newColor) => setState(() {
+                  selectedColorTemp = newColor;
+                }),
+                primaryAction: () => setState(() {
+                  selectedColor = selectedColorTemp;
+                }),
               ),
-              scrollDirection: Axis.horizontal,
-              itemCount: colors.length,
-              initialScrollIndex: selectedColorIdx,
-              itemBuilder: (context, index) => colorCard(index),
             ),
-          ),
+            child: Container(
+              width: rSize(40),
+              height: rSize(40),
+              decoration: BoxDecoration(
+                color: selectedColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(rSize(10)),
+                ),
+              ),
+            ),
+          )
         ],
       );
     }
@@ -708,7 +662,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         name: _nameController.text,
         cost: double.parse(_priceController.text),
         duration: Duration(hours: selectedHours, minutes: selectedMinutes),
-        colorID: colors[selectedColorIdx].value,
+        colorID: selectedColor.value,
         onlineBooking: onlineBooking,
         description: _descriptionController.text,
         noteMessage: _messageToClientController.text,
