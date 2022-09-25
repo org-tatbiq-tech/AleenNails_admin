@@ -145,9 +145,14 @@ class TimeLineState extends State<TimeLine> {
       DateTime date = DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day);
       var day = 'day1';
-      if (_focusedDay.day % 2 == 0) {
+      if (_selectedDay!.day % 2 == 0) {
         day = 'day2';
       }
+      print('selected day is');
+      print(_selectedDay);
+      print(_selectedDay!.day);
+      print('day is ');
+      print(day);
       Map<String, List<FlutterWeekViewEvent>> appointments = {
         'day1': [
           renderFlutterWeekViewEvent(
@@ -185,7 +190,7 @@ class TimeLineState extends State<TimeLine> {
         ],
         'day2': [
           renderFlutterWeekViewEvent(
-            title: 'Course 3',
+            title: 'Course 4',
             description:
                 'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
             backgroundColor: Colors.green,
@@ -211,6 +216,8 @@ class TimeLineState extends State<TimeLine> {
           ),
         ],
       };
+      print('list is ');
+      print(appointments[day]!.toList()[0].title);
       return appointments[day]!.toList();
     }
 
