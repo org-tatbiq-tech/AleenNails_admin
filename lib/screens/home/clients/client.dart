@@ -18,15 +18,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class NewClient extends StatefulWidget {
-  final Service? service;
-  const NewClient({Key? key, this.service}) : super(key: key);
+class ClientWidget extends StatefulWidget {
+  final Client? client;
+  const ClientWidget({Key? key, this.client}) : super(key: key);
 
   @override
-  State<NewClient> createState() => _NewClientState();
+  State<ClientWidget> createState() => _ClientWidgetState();
 }
 
-class _NewClientState extends State<NewClient> {
+class _ClientWidgetState extends State<ClientWidget> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -42,6 +42,16 @@ class _NewClientState extends State<NewClient> {
   @override
   void initState() {
     super.initState();
+    if (widget.client != null) {
+      _nameController.text = widget.client!.fullName;
+      _phoneController.text = widget.client!.phone;
+      _emailController.text = widget.client!.email;
+      _addressController.text = widget.client!.address;
+      _noteController.text = widget.client!.generalNotes!;
+      _discountController.text = widget.client!.discount.toString();
+      birthdayDate = widget.client!.birthday;
+    }
+
     _nameController.addListener(() => setState(() {}));
     _phoneController.addListener(() => setState(() {}));
     _emailController.addListener(() => setState(() {}));
@@ -437,9 +447,9 @@ class _NewClientState extends State<NewClient> {
 
     saveClient() {
       final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
-
-      Client newClient = Client(
-        id: '',
+      String clientID = widget.client == null ? '' : widget.client!.id;
+      Client client = Client(
+        id: clientID,
         fullName: _nameController.text,
         phone: _phoneController.text,
         address: _addressController.text,
@@ -452,14 +462,26 @@ class _NewClientState extends State<NewClient> {
         acceptedDate: DateTime.now(),
       );
 
-      clientMgr.submitNewClient(newClient);
-      showSuccessFlash(
-        context: context,
-        successTitle: 'Submitted!',
-        successBody: 'Client was added to DB successfully!',
-      );
-
-      Navigator.pop(context);
+      if (widget.client == null) {
+        clientMgr.submitNewClient(client);
+        showSuccessFlash(
+          context: context,
+          successTitle: 'Submitted!',
+          successBody: 'Client was added to DB successfully!',
+        );
+        Navigator.pop(context);
+      } else {
+        clientMgr.updateClient(client);
+        showSuccessFlash(
+          context: context,
+          successTitle: 'Updated!',
+          successBody: 'Client was updated successfully!',
+        );
+        int count = 0;
+        Navigator.popUntil(context, (route) {
+          return count++ == 2;
+        });
+      }
     }
 
     return GestureDetector(

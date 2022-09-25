@@ -1,13 +1,14 @@
+import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/timeline.dart';
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -90,7 +91,14 @@ class _HomeScreenState extends State<HomeScreen> {
               }),
             };
       case 1:
-        return () => {Navigator.pushNamed(context, '/newClient')};
+        return () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ClientWidget(),
+                ),
+              ),
+            };
       case 2:
         return () => {};
       default:

@@ -1,4 +1,5 @@
 import 'package:appointments/providers/app_data.dart';
+import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -36,7 +37,12 @@ class ClientSelectionState extends State<ClientSelection> {
                 size: rSize(24),
               ),
               customIconTap: () => {
-                Navigator.pushNamed(context, '/newClient'),
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ClientWidget(),
+                  ),
+                ),
               },
             ),
           ),

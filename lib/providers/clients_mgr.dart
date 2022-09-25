@@ -61,7 +61,14 @@ class ClientsMgr extends ChangeNotifier {
 
   Future<void> submitNewClient(Client newClient) async {
     /// Submitting new Client - update DB
-    CollectionReference clients = _fs.collection(clientsCollection);
-    clients.add(newClient.toJson());
+    CollectionReference clientsColl = _fs.collection(clientsCollection);
+    clientsColl.add(newClient.toJson());
+  }
+
+  Future<void> updateClient(Client updatedClient) async {
+    /// Update existing Client - update DB
+    CollectionReference clientsColl = _fs.collection(clientsCollection);
+    var data = updatedClient.toJson();
+    clientsColl.doc(updatedClient.id).update(data);
   }
 }

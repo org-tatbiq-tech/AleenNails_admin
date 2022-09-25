@@ -702,19 +702,20 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
     saveService() {
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
-      if (widget.service == null) {
-        Service newService = Service(
-          id: '',
-          name: _nameController.text,
-          cost: double.parse(_priceController.text),
-          duration: Duration(hours: selectedHours, minutes: selectedMinutes),
-          colorID: colors[selectedColorIdx].value,
-          onlineBooking: onlineBooking,
-          description: _descriptionController.text,
-          noteMessage: _messageToClientController.text,
-        );
+      String serviceID = widget.service == null ? '' : widget.service!.id;
+      Service service = Service(
+        id: serviceID,
+        name: _nameController.text,
+        cost: double.parse(_priceController.text),
+        duration: Duration(hours: selectedHours, minutes: selectedMinutes),
+        colorID: colors[selectedColorIdx].value,
+        onlineBooking: onlineBooking,
+        description: _descriptionController.text,
+        noteMessage: _messageToClientController.text,
+      );
 
-        servicesMgr.submitNewService(newService);
+      if (widget.service == null) {
+        servicesMgr.submitNewService(service);
         showSuccessFlash(
           context: context,
           successTitle: 'Submitted!',
@@ -722,21 +723,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
       } else {
         // update
-        Service updatedService = Service(
-          id: widget.service!.id,
-          name: _nameController.text,
-          cost: double.parse(_priceController.text),
-          duration: Duration(hours: selectedHours, minutes: selectedMinutes),
-          colorID: colors[selectedColorIdx].value,
-          onlineBooking: onlineBooking,
-          description: _descriptionController.text,
-          noteMessage: _messageToClientController.text,
-        );
-        servicesMgr.updateService(updatedService);
+        servicesMgr.updateService(service);
         showSuccessFlash(
           context: context,
           successTitle: 'Updated!',
-          successBody: 'Service was Updated successfully!',
+          successBody: 'Service was updated successfully!',
         );
       }
       Navigator.pop(context);

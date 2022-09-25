@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -501,7 +502,14 @@ class _ClientDetailsState extends State<ClientDetails> {
             Icons.edit,
             size: rSize(24),
           ),
-          customIconTap: () => {},
+          customIconTap: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ClientWidget(client: widget.client),
+              ),
+            ),
+          },
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
