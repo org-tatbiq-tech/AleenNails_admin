@@ -239,7 +239,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  '0%',
+                  '${widget.client.discount}%',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
