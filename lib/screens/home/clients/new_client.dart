@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -9,11 +10,13 @@ import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/validators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class NewClient extends StatefulWidget {
   final Service? service;
@@ -27,19 +30,11 @@ class _NewClientState extends State<NewClient> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _discountController =
       TextEditingController(text: '0');
-  int selectedColorIdx = 0;
-  bool onlineBooking = true;
-
-  List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
-  List<int> minutesData = [0, 15, 30, 45];
-
-  int selectedHours = 0;
-  int selectedHoursIdx = 0;
-  int selectedMinutes = 0;
-  int selectedMinutesIdx = 0;
+  bool trustedClient = true;
 
   DateTime? birthdayDate;
   DateTime? birthdayDateTemp;
@@ -50,6 +45,7 @@ class _NewClientState extends State<NewClient> {
     _nameController.addListener(() => setState(() {}));
     _phoneController.addListener(() => setState(() {}));
     _emailController.addListener(() => setState(() {}));
+    _addressController.addListener(() => setState(() {}));
     _noteController.addListener(() => setState(() {}));
     _discountController.selection = const TextSelection(
       baseOffset: 0,
@@ -64,6 +60,7 @@ class _NewClientState extends State<NewClient> {
     _nameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
+    _addressController.dispose();
     _noteController.dispose();
   }
 
@@ -137,7 +134,7 @@ class _NewClientState extends State<NewClient> {
                     child: Switch(
                       onChanged: (bool value) {
                         setState(() {
-                          onlineBooking = value;
+                          trustedClient = value;
                         });
                       },
                       splashRadius: 0,
@@ -146,7 +143,7 @@ class _NewClientState extends State<NewClient> {
                           Theme.of(context).colorScheme.onBackground,
                       inactiveTrackColor:
                           Theme.of(context).colorScheme.primaryContainer,
-                      value: onlineBooking,
+                      value: trustedClient,
                     ),
                   ),
                 ],
@@ -287,6 +284,38 @@ class _NewClientState extends State<NewClient> {
       );
     }
 
+    Widget renderClientAddress() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Text(
+              'Address',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+          ),
+          SizedBox(
+            height: rSize(5),
+          ),
+          CustomInputField(
+            customInputFieldProps: CustomInputFieldProps(
+              controller: _addressController,
+              keyboardType: TextInputType.text,
+            ),
+          ),
+        ],
+      );
+    }
+
     Widget renderBirthdayPicker() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -407,6 +436,29 @@ class _NewClientState extends State<NewClient> {
     }
 
     saveClient() {
+      final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
+
+      Client newClient = Client(
+        id: '',
+        fullName: _nameController.text,
+        phone: _phoneController.text,
+        address: _addressController.text,
+        email: _emailController.text,
+        creationDate: DateTime.now(),
+        birthday: birthdayDate,
+        generalNotes: _noteController.text,
+        discount: double.parse(_discountController.text),
+        isTrusted: trustedClient,
+        acceptedDate: DateTime.now(),
+      );
+
+      clientMgr.submitNewClient(newClient);
+      showSuccessFlash(
+        context: context,
+        successTitle: 'Submitted!',
+        successBody: 'Client was added to DB successfully!',
+      );
+
       Navigator.pop(context);
     }
 
@@ -450,6 +502,10 @@ class _NewClientState extends State<NewClient> {
                 height: rSize(20),
               ),
               renderClientEmail(),
+              SizedBox(
+                height: rSize(20),
+              ),
+              renderClientAddress(),
               SizedBox(
                 height: rSize(20),
               ),

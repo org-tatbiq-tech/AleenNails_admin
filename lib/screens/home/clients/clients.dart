@@ -1,4 +1,6 @@
-import 'package:appointments/providers/app_data.dart';
+import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +18,17 @@ class Clients extends StatefulWidget {
 class ClientsState extends State<Clients> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppData>(
-      builder: (context, appData, _) {
+    navigateToClient(Client client) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ClientDetails(client: client),
+        ),
+      );
+    }
+
+    return Consumer<ClientsMgr>(
+      builder: (context, clientsMgr, _) {
         return Container(
           color: Theme.of(context).colorScheme.background,
           child: Column(
@@ -35,11 +46,13 @@ class ClientsState extends State<Clients> {
                     vertical: rSize(20),
                     horizontal: rSize(20),
                   ),
-                  itemCount: appData.filteredContacts.length,
+                  itemCount: clientsMgr.clients.length,
                   itemBuilder: (context, index) {
                     return ClientCard(
                       clientCardProps: ClientCardProps(
-                        contactDetails: appData.filteredContacts[index],
+                        contactDetails: clientsMgr.clients[index],
+                        onTap: () =>
+                            navigateToClient(clientsMgr.clients[index]),
                       ),
                     );
                   },

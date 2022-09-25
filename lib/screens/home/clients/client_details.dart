@@ -1,23 +1,22 @@
 import 'dart:math';
 
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/providers/app_data.dart';
+import 'package:appointments/widget/appointment_card.dart';
+import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom_text_button.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/fade_animation.dart';
+import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:appointments/widget/appointment_card.dart';
-import 'package:common_widgets/custom_app_bar.dart';
-import 'package:appointments/widget/custom_avatar.dart';
-import 'package:common_widgets/custom_icon.dart';
-import 'package:appointments/widget/custom_text_button.dart';
-import 'package:common_widgets/ease_in_animation.dart';
-import 'package:common_widgets/read_more_text.dart';
-import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ClientDetails extends StatefulWidget {
-  const ClientDetails({Key? key}) : super(key: key);
+  final Client client;
+  const ClientDetails({required this.client, Key? key}) : super(key: key);
 
   @override
   _ClientDetailsState createState() => _ClientDetailsState();
@@ -31,13 +30,7 @@ class _ClientDetailsState extends State<ClientDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final appData = Provider.of<AppData>(context, listen: false);
-
-    List<Appointment> appointments = [
-      appData.selectedAppointment,
-      appData.selectedAppointment,
-      appData.selectedAppointment,
-    ];
+    List<Appointment> appointments = [];
 
     renderAppointments() {
       return SafeArea(
@@ -123,7 +116,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             ),
           ),
           Text(
-            'Thursday 25-06-2020',
+            '${Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)!.formatCompactDate(widget.client.birthday!)} - ${Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)!.formatTimeOfDay(TimeOfDay.fromDateTime(widget.client.birthday!))}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -276,8 +269,8 @@ class _ClientDetailsState extends State<ClientDetails> {
                 style: Theme.of(context).textTheme.bodyText2,
               ),
             ),
-            const ReadMoreText(
-              'No notes was added dsakj dsakldsa sdjlkada sdjksladjas sdkasldjasld dsakdjsakldasjkldjasldjaslkdjlksadjalksdjalskjkldsjaklsdjklsdajlkdjas daskdjsadas ddkjsakljdklas dsakjdaskljd',
+            ReadMoreText(
+              widget.client.generalNotes ?? '',
               trimLines: 2,
             ),
           ],
@@ -415,17 +408,17 @@ class _ClientDetailsState extends State<ClientDetails> {
               runSpacing: rSize(2),
               children: [
                 Text(
-                  'Ahmad Manaa',
+                  widget.client.fullName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
                 Text(
-                  '0505800955',
+                  widget.client.phone,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  'ahmadmnaa.b@gmail.com',
+                  widget.client.email,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -442,7 +435,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             width: rSize(120),
           ),
           EaseInAnimation(
-            onTap: () => makePhoneCall('0505800955'),
+            onTap: () => makePhoneCall(widget.client.phone),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
@@ -456,7 +449,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             width: rSize(10),
           ),
           EaseInAnimation(
-            onTap: () => sendSms('0505800955'),
+            onTap: () => sendSms(widget.client.phone),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
@@ -470,7 +463,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             width: rSize(10),
           ),
           EaseInAnimation(
-            onTap: () => sendMail('ahmadmnaa.b@gmail.com'),
+            onTap: () => sendMail(widget.client.email),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(

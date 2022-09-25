@@ -3,7 +3,7 @@ import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_state.dart';
-import 'package:appointments/providers/clients.dart';
+import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
@@ -12,7 +12,6 @@ import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/checkout/amount_selection.dart';
 import 'package:appointments/screens/home/checkout/checkout_details.dart';
 import 'package:appointments/screens/home/checkout/discount_selection.dart';
-import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/clients/new_client.dart';
 import 'package:appointments/screens/home/main.dart';
@@ -32,7 +31,6 @@ import 'package:appointments/screens/home/schedule_management/individual_schedul
 import 'package:appointments/screens/home/schedule_management/schedule_management.dart';
 import 'package:appointments/screens/home/schedule_management/unavailability.dart';
 import 'package:appointments/screens/home/schedule_management/working_days.dart';
-import 'package:appointments/screens/home/services/service.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/home/settings/booking_settings.dart';
 import 'package:appointments/screens/landing/landing.dart';
@@ -107,7 +105,6 @@ class AppointmentsApp extends StatelessWidget {
       '/home': (context) => const HomeScreen(),
       '/loginScreen': (context) => const LoginScreen(),
       '/clients': (context) => const Clients(),
-      '/clientDetails': (context) => const ClientDetails(),
       '/newClient': (context) => const NewClient(),
       '/forgetPassword': (context) => const ForgetPasswordScreen(),
       // '/resetPassword': (context) => const ResetPasswordScreen(),
@@ -120,7 +117,6 @@ class AppointmentsApp extends StatelessWidget {
       '/discountSelection': (context) => const DiscountSelection(),
       '/amountSelection': (context) => const AmountSelection(),
       '/services': (context) => const Services(),
-      '/newService': (context) => const ServiceWidget(),
       '/businessInfo': (context) => const BusinessInfo(),
       '/businessDetails': (context) => const BusinessDetails(),
       '/profileImages': (context) => const ProfileImages(),

@@ -1,9 +1,7 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_list_tile.dart';
-
 import 'package:common_widgets/ease_in_animation.dart';
-
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class ClientCard extends StatelessWidget {

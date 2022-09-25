@@ -231,10 +231,25 @@ class Client {
       'profileImage': profileImage,
       'birthday': birthday != null ? Timestamp.fromDate(birthday!) : '',
       'creationDate': Timestamp.fromDate(creationDate),
-      'acceptedDate': birthday != null ? Timestamp.fromDate(acceptedDate!) : '',
+      'acceptedDate': Timestamp.fromDate(creationDate),
       'discount': discount,
       'isTrusted': isTrusted,
     };
+  }
+
+  factory Client.fromJson(Map<String, dynamic> doc) {
+    return Client(
+      id: doc['id'],
+      fullName: doc['fullName'],
+      phone: doc['phone'],
+      address: doc['address'],
+      email: doc['email'],
+      creationDate: doc['creationDate'].toDate(),
+      generalNotes: doc['generalNotes'],
+      birthday: doc['birthday'].toDate(),
+      discount: doc['discount'],
+      isTrusted: doc['isTrusted'],
+    );
   }
 }
 
