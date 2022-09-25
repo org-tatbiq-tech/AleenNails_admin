@@ -89,15 +89,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     _messageToClientController.dispose();
   }
 
-  _scrollToIndex(index, colors) {
-    colorScrollController.scrollTo(
-      alignment: index / (colors.length + 1),
-      index: index,
-      curve: Curves.easeInOutCubic,
-      duration: const Duration(milliseconds: 300),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     List<Widget> mediaCards() {
