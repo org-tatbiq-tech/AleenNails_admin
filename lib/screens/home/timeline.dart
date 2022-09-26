@@ -23,23 +23,19 @@ class TimeLine extends StatefulWidget {
 
 class TimeLineState extends State<TimeLine> {
   DayViewController dayViewController = DayViewController();
-  late final ValueNotifier<List<FlutterWeekViewEvent>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.week;
   DateTime _focusedDay = DateTime.now();
-  late DateTime _selectedDay;
+  DateTime _selectedDay = DateTime.now();
   List<Appointment> appointments = [];
   bool isListView = false;
 
   @override
   void initState() {
     super.initState();
-    _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay));
   }
 
   @override
   void dispose() {
-    _selectedEvents.dispose();
     super.dispose();
   }
 
@@ -63,8 +59,6 @@ class TimeLineState extends State<TimeLine> {
           ),
         );
       });
-
-      _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
@@ -190,7 +184,6 @@ class TimeLineState extends State<TimeLine> {
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
               calendarFormat: _calendarFormat,
-              eventLoader: _getEventsForDay,
               onDaySelected: _onDaySelected,
               onPageChanged: (focusedDay) {
                 _focusedDay = focusedDay;
