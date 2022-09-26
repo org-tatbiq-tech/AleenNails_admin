@@ -166,7 +166,7 @@ class TimeLineState extends State<TimeLine> {
                 hours: appointment.endTime.hour,
                 minutes: appointment.endTime.minute),
           ),
-          backgroundColor: getStatusColor(appointment.status),
+          backgroundColor: Color(appointment.services[0].colorID),
           onTap: () => Navigator.push(
             context,
             MaterialPageRoute(
