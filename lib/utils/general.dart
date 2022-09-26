@@ -44,6 +44,9 @@ TimeOfDay? DBToTimeOfDay(Map data) {
   );
 }
 
-String getTimeOfDayFormat(TimeOfDay timeOfDay) {
+String getTimeOfDayFormat(TimeOfDay? timeOfDay) {
+  if (timeOfDay == null) {
+    return '';
+  }
   return '${timeOfDay.hour}:${timeOfDay.minute}';
 }

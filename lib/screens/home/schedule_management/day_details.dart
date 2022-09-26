@@ -1,23 +1,21 @@
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
-import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/flash_manager.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
-import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DayDetails extends StatefulWidget {
-  final String dayTile;
-  final bool isIndividual;
+  final WorkingDay workingDay;
   const DayDetails({
     Key? key,
-    this.dayTile = '',
-    this.isIndividual = false,
+    required this.workingDay,
   }) : super(key: key);
 
   @override
@@ -26,8 +24,6 @@ class DayDetails extends StatefulWidget {
 
 class _DayDetailsState extends State<DayDetails> {
   DateTime? durationValue;
-  bool _isWorking = false;
-  bool _isChanged = false;
   late DateTime startTime;
   late DateTime startTimeTemp;
   late DateTime endTime;
@@ -39,9 +35,25 @@ class _DayDetailsState extends State<DayDetails> {
     super.initState();
     setState(() {
       DateTime today = DateTime.now();
-      startTime = DateTime(today.year, today.month, today.day, 8, 0);
+      startTime = widget.workingDay.startTime == null
+          ? DateTime(today.year, today.month, today.day, 8, 0)
+          : DateTime(
+              today.year,
+              today.month,
+              today.day,
+              widget.workingDay.startTime!.hour,
+              widget.workingDay.startTime!.minute,
+            );
       startTimeTemp = DateTime(today.year, today.month, today.day, 8, 0);
-      endTime = DateTime(today.year, today.month, today.day, 18, 0);
+      endTime = widget.workingDay.endTime == null
+          ? DateTime(today.year, today.month, today.day, 18, 0)
+          : DateTime(
+              today.year,
+              today.month,
+              today.day,
+              widget.workingDay.endTime!.hour,
+              widget.workingDay.endTime!.minute,
+            );
       endTimeTemp = DateTime(today.year, today.month, today.day, 18, 0);
       endTimeMin = startTime;
     });
@@ -49,17 +61,20 @@ class _DayDetailsState extends State<DayDetails> {
 
   @override
   Widget build(BuildContext context) {
-    addBreak() {
-      Navigator.push(
+    addBreak() async {
+      final result = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => DayBreak(
             breakStartTime: startTime,
             breakEndTime: endTime,
-            dayTile: widget.dayTile,
+            dayTile: widget.workingDay.day,
           ),
         ),
       );
+      if (result != null) {
+        widget.workingDay.breaks!.add(result);
+      }
     }
 
     Widget renderSwitch() {
@@ -101,18 +116,25 @@ class _DayDetailsState extends State<DayDetails> {
                         Theme.of(context).colorScheme.primaryContainer,
                     inactiveThumbColor:
                         Theme.of(context).colorScheme.background,
-                    value: _isWorking,
+                    value: widget.workingDay.isDayOn,
                     onChanged: (bool state) {
                       setState(() {
-                        _isWorking = state;
-                        _isChanged = true;
+                        widget.workingDay.isDayOn = state;
+                        widget.workingDay.startTime = TimeOfDay(
+                          hour: startTime.hour,
+                          minute: startTime.minute,
+                        );
+                        widget.workingDay.endTime = TimeOfDay(
+                          hour: endTime.hour,
+                          minute: endTime.minute,
+                        );
                       });
                     },
                   ),
                 ),
               ),
               Text(
-                _isWorking ? 'Open' : 'Closed',
+                widget.workingDay.isDayOn ? 'Open' : 'Closed',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontSize: rSize(12),
                     ),
@@ -201,8 +223,16 @@ class _DayDetailsState extends State<DayDetails> {
                         setState(() {
                           startTime = startTimeTemp;
                           endTimeMin = startTimeTemp;
+                          widget.workingDay.startTime = TimeOfDay(
+                            hour: startTime.hour,
+                            minute: startTime.minute,
+                          );
                           if (startTime.isAfter(endTime)) {
                             endTime = startTimeTemp;
+                            widget.workingDay.endTime = TimeOfDay(
+                              hour: endTime.hour,
+                              minute: endTime.minute,
+                            );
                           }
                         }),
                       },
@@ -254,6 +284,10 @@ class _DayDetailsState extends State<DayDetails> {
                       primaryAction: () => {
                         setState(() {
                           endTime = endTimeTemp;
+                          widget.workingDay.endTime = TimeOfDay(
+                            hour: endTime.hour,
+                            minute: endTime.minute,
+                          );
                         }),
                       },
                     ),
@@ -269,7 +303,7 @@ class _DayDetailsState extends State<DayDetails> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: widget.dayTile,
+          titleText: widget.workingDay.day,
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -291,29 +325,26 @@ class _DayDetailsState extends State<DayDetails> {
             children: [
               renderSwitch(),
               SizedBox(
-                height: widget.isIndividual ? 0 : rSize(20),
+                height: rSize(20),
               ),
-              widget.isIndividual
-                  ? const SizedBox()
-                  : Text(
-                      'Set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day',
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            fontSize: rSize(14),
-                          ),
+              Text(
+                'Set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day',
+                style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                      fontSize: rSize(14),
                     ),
+              ),
               Expanded(
                 child: AnimatedSwitcher(
                   reverseDuration: const Duration(milliseconds: 400),
                   duration: const Duration(milliseconds: 400),
-                  child: _isWorking
+                  child: widget.workingDay.isDayOn
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             SizedBox(
-                              height:
-                                  widget.isIndividual ? rSize(20) : rSize(40),
+                              height: rSize(40),
                             ),
                             renderTimePicker(),
                             SizedBox(
@@ -325,41 +356,12 @@ class _DayDetailsState extends State<DayDetails> {
                       : const SizedBox(),
                 ),
               ),
-              widget.isIndividual
-                  ? Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: CustomButton(
-                            customButtonProps: CustomButtonProps(
-                              isDisabled: !_isChanged,
-                              text: 'Reset',
-                              isPrimary: false,
-                              isSecondary: true,
-                              onTap: (() => Navigator.pop(context)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: rSize(20),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: CustomButton(
-                            customButtonProps: CustomButtonProps(
-                              text: 'Save',
-                              onTap: (() => Navigator.pop(context)),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : CustomButton(
-                      customButtonProps: CustomButtonProps(
-                        text: 'OK',
-                        onTap: (() => Navigator.pop(context)),
-                      ),
-                    ),
+              CustomButton(
+                customButtonProps: CustomButtonProps(
+                  text: 'OK',
+                  onTap: (() => Navigator.pop(context)),
+                ),
+              ),
             ],
           ),
         ),

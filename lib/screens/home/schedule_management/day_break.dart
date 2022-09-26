@@ -1,9 +1,10 @@
-import 'package:common_widgets/custom_button_widget.dart';
-import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -181,7 +182,19 @@ class _DayBreakState extends State<DayBreak> {
               CustomButton(
                 customButtonProps: CustomButtonProps(
                   text: 'Add Break',
-                  onTap: (() => Navigator.pop(context)),
+                  onTap: (() => Navigator.pop(
+                        context,
+                        WorkingDayBreak(
+                          startTime: TimeOfDay(
+                            hour: startTime.hour,
+                            minute: startTime.hour,
+                          ),
+                          endTime: TimeOfDay(
+                            hour: endTime.hour,
+                            minute: endTime.minute,
+                          ),
+                        ),
+                      )),
                 ),
               ),
             ],

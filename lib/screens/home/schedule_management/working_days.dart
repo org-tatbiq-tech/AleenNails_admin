@@ -23,6 +23,10 @@ class _WorkingDaysState extends State<WorkingDays> {
   @override
   void initState() {
     super.initState();
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    _descriptionController.text =
+        settingsMgr.scheduleManagement.workingDays!.notes;
+
     _descriptionController.addListener(() => setState(() {}));
   }
 
@@ -74,54 +78,59 @@ class _WorkingDaysState extends State<WorkingDays> {
         padding: EdgeInsets.only(
           top: rSize(40),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: rSize(5),
-                left: rSize(10),
-                right: rSize(10),
-              ),
-              child: Text(
-                'Business Hours Note',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-            ),
-            SizedBox(
-              height: rSize(120),
-              child: CustomInputField(
-                customInputFieldProps: CustomInputFieldProps(
-                  controller: _descriptionController,
-                  hintText:
-                      'Short description of your business working hours (recommended)',
-                  isDescription: true,
-                  keyboardType: TextInputType.multiline,
+        child: Consumer<SettingsMgr>(
+          builder: (context, settingsMgr, _) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: rSize(5),
+                  left: rSize(10),
+                  right: rSize(10),
+                ),
+                child: Text(
+                  'Business Hours Note',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: rSize(120),
+                child: CustomInputField(
+                  customInputFieldProps: CustomInputFieldProps(
+                    controller: _descriptionController,
+                    hintText:
+                        'Short description of your business working hours (recommended)',
+                    isDescription: true,
+                    keyboardType: TextInputType.multiline,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
     }
 
     renderDay({required WorkingDay workingDay}) {
+      getDayDetails() async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DayDetails(
+              workingDay: workingDay,
+            ),
+          ),
+        );
+        setState(() {});
+      }
+
       return EaseInAnimation(
         beginAnimation: 1,
-        onTap: () => {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DayDetails(
-                dayTile: workingDay.day,
-              ),
-            ),
-          )
-        },
+        onTap: () => getDayDetails(),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: rSize(10),
@@ -139,7 +148,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                 ),
               ),
               Expanded(
-                child: !workingDay.isDayOff
+                child: workingDay.isDayOn
                     ? Column(
                         children: [
                           Row(
@@ -148,7 +157,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                getTimeOfDayFormat(workingDay.startTime!),
+                                getTimeOfDayFormat(workingDay.startTime),
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               Text(
@@ -156,7 +165,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               Text(
-                                getTimeOfDayFormat(workingDay.endTime!),
+                                getTimeOfDayFormat(workingDay.endTime),
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                             ],
@@ -192,6 +201,15 @@ class _WorkingDaysState extends State<WorkingDays> {
       );
     }
 
+    saveWorkingDays() {
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      settingsMgr.scheduleManagement.workingDays!.notes =
+          _descriptionController.text;
+      settingsMgr.submitNewScheduleManagement();
+      print(settingsMgr.scheduleManagement.workingDays!.schedule);
+      Navigator.pop(context);
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -202,14 +220,13 @@ class _WorkingDaysState extends State<WorkingDays> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-              titleText: 'Working Days',
-              withBack: true,
-              barHeight: 110,
-              withClipPath: true,
-              withSave: true,
-              saveTap: () => {
-                    Navigator.pop(context),
-                  }),
+            titleText: 'Working Days',
+            withBack: true,
+            barHeight: 110,
+            withClipPath: true,
+            withSave: true,
+            saveTap: () => saveWorkingDays(),
+          ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(

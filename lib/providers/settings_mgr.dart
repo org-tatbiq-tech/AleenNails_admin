@@ -58,10 +58,13 @@ class SettingsMgr extends ChangeNotifier {
     );
   }
 
-  Future<void> submitNewScheduleManagement(
-      ScheduleManagement newSchedule) async {
+  Future<void> submitNewScheduleManagement() async {
     /// Submitting new Schedule management - update DB
     CollectionReference settingsColl = _fs.collection(settingsCollection);
-    settingsColl.doc(scheduleManagementDoc).update(newSchedule.toJson());
+    print('submitting new schedule management;');
+    print(_scheduleManagement.toJson());
+    settingsColl
+        .doc(scheduleManagementDoc)
+        .update(_scheduleManagement.toJson());
   }
 }

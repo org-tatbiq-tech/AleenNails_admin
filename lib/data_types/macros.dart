@@ -43,23 +43,27 @@ class WorkingDay {
   String day;
   TimeOfDay? startTime;
   TimeOfDay? endTime;
-  bool isDayOff;
+  bool isDayOn;
   List<WorkingDayBreak>? breaks;
 
   WorkingDay({
     required this.day,
     this.startTime,
     this.endTime,
-    this.breaks,
-    this.isDayOff = true,
-  });
+    breaks,
+    this.isDayOn = false,
+  }) {
+    if (breaks == null) {
+      this.breaks = [];
+    }
+  }
 
   Map<String, dynamic> toJson() {
     return {
       'day': day,
       'startTime': timeOfDayToDB(startTime),
       'endTime': timeOfDayToDB(endTime),
-      'isDayOff': isDayOff,
+      'isDayOn': isDayOn,
       'breaks': breaks == null ? [] : breaks!.map((b) => b.toJson()).toList(),
     };
   }
@@ -77,7 +81,7 @@ class WorkingDay {
       day: doc['day'],
       startTime: DBToTimeOfDay(doc['startTime']),
       endTime: DBToTimeOfDay(doc['endTime']),
-      isDayOff: doc['isDayOff'],
+      isDayOn: doc['isDayOn'],
       breaks: loadBreaks(doc['breaks']),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/custom_expandable_calendar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -46,19 +45,19 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
     return EaseInAnimation(
       beginAnimation: 1,
       onTap: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DayDetails(
-              isIndividual: true,
-              dayTile: getDateTimeFormat(
-                isDayOfWeek: true,
-                dateTime: _selectedDay,
-                format: 'EEE, dd MMM yyyy',
-              ),
-            ),
-          ),
-        )
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => DayDetails(
+        //       isIndividual: true,
+        //       dayTile: getDateTimeFormat(
+        //         isDayOfWeek: true,
+        //         dateTime: _selectedDay,
+        //         format: 'EEE, dd MMM yyyy',
+        //       ),
+        //     ),
+        //   ),
+        // )
       },
       child: Padding(
         padding: EdgeInsets.only(

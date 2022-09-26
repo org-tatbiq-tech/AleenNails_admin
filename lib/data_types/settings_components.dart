@@ -50,13 +50,16 @@ class WorkingDaysComp {
   }
 
   factory WorkingDaysComp.fromJson(Map<String, dynamic> doc) {
+    Map<String, dynamic> docSchedule =
+        Map<String, dynamic>.from(doc['schedule']);
+
+    Map<String, WorkingDay> wdSchedule = {};
+    for (var dayDetails in docSchedule.entries) {
+      wdSchedule[dayDetails.key] = WorkingDay.fromJson(dayDetails.value);
+    }
+
     return WorkingDaysComp(
-      schedule: doc['schedule'].map(
-        (key, value) => MapEntry(
-          key,
-          WorkingDay.fromJson(value),
-        ),
-      ),
+      schedule: wdSchedule,
       notes: doc['notes'],
     );
   }
