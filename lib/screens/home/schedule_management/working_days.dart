@@ -1,5 +1,4 @@
 import 'package:appointments/data_types/macros.dart';
-import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/utils/general.dart';
@@ -39,9 +38,15 @@ class _WorkingDaysState extends State<WorkingDays> {
   @override
   Widget build(BuildContext context) {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    WorkingDaysComp workingDaysComp =
-        settingsMgr.scheduleManagement.workingDays!;
-    List<String> workingDaysList = workingDaysComp.schedule!.keys.toList();
+    List<String> workingDaysList = [
+      'Sunday',
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday'
+    ];
 
     List<Widget> getBreakForWorkingDay(WorkingDay workingDay) {
       List<Widget> widgetList = workingDay.breaks != null
@@ -229,42 +234,44 @@ class _WorkingDaysState extends State<WorkingDays> {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(
-          top: false,
-          right: false,
-          left: false,
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) {
-                    return index == workingDaysList.length
-                        ? renderDescription()
-                        : index == 0
-                            ? const SizedBox()
-                            : Divider(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
-                              );
-                  },
-                  padding: EdgeInsets.symmetric(
-                    vertical: rSize(20),
-                    horizontal: rSize(30),
+        body: Consumer<SettingsMgr>(
+          builder: (context, settingsMgr, _) => SafeArea(
+            top: false,
+            right: false,
+            left: false,
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) {
+                      return index == workingDaysList.length
+                          ? renderDescription()
+                          : index == 0
+                              ? const SizedBox()
+                              : Divider(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                );
+                    },
+                    padding: EdgeInsets.symmetric(
+                      vertical: rSize(20),
+                      horizontal: rSize(30),
+                    ),
+                    itemCount: workingDaysList.length + 2,
+                    itemBuilder: (context, index) {
+                      if (index == 0 || index == workingDaysList.length + 1) {
+                        return Container(); // zero height: not visible
+                      }
+                      return renderDay(
+                        workingDay: settingsMgr.scheduleManagement.workingDays!
+                            .schedule![workingDaysList[index - 1]]!,
+                      );
+                    },
                   ),
-                  itemCount: workingDaysList.length + 2,
-                  itemBuilder: (context, index) {
-                    if (index == 0 || index == workingDaysList.length + 1) {
-                      return Container(); // zero height: not visible
-                    }
-                    return renderDay(
-                      workingDay: workingDaysComp
-                          .schedule![workingDaysList[index - 1]]!,
-                    );
-                  },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -73,6 +73,7 @@ class _DayDetailsState extends State<DayDetails> {
         ),
       );
       if (result != null) {
+        widget.workingDay.breaks ??= [];
         widget.workingDay.breaks!.add(result);
       }
     }

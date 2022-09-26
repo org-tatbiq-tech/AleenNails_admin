@@ -34,10 +34,34 @@ class _DayBreakState extends State<DayBreak> {
   void initState() {
     super.initState();
     setState(() {
-      startTime = widget.breakStartTime;
-      startTimeTemp = widget.breakStartTime;
-      endTime = widget.breakEndTime;
-      endTimeTemp = widget.breakEndTime;
+      startTime = DateTime(
+        widget.breakStartTime.year,
+        widget.breakStartTime.month,
+        widget.breakStartTime.day,
+        widget.breakStartTime.hour,
+        widget.breakStartTime.minute,
+      );
+      startTimeTemp = DateTime(
+        widget.breakStartTime.year,
+        widget.breakStartTime.month,
+        widget.breakStartTime.day,
+        widget.breakStartTime.hour,
+        widget.breakStartTime.minute,
+      );
+      endTime = DateTime(
+        widget.breakEndTime.year,
+        widget.breakEndTime.month,
+        widget.breakEndTime.day,
+        widget.breakEndTime.hour,
+        widget.breakEndTime.minute,
+      );
+      endTimeTemp = DateTime(
+        widget.breakEndTime.year,
+        widget.breakEndTime.month,
+        widget.breakEndTime.day,
+        widget.breakEndTime.hour,
+        widget.breakEndTime.minute,
+      );
       endTimeMin = startTime;
     });
   }
