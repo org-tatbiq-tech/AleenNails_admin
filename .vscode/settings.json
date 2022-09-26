@@ -15,5 +15,6 @@
     "vsync",
     "עברית",
     "العربيه"
-  ]
+  ],
+  "java.configuration.updateBuildConfiguration": "automatic"
 }
