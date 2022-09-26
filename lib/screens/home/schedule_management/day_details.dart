@@ -1,9 +1,13 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
+import 'package:appointments/utils/general.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
+import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -73,8 +77,10 @@ class _DayDetailsState extends State<DayDetails> {
         ),
       );
       if (result != null) {
-        widget.workingDay.breaks ??= [];
-        widget.workingDay.breaks!.add(result);
+        setState(() {
+          widget.workingDay.breaks ??= [];
+          widget.workingDay.breaks!.add(result);
+        });
       }
     }
 
@@ -146,34 +152,178 @@ class _DayDetailsState extends State<DayDetails> {
       );
     }
 
+    Widget renderBreakTime(WorkingDayBreak workingDayBreak) {
+      return Padding(
+        padding: EdgeInsets.symmetric(vertical: rSize(10)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: rSize(5),
+                      left: rSize(10),
+                      right: rSize(10),
+                    ),
+                    child: Text(
+                      'Start',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ),
+                  CustomInputFieldButton(
+                    isDisabled: true,
+                    text: getTimeOfDayFormat(
+                      workingDayBreak.startTime,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: rSize(20),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: rSize(5),
+                      left: rSize(10),
+                      right: rSize(10),
+                    ),
+                    child: Text(
+                      'End',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                  ),
+                  CustomInputFieldButton(
+                    isDisabled: true,
+                    text: getTimeOfDayFormat(
+                      workingDayBreak.endTime,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: rSize(20),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: rSize(10)),
+              child: Row(
+                children: [
+                  EaseInAnimation(
+                    onTap: () => {},
+                    child: CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: null,
+                        path: 'assets/icons/pen.png',
+                        withPadding: true,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.onBackground,
+                        iconColor:
+                            darken(Theme.of(context).colorScheme.primary),
+                        containerSize: rSize(35),
+                        contentPadding: rSize(8),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: rSize(10),
+                  ),
+                  EaseInAnimation(
+                    onTap: () => {
+                      setState(
+                        () {
+                          widget.workingDay.breaks
+                              ?.removeWhere((item) => item == workingDayBreak);
+                        },
+                      )
+                    },
+                    child: CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: null,
+                        path: 'assets/icons/trash.png',
+                        withPadding: true,
+                        backgroundColor: errorPrimaryColor,
+                        iconColor: Colors.white,
+                        containerSize: rSize(35),
+                        contentPadding: rSize(8),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    List<Widget> getAllBreaks() {
+      if (widget.workingDay.breaks != null) {
+        List<Widget> widgetList = widget.workingDay.breaks!.map(
+          (WorkingDayBreak workingDayBreak) {
+            return renderBreakTime(workingDayBreak);
+          },
+        ).toList();
+
+        return widgetList;
+      }
+      return [const SizedBox()];
+    }
+
     Widget renderBreaks() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(
-            'Breaks',
-            style: Theme.of(context).textTheme.bodyText2,
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Breaks',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              CustomTextButton(
+                customTextButtonProps: CustomTextButtonProps(
+                  text: 'Add Break',
+                  textColor: Theme.of(context).colorScheme.primary,
+                  fontSize: rSize(16),
+                  withIcon: true,
+                  icon: Icon(
+                    FontAwesomeIcons.plus,
+                    size: rSize(16),
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onTap: () => {
+                    addBreak(),
+                  },
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: rSize(20),
           ),
-          CustomTextButton(
-            customTextButtonProps: CustomTextButtonProps(
-              text: 'Add Break',
-              textColor: Theme.of(context).colorScheme.primary,
-              fontSize: rSize(16),
-              withIcon: true,
-              icon: Icon(
-                FontAwesomeIcons.plus,
-                size: rSize(16),
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onTap: () => {
-                addBreak(),
-              },
-            ),
+          Column(
+            children: getAllBreaks(),
           ),
         ],
       );

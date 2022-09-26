@@ -1,13 +1,14 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
-import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_day_view.dart';
 import 'package:appointments/widget/custom_expandable_calendar.dart';
+import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -37,10 +38,6 @@ class TimeLineState extends State<TimeLine> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  List<FlutterWeekViewEvent> _getEventsForDay(DateTime day) {
-    return getFlutterWeekAppointments(day);
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -174,68 +171,131 @@ class TimeLineState extends State<TimeLine> {
     return events;
   }
 
+  Widget renderTodayButton() {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: rSize(10),
+        vertical: rSize(30),
+      ),
+      child: Align(
+          alignment: Alignment.bottomRight,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              EaseInAnimation(
+                onTap: () => {
+                  _onDaySelected(
+                    DateTime.now(),
+                    _focusedDay,
+                  )
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(10),
+                    vertical: rSize(10),
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(rSize(10)),
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.arrowUp,
+                        size: rSize(18),
+                        color: darken(
+                          Theme.of(context).colorScheme.primary,
+                          0.2,
+                        ),
+                      ),
+                      SizedBox(
+                        width: rSize(5),
+                      ),
+                      Text(
+                        'Today',
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppointmentsMgr>(
-      builder: (context, appointmentsMgr, _) => Column(
+      builder: (context, appointmentsMgr, _) => Stack(
         children: [
-          CustomExpandableCalendar(
-            customExpandableCalendarProps: CustomExpandableCalendarProps(
-              focusedDay: _focusedDay,
-              selectedDay: _selectedDay,
-              calendarFormat: _calendarFormat,
-              onDaySelected: _onDaySelected,
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-              },
-              onFormatChanged: (format) {
-                if (_calendarFormat != format) {
-                  setState(() {
-                    _calendarFormat = format;
-                  });
-                }
-              },
-            ),
-          ),
-          Expanded(
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              child: !isListView
-                  ? CustomDayView(
-                      customDayViewProps: CustomDayViewProps(
-                        dayViewController: dayViewController,
-                        minimumTime: const HourMinute(hour: 6),
-                        date: _selectedDay,
-                        userZoomAble: false,
-                        events: getFlutterWeekAppointments(_selectedDay),
-                        initialTime: HourMinute(
-                          hour: DateTime.now().hour,
-                          minute: DateTime.now().minute,
-                        ),
-                      ),
-                    )
-                  : ListView.separated(
-                      padding: EdgeInsets.only(
-                        top: rSize(20),
-                        left: rSize(20),
-                        right: rSize(20),
-                      ),
-                      itemCount: appointments.length,
-                      itemBuilder: (context, index) {
-                        return AppointmentCard(
-                          appointmentCardProps: AppointmentCardProps(
-                            appointmentDetails: appointments[index],
+          Column(
+            children: [
+              CustomExpandableCalendar(
+                customExpandableCalendarProps: CustomExpandableCalendarProps(
+                  focusedDay: _focusedDay,
+                  selectedDay: _selectedDay,
+                  calendarFormat: _calendarFormat,
+                  onDaySelected: _onDaySelected,
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
+                  },
+                  onFormatChanged: (format) {
+                    if (_calendarFormat != format) {
+                      setState(() {
+                        _calendarFormat = format;
+                      });
+                    }
+                  },
+                ),
+              ),
+              Expanded(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: !isListView
+                      ? CustomDayView(
+                          customDayViewProps: CustomDayViewProps(
+                            dayViewController: dayViewController,
+                            minimumTime: const HourMinute(hour: 6),
+                            date: _selectedDay,
+                            userZoomAble: false,
+                            events: getFlutterWeekAppointments(_selectedDay),
+                            initialTime: HourMinute(
+                              hour: DateTime.now().hour,
+                              minute: DateTime.now().minute,
+                            ),
                           ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
-                          height: rSize(10),
-                        );
-                      },
-                    ),
-            ),
+                        )
+                      : ListView.separated(
+                          padding: EdgeInsets.only(
+                            top: rSize(20),
+                            left: rSize(20),
+                            right: rSize(20),
+                          ),
+                          itemCount: appointments.length,
+                          itemBuilder: (context, index) {
+                            return AppointmentCard(
+                              appointmentCardProps: AppointmentCardProps(
+                                appointmentDetails: appointments[index],
+                              ),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return SizedBox(
+                              height: rSize(10),
+                            );
+                          },
+                        ),
+                ),
+              ),
+            ],
           ),
+          !isSameDay(_selectedDay, DateTime.now())
+              ? renderTodayButton()
+              : const SizedBox(),
         ],
       ),
     );

@@ -48,5 +48,5 @@ String getTimeOfDayFormat(TimeOfDay? timeOfDay) {
   if (timeOfDay == null) {
     return '';
   }
-  return '${timeOfDay.hour}:${timeOfDay.minute}';
+  return '${timeOfDay.hour.toString().padLeft(2, '0')}:${timeOfDay.minute.toString().padLeft(2, '0')}';
 }

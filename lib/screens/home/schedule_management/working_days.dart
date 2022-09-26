@@ -211,7 +211,6 @@ class _WorkingDaysState extends State<WorkingDays> {
       settingsMgr.scheduleManagement.workingDays!.notes =
           _descriptionController.text;
       settingsMgr.submitNewScheduleManagement();
-      print(settingsMgr.scheduleManagement.workingDays!.schedule);
       Navigator.pop(context);
     }
 
