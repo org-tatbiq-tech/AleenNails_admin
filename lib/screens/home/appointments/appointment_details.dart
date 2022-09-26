@@ -1,6 +1,6 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
-import 'package:appointments/providers/app_data.dart';
+import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
@@ -15,11 +15,12 @@ import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentDetails extends StatefulWidget {
-  final Appointment? appointment;
-  const AppointmentDetails({Key? key, this.appointment}) : super(key: key);
+  final Appointment appointment;
+  const AppointmentDetails({required this.appointment, Key? key})
+      : super(key: key);
 
   @override
   AppointmentDetailsState createState() => AppointmentDetailsState();
@@ -242,7 +243,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       serviceDetails: services[index],
                       title: services[index].name,
                       subTitle:
-                          '${getDateTimeFormat(dateTime: services[index].startTime, format: 'HH:mm')} - ${getDateTimeFormat(dateTime: services[index].endTime, format: 'HH:mm')} - ${services[index].duration}',
+                          '${getDateTimeFormat(dateTime: services[index].startTime, format: 'HH:mm')} - ${getDateTimeFormat(dateTime: services[index].endTime, format: 'HH:mm')} - ${durationToFormat(duration: services[index].duration)}',
                       withNavigation: false,
                       enabled: false,
                     ),
@@ -260,7 +261,17 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    renderDate() {
+    String getAppointmentDate(Appointment appointment) {
+      // Formatting appointment date
+      return DateFormat('EE dd-MM-yyyy').format(appointment.date);
+    }
+
+    String getAppointmentTime(Appointment appointment) {
+      // Formatting appointment - start time and end time
+      return '${DateFormat('kk:mm').format(appointment.date)} - ${DateFormat('kk:mm').format(appointment.endTime)}';
+    }
+
+    renderDate(Appointment appointment) {
       return Column(children: [
         Row(
           mainAxisSize: MainAxisSize.max,
@@ -293,13 +304,15 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Wed 13/02/2022',
+                    // 'Wed 13/02/2022',
+                    getAppointmentDate(appointment),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                   Text(
-                    '13:00 - 14:30',
+                    getAppointmentTime(appointment),
+                    // '13:00 - 14:30',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText1,
@@ -312,7 +325,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       ]);
     }
 
-    renderNotes() {
+    renderNotes(Appointment appointment) {
       return Column(children: [
         Column(
           mainAxisSize: MainAxisSize.max,
@@ -328,8 +341,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             SizedBox(
               height: rSize(5),
             ),
-            const ReadMoreText(
-              'No notes was added dsakj dsakldsa sdjlkada sdjksladjas sdkasldjasld dsakdjsakldasjkldjasldjaslkdjlksadjalksdjalskjkldsjaklsdjklsdajlkdjas daskdjsadas ddkjsakljdklas dsakjdaskljd',
+            ReadMoreText(
+              appointment.notes ?? '',
               trimLines: 2,
             ),
           ],
@@ -337,7 +350,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       ]);
     }
 
-    _renderHeader() {
+    renderHeader(Appointment appointment) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -371,7 +384,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 delay: 0.1,
                 positionType: PositionType.left,
                 child: Text(
-                  'Ahmad Manaa',
+                  appointment.clientName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -381,14 +394,14 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 delay: 0.1,
                 positionType: PositionType.left,
                 child: Text(
-                  '0505800955',
+                  appointment.clientPhone,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
               SizedBox(
                 height: rSize(15),
               ),
-              renderDate(),
+              renderDate(appointment),
             ],
           ),
         ],
@@ -414,74 +427,72 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         top: false,
         left: false,
         right: false,
-        child: Consumer<AppData>(
-          builder: (context, appData, _) => Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              FadeAnimation(
-                positionType: PositionType.bottom,
-                delay: 0.3,
-                child: CustomStatus(
-                  customStatusProps: CustomStatusProps(status: Status.waiting),
-                ),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FadeAnimation(
+              positionType: PositionType.bottom,
+              delay: 0.3,
+              child: CustomStatus(
+                customStatusProps: CustomStatusProps(status: Status.waiting),
               ),
-              SizedBox(
-                height: rSize(10),
+            ),
+            SizedBox(
+              height: rSize(10),
+            ),
+            FadeAnimation(
+              positionType: PositionType.bottom,
+              delay: 0.3,
+              child: renderAppointmentID(widget.appointment),
+            ),
+            SizedBox(
+              height: rSize(20),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: rSize(20),
               ),
-              FadeAnimation(
-                positionType: PositionType.bottom,
-                delay: 0.3,
-                child: renderAppointmentID(appData.selectedAppointment),
-              ),
-              SizedBox(
-                height: rSize(20),
-              ),
-              Padding(
+              child: renderHeader(widget.appointment),
+            ),
+            Expanded(
+              child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: rSize(20),
+                  horizontal: rSize(30),
                 ),
-                child: _renderHeader(),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: rSize(30),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: rSize(30),
-                      ),
-                      FadeAnimation(
-                        positionType: PositionType.right,
-                        delay: 0.5,
-                        child: renderNotes(),
-                      ),
-                      SizedBox(
-                        height: rSize(40),
-                      ),
-                      Expanded(
-                        child: renderServices(appData.selectedAppointment),
-                      ),
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                      renderAmount(appData.selectedAppointment),
-                      SizedBox(
-                        height: rSize(10),
-                      ),
-                      renderFooter(appData.selectedAppointment),
-                    ],
-                  ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: rSize(30),
+                    ),
+                    FadeAnimation(
+                      positionType: PositionType.right,
+                      delay: 0.5,
+                      child: renderNotes(widget.appointment),
+                    ),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    Expanded(
+                      child: renderServices(widget.appointment),
+                    ),
+                    SizedBox(
+                      height: rSize(20),
+                    ),
+                    renderAmount(widget.appointment),
+                    SizedBox(
+                      height: rSize(10),
+                    ),
+                    renderFooter(widget.appointment),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

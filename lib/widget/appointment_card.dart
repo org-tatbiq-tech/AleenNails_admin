@@ -1,9 +1,10 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/screens/home/appointments/appointment_details.dart';
+import 'package:appointments/widget/custom_status.dart';
+import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:appointments/widget/custom_status.dart';
-import 'package:common_widgets/custom_list_tile.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentCard extends StatelessWidget {
@@ -49,7 +50,14 @@ class AppointmentCard extends StatelessWidget {
       customListTileProps: CustomListTileProps(
         enabled: appointmentCardProps.enabled,
         onTap: appointmentCardProps.onTap ??
-            () => Navigator.pushNamed(context, '/appointmentDetails'),
+            () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AppointmentDetails(
+                      appointment: appointmentCardProps.appointmentDetails,
+                    ),
+                  ),
+                ),
         title: Padding(
           padding: EdgeInsets.only(bottom: rSize(5)),
           child: CustomStatus(
