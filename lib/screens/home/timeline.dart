@@ -53,6 +53,15 @@ class TimeLineState extends State<TimeLine> {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
         _calendarFormat = CalendarFormat.week;
+        final appointmentsMgr =
+            Provider.of<AppointmentsMgr>(context, listen: false);
+        appointmentsMgr.setSelectedDay(
+          DateTime(
+            _selectedDay.year,
+            _selectedDay.month,
+            _selectedDay.day,
+          ),
+        );
       });
 
       _selectedEvents.value = _getEventsForDay(selectedDay);
@@ -142,13 +151,6 @@ class TimeLineState extends State<TimeLine> {
   List<FlutterWeekViewEvent> getFlutterWeekAppointments(DateTime date) {
     final appointmentsMgr =
         Provider.of<AppointmentsMgr>(context, listen: false);
-    appointmentsMgr.setSelectedDay(
-      DateTime(
-        date.year,
-        date.month,
-        date.day,
-      ),
-    );
     List<FlutterWeekViewEvent> events = [];
     for (Appointment appointment in appointmentsMgr.appointments) {
       events.add(
