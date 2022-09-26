@@ -39,19 +39,19 @@ class ScheduleManagementState extends State<ScheduleManagement> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomIconButton(
-                customIconButtonProps: CustomIconButtonProps(
-                  onTap: () =>
-                      {Navigator.pushNamed(context, '/individualSchedule')},
-                  animationDelay: 0.1,
-                  iconPath: 'assets/icons/calendar.png',
-                  positionType: PositionType.bottom,
-                  title: 'Open Calendar',
-                ),
-              ),
-              SizedBox(
-                height: rSize(20),
-              ),
+              // CustomIconButton(
+              //   customIconButtonProps: CustomIconButtonProps(
+              //     onTap: () =>
+              //         {Navigator.pushNamed(context, '/individualSchedule')},
+              //     animationDelay: 0.1,
+              //     iconPath: 'assets/icons/calendar.png',
+              //     positionType: PositionType.bottom,
+              //     title: 'Open Calendar',
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: rSize(20),
+              // ),
               CustomIconButton(
                 customIconButtonProps: CustomIconButtonProps(
                   onTap: () => {Navigator.pushNamed(context, '/workingDays')},

@@ -61,6 +61,7 @@ class _NewAppointmentState extends State<NewAppointment> {
     );
     setState(() {
       selectedServices.add(appointmentService);
+      endTime = startDateTime?.add(getServicesDuration());
     });
     Navigator.pop(context);
   }
@@ -68,6 +69,7 @@ class _NewAppointmentState extends State<NewAppointment> {
   removeService(AppointmentService service) {
     setState(() {
       selectedServices.removeWhere((item) => item == service);
+      endTime = startDateTime?.add(getServicesDuration());
     });
   }
 
@@ -111,6 +113,14 @@ class _NewAppointmentState extends State<NewAppointment> {
       return false;
     }
     return true;
+  }
+
+  Duration getServicesDuration() {
+    Duration totalDuration = const Duration();
+    for (AppointmentService service in selectedServices) {
+      totalDuration += service.duration;
+    }
+    return totalDuration;
   }
 
   saveAppointment() {
@@ -306,7 +316,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                       primaryAction: () => {
                         setState(() {
                           startDateTime = startDateTimeTemp;
-                          // endTime = startDateTime.add();
+                          endTime = startDateTime?.add(getServicesDuration());
                         }),
                       },
                     ),

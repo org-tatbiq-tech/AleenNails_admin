@@ -124,7 +124,6 @@ class AppointmentsApp extends StatelessWidget {
       '/businessWorkplacePhotos': (context) => const BusinessWorkplacePhotos(),
       '/businessAddress': (context) => const BusinessAddress(),
       '/scheduleManagement': (context) => const ScheduleManagement(),
-      '/individualSchedule': (context) => const IndividualSchedule(),
       '/unavailability': (context) => const Unavailability(),
       '/workingDays': (context) => const WorkingDays(),
       '/dayDetails': (context) => const DayDetails(),

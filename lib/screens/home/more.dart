@@ -42,18 +42,18 @@ class MoreState extends State<More> {
             // SizedBox(
             //   height: rSize(20),
             // ),
-            CustomIconButton(
-              customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {},
-                animationDelay: 0.3,
-                iconPath: 'assets/icons/rating.png',
-                positionType: PositionType.bottom,
-                title: Languages.of(context)!.reviewRatingLabel,
-              ),
-            ),
-            SizedBox(
-              height: rSize(20),
-            ),
+            // CustomIconButton(
+            //   customIconButtonProps: CustomIconButtonProps(
+            //     onTap: () => {},
+            //     animationDelay: 0.3,
+            //     iconPath: 'assets/icons/rating.png',
+            //     positionType: PositionType.bottom,
+            //     title: Languages.of(context)!.reviewRatingLabel,
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: rSize(20),
+            // ),
             CustomIconButton(
               customIconButtonProps: CustomIconButtonProps(
                 onTap: () => {Navigator.pushNamed(context, '/services')},
