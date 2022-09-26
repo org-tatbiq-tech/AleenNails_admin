@@ -1,10 +1,14 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/screens/home/appointments/appointment_details.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_day_view.dart';
 import 'package:appointments/widget/custom_expandable_calendar.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 //class needs to extend StatefulWidget since we need to make changes to the bottom app bar according to the user clicks
@@ -136,111 +140,109 @@ class TimeLineState extends State<TimeLine> {
   }
 
   List<FlutterWeekViewEvent> getFlutterWeekAppointments(DateTime date) {
-    List<FlutterWeekViewEvent> appointments = [
-      renderFlutterWeekViewEvent(
-        title: 'Course 1',
-        description:
-            'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
-        start: date.add(Duration(hours: 19)),
-        end: date.add(Duration(hours: 22)),
-        backgroundColor: Colors.green,
-        onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
+    final appointmentsMgr =
+        Provider.of<AppointmentsMgr>(context, listen: false);
+    appointmentsMgr.setSelectedDay(
+      DateTime(
+        date.year,
+        date.month,
+        date.day,
       ),
-      renderFlutterWeekViewEvent(
-        title: 'Course 2',
-        description:
-            'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
-        start: date.add(Duration(hours: 23, minutes: 30)),
-        end: date.add(Duration(hours: 24)),
-        backgroundColor: Colors.red,
-        onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
-      ),
-      renderFlutterWeekViewEvent(
-        title: 'Course 3',
-        description:
-            'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
-        start: date.add(Duration(hours: 17)),
-        end: date.add(Duration(hours: 18, minutes: 30)),
-        backgroundColor: Colors.green,
-        onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
-      ),
-      renderFlutterWeekViewEvent(
-        title: 'An event 5',
-        description:
-            'A description 3 dsadjkhasd adasjd hnasd adasd alskdjask djsakldjsalkdjasldjkslajdlasjdaskjdklasjdalskdja dsakjdlajdlkasjlkds jlasdkjlkasjlkdjadklajldkasjdklsajlkkdjakldjlks',
-        start: date.add(Duration(hours: 20)),
-        end: date.add(Duration(hours: 21)),
-        backgroundColor: Colors.brown,
-        onTap: () => Navigator.pushNamed(context, '/appointmentDetails'),
-      ),
-    ];
-
-    return appointments;
+    );
+    List<FlutterWeekViewEvent> events = [];
+    for (Appointment appointment in appointmentsMgr.appointments) {
+      events.add(
+        renderFlutterWeekViewEvent(
+          title: appointment.clientName,
+          description: appointment.notes,
+          start: date.add(
+            Duration(
+                hours: appointment.date.hour, minutes: appointment.date.minute),
+          ),
+          end: date.add(
+            Duration(
+                hours: appointment.endTime.hour,
+                minutes: appointment.endTime.minute),
+          ),
+          backgroundColor: getStatusColor(appointment.status),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  AppointmentDetails(appointment: appointment),
+            ),
+          ),
+        ),
+      );
+    }
+    return events;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomExpandableCalendar(
-          customExpandableCalendarProps: CustomExpandableCalendarProps(
-            focusedDay: _focusedDay,
-            selectedDay: _selectedDay,
-            calendarFormat: _calendarFormat,
-            eventLoader: _getEventsForDay,
-            onDaySelected: _onDaySelected,
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
+    return Consumer<AppointmentsMgr>(
+      builder: (context, appointmentsMgr, _) => Column(
+        children: [
+          CustomExpandableCalendar(
+            customExpandableCalendarProps: CustomExpandableCalendarProps(
+              focusedDay: _focusedDay,
+              selectedDay: _selectedDay,
+              calendarFormat: _calendarFormat,
+              eventLoader: _getEventsForDay,
+              onDaySelected: _onDaySelected,
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
+              onFormatChanged: (format) {
+                if (_calendarFormat != format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                }
+              },
+            ),
           ),
-        ),
-        Expanded(
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 300),
-            child: !isListView
-                ? CustomDayView(
-                    customDayViewProps: CustomDayViewProps(
-                      dayViewController: dayViewController,
-                      minimumTime: const HourMinute(hour: 6),
-                      date: _selectedDay,
-                      userZoomAble: false,
-                      events: getFlutterWeekAppointments(_selectedDay),
-                      initialTime: HourMinute(
-                        hour: DateTime.now().hour,
-                        minute: DateTime.now().minute,
-                      ),
-                    ),
-                  )
-                : ListView.separated(
-                    padding: EdgeInsets.only(
-                      top: rSize(20),
-                      left: rSize(20),
-                      right: rSize(20),
-                    ),
-                    itemCount: appointments.length,
-                    itemBuilder: (context, index) {
-                      return AppointmentCard(
-                        appointmentCardProps: AppointmentCardProps(
-                          appointmentDetails: appointments[index],
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: !isListView
+                  ? CustomDayView(
+                      customDayViewProps: CustomDayViewProps(
+                        dayViewController: dayViewController,
+                        minimumTime: const HourMinute(hour: 6),
+                        date: _selectedDay,
+                        userZoomAble: false,
+                        events: getFlutterWeekAppointments(_selectedDay),
+                        initialTime: HourMinute(
+                          hour: DateTime.now().hour,
+                          minute: DateTime.now().minute,
                         ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: rSize(10),
-                      );
-                    },
-                  ),
+                      ),
+                    )
+                  : ListView.separated(
+                      padding: EdgeInsets.only(
+                        top: rSize(20),
+                        left: rSize(20),
+                        right: rSize(20),
+                      ),
+                      itemCount: appointments.length,
+                      itemBuilder: (context, index) {
+                        return AppointmentCard(
+                          appointmentCardProps: AppointmentCardProps(
+                            appointmentDetails: appointments[index],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: rSize(10),
+                        );
+                      },
+                    ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

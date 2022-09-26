@@ -1,6 +1,6 @@
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:appointments/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomStatus extends StatelessWidget {
@@ -12,25 +12,10 @@ class CustomStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getStatusColor() {
-      switch (customStatusProps.status) {
-        case Status.confirmed:
-          return successPrimaryColor;
-        case Status.cancelled:
-          return errorPrimaryColor;
-        case Status.declined:
-          return errorPrimaryColor;
-        case Status.waiting:
-          return warningPrimaryColor;
-        default:
-          return informationPrimaryColor;
-      }
-    }
-
     return Container(
       decoration: BoxDecoration(
         color: lighten(
-          getStatusColor(),
+          getStatusColor(customStatusProps.status),
           0.22,
         ),
         borderRadius: BorderRadius.circular(
@@ -46,7 +31,7 @@ class CustomStatus extends StatelessWidget {
           customStatusProps.status.name.toUpperCase(),
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(customStatusProps.fontSize),
-                color: getStatusColor(),
+                color: getStatusColor(customStatusProps.status),
               ),
         ),
       ),

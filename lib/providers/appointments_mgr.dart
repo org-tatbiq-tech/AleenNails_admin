@@ -14,7 +14,7 @@ const appointmentsCollection = 'appointments';
 class AppointmentsMgr extends ChangeNotifier {
   AppointmentsMgr() {
     DateTime now = DateTime.now();
-    selectedDay = DateTime(now.year, now.month, now.day);
+    _selectedDay = DateTime(now.year, now.month, now.day);
   }
 
   ///*************************** Firestore **********************************///
@@ -22,7 +22,18 @@ class AppointmentsMgr extends ChangeNotifier {
   final FirebaseAuth _fa = FirebaseAuth.instance;
 
   ///************************* Appointments ********************************///
-  late DateTime selectedDay; // Holding current day details
+  late DateTime _selectedDay; // Holding current day details
+
+  DateTime get selectedDay {
+    return _selectedDay;
+  }
+
+  setSelectedDay(DateTime value) async {
+    _selectedDay = value;
+    print('setting selected day');
+    await downloadAppointments();
+  }
+
   List<Appointment> _appointments = []; // Holds all DB appointments
   bool initialized = false; // Don't download Appointments unless required
   StreamSubscription<QuerySnapshot>? _appointmentsSub;
@@ -41,7 +52,7 @@ class AppointmentsMgr extends ChangeNotifier {
 
     var query = _fs
         .collection(appointmentsCollection)
-        .where('dayDate', isEqualTo: selectedDay);
+        .where('dayDate', isEqualTo: _selectedDay);
 
     _appointmentsSub = query.snapshots().listen(
       (snapshot) async {

@@ -101,7 +101,7 @@ class AppointmentService {
       startTime: doc['startTime'].toDate(),
       cost: doc['cost'],
       colorID: doc['colorID'],
-      duration: Duration(minutes: doc['duration']),
+      duration: Duration(minutes: int.parse(doc['duration'])),
     );
   }
 }
@@ -145,9 +145,13 @@ class Appointment {
     return services.fold<double>(0, (sum, item) => sum + item.cost);
   }
 
-  double get totalDurationInMins {
-    return services.fold<double>(
-        0, (sum, item) => sum + item.duration.inMinutes);
+  int get totalDurationInMins {
+    return (services.fold<double>(
+        0, (sum, item) => sum + item.duration.inMinutes)).toInt();
+  }
+
+  DateTime get endTime {
+    return date.add(Duration(minutes: totalDurationInMins));
   }
 
   DateTime get dayDate {
@@ -172,8 +176,7 @@ class Appointment {
   }
 
   factory Appointment.fromJson(Map<String, dynamic> doc) {
-    List<AppointmentService> loadServicesFromDoc(
-        List<Map<String, dynamic>> docServices) {
+    List<AppointmentService> loadServicesFromDoc(List<dynamic> docServices) {
       List<AppointmentService> services = [];
       for (Map<String, dynamic> s in docServices) {
         services.add(AppointmentService.fromJson(s));
@@ -181,18 +184,45 @@ class Appointment {
       return services;
     }
 
+    PaymentStatus loadPaymentStatus(String status) {
+      switch (status) {
+        case 'PaymentStatus.paid':
+          return PaymentStatus.paid;
+        case 'PaymentStatus.unpaid':
+          return PaymentStatus.unpaid;
+        default:
+          return PaymentStatus.unpaid;
+      }
+    }
+
+    Status loadStatus(String status) {
+      switch (status) {
+        case 'Status.waiting':
+          return Status.waiting;
+        case 'Status.unpaid':
+          return Status.cancelled;
+        case 'Status.confirmed':
+          return Status.confirmed;
+        case 'Status.declined':
+          return Status.declined;
+        default:
+          return Status.waiting;
+      }
+    }
+
     return Appointment(
-        id: doc["id"],
-        status: doc["status"],
-        creator: doc['creator'],
-        clientName: doc['clientName'],
-        clientDocID: doc['clientDocID'],
-        clientPhone: doc['clientPhone'],
-        creationDate: doc['creationDate'].toDate(),
-        notes: doc['notes'],
-        date: doc['date'].toDate(),
-        services: loadServicesFromDoc(doc['services']),
-        paymentStatus: doc['paymentStatus']);
+      id: doc["id"],
+      status: loadStatus(doc["status"]),
+      creator: doc['creator'],
+      clientName: doc['clientName'],
+      clientDocID: doc['clientDocID'],
+      clientPhone: doc['clientPhone'],
+      creationDate: doc['creationDate'].toDate(),
+      notes: doc['notes'],
+      date: doc['date'].toDate(),
+      services: loadServicesFromDoc(doc['services']),
+      paymentStatus: loadPaymentStatus(doc['paymentStatus']),
+    );
   }
 }
 

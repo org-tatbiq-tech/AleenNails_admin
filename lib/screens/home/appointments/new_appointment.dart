@@ -3,6 +3,7 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
+import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
@@ -112,7 +113,7 @@ class _NewAppointmentState extends State<NewAppointment> {
       date: startDateTime!,
       paymentStatus: PaymentStatus.unpaid,
       services: selectedServices,
-      status: Status.confirmed,
+      status: Status.waiting,
       notes: _notesController.text,
     );
 
@@ -139,7 +140,7 @@ class _NewAppointmentState extends State<NewAppointment> {
               enabled: false,
               serviceDetails: service,
               title: service.name,
-              subTitle: service.duration.toString(),
+              subTitle: durationToFormat(duration: service.duration),
             ),
           ),
         ),

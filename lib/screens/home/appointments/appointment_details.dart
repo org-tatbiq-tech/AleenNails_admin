@@ -1,24 +1,25 @@
-import 'package:appointments/widget/appointment_service_card.dart';
-import 'package:common_widgets/fade_animation.dart';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/app_data.dart';
-import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/input_validation.dart';
-import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/custom_app_bar.dart';
+import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom_status.dart';
+import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
-import 'package:appointments/widget/custom_status.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AppointmentDetails extends StatefulWidget {
-  const AppointmentDetails({Key? key}) : super(key: key);
+  final Appointment? appointment;
+  const AppointmentDetails({Key? key, this.appointment}) : super(key: key);
 
   @override
   AppointmentDetailsState createState() => AppointmentDetailsState();
