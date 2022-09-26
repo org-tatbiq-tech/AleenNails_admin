@@ -40,7 +40,7 @@ class ClientsMgr extends ChangeNotifier {
       (snapshot) async {
         _clients = [];
         if (snapshot.docs.isEmpty) {
-          // No data to show - notifying listeners for empty services list.
+          // No data to show - notifying listeners for empty clients list.
           notifyListeners();
           return;
         }

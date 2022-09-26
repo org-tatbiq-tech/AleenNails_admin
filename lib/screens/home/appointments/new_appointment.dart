@@ -113,7 +113,7 @@ class _NewAppointmentState extends State<NewAppointment> {
       date: startDateTime!,
       paymentStatus: PaymentStatus.unpaid,
       services: selectedServices,
-      status: Status.waiting,
+      status: AppointmentStatus.waiting,
       notes: _notesController.text,
     );
 

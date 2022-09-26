@@ -65,7 +65,7 @@ class AppData extends ChangeNotifier {
       date: DateTime.now(),
       paymentStatus: PaymentStatus.paid,
       services: [],
-      status: Status.confirmed,
+      status: AppointmentStatus.confirmed,
       notes: 'No notes',
     );
 

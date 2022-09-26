@@ -6,6 +6,7 @@ import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/services_mgr.dart';
+import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/checkout/amount_selection.dart';
@@ -61,6 +62,7 @@ void main() {
             create: (_) => AppointmentsMgr()),
         ChangeNotifierProvider<ServicesMgr>(create: (_) => ServicesMgr()),
         ChangeNotifierProvider<ClientsMgr>(create: (_) => ClientsMgr()),
+        ChangeNotifierProvider<SettingsMgr>(create: (_) => SettingsMgr()),
         ChangeNotifierProvider<AppData>(create: (_) => AppData()),
       ],
       child: AppointmentsApp(),

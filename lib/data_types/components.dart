@@ -106,17 +106,11 @@ class AppointmentService {
   }
 }
 
-/// PaymentStatus - Describe the status of the payment
-enum PaymentStatus {
-  paid,
-  unpaid,
-}
-
 /// Appointment holds all required data to define, understand and explain
 /// an appointment to its details
 class Appointment {
   String id; // Appointment ID (created by DB)
-  Status status; // Appointment Status
+  AppointmentStatus status; // Appointment Status
   String creator; // Appointment creator (which admin/worker/...)
   String clientName; // Client full name
   String clientPhone; // Client phone number
@@ -189,18 +183,18 @@ class Appointment {
       }
     }
 
-    Status loadStatus(String status) {
+    AppointmentStatus loadStatus(String status) {
       switch (status) {
-        case 'Status.waiting':
-          return Status.waiting;
-        case 'Status.unpaid':
-          return Status.cancelled;
-        case 'Status.confirmed':
-          return Status.confirmed;
-        case 'Status.declined':
-          return Status.declined;
+        case 'AppointmentStatus.waiting':
+          return AppointmentStatus.waiting;
+        case 'AppointmentStatus.cancelled':
+          return AppointmentStatus.cancelled;
+        case 'AppointmentStatus.confirmed':
+          return AppointmentStatus.confirmed;
+        case 'AppointmentStatus.declined':
+          return AppointmentStatus.declined;
         default:
-          return Status.waiting;
+          return AppointmentStatus.waiting;
       }
     }
 

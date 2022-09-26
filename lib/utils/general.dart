@@ -1,18 +1,49 @@
 import 'package:appointments/data_types/macros.dart';
+import 'package:flutter/material.dart';
 
 import 'layout.dart';
 
-getStatusColor(Status status) {
+getStatusColor(AppointmentStatus status) {
   switch (status) {
-    case Status.confirmed:
+    case AppointmentStatus.confirmed:
       return successPrimaryColor;
-    case Status.cancelled:
+    case AppointmentStatus.cancelled:
       return errorPrimaryColor;
-    case Status.declined:
+    case AppointmentStatus.declined:
       return errorPrimaryColor;
-    case Status.waiting:
+    case AppointmentStatus.waiting:
       return warningPrimaryColor;
     default:
       return informationPrimaryColor;
   }
+}
+
+Map timeOfDayToDB(TimeOfDay? timeOfDay) {
+  // Converter from TimeOfDay to firebase DB document
+  if (timeOfDay == null) {
+    return {
+      'hour': null,
+      'minute': null,
+    };
+  }
+  return {
+    'hour': timeOfDay.hour,
+    'minute': timeOfDay.minute,
+  };
+}
+
+TimeOfDay? DBToTimeOfDay(Map data) {
+  // Converter from firebase DB document to TimeOfDay
+  if (data['hour'] == null || data['minute'] == null) {
+    return null;
+  }
+
+  return TimeOfDay(
+    hour: data['hour'],
+    minute: data['minute'],
+  );
+}
+
+String getTimeOfDayFormat(TimeOfDay timeOfDay) {
+  return '${timeOfDay.hour}:${timeOfDay.minute}';
 }

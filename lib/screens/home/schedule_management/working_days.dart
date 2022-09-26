@@ -1,14 +1,14 @@
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/data_types/settings_components.dart';
+import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
-import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:common_widgets/custom_input_field.dart';
-
 import 'package:common_widgets/ease_in_animation.dart';
-
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WorkingDays extends StatefulWidget {
   const WorkingDays({Key? key}) : super(key: key);
@@ -19,41 +19,6 @@ class WorkingDays extends StatefulWidget {
 
 class _WorkingDaysState extends State<WorkingDays> {
   final TextEditingController _descriptionController = TextEditingController();
-
-  List<WorkingDay> workingDayList = [
-    WorkingDay(
-        title: 'Sunday', startTime: kToday, endTime: kToday, isDayOff: true),
-    WorkingDay(
-        title: 'Monday', startTime: kToday, endTime: kToday, isDayOff: true),
-    WorkingDay(
-      title: 'Tuesday',
-      startTime: kToday,
-      endTime: kToday,
-      breaks: [
-        WorkingDayBreak(startTime: kToday, endTime: kToday),
-        WorkingDayBreak(startTime: kToday, endTime: kToday),
-      ],
-    ),
-    WorkingDay(
-      title: 'Wednesday',
-      startTime: kToday,
-      endTime: kToday,
-      breaks: [
-        WorkingDayBreak(startTime: kToday, endTime: kToday),
-      ],
-    ),
-    WorkingDay(
-      title: 'Thursday',
-      startTime: kToday,
-      endTime: kToday,
-      breaks: [
-        WorkingDayBreak(startTime: kToday, endTime: kToday),
-        WorkingDayBreak(startTime: kToday, endTime: kToday),
-      ],
-    ),
-    WorkingDay(title: 'Friday', startTime: kToday, endTime: kToday),
-    WorkingDay(title: 'Saturday', startTime: kToday, endTime: kToday),
-  ];
 
   @override
   void initState() {
@@ -69,9 +34,14 @@ class _WorkingDaysState extends State<WorkingDays> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    WorkingDaysComp workingDaysComp =
+        settingsMgr.scheduleManagement.workingDays!;
+    List<String> workingDaysList = workingDaysComp.schedule!.keys.toList();
+
     List<Widget> getBreakForWorkingDay(WorkingDay workingDay) {
       List<Widget> widgetList = workingDay.breaks != null
-          ? workingDay.breaks!.map((workingDay) {
+          ? workingDay.breaks!.map((dayBreak) {
               return Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +52,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Text(
-                      getDateTimeFormat(dateTime: workingDay.startTime),
+                      getTimeOfDayFormat(dayBreak.startTime),
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Text(
@@ -90,7 +60,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Text(
-                      getDateTimeFormat(dateTime: workingDay.endTime),
+                      getTimeOfDayFormat(dayBreak.endTime),
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ]);
@@ -147,7 +117,7 @@ class _WorkingDaysState extends State<WorkingDays> {
             context,
             MaterialPageRoute(
               builder: (context) => DayDetails(
-                dayTile: workingDay.title,
+                dayTile: workingDay.day,
               ),
             ),
           )
@@ -164,7 +134,7 @@ class _WorkingDaysState extends State<WorkingDays> {
             children: [
               Expanded(
                 child: Text(
-                  workingDay.title,
+                  workingDay.day,
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
@@ -178,8 +148,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                getDateTimeFormat(
-                                    dateTime: workingDay.startTime),
+                                getTimeOfDayFormat(workingDay.startTime!),
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               Text(
@@ -187,8 +156,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                               Text(
-                                getDateTimeFormat(
-                                    dateTime: workingDay.startTime),
+                                getTimeOfDayFormat(workingDay.endTime!),
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                             ],
@@ -254,7 +222,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                 child: ListView.separated(
                   // physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (BuildContext context, int index) {
-                    return index == workingDayList.length
+                    return index == workingDaysList.length
                         ? renderDescription()
                         : index == 0
                             ? const SizedBox()
@@ -268,13 +236,14 @@ class _WorkingDaysState extends State<WorkingDays> {
                     vertical: rSize(20),
                     horizontal: rSize(30),
                   ),
-                  itemCount: workingDayList.length + 2,
+                  itemCount: workingDaysList.length + 2,
                   itemBuilder: (context, index) {
-                    if (index == 0 || index == workingDayList.length + 1) {
+                    if (index == 0 || index == workingDaysList.length + 1) {
                       return Container(); // zero height: not visible
                     }
                     return renderDay(
-                      workingDay: workingDayList[index - 1],
+                      workingDay: workingDaysComp
+                          .schedule![workingDaysList[index - 1]]!,
                     );
                   },
                 ),

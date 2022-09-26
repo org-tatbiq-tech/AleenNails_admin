@@ -1,12 +1,13 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
-import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
+import 'package:appointments/widget/custom_expandable_calendar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/ease_in_animation.dart';
-import 'package:appointments/widget/custom_expandable_calendar.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -78,18 +79,12 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    workingDay.title,
+                    workingDay.day,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                   SizedBox(
                     height: rSize(2),
                   ),
-                  workingDay.subTitle.isNotEmpty
-                      ? Text(
-                          workingDay.subTitle,
-                          style: Theme.of(context).textTheme.subtitle1,
-                        )
-                      : const SizedBox(),
                 ],
               ),
             ),
@@ -101,10 +96,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    getDateTimeFormat(
-                      dateTime: workingDay.startTime,
-                      format: 'HH:mm',
-                    ),
+                    getTimeOfDayFormat(workingDay.startTime!),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
@@ -112,10 +104,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                   Text(
-                    getDateTimeFormat(
-                      dateTime: workingDay.startTime,
-                      format: 'HH:mm',
-                    ),
+                    getTimeOfDayFormat(workingDay.endTime!),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
@@ -219,18 +208,12 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
                 ),
                 _renderDay(
                   workingDay: WorkingDay(
-                    selectedDate: _selectedDay,
-                    title: getDateTimeFormat(
+                    day: getDateTimeFormat(
                       dateTime: _selectedDay,
                       format: 'EEEE',
                     ),
-                    subTitle: getDateTimeFormat(
-                      isDayOfWeek: true,
-                      dateTime: _selectedDay,
-                      format: 'dd-MMM-yyyy',
-                    ),
-                    startTime: kToday,
-                    endTime: kToday,
+                    // startTime: kToday,
+                    // endTime: kToday,
                   ),
                 ),
                 Divider(

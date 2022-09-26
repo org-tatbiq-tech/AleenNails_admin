@@ -436,7 +436,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               positionType: PositionType.bottom,
               delay: 0.3,
               child: CustomStatus(
-                customStatusProps: CustomStatusProps(status: Status.waiting),
+                customStatusProps:
+                    CustomStatusProps(status: AppointmentStatus.waiting),
               ),
             ),
             SizedBox(

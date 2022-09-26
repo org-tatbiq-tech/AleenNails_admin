@@ -1,24 +1,22 @@
-import 'package:appointments/widget/appointment_service_card.dart';
-import 'package:common_widgets/fade_animation.dart';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
-import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/input_validation.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/close_slidable_on_tab.dart';
-import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom_slide_able.dart';
+import 'package:appointments/widget/custom_status.dart';
+import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
-import 'package:appointments/widget/custom_slide_able.dart';
-import 'package:appointments/widget/custom_status.dart';
 import 'package:common_widgets/ease_in_animation.dart';
-import 'package:appointments/widget/service_card.dart';
+import 'package:common_widgets/fade_animation.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -495,7 +493,7 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                       children: [
                         CustomStatus(
                           customStatusProps: CustomStatusProps(
-                            status: Status.confirmed,
+                            status: AppointmentStatus.confirmed,
                             fontSize: 12,
                           ),
                         ),

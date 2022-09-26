@@ -40,7 +40,7 @@ class CustomStatus extends StatelessWidget {
 }
 
 class CustomStatusProps {
-  Status status;
+  AppointmentStatus status;
   double fontSize;
   CustomStatusProps({
     required this.status,
