@@ -31,6 +31,7 @@ class AppointmentsMgr extends ChangeNotifier {
   setSelectedDay(DateTime value) async {
     _selectedDay = value;
     print('setting selected day');
+    print(_selectedDay);
     await downloadAppointments();
   }
 
@@ -52,7 +53,15 @@ class AppointmentsMgr extends ChangeNotifier {
 
     var query = _fs
         .collection(appointmentsCollection)
-        .where('dayDate', isEqualTo: _selectedDay);
+        .where('date', isGreaterThanOrEqualTo: _selectedDay)
+        .where(
+          'date',
+          isLessThanOrEqualTo: DateTime(
+            _selectedDay.year,
+            _selectedDay.month,
+            _selectedDay.day + 1,
+          ),
+        );
 
     _appointmentsSub = query.snapshots().listen(
       (snapshot) async {

@@ -154,11 +154,6 @@ class Appointment {
     return date.add(Duration(minutes: totalDurationInMins));
   }
 
-  DateTime get dayDate {
-    // Getting day details only (day, month, year)
-    return DateTime(date.year, date.month, date.day);
-  }
-
   Map<String, dynamic> toJson() {
     return {
       'status': status.toString(),
@@ -168,7 +163,6 @@ class Appointment {
       'clientPhone': clientPhone,
       'creationDate': Timestamp.fromDate(creationDate),
       'date': Timestamp.fromDate(date),
-      'dayDate': Timestamp.fromDate(dayDate),
       'notes': notes,
       'services': services.map((service) => service.toJson()).toList(),
       'paymentStatus': paymentStatus.toString(),
