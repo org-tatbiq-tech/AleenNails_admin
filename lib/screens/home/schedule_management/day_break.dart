@@ -79,7 +79,7 @@ class _DayBreakState extends State<DayBreak> {
                       context: context,
                       minimumDate: widget.breakStartTime,
                       maximumDate: widget.breakEndTime,
-                      initialDateTime: startTime ?? widget.breakStartTime,
+                      initialDateTime: startTime,
                       title: 'Start Time',
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
@@ -130,10 +130,9 @@ class _DayBreakState extends State<DayBreak> {
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
                       mode: CupertinoDatePickerMode.time,
                       context: context,
-                      minimumDate: endTimeMin ?? widget.breakStartTime,
+                      minimumDate: endTimeMin,
                       maximumDate: widget.breakEndTime,
-                      initialDateTime:
-                          endTime ?? endTimeMin ?? widget.breakStartTime,
+                      initialDateTime: endTime,
                       title: 'End Time',
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
