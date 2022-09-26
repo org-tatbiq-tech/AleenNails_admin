@@ -1,5 +1,6 @@
+import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -27,14 +28,40 @@ class _DayDetailsState extends State<DayDetails> {
   DateTime? durationValue;
   bool _isWorking = false;
   bool _isChanged = false;
-  DateTime? startTime;
-  DateTime? startTimeTemp;
-  DateTime? endTime;
-  DateTime? endTimeTemp;
-  DateTime? endTimeMin;
+  late DateTime startTime;
+  late DateTime startTimeTemp;
+  late DateTime endTime;
+  late DateTime endTimeTemp;
+  late DateTime endTimeMin;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      DateTime today = DateTime.now();
+      startTime = DateTime(today.year, today.month, today.day, 8, 0);
+      startTimeTemp = DateTime(today.year, today.month, today.day, 8, 0);
+      endTime = DateTime(today.year, today.month, today.day, 18, 0);
+      endTimeTemp = DateTime(today.year, today.month, today.day, 18, 0);
+      endTimeMin = startTime;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    addBreak() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DayBreak(
+            breakStartTime: startTime,
+            breakEndTime: endTime,
+            dayTile: widget.dayTile,
+          ),
+        ),
+      );
+    }
+
     Widget renderSwitch() {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,7 +147,9 @@ class _DayDetailsState extends State<DayDetails> {
                 size: rSize(16),
                 color: Theme.of(context).colorScheme.primary,
               ),
-              onTap: () => {},
+              onTap: () => {
+                addBreak(),
+              },
             ),
           ),
         ],
@@ -172,6 +201,9 @@ class _DayDetailsState extends State<DayDetails> {
                         setState(() {
                           startTime = startTimeTemp;
                           endTimeMin = startTimeTemp;
+                          if (startTime.isAfter(endTime)) {
+                            endTime = startTimeTemp;
+                          }
                         }),
                       },
                     ),
@@ -195,10 +227,12 @@ class _DayDetailsState extends State<DayDetails> {
                     left: rSize(10),
                     right: rSize(10),
                   ),
-                  child: Text('End',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2),
+                  child: Text(
+                    'End',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                 ),
                 CustomInputFieldButton(
                   text: getDateTimeFormat(
@@ -210,7 +244,7 @@ class _DayDetailsState extends State<DayDetails> {
                       mode: CupertinoDatePickerMode.time,
                       context: context,
                       minimumDate: endTimeMin,
-                      initialDateTime: endTime ?? endTimeMin,
+                      initialDateTime: endTime,
                       title: 'End Time',
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {

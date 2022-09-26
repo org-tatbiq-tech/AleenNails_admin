@@ -220,7 +220,6 @@ class _WorkingDaysState extends State<WorkingDays> {
             children: [
               Expanded(
                 child: ListView.separated(
-                  // physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (BuildContext context, int index) {
                     return index == workingDaysList.length
                         ? renderDescription()
@@ -248,13 +247,6 @@ class _WorkingDaysState extends State<WorkingDays> {
                   },
                 ),
               ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(
-              //     // vertical: rSize(20),
-              //     horizontal: rSize(30),
-              //   ),
-              //   child: _renderDescription(),
-              // ),
             ],
           ),
         ),
