@@ -85,45 +85,74 @@ class _NewAppointmentState extends State<NewAppointment> {
     return true;
   }
 
-  saveAppointment() {
-    /// need to add validation
-    final appointmentsMgr =
-        Provider.of<AppointmentsMgr>(context, listen: false);
-    List<AppointmentService> appointmentServices = [];
-
-    for (var service in selectedServices) {
-      AppointmentService appointmentService = AppointmentService(
-        id: service.id,
-        name: service.name,
-        startTime: startDateTime!,
-        duration: service.duration,
-        cost: service.cost,
-        colorID: service.colorID,
+  bool validateAppointmentData() {
+    if (selectedClient == null) {
+      showErrorFlash(
+        context: context,
+        errorTitle: 'Error',
+        errorBody: 'Please select client.',
       );
-      appointmentServices.add(appointmentService);
+      return false;
     }
+    if (selectedServices.isEmpty) {
+      showErrorFlash(
+        context: context,
+        errorTitle: 'Error',
+        errorBody: 'Please select at least one service.',
+      );
+      return false;
+    }
+    if (startDateTime == null) {
+      showErrorFlash(
+        context: context,
+        errorTitle: 'Error',
+        errorBody: 'Please select start date & time.',
+      );
+      return false;
+    }
+    return true;
+  }
 
-    Appointment newAppointment = Appointment(
-      id: '',
-      clientName: selectedClient!.fullName,
-      clientDocID: selectedClient!.id,
-      clientPhone: selectedClient!.phone,
-      creationDate: DateTime.now(),
-      creator: 'Business',
-      date: startDateTime!,
-      paymentStatus: PaymentStatus.unpaid,
-      services: selectedServices,
-      status: AppointmentStatus.waiting,
-      notes: _notesController.text,
-    );
+  saveAppointment() {
+    if (validateAppointmentData()) {
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      List<AppointmentService> appointmentServices = [];
 
-    appointmentsMgr.submitNewAppointment(newAppointment);
-    showSuccessFlash(
-      context: context,
-      successTitle: 'Submitted!',
-      successBody: 'Appointment was uploaded to DB successfully!',
-    );
-    Navigator.pop(context);
+      for (var service in selectedServices) {
+        AppointmentService appointmentService = AppointmentService(
+          id: service.id,
+          name: service.name,
+          startTime: startDateTime!,
+          duration: service.duration,
+          cost: service.cost,
+          colorID: service.colorID,
+        );
+        appointmentServices.add(appointmentService);
+      }
+
+      Appointment newAppointment = Appointment(
+        id: '',
+        clientName: selectedClient!.fullName,
+        clientDocID: selectedClient!.id,
+        clientPhone: selectedClient!.phone,
+        creationDate: DateTime.now(),
+        creator: 'Business',
+        date: startDateTime!,
+        paymentStatus: PaymentStatus.unpaid,
+        services: selectedServices,
+        status: AppointmentStatus.waiting,
+        notes: _notesController.text,
+      );
+
+      appointmentsMgr.submitNewAppointment(newAppointment);
+      showSuccessFlash(
+        context: context,
+        successTitle: 'Submitted!',
+        successBody: 'Appointment was uploaded to DB successfully!',
+      );
+      Navigator.pop(context);
+    }
   }
 
   renderServices() {
