@@ -1,9 +1,7 @@
+import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/custom_app_bar.dart';
-
-import 'package:common_widgets/custom_icon_button.dart';
-
 import 'package:flutter/material.dart';
 
 class BusinessDetails extends StatelessWidget {
@@ -52,18 +50,18 @@ class BusinessDetails extends StatelessWidget {
                 title: 'Profile Images',
               ),
             ),
-            SizedBox(
-              height: rSize(20),
-            ),
-            CustomIconButton(
-              customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {Navigator.pushNamed(context, '/businessAddress')},
-                animationDelay: 0.5,
-                iconPath: 'assets/icons/place_holder.png',
-                positionType: PositionType.bottom,
-                title: 'Business Location',
-              ),
-            ),
+            // SizedBox(
+            //   height: rSize(20),
+            // ),
+            // CustomIconButton(
+            //   customIconButtonProps: CustomIconButtonProps(
+            //     onTap: () => {Navigator.pushNamed(context, '/businessAddress')},
+            //     animationDelay: 0.5,
+            //     iconPath: 'assets/icons/place_holder.png',
+            //     positionType: PositionType.bottom,
+            //     title: 'Business Location',
+            //   ),
+            // ),
           ],
         ),
       ),

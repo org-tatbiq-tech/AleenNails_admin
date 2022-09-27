@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Settings components
 
+/// Schedule management
 class WorkingDaysComp {
   /// Defines working status per day
   // Need to take days from localization
@@ -118,4 +119,40 @@ class ScheduleManagement {
       unavailability: Unavailability.fromJson(doc['unavailability']),
     );
   }
+}
+
+/// Profile
+class BusinessInfoComp {
+  String name;
+  String phone;
+  String email;
+  String address;
+  String description;
+  String? facebookUrl;
+  String? instagramUrl;
+  String? websiteUrl;
+  String? wazeAddressLink;
+
+  BusinessInfoComp({
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.address,
+    required this.description,
+    this.facebookUrl = '',
+    this.instagramUrl = '',
+    this.websiteUrl = '',
+    this.wazeAddressLink = '',
+  });
+}
+
+class ProfileMedia {
+  // Logo
+  // Cover photo
+  // Workplace photos
+}
+
+/// Booking
+class BookingSettingComp {
+// Hold for now
 }
