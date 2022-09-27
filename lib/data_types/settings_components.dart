@@ -69,20 +69,26 @@ class Unavailability {
   /// Describes when and why is getting to be unavailable
   DateTime? startTime;
   DateTime? endTime;
+  String notes;
 
-  Unavailability({this.startTime, this.endTime});
+  Unavailability({this.startTime, this.endTime, this.notes = ''});
 
   Map<String, dynamic> toJson() {
     return {
       'startTime': startTime != null ? Timestamp.fromDate(startTime!) : null,
       'endTime': endTime != null ? Timestamp.fromDate(endTime!) : null,
+      'notes': notes,
     };
   }
 
   factory Unavailability.fromJson(Map<String, dynamic> doc) {
     return Unavailability(
-      startTime: doc['startTime'],
-      endTime: doc['endTime'],
+      startTime: doc['startTime'] != null
+          ? doc['startTime'].toDate()
+          : doc['startTime'],
+      endTime:
+          doc['endTime'] != null ? doc['endTime'].toDate() : doc['endTime'],
+      notes: doc['notes'],
     );
   }
 }

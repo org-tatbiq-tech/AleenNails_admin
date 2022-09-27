@@ -13,6 +13,10 @@ const settingsCollection = 'settings';
 const scheduleManagementDoc = 'scheduleManagement';
 
 class SettingsMgr extends ChangeNotifier {
+  SettingsMgr() {
+    downloadScheduleManagement();
+  }
+
   ///*************************** Firestore **********************************///
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
   final FirebaseAuth _fa = FirebaseAuth.instance;

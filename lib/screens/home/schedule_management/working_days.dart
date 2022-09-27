@@ -37,7 +37,6 @@ class _WorkingDaysState extends State<WorkingDays> {
 
   @override
   Widget build(BuildContext context) {
-    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     List<String> workingDaysList = [
       'Sunday',
       'Monday',

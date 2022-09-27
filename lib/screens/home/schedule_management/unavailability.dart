@@ -1,12 +1,14 @@
-import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/providers/settings_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Unavailability extends StatefulWidget {
@@ -40,6 +42,48 @@ class _UnavailabilityState extends State<Unavailability> {
   @override
   void initState() {
     super.initState();
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    _descriptionController.text =
+        settingsMgr.scheduleManagement.unavailability!.notes;
+    DateTime? st = settingsMgr.scheduleManagement.unavailability!.startTime;
+    startDateTime = st != null
+        ? DateTime(
+            st.year,
+            st.month,
+            st.day,
+            st.hour,
+            st.minute,
+          )
+        : null;
+    startDateTimeTemp = st != null
+        ? DateTime(
+            st.year,
+            st.month,
+            st.day,
+            st.hour,
+            st.minute,
+          )
+        : null;
+    DateTime? et = settingsMgr.scheduleManagement.unavailability!.endTime;
+
+    endTime = et != null
+        ? DateTime(
+            et.year,
+            et.month,
+            et.day,
+            et.hour,
+            et.minute,
+          )
+        : null;
+    endTimeTemp = et != null
+        ? DateTime(
+            et.year,
+            et.month,
+            et.day,
+            et.hour,
+            et.minute,
+          )
+        : null;
     _descriptionController.addListener(() => setState(() {}));
   }
 
@@ -191,6 +235,16 @@ class _UnavailabilityState extends State<Unavailability> {
 
   @override
   Widget build(BuildContext context) {
+    saveUnavailability() {
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      settingsMgr.scheduleManagement.unavailability!.notes =
+          _descriptionController.text;
+      settingsMgr.scheduleManagement.unavailability!.startTime = startDateTime;
+      settingsMgr.scheduleManagement.unavailability!.endTime = endTime;
+      settingsMgr.submitNewScheduleManagement();
+      Navigator.pop(context);
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -207,7 +261,7 @@ class _UnavailabilityState extends State<Unavailability> {
             barHeight: 110,
             withClipPath: true,
             withSave: true,
-            saveTap: () => {},
+            saveTap: () => saveUnavailability(),
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
