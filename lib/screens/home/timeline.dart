@@ -28,7 +28,7 @@ class TimeLineState extends State<TimeLine> {
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   List<Appointment> appointments = [];
-  bool isListView = false;
+  bool isListView = true;
 
   @override
   void initState() {
@@ -137,6 +137,12 @@ class TimeLineState extends State<TimeLine> {
       end: end,
       onTap: onTap,
     );
+  }
+
+  List<Appointment> getAppointments(DateTime date) {
+    final appointmentsMgr =
+        Provider.of<AppointmentsMgr>(context, listen: false);
+    return appointmentsMgr.appointments;
   }
 
   List<FlutterWeekViewEvent> getFlutterWeekAppointments(DateTime date) {
@@ -275,11 +281,12 @@ class TimeLineState extends State<TimeLine> {
                             left: rSize(20),
                             right: rSize(20),
                           ),
-                          itemCount: appointments.length,
+                          itemCount: getAppointments(_selectedDay).length,
                           itemBuilder: (context, index) {
                             return AppointmentCard(
                               appointmentCardProps: AppointmentCardProps(
-                                appointmentDetails: appointments[index],
+                                appointmentDetails:
+                                    getAppointments(_selectedDay)[index],
                               ),
                             );
                           },
