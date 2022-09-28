@@ -35,7 +35,11 @@ class WorkingDaysComp {
   String notes;
 
   WorkingDaysComp({schedule, this.notes = ''}) {
-    this.schedule = schedule ?? defSchedule;
+    if (schedule == null || schedule.isEmpty) {
+      this.schedule = defSchedule;
+    } else {
+      this.schedule = schedule;
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -52,7 +56,7 @@ class WorkingDaysComp {
 
   factory WorkingDaysComp.fromJson(Map<String, dynamic> doc) {
     Map<String, dynamic> docSchedule =
-        Map<String, dynamic>.from(doc['schedule']);
+        Map<String, dynamic>.from(doc['schedule'] ?? {});
 
     Map<String, WorkingDay> wdSchedule = {};
     for (var dayDetails in docSchedule.entries) {

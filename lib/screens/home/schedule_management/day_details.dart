@@ -127,14 +127,6 @@ class _DayDetailsState extends State<DayDetails> {
                     onChanged: (bool state) {
                       setState(() {
                         widget.workingDay.isDayOn = state;
-                        widget.workingDay.startTime = TimeOfDay(
-                          hour: startTime.hour,
-                          minute: startTime.minute,
-                        );
-                        widget.workingDay.endTime = TimeOfDay(
-                          hour: endTime.hour,
-                          minute: endTime.minute,
-                        );
                       });
                     },
                   ),
@@ -375,16 +367,8 @@ class _DayDetailsState extends State<DayDetails> {
                         setState(() {
                           startTime = startTimeTemp;
                           endTimeMin = startTimeTemp;
-                          widget.workingDay.startTime = TimeOfDay(
-                            hour: startTime.hour,
-                            minute: startTime.minute,
-                          );
                           if (startTime.isAfter(endTime)) {
                             endTime = startTimeTemp;
-                            widget.workingDay.endTime = TimeOfDay(
-                              hour: endTime.hour,
-                              minute: endTime.minute,
-                            );
                           }
                         }),
                       },
@@ -437,10 +421,6 @@ class _DayDetailsState extends State<DayDetails> {
                       primaryAction: () => {
                         setState(() {
                           endTime = endTimeTemp;
-                          widget.workingDay.endTime = TimeOfDay(
-                            hour: endTime.hour,
-                            minute: endTime.minute,
-                          );
                         }),
                       },
                     ),
@@ -512,7 +492,17 @@ class _DayDetailsState extends State<DayDetails> {
               CustomButton(
                 customButtonProps: CustomButtonProps(
                   text: 'OK',
-                  onTap: (() => Navigator.pop(context)),
+                  onTap: (() => {
+                        widget.workingDay.startTime = TimeOfDay(
+                          hour: startTime.hour,
+                          minute: startTime.minute,
+                        ),
+                        widget.workingDay.endTime = TimeOfDay(
+                          hour: endTime.hour,
+                          minute: endTime.minute,
+                        ),
+                        Navigator.pop(context)
+                      }),
                 ),
               ),
             ],

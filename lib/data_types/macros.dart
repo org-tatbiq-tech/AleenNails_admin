@@ -55,6 +55,8 @@ class WorkingDay {
   }) {
     if (breaks == null) {
       this.breaks = [];
+    } else {
+      this.breaks = breaks;
     }
   }
 
@@ -81,8 +83,8 @@ class WorkingDay {
       day: doc['day'],
       startTime: DBToTimeOfDay(doc['startTime']),
       endTime: DBToTimeOfDay(doc['endTime']),
-      isDayOn: doc['isDayOn'],
       breaks: loadBreaks(doc['breaks']),
+      isDayOn: doc['isDayOn'],
     );
   }
 }
