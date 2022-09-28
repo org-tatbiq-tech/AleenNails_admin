@@ -364,6 +364,7 @@ class _DayDetailsState extends State<DayDetails> {
                       mode: CupertinoDatePickerMode.time,
                       context: context,
                       initialDateTime: startTime,
+                      minuteInterval: 5,
                       title: 'Start Time',
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
@@ -424,6 +425,7 @@ class _DayDetailsState extends State<DayDetails> {
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
                       mode: CupertinoDatePickerMode.time,
                       context: context,
+                      minuteInterval: 5,
                       minimumDate: endTimeMin,
                       initialDateTime: endTime,
                       title: 'End Time',

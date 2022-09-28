@@ -1,11 +1,15 @@
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/unavailability_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,11 +28,11 @@ class _UnavailabilityState extends State<Unavailability> {
   final TextEditingController _descriptionController = TextEditingController();
 
   DayViewController dayViewController = DayViewController();
-  DateTime? startDateTime;
-  DateTime? startDateTimeTemp;
+  DateTime? startDateTime = nearestFive(DateTime.now());
+  DateTime startDateTimeTemp = nearestFive(DateTime.now());
 
-  DateTime? endTime;
-  DateTime? endTimeTemp;
+  DateTime? endTime = nearestFive(DateTime.now());
+  DateTime endTimeTemp = nearestFive(DateTime.now());
   DateTime? endTimeMin;
 
   DateTime? _selectedDay = kToday;
@@ -47,53 +51,11 @@ class _UnavailabilityState extends State<Unavailability> {
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    _descriptionController.text =
-        settingsMgr.scheduleManagement.unavailability!.notes;
-    DateTime? st = settingsMgr.scheduleManagement.unavailability!.startTime;
-    startDateTime = st != null
-        ? DateTime(
-            st.year,
-            st.month,
-            st.day,
-            st.hour,
-            st.minute,
-          )
-        : null;
-    startDateTimeTemp = st != null
-        ? DateTime(
-            st.year,
-            st.month,
-            st.day,
-            st.hour,
-            st.minute,
-          )
-        : null;
-    DateTime? et = settingsMgr.scheduleManagement.unavailability!.endTime;
-
-    endTime = et != null
-        ? DateTime(
-            et.year,
-            et.month,
-            et.day,
-            et.hour,
-            et.minute,
-          )
-        : null;
-    endTimeTemp = et != null
-        ? DateTime(
-            et.year,
-            et.month,
-            et.day,
-            et.hour,
-            et.minute,
-          )
-        : null;
-
     unavailabilityList.add(
       UnavailabilityData(
-        startTime: startDateTime,
-        endTime: endTime,
-        notes: _descriptionController.text,
+        startTime: settingsMgr.scheduleManagement.unavailability!.startTime,
+        endTime: settingsMgr.scheduleManagement.unavailability!.endTime,
+        notes: settingsMgr.scheduleManagement.unavailability!.notes,
       ),
     );
     _descriptionController.addListener(() => setState(() {}));
@@ -173,7 +135,8 @@ class _UnavailabilityState extends State<Unavailability> {
                 onTap: () => showPickerDateTimeModal(
                   pickerDateTimeModalProps: PickerDateTimeModalProps(
                     context: context,
-                    minimumDate: DateTime.now(),
+                    minuteInterval: 5,
+                    minimumDate: nearestFive(DateTime.now()),
                     initialDateTime: startDateTime,
                     title: 'Start Date & Time',
                     onDateTimeChanged: (DateTime value) => {
@@ -247,14 +210,82 @@ class _UnavailabilityState extends State<Unavailability> {
 
   @override
   Widget build(BuildContext context) {
+    bool validateUnavailabilityData() {
+      if (startDateTime == null) {
+        showErrorFlash(
+          context: context,
+          errorTitle: 'Error',
+          errorBody: 'Please select Start Date & Time.',
+        );
+        return false;
+      }
+      if (endTime == null) {
+        showErrorFlash(
+          context: context,
+          errorTitle: 'Error',
+          errorBody: 'Please select End Time',
+        );
+        return false;
+      }
+      return true;
+    }
+
     saveUnavailability() {
-      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-      settingsMgr.scheduleManagement.unavailability!.notes =
-          _descriptionController.text;
-      settingsMgr.scheduleManagement.unavailability!.startTime = startDateTime;
-      settingsMgr.scheduleManagement.unavailability!.endTime = endTime;
-      settingsMgr.submitNewScheduleManagement();
-      Navigator.pop(context);
+      if (validateUnavailabilityData()) {
+        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+        settingsMgr.scheduleManagement.unavailability!.notes =
+            _descriptionController.text;
+        settingsMgr.scheduleManagement.unavailability!.startTime =
+            startDateTime;
+        settingsMgr.scheduleManagement.unavailability!.endTime = endTime;
+        settingsMgr.submitNewScheduleManagement();
+        Navigator.pop(context);
+      }
+    }
+
+    removeUnavailability() {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: 'Delete',
+          secondaryButtonText: 'Back',
+          deleteCancelModal: true,
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/trash.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: rSize(80),
+                  contentPadding: rSize(20),
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                'Delete Unavailability?',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                'Action can not be undone',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
     return GestureDetector(
@@ -302,8 +333,8 @@ class _UnavailabilityState extends State<Unavailability> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                            top: rSize(30),
-                            bottom: rSize(10),
+                            top: rSize(40),
+                            bottom: rSize(15),
                           ),
                           child: Text(
                             'Unavailability List',
@@ -330,7 +361,7 @@ class _UnavailabilityState extends State<Unavailability> {
                         )}',
                         subTitle: unavailabilityList[index].notes,
                         unavailabilityDetails: unavailabilityList[index],
-                        deleteAction: () => {},
+                        deleteAction: () => {removeUnavailability()},
                       ),
                     );
                   },
