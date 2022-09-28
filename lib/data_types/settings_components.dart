@@ -132,29 +132,84 @@ class BusinessInfoComp {
   String phone;
   String email;
   String address;
-  String description;
+  String? description;
   String? facebookUrl;
   String? instagramUrl;
   String? websiteUrl;
-  String? wazeAddressLink;
+  String? wazeAddressUrl;
 
   BusinessInfoComp({
     required this.name,
     required this.phone,
     required this.email,
     required this.address,
-    required this.description,
-    this.facebookUrl = '',
-    this.instagramUrl = '',
-    this.websiteUrl = '',
-    this.wazeAddressLink = '',
-  });
+    description = '',
+    facebookUrl = '',
+    instagramUrl = '',
+    websiteUrl = '',
+    wazeAddressUrl = '',
+  }) {
+    this.description = description ?? '';
+    this.facebookUrl = facebookUrl ?? '';
+    this.instagramUrl = instagramUrl ?? '';
+    this.websiteUrl = websiteUrl ?? '';
+    this.wazeAddressUrl = wazeAddressUrl ?? '';
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'phone': phone,
+      'email': email,
+      'address': address,
+      'description': description,
+      'facebookUrl': facebookUrl,
+      'instagramUrl': instagramUrl,
+      'websiteUrl': websiteUrl,
+      'wazeAddressUrl': wazeAddressUrl,
+    };
+  }
+
+  factory BusinessInfoComp.fromJson(Map<String, dynamic> doc) {
+    return BusinessInfoComp(
+      name: doc['name'] ?? '',
+      phone: doc['phone'] ?? '',
+      email: doc['email'] ?? '',
+      address: doc['address'] ?? '',
+      description: doc['description'] ?? '',
+      facebookUrl: doc['facebookUrl'] ?? '',
+      instagramUrl: doc['instagramUrl'] ?? '',
+      websiteUrl: doc['websiteUrl'] ?? '',
+      wazeAddressUrl: doc['wazeAddressUrl'] ?? '',
+    );
+  }
 }
 
 class ProfileMedia {
   // Logo
   // Cover photo
   // Workplace photos
+}
+
+class ProfileManagement {
+  BusinessInfoComp businessInfo;
+  ProfileMedia? profileMedia;
+
+  ProfileManagement({required this.businessInfo, this.profileMedia});
+
+  Map<String, dynamic> toJson() {
+    return {
+      'businessInfo': businessInfo.toJson(),
+    };
+  }
+
+  factory ProfileManagement.fromJson(Map<String, dynamic> doc) {
+    return ProfileManagement(
+      businessInfo: BusinessInfoComp.fromJson(
+        doc['businessInfo'],
+      ),
+    );
+  }
 }
 
 /// Booking

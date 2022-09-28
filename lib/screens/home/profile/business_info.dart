@@ -1,8 +1,10 @@
+import 'package:appointments/providers/settings_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BusinessInfo extends StatefulWidget {
   const BusinessInfo({Key? key}) : super(key: key);
@@ -27,6 +29,24 @@ class BusinessInfoState extends State<BusinessInfo> {
   @override
   void initState() {
     super.initState();
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+
+    _nameController.text = settingsMgr.profileManagement.businessInfo.name;
+    _phoneController.text = settingsMgr.profileManagement.businessInfo.phone;
+    _emailController.text = settingsMgr.profileManagement.businessInfo.email;
+    _addressController.text =
+        settingsMgr.profileManagement.businessInfo.address;
+    _wazeController.text =
+        settingsMgr.profileManagement.businessInfo.wazeAddressUrl!;
+    _facebookController.text =
+        settingsMgr.profileManagement.businessInfo.facebookUrl!;
+    _instagramController.text =
+        settingsMgr.profileManagement.businessInfo.instagramUrl!;
+    _webController.text =
+        settingsMgr.profileManagement.businessInfo.websiteUrl!;
+    _descriptionController.text =
+        settingsMgr.profileManagement.businessInfo.description!;
+
     _nameController.addListener(() => setState(() {}));
     _phoneController.addListener(() => setState(() {}));
     _emailController.addListener(() => setState(() {}));
@@ -385,6 +405,26 @@ class BusinessInfoState extends State<BusinessInfo> {
       );
     }
 
+    saveBusinessInfo() {
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      settingsMgr.profileManagement.businessInfo.name = _nameController.text;
+      settingsMgr.profileManagement.businessInfo.phone = _phoneController.text;
+      settingsMgr.profileManagement.businessInfo.email = _emailController.text;
+      settingsMgr.profileManagement.businessInfo.description =
+          _descriptionController.text;
+      settingsMgr.profileManagement.businessInfo.wazeAddressUrl =
+          _wazeController.text;
+      settingsMgr.profileManagement.businessInfo.facebookUrl =
+          _facebookController.text;
+      settingsMgr.profileManagement.businessInfo.instagramUrl =
+          _instagramController.text;
+      settingsMgr.profileManagement.businessInfo.websiteUrl =
+          _webController.text;
+
+      settingsMgr.submitNewProfile();
+      Navigator.pop(context);
+    }
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -400,7 +440,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             withClipPath: true,
             withBack: true,
             withSave: true,
-            saveTap: () => {},
+            saveTap: () => {saveBusinessInfo()},
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,

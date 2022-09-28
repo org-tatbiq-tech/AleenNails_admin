@@ -11,10 +11,12 @@ import 'package:flutter/material.dart';
 ///*************************** Naming **********************************///
 const settingsCollection = 'settings';
 const scheduleManagementDoc = 'scheduleManagement';
+const profileManagementDoc = 'profile';
 
 class SettingsMgr extends ChangeNotifier {
   SettingsMgr() {
     downloadScheduleManagement();
+    downloadProfileManagement();
   }
 
   ///*************************** Firestore **********************************///
@@ -39,9 +41,8 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<void> downloadScheduleManagement() async {
-    /// Download services from DB
+    /// Download schedule from DB
     // query preparation
-
     var query = _fs.collection(settingsCollection);
 
     _scheduleManagementSub =
@@ -71,5 +72,46 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   ///*********************** Profile ****************************///
+  ProfileManagement _profileManagement = ProfileManagement(
+      businessInfo: BusinessInfoComp.fromJson({})); // Holds profile details
+  bool initializedProfileManagement =
+      false; // Don't download Profile details form settings unless required
+  StreamSubscription<DocumentSnapshot>? _profileManagementSub;
 
+  ProfileManagement get profileManagement {
+    if (!initializedProfileManagement) {
+      initializedProfileManagement = true;
+      downloadProfileManagement();
+    }
+    return _profileManagement;
+  }
+
+  Future<void> downloadProfileManagement() async {
+    /// Download services from DB
+    // query preparation
+
+    var query = _fs.collection(settingsCollection);
+
+    _profileManagementSub = query.doc(profileManagementDoc).snapshots().listen(
+      (snapshot) async {
+        if (!snapshot.exists ||
+            snapshot.data() == null ||
+            snapshot.data()!.isEmpty) {
+          // No data to show - notifying listeners for empty schedule management settings
+          notifyListeners();
+          return;
+        }
+
+        // schedule management doc has data to show
+        _profileManagement = ProfileManagement.fromJson(snapshot.data()!);
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> submitNewProfile() async {
+    /// Submitting new Profile details - update DB
+    CollectionReference settingsColl = _fs.collection(settingsCollection);
+    settingsColl.doc(profileManagementDoc).update(_profileManagement.toJson());
+  }
 }
