@@ -18,7 +18,7 @@ class ServiceCard extends StatelessWidget {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
         // minLeadingWidth: 10,
-        marginBottom: 15,
+        // marginBottom: 15,
         enabled: serviceCardProps.enabled,
         onTap: serviceCardProps.onTap,
         title: Text(

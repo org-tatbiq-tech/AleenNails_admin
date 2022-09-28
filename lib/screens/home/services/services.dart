@@ -4,6 +4,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/screens/home/services/service.dart';
 import 'package:appointments/utils/formats.dart';
+import 'package:appointments/widget/custom_reorderable_list_view.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/service_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -89,7 +90,10 @@ class ServicesState extends State<Services> {
           children: [
             servicesMgr.services.isNotEmpty
                 ? Expanded(
-                    child: ReorderableListView.builder(
+                    child: CustomReorderableListView.separated(
+                      separatorBuilder: (context, index) => SizedBox(
+                        height: rSize(15),
+                      ),
                       buildDefaultDragHandles: false,
                       onReorder: (oldIndex, newIndex) {
                         if (newIndex > oldIndex) newIndex--;
@@ -102,6 +106,7 @@ class ServicesState extends State<Services> {
                         vertical: rSize(40),
                         horizontal: rSize(30),
                       ),
+                      shrinkWrap: true,
                       itemCount: servicesMgr.services.length,
                       itemBuilder: (context, index) {
                         return ServiceCard(
@@ -122,6 +127,39 @@ class ServicesState extends State<Services> {
                         );
                       },
                     ),
+                    // child: ReorderableListView.builder(
+                    //   buildDefaultDragHandles: false,
+                    //   onReorder: (oldIndex, newIndex) {
+                    //     if (newIndex > oldIndex) newIndex--;
+                    //     final Service service =
+                    //         servicesMgr.services.removeAt(oldIndex);
+                    //     servicesMgr.services.insert(newIndex, service);
+                    //   },
+                    //   proxyDecorator: proxyDecorator,
+                    //   padding: EdgeInsets.symmetric(
+                    //     vertical: rSize(40),
+                    //     horizontal: rSize(30),
+                    //   ),
+                    //   itemCount: servicesMgr.services.length,
+                    //   itemBuilder: (context, index) {
+                    //     return ServiceCard(
+                    //       key: ValueKey(servicesMgr.services[index].id),
+                    //       serviceCardProps: ServiceCardProps(
+                    //         withNavigation: !widget.selectionMode,
+                    //         dragIndex: index,
+                    //         onTap: widget.onTap != null
+                    //             ? () =>
+                    //                 widget.onTap!(servicesMgr.services[index])
+                    //             : () => navigateToService(
+                    //                 servicesMgr.services[index]),
+                    //         serviceDetails: servicesMgr.services[index],
+                    //         title: servicesMgr.services[index].name,
+                    //         subTitle: durationToFormat(
+                    //             duration: servicesMgr.services[index].duration),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                   )
                 : Padding(
                     padding: EdgeInsets.only(

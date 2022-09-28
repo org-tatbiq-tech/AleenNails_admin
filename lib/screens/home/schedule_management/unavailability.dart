@@ -1,4 +1,6 @@
+import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/widget/unavailability_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
@@ -30,6 +32,8 @@ class _UnavailabilityState extends State<Unavailability> {
   DateTime? endTimeMin;
 
   DateTime? _selectedDay = kToday;
+
+  List<UnavailabilityData> unavailabilityList = [];
 
   void onDaySelected(DateTime selectedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -84,6 +88,14 @@ class _UnavailabilityState extends State<Unavailability> {
             et.minute,
           )
         : null;
+
+    unavailabilityList.add(
+      UnavailabilityData(
+        startTime: startDateTime,
+        endTime: endTime,
+        notes: _descriptionController.text,
+      ),
+    );
     _descriptionController.addListener(() => setState(() {}));
   }
 
@@ -265,32 +277,71 @@ class _UnavailabilityState extends State<Unavailability> {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
-        body: SingleChildScrollView(
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(30),
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: rSize(30),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    SizedBox(
-                      height: rSize(30),
-                    ),
-                    renderTimePicker(),
-                    SizedBox(
-                      height: rSize(30),
-                    ),
-                    _renderReason(),
-                  ],
-                ),
+              SizedBox(
+                height: rSize(30),
               ),
+              renderTimePicker(),
+              SizedBox(
+                height: rSize(30),
+              ),
+              _renderReason(),
+              unavailabilityList.isNotEmpty
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: rSize(30),
+                            bottom: rSize(10),
+                          ),
+                          child: Text(
+                            'Unavailability List',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
+              Expanded(
+                child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return UnavailabilityCard(
+                      key: ValueKey(index),
+                      unavailabilityCardProps: UnavailabilityCardProps(
+                        title: '${getDateTimeFormat(
+                          dateTime: unavailabilityList[index].startTime,
+                          format: 'HH:mm',
+                        )} → ${getDateTimeFormat(
+                          dateTime: unavailabilityList[index].endTime,
+                          format: 'HH:mm',
+                        )}',
+                        subTitle: unavailabilityList[index].notes,
+                        unavailabilityDetails: unavailabilityList[index],
+                        deleteAction: () => {},
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: rSize(10),
+                    );
+                  },
+                  itemCount: unavailabilityList.length,
+                ),
+              )
             ],
           ),
         ),

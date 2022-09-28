@@ -65,13 +65,13 @@ class WorkingDaysComp {
   }
 }
 
-class Unavailability {
+class UnavailabilityData {
   /// Describes when and why is getting to be unavailable
   DateTime? startTime;
   DateTime? endTime;
   String notes;
 
-  Unavailability({this.startTime, this.endTime, this.notes = ''});
+  UnavailabilityData({this.startTime, this.endTime, this.notes = ''});
 
   Map<String, dynamic> toJson() {
     return {
@@ -81,8 +81,8 @@ class Unavailability {
     };
   }
 
-  factory Unavailability.fromJson(Map<String, dynamic> doc) {
-    return Unavailability(
+  factory UnavailabilityData.fromJson(Map<String, dynamic> doc) {
+    return UnavailabilityData(
       startTime: doc['startTime'] != null
           ? doc['startTime'].toDate()
           : doc['startTime'],
@@ -95,14 +95,14 @@ class Unavailability {
 
 class ScheduleManagement {
   WorkingDaysComp? workingDays;
-  Unavailability? unavailability;
+  UnavailabilityData? unavailability;
 
   ScheduleManagement({
     workingDays,
     unavailability,
   }) {
     this.workingDays = workingDays ?? WorkingDaysComp();
-    this.unavailability = unavailability ?? Unavailability();
+    this.unavailability = unavailability ?? UnavailabilityData();
   }
 
   Map<String, dynamic> toJson() {
@@ -115,7 +115,7 @@ class ScheduleManagement {
   factory ScheduleManagement.fromJson(Map<String, dynamic> doc) {
     return ScheduleManagement(
       workingDays: WorkingDaysComp.fromJson(doc['workingDays']),
-      unavailability: Unavailability.fromJson(doc['unavailability']),
+      unavailability: UnavailabilityData.fromJson(doc['unavailability']),
     );
   }
 }
