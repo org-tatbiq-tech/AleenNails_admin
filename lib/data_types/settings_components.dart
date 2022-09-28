@@ -66,13 +66,13 @@ class WorkingDaysComp {
   }
 }
 
-class UnavailabilityData {
+class UnavailabilityComp {
   /// Describes when and why is getting to be unavailable
   DateTime? startTime;
   DateTime? endTime;
   String notes;
 
-  UnavailabilityData({this.startTime, this.endTime, this.notes = ''});
+  UnavailabilityComp({this.startTime, this.endTime, this.notes = ''});
 
   Map<String, dynamic> toJson() {
     return {
@@ -82,8 +82,8 @@ class UnavailabilityData {
     };
   }
 
-  factory UnavailabilityData.fromJson(Map<String, dynamic> doc) {
-    return UnavailabilityData(
+  factory UnavailabilityComp.fromJson(Map<String, dynamic> doc) {
+    return UnavailabilityComp(
       startTime: doc['startTime'] != null
           ? doc['startTime'].toDate()
           : doc['startTime'],
@@ -96,27 +96,32 @@ class UnavailabilityData {
 
 class ScheduleManagement {
   WorkingDaysComp? workingDays;
-  UnavailabilityData? unavailability;
+  List<UnavailabilityComp>? unavailabilityList;
 
   ScheduleManagement({
     workingDays,
-    unavailability,
+    unavailabilityList,
   }) {
     this.workingDays = workingDays ?? WorkingDaysComp();
-    this.unavailability = unavailability ?? UnavailabilityData();
+    this.unavailabilityList = unavailabilityList ?? [];
   }
 
   Map<String, dynamic> toJson() {
     return {
       'workingDays': workingDays!.toJson(),
-      'unavailability': unavailability!.toJson(),
+      'unavailability': unavailabilityList!.map((e) => e.toJson()).toList(),
     };
   }
 
   factory ScheduleManagement.fromJson(Map<String, dynamic> doc) {
+    List<UnavailabilityComp> unavailabilityList = [];
+    for (var unavailabilityElement in doc['unavailability']) {
+      unavailabilityList
+          .add(UnavailabilityComp.fromJson(unavailabilityElement));
+    }
     return ScheduleManagement(
       workingDays: WorkingDaysComp.fromJson(doc['workingDays']),
-      unavailability: UnavailabilityData.fromJson(doc['unavailability']),
+      unavailabilityList: unavailabilityList,
     );
   }
 }

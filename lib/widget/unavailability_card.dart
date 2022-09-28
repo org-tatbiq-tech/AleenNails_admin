@@ -120,7 +120,7 @@ class UnavailabilityCard extends StatelessWidget {
 }
 
 class UnavailabilityCardProps {
-  final UnavailabilityData unavailabilityDetails;
+  final UnavailabilityComp unavailabilityDetails;
   final bool enabled;
   final String subTitle;
   final String title;

@@ -36,8 +36,7 @@ class _UnavailabilityState extends State<Unavailability> {
   DateTime? endTimeMin;
 
   DateTime? _selectedDay = kToday;
-
-  List<UnavailabilityData> unavailabilityList = [];
+  late SettingsMgr settingsMgr;
 
   void onDaySelected(DateTime selectedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -50,14 +49,8 @@ class _UnavailabilityState extends State<Unavailability> {
   @override
   void initState() {
     super.initState();
-    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    unavailabilityList.add(
-      UnavailabilityData(
-        startTime: settingsMgr.scheduleManagement.unavailability!.startTime,
-        endTime: settingsMgr.scheduleManagement.unavailability!.endTime,
-        notes: settingsMgr.scheduleManagement.unavailability!.notes,
-      ),
-    );
+    settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+
     _descriptionController.addListener(() => setState(() {}));
   }
 
@@ -233,11 +226,12 @@ class _UnavailabilityState extends State<Unavailability> {
     saveUnavailability() {
       if (validateUnavailabilityData()) {
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-        settingsMgr.scheduleManagement.unavailability!.notes =
-            _descriptionController.text;
-        settingsMgr.scheduleManagement.unavailability!.startTime =
-            startDateTime;
-        settingsMgr.scheduleManagement.unavailability!.endTime = endTime;
+        UnavailabilityComp unavailabilityComp = UnavailabilityComp(
+            startTime: startDateTime,
+            endTime: endTime,
+            notes: _descriptionController.text);
+        settingsMgr.scheduleManagement.unavailabilityList!
+            .add(unavailabilityComp);
         settingsMgr.submitNewScheduleManagement();
         Navigator.pop(context);
       }
@@ -325,7 +319,7 @@ class _UnavailabilityState extends State<Unavailability> {
                 height: rSize(30),
               ),
               _renderReason(),
-              unavailabilityList.isNotEmpty
+              settingsMgr.scheduleManagement.unavailabilityList!.isNotEmpty
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -353,14 +347,18 @@ class _UnavailabilityState extends State<Unavailability> {
                       key: ValueKey(index),
                       unavailabilityCardProps: UnavailabilityCardProps(
                         title: '${getDateTimeFormat(
-                          dateTime: unavailabilityList[index].startTime,
+                          dateTime: settingsMgr.scheduleManagement
+                              .unavailabilityList![index].startTime,
                           format: 'HH:mm',
                         )} → ${getDateTimeFormat(
-                          dateTime: unavailabilityList[index].endTime,
+                          dateTime: settingsMgr.scheduleManagement
+                              .unavailabilityList![index].endTime,
                           format: 'HH:mm',
                         )}',
-                        subTitle: unavailabilityList[index].notes,
-                        unavailabilityDetails: unavailabilityList[index],
+                        subTitle: settingsMgr.scheduleManagement
+                            .unavailabilityList![index].notes,
+                        unavailabilityDetails: settingsMgr
+                            .scheduleManagement.unavailabilityList![index],
                         deleteAction: () => {removeUnavailability()},
                       ),
                     );
@@ -370,7 +368,8 @@ class _UnavailabilityState extends State<Unavailability> {
                       height: rSize(10),
                     );
                   },
-                  itemCount: unavailabilityList.length,
+                  itemCount:
+                      settingsMgr.scheduleManagement.unavailabilityList!.length,
                 ),
               )
             ],
