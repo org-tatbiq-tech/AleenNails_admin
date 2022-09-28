@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/formats.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_color_picker.dart';
 import 'package:appointments/widget/duration_picker_modal.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -665,6 +666,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           context: context,
           successTitle: 'Submitted!',
           successBody: 'Service was uploaded to DB successfully!',
+          successColor: successPrimaryColor,
         );
       } else {
         // update
@@ -673,6 +675,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           context: context,
           successTitle: 'Updated!',
           successBody: 'Service was updated successfully!',
+          successColor: successPrimaryColor,
         );
       }
       Navigator.pop(context);

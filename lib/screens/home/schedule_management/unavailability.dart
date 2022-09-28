@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/formats.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/unavailability_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -28,12 +29,12 @@ class _UnavailabilityState extends State<Unavailability> {
   final TextEditingController _descriptionController = TextEditingController();
 
   DayViewController dayViewController = DayViewController();
-  DateTime? startDateTime = nearestFive(DateTime.now());
+  DateTime startDateTime = nearestFive(DateTime.now());
   DateTime startDateTimeTemp = nearestFive(DateTime.now());
 
-  DateTime? endTime = nearestFive(DateTime.now());
+  DateTime endTime = nearestFive(DateTime.now());
   DateTime endTimeTemp = nearestFive(DateTime.now());
-  DateTime? endTimeMin;
+  DateTime endTimeMin = nearestFive(DateTime.now());
 
   DateTime? _selectedDay = kToday;
   late SettingsMgr settingsMgr;
@@ -50,7 +51,6 @@ class _UnavailabilityState extends State<Unavailability> {
   void initState() {
     super.initState();
     settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-
     _descriptionController.addListener(() => setState(() {}));
   }
 
@@ -141,6 +141,9 @@ class _UnavailabilityState extends State<Unavailability> {
                       setState(() {
                         startDateTime = startDateTimeTemp;
                         endTimeMin = startDateTimeTemp;
+                        if (startDateTime.isAfter(endTime)) {
+                          endTime = startDateTimeTemp;
+                        }
                       }),
                     },
                   ),
@@ -178,7 +181,8 @@ class _UnavailabilityState extends State<Unavailability> {
                   pickerDateTimeModalProps: PickerDateTimeModalProps(
                     mode: CupertinoDatePickerMode.time,
                     context: context,
-                    initialDateTime: endTime ?? endTimeMin,
+                    minuteInterval: 5,
+                    initialDateTime: endTime,
                     minimumDate: endTimeMin,
                     title: 'End Time',
                     onDateTimeChanged: (DateTime value) => {
@@ -209,6 +213,7 @@ class _UnavailabilityState extends State<Unavailability> {
           context: context,
           errorTitle: 'Error',
           errorBody: 'Please select Start Date & Time.',
+          errorColor: errorPrimaryColor,
         );
         return false;
       }
@@ -217,6 +222,7 @@ class _UnavailabilityState extends State<Unavailability> {
           context: context,
           errorTitle: 'Error',
           errorBody: 'Please select End Time',
+          errorColor: errorPrimaryColor,
         );
         return false;
       }
