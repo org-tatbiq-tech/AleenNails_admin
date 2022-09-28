@@ -237,7 +237,7 @@ class _UnavailabilityState extends State<Unavailability> {
       }
     }
 
-    removeUnavailability() {
+    removeUnavailability(int index) {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -280,6 +280,9 @@ class _UnavailabilityState extends State<Unavailability> {
           ),
         ),
       );
+      // Make sure delete has been clicked
+      settingsMgr.scheduleManagement.unavailabilityList!.removeAt(index);
+      settingsMgr.submitNewScheduleManagement();
     }
 
     return GestureDetector(
@@ -359,7 +362,7 @@ class _UnavailabilityState extends State<Unavailability> {
                             .unavailabilityList![index].notes,
                         unavailabilityDetails: settingsMgr
                             .scheduleManagement.unavailabilityList![index],
-                        deleteAction: () => {removeUnavailability()},
+                        deleteAction: () => {removeUnavailability(index)},
                       ),
                     );
                   },
