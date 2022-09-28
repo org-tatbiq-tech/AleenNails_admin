@@ -1,10 +1,7 @@
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:common_widgets/custom_icon.dart';
-
 import 'package:common_widgets/custom_input_field.dart';
-
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class BusinessInfo extends StatefulWidget {
@@ -20,6 +17,8 @@ class BusinessInfoState extends State<BusinessInfo> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _wazeController = TextEditingController();
   final TextEditingController _facebookController = TextEditingController();
   final TextEditingController _instagramController = TextEditingController();
   final TextEditingController _webController = TextEditingController();
@@ -31,6 +30,8 @@ class BusinessInfoState extends State<BusinessInfo> {
     _nameController.addListener(() => setState(() {}));
     _phoneController.addListener(() => setState(() {}));
     _emailController.addListener(() => setState(() {}));
+    _addressController.addListener(() => setState(() {}));
+    _wazeController.addListener(() => setState(() {}));
     _facebookController.addListener(() => setState(() {}));
     _instagramController.addListener(() => setState(() {}));
     _webController.addListener(() => setState(() {}));
@@ -43,6 +44,8 @@ class BusinessInfoState extends State<BusinessInfo> {
     _nameController.dispose();
     _phoneController.dispose();
     _emailController.dispose();
+    _addressController.dispose();
+    _wazeController.dispose();
     _facebookController.dispose();
     _instagramController.dispose();
     _webController.dispose();
@@ -51,7 +54,7 @@ class BusinessInfoState extends State<BusinessInfo> {
 
   @override
   Widget build(BuildContext context) {
-    Widget _renderSocialMedia() {
+    Widget renderSocialMedia() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,7 +197,7 @@ class BusinessInfoState extends State<BusinessInfo> {
       );
     }
 
-    Widget _renderDescription() {
+    Widget renderDescription() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,7 +231,7 @@ class BusinessInfoState extends State<BusinessInfo> {
       );
     }
 
-    Widget _renderEmail() {
+    Widget renderEmail() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,7 +260,74 @@ class BusinessInfoState extends State<BusinessInfo> {
       );
     }
 
-    Widget _renderPhoneNumber() {
+    Widget renderAddress() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(5),
+            ),
+            child: Text(
+              'Address',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+          ),
+          CustomInputField(
+            customInputFieldProps: CustomInputFieldProps(
+              controller: _addressController,
+              keyboardType: TextInputType.text,
+            ),
+          ),
+          SizedBox(
+            height: rSize(20),
+          ),
+          CustomInputField(
+            customInputFieldProps: CustomInputFieldProps(
+              controller: _wazeController,
+              hintText: 'Waze',
+              keyboardType: TextInputType.text,
+              prefixIcon: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: rSize(10),
+                  ),
+                  CustomIcon(
+                    customIconProps: CustomIconProps(
+                      icon: null,
+                      path: 'assets/icons/waze.png',
+                      backgroundColor: Colors.transparent,
+                      containerSize: 30,
+                    ),
+                  ),
+                  SizedBox(
+                    width: rSize(10),
+                  ),
+                  Container(
+                    width: rSize(1),
+                    color: Theme.of(context).colorScheme.primary,
+                    margin: EdgeInsets.symmetric(
+                      vertical: rSize(6),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget renderPhoneNumber() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,7 +356,7 @@ class BusinessInfoState extends State<BusinessInfo> {
       );
     }
 
-    Widget _renderBusinessName() {
+    Widget renderBusinessName() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,23 +413,27 @@ class BusinessInfoState extends State<BusinessInfo> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _renderBusinessName(),
+              renderBusinessName(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderPhoneNumber(),
+              renderPhoneNumber(),
               SizedBox(
                 height: rSize(20),
               ),
-              _renderEmail(),
+              renderEmail(),
+              SizedBox(
+                height: rSize(20),
+              ),
+              renderAddress(),
               SizedBox(
                 height: rSize(30),
               ),
-              _renderSocialMedia(),
+              renderSocialMedia(),
               SizedBox(
                 height: rSize(30),
               ),
-              _renderDescription(),
+              renderDescription(),
               SizedBox(
                 height: rSize(30),
               ),

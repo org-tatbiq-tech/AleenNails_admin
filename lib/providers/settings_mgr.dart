@@ -69,4 +69,7 @@ class SettingsMgr extends ChangeNotifier {
         .doc(scheduleManagementDoc)
         .update(_scheduleManagement.toJson());
   }
+
+  ///*********************** Profile ****************************///
+
 }
