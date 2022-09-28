@@ -33,8 +33,8 @@ class NewAppointment extends StatefulWidget {
 class _NewAppointmentState extends State<NewAppointment> {
   final TextEditingController _notesController = TextEditingController();
 
-  DateTime? startDateTime;
-  DateTime? startDateTimeTemp;
+  DateTime startDateTime = nearestFive(DateTime.now());
+  DateTime startDateTimeTemp = nearestFive(DateTime.now());
   DateTime? endTime;
   Client? selectedClient;
   List<AppointmentService> selectedServices = [];
@@ -62,7 +62,7 @@ class _NewAppointmentState extends State<NewAppointment> {
     );
     setState(() {
       selectedServices.add(appointmentService);
-      endTime = startDateTime?.add(getServicesDuration());
+      endTime = startDateTime.add(getServicesDuration());
     });
     Navigator.pop(context);
   }
@@ -70,7 +70,7 @@ class _NewAppointmentState extends State<NewAppointment> {
   removeService(AppointmentService service) {
     setState(() {
       selectedServices.removeWhere((item) => item == service);
-      endTime = startDateTime?.add(getServicesDuration());
+      endTime = startDateTime.add(getServicesDuration());
     });
   }
 
@@ -107,15 +107,15 @@ class _NewAppointmentState extends State<NewAppointment> {
       );
       return false;
     }
-    if (startDateTime == null) {
-      showErrorFlash(
-        context: context,
-        errorTitle: 'Error',
-        errorBody: 'Please select start date & time.',
-        errorColor: errorPrimaryColor,
-      );
-      return false;
-    }
+    // if (startDateTime == null) {
+    //   showErrorFlash(
+    //     context: context,
+    //     errorTitle: 'Error',
+    //     errorBody: 'Please select start date & time.',
+    //     errorColor: errorPrimaryColor,
+    //   );
+    //   return false;
+    // }
     return true;
   }
 
@@ -137,7 +137,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         AppointmentService appointmentService = AppointmentService(
           id: service.id,
           name: service.name,
-          startTime: startDateTime!,
+          startTime: startDateTime,
           duration: service.duration,
           cost: service.cost,
           colorID: service.colorID,
@@ -152,7 +152,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         clientPhone: selectedClient!.phone,
         creationDate: DateTime.now(),
         creator: 'Business',
-        date: startDateTime!,
+        date: startDateTime,
         paymentStatus: PaymentStatus.unpaid,
         services: selectedServices,
         status: AppointmentStatus.waiting,
@@ -311,6 +311,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
                       context: context,
                       minimumDate: DateTime.now(),
+                      minuteInterval: 5,
                       initialDateTime: startDateTime,
                       title: 'Start Date & Time',
                       onDateTimeChanged: (DateTime value) => {
@@ -321,7 +322,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                       primaryAction: () => {
                         setState(() {
                           startDateTime = startDateTimeTemp;
-                          endTime = startDateTime?.add(getServicesDuration());
+                          endTime = startDateTime.add(getServicesDuration());
                         }),
                       },
                     ),
