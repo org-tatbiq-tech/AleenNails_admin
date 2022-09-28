@@ -91,7 +91,7 @@ packages:
       name: common_widgets
       url: "https://dart.cloudsmith.io/ahmad-manaa-44N/common-widgets/"
     source: hosted
-    version: "0.0.25"
+    version: "0.0.26"
   cross_file:
     dependency: transitive
     description:

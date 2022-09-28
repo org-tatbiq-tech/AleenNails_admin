@@ -4,6 +4,7 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
@@ -93,6 +94,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         context: context,
         errorTitle: 'Error',
         errorBody: 'Please select client.',
+        errorColor: errorPrimaryColor,
       );
       return false;
     }
@@ -101,6 +103,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         context: context,
         errorTitle: 'Error',
         errorBody: 'Please select at least one service.',
+        errorColor: errorPrimaryColor,
       );
       return false;
     }
@@ -109,6 +112,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         context: context,
         errorTitle: 'Error',
         errorBody: 'Please select start date & time.',
+        errorColor: errorPrimaryColor,
       );
       return false;
     }
@@ -160,6 +164,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         context: context,
         successTitle: 'Submitted!',
         successBody: 'Appointment was uploaded to DB successfully!',
+        successColor: successPrimaryColor,
       );
       Navigator.pop(context);
     }

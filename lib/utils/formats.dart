@@ -5,5 +5,11 @@ String durationToFormat({required Duration duration, String format = ''}) {
 }
 
 DateTime nearestFive(DateTime val) {
-  return DateTime(val.year, val.month, val.day, val.hour, val.minute ~/ 5 * 10);
+  return DateTime(
+    val.year,
+    val.month,
+    val.day,
+    val.hour,
+    (val.minute ~/ 5 + 1) * 5,
+  );
 }

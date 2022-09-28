@@ -1,3 +1,4 @@
+import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +123,7 @@ class ThemeNotifier with ChangeNotifier {
         background: primaryWithAlpha3,
         onBackground: primaryWithAlpha2,
         outline: primaryFontWithAlpha1,
+        onError: errorPrimaryColor,
       ));
 
   ThemeData? _themeData;

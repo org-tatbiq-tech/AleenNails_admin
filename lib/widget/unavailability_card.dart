@@ -27,17 +27,10 @@ class UnavailabilityCard extends StatelessWidget {
                 fontSize: rSize(16),
               ),
         ),
-        subTitle: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Text(
-              unavailabilityCardProps.subTitle,
-              style: Theme.of(context).textTheme.subtitle1,
-              maxLines: 2,
-            ),
-          ],
+        subTitle: Text(
+          unavailabilityCardProps.subTitle,
+          style: Theme.of(context).textTheme.subtitle1,
+          maxLines: 2,
         ),
         trailing: Column(
           mainAxisSize: MainAxisSize.max,

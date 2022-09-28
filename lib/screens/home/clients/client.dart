@@ -1,5 +1,6 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -468,6 +469,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           context: context,
           successTitle: 'Submitted!',
           successBody: 'Client was added to DB successfully!',
+          successColor: successPrimaryColor,
         );
         Navigator.pop(context);
       } else {
@@ -476,6 +478,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           context: context,
           successTitle: 'Updated!',
           successBody: 'Client was updated successfully!',
+          successColor: successPrimaryColor,
         );
         int count = 0;
         Navigator.popUntil(context, (route) {
