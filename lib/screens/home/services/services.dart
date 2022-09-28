@@ -37,14 +37,17 @@ class ServicesState extends State<Services> {
       return AnimatedBuilder(
         animation: animation,
         builder: (BuildContext context, Widget? child) {
-          final double animValue = Curves.easeInOut.transform(animation.value);
-          final double elevation = lerpDouble(0, 6, animValue)!;
-          return Material(
-            borderRadius: BorderRadius.circular(rSize(10)),
-            elevation: elevation,
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
-            shadowColor: Theme.of(context).shadowColor,
-            child: child,
+          final animValue = Curves.easeInOut.transform(animation.value);
+          final scale = lerpDouble(1, 1.05, animValue)!;
+          final elevation = lerpDouble(0, 6, animValue)!;
+          return Transform.scale(
+            scale: scale,
+            child: Material(
+              elevation: elevation,
+              borderRadius: BorderRadius.circular(rSize(10)),
+              color: Colors.transparent,
+              child: child,
+            ),
           );
         },
         child: child,
@@ -91,6 +94,7 @@ class ServicesState extends State<Services> {
             servicesMgr.services.isNotEmpty
                 ? Expanded(
                     child: CustomReorderableListView.separated(
+                      // scrollController: scrollController,
                       separatorBuilder: (context, index) => SizedBox(
                         height: rSize(15),
                       ),
@@ -106,14 +110,13 @@ class ServicesState extends State<Services> {
                         vertical: rSize(40),
                         horizontal: rSize(30),
                       ),
-                      shrinkWrap: true,
                       itemCount: servicesMgr.services.length,
                       itemBuilder: (context, index) {
                         return ServiceCard(
                           key: ValueKey(servicesMgr.services[index].id),
                           serviceCardProps: ServiceCardProps(
                             withNavigation: !widget.selectionMode,
-                            dragIndex: index,
+                            dragIndex: index == 0 ? index : index + (1 * index),
                             onTap: widget.onTap != null
                                 ? () =>
                                     widget.onTap!(servicesMgr.services[index])
