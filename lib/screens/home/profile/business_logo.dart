@@ -8,7 +8,6 @@ import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 
 class BusinessLogo extends StatefulWidget {
   const BusinessLogo({Key? key}) : super(key: key);
@@ -76,7 +75,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                   showImagePickerModal(
                     imagePickerModalProps: ImagePickerModalProps(
                       context: context,
-                      cropStyle: CropStyle.circle,
+                      isCircleCropStyle: true,
                       saveImage: (File? imageFile) {
                         setState(() {
                           _imageFile = imageFile;
@@ -153,7 +152,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                                 showImagePickerModal(
                                   imagePickerModalProps: ImagePickerModalProps(
                                     context: context,
-                                    cropStyle: CropStyle.circle,
+                                    isCircleCropStyle: true,
                                     saveImage: (File? imageFile) {
                                       setState(() {
                                         _imageFile = imageFile;

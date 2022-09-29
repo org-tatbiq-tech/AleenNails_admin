@@ -1,18 +1,21 @@
-import 'package:common_widgets/utils/layout.dart';
+import 'dart:io';
 import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:common_widgets/custom_icon.dart';
-
 import 'package:common_widgets/ease_in_animation.dart';
-
 import 'package:common_widgets/image_picker_modal.dart';
-
+import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
-class BusinessCoverPhoto extends StatelessWidget {
+class BusinessCoverPhoto extends StatefulWidget {
   const BusinessCoverPhoto({Key? key}) : super(key: key);
 
+  @override
+  State<BusinessCoverPhoto> createState() => _BusinessCoverPhotoState();
+}
+
+class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
+  File? _imageFile;
   @override
   Widget build(BuildContext context) {
     Widget renderBusinessCoverPhoto() {
@@ -21,7 +24,11 @@ class BusinessCoverPhoto extends StatelessWidget {
           showImagePickerModal(
             imagePickerModalProps: ImagePickerModalProps(
               context: context,
-              saveImage: () => {},
+              saveImage: (File? imageFile) {
+                setState(() {
+                  _imageFile = imageFile;
+                });
+              },
             ),
           )
         },
