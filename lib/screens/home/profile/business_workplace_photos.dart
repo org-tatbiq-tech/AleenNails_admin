@@ -116,6 +116,8 @@ class BusinessWorkplacePhotos extends StatelessWidget {
           withBack: true,
           barHeight: 110,
           withClipPath: true,
+          withSave: true,
+          saveTap: () => {}, // here will add the save action
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,

@@ -196,6 +196,8 @@ class _BusinessLogoState extends State<BusinessLogo> {
           withBack: true,
           barHeight: 110,
           withClipPath: true,
+          withSave: true,
+          saveTap: () => {}, // here will add the save action
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
