@@ -28,6 +28,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
           primaryButtonText: 'Delete',
           secondaryButtonText: 'Back',
           deleteCancelModal: true,
+          primaryAction: () => {}, // delete action will be added here
           footerButton: ModalFooter.both,
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -176,7 +177,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                               text: 'Delete Logo',
                               backgroundColor:
                                   Theme.of(context).colorScheme.error,
-                              textColor: Theme.of(context).colorScheme.onError,
+                              textColor: Colors.white,
                             ),
                           ),
                         ),
