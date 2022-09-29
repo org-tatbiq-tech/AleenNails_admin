@@ -18,7 +18,6 @@ import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/personal_settings/language_settings.dart';
 import 'package:appointments/screens/home/personal_settings/notification_settings.dart';
 import 'package:appointments/screens/home/personal_settings/personal_settings.dart';
-import 'package:appointments/screens/home/profile/business_address.dart';
 import 'package:appointments/screens/home/profile/business_cover_photo.dart';
 import 'package:appointments/screens/home/profile/business_details.dart';
 import 'package:appointments/screens/home/profile/business_info.dart';
@@ -119,7 +118,6 @@ class AppointmentsApp extends StatelessWidget {
       '/businessLogo': (context) => const BusinessLogo(),
       '/businessCoverPhoto': (context) => const BusinessCoverPhoto(),
       '/businessWorkplacePhotos': (context) => const BusinessWorkplacePhotos(),
-      '/businessAddress': (context) => const BusinessAddress(),
       '/scheduleManagement': (context) => const ScheduleManagement(),
       '/unavailability': (context) => const Unavailability(),
       '/workingDays': (context) => const WorkingDays(),

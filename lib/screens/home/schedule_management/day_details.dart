@@ -218,31 +218,32 @@ class _DayDetailsState extends State<DayDetails> {
               padding: EdgeInsets.only(bottom: rSize(10)),
               child: Row(
                 children: [
-                  EaseInAnimation(
-                    onTap: () => {},
-                    child: CustomIcon(
-                      customIconProps: CustomIconProps(
-                        icon: null,
-                        path: 'assets/icons/pen.png',
-                        withPadding: true,
-                        backgroundColor:
-                            Theme.of(context).colorScheme.onBackground,
-                        iconColor:
-                            darken(Theme.of(context).colorScheme.primary),
-                        containerSize: rSize(35),
-                        contentPadding: rSize(8),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: rSize(10),
-                  ),
+                  // EaseInAnimation(
+                  //   onTap: () => {},
+                  //   child: CustomIcon(
+                  //     customIconProps: CustomIconProps(
+                  //       icon: null,
+                  //       path: 'assets/icons/pen.png',
+                  //       withPadding: true,
+                  //       backgroundColor:
+                  //           Theme.of(context).colorScheme.onBackground,
+                  //       iconColor:
+                  //           darken(Theme.of(context).colorScheme.primary),
+                  //       containerSize: rSize(35),
+                  //       contentPadding: rSize(8),
+                  //     ),
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   width: rSize(10),
+                  // ),
                   EaseInAnimation(
                     onTap: () => {
                       setState(
                         () {
-                          widget.workingDay.breaks
-                              ?.removeWhere((item) => item == workingDayBreak);
+                          widget.workingDay.breaks?.removeWhere(
+                            (item) => item == workingDayBreak,
+                          );
                         },
                       )
                     },

@@ -34,34 +34,10 @@ class _DayBreakState extends State<DayBreak> {
   void initState() {
     super.initState();
     setState(() {
-      startTime = DateTime(
-        widget.breakStartTime.year,
-        widget.breakStartTime.month,
-        widget.breakStartTime.day,
-        widget.breakStartTime.hour,
-        widget.breakStartTime.minute,
-      );
-      startTimeTemp = DateTime(
-        widget.breakStartTime.year,
-        widget.breakStartTime.month,
-        widget.breakStartTime.day,
-        widget.breakStartTime.hour,
-        widget.breakStartTime.minute,
-      );
-      endTime = DateTime(
-        widget.breakEndTime.year,
-        widget.breakEndTime.month,
-        widget.breakEndTime.day,
-        widget.breakEndTime.hour,
-        widget.breakEndTime.minute,
-      );
-      endTimeTemp = DateTime(
-        widget.breakEndTime.year,
-        widget.breakEndTime.month,
-        widget.breakEndTime.day,
-        widget.breakEndTime.hour,
-        widget.breakEndTime.minute,
-      );
+      startTime = widget.breakStartTime;
+      startTimeTemp = widget.breakStartTime;
+      endTime = widget.breakEndTime;
+      endTimeTemp = widget.breakEndTime;
       endTimeMin = startTime;
     });
   }
@@ -102,6 +78,7 @@ class _DayBreakState extends State<DayBreak> {
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
                       mode: CupertinoDatePickerMode.time,
                       context: context,
+                      minuteInterval: 5,
                       minimumDate: widget.breakStartTime,
                       maximumDate: widget.breakEndTime,
                       initialDateTime: startTime,
@@ -141,10 +118,12 @@ class _DayBreakState extends State<DayBreak> {
                     left: rSize(10),
                     right: rSize(10),
                   ),
-                  child: Text('End',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2),
+                  child: Text(
+                    'End',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                 ),
                 CustomInputFieldButton(
                   text: getDateTimeFormat(
@@ -155,6 +134,7 @@ class _DayBreakState extends State<DayBreak> {
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
                       mode: CupertinoDatePickerMode.time,
                       context: context,
+                      minuteInterval: 5,
                       minimumDate: endTimeMin,
                       maximumDate: widget.breakEndTime,
                       initialDateTime: endTime,
@@ -211,7 +191,7 @@ class _DayBreakState extends State<DayBreak> {
                         WorkingDayBreak(
                           startTime: TimeOfDay(
                             hour: startTime.hour,
-                            minute: startTime.hour,
+                            minute: startTime.minute,
                           ),
                           endTime: TimeOfDay(
                             hour: endTime.hour,

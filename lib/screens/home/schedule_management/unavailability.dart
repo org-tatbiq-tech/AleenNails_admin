@@ -207,40 +207,16 @@ class _UnavailabilityState extends State<Unavailability> {
 
   @override
   Widget build(BuildContext context) {
-    bool validateUnavailabilityData() {
-      if (startDateTime == null) {
-        showErrorFlash(
-          context: context,
-          errorTitle: 'Error',
-          errorBody: 'Please select Start Date & Time.',
-          errorColor: errorPrimaryColor,
-        );
-        return false;
-      }
-      if (endTime == null) {
-        showErrorFlash(
-          context: context,
-          errorTitle: 'Error',
-          errorBody: 'Please select End Time',
-          errorColor: errorPrimaryColor,
-        );
-        return false;
-      }
-      return true;
-    }
-
     saveUnavailability() {
-      if (validateUnavailabilityData()) {
-        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-        UnavailabilityComp unavailabilityComp = UnavailabilityComp(
-            startTime: startDateTime,
-            endTime: endTime,
-            notes: _descriptionController.text);
-        settingsMgr.scheduleManagement.unavailabilityList!
-            .add(unavailabilityComp);
-        settingsMgr.submitNewScheduleManagement();
-        Navigator.pop(context);
-      }
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      UnavailabilityComp unavailabilityComp = UnavailabilityComp(
+          startTime: startDateTime,
+          endTime: endTime,
+          notes: _descriptionController.text);
+      settingsMgr.scheduleManagement.unavailabilityList!
+          .add(unavailabilityComp);
+      settingsMgr.submitNewScheduleManagement();
+      Navigator.pop(context);
     }
 
     deleteUnavailability(int index) {

@@ -53,18 +53,6 @@ class BusinessDetails extends StatelessWidget {
                   title: 'Profile Images',
                 ),
               ),
-              // SizedBox(
-              //   height: rSize(20),
-              // ),
-              // CustomIconButton(
-              //   customIconButtonProps: CustomIconButtonProps(
-              //     onTap: () => {Navigator.pushNamed(context, '/businessAddress')},
-              //     animationDelay: 0.5,
-              //     iconPath: 'assets/icons/place_holder.png',
-              //     positionType: PositionType.bottom,
-              //     title: 'Business Location',
-              //   ),
-              // ),
             ],
           ),
         ),

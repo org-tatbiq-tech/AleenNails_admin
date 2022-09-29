@@ -1,9 +1,13 @@
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class BusinessInfo extends StatefulWidget {
@@ -25,6 +29,7 @@ class BusinessInfoState extends State<BusinessInfo> {
   final TextEditingController _instagramController = TextEditingController();
   final TextEditingController _webController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -98,6 +103,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               controller: _facebookController,
               hintText: 'Facebook',
               keyboardType: TextInputType.text,
+              validator: validateUrl,
               prefixIcon: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -139,6 +145,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               controller: _instagramController,
               hintText: 'Instagram',
               keyboardType: TextInputType.text,
+              validator: validateUrl,
               prefixIcon: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -179,6 +186,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _webController,
               hintText: 'Website',
+              validator: validateUrl,
               keyboardType: TextInputType.text,
               prefixIcon: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -274,6 +282,10 @@ class BusinessInfoState extends State<BusinessInfo> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
+              validator: emailValidation,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(40),
+              ],
             ),
           ),
         ],
@@ -312,6 +324,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _wazeController,
               hintText: 'Waze',
+              validator: validateUrl,
               keyboardType: TextInputType.text,
               prefixIcon: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -368,8 +381,13 @@ class BusinessInfoState extends State<BusinessInfo> {
           ),
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(10),
+                FilteringTextInputFormatter.digitsOnly
+              ],
               controller: _phoneController,
               keyboardType: TextInputType.phone,
+              validator: mobileValidation,
             ),
           ),
         ],
@@ -399,6 +417,10 @@ class BusinessInfoState extends State<BusinessInfo> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _nameController,
               keyboardType: TextInputType.text,
+              validator: emptyValidation,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+              ],
             ),
           ),
         ],
@@ -406,23 +428,34 @@ class BusinessInfoState extends State<BusinessInfo> {
     }
 
     saveBusinessInfo() {
-      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-      settingsMgr.profileManagement.businessInfo.name = _nameController.text;
-      settingsMgr.profileManagement.businessInfo.phone = _phoneController.text;
-      settingsMgr.profileManagement.businessInfo.email = _emailController.text;
-      settingsMgr.profileManagement.businessInfo.description =
-          _descriptionController.text;
-      settingsMgr.profileManagement.businessInfo.wazeAddressUrl =
-          _wazeController.text;
-      settingsMgr.profileManagement.businessInfo.facebookUrl =
-          _facebookController.text;
-      settingsMgr.profileManagement.businessInfo.instagramUrl =
-          _instagramController.text;
-      settingsMgr.profileManagement.businessInfo.websiteUrl =
-          _webController.text;
+      final form = _formKey.currentState;
+      if (form!.validate()) {
+        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+        settingsMgr.profileManagement.businessInfo.name = _nameController.text;
+        settingsMgr.profileManagement.businessInfo.phone =
+            _phoneController.text;
+        settingsMgr.profileManagement.businessInfo.email =
+            _emailController.text;
+        settingsMgr.profileManagement.businessInfo.description =
+            _descriptionController.text;
+        settingsMgr.profileManagement.businessInfo.wazeAddressUrl =
+            _wazeController.text;
+        settingsMgr.profileManagement.businessInfo.facebookUrl =
+            _facebookController.text;
+        settingsMgr.profileManagement.businessInfo.instagramUrl =
+            _instagramController.text;
+        settingsMgr.profileManagement.businessInfo.websiteUrl =
+            _webController.text;
 
-      settingsMgr.submitNewProfile();
-      Navigator.pop(context);
+        settingsMgr.submitNewProfile();
+        showSuccessFlash(
+          context: context,
+          successColor: successPrimaryColor,
+          successBody: 'Success!',
+          successTitle: 'Data Updated Successfully.',
+        );
+        Navigator.pop(context);
+      }
     }
 
     return GestureDetector(
@@ -449,35 +482,38 @@ class BusinessInfoState extends State<BusinessInfo> {
             horizontal: rSize(30),
             vertical: rSize(20),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              renderBusinessName(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderPhoneNumber(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderEmail(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderAddress(),
-              SizedBox(
-                height: rSize(30),
-              ),
-              renderSocialMedia(),
-              SizedBox(
-                height: rSize(30),
-              ),
-              renderDescription(),
-              SizedBox(
-                height: rSize(30),
-              ),
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                renderBusinessName(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderPhoneNumber(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderEmail(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderAddress(),
+                SizedBox(
+                  height: rSize(30),
+                ),
+                renderSocialMedia(),
+                SizedBox(
+                  height: rSize(30),
+                ),
+                renderDescription(),
+                SizedBox(
+                  height: rSize(30),
+                ),
+              ],
+            ),
           ),
         ),
       ),
