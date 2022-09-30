@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 /// Settings manager provider
@@ -12,6 +13,7 @@ import 'package:flutter/material.dart';
 const settingsCollection = 'settings';
 const scheduleManagementDoc = 'scheduleManagement';
 const profileManagementDoc = 'profile';
+const profileStorageDir = 'profile';
 
 class SettingsMgr extends ChangeNotifier {
   SettingsMgr() {
@@ -21,7 +23,7 @@ class SettingsMgr extends ChangeNotifier {
 
   ///*************************** Firestore **********************************///
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
-  final FirebaseAuth _fa = FirebaseAuth.instance;
+  final FirebaseStorage _fst = FirebaseStorage.instance;
 
   ///************************* Settings *******************************///
 
@@ -113,5 +115,30 @@ class SettingsMgr extends ChangeNotifier {
     /// Submitting new Profile details - update DB
     CollectionReference settingsColl = _fs.collection(settingsCollection);
     settingsColl.doc(profileManagementDoc).update(_profileManagement.toJson());
+  }
+
+  ///*********************** Storage ****************************///
+  Future<void> uploadLogoImage(File image) async {
+    Reference ref = _fst.ref(profileStorageDir).child('logo.png');
+    await ref.putFile(image);
+  }
+
+  Future<String> getLogoImage() async {
+    Reference ref = _fst.ref(profileStorageDir).child('logo.png');
+    return await ref.getDownloadURL();
+  }
+
+  Future<void> uploadCoverImage(File image) async {
+    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
+    await ref.putFile(image);
+  }
+
+  Future<void> uploadWPImages(List<File> imageList) async {
+    var i = 0;
+    for (File image in imageList) {
+      Reference ref = _fst.ref(profileStorageDir).child('WP${i}_image.png');
+      await ref.putFile(image);
+      i += 1;
+    }
   }
 }
