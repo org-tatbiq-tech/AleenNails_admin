@@ -129,6 +129,11 @@ class SettingsMgr extends ChangeNotifier {
     return refStr;
   }
 
+  Future<void> deleteLogoImage() async {
+    Reference ref = _fst.ref(profileStorageDir).child('logo.png');
+    return await ref.delete();
+  }
+
   Future<void> uploadCoverImage(File image) async {
     Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
     await ref.putFile(image);
@@ -138,6 +143,11 @@ class SettingsMgr extends ChangeNotifier {
     Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
     var refStr = await ref.getDownloadURL();
     return refStr;
+  }
+
+  Future<void> deleteCoverImage() async {
+    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
+    return await ref.delete();
   }
 
   Future<void> uploadWPImages(List<File> imageList) async {
