@@ -21,6 +21,16 @@ class BusinessCoverPhoto extends StatefulWidget {
 
 class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   File? _imageFile;
+
+  @override
+  void initState() {
+    super.initState();
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    settingsMgr
+        .getCoverImage()
+        .then((imageUrl) => print('image url is ${imageUrl}'));
+  }
+
   @override
   Widget build(BuildContext context) {
     deleteCoverPhoto() {

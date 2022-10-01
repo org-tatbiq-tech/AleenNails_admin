@@ -134,6 +134,12 @@ class SettingsMgr extends ChangeNotifier {
     await ref.putFile(image);
   }
 
+  Future<String> getCoverImage() async {
+    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
+    var refStr = await ref.getDownloadURL();
+    return refStr;
+  }
+
   Future<void> uploadWPImages(List<File> imageList) async {
     var i = 0;
     for (File image in imageList) {
