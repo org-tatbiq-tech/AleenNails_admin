@@ -162,6 +162,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(rSize(80)),
                       image: DecorationImage(
+                        fit: BoxFit.cover,
                         image: FileImage(
                           _imageFile!,
                         ),
@@ -173,44 +174,40 @@ class _BusinessLogoState extends State<BusinessLogo> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Expanded(
-                          child: CustomButton(
-                            customButtonProps: CustomButtonProps(
-                              onTap: () => {
-                                showImagePickerModal(
-                                  imagePickerModalProps: ImagePickerModalProps(
-                                    context: context,
-                                    isCircleCropStyle: true,
-                                    saveImage: (File? imageFile) {
-                                      setState(() {
-                                        _imageFile = imageFile;
-                                      });
-                                    },
-                                  ),
-                                )
-                              },
-                              text: 'Edit Logo',
-                              isPrimary: true,
-                            ),
+                        CustomButton(
+                          customButtonProps: CustomButtonProps(
+                            onTap: () => {
+                              showImagePickerModal(
+                                imagePickerModalProps: ImagePickerModalProps(
+                                  context: context,
+                                  isCircleCropStyle: true,
+                                  saveImage: (File? imageFile) {
+                                    setState(() {
+                                      _imageFile = imageFile;
+                                    });
+                                  },
+                                ),
+                              )
+                            },
+                            text: 'Edit Logo',
+                            isPrimary: true,
                           ),
                         ),
                         SizedBox(
-                          width: rSize(40),
+                          height: rSize(20),
                         ),
-                        Expanded(
-                          child: CustomButton(
-                            customButtonProps: CustomButtonProps(
-                              onTap: () => {deleteLogo()},
-                              text: 'Delete Logo',
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.error,
-                              textColor: Colors.white,
-                            ),
+                        CustomButton(
+                          customButtonProps: CustomButtonProps(
+                            onTap: () => {deleteLogo()},
+                            text: 'Delete Logo',
+                            backgroundColor:
+                                Theme.of(context).colorScheme.error,
+                            textColor: Colors.white,
                           ),
                         ),
                       ],

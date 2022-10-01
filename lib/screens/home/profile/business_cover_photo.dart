@@ -4,10 +4,12 @@ import 'package:appointments/providers/settings_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,14 +23,23 @@ class BusinessCoverPhoto extends StatefulWidget {
 
 class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   File? _imageFile;
-
+  bool _isLoading = true;
   @override
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    settingsMgr
-        .getCoverImage()
-        .then((imageUrl) => print('image url is ${imageUrl}'));
+    settingsMgr.getLogoImage().then(
+          (imageUrl) => {
+            fileFromImageUrl('logo', imageUrl).then(
+              (value) => setState(
+                (() {
+                  _imageFile = value;
+                  _isLoading = false;
+                }),
+              ),
+            ),
+          },
+        );
   }
 
   @override
@@ -147,6 +158,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(rSize(10)),
                       image: DecorationImage(
+                        fit: BoxFit.cover,
                         image: FileImage(
                           _imageFile!,
                         ),
@@ -158,44 +170,40 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        Expanded(
-                          child: CustomButton(
-                            customButtonProps: CustomButtonProps(
-                              onTap: () => {
-                                showImagePickerModal(
-                                  imagePickerModalProps: ImagePickerModalProps(
-                                    context: context,
-                                    isCircleCropStyle: false,
-                                    saveImage: (File? imageFile) {
-                                      setState(() {
-                                        _imageFile = imageFile;
-                                      });
-                                    },
-                                  ),
-                                )
-                              },
-                              text: 'Edit Cover Photo',
-                              isPrimary: true,
-                            ),
+                        CustomButton(
+                          customButtonProps: CustomButtonProps(
+                            onTap: () => {
+                              showImagePickerModal(
+                                imagePickerModalProps: ImagePickerModalProps(
+                                  context: context,
+                                  isCircleCropStyle: false,
+                                  saveImage: (File? imageFile) {
+                                    setState(() {
+                                      _imageFile = imageFile;
+                                    });
+                                  },
+                                ),
+                              )
+                            },
+                            text: 'Edit Cover Photo',
+                            isPrimary: true,
                           ),
                         ),
                         SizedBox(
-                          width: rSize(40),
+                          height: rSize(20),
                         ),
-                        Expanded(
-                          child: CustomButton(
-                            customButtonProps: CustomButtonProps(
-                              onTap: () => {deleteCoverPhoto()},
-                              text: 'Delete Cover Photo',
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.error,
-                              textColor: Colors.white,
-                            ),
+                        CustomButton(
+                          customButtonProps: CustomButtonProps(
+                            onTap: () => {deleteCoverPhoto()},
+                            text: 'Delete Cover Photo',
+                            backgroundColor:
+                                Theme.of(context).colorScheme.error,
+                            textColor: Colors.white,
                           ),
                         ),
                       ],
@@ -241,9 +249,12 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
               style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
-              height: rSize(100),
+              height: rSize(80),
             ),
-            renderBusinessCoverPhoto(),
+            _isLoading
+                ? CustomLoadingIndicator(
+                    customLoadingIndicatorProps: CustomLoadingIndicatorProps())
+                : renderBusinessCoverPhoto(),
           ],
         ),
       ),
