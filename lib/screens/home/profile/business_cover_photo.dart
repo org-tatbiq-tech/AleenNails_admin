@@ -101,8 +101,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                       rSize(10),
                     ),
                     child: SizedBox(
-                      width: rSize(400),
-                      height: rSize(200),
+                      width: rSize(330),
+                      height: rSize(165),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

@@ -4,10 +4,12 @@ import 'package:appointments/providers/settings_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,18 +22,36 @@ class BusinessLogo extends StatefulWidget {
 }
 
 class _BusinessLogoState extends State<BusinessLogo> {
+  File? _imageFile;
+  bool _isLoading = true;
   @override
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    settingsMgr
-        .getLogoImage()
-        .then((imageUrl) => print('image url is ${imageUrl}'));
+    settingsMgr.getLogoImage().then(
+          (imageUrl) => {
+            fileFromImageUrl('logo', imageUrl).then(
+              (value) => setState(
+                (() {
+                  _imageFile = value;
+                  _isLoading = false;
+                }),
+              ),
+            ),
+          },
+        );
   }
 
-  File? _imageFile;
   @override
   Widget build(BuildContext context) {
+    saveImage() {
+      if (_imageFile != null) {
+        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+        settingsMgr.uploadLogoImage(_imageFile!);
+      }
+      Navigator.pop(context);
+    }
+
     deleteLogo() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
@@ -201,14 +221,6 @@ class _BusinessLogoState extends State<BusinessLogo> {
       );
     }
 
-    saveImage() {
-      if (_imageFile != null) {
-        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-        settingsMgr.uploadLogoImage(_imageFile!);
-      }
-      Navigator.pop(context);
-    }
-
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
@@ -246,7 +258,10 @@ class _BusinessLogoState extends State<BusinessLogo> {
                 : SizedBox(
                     height: rSize(40),
                   ),
-            renderBusinessLogo(),
+            _isLoading
+                ? CustomLoadingIndicator(
+                    customLoadingIndicatorProps: CustomLoadingIndicatorProps())
+                : renderBusinessLogo(),
           ],
         ),
       ),
