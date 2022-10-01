@@ -44,6 +44,23 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
 
   @override
   Widget build(BuildContext context) {
+    deleteImage() {
+      if (_imageFile != null) {
+        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+        setState(() {
+          _isLoading = true;
+        });
+        settingsMgr.deleteCoverImage().then(
+              (value) => setState(
+                (() {
+                  _imageFile = null;
+                  _isLoading = false;
+                }),
+              ),
+            );
+      }
+    }
+
     deleteCoverPhoto() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
@@ -52,7 +69,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
           primaryButtonText: 'Delete',
           secondaryButtonText: 'Back',
           deleteCancelModal: true,
-          primaryAction: () => {}, // delete action will be added here
+          primaryAction: () => {deleteImage()},
           footerButton: ModalFooter.both,
           child: Column(
             mainAxisSize: MainAxisSize.max,

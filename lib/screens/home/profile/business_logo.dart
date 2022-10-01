@@ -52,6 +52,23 @@ class _BusinessLogoState extends State<BusinessLogo> {
       Navigator.pop(context);
     }
 
+    deleteImage() {
+      if (_imageFile != null) {
+        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+        setState(() {
+          _isLoading = true;
+        });
+        settingsMgr.deleteLogoImage().then(
+              (value) => setState(
+                (() {
+                  _imageFile = null;
+                  _isLoading = false;
+                }),
+              ),
+            );
+      }
+    }
+
     deleteLogo() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
@@ -60,7 +77,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
           primaryButtonText: 'Delete',
           secondaryButtonText: 'Back',
           deleteCancelModal: true,
-          primaryAction: () => {}, // delete action will be added here
+          primaryAction: () => {deleteImage()},
           footerButton: ModalFooter.both,
           child: Column(
             mainAxisSize: MainAxisSize.max,
