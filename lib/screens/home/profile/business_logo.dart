@@ -243,21 +243,17 @@ class _BusinessLogoState extends State<BusinessLogo> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            _imageFile == null
-                ? Column(
-                    children: [
-                      Text(
-                        'Upload your business logo so its visible on your profile.',
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                      SizedBox(
-                        height: rSize(100),
-                      ),
-                    ],
-                  )
-                : SizedBox(
-                    height: rSize(40),
-                  ),
+            Column(
+              children: [
+                Text(
+                  'Upload your business logo so its visible on your profile.',
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                SizedBox(
+                  height: rSize(40),
+                ),
+              ],
+            ),
             _isLoading
                 ? CustomLoadingIndicator(
                     customLoadingIndicatorProps: CustomLoadingIndicatorProps())
