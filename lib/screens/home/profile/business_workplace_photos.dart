@@ -1,26 +1,33 @@
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:common_widgets/custom_icon.dart';
-
 import 'package:common_widgets/ease_in_animation.dart';
-
 import 'package:common_widgets/image_picker_modal.dart';
-
+import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
-class BusinessWorkplacePhotos extends StatelessWidget {
+class BusinessWorkplacePhotos extends StatefulWidget {
   const BusinessWorkplacePhotos({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    List<Color> mediaList = [
-      // Colors.red,
-      // Colors.red,
-      // Colors.red,
-    ];
+  State<BusinessWorkplacePhotos> createState() =>
+      _BusinessWorkplacePhotosState();
+}
 
+class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
+  List<Color> mediaList = [];
+  @override
+  void initState() {
+    super.initState();
+    mediaList = [
+      Colors.red,
+      Colors.red,
+      Colors.red,
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
     List<Widget> mediaCards() {
       List<Widget> widgetList = mediaList.map((item) {
         return EaseInAnimation(
@@ -40,7 +47,7 @@ class BusinessWorkplacePhotos extends StatelessWidget {
             child: Image.asset(
               'assets/images/avatar_female.png',
               alignment: Alignment.center,
-              fit: BoxFit.contain,
+              fit: BoxFit.cover,
             ),
           ),
         );
@@ -133,7 +140,7 @@ class BusinessWorkplacePhotos extends StatelessWidget {
           children: [
             Text(
               'Give clients a sneak peek of your space before they even walk through the door.',
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
               height: rSize(40),
