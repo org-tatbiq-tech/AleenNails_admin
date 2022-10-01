@@ -20,6 +20,15 @@ class BusinessLogo extends StatefulWidget {
 }
 
 class _BusinessLogoState extends State<BusinessLogo> {
+  @override
+  void initState() {
+    super.initState();
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    settingsMgr
+        .getLogoImage()
+        .then((imageUrl) => print('image url is ${imageUrl}'));
+  }
+
   File? _imageFile;
   @override
   Widget build(BuildContext context) {

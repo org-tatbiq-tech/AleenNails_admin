@@ -23,7 +23,7 @@ import 'package:appointments/screens/home/profile/business_details.dart';
 import 'package:appointments/screens/home/profile/business_info.dart';
 import 'package:appointments/screens/home/profile/business_logo.dart';
 import 'package:appointments/screens/home/profile/business_workplace_photos.dart';
-import 'package:appointments/screens/home/profile/profile_Images.dart';
+import 'package:appointments/screens/home/profile/profile_images.dart';
 import 'package:appointments/screens/home/schedule_management/schedule_management.dart';
 import 'package:appointments/screens/home/schedule_management/unavailability.dart';
 import 'package:appointments/screens/home/schedule_management/working_days.dart';

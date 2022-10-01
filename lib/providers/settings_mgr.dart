@@ -125,7 +125,8 @@ class SettingsMgr extends ChangeNotifier {
 
   Future<String> getLogoImage() async {
     Reference ref = _fst.ref(profileStorageDir).child('logo.png');
-    return await ref.getDownloadURL();
+    var refStr = await ref.getDownloadURL();
+    return refStr;
   }
 
   Future<void> uploadCoverImage(File image) async {
