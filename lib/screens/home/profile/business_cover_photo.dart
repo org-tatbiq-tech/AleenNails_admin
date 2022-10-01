@@ -30,14 +30,25 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     settingsMgr.getLogoImage().then(
           (imageUrl) => {
-            fileFromImageUrl('logo', imageUrl).then(
-              (value) => setState(
-                (() {
-                  _imageFile = value;
-                  _isLoading = false;
-                }),
-              ),
-            ),
+            if (imageUrl == 'notFound')
+              {
+                setState(
+                  (() {
+                    _isLoading = false;
+                  }),
+                ),
+              }
+            else
+              {
+                fileFromImageUrl('logo', imageUrl).then(
+                  (value) => setState(
+                    (() {
+                      _imageFile = value;
+                      _isLoading = false;
+                    }),
+                  ),
+                ),
+              },
           },
         );
   }

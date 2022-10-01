@@ -125,7 +125,12 @@ class SettingsMgr extends ChangeNotifier {
 
   Future<String> getLogoImage() async {
     Reference ref = _fst.ref(profileStorageDir).child('logo.png');
-    var refStr = await ref.getDownloadURL();
+    var refStr = 'notFound';
+    try {
+      refStr = await ref.getDownloadURL();
+    } catch (error) {
+      return refStr;
+    }
     return refStr;
   }
 
@@ -141,7 +146,12 @@ class SettingsMgr extends ChangeNotifier {
 
   Future<String> getCoverImage() async {
     Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
-    var refStr = await ref.getDownloadURL();
+    var refStr = 'notFound';
+    try {
+      refStr = await ref.getDownloadURL();
+    } catch (error) {
+      return refStr;
+    }
     return refStr;
   }
 
