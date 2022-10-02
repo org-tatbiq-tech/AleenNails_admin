@@ -20,11 +20,18 @@ exports.newAppointment = functions.firestore.
         const client = admin.firestore().collection(clientsCollection).doc(clientDocID);
 
         return client.get().then(clientDoc => {
-//            let myAppointment = {
-//            }
-//            myAppointment[appointmentId] = { id: appointmentId}
             clientAppointments = clientDoc.data().appointments
-            clientAppointments[appointmentId] = { id: appointmentId}
+            let services = [];
+            for(const idx in newAppointmentData.services) {
+                services.push(newAppointmentData.services[idx].name);
+            }
+            clientAppointments[appointmentId] = {
+                id: appointmentId,
+                startTime: newAppointmentData.date,
+                endTime: newAppointmentData.endTime,
+                totalCost: newAppointmentData.totalCost,
+                services: services
+                }
             return client.update({
                        appointments: clientAppointments
            });

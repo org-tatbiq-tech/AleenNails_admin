@@ -60,7 +60,7 @@ class Service {
   }
 }
 
-/// Appointment service - holds partial details on service pin particular
+/// Appointment service - holds partial details on service per particular
 /// appointment (e.g. start time, service with getters)
 class AppointmentService {
   String id; // Service ID (if required to fetch from DB)
@@ -160,6 +160,8 @@ class Appointment {
       'notes': notes,
       'services': services.map((service) => service.toJson()).toList(),
       'paymentStatus': paymentStatus.toString(),
+      'endTime': endTime,
+      'totalCost': totalCost,
     };
   }
 
@@ -214,6 +216,53 @@ class Appointment {
   }
 }
 
+/// Clients appointment holds partial details of Appointment,
+/// will be saved as part of clients appointments
+
+class ClientAppointment {
+  String id; // Appointment ID (if required to fetch from DB)
+  DateTime startTime; // Appointment start date and time
+  DateTime endTime; // Appointment end date time
+  double totalCost; // Appointment total cost
+  List<String> services; // List of services names selected in this appointment
+
+  ClientAppointment({
+    required this.id,
+    required this.startTime,
+    required this.endTime,
+    required this.totalCost,
+    required this.services,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'startTime': Timestamp.fromDate(startTime),
+      'endTime': Timestamp.fromDate(endTime),
+      'totalCost': totalCost,
+      'services': services,
+    };
+  }
+
+  factory ClientAppointment.fromJson(Map<String, dynamic> doc) {
+    List<String> loadServices(List<dynamic> servicesDoc) {
+      List<String> services = [];
+      for (var service in servicesDoc) {
+        services.add(service);
+      }
+      return services;
+    }
+
+    return ClientAppointment(
+      id: doc['id'],
+      startTime: doc['startTime'].toDate(),
+      endTime: doc['endTime'].toDate(),
+      totalCost: doc['totalCost'].toDouble() ?? 0.0,
+      services: doc['services'] == null ? [] : loadServices(doc['services']),
+    );
+  }
+}
+
 /// Client holds all required data to define, understand and explain
 /// an client to its details
 class Client {
@@ -229,6 +278,7 @@ class Client {
   DateTime? acceptedDate; // Birthday date
   double? discount; // general discount for client
   bool? isTrusted; // Birthday date
+  Map<String, ClientAppointment>? appointments;
 
   Client({
     required this.id,
@@ -243,6 +293,7 @@ class Client {
     this.acceptedDate,
     this.discount,
     this.isTrusted,
+    this.appointments,
   });
 
   Map<String, dynamic> toJson() {
@@ -258,10 +309,22 @@ class Client {
       'acceptedDate': Timestamp.fromDate(creationDate),
       'discount': discount,
       'isTrusted': isTrusted,
+      'appointments': appointments == null
+          ? {}
+          : appointments!.map((key, value) => MapEntry(key, value.toJson())),
     };
   }
 
   factory Client.fromJson(Map<String, dynamic> doc) {
+    Map<String, ClientAppointment> loadAppointmentsFromDoc(
+        Map<String, dynamic> docAppointments) {
+      Map<String, ClientAppointment> appointments = {};
+      for (var app in docAppointments.entries) {
+        appointments[app.key] = ClientAppointment.fromJson(app.value);
+      }
+      return appointments;
+    }
+
     return Client(
       id: doc['id'],
       fullName: doc['fullName'],
@@ -273,6 +336,9 @@ class Client {
       birthday: doc['birthday'].toDate(),
       discount: doc['discount'],
       isTrusted: doc['isTrusted'],
+      appointments: doc['appointments'] == null
+          ? {}
+          : loadAppointmentsFromDoc(doc['appointments']),
     );
   }
 }
