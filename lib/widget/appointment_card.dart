@@ -20,14 +20,14 @@ class AppointmentCard extends StatelessWidget {
       List<Widget> widgetList = appointmentCardProps.appointmentDetails.services
           .map((AppointmentService service) {
         return Container(
-          margin: EdgeInsets.symmetric(
-            vertical: rSize(5),
+          margin: EdgeInsets.only(
+            bottom: rSize(5),
           ),
           height: rSize(18),
           child: Row(
             children: [
               VerticalDivider(
-                color: Theme.of(context).colorScheme.primary,
+                color: Color(service.colorID),
                 width: rSize(2),
                 thickness: rSize(2),
               ),
@@ -58,20 +58,19 @@ class AppointmentCard extends StatelessWidget {
                     ),
                   ),
                 ),
-        title: Padding(
-          padding: EdgeInsets.only(bottom: rSize(5)),
-          child: CustomStatus(
-            customStatusProps: CustomStatusProps(
-              status: appointmentCardProps.appointmentDetails.status,
-              fontSize: 8,
-            ),
-          ),
-        ),
-        subTitle: Column(
+        title: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: appointmentServices(),
+        ),
+        subTitle: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+          child: Text(
+            appointmentCardProps.appointmentDetails.notes ?? '',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
         ),
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
@@ -83,13 +82,29 @@ class AppointmentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  getStringPrice(
-                    appointmentCardProps.appointmentDetails.totalCost,
-                  ),
-                  style: Theme.of(context).textTheme.headline1?.copyWith(
-                        fontSize: rSize(16),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomStatus(
+                      customStatusProps: CustomStatusProps(
+                        status: appointmentCardProps.appointmentDetails.status,
+                        fontSize: 10,
                       ),
+                    ),
+                    SizedBox(
+                      height: rSize(10),
+                    ),
+                    Text(
+                      getStringPrice(
+                        appointmentCardProps.appointmentDetails.totalCost,
+                      ),
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontSize: rSize(14),
+                          ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   width: rSize(5),
@@ -107,39 +122,60 @@ class AppointmentCard extends StatelessWidget {
             ),
           ],
         ),
-        leading: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              getDateTimeFormat(
+        leading: Container(
+          padding:
+              EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).colorScheme.primary,
+              width: rSize(1),
+            ),
+            borderRadius: BorderRadius.circular(
+              rSize(10),
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                getDateTimeFormat(
+                    dateTime: appointmentCardProps.appointmentDetails.date,
+                    format: 'EEE',
+                    isDayOfWeek: true),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    ?.copyWith(fontSize: rSize(12)),
+              ),
+              SizedBox(
+                height: rSize(5),
+              ),
+              Text(
+                getDateTimeFormat(
                   dateTime: appointmentCardProps.appointmentDetails.date,
-                  format: 'EEEE',
-                  isDayOfWeek: true),
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-            SizedBox(
-              height: rSize(5),
-            ),
-            Text(
-              getDateTimeFormat(
+                  format: 'dd',
+                ),
+                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      fontSize: rSize(22),
+                    ),
+              ),
+              SizedBox(
+                height: rSize(2),
+              ),
+              Text(
+                getDateTimeFormat(
                   dateTime: appointmentCardProps.appointmentDetails.date,
-                  format: 'dd'),
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                    fontSize: rSize(18),
-                  ),
-            ),
-            SizedBox(
-              height: rSize(2),
-            ),
-            Text(
-              getDateTimeFormat(
-                  dateTime: appointmentCardProps.appointmentDetails.date,
-                  format: 'HH:mm'),
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ],
+                  format: 'HH:mm',
+                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .subtitle2
+                    ?.copyWith(fontSize: rSize(12)),
+              ),
+            ],
+          ),
         ),
       ),
     );
