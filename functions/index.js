@@ -18,16 +18,17 @@ exports.newAppointment = functions.firestore.
 
         const clientDocID = newAppointmentData.clientDocID;
         const client = admin.firestore().collection(clientsCollection).doc(clientDocID);
-        let myAppointment = {
-            appointmentId: { id: appointmentId}
 
-        }
-        return client.update({
-                   appointments: myAppointment
-       });
-//        return client.get().then(clientDoc => {
-//            clientDoc
-//        }
+        return client.get().then(clientDoc => {
+//            let myAppointment = {
+//            }
+//            myAppointment[appointmentId] = { id: appointmentId}
+            clientAppointments = clientDoc.data().appointments
+            clientAppointments[appointmentId] = { id: appointmentId}
+            return client.update({
+                       appointments: clientAppointments
+           });
+        })
 
          // Setting notification content - must send package_id
 //        const notificationContent = {
