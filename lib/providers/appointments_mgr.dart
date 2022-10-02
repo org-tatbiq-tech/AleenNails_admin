@@ -83,13 +83,36 @@ class AppointmentsMgr extends ChangeNotifier {
     );
   }
 
-  late Appointment selectedAppointment;
-  bool isSelectedAppointmentLoaded = false;
-
   Future<void> submitNewAppointment(Appointment newAppointment) async {
     /// Submitting new appointment - update DB
     CollectionReference appointmentsColl =
         _fs.collection(appointmentsCollection);
     appointmentsColl.add(newAppointment.toJson());
+  }
+
+  /// Appointment selection
+  late Appointment selectedAppointment;
+  bool isSelectedAppointmentLoaded = false;
+
+  Future<void> setSelectedAppointment(
+      {Appointment? appointment, String? appointmentID}) async {
+    isSelectedAppointmentLoaded = false;
+    if (appointment != null) {
+      // Appointment is provided, no need to download
+      selectedAppointment = appointment;
+      isSelectedAppointmentLoaded = true;
+    } else {
+      // download appointment
+      _fs.collection(appointmentsCollection).doc(appointmentID).get().then(
+            (value) => {
+              if (value.data() != null)
+                {
+                  selectedAppointment = Appointment.fromJson(value.data()!),
+                  isSelectedAppointmentLoaded = true,
+                },
+            },
+          );
+      notifyListeners();
+    }
   }
 }

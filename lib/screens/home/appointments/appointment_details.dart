@@ -1,5 +1,6 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
@@ -7,19 +8,23 @@ import 'package:appointments/widget/custom_status.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class AppointmentDetails extends StatefulWidget {
-  final Appointment appointment;
-  const AppointmentDetails({required this.appointment, Key? key})
+  final Appointment? appointment;
+  final String? appointmentId;
+  const AppointmentDetails({this.appointment, this.appointmentId, Key? key})
       : super(key: key);
 
   @override
@@ -30,6 +35,23 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   void initState() {
     super.initState();
+    final appointmentsMgr =
+        Provider.of<AppointmentsMgr>(context, listen: false);
+    if (widget.appointment != null) {
+      appointmentsMgr.setSelectedAppointment(appointment: widget.appointment);
+    } else {
+      // download appointment via ID
+      if (widget.appointmentId == null) {
+        showErrorFlash(
+            context: context,
+            errorTitle: 'Could not load appointment details',
+            errorBody: 'contact support');
+        return;
+      } else {
+        appointmentsMgr.setSelectedAppointment(
+            appointmentID: widget.appointmentId);
+      }
+    }
   }
 
   @override
@@ -427,73 +449,82 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         top: false,
         left: false,
         right: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            FadeAnimation(
-              positionType: PositionType.bottom,
-              delay: 0.3,
-              child: CustomStatus(
-                customStatusProps:
-                    CustomStatusProps(status: AppointmentStatus.waiting),
-              ),
-            ),
-            SizedBox(
-              height: rSize(10),
-            ),
-            FadeAnimation(
-              positionType: PositionType.bottom,
-              delay: 0.3,
-              child: renderAppointmentID(widget.appointment),
-            ),
-            SizedBox(
-              height: rSize(20),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: rSize(20),
-              ),
-              child: renderHeader(widget.appointment),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: rSize(30),
-                ),
-                child: Column(
+        child: Consumer<AppointmentsMgr>(
+          builder: (context, appointmentsMgr, _) => !appointmentsMgr
+                  .isSelectedAppointmentLoaded
+              ? CustomLoadingIndicator(
+                  customLoadingIndicatorProps: CustomLoadingIndicatorProps())
+              : Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    FadeAnimation(
+                      positionType: PositionType.bottom,
+                      delay: 0.3,
+                      child: CustomStatus(
+                        customStatusProps: CustomStatusProps(
+                            status: AppointmentStatus.waiting),
+                      ),
+                    ),
                     SizedBox(
-                      height: rSize(30),
+                      height: rSize(10),
                     ),
                     FadeAnimation(
-                      positionType: PositionType.right,
-                      delay: 0.5,
-                      child: renderNotes(widget.appointment),
-                    ),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    Expanded(
-                      child: renderServices(widget.appointment),
+                      positionType: PositionType.bottom,
+                      delay: 0.3,
+                      child: renderAppointmentID(
+                          appointmentsMgr.selectedAppointment),
                     ),
                     SizedBox(
                       height: rSize(20),
                     ),
-                    renderAmount(widget.appointment),
-                    SizedBox(
-                      height: rSize(10),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: rSize(20),
+                      ),
+                      child: renderHeader(appointmentsMgr.selectedAppointment),
                     ),
-                    renderFooter(widget.appointment),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: rSize(30),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: rSize(30),
+                            ),
+                            FadeAnimation(
+                              positionType: PositionType.right,
+                              delay: 0.5,
+                              child: renderNotes(
+                                  appointmentsMgr.selectedAppointment),
+                            ),
+                            SizedBox(
+                              height: rSize(40),
+                            ),
+                            Expanded(
+                              child: renderServices(
+                                  appointmentsMgr.selectedAppointment),
+                            ),
+                            SizedBox(
+                              height: rSize(20),
+                            ),
+                            renderAmount(appointmentsMgr.selectedAppointment),
+                            SizedBox(
+                              height: rSize(10),
+                            ),
+                            renderFooter(appointmentsMgr.selectedAppointment),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-            ),
-          ],
         ),
       ),
     );
