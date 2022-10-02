@@ -1,8 +1,8 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
+import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
 import 'package:common_widgets/custom_list_tile.dart';
-import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -64,14 +64,12 @@ class AppointmentCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: appointmentServices(),
         ),
-        subTitle: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-          child: Text(
-            appointmentCardProps.appointmentDetails.notes ?? '',
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-        ),
+        subTitle: appointmentCardProps.appointmentDetails.notes!.isEmpty
+            ? null
+            : Text(
+                appointmentCardProps.appointmentDetails.notes ?? '',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -122,60 +120,28 @@ class AppointmentCard extends StatelessWidget {
             ),
           ],
         ),
-        leading: Container(
-          padding:
-              EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).colorScheme.primary,
-              width: rSize(1),
+        leading: Column(
+          children: [
+            CustomAvatar(
+              customAvatarProps: CustomAvatarProps(
+                radius: rSize(50),
+                rectangleShape: false,
+                circleShape: true,
+                enable: false,
+                isMale: false,
+              ),
             ),
-            borderRadius: BorderRadius.circular(
-              rSize(10),
+            SizedBox(
+              height: rSize(5),
             ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                getDateTimeFormat(
-                    dateTime: appointmentCardProps.appointmentDetails.date,
-                    format: 'EEE',
-                    isDayOfWeek: true),
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    ?.copyWith(fontSize: rSize(12)),
-              ),
-              SizedBox(
-                height: rSize(5),
-              ),
-              Text(
-                getDateTimeFormat(
-                  dateTime: appointmentCardProps.appointmentDetails.date,
-                  format: 'dd',
-                ),
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                      fontSize: rSize(22),
-                    ),
-              ),
-              SizedBox(
-                height: rSize(2),
-              ),
-              Text(
-                getDateTimeFormat(
-                  dateTime: appointmentCardProps.appointmentDetails.date,
-                  format: 'HH:mm',
-                ),
-                style: Theme.of(context)
-                    .textTheme
-                    .subtitle2
-                    ?.copyWith(fontSize: rSize(12)),
-              ),
-            ],
-          ),
+            Text(
+              appointmentCardProps.appointmentDetails.clientName,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  ?.copyWith(fontSize: rSize(12)),
+            ),
+          ],
         ),
       ),
     );
