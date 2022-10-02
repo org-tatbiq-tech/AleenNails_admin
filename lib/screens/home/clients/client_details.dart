@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/screens/home/clients/client.dart';
-import 'package:appointments/widget/appointment_card.dart';
+import 'package:appointments/widget/client_appointment_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -20,7 +20,7 @@ class ClientDetails extends StatefulWidget {
   const ClientDetails({required this.client, Key? key}) : super(key: key);
 
   @override
-  _ClientDetailsState createState() => _ClientDetailsState();
+  State<ClientDetails> createState() => _ClientDetailsState();
 }
 
 class _ClientDetailsState extends State<ClientDetails> {
@@ -31,7 +31,7 @@ class _ClientDetailsState extends State<ClientDetails> {
 
   @override
   Widget build(BuildContext context) {
-    List<Appointment> appointments = [];
+    List<ClientAppointment> clientAppointments = [];
 
     renderAppointments() {
       return SafeArea(
@@ -79,16 +79,16 @@ class _ClientDetailsState extends State<ClientDetails> {
                 left: rSize(20),
                 right: rSize(20),
               ),
-              itemCount: min(appointments.length, 3),
+              itemCount: min(clientAppointments.length, 3),
               itemBuilder: (context, index) {
                 return FadeAnimation(
                   positionType: PositionType.top,
                   delay: 1 + index.toDouble() * 0.3,
-                  child: AppointmentCard(
-                    appointmentCardProps: AppointmentCardProps(
+                  child: ClientAppointmentCard(
+                    clientAppointmentCardProps: ClientAppointmentCardProps(
                       enabled: false,
                       withNavigation: false,
-                      appointmentDetails: appointments[index],
+                      clientAppointmentDetails: clientAppointments[index],
                     ),
                   ),
                 );
