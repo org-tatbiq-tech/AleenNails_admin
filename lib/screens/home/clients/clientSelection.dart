@@ -1,4 +1,4 @@
-import 'package:appointments/providers/app_data.dart';
+import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -23,8 +23,8 @@ class ClientSelection extends StatefulWidget {
 class ClientSelectionState extends State<ClientSelection> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppData>(
-      builder: (context, appData, _) {
+    return Consumer<ClientsMgr>(
+      builder: (context, clientsMgr, _) {
         return Scaffold(
           appBar: CustomAppBar(
             customAppBarProps: CustomAppBarProps(
@@ -62,15 +62,15 @@ class ClientSelectionState extends State<ClientSelection> {
                     vertical: rSize(20),
                     horizontal: rSize(20),
                   ),
-                  itemCount: appData.filteredContacts.length,
+                  itemCount: clientsMgr.clients.length,
                   itemBuilder: (context, index) {
                     return ClientCard(
                       clientCardProps: ClientCardProps(
                         onTap: () => widget.onTap!(
-                          appData.filteredContacts[index],
+                          clientsMgr.clients[index],
                         ),
                         withNavigation: false,
-                        contactDetails: appData.filteredContacts[index],
+                        contactDetails: clientsMgr.clients[index],
                       ),
                     );
                   },
