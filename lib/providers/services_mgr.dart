@@ -57,9 +57,6 @@ class ServicesMgr extends ChangeNotifier {
     );
   }
 
-  late Service selectedService;
-  bool isSelectedServiceLoaded = false;
-
   Future<void> submitNewService(Service newService) async {
     /// Submitting new service - update DB
     CollectionReference servicesColl = _fs.collection(servicesCollection);
