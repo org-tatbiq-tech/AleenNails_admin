@@ -145,6 +145,18 @@ class TimeLineState extends State<TimeLine> {
     return appointmentsMgr.appointments;
   }
 
+  navigateToAppointmentDetails(Appointment appointment) {
+    final appointmentsMgr =
+        Provider.of<AppointmentsMgr>(context, listen: false);
+    appointmentsMgr.setSelectedAppointment(appointment: appointment);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AppointmentDetails(),
+      ),
+    );
+  }
+
   List<FlutterWeekViewEvent> getFlutterWeekAppointments(DateTime date) {
     final appointmentsMgr =
         Provider.of<AppointmentsMgr>(context, listen: false);
@@ -164,13 +176,7 @@ class TimeLineState extends State<TimeLine> {
                 minutes: appointment.endTime.minute),
           ),
           backgroundColor: Color(appointment.services[0].colorID),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  AppointmentDetails(appointment: appointment),
-            ),
-          ),
+          onTap: () => navigateToAppointmentDetails(appointment),
         ),
       );
     }

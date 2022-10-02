@@ -24,15 +24,18 @@ class ClientDetails extends StatefulWidget {
 }
 
 class _ClientDetailsState extends State<ClientDetails> {
+  List<ClientAppointment> clientAppointments = [];
+
   @override
   void initState() {
     super.initState();
+    if (widget.client.appointments != null) {
+      clientAppointments.addAll(widget.client.appointments!.values);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    List<ClientAppointment> clientAppointments = [];
-
     renderAppointments() {
       return SafeArea(
         left: false,
@@ -86,7 +89,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   delay: 1 + index.toDouble() * 0.3,
                   child: ClientAppointmentCard(
                     clientAppointmentCardProps: ClientAppointmentCardProps(
-                      enabled: false,
+                      enabled: true,
                       withNavigation: false,
                       clientAppointmentDetails: clientAppointments[index],
                     ),

@@ -1,9 +1,12 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClientAppointmentCard extends StatelessWidget {
   final ClientAppointmentCardProps clientAppointmentCardProps;
@@ -23,11 +26,24 @@ class ClientAppointmentCard extends StatelessWidget {
       return appointmentName;
     }
 
+    navigateToAppointmentDetails(String appointmentId) {
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointmentsMgr.setSelectedAppointment(appointmentID: appointmentId);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AppointmentDetails(),
+        ),
+      );
+    }
+
     return CustomListTile(
       customListTileProps: CustomListTileProps(
         enabled: clientAppointmentCardProps.enabled,
         onTap: clientAppointmentCardProps.onTap ??
-            () => Navigator.pushNamed(context, '/appointmentDetails'),
+            () => navigateToAppointmentDetails(
+                clientAppointmentCardProps.clientAppointmentDetails.id),
         title: Text(
           getAppointmentName(),
         ),

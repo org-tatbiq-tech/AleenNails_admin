@@ -14,7 +14,6 @@ import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -22,10 +21,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AppointmentDetails extends StatefulWidget {
-  final Appointment? appointment;
-  final String? appointmentId;
-  const AppointmentDetails({this.appointment, this.appointmentId, Key? key})
-      : super(key: key);
+  const AppointmentDetails({Key? key}) : super(key: key);
 
   @override
   AppointmentDetailsState createState() => AppointmentDetailsState();
@@ -35,23 +31,23 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   void initState() {
     super.initState();
-    final appointmentsMgr =
-        Provider.of<AppointmentsMgr>(context, listen: false);
-    if (widget.appointment != null) {
-      appointmentsMgr.setSelectedAppointment(appointment: widget.appointment);
-    } else {
-      // download appointment via ID
-      if (widget.appointmentId == null) {
-        showErrorFlash(
-            context: context,
-            errorTitle: 'Could not load appointment details',
-            errorBody: 'contact support');
-        return;
-      } else {
-        appointmentsMgr.setSelectedAppointment(
-            appointmentID: widget.appointmentId);
-      }
-    }
+    // final appointmentsMgr =
+    //     Provider.of<AppointmentsMgr>(context, listen: false);
+    // appointmentsMgr.isSelectedAppointmentLoaded = false;
+    // if (widget.appointment != null) {
+    //   appointmentsMgr.setSelectedAppointment(appointment: widget.appointment);
+    // } else {
+    //   // download appointment via ID
+    //   if (widget.appointmentId == null) {
+    //     showErrorFlash(
+    //         context: context,
+    //         errorTitle: 'Could not load appointment details',
+    //         errorBody: 'contact support');
+    //   } else {
+    //     appointmentsMgr.setSelectedAppointment(
+    //         appointmentID: widget.appointmentId);
+    //   }
+    // }
   }
 
   @override

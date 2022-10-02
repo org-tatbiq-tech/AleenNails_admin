@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
@@ -6,6 +7,7 @@ import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AppointmentCard extends StatelessWidget {
   final AppointmentCardProps appointmentCardProps;
@@ -46,18 +48,24 @@ class AppointmentCard extends StatelessWidget {
       return widgetList;
     }
 
+    navigateToAppointmentDetails(Appointment appointment) {
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointmentsMgr.setSelectedAppointment(appointment: appointment);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AppointmentDetails(),
+        ),
+      );
+    }
+
     return CustomListTile(
       customListTileProps: CustomListTileProps(
         enabled: appointmentCardProps.enabled,
         onTap: appointmentCardProps.onTap ??
-            () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AppointmentDetails(
-                      appointment: appointmentCardProps.appointmentDetails,
-                    ),
-                  ),
-                ),
+            () => navigateToAppointmentDetails(
+                appointmentCardProps.appointmentDetails),
         title: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
