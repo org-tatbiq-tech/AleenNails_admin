@@ -56,9 +56,6 @@ class ClientsMgr extends ChangeNotifier {
     );
   }
 
-  late Appointment selectedClient;
-  bool isSelectedClientLoaded = false;
-
   Future<void> submitNewClient(Client newClient) async {
     /// Submitting new Client - update DB
     CollectionReference clientsColl = _fs.collection(clientsCollection);
@@ -70,5 +67,36 @@ class ClientsMgr extends ChangeNotifier {
     CollectionReference clientsColl = _fs.collection(clientsCollection);
     var data = updatedClient.toJson();
     clientsColl.doc(updatedClient.id).update(data);
+  }
+
+  /// Client selection
+  late Client selectedClient;
+  bool isSelectedClientLoaded = false;
+
+  Future<void> setSelectedClient({
+    Client? client,
+    String? clientID,
+  }) async {
+    isSelectedClientLoaded = false;
+    if (client != null) {
+      // Client is provided, no need to download
+      selectedClient = client;
+      isSelectedClientLoaded = true;
+    } else {
+      // download appointment
+      Map<String, dynamic>? data;
+      _fs.collection(clientsCollection).doc(clientID).get().then(
+            (value) => {
+              data = value.data(),
+              if (data != null)
+                {
+                  data!['id'] = value.id,
+                  selectedClient = Client.fromJson(data!),
+                  isSelectedClientLoaded = true,
+                },
+              notifyListeners(),
+            },
+          );
+    }
   }
 }

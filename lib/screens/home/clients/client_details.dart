@@ -1,12 +1,15 @@
 import 'dart:math';
 
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
@@ -14,10 +17,10 @@ import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClientDetails extends StatefulWidget {
-  final Client client;
-  const ClientDetails({required this.client, Key? key}) : super(key: key);
+  const ClientDetails({Key? key}) : super(key: key);
 
   @override
   State<ClientDetails> createState() => _ClientDetailsState();
@@ -27,15 +30,15 @@ class _ClientDetailsState extends State<ClientDetails> {
   List<ClientAppointment> clientAppointments = [];
 
   @override
-  void initState() {
-    super.initState();
-    if (widget.client.appointments != null) {
-      clientAppointments.addAll(widget.client.appointments!.values);
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+
+    if (clientsMgr.selectedClient != null &&
+        clientsMgr.isSelectedClientLoaded == false &&
+        clientsMgr.selectedClient.appointments != null) {
+      clientAppointments.addAll(clientsMgr.selectedClient.appointments!.values);
+    }
+
     renderAppointments() {
       return SafeArea(
         left: false,
@@ -102,7 +105,7 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
-    renderBirthday() {
+    renderBirthday(Client client) {
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -120,7 +123,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             ),
           ),
           Text(
-            '${Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)!.formatCompactDate(widget.client.birthday!)} - ${Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)!.formatTimeOfDay(TimeOfDay.fromDateTime(widget.client.birthday!))}',
+            '${Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)!.formatCompactDate(client.birthday!)} - ${Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)!.formatTimeOfDay(TimeOfDay.fromDateTime(client.birthday!))}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -129,7 +132,7 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
-    renderLastVisit() {
+    renderLastVisit(Client client) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -180,7 +183,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  widget.client.isTrusted! ? 'Yes' : 'No',
+                  client.isTrusted! ? 'Yes' : 'No',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -192,7 +195,7 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
-    renderTotalRevenue() {
+    renderTotalRevenue(Client client) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -243,7 +246,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  '${widget.client.discount}%',
+                  '${client.discount}%',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -255,7 +258,7 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
-    renderNotes() {
+    renderNotes(Client client) {
       return Column(children: [
         Column(
           mainAxisSize: MainAxisSize.max,
@@ -274,7 +277,7 @@ class _ClientDetailsState extends State<ClientDetails> {
               ),
             ),
             ReadMoreText(
-              widget.client.generalNotes ?? '',
+              client.generalNotes ?? '',
               trimLines: 2,
             ),
           ],
@@ -381,7 +384,7 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
-    renderHeader() {
+    renderHeader(Client client) {
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -412,17 +415,17 @@ class _ClientDetailsState extends State<ClientDetails> {
               runSpacing: rSize(2),
               children: [
                 Text(
-                  widget.client.fullName,
+                  client.fullName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
                 Text(
-                  widget.client.phone,
+                  client.phone,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Text(
-                  widget.client.email,
+                  client.email,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -432,14 +435,14 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
-    renderActions() {
+    renderActions(Client client) {
       return Row(
         children: [
           SizedBox(
             width: rSize(120),
           ),
           EaseInAnimation(
-            onTap: () => makePhoneCall(widget.client.phone),
+            onTap: () => makePhoneCall(client.phone),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
@@ -453,7 +456,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             width: rSize(10),
           ),
           EaseInAnimation(
-            onTap: () => sendSms(widget.client.phone),
+            onTap: () => sendSms(client.phone),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
@@ -467,7 +470,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             width: rSize(10),
           ),
           EaseInAnimation(
-            onTap: () => sendMail(widget.client.email),
+            onTap: () => sendMail(client.email),
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 icon: Icon(
@@ -481,7 +484,14 @@ class _ClientDetailsState extends State<ClientDetails> {
             width: rSize(10),
           ),
           EaseInAnimation(
-            onTap: () => {Navigator.pushNamed(context, '/newAppointment')},
+            onTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewAppointment(client: client),
+                ),
+              ),
+            },
             child: CustomIcon(
               customIconProps: CustomIconProps(
                 withPadding: true,
@@ -494,109 +504,118 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: 'Client Details',
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
-          customIcon: Icon(
-            Icons.edit,
-            size: rSize(24),
-          ),
-          customIconTap: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ClientWidget(client: widget.client),
+    return Consumer<ClientsMgr>(
+      builder: (context, clientsMgr, _) {
+        return Scaffold(
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText: 'Client Details',
+              withBack: true,
+              barHeight: 110,
+              withClipPath: true,
+              customIcon: Icon(
+                Icons.edit,
+                size: rSize(24),
               ),
-            ),
-          },
-        ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: rSize(20),
-            ),
-            child: Column(
-              children: [
-                renderHeader(),
-                FadeAnimation(
-                  positionType: PositionType.bottom,
-                  delay: 0.4,
-                  child: renderActions(),
+              customIconTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ClientWidget(client: clientsMgr.selectedClient),
+                  ),
                 ),
-                SizedBox(
-                  height: rSize(24),
-                ),
-                FadeAnimation(
-                  positionType: PositionType.top,
-                  delay: 0.5,
-                  child: renderStatics(),
-                ),
-              ],
+              },
             ),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              padding: EdgeInsets.symmetric(
-                horizontal: rSize(30),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: rSize(30),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.6,
-                    child: renderBirthday(),
-                  ),
-                  SizedBox(
-                    height: rSize(24),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.7,
-                    child: renderLastVisit(),
-                  ),
-                  SizedBox(
-                    height: rSize(24),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.7,
-                    child: renderTotalRevenue(),
-                  ),
-                  SizedBox(
-                    height: rSize(24),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.8,
-                    child: renderNotes(),
-                  ),
-                  SizedBox(
-                    height: rSize(40),
-                  ),
-                  renderAppointments(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: !clientsMgr.isSelectedClientLoaded
+              ? CustomLoadingIndicator(
+                  customLoadingIndicatorProps: CustomLoadingIndicatorProps())
+              : Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: rSize(20),
+                      ),
+                      child: Column(
+                        children: [
+                          renderHeader(clientsMgr.selectedClient),
+                          FadeAnimation(
+                            positionType: PositionType.bottom,
+                            delay: 0.4,
+                            child: renderActions(clientsMgr.selectedClient),
+                          ),
+                          SizedBox(
+                            height: rSize(24),
+                          ),
+                          FadeAnimation(
+                            positionType: PositionType.top,
+                            delay: 0.5,
+                            child: renderStatics(),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: rSize(30),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: rSize(30),
+                            ),
+                            FadeAnimation(
+                              positionType: PositionType.right,
+                              delay: 0.6,
+                              child: renderBirthday(clientsMgr.selectedClient),
+                            ),
+                            SizedBox(
+                              height: rSize(24),
+                            ),
+                            FadeAnimation(
+                              positionType: PositionType.right,
+                              delay: 0.7,
+                              child: renderLastVisit(clientsMgr.selectedClient),
+                            ),
+                            SizedBox(
+                              height: rSize(24),
+                            ),
+                            FadeAnimation(
+                              positionType: PositionType.right,
+                              delay: 0.7,
+                              child:
+                                  renderTotalRevenue(clientsMgr.selectedClient),
+                            ),
+                            SizedBox(
+                              height: rSize(24),
+                            ),
+                            FadeAnimation(
+                              positionType: PositionType.right,
+                              delay: 0.8,
+                              child: renderNotes(clientsMgr.selectedClient),
+                            ),
+                            SizedBox(
+                              height: rSize(40),
+                            ),
+                            renderAppointments(),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        );
+      },
     );
   }
 }

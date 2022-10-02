@@ -24,7 +24,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class NewAppointment extends StatefulWidget {
-  const NewAppointment({Key? key}) : super(key: key);
+  final Client? client;
+  const NewAppointment({Key? key, this.client}) : super(key: key);
 
   @override
   State<NewAppointment> createState() => _NewAppointmentState();
@@ -43,6 +44,9 @@ class _NewAppointmentState extends State<NewAppointment> {
   void initState() {
     super.initState();
     _notesController.addListener(() => setState(() {}));
+    if (widget.client != null) {
+      selectedClient = widget.client;
+    }
   }
 
   @override

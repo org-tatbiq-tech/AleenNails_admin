@@ -1,8 +1,11 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClientCard extends StatelessWidget {
   ClientCardProps clientCardProps;
@@ -13,10 +16,21 @@ class ClientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    navigateToClientDetails(Client client) {
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      clientsMgr.setSelectedClient(client: client);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ClientDetails(),
+        ),
+      );
+    }
+
     return CustomListTile(
       customListTileProps: CustomListTileProps(
         onTap: clientCardProps.onTap ??
-            () => Navigator.pushNamed(context, '/clientDetails'),
+            () => navigateToClientDetails(clientCardProps.contactDetails),
         title: Text(
           clientCardProps.contactDetails.fullName,
           style: Theme.of(context).textTheme.headline1?.copyWith(

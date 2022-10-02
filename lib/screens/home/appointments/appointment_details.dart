@@ -1,6 +1,8 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
@@ -368,6 +370,17 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       ]);
     }
 
+    navigateToClientDetails(String clientID) {
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      clientsMgr.setSelectedClient(clientID: clientID);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ClientDetails(),
+        ),
+      );
+    }
+
     renderHeader(Appointment appointment) {
       return Row(
         mainAxisSize: MainAxisSize.max,
@@ -382,7 +395,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 rectangleShape: false,
                 enable: true,
                 onTap: () => {
-                  Navigator.pushNamed(context, '/clientDetails'),
+                  navigateToClientDetails(appointment.clientDocID),
                 },
                 circleShape: true,
                 isMale: false,

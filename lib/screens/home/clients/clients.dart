@@ -18,11 +18,13 @@ class Clients extends StatefulWidget {
 class ClientsState extends State<Clients> {
   @override
   Widget build(BuildContext context) {
-    navigateToClient(Client client) {
+    navigateToClientDetails(Client client) {
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      clientsMgr.setSelectedClient(client: client);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ClientDetails(client: client),
+          builder: (context) => ClientDetails(),
         ),
       );
     }
@@ -52,7 +54,7 @@ class ClientsState extends State<Clients> {
                       clientCardProps: ClientCardProps(
                         contactDetails: clientsMgr.clients[index],
                         onTap: () =>
-                            navigateToClient(clientsMgr.clients[index]),
+                            navigateToClientDetails(clientsMgr.clients[index]),
                       ),
                     );
                   },
