@@ -32,9 +32,7 @@ class _ClientDetailsState extends State<ClientDetails> {
   @override
   Widget build(BuildContext context) {
     final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-
-    if (clientsMgr.selectedClient != null &&
-        clientsMgr.isSelectedClientLoaded == false &&
+    if (clientsMgr.isSelectedClientLoaded == true &&
         clientsMgr.selectedClient.appointments != null) {
       clientAppointments.addAll(clientsMgr.selectedClient.appointments!.values);
     }

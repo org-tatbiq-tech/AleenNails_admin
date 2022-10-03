@@ -24,7 +24,7 @@ class ClientsState extends State<Clients> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ClientDetails(),
+          builder: (context) => const ClientDetails(),
         ),
       );
     }
