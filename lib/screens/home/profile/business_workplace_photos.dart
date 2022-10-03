@@ -48,7 +48,10 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                         workPlacePhoto.key,
                         workPlacePhoto.value,
                       ),
-                    }
+                    },
+                  setState(() {
+                    _isLoading = false;
+                  }),
                 }
             },
           );

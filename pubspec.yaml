@@ -60,7 +60,7 @@ dependencies:
     hosted:
       url: https://dart.cloudsmith.io/ahmad-manaa-44N/common-widgets/
       name: common_widgets
-    version: 0.0.31
+    version: 0.0.32
   dotted_border: ^2.0.0+2
   flutter_week_view: ^1.2.2
   flutter_colorpicker: ^1.0.3
