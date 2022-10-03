@@ -163,7 +163,7 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<void> uploadWPImages(List<File> imageList) async {
-    var uuid = Uuid();
+    var uuid = const Uuid();
     for (File image in imageList) {
       Reference ref =
           _fst.ref(profileWPStorageDir).child('WP${uuid.v4()}_image.png');

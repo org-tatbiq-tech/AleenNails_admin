@@ -9,9 +9,11 @@ import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class BusinessWorkplacePhotos extends StatefulWidget {
   const BusinessWorkplacePhotos({Key? key}) : super(key: key);
@@ -22,8 +24,8 @@ class BusinessWorkplacePhotos extends StatefulWidget {
 }
 
 class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
-  List<File> mediaList = [];
-  List<File> mediaListToUpload = [];
+  Map<String, File> mediaList = {};
+  Map<String, File> mediaListToUpload = {};
   bool _isLoading = true;
   @override
   void initState() {
@@ -31,13 +33,22 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     try {
       settingsMgr.getWPImages().then(
-            (res) => {
-              // res is a dictionary of filename: fileURL
+            (res) async => {
               if (res.isEmpty)
                 {
                   setState(() {
                     _isLoading = false;
                   }),
+                }
+              else
+                {
+                  for (var workPlacePhoto in res.entries)
+                    {
+                      mediaList[workPlacePhoto.key] = await fileFromImageUrl(
+                        workPlacePhoto.key,
+                        workPlacePhoto.value,
+                      ),
+                    }
                 }
             },
           );
@@ -46,7 +57,6 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
         _isLoading = false;
       });
     }
-    // init media list from DB (Need to create getWPImages function)
   }
 
   @override
@@ -54,7 +64,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
     saveWorkplacePhotos() {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       if (mediaListToUpload.isNotEmpty) {
-        settingsMgr.uploadWPImages(mediaList).then(
+        settingsMgr.uploadWPImages(mediaListToUpload.values.toList()).then(
               (value) => showSuccessFlash(
                 context: context,
                 successColor: successPrimaryColor,
@@ -66,26 +76,37 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
       }
     }
 
+    deleteWorkspacePhoto(String url) {
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      settingsMgr.deleteWPImage(url);
+    }
+
     List<Widget> mediaCards() {
-      List<Widget> widgetList = mediaList.map((item) {
-        return EaseInAnimation(
-          beginAnimation: 0.98,
-          onTap: () => {},
-          child: Container(
-            width: rSize(100),
-            height: rSize(100),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(rSize(10)),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: FileImage(
-                  item,
+      List<Widget> widgetList = [];
+
+      for (var workspacePhoto in mediaList.entries) {
+        widgetList.add(
+          EaseInAnimation(
+            beginAnimation: 0.98,
+            onTap: () => {
+              deleteWorkspacePhoto(workspacePhoto.key),
+            },
+            child: Container(
+              width: rSize(100),
+              height: rSize(100),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(rSize(10)),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: FileImage(
+                    workspacePhoto.value,
+                  ),
                 ),
               ),
             ),
           ),
         );
-      }).toList();
+      }
       widgetList.insert(
         0,
         EaseInAnimation(
@@ -95,8 +116,8 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
               context: context,
               saveImage: (File imageFile) {
                 setState(() {
-                  mediaList.add(imageFile);
-                  mediaListToUpload.add(imageFile);
+                  mediaList[const Uuid().v4()] = imageFile;
+                  mediaListToUpload[const Uuid().v4()] = imageFile;
                 });
               },
             ))
