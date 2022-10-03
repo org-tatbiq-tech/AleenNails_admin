@@ -28,7 +28,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    settingsMgr.getLogoImage().then(
+    settingsMgr.getCoverImage().then(
           (imageUrl) => {
             if (imageUrl == 'notFound')
               {

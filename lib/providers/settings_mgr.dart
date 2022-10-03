@@ -15,7 +15,7 @@ const settingsCollection = 'settings';
 const scheduleManagementDoc = 'scheduleManagement';
 const profileManagementDoc = 'profile';
 const profileStorageDir = 'profile';
-const profileWPStorageDir = 'profile/wp';
+const profileWPStorageDir = 'profile/workplace';
 
 class SettingsMgr extends ChangeNotifier {
   SettingsMgr() {

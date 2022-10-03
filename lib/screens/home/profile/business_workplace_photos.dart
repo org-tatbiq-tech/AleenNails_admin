@@ -32,7 +32,13 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
     try {
       settingsMgr.getWPImages().then(
             (res) => {
-              // res is dictionary of filename: fileURL
+              // res is a dictionary of filename: fileURL
+              if (res.isEmpty)
+                {
+                  setState(() {
+                    _isLoading = false;
+                  }),
+                }
             },
           );
     } catch (error) {
