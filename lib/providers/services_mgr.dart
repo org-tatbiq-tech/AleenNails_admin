@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:appointments/data_types/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 /// Services manager provider
@@ -10,11 +12,13 @@ import 'package:flutter/material.dart';
 
 ///*************************** Naming **********************************///
 const servicesCollection = 'services';
+const servicesStorageDir = 'services';
 
 class ServicesMgr extends ChangeNotifier {
   ///************************* Firestore *******************************///
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
   final FirebaseAuth _fa = FirebaseAuth.instance;
+  final FirebaseStorage _fst = FirebaseStorage.instance;
 
   ///************************* Services *******************************///
   List<Service> _services = []; // Holds all DB services
@@ -57,12 +61,18 @@ class ServicesMgr extends ChangeNotifier {
     );
   }
 
+  Future<void> uploadServiceImage(String serviceName, File image) async {
+    Reference ref = _fst.ref(servicesStorageDir).child('$serviceName.png');
+    await ref.putFile(image);
+  }
+
   Future<void> submitNewService(Service newService) async {
     /// Submitting new service - update DB
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     var data = newService.toJson();
     data['priority'] = services.length;
     servicesColl.add(data);
+    // await uploadServiceImage(newService.name, image);
   }
 
   Future<void> updateService(Service updatedService) async {
