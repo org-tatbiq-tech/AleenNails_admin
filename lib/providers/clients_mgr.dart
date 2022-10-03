@@ -49,7 +49,6 @@ class ClientsMgr extends ChangeNotifier {
         for (var document in snapshot.docs) {
           var data = document.data();
           data['id'] = document.id;
-          print(data);
           _clients.add(Client.fromJson(data));
         }
         notifyListeners();

@@ -30,8 +30,6 @@ class AppointmentsMgr extends ChangeNotifier {
 
   setSelectedDay(DateTime value) async {
     _selectedDay = value;
-    print('setting selected day');
-    print(_selectedDay);
     await downloadAppointments();
   }
 
@@ -88,6 +86,14 @@ class AppointmentsMgr extends ChangeNotifier {
     CollectionReference appointmentsColl =
         _fs.collection(appointmentsCollection);
     appointmentsColl.add(newAppointment.toJson());
+  }
+
+  Future<void> updateAppointment(Appointment updatedAppointment) async {
+    /// Update existing Appointment - update DB
+    CollectionReference appointmentsColl =
+        _fs.collection(appointmentsCollection);
+    var data = updatedAppointment.toJson();
+    appointmentsColl.doc(updatedAppointment.id).update(data);
   }
 
   /// Appointment selection

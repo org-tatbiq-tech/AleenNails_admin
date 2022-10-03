@@ -3,6 +3,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'macros.dart';
 
 /// Data components
+/// Helpers
+AppointmentStatus loadAppointmentStatus(String status) {
+  switch (status) {
+    case 'AppointmentStatus.waiting':
+      return AppointmentStatus.waiting;
+    case 'AppointmentStatus.cancelled':
+      return AppointmentStatus.cancelled;
+    case 'AppointmentStatus.confirmed':
+      return AppointmentStatus.confirmed;
+    case 'AppointmentStatus.declined':
+      return AppointmentStatus.declined;
+    default:
+      return AppointmentStatus.waiting;
+  }
+}
 
 /// Service hold all required data to define, understand and explain
 /// a provided service
@@ -185,24 +200,9 @@ class Appointment {
       }
     }
 
-    AppointmentStatus loadStatus(String status) {
-      switch (status) {
-        case 'AppointmentStatus.waiting':
-          return AppointmentStatus.waiting;
-        case 'AppointmentStatus.cancelled':
-          return AppointmentStatus.cancelled;
-        case 'AppointmentStatus.confirmed':
-          return AppointmentStatus.confirmed;
-        case 'AppointmentStatus.declined':
-          return AppointmentStatus.declined;
-        default:
-          return AppointmentStatus.waiting;
-      }
-    }
-
     return Appointment(
       id: doc["id"],
-      status: loadStatus(doc["status"]),
+      status: loadAppointmentStatus(doc["status"]),
       creator: doc['creator'],
       clientName: doc['clientName'],
       clientDocID: doc['clientDocID'],
@@ -225,6 +225,7 @@ class ClientAppointment {
   DateTime endTime; // Appointment end date time
   double totalCost; // Appointment total cost
   List<String> services; // List of services names selected in this appointment
+  AppointmentStatus status;
 
   ClientAppointment({
     required this.id,
@@ -232,6 +233,7 @@ class ClientAppointment {
     required this.endTime,
     required this.totalCost,
     required this.services,
+    required this.status,
   });
 
   Map<String, dynamic> toJson() {
@@ -241,6 +243,7 @@ class ClientAppointment {
       'endTime': Timestamp.fromDate(endTime),
       'totalCost': totalCost,
       'services': services,
+      'status': status.toString(),
     };
   }
 
@@ -254,12 +257,14 @@ class ClientAppointment {
     }
 
     return ClientAppointment(
-      id: doc['id'],
-      startTime: doc['startTime'].toDate(),
-      endTime: doc['endTime'].toDate(),
-      totalCost: doc['totalCost'].toDouble() ?? 0.0,
-      services: doc['services'] == null ? [] : loadServices(doc['services']),
-    );
+        id: doc['id'],
+        startTime: doc['startTime'].toDate(),
+        endTime: doc['endTime'].toDate(),
+        totalCost: doc['totalCost'].toDouble() ?? 0.0,
+        services: doc['services'] == null ? [] : loadServices(doc['services']),
+        status: doc['status'] == null
+            ? AppointmentStatus.waiting
+            : loadAppointmentStatus(doc['status']));
   }
 }
 

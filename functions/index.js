@@ -30,7 +30,8 @@ exports.newAppointment = functions.firestore.
                 startTime: newAppointmentData.date,
                 endTime: newAppointmentData.endTime,
                 totalCost: newAppointmentData.totalCost,
-                services: services
+                services: services,
+                status: newAppointmentData.status,
                 }
             return client.update({
                        appointments: clientAppointments
@@ -51,4 +52,35 @@ exports.newAppointment = functions.firestore.
 //
 //        return admin.messaging().sendToDevice(store.data()["tokens"], notificationContent);
 
+    })
+
+// Updating existing appointment status
+exports.updateAppointmentStatus = functions.firestore.
+    document('appointments/{any}').
+    onUpdate((change, context) => {
+
+        // Get the updated object representing the updated document
+        const newValue = change.after.data();
+        const appointmentId = change.after.id;
+
+        // Get the previous object before this updated document
+        const previousValue = change.before.data();
+
+        if (newValue.status == previousValue.status) {
+            return;
+        }
+        // status has changed, hence, change status in user
+        const clientDocID = newValue.clientDocID;
+        const client = admin.firestore().collection(clientsCollection).doc(clientDocID);
+
+        return client.get().then(clientDoc => {
+            clientAppointments = clientDoc.data().appointments;
+            clientAppointment = clientDoc.data().appointments[appointmentId];
+            clientAppointment['status'] = newValue.status;
+            clientAppointments[appointmentId] = clientAppointment;
+
+            return client.update({
+                       appointments: clientAppointments
+           });
+        })
     })

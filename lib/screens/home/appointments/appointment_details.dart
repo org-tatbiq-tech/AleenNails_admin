@@ -31,35 +31,21 @@ class AppointmentDetails extends StatefulWidget {
 
 class AppointmentDetailsState extends State<AppointmentDetails> {
   @override
-  void initState() {
-    super.initState();
-    // final appointmentsMgr =
-    //     Provider.of<AppointmentsMgr>(context, listen: false);
-    // appointmentsMgr.isSelectedAppointmentLoaded = false;
-    // if (widget.appointment != null) {
-    //   appointmentsMgr.setSelectedAppointment(appointment: widget.appointment);
-    // } else {
-    //   // download appointment via ID
-    //   if (widget.appointmentId == null) {
-    //     showErrorFlash(
-    //         context: context,
-    //         errorTitle: 'Could not load appointment details',
-    //         errorBody: 'contact support');
-    //   } else {
-    //     appointmentsMgr.setSelectedAppointment(
-    //         appointmentID: widget.appointmentId);
-    //   }
-    // }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    cancelAppointment() {
+    cancelAppointmentClicked(Appointment appointment) {
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointment.status = AppointmentStatus.cancelled;
+      appointmentsMgr.updateAppointment(appointment);
+    }
+
+    cancelAppointment(Appointment appointment) {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
           primaryButtonText: 'Cancel',
+          primaryAction: () => {cancelAppointmentClicked(appointment)},
           secondaryButtonText: 'Back',
           deleteCancelModal: true,
           footerButton: ModalFooter.both,
@@ -153,7 +139,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             mainAxisSize: MainAxisSize.max,
             children: [
               EaseInAnimation(
-                onTap: () => cancelAppointment(),
+                onTap: () => cancelAppointment(appointment),
                 child: CustomIcon(
                   customIconProps: CustomIconProps(
                     icon: null,

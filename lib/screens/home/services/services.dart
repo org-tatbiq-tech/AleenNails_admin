@@ -68,7 +68,7 @@ class ServicesState extends State<Services> {
         customAppBarProps: CustomAppBarProps(
           titleText: 'Services',
           withBack: true,
-          withSearch: true,
+          withSearch: false,
           withClipPath: false,
           customIcon: Icon(
             FontAwesomeIcons.plus,
