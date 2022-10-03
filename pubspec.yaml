@@ -66,6 +66,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   firebase_storage: ^10.3.9
   cloud_functions: ^3.3.9
+  uuid: ^3.0.6
 #  flutter_week_view: ^1.2.1+1
 
 dev_dependencies:

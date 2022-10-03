@@ -5,6 +5,7 @@ import 'package:appointments/data_types/settings_components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 /// Settings manager provider
 /// Managing and handling settings data and DB interaction
@@ -14,6 +15,7 @@ const settingsCollection = 'settings';
 const scheduleManagementDoc = 'scheduleManagement';
 const profileManagementDoc = 'profile';
 const profileStorageDir = 'profile';
+const profileWPStorageDir = 'profile/wp';
 
 class SettingsMgr extends ChangeNotifier {
   SettingsMgr() {
@@ -161,11 +163,37 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<void> uploadWPImages(List<File> imageList) async {
-    var i = 0;
+    var uuid = Uuid();
     for (File image in imageList) {
-      Reference ref = _fst.ref(profileStorageDir).child('WP${i}_image.png');
+      Reference ref =
+          _fst.ref(profileWPStorageDir).child('WP${uuid.v4()}_image.png');
       await ref.putFile(image);
-      i += 1;
     }
+  }
+
+  Future<Map<String, String>> getWPImages() async {
+    /// Return map of file name --> url
+    Map<String, String> filesMap = {};
+    Reference ref = _fst.ref(profileWPStorageDir);
+    var refStr = 'notFound';
+    try {
+      await ref.listAll().then(
+            (res) async => {
+              for (var imageRef in res.items)
+                {
+                  refStr = await imageRef.getDownloadURL(),
+                  filesMap[imageRef.name] = refStr,
+                },
+            },
+          );
+    } catch (error) {
+      return {};
+    }
+    return filesMap;
+  }
+
+  Future<void> deleteWPImage(String image) async {
+    Reference ref = _fst.ref(profileStorageDir).child(image);
+    return await ref.delete();
   }
 }

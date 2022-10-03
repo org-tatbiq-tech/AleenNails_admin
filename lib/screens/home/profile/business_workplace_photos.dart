@@ -24,11 +24,22 @@ class BusinessWorkplacePhotos extends StatefulWidget {
 class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   List<File> mediaList = [];
   List<File> mediaListToUpload = [];
-  bool _isLoading = false;
+  bool _isLoading = true;
   @override
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    try {
+      settingsMgr.getWPImages().then(
+            (res) => {
+              // res is dictionary of filename: fileURL
+            },
+          );
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
     // init media list from DB (Need to create getWPImages function)
   }
 
