@@ -1,10 +1,17 @@
+import 'dart:io';
+
+import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BusinessWorkplacePhotos extends StatefulWidget {
   const BusinessWorkplacePhotos({Key? key}) : super(key: key);
@@ -15,19 +22,33 @@ class BusinessWorkplacePhotos extends StatefulWidget {
 }
 
 class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
-  List<Color> mediaList = [];
+  List<File> mediaList = [];
+  List<File> mediaListToUpload = [];
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
-    mediaList = [
-      Colors.red,
-      Colors.red,
-      Colors.red,
-    ];
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    // init media list from DB (Need to create getWPImages function)
   }
 
   @override
   Widget build(BuildContext context) {
+    saveWorkplacePhotos() {
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      if (mediaListToUpload.isNotEmpty) {
+        settingsMgr.uploadWPImages(mediaList).then(
+              (value) => showSuccessFlash(
+                context: context,
+                successColor: successPrimaryColor,
+                successTitle: 'Success!',
+                successBody: 'Workplace Photos updated successfully',
+              ),
+            );
+        Navigator.pop(context);
+      }
+    }
+
     List<Widget> mediaCards() {
       List<Widget> widgetList = mediaList.map((item) {
         return EaseInAnimation(
@@ -37,17 +58,13 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             width: rSize(100),
             height: rSize(100),
             decoration: BoxDecoration(
-              // color: Colors.red,
-              borderRadius: BorderRadius.all(
-                Radius.circular(
-                  rSize(10),
+              borderRadius: BorderRadius.circular(rSize(10)),
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: FileImage(
+                  item,
                 ),
               ),
-            ),
-            child: Image.asset(
-              'assets/images/avatar_female.png',
-              alignment: Alignment.center,
-              fit: BoxFit.cover,
             ),
           ),
         );
@@ -59,7 +76,12 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             showImagePickerModal(
                 imagePickerModalProps: ImagePickerModalProps(
               context: context,
-              saveImage: () => {},
+              saveImage: (File imageFile) {
+                setState(() {
+                  mediaList.add(imageFile);
+                  mediaListToUpload.add(imageFile);
+                });
+              },
             ))
           },
           beginAnimation: 0.98,
@@ -124,7 +146,9 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
-          saveTap: () => {}, // here will add the save action
+          saveTap: () => {
+            saveWorkplacePhotos(),
+          },
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -136,7 +160,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Give clients a sneak peek of your space before they even walk through the door.',
@@ -145,7 +169,10 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             SizedBox(
               height: rSize(40),
             ),
-            renderMedia(),
+            _isLoading
+                ? CustomLoadingIndicator(
+                    customLoadingIndicatorProps: CustomLoadingIndicatorProps())
+                : renderMedia(),
           ],
         ),
       ),
