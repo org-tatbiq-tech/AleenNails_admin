@@ -27,17 +27,9 @@ class ClientDetails extends StatefulWidget {
 }
 
 class _ClientDetailsState extends State<ClientDetails> {
-  List<ClientAppointment> clientAppointments = [];
-
   @override
   Widget build(BuildContext context) {
     final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-
-    if (clientsMgr.selectedClient != null &&
-        clientsMgr.isSelectedClientLoaded == false &&
-        clientsMgr.selectedClient.appointments != null) {
-      clientAppointments.addAll(clientsMgr.selectedClient.appointments!.values);
-    }
 
     renderAppointments() {
       return SafeArea(
@@ -85,7 +77,8 @@ class _ClientDetailsState extends State<ClientDetails> {
                 left: rSize(20),
                 right: rSize(20),
               ),
-              itemCount: min(clientAppointments.length, 3),
+              itemCount:
+                  min(clientsMgr.selectedClient.appointments!.values.length, 3),
               itemBuilder: (context, index) {
                 return FadeAnimation(
                   positionType: PositionType.top,
@@ -94,7 +87,9 @@ class _ClientDetailsState extends State<ClientDetails> {
                     clientAppointmentCardProps: ClientAppointmentCardProps(
                       enabled: true,
                       withNavigation: false,
-                      clientAppointmentDetails: clientAppointments[index],
+                      clientAppointmentDetails: clientsMgr
+                          .selectedClient.appointments!.values
+                          .toList()[index],
                     ),
                   ),
                 );
