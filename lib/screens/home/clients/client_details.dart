@@ -4,6 +4,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
+import 'package:appointments/screens/home/clients/client_appointments.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -49,14 +50,21 @@ class _ClientDetailsState extends State<ClientDetails> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Appointments'.toUpperCase(),
+                    '${'Appointments'.toUpperCase()} (${clientsMgr.selectedClient.appointments.values.length.toString()})',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                   CustomTextButton(
                     customTextButtonProps: CustomTextButtonProps(
-                      onTap: () => {},
+                      onTap: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ClientAppointments(),
+                          ),
+                        ),
+                      },
                       text: 'Show All',
                       textColor: Theme.of(context).colorScheme.primary,
                     ),
@@ -78,7 +86,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 right: rSize(20),
               ),
               itemCount:
-                  min(clientsMgr.selectedClient.appointments!.values.length, 3),
+                  min(clientsMgr.selectedClient.appointments.values.length, 1),
               itemBuilder: (context, index) {
                 return FadeAnimation(
                   positionType: PositionType.top,
@@ -88,7 +96,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                       enabled: true,
                       withNavigation: false,
                       clientAppointmentDetails: clientsMgr
-                          .selectedClient.appointments!.values
+                          .selectedClient.appointments.values
                           .toList()[index],
                     ),
                   ),

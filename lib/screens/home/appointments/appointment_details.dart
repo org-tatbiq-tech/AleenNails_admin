@@ -258,7 +258,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               },
               separatorBuilder: (BuildContext context, int index) {
                 return SizedBox(
-                  height: rSize(10),
+                  height: rSize(15),
                 );
               },
             ),
@@ -362,7 +362,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ClientDetails(),
+          builder: (context) => const ClientDetails(),
         ),
       );
     }
@@ -497,23 +497,29 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                               positionType: PositionType.right,
                               delay: 0.5,
                               child: renderNotes(
-                                  appointmentsMgr.selectedAppointment),
+                                appointmentsMgr.selectedAppointment,
+                              ),
                             ),
                             SizedBox(
                               height: rSize(40),
                             ),
                             Expanded(
                               child: renderServices(
-                                  appointmentsMgr.selectedAppointment),
+                                appointmentsMgr.selectedAppointment,
+                              ),
                             ),
                             SizedBox(
                               height: rSize(20),
                             ),
-                            renderAmount(appointmentsMgr.selectedAppointment),
+                            renderAmount(
+                              appointmentsMgr.selectedAppointment,
+                            ),
                             SizedBox(
                               height: rSize(10),
                             ),
-                            renderFooter(appointmentsMgr.selectedAppointment),
+                            renderFooter(
+                              appointmentsMgr.selectedAppointment,
+                            ),
                           ],
                         ),
                       ),

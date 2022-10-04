@@ -17,11 +17,10 @@ class ClientAppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String getAppointmentName() {
-      String appointmentName = '';
-      for (String serviceName
-          in clientAppointmentCardProps.clientAppointmentDetails.services) {
-        appointmentName += '$serviceName |';
+    String getAppointmentName(List<String> services) {
+      String appointmentName = services[0];
+      if (services.isNotEmpty && services.length > 1) {
+        appointmentName += ' + More';
       }
       return appointmentName;
     }
@@ -33,7 +32,7 @@ class ClientAppointmentCard extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => AppointmentDetails(),
+          builder: (context) => const AppointmentDetails(),
         ),
       );
     }
@@ -43,9 +42,14 @@ class ClientAppointmentCard extends StatelessWidget {
         enabled: clientAppointmentCardProps.enabled,
         onTap: clientAppointmentCardProps.onTap ??
             () => navigateToAppointmentDetails(
-                clientAppointmentCardProps.clientAppointmentDetails.id),
+                  clientAppointmentCardProps.clientAppointmentDetails.id,
+                ),
         title: Text(
-          getAppointmentName(),
+          getAppointmentName(
+              clientAppointmentCardProps.clientAppointmentDetails.services),
+          style: Theme.of(context).textTheme.subtitle2,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         subTitle: Padding(
           padding:
@@ -60,6 +64,7 @@ class ClientAppointmentCard extends StatelessWidget {
                   clientAppointmentCardProps.clientAppointmentDetails.endTime,
               format: 'HH:mm',
             )}',
+            style: Theme.of(context).textTheme.subtitle2,
           ),
         ),
         trailing: Column(
