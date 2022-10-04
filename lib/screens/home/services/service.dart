@@ -84,7 +84,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
       final serviceMgr = Provider.of<ServicesMgr>(context, listen: false);
       try {
-        serviceMgr.getServiceImages().then(
+        serviceMgr.getServiceImages(widget.service!.name).then(
               (res) async => {
                 if (res.isEmpty)
                   {
@@ -134,7 +134,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   Widget build(BuildContext context) {
     deleteServicePhoto(String fileName) {
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
-      servicesMgr.deleteServiceImage(fileName);
+      servicesMgr.deleteServiceImage(_nameController.text, fileName);
     }
 
     List<Widget> mediaCards() {

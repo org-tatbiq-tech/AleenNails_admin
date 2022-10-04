@@ -67,16 +67,18 @@ class ServicesMgr extends ChangeNotifier {
     var uuid = const Uuid();
     var name = serviceName.replaceAll(' ', '_');
     for (File image in imageList) {
-      Reference ref =
-          _fst.ref(servicesStorageDir).child('${name}_${uuid.v4()}_image.png');
+      Reference ref = _fst
+          .ref('$servicesStorageDir/$name')
+          .child('${name}_${uuid.v4()}_image.png');
       await ref.putFile(image);
     }
   }
 
-  Future<Map<String, String>> getServiceImages() async {
+  Future<Map<String, String>> getServiceImages(String serviceName) async {
     /// Return map of file name --> url
     Map<String, String> filesMap = {};
-    Reference ref = _fst.ref(servicesStorageDir);
+    var name = serviceName.replaceAll(' ', '_');
+    Reference ref = _fst.ref('$servicesStorageDir/$name');
     var refStr = 'notFound';
     try {
       await ref.listAll().then(
@@ -94,8 +96,9 @@ class ServicesMgr extends ChangeNotifier {
     return filesMap;
   }
 
-  Future<void> deleteServiceImage(String image) async {
-    Reference ref = _fst.ref(servicesStorageDir).child(image);
+  Future<void> deleteServiceImage(String serviceName, String image) async {
+    var name = serviceName.replaceAll(' ', '_');
+    Reference ref = _fst.ref('$servicesStorageDir/$name').child(image);
     return await ref.delete();
   }
 
