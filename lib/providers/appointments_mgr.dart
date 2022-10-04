@@ -28,7 +28,7 @@ class AppointmentsMgr extends ChangeNotifier {
     return _selectedDay;
   }
 
-  setSelectedDay(DateTime value) async {
+  Future<void> setSelectedDay(DateTime value) async {
     _selectedDay = value;
     await downloadAppointments();
   }

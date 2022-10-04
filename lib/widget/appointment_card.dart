@@ -36,9 +36,13 @@ class AppointmentCard extends StatelessWidget {
               SizedBox(
                 width: rSize(10),
               ),
-              Text(
-                service.name,
-                style: Theme.of(context).textTheme.subtitle2,
+              Expanded(
+                child: Text(
+                  service.name,
+                  style: Theme.of(context).textTheme.subtitle2,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

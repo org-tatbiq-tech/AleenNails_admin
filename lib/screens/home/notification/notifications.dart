@@ -24,18 +24,17 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: CustomAppBar(
-      //   customAppBarProps: CustomAppBarProps(
-      //     titleText: 'Notifications',
-      //     withBack: true,
-      //     withClipPath: false,
-      //     customIcon: Icon(
-      //       Icons.refresh,
-      //       size: rSize(24),
-      //     ),
-      //     customIconTap: () => {},
-      //   ),
-      // ),
+      appBar: CustomAppBar(
+        customAppBarProps: CustomAppBarProps(
+          titleText: 'Notifications',
+          withClipPath: false,
+          customIcon: Icon(
+            Icons.refresh,
+            size: rSize(24),
+          ),
+          customIconTap: () => {},
+        ),
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Column(
         mainAxisSize: MainAxisSize.max,

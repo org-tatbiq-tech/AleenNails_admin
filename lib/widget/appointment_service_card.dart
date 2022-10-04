@@ -15,7 +15,6 @@ class AppointmentServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
-        marginBottom: 15,
         enabled: appointmentServiceCardProps.enabled,
         onTap: appointmentServiceCardProps.onTap ??
             () => Navigator.pushNamed(context, '/serviceDetails'),

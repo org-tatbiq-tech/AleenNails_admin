@@ -283,7 +283,7 @@ class Client {
   DateTime? acceptedDate; // Birthday date
   double? discount; // general discount for client
   bool? isTrusted; // Birthday date
-  Map<String, ClientAppointment>? appointments;
+  Map<String, ClientAppointment> appointments;
 
   Client({
     required this.id,
@@ -298,7 +298,7 @@ class Client {
     this.acceptedDate,
     this.discount,
     this.isTrusted,
-    this.appointments,
+    this.appointments = const {},
   });
 
   Map<String, dynamic> toJson() {
@@ -314,9 +314,8 @@ class Client {
       'acceptedDate': Timestamp.fromDate(creationDate),
       'discount': discount,
       'isTrusted': isTrusted,
-      'appointments': appointments == null
-          ? {}
-          : appointments!.map((key, value) => MapEntry(key, value.toJson())),
+      'appointments':
+          appointments.map((key, value) => MapEntry(key, value.toJson())),
     };
   }
 

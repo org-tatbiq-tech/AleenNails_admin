@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/formats.dart';
@@ -18,6 +20,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:uuid/uuid.dart';
 
 class ServiceWidget extends StatefulWidget {
   final Service? service;
@@ -49,7 +52,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   int selectedMinutes = 0;
   int selectedMinutesIdx = 0;
 
-  List<Color> mediaList = [];
+  Map<String, File> mediaList = {};
+  Map<String, File> mediaListToUpload = {};
 
   @override
   void initState() {
@@ -73,6 +77,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       onlineBooking = widget.service!.onlineBooking;
       selectedColor = Color(widget.service!.colorID);
       selectedColorTemp = Color(widget.service!.colorID);
+
+      // need to download the service images as we did in the workspace photos
     }
     colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {}));
@@ -92,82 +98,86 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   @override
   Widget build(BuildContext context) {
+    deleteServicePhoto(String url) {
+      // need to call Firebase function to delete image.
+    }
+
     List<Widget> mediaCards() {
-      List<Widget> widgetList = mediaList.map((item) {
-        return EaseInAnimation(
-          beginAnimation: 0.98,
-          onTap: () => {},
-          child: Container(
-            width: rSize(100),
-            height: rSize(100),
-            margin: EdgeInsets.only(
-              right: rSize(15),
-            ),
-            decoration: BoxDecoration(
-              // color: Colors.red,
-              borderRadius: BorderRadius.all(
-                Radius.circular(
-                  rSize(10),
+      List<Widget> widgetList = [];
+
+      for (var servicePhoto in mediaList.entries) {
+        widgetList.add(
+          EaseInAnimation(
+            beginAnimation: 0.98,
+            onTap: () => {
+              deleteServicePhoto(servicePhoto.key),
+            },
+            child: Container(
+              width: rSize(100),
+              height: rSize(100),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(rSize(10)),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: FileImage(
+                    servicePhoto.value,
+                  ),
                 ),
               ),
             ),
-            child: Image.asset(
-              'assets/images/avatar_female.png',
-              alignment: Alignment.center,
-              fit: BoxFit.contain,
-            ),
           ),
         );
-      }).toList();
+      }
       widgetList.insert(
         0,
         EaseInAnimation(
           onTap: () => {
             showImagePickerModal(
-              imagePickerModalProps: ImagePickerModalProps(
-                context: context,
-                saveImage: () => {},
-              ),
-            )
+                imagePickerModalProps: ImagePickerModalProps(
+              context: context,
+              saveImage: (File imageFile) {
+                setState(() {
+                  mediaList[const Uuid().v4()] = imageFile;
+                  mediaListToUpload[const Uuid().v4()] = imageFile;
+                });
+              },
+            ))
           },
           beginAnimation: 0.98,
-          child: Padding(
-            padding: EdgeInsets.only(right: rSize(20)),
-            child: DottedBorder(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              borderType: BorderType.RRect,
-              dashPattern: [rSize(6), rSize(4)],
-              strokeWidth: rSize(1),
-              radius: Radius.circular(
-                rSize(10),
-              ),
-              child: SizedBox(
-                width: rSize(100),
-                height: rSize(100),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    CustomIcon(
-                      customIconProps: CustomIconProps(
-                        icon: null,
-                        backgroundColor: Colors.transparent,
-                        path: 'assets/icons/camera.png',
-                        containerSize: 40,
-                      ),
+          child: DottedBorder(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            borderType: BorderType.RRect,
+            dashPattern: [rSize(6), rSize(4)],
+            strokeWidth: rSize(1),
+            radius: Radius.circular(
+              rSize(10),
+            ),
+            child: SizedBox(
+              width: rSize(100),
+              height: rSize(100),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  CustomIcon(
+                    customIconProps: CustomIconProps(
+                      icon: null,
+                      backgroundColor: Colors.transparent,
+                      path: 'assets/icons/camera.png',
+                      containerSize: 40,
                     ),
-                    SizedBox(
-                      height: rSize(2),
-                    ),
-                    Text(
-                      'Add Media',
-                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                            fontSize: rSize(12),
-                          ),
-                    )
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: rSize(2),
+                  ),
+                  Text(
+                    'Add Media',
+                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                          fontSize: rSize(12),
+                        ),
+                  )
+                ],
               ),
             ),
           ),
@@ -178,17 +188,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     }
 
     Widget renderServiceColors() {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: EdgeInsets.only(
-              bottom: rSize(5),
-              left: rSize(10),
-              right: rSize(10),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: rSize(10)),
             child: Text(
               'Service Color',
               maxLines: 1,
@@ -669,7 +675,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           successColor: successPrimaryColor,
         );
       } else {
-        // update
         servicesMgr.updateService(service);
         showSuccessFlash(
           context: context,

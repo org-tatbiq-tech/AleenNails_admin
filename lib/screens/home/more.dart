@@ -1,4 +1,5 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_icon_button.dart';
 
@@ -17,9 +18,17 @@ class More extends StatefulWidget {
 class MoreState extends State<More> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Theme.of(context).colorScheme.background,
-      child: Padding(
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: CustomAppBar(
+        customAppBarProps: CustomAppBarProps(
+          isLogoMode: true,
+          logoHeight: rSize(75),
+          withClipPath: true,
+          barHeight: 120,
+        ),
+      ),
+      body: Padding(
         padding: EdgeInsets.only(
           left: rSize(30),
           right: rSize(30),
