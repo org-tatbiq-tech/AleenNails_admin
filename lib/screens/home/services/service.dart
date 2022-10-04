@@ -11,11 +11,13 @@ import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,6 +45,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   Color selectedColor = Colors.green;
   Color selectedColorTemp = Colors.green;
   bool onlineBooking = true;
+  bool _isLoading = false;
 
   List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
   List<int> minutesData = [0, 15, 30, 45];
@@ -60,6 +63,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     super.initState();
 
     if (widget.service != null) {
+      _isLoading = true;
       _nameController.text = widget.service!.name;
       _priceController.text = widget.service!.cost.toString();
       _descriptionController.text = widget.service!.description ?? '';
@@ -78,13 +82,43 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       selectedColor = Color(widget.service!.colorID);
       selectedColorTemp = Color(widget.service!.colorID);
 
-      // need to download the service images as we did in the workspace photos
+      final serviceMgr = Provider.of<ServicesMgr>(context, listen: false);
+      try {
+        serviceMgr.getServiceImages().then(
+              (res) async => {
+                if (res.isEmpty)
+                  {
+                    setState(() {
+                      _isLoading = false;
+                    }),
+                  }
+                else
+                  {
+                    for (var workPlacePhoto in res.entries)
+                      {
+                        mediaList[workPlacePhoto.key] = await fileFromImageUrl(
+                          workPlacePhoto.key,
+                          workPlacePhoto.value,
+                        ),
+                      },
+                    setState(() {
+                      _isLoading = false;
+                    }),
+                  }
+              },
+            );
+      } catch (error) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
     colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {}));
     _priceController.addListener(() => setState(() {}));
     _descriptionController.addListener(() => setState(() {}));
     _messageToClientController.addListener(() => setState(() {}));
+    _isLoading = false;
   }
 
   @override
@@ -98,8 +132,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    deleteServicePhoto(String url) {
-      // need to call Firebase function to delete image.
+    deleteServicePhoto(String fileName) {
+      final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
+      servicesMgr.deleteServiceImage(fileName);
     }
 
     List<Widget> mediaCards() {
@@ -485,9 +520,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               top: rSize(15),
             ),
             scrollDirection: Axis.horizontal,
-            child: Row(
-              children: mediaCards(),
-            ),
+            child: _isLoading
+                ? CustomLoadingIndicator(
+                    customLoadingIndicatorProps: CustomLoadingIndicatorProps())
+                : Row(
+                    children: mediaCards(),
+                  ),
           ),
         ],
       );
@@ -667,7 +705,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       );
 
       if (widget.service == null) {
-        servicesMgr.submitNewService(service);
+        servicesMgr.submitNewService(
+          service,
+          mediaListToUpload.values.toList(),
+        );
         showSuccessFlash(
           context: context,
           successTitle: 'Submitted!',
@@ -675,7 +716,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           successColor: successPrimaryColor,
         );
       } else {
-        servicesMgr.updateService(service);
+        servicesMgr.updateService(
+          service,
+          mediaListToUpload.values.toList(),
+        );
         showSuccessFlash(
           context: context,
           successTitle: 'Updated!',
