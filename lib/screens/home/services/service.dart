@@ -188,17 +188,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     }
 
     Widget renderServiceColors() {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           Padding(
-            padding: EdgeInsets.only(
-              bottom: rSize(5),
-              left: rSize(10),
-              right: rSize(10),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: rSize(10)),
             child: Text(
               'Service Color',
               maxLines: 1,
