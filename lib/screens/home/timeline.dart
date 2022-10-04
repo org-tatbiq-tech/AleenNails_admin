@@ -4,6 +4,8 @@ import 'package:appointments/screens/home/appointments/appointment_details.dart'
 import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_day_view.dart';
 import 'package:appointments/widget/custom_expandable_calendar.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,8 @@ class TimeLineState extends State<TimeLine> {
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   List<Appointment> appointments = [];
-  bool isListView = true;
+  bool _isListView = true;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -45,16 +48,21 @@ class TimeLineState extends State<TimeLine> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
+        _isLoading = true;
         _calendarFormat = CalendarFormat.week;
         final appointmentsMgr =
             Provider.of<AppointmentsMgr>(context, listen: false);
-        appointmentsMgr.setSelectedDay(
-          DateTime(
-            _selectedDay.year,
-            _selectedDay.month,
-            _selectedDay.day,
-          ),
-        );
+        appointmentsMgr
+            .setSelectedDay(
+              DateTime(
+                _selectedDay.year,
+                _selectedDay.month,
+                _selectedDay.day,
+              ),
+            )
+            .then(
+              (value) => _isLoading = false,
+            );
       });
     }
   }
@@ -239,77 +247,115 @@ class TimeLineState extends State<TimeLine> {
     );
   }
 
+  Widget getCustomIcon() {
+    if (_isListView) {
+      return Icon(
+        Icons.list,
+        size: rSize(26),
+      );
+    }
+    return Icon(
+      Icons.calendar_today,
+      size: rSize(24),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppointmentsMgr>(
-      builder: (context, appointmentsMgr, _) => Stack(
-        children: [
-          Column(
-            children: [
-              CustomExpandableCalendar(
-                customExpandableCalendarProps: CustomExpandableCalendarProps(
-                  focusedDay: _focusedDay,
-                  selectedDay: _selectedDay,
-                  calendarFormat: _calendarFormat,
-                  onDaySelected: _onDaySelected,
-                  onPageChanged: (focusedDay) {
-                    _focusedDay = focusedDay;
-                  },
-                  onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() {
-                        _calendarFormat = format;
-                      });
-                    }
-                  },
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: CustomAppBar(
+        customAppBarProps: CustomAppBarProps(
+          withBorder: true,
+          withClipPath: false,
+          titleText: 'Home',
+          customIcon: getCustomIcon(),
+          customIconTap: () => setState(() {
+            _isListView = !_isListView;
+          }),
+        ),
+      ),
+      body: Consumer<AppointmentsMgr>(
+        builder: (context, appointmentsMgr, _) => Stack(
+          children: [
+            Column(
+              children: [
+                CustomExpandableCalendar(
+                  customExpandableCalendarProps: CustomExpandableCalendarProps(
+                    focusedDay: _focusedDay,
+                    selectedDay: _selectedDay,
+                    calendarFormat: _calendarFormat,
+                    onDaySelected: _onDaySelected,
+                    onPageChanged: (focusedDay) {
+                      _focusedDay = focusedDay;
+                    },
+                    onFormatChanged: (format) {
+                      if (_calendarFormat != format) {
+                        setState(() {
+                          _calendarFormat = format;
+                        });
+                      }
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: !isListView
-                      ? CustomDayView(
-                          customDayViewProps: CustomDayViewProps(
-                            dayViewController: dayViewController,
-                            minimumTime: const HourMinute(hour: 6),
-                            date: _selectedDay,
-                            userZoomAble: false,
-                            events: getFlutterWeekAppointments(_selectedDay),
-                            initialTime: HourMinute(
-                              hour: DateTime.now().hour,
-                              minute: DateTime.now().minute,
-                            ),
+                Expanded(
+                  child: _isLoading
+                      ? Center(
+                          child: CustomLoadingIndicator(
+                            customLoadingIndicatorProps:
+                                CustomLoadingIndicatorProps(),
                           ),
                         )
-                      : ListView.separated(
-                          padding: EdgeInsets.only(
-                            top: rSize(20),
-                            left: rSize(20),
-                            right: rSize(20),
-                          ),
-                          itemCount: getAppointments(_selectedDay).length,
-                          itemBuilder: (context, index) {
-                            return AppointmentCard(
-                              appointmentCardProps: AppointmentCardProps(
-                                appointmentDetails:
-                                    getAppointments(_selectedDay)[index],
-                              ),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              height: rSize(10),
-                            );
-                          },
+                      : AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 300),
+                          child: !_isListView
+                              ? CustomDayView(
+                                  customDayViewProps: CustomDayViewProps(
+                                    dayViewController: dayViewController,
+                                    minimumTime: const HourMinute(hour: 6),
+                                    date: _selectedDay,
+                                    userZoomAble: false,
+                                    events: getFlutterWeekAppointments(
+                                        _selectedDay),
+                                    initialTime: HourMinute(
+                                      hour: DateTime.now().hour,
+                                      minute: DateTime.now().minute,
+                                    ),
+                                  ),
+                                )
+                              : ListView.separated(
+                                  padding: EdgeInsets.only(
+                                    top: rSize(20),
+                                    left: rSize(20),
+                                    right: rSize(20),
+                                  ),
+                                  itemCount:
+                                      getAppointments(_selectedDay).length,
+                                  itemBuilder: (context, index) {
+                                    return AppointmentCard(
+                                      appointmentCardProps:
+                                          AppointmentCardProps(
+                                        appointmentDetails: getAppointments(
+                                            _selectedDay)[index],
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return SizedBox(
+                                      height: rSize(10),
+                                    );
+                                  },
+                                ),
                         ),
                 ),
-              ),
-            ],
-          ),
-          !isSameDay(_selectedDay, DateTime.now())
-              ? renderTodayButton()
-              : const SizedBox(),
-        ],
+              ],
+            ),
+            !isSameDay(_selectedDay, DateTime.now())
+                ? renderTodayButton()
+                : const SizedBox(),
+          ],
+        ),
       ),
     );
   }
