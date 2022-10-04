@@ -626,7 +626,7 @@ PODS:
   - Firebase/Storage (9.6.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 9.6.0)
-  - firebase_auth (3.11.0):
+  - firebase_auth (3.11.1):
     - Firebase/Auth (= 9.6.0)
     - firebase_core
     - Flutter
@@ -847,7 +847,7 @@ PODS:
   - permission_handler_apple (9.0.4):
     - Flutter
   - PromisesObjC (2.1.1)
-  - Protobuf (3.21.6)
+  - Protobuf (3.21.7)
   - SDWebImage (5.13.4):
     - SDWebImage/Core (= 5.13.4)
   - SDWebImage/Core (5.13.4)
@@ -960,7 +960,7 @@ SPEC CHECKSUMS:
   cloud_firestore: 09a9630b3fd8bb78f6e01094d8f52d85f1eba0c8
   cloud_functions: 3cd07c4445edc98e17d5786922c3ebe71146c399
   Firebase: 5ae8b7cf8efce559a653aef0ad95bab3f427c351
-  firebase_auth: 659d792742e05dc223afc033f008e2f335f8f276
+  firebase_auth: bb406baf3e15b89102e5963eb2147452d1072fd5
   firebase_core: 7c28ecc1e5dd74e03829ac3e9ff5ba3314e737a9
   firebase_storage: 015e4eeb3b9ac2f25ad84c4032c6897d0dc2026e
   FirebaseAppCheckInterop: d5ecda0c09f8069406643d6e0fa12c09d1b736e3
@@ -1002,7 +1002,7 @@ SPEC CHECKSUMS:
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  Protobuf: e7846f61e8542750cf311385fc633c1d00928f9f
+  Protobuf: f4128517d7a42302e106cc3afe614ee3a7513e94
   SDWebImage: e5cc87bf736e60f49592f307bdf9e157189298a3
   SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
