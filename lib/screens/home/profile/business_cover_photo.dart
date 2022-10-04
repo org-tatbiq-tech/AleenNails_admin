@@ -1,13 +1,16 @@
 import 'dart:io';
 
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -40,7 +43,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
               }
             else
               {
-                fileFromImageUrl('logo', imageUrl).then(
+                fileFromImageUrl('logo.png', imageUrl).then(
                   (value) => setState(
                     (() {
                       _imageFile = value;
@@ -55,9 +58,9 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     deleteImage() {
       if (_imageFile != null) {
-        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
         setState(() {
           _isLoading = true;
         });
@@ -128,6 +131,9 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                   showImagePickerModal(
                     imagePickerModalProps: ImagePickerModalProps(
                       context: context,
+                      ratioX: 16,
+                      ratioY: 9,
+                      compressQuality: 20,
                       isCircleCropStyle: false,
                       saveImage: (File? imageFile) {
                         setState(() {
@@ -150,8 +156,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                       rSize(10),
                     ),
                     child: SizedBox(
-                      width: rSize(330),
-                      height: rSize(165),
+                      width: rSize(400),
+                      height: rSize(225),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -182,7 +188,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                 children: [
                   Container(
                     width: rSize(400),
-                    height: rSize(200),
+                    height: rSize(225),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(rSize(10)),
                       image: DecorationImage(
@@ -210,6 +216,9 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                                 imagePickerModalProps: ImagePickerModalProps(
                                   context: context,
                                   isCircleCropStyle: false,
+                                  compressQuality: 20,
+                                  ratioX: 16,
+                                  ratioY: 9,
                                   saveImage: (File? imageFile) {
                                     setState(() {
                                       _imageFile = imageFile;
@@ -242,12 +251,14 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
       );
     }
 
-    saveImage() {
-      if (_imageFile != null) {
-        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-        settingsMgr.uploadCoverImage(_imageFile!);
+    saveImage() async {
+      if (_imageFile != null && _imageFile!.path.isNotEmpty) {
+        var compressedFile = await compressImage(
+          path: _imageFile!.path,
+          quality: 30,
+        );
+        settingsMgr.uploadCoverImage(compressedFile!);
       }
-      Navigator.pop(context);
     }
 
     return Scaffold(
@@ -258,7 +269,17 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
-          saveTap: () => {saveImage()},
+          saveTap: () async => {
+            showLoaderDialog(context),
+            await saveImage(),
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody: 'Success',
+              successTitle: 'Cover Photo Uploaded Successfully.',
+            ),
+          },
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
