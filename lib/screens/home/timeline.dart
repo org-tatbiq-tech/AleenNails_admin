@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/widget/appointment_card.dart';
@@ -7,6 +8,7 @@ import 'package:appointments/widget/custom_expandable_calendar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
@@ -97,19 +99,27 @@ class TimeLineState extends State<TimeLine> {
           event.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context)
-              .textTheme
-              .headline1
-              ?.copyWith(color: event.backgroundColor),
+          style: Theme.of(context).textTheme.headline1?.copyWith(
+                color: darken(
+                  event.backgroundColor ??
+                      Theme.of(context).colorScheme.primary,
+                  0.2,
+                ),
+              ),
         ),
         Expanded(
-          child: Text(event.description,
-              maxLines: maxLines != 0 ? maxLines : 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  ?.copyWith(color: event.backgroundColor)),
+          child: Text(
+            event.description,
+            maxLines: maxLines != 0 ? maxLines : 1,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  color: darken(
+                    event.backgroundColor ??
+                        Theme.of(context).colorScheme.primary,
+                    0.2,
+                  ),
+                ),
+          ),
         ),
       ],
     );
@@ -139,7 +149,7 @@ class TimeLineState extends State<TimeLine> {
         borderRadius: BorderRadius.circular(
           rSize(10),
         ),
-        color: lighten(backgroundColor, 0.3),
+        color: lighten(backgroundColor, 0.2),
       ),
       start: start,
       end: end,
@@ -165,6 +175,24 @@ class TimeLineState extends State<TimeLine> {
     );
   }
 
+  String getAppointmentDescription(Appointment appointment) {
+    String description = '';
+    if (appointment.clientPhone.isNotEmpty) {
+      description += appointment.clientPhone;
+    }
+    if (appointment.services.isNotEmpty) {
+      description += '\nServices ➙ ${appointment.services.length}';
+    }
+    if (appointment.notes!.isNotEmpty) {
+      description += '\nNotes ➙ ${appointment.notes}';
+    }
+    description += '\nPrice ➙ ${getStringPrice(appointment.totalCost)}';
+    description += '\nDuration ➙ ${appointment.totalDurationInMins}min';
+    description += '\nStatus ➙ ${appointment.status.name.toUpperCase()}';
+
+    return description;
+  }
+
   List<FlutterWeekViewEvent> getFlutterWeekAppointments(DateTime date) {
     final appointmentsMgr =
         Provider.of<AppointmentsMgr>(context, listen: false);
@@ -173,7 +201,7 @@ class TimeLineState extends State<TimeLine> {
       events.add(
         renderFlutterWeekViewEvent(
           title: appointment.clientName,
-          description: appointment.notes,
+          description: getAppointmentDescription(appointment),
           start: date.add(
             Duration(
                 hours: appointment.date.hour, minutes: appointment.date.minute),
