@@ -82,9 +82,9 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
       }
     }
 
-    deleteWorkspacePhoto(String url) {
+    deleteWorkspacePhoto(String url) async {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-      settingsMgr.deleteWPImage(url);
+      await settingsMgr.deleteWPImage(url);
     }
 
     removeWorkspacePhoto(String url) {
@@ -95,7 +95,17 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           primaryButtonText: 'Delete',
           secondaryButtonText: 'Back',
           deleteCancelModal: true,
-          primaryAction: () => deleteWorkspacePhoto(url),
+          primaryAction: () async => {
+            showLoaderDialog(context),
+            await deleteWorkspacePhoto(url),
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody: 'Success',
+              successTitle: 'Workplace Photo Deleted Successfully.',
+            ),
+          },
           footerButton: ModalFooter.both,
           child: Column(
             mainAxisSize: MainAxisSize.max,

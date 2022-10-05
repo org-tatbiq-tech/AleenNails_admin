@@ -59,12 +59,12 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   @override
   Widget build(BuildContext context) {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    deleteImage() {
+    deleteImage() async {
       if (_imageFile != null) {
         setState(() {
           _isLoading = true;
         });
-        settingsMgr.deleteCoverImage().then(
+        await settingsMgr.deleteCoverImage().then(
               (value) => setState(
                 (() {
                   _imageFile = null;
@@ -83,7 +83,17 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
           primaryButtonText: 'Delete',
           secondaryButtonText: 'Back',
           deleteCancelModal: true,
-          primaryAction: () => {deleteImage()},
+          primaryAction: () async => {
+            showLoaderDialog(context),
+            await deleteImage(),
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody: 'Success',
+              successTitle: 'Logo Photo Deleted Successfully.',
+            ),
+          },
           footerButton: ModalFooter.both,
           child: Column(
             mainAxisSize: MainAxisSize.max,

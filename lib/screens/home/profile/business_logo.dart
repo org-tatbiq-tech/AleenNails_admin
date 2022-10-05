@@ -71,13 +71,13 @@ class _BusinessLogoState extends State<BusinessLogo> {
       }
     }
 
-    deleteImage() {
+    deleteImage() async {
       if (_imageFile != null) {
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
         setState(() {
           _isLoading = true;
         });
-        settingsMgr.deleteLogoImage().then(
+        await settingsMgr.deleteLogoImage().then(
               (value) => setState(
                 (() {
                   _imageFile = null;
@@ -96,7 +96,17 @@ class _BusinessLogoState extends State<BusinessLogo> {
           primaryButtonText: 'Delete',
           secondaryButtonText: 'Back',
           deleteCancelModal: true,
-          primaryAction: () => {deleteImage()},
+          primaryAction: () async => {
+            showLoaderDialog(context),
+            await deleteImage(),
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody: 'Success',
+              successTitle: 'Logo Photo Deleted Successfully.',
+            ),
+          },
           footerButton: ModalFooter.both,
           child: Column(
             mainAxisSize: MainAxisSize.max,
