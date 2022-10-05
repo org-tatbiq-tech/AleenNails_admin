@@ -193,7 +193,7 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<void> deleteWPImage(String image) async {
-    Reference ref = _fst.ref(profileStorageDir).child(image);
+    Reference ref = _fst.ref(profileWPStorageDir).child(image);
     return await ref.delete();
   }
 }
