@@ -32,6 +32,16 @@ class AppointmentDetails extends StatefulWidget {
 class AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   Widget build(BuildContext context) {
+    cancelAppointmentVisibility(Appointment appointment) {
+      if (appointment.status == AppointmentStatus.cancelled) {
+        return false;
+      }
+      if (appointment.paymentStatus == PaymentStatus.paid) {
+        return false;
+      }
+      return true;
+    }
+
     cancelAppointmentClicked(Appointment appointment) {
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
@@ -90,7 +100,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         positionType: PositionType.top,
         delay: 1.3,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -101,26 +111,14 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               children: [
                 Text(
                   'Total'.toUpperCase(),
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(
+                  height: rSize(5),
                 ),
                 Text(
-                  getStringPrice(10.6),
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  'Due To'.toUpperCase(),
-                  style: Theme.of(context).textTheme.subtitle1,
-                ),
-                Text(
-                  getStringPrice(10.6),
-                  style: Theme.of(context).textTheme.headline1,
+                  getStringPrice(appointment.totalCost),
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
               ],
             ),
@@ -138,24 +136,30 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              EaseInAnimation(
-                onTap: () => cancelAppointment(appointment),
-                child: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    icon: null,
-                    containerSize: rSize(50),
-                    contentPadding: rSize(12),
-                    withPadding: true,
-                    borderColor: Theme.of(context).colorScheme.primary,
-                    backgroundColor: Colors.transparent,
-                    iconColor: Theme.of(context).colorScheme.error,
-                    // backgroundColor: Colors.transparent,
-                    path: 'assets/icons/cancel.png',
-                  ),
+              Visibility(
+                visible: cancelAppointmentVisibility(appointment),
+                child: Row(
+                  children: [
+                    EaseInAnimation(
+                      onTap: () => cancelAppointment(appointment),
+                      child: CustomIcon(
+                        customIconProps: CustomIconProps(
+                          icon: null,
+                          containerSize: rSize(50),
+                          contentPadding: rSize(12),
+                          withPadding: true,
+                          borderColor: Theme.of(context).colorScheme.primary,
+                          backgroundColor: Colors.transparent,
+                          iconColor: Theme.of(context).colorScheme.error,
+                          path: 'assets/icons/cancel.png',
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: rSize(10),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                width: rSize(10),
               ),
               Expanded(
                 child: CustomButton(
@@ -167,18 +171,27 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: rSize(10),
-              ),
-              Expanded(
-                child: CustomButton(
-                  customButtonProps: CustomButtonProps(
-                    onTap: () => {
-                      Navigator.pushNamed(context, '/checkoutDetails'),
-                    },
-                    text: 'Checkout',
-                    isPrimary: true,
-                    isSecondary: false,
+              Visibility(
+                visible: appointment.paymentStatus != PaymentStatus.paid,
+                child: Expanded(
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: rSize(10),
+                      ),
+                      Expanded(
+                        child: CustomButton(
+                          customButtonProps: CustomButtonProps(
+                            onTap: () => {
+                              Navigator.pushNamed(context, '/checkoutDetails'),
+                            },
+                            text: 'Checkout',
+                            isPrimary: true,
+                            isSecondary: false,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -348,7 +361,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               height: rSize(5),
             ),
             ReadMoreText(
-              appointment.notes ?? '',
+              appointment.notes.isEmpty
+                  ? 'There is no notes.'
+                  : appointment.notes,
               trimLines: 2,
             ),
           ],
@@ -447,8 +462,11 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         child: Consumer<AppointmentsMgr>(
           builder: (context, appointmentsMgr, _) => !appointmentsMgr
                   .isSelectedAppointmentLoaded
-              ? CustomLoadingIndicator(
-                  customLoadingIndicatorProps: CustomLoadingIndicatorProps())
+              ? Center(
+                  child: CustomLoadingIndicator(
+                    customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
+                  ),
+                )
               : Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -459,7 +477,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       delay: 0.3,
                       child: CustomStatus(
                         customStatusProps: CustomStatusProps(
-                            status: AppointmentStatus.waiting),
+                          status: appointmentsMgr.selectedAppointment.status,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -515,7 +534,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                               appointmentsMgr.selectedAppointment,
                             ),
                             SizedBox(
-                              height: rSize(10),
+                              height: rSize(15),
                             ),
                             renderFooter(
                               appointmentsMgr.selectedAppointment,

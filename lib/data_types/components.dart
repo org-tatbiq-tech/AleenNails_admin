@@ -132,7 +132,7 @@ class Appointment {
   String clientDocID; // Client database ID
   DateTime creationDate; // Appointment creation date (date and time)
   DateTime date; // Appointment date (date and time)
-  String? notes; // Appointment detailed notes
+  String notes; // Appointment detailed notes
   List<AppointmentService> services;
   PaymentStatus paymentStatus;
 
@@ -145,7 +145,7 @@ class Appointment {
     required this.clientDocID,
     required this.creationDate,
     required this.date,
-    this.notes,
+    this.notes = '',
     required this.services,
     required this.paymentStatus,
   });
