@@ -1,13 +1,16 @@
 import 'dart:io';
 
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
@@ -61,12 +64,11 @@ class _BusinessLogoState extends State<BusinessLogo> {
 
   @override
   Widget build(BuildContext context) {
-    saveImage() {
+    saveImage() async {
       if (_imageFile != null) {
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-        settingsMgr.uploadLogoImage(_imageFile!);
+        await settingsMgr.uploadLogoImage(_imageFile!);
       }
-      Navigator.pop(context);
     }
 
     deleteImage() {
@@ -260,7 +262,17 @@ class _BusinessLogoState extends State<BusinessLogo> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
-          saveTap: () => {saveImage()},
+          saveTap: () async => {
+            showLoaderDialog(context),
+            await saveImage(),
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody: 'Success',
+              successTitle: 'Logo Uploaded Successfully.',
+            ),
+          },
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,

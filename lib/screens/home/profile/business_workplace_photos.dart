@@ -5,6 +5,8 @@ import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
+import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
@@ -64,10 +66,12 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
 
   @override
   Widget build(BuildContext context) {
-    saveWorkplacePhotos() {
+    saveWorkplacePhotos() async {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       if (mediaListToUpload.isNotEmpty) {
-        settingsMgr.uploadWPImages(mediaListToUpload.values.toList()).then(
+        await settingsMgr
+            .uploadWPImages(mediaListToUpload.values.toList())
+            .then(
               (value) => showSuccessFlash(
                 context: context,
                 successColor: successPrimaryColor,
@@ -75,13 +79,58 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                 successBody: 'Workplace Photos updated successfully',
               ),
             );
-        Navigator.pop(context);
       }
     }
 
     deleteWorkspacePhoto(String url) {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       settingsMgr.deleteWPImage(url);
+    }
+
+    removeWorkspacePhoto(String url) {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: 'Delete',
+          secondaryButtonText: 'Back',
+          deleteCancelModal: true,
+          primaryAction: () => deleteWorkspacePhoto(url),
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/trash.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: rSize(80),
+                  contentPadding: rSize(20),
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                'Delete Photo?',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                'Action can not be undone',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
     List<Widget> mediaCards() {
@@ -92,7 +141,8 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           EaseInAnimation(
             beginAnimation: 0.98,
             onTap: () => {
-              deleteWorkspacePhoto(workspacePhoto.key),
+              print(workspacePhoto.key),
+              removeWorkspacePhoto(workspacePhoto.key),
             },
             child: Container(
               width: rSize(100),
@@ -187,8 +237,16 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
-          saveTap: () => {
-            saveWorkplacePhotos(),
+          saveTap: () async => {
+            showLoaderDialog(context),
+            await saveWorkplacePhotos(),
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody: 'Success',
+              successTitle: 'Workplace Photos Uploaded Successfully.',
+            ),
           },
         ),
       ),
@@ -212,7 +270,8 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             ),
             _isLoading
                 ? CustomLoadingIndicator(
-                    customLoadingIndicatorProps: CustomLoadingIndicatorProps())
+                    customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
+                  )
                 : renderMedia(),
           ],
         ),
