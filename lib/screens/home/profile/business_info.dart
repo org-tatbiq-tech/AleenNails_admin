@@ -458,7 +458,8 @@ class BusinessInfoState extends State<BusinessInfo> {
           name: _nameController.text,
           phone: _phoneController.text,
           email: _emailController.text,
-          address: _addressController.text, // address is missing
+          address:
+              _addressController.text, // address is missing in the below code
           description: _descriptionController.text,
           wazeAddressUrl: _wazeController.text,
           facebookUrl: _facebookController.text,
@@ -515,6 +516,9 @@ class BusinessInfoState extends State<BusinessInfo> {
                 successBody: 'Success!',
                 successTitle: 'Business Info Updated Successfully.',
               ),
+              setState(() {
+                isSaveDisabled = true;
+              })
               // Navigator.pop(context),
             },
           ),
@@ -528,8 +532,9 @@ class BusinessInfoState extends State<BusinessInfo> {
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 renderBusinessName(),
                 SizedBox(

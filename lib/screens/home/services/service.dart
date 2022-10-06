@@ -740,7 +740,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'New Service',
+            titleText:
+                widget.service != null ? 'Service Details' : 'New Service',
             withBack: true,
             withSave: true,
             saveTap: () => saveService(),
@@ -782,7 +783,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 height: rSize(20),
               ),
               renderPermissions(),
-              widget.service != null ? renderFooter() : const SizedBox(),
+              Visibility(
+                visible: widget.service != null,
+                child: renderFooter(),
+              ),
             ],
           ),
         ),
