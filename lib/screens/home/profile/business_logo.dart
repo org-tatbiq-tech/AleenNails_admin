@@ -159,7 +159,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                       saveImage: (File? imageFile) {
                         setState(() {
                           _imageFile = imageFile;
-                          isSaveDisabled = true;
+                          isSaveDisabled = false;
                         });
                       },
                     ),
@@ -237,7 +237,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                                   saveImage: (File? imageFile) {
                                     setState(() {
                                       _imageFile = imageFile;
-                                      isSaveDisabled = true;
+                                      isSaveDisabled = false;
                                     });
                                   },
                                 ),
@@ -286,6 +286,9 @@ class _BusinessLogoState extends State<BusinessLogo> {
               successBody: 'Success',
               successTitle: 'Logo Uploaded Successfully.',
             ),
+            setState(() {
+              isSaveDisabled = true;
+            })
           },
         ),
       ),

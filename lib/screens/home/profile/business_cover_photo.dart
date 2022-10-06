@@ -149,7 +149,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                       saveImage: (File? imageFile) {
                         setState(() {
                           _imageFile = imageFile;
-                          isSaveDisabled = true;
+                          isSaveDisabled = false;
                         });
                       },
                     ),
@@ -234,7 +234,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                                   saveImage: (File? imageFile) {
                                     setState(() {
                                       _imageFile = imageFile;
-                                      isSaveDisabled = true;
+                                      isSaveDisabled = false;
                                     });
                                   },
                                 ),
@@ -293,6 +293,9 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
               successBody: 'Success',
               successTitle: 'Cover Photo Uploaded Successfully.',
             ),
+            setState(() {
+              isSaveDisabled = true;
+            })
           },
         ),
       ),

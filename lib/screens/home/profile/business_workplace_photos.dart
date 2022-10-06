@@ -181,7 +181,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                 setState(() {
                   mediaList[const Uuid().v4()] = imageFile;
                   mediaListToUpload[const Uuid().v4()] = imageFile;
-                  isSaveDisabled = true;
+                  isSaveDisabled = false;
                 });
               },
             ))
@@ -259,6 +259,9 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
               successBody: 'Success',
               successTitle: 'Workplace Photos Uploaded Successfully.',
             ),
+            setState(() {
+              isSaveDisabled = true;
+            })
           },
         ),
       ),

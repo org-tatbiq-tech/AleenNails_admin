@@ -12,6 +12,7 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
@@ -132,9 +133,65 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
   @override
   Widget build(BuildContext context) {
-    deleteServicePhoto(String fileName) {
+    deleteServicePhoto(String fileName) async {
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
-      servicesMgr.deleteServiceImage(_nameController.text, fileName);
+      await servicesMgr.deleteServiceImage(_nameController.text, fileName);
+    }
+
+    removeServicePhoto(String url) async {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: 'Delete',
+          secondaryButtonText: 'Back',
+          deleteCancelModal: true,
+          primaryAction: () async => {
+            showLoaderDialog(context),
+            await deleteServicePhoto(url),
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody: 'Success',
+              successTitle: 'Workplace Photo Deleted Successfully.',
+            ),
+          },
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/trash.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: rSize(80),
+                  contentPadding: rSize(20),
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                'Delete Photo?',
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                'Action can not be undone',
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
     List<Widget> mediaCards() {
@@ -142,20 +199,23 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
       for (var servicePhoto in mediaList.entries) {
         widgetList.add(
-          EaseInAnimation(
-            beginAnimation: 0.98,
-            onTap: () => {
-              deleteServicePhoto(servicePhoto.key),
-            },
-            child: Container(
-              width: rSize(100),
-              height: rSize(100),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(rSize(10)),
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: FileImage(
-                    servicePhoto.value,
+          Padding(
+            padding: EdgeInsets.only(left: rSize(10)),
+            child: EaseInAnimation(
+              beginAnimation: 0.98,
+              onTap: () => {
+                removeServicePhoto(servicePhoto.key),
+              },
+              child: Container(
+                width: rSize(100),
+                height: rSize(100),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(rSize(10)),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: FileImage(
+                      servicePhoto.value,
+                    ),
                   ),
                 ),
               ),
@@ -170,6 +230,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             showImagePickerModal(
                 imagePickerModalProps: ImagePickerModalProps(
               context: context,
+              isCircleCropStyle: false,
               saveImage: (File imageFile) {
                 setState(() {
                   mediaList[const Uuid().v4()] = imageFile;
