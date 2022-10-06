@@ -27,6 +27,7 @@ class BusinessCoverPhoto extends StatefulWidget {
 class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   File? _imageFile;
   bool _isLoading = true;
+  bool isSaveDisabled = true;
   @override
   void initState() {
     super.initState();
@@ -148,6 +149,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                       saveImage: (File? imageFile) {
                         setState(() {
                           _imageFile = imageFile;
+                          isSaveDisabled = true;
                         });
                       },
                     ),
@@ -232,6 +234,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                                   saveImage: (File? imageFile) {
                                     setState(() {
                                       _imageFile = imageFile;
+                                      isSaveDisabled = true;
                                     });
                                   },
                                 ),
@@ -279,6 +282,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
+          withSaveDisabled: isSaveDisabled,
           saveTap: () async => {
             showLoaderDialog(context),
             await saveImage(),

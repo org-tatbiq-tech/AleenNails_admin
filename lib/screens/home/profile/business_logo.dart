@@ -27,6 +27,7 @@ class BusinessLogo extends StatefulWidget {
 class _BusinessLogoState extends State<BusinessLogo> {
   File? _imageFile;
   bool _isLoading = true;
+  bool isSaveDisabled = true;
   @override
   void initState() {
     super.initState();
@@ -158,6 +159,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                       saveImage: (File? imageFile) {
                         setState(() {
                           _imageFile = imageFile;
+                          isSaveDisabled = true;
                         });
                       },
                     ),
@@ -235,6 +237,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                                   saveImage: (File? imageFile) {
                                     setState(() {
                                       _imageFile = imageFile;
+                                      isSaveDisabled = true;
                                     });
                                   },
                                 ),
@@ -272,6 +275,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
+          withSaveDisabled: isSaveDisabled,
           saveTap: () async => {
             showLoaderDialog(context),
             await saveImage(),

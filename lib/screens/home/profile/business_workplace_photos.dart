@@ -29,6 +29,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   Map<String, File> mediaList = {};
   Map<String, File> mediaListToUpload = {};
   bool _isLoading = true;
+  bool isSaveDisabled = true;
   @override
   void initState() {
     super.initState();
@@ -151,7 +152,6 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           EaseInAnimation(
             beginAnimation: 0.98,
             onTap: () => {
-              print(workspacePhoto.key),
               removeWorkspacePhoto(workspacePhoto.key),
             },
             child: Container(
@@ -181,6 +181,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                 setState(() {
                   mediaList[const Uuid().v4()] = imageFile;
                   mediaListToUpload[const Uuid().v4()] = imageFile;
+                  isSaveDisabled = true;
                 });
               },
             ))
@@ -247,6 +248,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
+          withSaveDisabled: isSaveDisabled,
           saveTap: () async => {
             showLoaderDialog(context),
             await saveWorkplacePhotos(),

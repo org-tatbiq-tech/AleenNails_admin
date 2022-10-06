@@ -1,9 +1,11 @@
+import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,7 @@ class BusinessInfoState extends State<BusinessInfo> {
   final TextEditingController _webController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isSaveDisabled = true;
 
   @override
   void initState() {
@@ -52,15 +55,33 @@ class BusinessInfoState extends State<BusinessInfo> {
     _descriptionController.text =
         settingsMgr.profileManagement.businessInfo.description!;
 
-    _nameController.addListener(() => setState(() {}));
-    _phoneController.addListener(() => setState(() {}));
-    _emailController.addListener(() => setState(() {}));
-    _addressController.addListener(() => setState(() {}));
-    _wazeController.addListener(() => setState(() {}));
-    _facebookController.addListener(() => setState(() {}));
-    _instagramController.addListener(() => setState(() {}));
-    _webController.addListener(() => setState(() {}));
-    _descriptionController.addListener(() => setState(() {}));
+    _nameController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _phoneController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _emailController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _addressController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _wazeController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _facebookController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _instagramController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _webController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _descriptionController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
   }
 
   @override
@@ -427,34 +448,44 @@ class BusinessInfoState extends State<BusinessInfo> {
       );
     }
 
-    saveBusinessInfo() {
+    saveBusinessInfo() async {
       final form = _formKey.currentState;
       if (form!.validate()) {
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-        settingsMgr.profileManagement.businessInfo.name = _nameController.text;
-        settingsMgr.profileManagement.businessInfo.phone =
-            _phoneController.text;
-        settingsMgr.profileManagement.businessInfo.email =
-            _emailController.text;
-        settingsMgr.profileManagement.businessInfo.description =
-            _descriptionController.text;
-        settingsMgr.profileManagement.businessInfo.wazeAddressUrl =
-            _wazeController.text;
-        settingsMgr.profileManagement.businessInfo.facebookUrl =
-            _facebookController.text;
-        settingsMgr.profileManagement.businessInfo.instagramUrl =
-            _instagramController.text;
-        settingsMgr.profileManagement.businessInfo.websiteUrl =
-            _webController.text;
 
-        settingsMgr.submitNewProfile();
-        showSuccessFlash(
-          context: context,
-          successColor: successPrimaryColor,
-          successBody: 'Success!',
-          successTitle: 'Data Updated Successfully.',
+        //Why we are not creating BusinessInfo object
+        BusinessInfoComp newData = BusinessInfoComp(
+          name: _nameController.text,
+          phone: _phoneController.text,
+          email: _emailController.text,
+          address: _addressController.text, // address is missing
+          description: _descriptionController.text,
+          wazeAddressUrl: _wazeController.text,
+          facebookUrl: _facebookController.text,
+          instagramUrl: _instagramController.text,
+          websiteUrl: _webController.text,
         );
-        Navigator.pop(context);
+        settingsMgr.profileManagement.businessInfo = newData;
+
+        // instead of this
+
+        // settingsMgr.profileManagement.businessInfo.name = _nameController.text;
+        // settingsMgr.profileManagement.businessInfo.phone =
+        //     _phoneController.text;
+        // settingsMgr.profileManagement.businessInfo.email =
+        //     _emailController.text;
+        // settingsMgr.profileManagement.businessInfo.description =
+        //     _descriptionController.text;
+        // settingsMgr.profileManagement.businessInfo.wazeAddressUrl =
+        //     _wazeController.text;
+        // settingsMgr.profileManagement.businessInfo.facebookUrl =
+        //     _facebookController.text;
+        // settingsMgr.profileManagement.businessInfo.instagramUrl =
+        //     _instagramController.text;
+        // settingsMgr.profileManagement.businessInfo.websiteUrl =
+        //     _webController.text;
+
+        await settingsMgr.submitNewProfile();
       }
     }
 
@@ -473,7 +504,19 @@ class BusinessInfoState extends State<BusinessInfo> {
             withClipPath: true,
             withBack: true,
             withSave: true,
-            saveTap: () => {saveBusinessInfo()},
+            withSaveDisabled: isSaveDisabled,
+            saveTap: () async => {
+              showLoaderDialog(context),
+              await saveBusinessInfo(),
+              Navigator.pop(context),
+              showSuccessFlash(
+                context: context,
+                successColor: successPrimaryColor,
+                successBody: 'Success!',
+                successTitle: 'Business Info Updated Successfully.',
+              ),
+              // Navigator.pop(context),
+            },
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
