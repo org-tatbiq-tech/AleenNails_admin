@@ -76,10 +76,10 @@ class AppointmentCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: appointmentServices(),
         ),
-        subTitle: appointmentCardProps.appointmentDetails.notes!.isEmpty
+        subTitle: appointmentCardProps.appointmentDetails.notes.isEmpty
             ? null
             : Text(
-                appointmentCardProps.appointmentDetails.notes ?? '',
+                appointmentCardProps.appointmentDetails.notes,
                 style: Theme.of(context).textTheme.subtitle1,
               ),
         trailing: Column(

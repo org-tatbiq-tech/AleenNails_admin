@@ -183,7 +183,7 @@ class TimeLineState extends State<TimeLine> {
     if (appointment.services.isNotEmpty) {
       description += '\nServices ➙ ${appointment.services.length}';
     }
-    if (appointment.notes!.isNotEmpty) {
+    if (appointment.notes.isNotEmpty) {
       description += '\nNotes ➙ ${appointment.notes}';
     }
     description += '\nPrice ➙ ${getStringPrice(appointment.totalCost)}';
