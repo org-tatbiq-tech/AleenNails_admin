@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  calendar_view:
+    dependency: "direct main"
+    description:
+      name: calendar_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   characters:
     dependency: transitive
     description:
@@ -119,7 +126,7 @@ packages:
       name: common_widgets
       url: "https://dart.cloudsmith.io/ahmad-manaa-44N/common-widgets/"
     source: hosted
-    version: "0.0.36"
+    version: "0.0.37"
   cross_file:
     dependency: transitive
     description:
