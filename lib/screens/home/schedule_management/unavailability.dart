@@ -325,27 +325,29 @@ class _UnavailabilityState extends State<Unavailability> {
                 height: rSize(30),
               ),
               _renderReason(),
-              settingsMgr.scheduleManagement.unavailabilityList!.isNotEmpty
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: rSize(40),
-                            bottom: rSize(15),
-                          ),
-                          child: Text(
-                            'Unavailability List',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                        ),
-                      ],
-                    )
-                  : const SizedBox(),
+              Visibility(
+                visible: settingsMgr
+                    .scheduleManagement.unavailabilityList!.isNotEmpty,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: rSize(40),
+                        bottom: rSize(15),
+                      ),
+                      child: Text(
+                        'Unavailability List (${settingsMgr.scheduleManagement.unavailabilityList!.length})',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: ListView.separated(
                   itemBuilder: (context, index) {
@@ -371,7 +373,7 @@ class _UnavailabilityState extends State<Unavailability> {
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
-                      height: rSize(10),
+                      height: rSize(15),
                     );
                   },
                   itemCount:
