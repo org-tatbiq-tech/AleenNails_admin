@@ -33,6 +33,7 @@ class _DayDetailsState extends State<DayDetails> {
   late DateTime endTime;
   late DateTime endTimeTemp;
   late DateTime endTimeMin;
+  bool isSaveDisabled = true;
 
   @override
   void initState() {
@@ -40,7 +41,13 @@ class _DayDetailsState extends State<DayDetails> {
     setState(() {
       DateTime today = DateTime.now();
       startTime = widget.workingDay.startTime == null
-          ? DateTime(today.year, today.month, today.day, 8, 0)
+          ? DateTime(
+              today.year,
+              today.month,
+              today.day,
+              8,
+              0,
+            )
           : DateTime(
               today.year,
               today.month,
@@ -48,9 +55,22 @@ class _DayDetailsState extends State<DayDetails> {
               widget.workingDay.startTime!.hour,
               widget.workingDay.startTime!.minute,
             );
-      startTimeTemp = DateTime(today.year, today.month, today.day, 8, 0);
+      startTimeTemp = startTime;
+      // startTimeTemp = DateTime(
+      //   today.year,
+      //   today.month,
+      //   today.day,
+      //   8,
+      //   0,
+      // );
       endTime = widget.workingDay.endTime == null
-          ? DateTime(today.year, today.month, today.day, 18, 0)
+          ? DateTime(
+              today.year,
+              today.month,
+              today.day,
+              18,
+              0,
+            )
           : DateTime(
               today.year,
               today.month,
@@ -58,7 +78,14 @@ class _DayDetailsState extends State<DayDetails> {
               widget.workingDay.endTime!.hour,
               widget.workingDay.endTime!.minute,
             );
-      endTimeTemp = DateTime(today.year, today.month, today.day, 18, 0);
+      endTimeTemp = endTime;
+      // endTimeTemp = DateTime(
+      //   today.year,
+      //   today.month,
+      //   today.day,
+      //   18,
+      //   0,
+      // );
       endTimeMin = startTime;
     });
   }
@@ -80,6 +107,7 @@ class _DayDetailsState extends State<DayDetails> {
         setState(() {
           widget.workingDay.breaks ??= [];
           widget.workingDay.breaks!.add(result);
+          isSaveDisabled = false;
         });
       }
     }
@@ -127,6 +155,7 @@ class _DayDetailsState extends State<DayDetails> {
                     onChanged: (bool state) {
                       setState(() {
                         widget.workingDay.isDayOn = state;
+                        isSaveDisabled = false;
                       });
                     },
                   ),
@@ -218,25 +247,6 @@ class _DayDetailsState extends State<DayDetails> {
               padding: EdgeInsets.only(bottom: rSize(10)),
               child: Row(
                 children: [
-                  // EaseInAnimation(
-                  //   onTap: () => {},
-                  //   child: CustomIcon(
-                  //     customIconProps: CustomIconProps(
-                  //       icon: null,
-                  //       path: 'assets/icons/pen.png',
-                  //       withPadding: true,
-                  //       backgroundColor:
-                  //           Theme.of(context).colorScheme.onBackground,
-                  //       iconColor:
-                  //           darken(Theme.of(context).colorScheme.primary),
-                  //       containerSize: rSize(35),
-                  //       contentPadding: rSize(8),
-                  //     ),
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   width: rSize(10),
-                  // ),
                   EaseInAnimation(
                     onTap: () => {
                       setState(
@@ -244,6 +254,7 @@ class _DayDetailsState extends State<DayDetails> {
                           widget.workingDay.breaks?.removeWhere(
                             (item) => item == workingDayBreak,
                           );
+                          isSaveDisabled = false;
                         },
                       )
                     },
@@ -371,6 +382,7 @@ class _DayDetailsState extends State<DayDetails> {
                           if (startTime.isAfter(endTime)) {
                             endTime = startTimeTemp;
                           }
+                          isSaveDisabled = false;
                         }),
                       },
                     ),
@@ -493,6 +505,7 @@ class _DayDetailsState extends State<DayDetails> {
               CustomButton(
                 customButtonProps: CustomButtonProps(
                   text: 'OK',
+                  isDisabled: isSaveDisabled,
                   onTap: (() => {
                         widget.workingDay.startTime = TimeOfDay(
                           hour: startTime.hour,

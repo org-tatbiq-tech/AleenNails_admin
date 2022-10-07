@@ -2,9 +2,12 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_input_field.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +21,7 @@ class WorkingDays extends StatefulWidget {
 
 class _WorkingDaysState extends State<WorkingDays> {
   final TextEditingController _descriptionController = TextEditingController();
-
+  bool isSaveDisabled = true;
   @override
   void initState() {
     super.initState();
@@ -26,7 +29,9 @@ class _WorkingDaysState extends State<WorkingDays> {
     _descriptionController.text =
         settingsMgr.scheduleManagement.workingDays!.notes;
 
-    _descriptionController.addListener(() => setState(() {}));
+    _descriptionController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
   }
 
   @override
@@ -129,7 +134,9 @@ class _WorkingDaysState extends State<WorkingDays> {
             ),
           ),
         );
-        setState(() {});
+        setState(() {
+          isSaveDisabled = false;
+        });
       }
 
       return EaseInAnimation(
@@ -205,11 +212,19 @@ class _WorkingDaysState extends State<WorkingDays> {
       );
     }
 
-    saveWorkingDays() {
+    saveWorkingDays() async {
+      showLoaderDialog(context);
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       settingsMgr.scheduleManagement.workingDays!.notes =
           _descriptionController.text;
-      settingsMgr.submitNewScheduleManagement();
+      await settingsMgr.submitNewScheduleManagement();
+      Navigator.pop(context);
+      showSuccessFlash(
+        context: context,
+        successColor: successPrimaryColor,
+        successBody: 'Success',
+        successTitle: 'Working Days Updated Successfully.',
+      );
       Navigator.pop(context);
     }
 
@@ -228,6 +243,7 @@ class _WorkingDaysState extends State<WorkingDays> {
             barHeight: 110,
             withClipPath: true,
             withSave: true,
+            withSaveDisabled: isSaveDisabled,
             saveTap: () => saveWorkingDays(),
           ),
         ),
