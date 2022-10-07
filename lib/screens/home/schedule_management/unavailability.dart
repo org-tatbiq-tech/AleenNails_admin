@@ -7,6 +7,7 @@ import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
@@ -36,7 +37,7 @@ class _UnavailabilityState extends State<Unavailability> {
   DateTime endTimeTemp = nearestFive(DateTime.now());
   DateTime endTimeMin = nearestFive(DateTime.now());
 
-  DateTime? _selectedDay = kToday;
+  DateTime _selectedDay = DateTime.now();
   late SettingsMgr settingsMgr;
 
   void onDaySelected(DateTime selectedDay) {
@@ -207,7 +208,8 @@ class _UnavailabilityState extends State<Unavailability> {
 
   @override
   Widget build(BuildContext context) {
-    saveUnavailability() {
+    saveUnavailability() async {
+      showLoaderDialog(context);
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       UnavailabilityComp unavailabilityComp = UnavailabilityComp(
           startTime: startDateTime,
@@ -215,14 +217,29 @@ class _UnavailabilityState extends State<Unavailability> {
           notes: _descriptionController.text);
       settingsMgr.scheduleManagement.unavailabilityList!
           .add(unavailabilityComp);
-      settingsMgr.submitNewScheduleManagement();
+      await settingsMgr.submitNewScheduleManagement();
+      Navigator.pop(context);
+      showSuccessFlash(
+        context: context,
+        successColor: successPrimaryColor,
+        successBody: 'Success!',
+        successTitle: 'Unavailability Updated Successfully.',
+      );
       Navigator.pop(context);
     }
 
     deleteUnavailability(int index) {
-      deleteUnavailabilityFromList(int index) {
+      deleteUnavailabilityFromList(int index) async {
+        showLoaderDialog(context);
         settingsMgr.scheduleManagement.unavailabilityList!.removeAt(index);
-        settingsMgr.submitNewScheduleManagement();
+        await settingsMgr.submitNewScheduleManagement();
+        showSuccessFlash(
+          context: context,
+          successColor: successPrimaryColor,
+          successBody: 'Success!',
+          successTitle: 'Unavailability Deleted Successfully.',
+        );
+        Navigator.pop(context);
         setState(() {});
       }
 
