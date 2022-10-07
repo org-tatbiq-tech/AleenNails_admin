@@ -62,3 +62,15 @@ validateUrl(String url) {
   }
   return null;
 }
+
+priceValidation(String price) {
+  String pattern = r'^\d{0,8}(\.\d{1,4})?$';
+  RegExp regExp = RegExp(pattern);
+  if (price.isEmpty) {
+    return 'Price can not be empty!.';
+  }
+  if (!regExp.hasMatch(price)) {
+    return 'Please enter valid price';
+  }
+  return null;
+}
