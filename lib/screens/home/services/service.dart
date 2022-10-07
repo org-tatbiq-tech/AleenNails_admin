@@ -4,6 +4,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom_color_picker.dart';
 import 'package:appointments/widget/duration_picker_modal.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -42,17 +43,18 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _messageToClientController =
       TextEditingController();
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Color selectedColor = Colors.green;
   Color selectedColorTemp = Colors.green;
   bool onlineBooking = true;
   bool _isLoading = false;
+  bool isSaveDisabled = true;
 
   List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
   List<int> minutesData = [0, 15, 30, 45];
 
   int selectedHours = 0;
-  int selectedHoursIdx = 0;
+  int selectedHoursIdx = 1;
   int selectedMinutes = 0;
   int selectedMinutesIdx = 0;
 
@@ -115,10 +117,18 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       }
     }
     colorPositionsListener.itemPositions.addListener(() {});
-    _nameController.addListener(() => setState(() {}));
-    _priceController.addListener(() => setState(() {}));
-    _descriptionController.addListener(() => setState(() {}));
-    _messageToClientController.addListener(() => setState(() {}));
+    _nameController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _priceController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _descriptionController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _messageToClientController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
     _isLoading = false;
   }
 
@@ -308,6 +318,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 }),
                 primaryAction: () => setState(() {
                   selectedColor = selectedColorTemp;
+                  isSaveDisabled = false;
                 }),
               ),
             ),
@@ -365,7 +376,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                         bottomModalProps: BottomModalProps(
                           context: context,
                           enableDrag: true,
-                          // showDragPen: true,
                           centerTitle: true,
                           title: 'Allow Clients to Book Online',
                           child: Text(
@@ -395,6 +405,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       onChanged: (bool value) {
                         setState(() {
                           onlineBooking = value;
+                          isSaveDisabled = false;
                         });
                       },
                       splashRadius: 0,
@@ -581,12 +592,16 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               top: rSize(15),
             ),
             scrollDirection: Axis.horizontal,
-            child: _isLoading
-                ? CustomLoadingIndicator(
-                    customLoadingIndicatorProps: CustomLoadingIndicatorProps())
-                : Row(
-                    children: mediaCards(),
-                  ),
+            child: Visibility(
+              visible: !_isLoading,
+              replacement: CustomLoadingIndicator(
+                customLoadingIndicatorProps:
+                    CustomLoadingIndicatorProps(containerSize: 100),
+              ),
+              child: Row(
+                children: mediaCards(),
+              ),
+            ),
           ),
         ],
       );
@@ -657,6 +672,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       controller: _priceController,
                       keyboardType: TextInputType.number,
                       isCurrency: true,
+                      validator: priceValidation,
                     ),
                   ),
                 ],
@@ -703,11 +719,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                         saveMinutes: (value) => {
                           setState(() {
                             selectedMinutes = minutesData[value];
+                            isSaveDisabled = false;
                           })
                         },
                         saveHours: (value) => {
                           setState(() {
                             selectedHours = hoursData[value];
+                            isSaveDisabled = false;
                           })
                         },
                       ),
@@ -745,50 +763,56 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _nameController,
               keyboardType: TextInputType.text,
+              validator: emptyValidation,
             ),
           ),
         ],
       );
     }
 
-    saveService() {
-      final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
-      String serviceID = widget.service == null ? '' : widget.service!.id;
-      Service service = Service(
-        id: serviceID,
-        name: _nameController.text,
-        cost: double.parse(_priceController.text),
-        duration: Duration(hours: selectedHours, minutes: selectedMinutes),
-        colorID: selectedColor.value,
-        onlineBooking: onlineBooking,
-        description: _descriptionController.text,
-        noteMessage: _messageToClientController.text,
-      );
+    saveService() async {
+      final form = _formKey.currentState;
+      if (form!.validate()) {
+        showLoaderDialog(context);
+        final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
+        String serviceID = widget.service == null ? '' : widget.service!.id;
+        Service service = Service(
+          id: serviceID,
+          name: _nameController.text,
+          cost: double.parse(_priceController.text),
+          duration: Duration(hours: selectedHours, minutes: selectedMinutes),
+          colorID: selectedColor.value,
+          onlineBooking: onlineBooking,
+          description: _descriptionController.text,
+          noteMessage: _messageToClientController.text,
+        );
 
-      if (widget.service == null) {
-        servicesMgr.submitNewService(
-          service,
-          mediaListToUpload.values.toList(),
-        );
-        showSuccessFlash(
-          context: context,
-          successTitle: 'Submitted!',
-          successBody: 'Service was uploaded to DB successfully!',
-          successColor: successPrimaryColor,
-        );
-      } else {
-        servicesMgr.updateService(
-          service,
-          mediaListToUpload.values.toList(),
-        );
-        showSuccessFlash(
-          context: context,
-          successTitle: 'Updated!',
-          successBody: 'Service was updated successfully!',
-          successColor: successPrimaryColor,
-        );
+        if (widget.service == null) {
+          await servicesMgr.submitNewService(
+            service,
+            mediaListToUpload.values.toList(),
+          );
+          Navigator.pop(context);
+          showSuccessFlash(
+            context: context,
+            successTitle: 'Submitted!',
+            successBody: 'Service was uploaded to DB successfully!',
+            successColor: successPrimaryColor,
+          );
+        } else {
+          await servicesMgr.updateService(
+            service,
+            mediaListToUpload.values.toList(),
+          );
+          Navigator.pop(context);
+          showSuccessFlash(
+            context: context,
+            successTitle: 'Updated!',
+            successBody: 'Service was updated successfully!',
+            successColor: successPrimaryColor,
+          );
+        }
       }
-      Navigator.pop(context);
     }
 
     return GestureDetector(
@@ -805,7 +829,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 widget.service != null ? 'Service Details' : 'New Service',
             withBack: true,
             withSave: true,
-            saveTap: () => saveService(),
+            withSaveDisabled: isSaveDisabled,
+            saveTap: () => {
+              saveService(),
+            },
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -814,41 +841,44 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             horizontal: rSize(30),
             vertical: rSize(40),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              renderServiceName(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderPriceDuration(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderServiceColors(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderDescription(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderMedia(),
-              SizedBox(
-                height: rSize(30),
-              ),
-              renderMessageToClient(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderPermissions(),
-              Visibility(
-                visible: widget.service != null,
-                child: renderFooter(),
-              ),
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                renderServiceName(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderPriceDuration(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderServiceColors(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderDescription(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderMedia(),
+                SizedBox(
+                  height: rSize(30),
+                ),
+                renderMessageToClient(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderPermissions(),
+                Visibility(
+                  visible: widget.service != null,
+                  child: renderFooter(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
