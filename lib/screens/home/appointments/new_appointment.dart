@@ -403,6 +403,9 @@ class _NewAppointmentState extends State<NewAppointment> {
                         customAvatarProps: CustomAvatarProps(
                           enable: false,
                           circleShape: true,
+                          defaultImage: const AssetImage(
+                            'assets/images/avatar_female.png',
+                          ),
                         ),
                       ),
                       SizedBox(

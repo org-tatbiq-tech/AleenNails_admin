@@ -139,6 +139,9 @@ class AppointmentCard extends StatelessWidget {
                 radius: rSize(50),
                 rectangleShape: false,
                 circleShape: true,
+                defaultImage: const AssetImage(
+                  'assets/images/avatar_female.png',
+                ),
                 enable: false,
               ),
             ),

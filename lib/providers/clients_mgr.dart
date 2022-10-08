@@ -67,7 +67,7 @@ class ClientsMgr extends ChangeNotifier {
   }
 
   Future<String> getClientImage(String path) async {
-    Reference ref = _fst.ref(clientStorageDir).child(path);
+    Reference ref = _fst.ref(clientStorageDir).child('${path}_600x600');
     var refStr = 'notFound';
     try {
       refStr = await ref.getDownloadURL();
@@ -78,7 +78,7 @@ class ClientsMgr extends ChangeNotifier {
   }
 
   Future<void> deleteClientImage(String path) async {
-    Reference ref = _fst.ref(clientStorageDir).child(path);
+    Reference ref = _fst.ref(clientStorageDir).child('${path}_600x600');
     return await ref.delete();
   }
 

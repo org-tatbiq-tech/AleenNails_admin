@@ -399,6 +399,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   navigateToClientDetails(appointment.clientDocID),
                 },
                 circleShape: true,
+                defaultImage: const AssetImage(
+                  'assets/images/avatar_female.png',
+                ),
               ),
             ),
           ),

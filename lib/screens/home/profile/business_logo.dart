@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -12,7 +13,6 @@ import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +26,7 @@ class BusinessLogo extends StatefulWidget {
 
 class _BusinessLogoState extends State<BusinessLogo> {
   File? _imageFile;
+  String imageUrl = '';
   bool _isLoading = true;
   bool isSaveDisabled = true;
   @override
@@ -34,8 +35,8 @@ class _BusinessLogoState extends State<BusinessLogo> {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     try {
       settingsMgr.getLogoImage().then(
-            (imageUrl) => {
-              if (imageUrl == 'notFound')
+            (url) => {
+              if (url == 'notFound')
                 {
                   setState(
                     (() {
@@ -45,13 +46,11 @@ class _BusinessLogoState extends State<BusinessLogo> {
                 }
               else
                 {
-                  fileFromImageUrl('logo', imageUrl).then(
-                    (value) => setState(
-                      (() {
-                        _imageFile = value;
-                        _isLoading = false;
-                      }),
-                    ),
+                  setState(
+                    (() {
+                      imageUrl = url;
+                      _isLoading = false;
+                    }),
                   ),
                 },
             },
@@ -149,7 +148,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
       return AnimatedSwitcher(
         reverseDuration: const Duration(milliseconds: 400),
         duration: const Duration(milliseconds: 400),
-        child: _imageFile == null
+        child: _imageFile == null && imageUrl.isEmpty
             ? EaseInAnimation(
                 onTap: () => {
                   showImagePickerModal(
@@ -209,12 +208,15 @@ class _BusinessLogoState extends State<BusinessLogo> {
                     height: rSize(160),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(rSize(80)),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: FileImage(
-                          _imageFile!,
-                        ),
-                      ),
+                      image: _imageFile == null
+                          ? DecorationImage(
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(imageUrl),
+                            )
+                          : DecorationImage(
+                              fit: BoxFit.cover,
+                              image: FileImage(_imageFile!),
+                            ),
                     ),
                   ),
                   SizedBox(

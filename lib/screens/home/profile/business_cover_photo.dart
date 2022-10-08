@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -26,6 +27,7 @@ class BusinessCoverPhoto extends StatefulWidget {
 
 class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   File? _imageFile;
+  String imageUrl = '';
   bool _isLoading = true;
   bool isSaveDisabled = true;
   @override
@@ -33,8 +35,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     settingsMgr.getCoverImage().then(
-          (imageUrl) => {
-            if (imageUrl == 'notFound')
+          (url) => {
+            if (url == 'notFound')
               {
                 setState(
                   (() {
@@ -43,16 +45,12 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                 ),
               }
             else
-              {
-                fileFromImageUrl('logo.png', imageUrl).then(
-                  (value) => setState(
-                    (() {
-                      _imageFile = value;
-                      _isLoading = false;
-                    }),
-                  ),
-                ),
-              },
+              setState(
+                (() {
+                  imageUrl = url;
+                  _isLoading = false;
+                }),
+              ),
           },
         );
   }
@@ -144,7 +142,6 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                       context: context,
                       ratioX: 16,
                       ratioY: 9,
-                      compressQuality: 20,
                       isCircleCropStyle: false,
                       saveImage: (File? imageFile) {
                         setState(() {
@@ -203,12 +200,15 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                     height: rSize(225),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(rSize(10)),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: FileImage(
-                          _imageFile!,
-                        ),
-                      ),
+                      image: _imageFile == null
+                          ? DecorationImage(
+                              fit: BoxFit.cover,
+                              image: CachedNetworkImageProvider(imageUrl),
+                            )
+                          : DecorationImage(
+                              fit: BoxFit.cover,
+                              image: FileImage(_imageFile!),
+                            ),
                     ),
                   ),
                   SizedBox(
@@ -228,7 +228,6 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                                 imagePickerModalProps: ImagePickerModalProps(
                                   context: context,
                                   isCircleCropStyle: false,
-                                  compressQuality: 20,
                                   ratioX: 16,
                                   ratioY: 9,
                                   saveImage: (File? imageFile) {

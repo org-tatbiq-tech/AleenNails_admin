@@ -68,6 +68,9 @@ class NotificationCard extends StatelessWidget {
                 enable: true,
                 onTap: () => Navigator.pushNamed(context, '/clientDetails'),
                 circleShape: true,
+                defaultImage: const AssetImage(
+                  'assets/images/avatar_female.png',
+                ),
               ),
             )
           ],

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:appointments/data_types/components.dart';
@@ -8,6 +9,7 @@ import 'package:appointments/screens/home/clients/client_appointments.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
@@ -16,6 +18,7 @@ import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +31,39 @@ class ClientDetails extends StatefulWidget {
 }
 
 class _ClientDetailsState extends State<ClientDetails> {
+  String imageUrl = '';
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+
+    if (clientsMgr.selectedClient.imagePath.isNotEmpty) {
+      clientsMgr.getClientImage(clientsMgr.selectedClient.imagePath).then(
+            (url) => {
+              if (imageUrl == 'notFound')
+                {
+                  setState(
+                    (() {
+                      _isLoading = false;
+                    }),
+                  ),
+                }
+              else
+                {
+                  setState(
+                    (() {
+                      imageUrl = url;
+                      _isLoading = false;
+                    }),
+                  ),
+                },
+            },
+          );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
@@ -398,9 +434,17 @@ class _ClientDetailsState extends State<ClientDetails> {
             child: CustomAvatar(
               customAvatarProps: CustomAvatarProps(
                 radius: rSize(100),
-                rectangleShape: false,
-                circleShape: true,
+                editable: false,
+                circleShape: false,
+                rectangleShape: true,
                 enable: false,
+                isLoading: _isLoading,
+                defaultImage: const AssetImage(
+                  'assets/images/avatar_female.png',
+                ),
+                backgroundImage: imageUrl.isNotEmpty
+                    ? CachedNetworkImageProvider(imageUrl)
+                    : null,
               ),
             ),
           ),

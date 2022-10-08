@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ClientCard extends StatelessWidget {
-  ClientCardProps clientCardProps;
-  ClientCard({
+  final ClientCardProps clientCardProps;
+  const ClientCard({
     Key? key,
     required this.clientCardProps,
   }) : super(key: key);

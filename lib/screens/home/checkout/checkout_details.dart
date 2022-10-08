@@ -400,6 +400,9 @@ class _CheckoutDetailsState extends State<CheckoutDetails> {
                         customAvatarProps: CustomAvatarProps(
                           enable: false,
                           circleShape: true,
+                          defaultImage: const AssetImage(
+                            'assets/images/avatar_female.png',
+                          ),
                         ),
                       ),
                       SizedBox(

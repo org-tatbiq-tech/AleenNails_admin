@@ -77,8 +77,7 @@ class CustomAvatar extends StatelessWidget {
                               fit: BoxFit.contain,
                               color: Theme.of(context).colorScheme.primary,
                               alignment: Alignment.bottomCenter,
-                              image: const AssetImage(
-                                  'assets/images/avatar_female.png'),
+                              image: customAvatarProps.defaultImage,
                             ),
                           )
                         : Container(
@@ -136,6 +135,7 @@ class CustomAvatarProps {
   final bool editable;
   final bool isLoading;
   final ImageProvider? backgroundImage;
+  final ImageProvider defaultImage;
   final Function? onTap;
 
   CustomAvatarProps({
@@ -144,6 +144,7 @@ class CustomAvatarProps {
     this.editable = false,
     this.circleShape = false,
     this.isLoading = false,
+    required this.defaultImage,
     this.onTap,
     this.rectangleShape = false,
     this.backgroundImage,

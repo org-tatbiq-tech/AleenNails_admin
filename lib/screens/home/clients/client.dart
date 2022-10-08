@@ -5,6 +5,7 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom_avatar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
@@ -17,7 +18,6 @@ import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:common_widgets/utils/validators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +45,7 @@ class _ClientWidgetState extends State<ClientWidget> {
   bool trustedClient = true;
   bool autoValidate = false;
   File? _imageFile;
+  String imageUrl = '';
   String imagePath = '';
   bool _isImageFileChanged = false;
   bool _isLoading = true;
@@ -70,8 +71,8 @@ class _ClientWidgetState extends State<ClientWidget> {
       imagePath = widget.client!.imagePath;
       if (imagePath.isNotEmpty) {
         clientMgr.getClientImage(imagePath).then(
-              (imageUrl) => {
-                if (imageUrl == 'notFound')
+              (url) => {
+                if (url == 'notFound')
                   {
                     setState(
                       (() {
@@ -81,13 +82,12 @@ class _ClientWidgetState extends State<ClientWidget> {
                   }
                 else
                   {
-                    fileFromImageUrl('$imagePath.png', imageUrl).then(
-                      (value) => setState(
-                        (() {
-                          _imageFile = value;
-                          _isLoading = false;
-                        }),
-                      ),
+                    setState(
+                      (() {
+                        _isLoading = false;
+                        _isLoading = false;
+                        imageUrl = url;
+                      }),
                     ),
                   },
               },
@@ -501,18 +501,18 @@ class _ClientWidgetState extends State<ClientWidget> {
                 editable: true,
                 circleShape: false,
                 rectangleShape: true,
+                defaultImage: const AssetImage(
+                  'assets/images/avatar_female.png',
+                ),
                 enable: true,
                 isLoading: _isLoading,
-                backgroundImage: _imageFile != null
-                    ? FileImage(
-                        _imageFile!,
-                      )
+                backgroundImage: imageUrl.isNotEmpty
+                    ? CachedNetworkImageProvider(imageUrl)
                     : null,
                 onTap: () => {
                       showImagePickerModal(
                         imagePickerModalProps: ImagePickerModalProps(
                           context: context,
-                          compressQuality: 20,
                           saveImage: (File? imageFile) {
                             setState(() {
                               _imageFile = imageFile;
@@ -597,6 +597,7 @@ class _ClientWidgetState extends State<ClientWidget> {
             titleText: widget.client != null ? 'Client Details' : 'New Client',
             withBack: true,
             withSave: true,
+            withSaveDisabled: isSaveDisabled,
             saveTap: () => saveClient(),
           ),
         ),
