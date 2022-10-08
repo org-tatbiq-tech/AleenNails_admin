@@ -489,6 +489,15 @@ class _ClientWidgetState extends State<ClientWidget> {
       );
     }
 
+    ImageProvider<Object>? getBackgroundImage() {
+      if (_imageFile != null) {
+        return FileImage(_imageFile!);
+      } else if (imageUrl.isNotEmpty) {
+        return CachedNetworkImageProvider(imageUrl);
+      }
+      return null;
+    }
+
     Widget renderAvatar() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -506,9 +515,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                 ),
                 enable: true,
                 isLoading: _isLoading,
-                backgroundImage: imageUrl.isNotEmpty
-                    ? CachedNetworkImageProvider(imageUrl)
-                    : null,
+                backgroundImage: getBackgroundImage(),
                 onTap: () => {
                       showImagePickerModal(
                         imagePickerModalProps: ImagePickerModalProps(
