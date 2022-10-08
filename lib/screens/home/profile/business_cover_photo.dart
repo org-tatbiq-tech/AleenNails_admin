@@ -13,7 +13,6 @@ import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,25 +33,33 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    settingsMgr.getCoverImage().then(
-          (url) => {
-            if (url == 'notFound')
-              {
-                setState(
-                  (() {
-                    _isLoading = false;
-                  }),
-                ),
-              }
-            else
-              setState(
-                (() {
-                  imageUrl = url;
-                  _isLoading = false;
-                }),
-              ),
-          },
-        );
+    try {
+      settingsMgr.getCoverImage().then(
+            (url) => {
+              if (url == 'notFound')
+                {
+                  setState(
+                    (() {
+                      _isLoading = false;
+                    }),
+                  ),
+                }
+              else
+                {
+                  setState(
+                    (() {
+                      imageUrl = url;
+                      _isLoading = false;
+                    }),
+                  ),
+                },
+            },
+          );
+    } catch (error) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
