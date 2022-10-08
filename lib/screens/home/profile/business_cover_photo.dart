@@ -265,12 +265,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
     }
 
     saveImage() async {
-      if (_imageFile != null && _imageFile!.path.isNotEmpty) {
-        var compressedFile = await compressImage(
-          path: _imageFile!.path,
-          quality: 30,
-        );
-        settingsMgr.uploadCoverImage(compressedFile!);
+      if (_imageFile != null) {
+        await settingsMgr.uploadCoverImage(_imageFile!);
       }
     }
 

@@ -126,7 +126,7 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<String> getLogoImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('logo.png');
+    Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
     var refStr = 'notFound';
     try {
       refStr = await ref.getDownloadURL();
@@ -137,7 +137,7 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<void> deleteLogoImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('logo.png');
+    Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
     return await ref.delete();
   }
 
@@ -147,7 +147,7 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<String> getCoverImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
+    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
     var refStr = 'notFound';
     try {
       refStr = await ref.getDownloadURL();
@@ -158,7 +158,7 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<void> deleteCoverImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
+    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
     return await ref.delete();
   }
 
