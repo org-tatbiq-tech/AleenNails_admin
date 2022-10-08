@@ -1,20 +1,25 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:appointments/data_types/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 /// Clients manager provider
 /// Managing and handling clients data and DB interaction
 
 ///*************************** Naming **********************************///
 const clientsCollection = 'clients';
+const clientStorageDir = 'clients';
 
 class ClientsMgr extends ChangeNotifier {
   ///*************************** Firestore **********************************///
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
   final FirebaseAuth _fa = FirebaseAuth.instance;
+  final FirebaseStorage _fst = FirebaseStorage.instance;
 
   ///************************* Clients *******************************///
   List<Client> _clients = []; // Holds all DB clients
@@ -54,6 +59,27 @@ class ClientsMgr extends ChangeNotifier {
         notifyListeners();
       },
     );
+  }
+
+  Future<void> uploadClientImage(File image, String path) async {
+    Reference ref = _fst.ref(clientStorageDir).child(path);
+    await ref.putFile(image);
+  }
+
+  Future<String> getClientImage(String path) async {
+    Reference ref = _fst.ref(clientStorageDir).child(path);
+    var refStr = 'notFound';
+    try {
+      refStr = await ref.getDownloadURL();
+    } catch (error) {
+      return refStr;
+    }
+    return refStr;
+  }
+
+  Future<void> deleteClientImage(String path) async {
+    Reference ref = _fst.ref(clientStorageDir).child(path);
+    return await ref.delete();
   }
 
   Future<void> submitNewClient(Client newClient) async {

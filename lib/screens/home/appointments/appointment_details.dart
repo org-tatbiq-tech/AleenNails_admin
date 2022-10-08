@@ -399,7 +399,6 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   navigateToClientDetails(appointment.clientDocID),
                 },
                 circleShape: true,
-                isMale: false,
               ),
             ),
           ),

@@ -401,7 +401,6 @@ class _ClientDetailsState extends State<ClientDetails> {
                 rectangleShape: false,
                 circleShape: true,
                 enable: false,
-                isMale: false,
               ),
             ),
           ),

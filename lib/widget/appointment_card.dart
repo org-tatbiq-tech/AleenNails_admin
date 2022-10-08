@@ -140,7 +140,6 @@ class AppointmentCard extends StatelessWidget {
                 rectangleShape: false,
                 circleShape: true,
                 enable: false,
-                isMale: false,
               ),
             ),
             SizedBox(

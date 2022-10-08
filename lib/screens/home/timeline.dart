@@ -5,9 +5,11 @@ import 'package:appointments/screens/home/appointments/appointment_details.dart'
 import 'package:appointments/widget/appointment_card.dart';
 import 'package:appointments/widget/custom_day_view.dart';
 import 'package:appointments/widget/custom_expandable_calendar.dart';
+import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/empty_list_image.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -351,29 +353,70 @@ class TimeLineState extends State<TimeLine> {
                                     ),
                                   ),
                                 )
-                              : ListView.separated(
-                                  padding: EdgeInsets.only(
-                                    top: rSize(20),
-                                    left: rSize(20),
-                                    right: rSize(20),
-                                  ),
-                                  itemCount:
-                                      getAppointments(_selectedDay).length,
-                                  itemBuilder: (context, index) {
-                                    return AppointmentCard(
-                                      appointmentCardProps:
-                                          AppointmentCardProps(
-                                        appointmentDetails: getAppointments(
-                                            _selectedDay)[index],
+                              : Visibility(
+                                  visible:
+                                      getAppointments(_selectedDay).isNotEmpty,
+                                  replacement: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      EmptyListImage(
+                                        emptyListImageProps:
+                                            EmptyListImageProps(
+                                          title: 'No appointment on this day.',
+                                          iconPath: 'assets/icons/menu.png',
+                                          bottomWidgetPosition: 10,
+                                          bottomWidget: CustomTextButton(
+                                            customTextButtonProps:
+                                                CustomTextButtonProps(
+                                              onTap: () => {
+                                                Navigator.of(context).pushNamed(
+                                                    '/newAppointment'),
+                                              },
+                                              text: 'Add New Appointment',
+                                              textColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              withIcon: true,
+                                              icon: Icon(
+                                                FontAwesomeIcons.plus,
+                                                size: rSize(16),
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    );
-                                  },
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return SizedBox(
-                                      height: rSize(10),
-                                    );
-                                  },
+                                    ],
+                                  ),
+                                  child: ListView.separated(
+                                    padding: EdgeInsets.only(
+                                      top: rSize(20),
+                                      left: rSize(20),
+                                      right: rSize(20),
+                                    ),
+                                    itemCount:
+                                        getAppointments(_selectedDay).length,
+                                    itemBuilder: (context, index) {
+                                      return AppointmentCard(
+                                        appointmentCardProps:
+                                            AppointmentCardProps(
+                                          appointmentDetails: getAppointments(
+                                              _selectedDay)[index],
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return SizedBox(
+                                        height: rSize(10),
+                                      );
+                                    },
+                                  ),
                                 ),
                         ),
                 ),

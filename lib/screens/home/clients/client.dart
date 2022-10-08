@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
@@ -13,11 +17,13 @@ import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:common_widgets/utils/validators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class ClientWidget extends StatefulWidget {
   final Client? client;
@@ -35,15 +41,25 @@ class _ClientWidgetState extends State<ClientWidget> {
   final TextEditingController _noteController = TextEditingController();
   final TextEditingController _discountController =
       TextEditingController(text: '0');
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool trustedClient = true;
+  bool autoValidate = false;
+  File? _imageFile;
+  String imagePath = '';
+  bool _isImageFileChanged = false;
+  bool _isLoading = true;
+  bool isSaveDisabled = true;
 
   DateTime? birthdayDate;
   DateTime? birthdayDateTemp;
+  DateTime today = DateTime.now();
+  late DateTime maximumDate = DateTime(today.year - 5, today.month, today.day);
 
   @override
   void initState() {
     super.initState();
     if (widget.client != null) {
+      final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
       _nameController.text = widget.client!.fullName;
       _phoneController.text = widget.client!.phone;
       _emailController.text = widget.client!.email;
@@ -51,18 +67,56 @@ class _ClientWidgetState extends State<ClientWidget> {
       _noteController.text = widget.client!.generalNotes!;
       _discountController.text = widget.client!.discount.toString();
       birthdayDate = widget.client!.birthday;
+      imagePath = widget.client!.imagePath;
+      if (imagePath.isNotEmpty) {
+        clientMgr.getClientImage(imagePath).then(
+              (imageUrl) => {
+                if (imageUrl == 'notFound')
+                  {
+                    setState(
+                      (() {
+                        _isLoading = false;
+                      }),
+                    ),
+                  }
+                else
+                  {
+                    fileFromImageUrl('$imagePath.png', imageUrl).then(
+                      (value) => setState(
+                        (() {
+                          _imageFile = value;
+                          _isLoading = false;
+                        }),
+                      ),
+                    ),
+                  },
+              },
+            );
+      }
     }
 
-    _nameController.addListener(() => setState(() {}));
-    _phoneController.addListener(() => setState(() {}));
-    _emailController.addListener(() => setState(() {}));
-    _addressController.addListener(() => setState(() {}));
-    _noteController.addListener(() => setState(() {}));
+    _nameController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _phoneController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _emailController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _addressController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
+    _noteController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
     _discountController.selection = const TextSelection(
       baseOffset: 0,
       extentOffset: 1,
     );
-    _discountController.addListener(() => setState(() {}));
+    _discountController.addListener(() => setState(() {
+          isSaveDisabled = false;
+        }));
   }
 
   @override
@@ -146,6 +200,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                       onChanged: (bool value) {
                         setState(() {
                           trustedClient = value;
+                          isSaveDisabled = false;
                         });
                       },
                       splashRadius: 0,
@@ -225,6 +280,10 @@ class _ClientWidgetState extends State<ClientWidget> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _nameController,
               keyboardType: TextInputType.text,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(30),
+              ],
+              validator: emptyValidation,
             ),
           ),
         ],
@@ -257,6 +316,11 @@ class _ClientWidgetState extends State<ClientWidget> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _phoneController,
               keyboardType: TextInputType.phone,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(10),
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              validator: mobileValidation,
             ),
           ),
         ],
@@ -289,6 +353,10 @@ class _ClientWidgetState extends State<ClientWidget> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(40),
+              ],
+              validator: emailValidation,
             ),
           ),
         ],
@@ -355,8 +423,8 @@ class _ClientWidgetState extends State<ClientWidget> {
             onTap: () => showPickerDateTimeModal(
               pickerDateTimeModalProps: PickerDateTimeModalProps(
                 context: context,
-                // maximumDate: DateTime.now(),
-                initialDateTime: birthdayDate,
+                maximumDate: maximumDate,
+                initialDateTime: birthdayDate ?? maximumDate,
                 mode: CupertinoDatePickerMode.date,
                 title: 'Birthday',
                 onDateTimeChanged: (DateTime value) => {
@@ -367,6 +435,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                 primaryAction: () => {
                   setState(() {
                     birthdayDate = birthdayDateTemp;
+                    isSaveDisabled = false;
                   }),
                 },
               ),
@@ -433,58 +502,86 @@ class _ClientWidgetState extends State<ClientWidget> {
                 circleShape: false,
                 rectangleShape: true,
                 enable: true,
+                isLoading: _isLoading,
+                backgroundImage: _imageFile != null
+                    ? FileImage(
+                        _imageFile!,
+                      )
+                    : null,
                 onTap: () => {
                       showImagePickerModal(
                         imagePickerModalProps: ImagePickerModalProps(
                           context: context,
-                          saveImage: () => {},
+                          compressQuality: 20,
+                          saveImage: (File? imageFile) {
+                            setState(() {
+                              _imageFile = imageFile;
+                              isSaveDisabled = false;
+                              _isImageFileChanged = true;
+                            });
+                          },
                         ),
                       )
                     }),
-          ),
+          )
         ],
       );
     }
 
-    saveClient() {
-      final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
-      String clientID = widget.client == null ? '' : widget.client!.id;
-      Client client = Client(
-        id: clientID,
-        fullName: _nameController.text,
-        phone: _phoneController.text,
-        address: _addressController.text,
-        email: _emailController.text,
-        creationDate: DateTime.now(),
-        birthday: birthdayDate,
-        generalNotes: _noteController.text,
-        discount: double.parse(_discountController.text),
-        isTrusted: trustedClient,
-        acceptedDate: DateTime.now(),
-      );
+    saveClient() async {
+      final form = _formKey.currentState;
+      if (form!.validate()) {
+        showLoaderDialog(context);
+        final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
+        String clientID = widget.client == null ? '' : widget.client!.id;
+        if (_imageFile != null && _isImageFileChanged) {
+          if (imagePath.isEmpty) {
+            imagePath = const Uuid().v4();
+            await clientMgr.uploadClientImage(_imageFile!, imagePath);
+          } else {
+            await clientMgr.uploadClientImage(_imageFile!, imagePath);
+          }
+        }
+        Client client = Client(
+          id: clientID,
+          fullName: _nameController.text,
+          phone: _phoneController.text,
+          address: _addressController.text,
+          email: _emailController.text,
+          creationDate: DateTime.now(),
+          birthday: birthdayDate,
+          generalNotes: _noteController.text,
+          discount: double.parse(_discountController.text),
+          isTrusted: trustedClient,
+          acceptedDate: DateTime.now(),
+          imagePath: imagePath,
+        );
 
-      if (widget.client == null) {
-        clientMgr.submitNewClient(client);
-        showSuccessFlash(
-          context: context,
-          successTitle: 'Submitted!',
-          successBody: 'Client was added to DB successfully!',
-          successColor: successPrimaryColor,
-        );
-        Navigator.pop(context);
-      } else {
-        clientMgr.updateClient(client);
-        showSuccessFlash(
-          context: context,
-          successTitle: 'Updated!',
-          successBody: 'Client was updated successfully!',
-          successColor: successPrimaryColor,
-        );
-        int count = 0;
-        Navigator.popUntil(context, (route) {
-          return count++ == 2;
-        });
+        if (widget.client == null) {
+          await clientMgr.submitNewClient(client);
+          Navigator.pop(context);
+          showSuccessFlash(
+            context: context,
+            successTitle: 'Submitted!',
+            successBody: 'Client was added to DB successfully!',
+            successColor: successPrimaryColor,
+          );
+          Navigator.pop(context);
+        } else {
+          await clientMgr.updateClient(client);
+          Navigator.pop(context);
+          showSuccessFlash(
+            context: context,
+            successTitle: 'Updated!',
+            successBody: 'Client was updated successfully!',
+            successColor: successPrimaryColor,
+          );
+          Navigator.pop(context);
+        }
       }
+      setState(() {
+        autoValidate = true;
+      });
     }
 
     return GestureDetector(
@@ -497,7 +594,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'New Client',
+            titleText: widget.client != null ? 'Client Details' : 'New Client',
             withBack: true,
             withSave: true,
             saveTap: () => saveClient(),
@@ -509,49 +606,54 @@ class _ClientWidgetState extends State<ClientWidget> {
             horizontal: rSize(30),
             vertical: rSize(40),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              renderAvatar(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderClientName(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderClientPhone(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderClientEmail(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderClientAddress(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              Row(
-                children: [
-                  Expanded(child: renderBirthdayPicker()),
-                  SizedBox(
-                    width: rSize(10),
-                  ),
-                  Expanded(child: renderClientDiscount()),
-                ],
-              ),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderNotes(),
-              SizedBox(
-                height: rSize(40),
-              ),
-              renderPermissions(),
-            ],
+          child: Form(
+            key: _formKey,
+            autovalidateMode:
+                autoValidate ? AutovalidateMode.onUserInteraction : null,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                renderAvatar(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderClientName(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderClientPhone(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderClientEmail(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderClientAddress(),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                Row(
+                  children: [
+                    Expanded(child: renderBirthdayPicker()),
+                    SizedBox(
+                      width: rSize(10),
+                    ),
+                    Expanded(child: renderClientDiscount()),
+                  ],
+                ),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderNotes(),
+                SizedBox(
+                  height: rSize(40),
+                ),
+                renderPermissions(),
+              ],
+            ),
           ),
         ),
       ),

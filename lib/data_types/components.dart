@@ -283,6 +283,7 @@ class Client {
   DateTime? acceptedDate; // Birthday date
   double? discount; // general discount for client
   bool? isTrusted; // Birthday date
+  String imagePath; // Image Path
   Map<String, ClientAppointment> appointments;
 
   Client({
@@ -298,6 +299,7 @@ class Client {
     this.acceptedDate,
     this.discount,
     this.isTrusted,
+    this.imagePath = '',
     this.appointments = const {},
   });
 
@@ -314,6 +316,7 @@ class Client {
       'acceptedDate': Timestamp.fromDate(creationDate),
       'discount': discount,
       'isTrusted': isTrusted,
+      'imagePath': imagePath,
       'appointments':
           appointments.map((key, value) => MapEntry(key, value.toJson())),
     };
@@ -340,6 +343,7 @@ class Client {
       birthday: doc['birthday'].toDate(),
       discount: doc['discount'],
       isTrusted: doc['isTrusted'],
+      imagePath: doc['imagePath'],
       appointments: doc['appointments'] == null
           ? {}
           : loadAppointmentsFromDoc(doc['appointments']),
