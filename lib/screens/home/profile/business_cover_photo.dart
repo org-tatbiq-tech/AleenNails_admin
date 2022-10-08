@@ -141,7 +141,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
       return AnimatedSwitcher(
         reverseDuration: const Duration(milliseconds: 400),
         duration: const Duration(milliseconds: 400),
-        child: _imageFile == null
+        child: _imageFile == null && imageUrl.isEmpty
             ? EaseInAnimation(
                 onTap: () => {
                   showImagePickerModal(
