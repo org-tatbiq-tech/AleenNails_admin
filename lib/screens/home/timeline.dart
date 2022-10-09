@@ -1,5 +1,4 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/widget/appointment_card.dart';

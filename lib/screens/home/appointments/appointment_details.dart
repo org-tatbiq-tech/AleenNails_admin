@@ -7,6 +7,7 @@ import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -47,6 +48,18 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           Provider.of<AppointmentsMgr>(context, listen: false);
       appointment.status = AppointmentStatus.cancelled;
       appointmentsMgr.updateAppointment(appointment);
+    }
+
+    Future<ImageProvider<Object>?> getClientImage(String path) async {
+      String imageUrl = '';
+      if (path.isNotEmpty) {
+        final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+        imageUrl = await clientsMgr.getClientImage(path);
+      }
+      if (imageUrl.isNotEmpty) {
+        return CachedNetworkImageProvider(imageUrl);
+      }
+      return null;
     }
 
     cancelAppointment(Appointment appointment) {
@@ -373,13 +386,14 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
 
     navigateToClientDetails(String clientID) {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      clientsMgr.setSelectedClient(clientID: clientID);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ClientDetails(),
-        ),
-      );
+      clientsMgr.setSelectedClient(clientID: clientID).then(
+            (value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ClientDetails(),
+              ),
+            ),
+          );
     }
 
     renderHeader(Appointment appointment) {
@@ -390,20 +404,27 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         children: [
           FadeAnimation(
             delay: 0.1,
-            child: CustomAvatar(
-              customAvatarProps: CustomAvatarProps(
-                radius: rSize(130),
-                rectangleShape: false,
-                enable: true,
-                onTap: () => {
-                  navigateToClientDetails(appointment.clientDocID),
-                },
-                circleShape: true,
-                defaultImage: const AssetImage(
-                  'assets/images/avatar_female.png',
-                ),
-              ),
-            ),
+            child: FutureBuilder<ImageProvider<Object>?>(
+                future: getClientImage(appointment.clientImagePath),
+                builder: (context, snapshot) {
+                  return CustomAvatar(
+                    customAvatarProps: CustomAvatarProps(
+                      radius: rSize(110),
+                      rectangleShape: true,
+                      backgroundImage: snapshot.data,
+                      isLoading:
+                          snapshot.connectionState == ConnectionState.waiting,
+                      enable: true,
+                      onTap: () => {
+                        navigateToClientDetails(appointment.clientDocID),
+                      },
+                      circleShape: false,
+                      defaultImage: const AssetImage(
+                        'assets/images/avatar_female.png',
+                      ),
+                    ),
+                  );
+                }),
           ),
           SizedBox(
             width: rSize(20),

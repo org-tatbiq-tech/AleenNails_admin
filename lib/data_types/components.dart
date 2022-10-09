@@ -129,6 +129,7 @@ class Appointment {
   String creator; // Appointment creator (which admin/worker/...)
   String clientName; // Client full name
   String clientPhone; // Client phone number
+  String clientImagePath; // Client Image Url
   String clientDocID; // Client database ID
   DateTime creationDate; // Appointment creation date (date and time)
   DateTime date; // Appointment date (date and time)
@@ -146,6 +147,7 @@ class Appointment {
     required this.creationDate,
     required this.date,
     this.notes = '',
+    this.clientImagePath = '',
     required this.services,
     required this.paymentStatus,
   });
@@ -173,6 +175,7 @@ class Appointment {
       'creationDate': Timestamp.fromDate(creationDate),
       'date': Timestamp.fromDate(date),
       'notes': notes,
+      'clientImagePath': clientImagePath,
       'services': services.map((service) => service.toJson()).toList(),
       'paymentStatus': paymentStatus.toString(),
       'endTime': endTime,
@@ -209,6 +212,7 @@ class Appointment {
       clientPhone: doc['clientPhone'],
       creationDate: doc['creationDate'].toDate(),
       notes: doc['notes'],
+      clientImagePath: doc['clientImagePath'],
       date: doc['date'].toDate(),
       services: loadServicesFromDoc(doc['services']),
       paymentStatus: loadPaymentStatus(doc['paymentStatus']),

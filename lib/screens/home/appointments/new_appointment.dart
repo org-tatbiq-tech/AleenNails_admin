@@ -154,6 +154,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         clientName: selectedClient!.fullName,
         clientDocID: selectedClient!.id,
         clientPhone: selectedClient!.phone,
+        clientImagePath: selectedClient!.imagePath,
         creationDate: DateTime.now(),
         creator: 'Business',
         date: startDateTime,
@@ -177,21 +178,28 @@ class _NewAppointmentState extends State<NewAppointment> {
   renderServices() {
     List<Widget> widgetList =
         selectedServices.map((AppointmentService service) {
-      return CustomSlidable(
-        customSlidableProps: CustomSlidableProps(
-          groupTag: 'newAppointment',
-          deleteAction: () => removeService(service),
-          child: AppointmentServiceCard(
-            // key: ValueKey(service.id),
-            appointmentServiceCardProps: AppointmentServiceCardProps(
-              withNavigation: false,
-              enabled: false,
-              serviceDetails: service,
-              title: service.name,
-              subTitle: durationToFormat(duration: service.duration),
+      return Column(
+        children: [
+          CustomSlidable(
+            customSlidableProps: CustomSlidableProps(
+              groupTag: 'newAppointment',
+              deleteAction: () => removeService(service),
+              child: AppointmentServiceCard(
+                // key: ValueKey(service.id),
+                appointmentServiceCardProps: AppointmentServiceCardProps(
+                  withNavigation: false,
+                  enabled: false,
+                  serviceDetails: service,
+                  title: service.name,
+                  subTitle: durationToFormat(duration: service.duration),
+                ),
+              ),
             ),
           ),
-        ),
+          SizedBox(
+            height: rSize(15),
+          ),
+        ],
       );
     }).toList();
 
