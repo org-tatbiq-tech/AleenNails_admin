@@ -59,6 +59,7 @@ dependencies:
   get: ^4.6.1
   google_fonts: ^3.0.1
   graphic: ^0.10.7
+  intl: ^0.17.0
   permission_handler: ^10.1.0
   pin_code_fields: ^7.4.0
   provider: ^6.0.3

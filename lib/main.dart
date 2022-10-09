@@ -9,9 +9,7 @@ import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
-import 'package:appointments/screens/home/checkout/amount_selection.dart';
-import 'package:appointments/screens/home/checkout/checkout_details.dart';
-import 'package:appointments/screens/home/checkout/discount_selection.dart';
+import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
@@ -108,9 +106,7 @@ class AppointmentsApp extends StatelessWidget {
       '/register/registerMobile': (context) => const RegisterMobileScreen(),
       '/register/otpConfirmation': (context) => const RegisterOTPScreen(),
       '/newAppointment': (context) => const NewAppointment(),
-      '/checkoutDetails': (context) => const CheckoutDetails(),
       '/discountSelection': (context) => const DiscountSelection(),
-      '/amountSelection': (context) => const AmountSelection(),
       '/services': (context) => const Services(),
       '/businessInfo': (context) => const BusinessInfo(),
       '/businessDetails': (context) => const BusinessDetails(),

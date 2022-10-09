@@ -3,6 +3,7 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
+import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
@@ -31,6 +32,7 @@ class AppointmentDetails extends StatefulWidget {
 }
 
 class AppointmentDetailsState extends State<AppointmentDetails> {
+  bool isCheckoutScreen = false;
   @override
   Widget build(BuildContext context) {
     cancelAppointmentVisibility(Appointment appointment) {
@@ -108,30 +110,92 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
+    addAnotherService() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Services(
+            selectionMode: true,
+            onTap: () => {Navigator.pop(context)},
+          ),
+        ),
+      );
+    }
+
     renderAmount(Appointment appointment) {
       return FadeAnimation(
         positionType: PositionType.top,
         delay: 1.3,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
+            Visibility(
+              visible: isCheckoutScreen,
+              child: Row(
+                children: [
+                  EaseInAnimation(
+                    onTap: () => {
+                      addAnotherService(),
+                    },
+                    child: CustomIcon(
+                      customIconProps: CustomIconProps(
+                        iconColor: Theme.of(context).colorScheme.primary,
+                        icon: null,
+                        contentPadding: rSize(10),
+                        withPadding: true,
+                        path: 'assets/icons/plus.png',
+                        containerSize: 35,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: rSize(10),
+                  ),
+                  Text(
+                    'Add Service',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  SizedBox(
+                    width: rSize(20),
+                  ),
+                  EaseInAnimation(
+                    onTap: () => {
+                      Navigator.pushNamed(context, '/discountSelection'),
+                    },
+                    child: CustomIcon(
+                      customIconProps: CustomIconProps(
+                        iconColor: Theme.of(context).colorScheme.primary,
+                        icon: null,
+                        withPadding: true,
+                        path: 'assets/icons/percent.png',
+                        containerSize: 35,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: rSize(10),
+                  ),
+                  Text(
+                    'Discount',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ],
+              ),
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
                   'Total'.toUpperCase(),
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                SizedBox(
-                  height: rSize(5),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
                   getStringPrice(appointment.totalCost),
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.headline1,
                 ),
               ],
             ),
@@ -142,74 +206,119 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
 
     renderFooter(Appointment appointment) {
       return FadeAnimation(
-          positionType: PositionType.top,
-          delay: 1,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Visibility(
-                visible: cancelAppointmentVisibility(appointment),
-                child: Row(
+        positionType: PositionType.top,
+        delay: 1,
+        child: AnimatedSwitcher(
+          reverseDuration: const Duration(milliseconds: 400),
+          duration: const Duration(milliseconds: 400),
+          child: isCheckoutScreen
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    EaseInAnimation(
-                      onTap: () => cancelAppointment(appointment),
-                      child: CustomIcon(
-                        customIconProps: CustomIconProps(
-                          icon: null,
-                          containerSize: rSize(50),
-                          contentPadding: rSize(12),
-                          withPadding: true,
-                          borderColor: Theme.of(context).colorScheme.primary,
-                          backgroundColor: Colors.transparent,
-                          iconColor: Theme.of(context).colorScheme.error,
-                          path: 'assets/icons/cancel.png',
+                    Expanded(
+                      child: CustomButton(
+                        customButtonProps: CustomButtonProps(
+                          onTap: () => setState(() {
+                            isCheckoutScreen = false;
+                          }),
+                          text: 'Back',
+                          isPrimary: false,
+                          isSecondary: true,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: rSize(10),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: rSize(10),
+                          ),
+                          Expanded(
+                            child: CustomButton(
+                              customButtonProps: CustomButtonProps(
+                                onTap: () => {},
+                                text: 'Confirm',
+                                isPrimary: true,
+                                isSecondary: false,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Visibility(
+                      visible: cancelAppointmentVisibility(appointment),
+                      child: Row(
+                        children: [
+                          EaseInAnimation(
+                            onTap: () => cancelAppointment(appointment),
+                            child: CustomIcon(
+                              customIconProps: CustomIconProps(
+                                icon: null,
+                                containerSize: rSize(50),
+                                contentPadding: rSize(12),
+                                withPadding: true,
+                                borderColor:
+                                    Theme.of(context).colorScheme.primary,
+                                backgroundColor: Colors.transparent,
+                                iconColor: Theme.of(context).colorScheme.error,
+                                path: 'assets/icons/cancel.png',
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: rSize(10),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: CustomButton(
+                        customButtonProps: CustomButtonProps(
+                          onTap: () => {},
+                          text: 'Book Again',
+                          isPrimary: false,
+                          isSecondary: true,
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: cancelAppointmentVisibility(appointment),
+                      child: Expanded(
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: rSize(10),
+                            ),
+                            Expanded(
+                              child: CustomButton(
+                                customButtonProps: CustomButtonProps(
+                                  onTap: () => setState(() {
+                                    isCheckoutScreen = true;
+                                  }),
+                                  text: 'Checkout',
+                                  isPrimary: true,
+                                  isSecondary: false,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: CustomButton(
-                  customButtonProps: CustomButtonProps(
-                    onTap: () => {},
-                    text: 'Book Again',
-                    isPrimary: false,
-                    isSecondary: true,
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: appointment.paymentStatus != PaymentStatus.paid,
-                child: Expanded(
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: rSize(10),
-                      ),
-                      Expanded(
-                        child: CustomButton(
-                          customButtonProps: CustomButtonProps(
-                            onTap: () => {
-                              Navigator.pushNamed(context, '/checkoutDetails'),
-                            },
-                            text: 'Checkout',
-                            isPrimary: true,
-                            isSecondary: false,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ));
+        ),
+      );
     }
 
     Widget renderAppointmentID(Appointment appointment) {
@@ -466,7 +575,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Appointment Details',
+          titleText: isCheckoutScreen ? 'Checkout' : 'Appointment Details',
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -483,91 +592,94 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         left: false,
         right: false,
         child: Consumer<AppointmentsMgr>(
-          builder: (context, appointmentsMgr, _) => !appointmentsMgr
-                  .isSelectedAppointmentLoaded
-              ? Center(
-                  child: CustomLoadingIndicator(
-                    customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
+          builder: (context, appointmentsMgr, _) => Visibility(
+            visible: appointmentsMgr.isSelectedAppointmentLoaded,
+            replacement: Center(
+              child: CustomLoadingIndicator(
+                customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                FadeAnimation(
+                  positionType: PositionType.bottom,
+                  delay: 0.3,
+                  child: CustomStatus(
+                    customStatusProps: CustomStatusProps(
+                      status: appointmentsMgr.selectedAppointment.status,
+                    ),
                   ),
-                )
-              : Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    FadeAnimation(
-                      positionType: PositionType.bottom,
-                      delay: 0.3,
-                      child: CustomStatus(
-                        customStatusProps: CustomStatusProps(
-                          status: appointmentsMgr.selectedAppointment.status,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: rSize(10),
-                    ),
-                    FadeAnimation(
-                      positionType: PositionType.bottom,
-                      delay: 0.3,
-                      child: renderAppointmentID(
-                          appointmentsMgr.selectedAppointment),
-                    ),
-                    SizedBox(
-                      height: rSize(20),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: rSize(20),
-                      ),
-                      child: renderHeader(appointmentsMgr.selectedAppointment),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: rSize(30),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: rSize(30),
-                            ),
-                            FadeAnimation(
-                              positionType: PositionType.right,
-                              delay: 0.5,
-                              child: renderNotes(
-                                appointmentsMgr.selectedAppointment,
-                              ),
-                            ),
-                            SizedBox(
-                              height: rSize(40),
-                            ),
-                            Expanded(
-                              child: renderServices(
-                                appointmentsMgr.selectedAppointment,
-                              ),
-                            ),
-                            SizedBox(
-                              height: rSize(20),
-                            ),
-                            renderAmount(
-                              appointmentsMgr.selectedAppointment,
-                            ),
-                            SizedBox(
-                              height: rSize(15),
-                            ),
-                            renderFooter(
-                              appointmentsMgr.selectedAppointment,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
+                SizedBox(
+                  height: rSize(10),
+                ),
+                FadeAnimation(
+                  positionType: PositionType.bottom,
+                  delay: 0.3,
+                  child:
+                      renderAppointmentID(appointmentsMgr.selectedAppointment),
+                ),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(20),
+                  ),
+                  child: renderHeader(appointmentsMgr.selectedAppointment),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: rSize(30),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: rSize(30),
+                        ),
+                        FadeAnimation(
+                          positionType: PositionType.right,
+                          delay: 0.5,
+                          child: renderNotes(
+                            appointmentsMgr.selectedAppointment,
+                          ),
+                        ),
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        Expanded(
+                          child: renderServices(
+                            appointmentsMgr.selectedAppointment,
+                          ),
+                        ),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        Visibility(
+                          child: renderAmount(
+                            appointmentsMgr.selectedAppointment,
+                          ),
+                        ),
+                        SizedBox(
+                          height: rSize(15),
+                        ),
+                        renderFooter(
+                          appointmentsMgr.selectedAppointment,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
