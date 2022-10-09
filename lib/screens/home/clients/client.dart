@@ -48,7 +48,7 @@ class _ClientWidgetState extends State<ClientWidget> {
   String imageUrl = '';
   String imagePath = '';
   bool _isImageFileChanged = false;
-  bool _isLoading = true;
+  bool _isLoading = false;
   bool isSaveDisabled = true;
 
   DateTime? birthdayDate;
@@ -60,6 +60,9 @@ class _ClientWidgetState extends State<ClientWidget> {
   void initState() {
     super.initState();
     if (widget.client != null) {
+      setState((() {
+        _isLoading = true;
+      }));
       final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
       _nameController.text = widget.client!.fullName;
       _phoneController.text = widget.client!.phone;
