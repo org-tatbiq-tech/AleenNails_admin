@@ -5,6 +5,7 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
@@ -13,11 +14,13 @@ import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -45,13 +48,6 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       return true;
     }
 
-    cancelAppointmentClicked(Appointment appointment) {
-      final appointmentsMgr =
-          Provider.of<AppointmentsMgr>(context, listen: false);
-      appointment.status = AppointmentStatus.cancelled;
-      appointmentsMgr.updateAppointment(appointment);
-    }
-
     Future<ImageProvider<Object>?> getClientImage(String path) async {
       String imageUrl = '';
       if (path.isNotEmpty) {
@@ -62,6 +58,39 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         return CachedNetworkImageProvider(imageUrl);
       }
       return null;
+    }
+
+    cancelAppointmentClicked(Appointment appointment) {
+      showLoaderDialog(context);
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointment.status = AppointmentStatus.cancelled;
+      appointmentsMgr.updateAppointment(appointment).then((value) => {
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successTitle: 'Success',
+              successBody: 'Appointment Cancelled Successfully.',
+            ),
+          });
+    }
+
+    confirmCheckout(Appointment appointment) {
+      showLoaderDialog(context);
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointment.status = AppointmentStatus.confirmed;
+      appointment.paymentStatus = PaymentStatus.paid;
+      appointmentsMgr.updateAppointment(appointment).then((value) => {
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successTitle: 'Success',
+              successBody: 'Checkout Successfully Confirmed.',
+            ),
+          });
     }
 
     cancelAppointment(Appointment appointment) {
@@ -238,7 +267,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                           Expanded(
                             child: CustomButton(
                               customButtonProps: CustomButtonProps(
-                                onTap: () => {},
+                                onTap: () => {
+                                  confirmCheckout(appointment),
+                                },
                                 text: 'Confirm',
                                 isPrimary: true,
                                 isSecondary: false,
