@@ -13,6 +13,11 @@ enum PaymentStatus {
   unpaid,
 }
 
+enum AppointmentCreator {
+  business,
+  client,
+}
+
 class WorkingDayBreak {
   /// Defines break start and end time
   TimeOfDay startTime;

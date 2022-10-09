@@ -73,6 +73,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               successTitle: 'Success',
               successBody: 'Appointment Cancelled Successfully.',
             ),
+            Navigator.pop(context),
           });
     }
 
@@ -90,6 +91,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               successTitle: 'Success',
               successBody: 'Checkout Successfully Confirmed.',
             ),
+            Navigator.pop(context),
           });
     }
 
@@ -638,10 +640,27 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 FadeAnimation(
                   positionType: PositionType.bottom,
                   delay: 0.3,
-                  child: CustomStatus(
-                    customStatusProps: CustomStatusProps(
-                      status: appointmentsMgr.selectedAppointment.status,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomStatus(
+                        customStatusProps: CustomStatusProps(
+                          appointmentStatus:
+                              appointmentsMgr.selectedAppointment.status,
+                        ),
+                      ),
+                      SizedBox(
+                        width: rSize(10),
+                      ),
+                      CustomStatus(
+                        customStatusProps: CustomStatusProps(
+                          paymentStatus:
+                              appointmentsMgr.selectedAppointment.paymentStatus,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(

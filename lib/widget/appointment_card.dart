@@ -113,7 +113,8 @@ class AppointmentCard extends StatelessWidget {
                   children: [
                     CustomStatus(
                       customStatusProps: CustomStatusProps(
-                        status: appointmentCardProps.appointmentDetails.status,
+                        appointmentStatus:
+                            appointmentCardProps.appointmentDetails.status,
                         fontSize: 10,
                       ),
                     ),

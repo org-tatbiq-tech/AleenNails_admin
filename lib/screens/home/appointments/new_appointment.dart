@@ -13,6 +13,7 @@ import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
@@ -133,6 +134,7 @@ class _NewAppointmentState extends State<NewAppointment> {
 
   saveAppointment() {
     if (validateAppointmentData()) {
+      showLoaderDialog(context);
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
       List<AppointmentService> appointmentServices = [];
@@ -156,22 +158,24 @@ class _NewAppointmentState extends State<NewAppointment> {
         clientPhone: selectedClient!.phone,
         clientImagePath: selectedClient!.imagePath,
         creationDate: DateTime.now(),
-        creator: 'Business',
+        creator: 'Business', // will be used as enum AppointmentCreator
         date: startDateTime,
         paymentStatus: PaymentStatus.unpaid,
         services: selectedServices,
-        status: AppointmentStatus.waiting,
+        status: AppointmentStatus.confirmed,
         notes: _notesController.text,
       );
 
-      appointmentsMgr.submitNewAppointment(newAppointment);
-      showSuccessFlash(
-        context: context,
-        successTitle: 'Submitted!',
-        successBody: 'Appointment was uploaded to DB successfully!',
-        successColor: successPrimaryColor,
-      );
-      Navigator.pop(context);
+      appointmentsMgr.submitNewAppointment(newAppointment).then((value) => {
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successTitle: 'Submitted!',
+              successBody: 'Appointment was uploaded to DB successfully!',
+              successColor: successPrimaryColor,
+            ),
+            Navigator.pop(context),
+          });
     }
   }
 

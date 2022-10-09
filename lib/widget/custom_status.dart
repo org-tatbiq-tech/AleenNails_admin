@@ -1,5 +1,6 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 
@@ -12,10 +13,38 @@ class CustomStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getAppointmentStatusColor(AppointmentStatus status) {
+      switch (status) {
+        case AppointmentStatus.confirmed:
+          return successPrimaryColor;
+        case AppointmentStatus.cancelled:
+          return errorPrimaryColor;
+        case AppointmentStatus.declined:
+          return errorPrimaryColor;
+        case AppointmentStatus.waiting:
+          return warningPrimaryColor;
+        default:
+          return informationPrimaryColor;
+      }
+    }
+
+    getPaymentStatusColor(PaymentStatus status) {
+      switch (status) {
+        case PaymentStatus.paid:
+          return successPrimaryColor;
+        case PaymentStatus.unpaid:
+          return warningPrimaryColor;
+        default:
+          return informationPrimaryColor;
+      }
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: lighten(
-          getStatusColor(customStatusProps.status),
+          customStatusProps.paymentStatus != null
+              ? getPaymentStatusColor(customStatusProps.paymentStatus!)
+              : getAppointmentStatusColor(customStatusProps.appointmentStatus!),
           0.22,
         ),
         borderRadius: BorderRadius.circular(
@@ -28,10 +57,16 @@ class CustomStatus extends StatelessWidget {
           vertical: rSize(customStatusProps.fontSize / 2),
         ),
         child: Text(
-          customStatusProps.status.name.toUpperCase(),
+          customStatusProps.appointmentStatus != null
+              ? customStatusProps.appointmentStatus!.name.toUpperCase()
+              : customStatusProps.paymentStatus!.name.toUpperCase(),
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(customStatusProps.fontSize),
-                color: getStatusColor(customStatusProps.status),
+                color: customStatusProps.appointmentStatus != null
+                    ? getAppointmentStatusColor(
+                        customStatusProps.appointmentStatus!,
+                      )
+                    : getPaymentStatusColor(customStatusProps.paymentStatus!),
               ),
         ),
       ),
@@ -40,10 +75,12 @@ class CustomStatus extends StatelessWidget {
 }
 
 class CustomStatusProps {
-  AppointmentStatus status;
+  AppointmentStatus? appointmentStatus;
+  PaymentStatus? paymentStatus;
   double fontSize;
   CustomStatusProps({
-    required this.status,
+    this.appointmentStatus,
+    this.paymentStatus,
     this.fontSize = 16,
   });
 }

@@ -1,22 +1,4 @@
-import 'package:appointments/data_types/macros.dart';
 import 'package:flutter/material.dart';
-
-import 'layout.dart';
-
-getStatusColor(AppointmentStatus status) {
-  switch (status) {
-    case AppointmentStatus.confirmed:
-      return successPrimaryColor;
-    case AppointmentStatus.cancelled:
-      return errorPrimaryColor;
-    case AppointmentStatus.declined:
-      return errorPrimaryColor;
-    case AppointmentStatus.waiting:
-      return warningPrimaryColor;
-    default:
-      return informationPrimaryColor;
-  }
-}
 
 Map timeOfDayToDB(TimeOfDay? timeOfDay) {
   // Converter from TimeOfDay to firebase DB document
