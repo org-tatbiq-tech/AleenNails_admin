@@ -22,6 +22,7 @@ import 'package:common_widgets/utils/validators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -501,6 +502,16 @@ class _ClientWidgetState extends State<ClientWidget> {
       return null;
     }
 
+    importClient() async {
+      if (await FlutterContacts.requestPermission()) {
+        final contact = await FlutterContacts.openExternalPick();
+        _nameController.text = contact!.displayName;
+        _phoneController.text = contact.phones[0].number;
+        _emailController.text = contact.emails[0].address;
+        _addressController.text = contact.addresses[0].address;
+      }
+    }
+
     Widget renderAvatar() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -611,6 +622,11 @@ class _ClientWidgetState extends State<ClientWidget> {
             withSave: true,
             withSaveDisabled: isSaveDisabled,
             saveTap: () => saveClient(),
+            customIcon: Icon(
+              Icons.import_contacts_rounded,
+              size: rSize(24),
+            ),
+            customIconTap: () => importClient(),
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.background,

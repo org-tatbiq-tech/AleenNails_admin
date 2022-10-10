@@ -45,5 +45,7 @@
 		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<key>NSContactsUsageDescription</key>
+		<string>Importing Contacts to the application</string>
 	</dict>
 </plist>
