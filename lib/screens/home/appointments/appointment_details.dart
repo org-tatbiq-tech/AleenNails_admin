@@ -2,7 +2,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
-import 'package:appointments/screens/home/appointments/new_appointment.dart';
+import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
@@ -52,14 +52,28 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       return true;
     }
 
-    editIconAction() {
+    editAppointmentAction() {
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              NewAppointment(appointment: appointmentsMgr.selectedAppointment),
+          builder: (context) => AppointmentScreen(
+            appointment: appointmentsMgr.selectedAppointment,
+          ),
+        ),
+      );
+    }
+
+    bookAgainAction() {
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AppointmentScreen(
+            bookAgainAppointment: appointmentsMgr.selectedAppointment,
+          ),
         ),
       );
     }
@@ -333,7 +347,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     Expanded(
                       child: CustomButton(
                         customButtonProps: CustomButtonProps(
-                          onTap: () => {},
+                          onTap: () => {bookAgainAction()},
                           text: 'Book Again',
                           isPrimary: false,
                           isSecondary: true,
@@ -634,7 +648,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   size: rSize(24),
                 )
               : null,
-          customIconTap: () => editIconAction(),
+          customIconTap: () => editAppointmentAction(),
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,

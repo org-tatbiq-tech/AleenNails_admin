@@ -1,5 +1,5 @@
 import 'package:appointments/providers/clients_mgr.dart';
-import 'package:appointments/screens/home/appointments/new_appointment.dart';
+import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -39,7 +39,7 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        NewAppointment(client: clientsMgr.selectedClient),
+                        AppointmentScreen(client: clientsMgr.selectedClient),
                   ),
                 ),
               },
@@ -65,7 +65,7 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => NewAppointment(
+                                    builder: (context) => AppointmentScreen(
                                         client: clientsMgr.selectedClient),
                                   ),
                                 ),

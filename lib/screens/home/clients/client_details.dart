@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/clients_mgr.dart';
-import 'package:appointments/screens/home/appointments/new_appointment.dart';
+import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_appointments.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
@@ -539,7 +539,7 @@ class _ClientDetailsState extends State<ClientDetails> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => NewAppointment(client: client),
+                  builder: (context) => AppointmentScreen(client: client),
                 ),
               ),
             },

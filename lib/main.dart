@@ -8,7 +8,7 @@ import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
-import 'package:appointments/screens/home/appointments/new_appointment.dart';
+import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/main.dart';
@@ -105,7 +105,7 @@ class AppointmentsApp extends StatelessWidget {
       '/register': (context) => const RegisterMainScreen(),
       '/register/registerMobile': (context) => const RegisterMobileScreen(),
       '/register/otpConfirmation': (context) => const RegisterOTPScreen(),
-      '/newAppointment': (context) => const NewAppointment(),
+      '/newAppointment': (context) => const AppointmentScreen(),
       '/discountSelection': (context) => const DiscountSelection(),
       '/services': (context) => const Services(),
       '/businessInfo': (context) => const BusinessInfo(),

@@ -24,17 +24,19 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class NewAppointment extends StatefulWidget {
+class AppointmentScreen extends StatefulWidget {
   final Client? client;
   final Appointment? appointment;
-  const NewAppointment({Key? key, this.client, this.appointment})
+  final Appointment? bookAgainAppointment;
+  const AppointmentScreen(
+      {Key? key, this.client, this.appointment, this.bookAgainAppointment})
       : super(key: key);
 
   @override
-  State<NewAppointment> createState() => _NewAppointmentState();
+  State<AppointmentScreen> createState() => _AppointmentScreenState();
 }
 
-class _NewAppointmentState extends State<NewAppointment> {
+class _AppointmentScreenState extends State<AppointmentScreen> {
   final TextEditingController _notesController = TextEditingController();
 
   DateTime startDateTime = nearestFive(DateTime.now());
@@ -65,6 +67,19 @@ class _NewAppointmentState extends State<NewAppointment> {
       startDateTimeTemp = widget.appointment!.date;
       endTime = widget.appointment!.endTime;
       _notesController.text = widget.appointment!.notes;
+    }
+    if (widget.bookAgainAppointment != null) {
+      selectedClient = Client(
+        id: widget.bookAgainAppointment!.clientDocID,
+        fullName: widget.bookAgainAppointment!.clientName,
+        phone: widget.bookAgainAppointment!.clientPhone,
+        address: '',
+        email: '',
+        imagePath: widget.bookAgainAppointment!.clientImagePath,
+        creationDate: DateTime.now(),
+      );
+      selectedServices = widget.bookAgainAppointment!.services;
+      _notesController.text = widget.bookAgainAppointment!.notes;
     }
   }
 

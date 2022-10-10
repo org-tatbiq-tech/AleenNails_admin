@@ -1,6 +1,8 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
+import 'package:appointments/widget/custom_avatar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -16,6 +18,18 @@ class ClientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<ImageProvider<Object>?> getClientImage(String path) async {
+      String imageUrl = '';
+      if (path.isNotEmpty) {
+        final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+        imageUrl = await clientsMgr.getClientImage(path);
+      }
+      if (imageUrl.isNotEmpty) {
+        return CachedNetworkImageProvider(imageUrl);
+      }
+      return null;
+    }
+
     navigateToClientDetails(Client client) {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
       clientsMgr.setSelectedClient(client: client);
@@ -73,15 +87,24 @@ class ClientCard extends StatelessWidget {
                 : const SizedBox(),
           ],
         ),
-        leading: CircleAvatar(
-          radius: rSize(25),
-          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          child: Text(
-            clientCardProps.contactDetails.fullName[0].toUpperCase() +
-                clientCardProps.contactDetails.fullName[1].toUpperCase(),
-            style: Theme.of(context).textTheme.bodyText2,
-          ),
-        ),
+        leading: FutureBuilder<ImageProvider<Object>?>(
+            future: getClientImage(
+              clientCardProps.contactDetails.imagePath,
+            ),
+            builder: (context, snapshot) {
+              return CustomAvatar(
+                customAvatarProps: CustomAvatarProps(
+                  radius: rSize(50),
+                  rectangleShape: true,
+                  circleShape: false,
+                  backgroundImage: snapshot.data,
+                  defaultImage: const AssetImage(
+                    'assets/images/avatar_female.png',
+                  ),
+                  enable: false,
+                ),
+              );
+            }),
       ),
     );
   }

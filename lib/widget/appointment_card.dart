@@ -159,8 +159,6 @@ class AppointmentCard extends StatelessWidget {
                       rectangleShape: false,
                       circleShape: true,
                       backgroundImage: snapshot.data,
-                      isLoading:
-                          snapshot.connectionState == ConnectionState.waiting,
                       defaultImage: const AssetImage(
                         'assets/images/avatar_female.png',
                       ),
