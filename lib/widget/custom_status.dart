@@ -1,5 +1,4 @@
 import 'package:appointments/data_types/macros.dart';
-import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';

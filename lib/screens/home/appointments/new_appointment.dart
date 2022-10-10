@@ -26,7 +26,9 @@ import 'package:provider/provider.dart';
 
 class NewAppointment extends StatefulWidget {
   final Client? client;
-  const NewAppointment({Key? key, this.client}) : super(key: key);
+  final Appointment? appointment;
+  const NewAppointment({Key? key, this.client, this.appointment})
+      : super(key: key);
 
   @override
   State<NewAppointment> createState() => _NewAppointmentState();
@@ -48,12 +50,35 @@ class _NewAppointmentState extends State<NewAppointment> {
     if (widget.client != null) {
       selectedClient = widget.client;
     }
+    if (widget.appointment != null) {
+      selectedClient = Client(
+        id: widget.appointment!.clientDocID,
+        fullName: widget.appointment!.clientName,
+        phone: widget.appointment!.clientPhone,
+        address: '',
+        email: '',
+        imagePath: widget.appointment!.clientImagePath,
+        creationDate: DateTime.now(),
+      );
+      selectedServices = widget.appointment!.services;
+      startDateTime = widget.appointment!.date;
+      startDateTimeTemp = widget.appointment!.date;
+      endTime = widget.appointment!.endTime;
+      _notesController.text = widget.appointment!.notes;
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
     _notesController.dispose();
+  }
+
+  DateTime getMinDate() {
+    if (nearestFive(DateTime.now()).isAfter(startDateTime)) {
+      return startDateTime;
+    }
+    return nearestFive(DateTime.now());
   }
 
   onServiceTap(Service service) {
@@ -86,13 +111,6 @@ class _NewAppointmentState extends State<NewAppointment> {
     Navigator.pop(context);
   }
 
-  isButtonDisabled() {
-    if (selectedServices != null) {
-      return false;
-    }
-    return true;
-  }
-
   bool validateAppointmentData() {
     if (selectedClient == null) {
       showErrorFlash(
@@ -112,15 +130,6 @@ class _NewAppointmentState extends State<NewAppointment> {
       );
       return false;
     }
-    // if (startDateTime == null) {
-    //   showErrorFlash(
-    //     context: context,
-    //     errorTitle: 'Error',
-    //     errorBody: 'Please select start date & time.',
-    //     errorColor: errorPrimaryColor,
-    //   );
-    //   return false;
-    // }
     return true;
   }
 
@@ -151,8 +160,11 @@ class _NewAppointmentState extends State<NewAppointment> {
         appointmentServices.add(appointmentService);
       }
 
+      String appointmentID =
+          widget.appointment == null ? '' : widget.appointment!.id;
+
       Appointment newAppointment = Appointment(
-        id: '',
+        id: appointmentID,
         clientName: selectedClient!.fullName,
         clientDocID: selectedClient!.id,
         clientPhone: selectedClient!.phone,
@@ -166,16 +178,29 @@ class _NewAppointmentState extends State<NewAppointment> {
         notes: _notesController.text,
       );
 
-      appointmentsMgr.submitNewAppointment(newAppointment).then((value) => {
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successTitle: 'Submitted!',
-              successBody: 'Appointment was uploaded to DB successfully!',
-              successColor: successPrimaryColor,
-            ),
-            Navigator.pop(context),
-          });
+      if (widget.appointment == null) {
+        appointmentsMgr.submitNewAppointment(newAppointment).then((value) => {
+              Navigator.pop(context),
+              showSuccessFlash(
+                context: context,
+                successTitle: 'Submitted!',
+                successBody: 'Appointment was added successfully!',
+                successColor: successPrimaryColor,
+              ),
+              Navigator.pop(context),
+            });
+      } else {
+        appointmentsMgr.updateAppointment(newAppointment).then((value) => {
+              Navigator.pop(context),
+              showSuccessFlash(
+                context: context,
+                successTitle: 'Submitted!',
+                successBody: 'Appointment was updated successfully!',
+                successColor: successPrimaryColor,
+              ),
+              Navigator.pop(context),
+            });
+      }
     }
   }
 
@@ -186,7 +211,7 @@ class _NewAppointmentState extends State<NewAppointment> {
         children: [
           CustomSlidable(
             customSlidableProps: CustomSlidableProps(
-              groupTag: 'newAppointment',
+              groupTag: 'appointment',
               deleteAction: () => removeService(service),
               child: AppointmentServiceCard(
                 // key: ValueKey(service.id),
@@ -326,7 +351,7 @@ class _NewAppointmentState extends State<NewAppointment> {
                   onTap: () => showPickerDateTimeModal(
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
                       context: context,
-                      minimumDate: DateTime.now(),
+                      minimumDate: getMinDate(),
                       minuteInterval: 5,
                       initialDateTime: startDateTime,
                       title: 'Start Date & Time',
@@ -507,7 +532,9 @@ class _NewAppointmentState extends State<NewAppointment> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'New Appointment',
+            titleText: widget.appointment != null
+                ? 'Edit Appointment'
+                : 'New Appointment',
             withBack: true,
             withClipPath: true,
             barHeight: 110,

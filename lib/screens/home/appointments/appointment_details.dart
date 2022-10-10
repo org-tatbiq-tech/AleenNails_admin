@@ -2,6 +2,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
@@ -38,7 +39,10 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   bool isCheckoutScreen = false;
   @override
   Widget build(BuildContext context) {
-    cancelAppointmentVisibility(Appointment appointment) {
+    cancelAppointmentVisibility() {
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      Appointment appointment = appointmentsMgr.selectedAppointment;
       if (appointment.status == AppointmentStatus.cancelled) {
         return false;
       }
@@ -46,6 +50,18 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         return false;
       }
       return true;
+    }
+
+    editIconAction() {
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              NewAppointment(appointment: appointmentsMgr.selectedAppointment),
+        ),
+      );
     }
 
     Future<ImageProvider<Object>?> getClientImage(String path) async {
@@ -289,7 +305,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Visibility(
-                      visible: cancelAppointmentVisibility(appointment),
+                      visible: cancelAppointmentVisibility(),
                       child: Row(
                         children: [
                           EaseInAnimation(
@@ -325,7 +341,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       ),
                     ),
                     Visibility(
-                      visible: cancelAppointmentVisibility(appointment),
+                      visible: cancelAppointmentVisibility(),
                       child: Expanded(
                         child: Row(
                           children: [
@@ -612,11 +628,13 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           withBack: true,
           barHeight: 110,
           withClipPath: true,
-          customIcon: Icon(
-            Icons.edit,
-            size: rSize(24),
-          ),
-          customIconTap: () => {},
+          customIcon: cancelAppointmentVisibility()
+              ? Icon(
+                  Icons.edit,
+                  size: rSize(24),
+                )
+              : null,
+          customIconTap: () => editIconAction(),
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
