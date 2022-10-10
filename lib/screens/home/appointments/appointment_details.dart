@@ -584,8 +584,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       radius: rSize(110),
                       rectangleShape: true,
                       backgroundImage: snapshot.data,
-                      isLoading:
-                          snapshot.connectionState == ConnectionState.waiting,
+                      // isLoading:
+                      //     snapshot.connectionState == ConnectionState.waiting,
                       enable: true,
                       onTap: () => {
                         navigateToClientDetails(appointment.clientDocID),
