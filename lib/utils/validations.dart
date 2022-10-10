@@ -9,7 +9,7 @@ mobileValidation(String mobile) {
   if (mobile.isEmpty) {
     return 'Mobile can not be empty!.';
   }
-  if (!RegExp("[0-9]{10}").hasMatch(mobile)) {
+  if (!RegExp(r"^[0-9]{10}$").hasMatch(mobile)) {
     return 'Please Enter valid mobile number.';
   }
   return null;

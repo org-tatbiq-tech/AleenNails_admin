@@ -506,9 +506,19 @@ class _ClientWidgetState extends State<ClientWidget> {
       if (await FlutterContacts.requestPermission()) {
         final contact = await FlutterContacts.openExternalPick();
         _nameController.text = contact!.displayName;
-        _phoneController.text = contact.phones[0].number;
-        _emailController.text = contact.emails[0].address;
-        _addressController.text = contact.addresses[0].address;
+        String phoneNumber = contact.phones.isNotEmpty
+            ? contact.phones[0].number
+                .replaceAll('-', '')
+                .replaceAll('+972', '0')
+                .replaceAll('(', '')
+                .replaceAll(')', '')
+                .replaceAll(' ', '')
+            : '';
+        _phoneController.text = phoneNumber;
+        _emailController.text =
+            contact.emails.isNotEmpty ? contact.emails[0].address : '';
+        _addressController.text =
+            contact.addresses.isNotEmpty ? contact.addresses[0].address : '';
       }
     }
 
