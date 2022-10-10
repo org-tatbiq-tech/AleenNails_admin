@@ -538,7 +538,6 @@ class _ClientWidgetState extends State<ClientWidget> {
                   'assets/images/avatar_female.png',
                 ),
                 enable: true,
-                isLoading: _isLoading,
                 backgroundImage: getBackgroundImage(),
                 onTap: () => {
                       showImagePickerModal(

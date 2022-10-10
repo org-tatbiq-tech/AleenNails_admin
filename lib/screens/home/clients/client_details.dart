@@ -443,7 +443,6 @@ class _ClientDetailsState extends State<ClientDetails> {
                 circleShape: false,
                 rectangleShape: true,
                 enable: false,
-                isLoading: _isLoading,
                 defaultImage: const AssetImage(
                   'assets/images/avatar_female.png',
                 ),
