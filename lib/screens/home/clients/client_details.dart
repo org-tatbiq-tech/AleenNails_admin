@@ -161,9 +161,11 @@ class _ClientDetailsState extends State<ClientDetails> {
             ),
           ),
           Text(
-            Localizations.of<MaterialLocalizations>(
-                    context, MaterialLocalizations)!
-                .formatCompactDate(client.birthday!),
+            client.birthday != null
+                ? Localizations.of<MaterialLocalizations>(
+                        context, MaterialLocalizations)!
+                    .formatCompactDate(client.birthday!)
+                : 'Not Set',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -197,9 +199,11 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  Localizations.of<MaterialLocalizations>(
-                          context, MaterialLocalizations)!
-                      .formatCompactDate(client.birthday!),
+                  client.birthday != null
+                      ? Localizations.of<MaterialLocalizations>(
+                              context, MaterialLocalizations)!
+                          .formatCompactDate(client.birthday!)
+                      : 'Not Set',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,

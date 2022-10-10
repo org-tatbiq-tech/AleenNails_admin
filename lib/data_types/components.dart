@@ -281,7 +281,6 @@ class Client {
   String address; // Client physical address
   String email; // Client email
   String? generalNotes; // General notes about client
-  String? profileImage; // Profile Image (Avatar)
   DateTime? birthday; // Birthday date
   DateTime creationDate; // Client creation date
   DateTime? acceptedDate; // Birthday date
@@ -322,7 +321,6 @@ class Client {
     required this.address,
     required this.email,
     this.generalNotes,
-    this.profileImage,
     this.birthday,
     required this.creationDate,
     this.acceptedDate,
@@ -339,7 +337,6 @@ class Client {
       'address': address,
       'email': email,
       'generalNotes': generalNotes,
-      'profileImage': profileImage,
       'birthday': birthday != null ? Timestamp.fromDate(birthday!) : '',
       'creationDate': Timestamp.fromDate(creationDate),
       'acceptedDate': Timestamp.fromDate(creationDate),
@@ -369,7 +366,9 @@ class Client {
       email: doc['email'],
       creationDate: doc['creationDate'].toDate(),
       generalNotes: doc['generalNotes'],
-      birthday: doc['birthday'].toDate(),
+      birthday: doc['birthday'].toString().isNotEmpty
+          ? doc['birthday'].toDate()
+          : null,
       discount: doc['discount'],
       isTrusted: doc['isTrusted'],
       imagePath: doc['imagePath'],
