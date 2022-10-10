@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/new_appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
@@ -18,7 +18,6 @@ import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -162,7 +161,9 @@ class _ClientDetailsState extends State<ClientDetails> {
             ),
           ),
           Text(
-            '${Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)!.formatCompactDate(client.birthday!)} - ${Localizations.of<MaterialLocalizations>(context, MaterialLocalizations)!.formatTimeOfDay(TimeOfDay.fromDateTime(client.birthday!))}',
+            Localizations.of<MaterialLocalizations>(
+                    context, MaterialLocalizations)!
+                .formatCompactDate(client.birthday!),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -178,7 +179,7 @@ class _ClientDetailsState extends State<ClientDetails> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -196,7 +197,9 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  'Thursday 25-06-2020',
+                  Localizations.of<MaterialLocalizations>(
+                          context, MaterialLocalizations)!
+                      .formatCompactDate(client.birthday!),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -204,70 +207,8 @@ class _ClientDetailsState extends State<ClientDetails> {
               ],
             ),
           ),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    bottom: rSize(5),
-                  ),
-                  child: Text(
-                    'Trusted Client'.toUpperCase(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-                Text(
-                  client.isTrusted! ? 'Yes' : 'No',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    }
-
-    renderTotalRevenue(Client client) {
-      return Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
           Expanded(
             flex: 2,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    bottom: rSize(5),
-                  ),
-                  child: Text(
-                    'Total Revenue'.toUpperCase(),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ),
-                Text(
-                  getStringPrice(0),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -286,6 +227,70 @@ class _ClientDetailsState extends State<ClientDetails> {
                 ),
                 Text(
                   '${client.discount}%',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
+    renderTotalRevenue(Client client) {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                  ),
+                  child: Text(
+                    'Total Revenue'.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+                Text(
+                  client.totalRevenue.toString(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                  ),
+                  child: Text(
+                    'Trusted Client'.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+                Text(
+                  client.isTrusted! ? 'Yes' : 'No',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -324,7 +329,7 @@ class _ClientDetailsState extends State<ClientDetails> {
       ]);
     }
 
-    renderStatics() {
+    renderStatics(Client client) {
       return Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onBackground,
@@ -357,7 +362,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  '1',
+                  client.appointments.length.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -382,7 +387,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  '1',
+                  client.totalCancelledAppointment.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -409,7 +414,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                       ),
                 ),
                 Text(
-                  '1',
+                  client.totalNoShowAppointment.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2?.copyWith(
@@ -601,7 +606,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                           FadeAnimation(
                             positionType: PositionType.top,
                             delay: 0.5,
-                            child: renderStatics(),
+                            child: renderStatics(clientsMgr.selectedClient),
                           ),
                         ],
                       ),

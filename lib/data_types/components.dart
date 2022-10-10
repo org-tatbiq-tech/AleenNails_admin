@@ -290,6 +290,31 @@ class Client {
   String imagePath; // Image Path
   Map<String, ClientAppointment> appointments;
 
+  double get totalRevenue {
+    return appointments.values
+        .fold<double>(0, (sum, item) => sum + item.totalCost);
+  }
+
+  int get totalCancelledAppointment {
+    int totalCancelledAppointments = 0;
+    appointments.forEach((key, value) {
+      if (value.status == AppointmentStatus.cancelled) {
+        totalCancelledAppointments += 1;
+      }
+    });
+    return totalCancelledAppointments;
+  }
+
+  int get totalNoShowAppointment {
+    int totalNoShowAppointments = 0;
+    appointments.forEach((key, value) {
+      if (value.status == AppointmentStatus.noShow) {
+        totalNoShowAppointments += 1;
+      }
+    });
+    return totalNoShowAppointments;
+  }
+
   Client({
     required this.id,
     required this.fullName,

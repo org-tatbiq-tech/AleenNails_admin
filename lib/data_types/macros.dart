@@ -6,6 +6,7 @@ enum AppointmentStatus {
   declined,
   cancelled,
   waiting,
+  noShow,
 }
 
 enum PaymentStatus {

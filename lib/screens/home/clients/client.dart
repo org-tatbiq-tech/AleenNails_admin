@@ -568,25 +568,27 @@ class _ClientWidgetState extends State<ClientWidget> {
         );
 
         if (widget.client == null) {
-          await clientMgr.submitNewClient(client);
-          Navigator.pop(context);
-          showSuccessFlash(
-            context: context,
-            successTitle: 'Submitted!',
-            successBody: 'Client was added to DB successfully!',
-            successColor: successPrimaryColor,
-          );
-          Navigator.pop(context);
+          clientMgr.submitNewClient(client).then((value) => {
+                Navigator.pop(context),
+                showSuccessFlash(
+                  context: context,
+                  successTitle: 'Submitted!',
+                  successBody: 'Client was added to DB successfully!',
+                  successColor: successPrimaryColor,
+                ),
+                Navigator.pop(context),
+              });
         } else {
-          await clientMgr.updateClient(client);
-          Navigator.pop(context);
-          showSuccessFlash(
-            context: context,
-            successTitle: 'Updated!',
-            successBody: 'Client was updated successfully!',
-            successColor: successPrimaryColor,
-          );
-          Navigator.pop(context);
+          await clientMgr.updateClient(client).then((value) => {
+                Navigator.pop(context),
+                showSuccessFlash(
+                  context: context,
+                  successTitle: 'Updated!',
+                  successBody: 'Client was updated successfully!',
+                  successColor: successPrimaryColor,
+                ),
+                Navigator.pop(context),
+              });
         }
       }
       setState(() {
