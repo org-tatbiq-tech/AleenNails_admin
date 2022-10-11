@@ -303,30 +303,30 @@ class _LoginScreenState extends State<LoginScreen>
                             isPrimary: true,
                           ),
                         ),
-                        SizedBox(
-                          height: rSize(20),
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              Languages.of(context)!.labelNoAccount,
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                            CustomTextButton(
-                              customTextButtonProps: CustomTextButtonProps(
-                                text: Languages.of(context)!.labelRegisterNow,
-                                textColor:
-                                    Theme.of(context).colorScheme.primary,
-                                onTap: () => {
-                                  Navigator.pushNamed(context, '/register'),
-                                },
-                              ),
-                            )
-                          ],
-                        ),
+                        // SizedBox(
+                        //   height: rSize(20),
+                        // ),
+                        // Row(
+                        //   mainAxisSize: MainAxisSize.max,
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Text(
+                        //       Languages.of(context)!.labelNoAccount,
+                        //       style: Theme.of(context).textTheme.subtitle1,
+                        //     ),
+                        //     CustomTextButton(
+                        //       customTextButtonProps: CustomTextButtonProps(
+                        //         text: Languages.of(context)!.labelRegisterNow,
+                        //         textColor:
+                        //             Theme.of(context).colorScheme.primary,
+                        //         onTap: () => {
+                        //           Navigator.pushNamed(context, '/register'),
+                        //         },
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
                       ],
                     ),
                   ),

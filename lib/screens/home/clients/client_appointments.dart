@@ -1,6 +1,7 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
-import 'package:appointments/screens/home/clients/client.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -28,7 +29,8 @@ class ClientAppointmentsState extends State<ClientAppointments> {
           backgroundColor: Theme.of(context).colorScheme.background,
           appBar: CustomAppBar(
             customAppBarProps: CustomAppBarProps(
-              titleText: 'Client Appointments',
+              titleText:
+                  Languages.of(context)!.clientAppointmentsLabel.toTitleCase(),
               withBack: true,
               customIcon: Icon(
                 FontAwesomeIcons.plus,
@@ -56,7 +58,9 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                       ),
                       child: EmptyListImage(
                         emptyListImageProps: EmptyListImageProps(
-                          title: 'No appointment added yet',
+                          title: Languages.of(context)!
+                              .emptyAppointmentListLabel
+                              .toCapitalized(),
                           iconPath: 'assets/icons/menu.png',
                           bottomWidgetPosition: 10,
                           bottomWidget: CustomTextButton(
@@ -70,7 +74,9 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                                   ),
                                 ),
                               },
-                              text: 'Add New Appointment',
+                              text: Languages.of(context)!
+                                  .addNewAppointmentLabel
+                                  .toTitleCase(),
                               textColor: Theme.of(context).colorScheme.primary,
                               withIcon: true,
                               icon: Icon(

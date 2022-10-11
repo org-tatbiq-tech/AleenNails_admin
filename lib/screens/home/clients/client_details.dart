@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_appointments.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -16,7 +17,6 @@ import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
-import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
@@ -31,22 +31,18 @@ class ClientDetails extends StatefulWidget {
 
 class _ClientDetailsState extends State<ClientDetails> {
   String imageUrl = '';
-  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-
     if (clientsMgr.selectedClient.imagePath.isNotEmpty) {
       clientsMgr.getClientImage(clientsMgr.selectedClient.imagePath).then(
             (url) => {
               if (imageUrl == 'notFound')
                 {
                   setState(
-                    (() {
-                      _isLoading = false;
-                    }),
+                    (() {}),
                   ),
                 }
               else
@@ -54,7 +50,6 @@ class _ClientDetailsState extends State<ClientDetails> {
                   setState(
                     (() {
                       imageUrl = url;
-                      _isLoading = false;
                     }),
                   ),
                 },
@@ -85,7 +80,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '${'Appointments'.toUpperCase()} (${clientsMgr.selectedClient.appointments.values.length.toString()})',
+                    '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClient.appointments.values.length.toString()})',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
@@ -100,7 +95,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                           ),
                         ),
                       },
-                      text: 'Show All',
+                      text: Languages.of(context)!.showAllLabel.toTitleCase(),
                       textColor: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -154,7 +149,7 @@ class _ClientDetailsState extends State<ClientDetails> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Birthday'.toUpperCase(),
+              Languages.of(context)!.birthdayLabel.toUpperCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText1,
@@ -165,7 +160,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 ? Localizations.of<MaterialLocalizations>(
                         context, MaterialLocalizations)!
                     .formatCompactDate(client.birthday!)
-                : 'Not Set',
+                : Languages.of(context)!.notSetLabel.toTitleCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -192,7 +187,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     bottom: rSize(5),
                   ),
                   child: Text(
-                    'Last Visit'.toUpperCase(),
+                    Languages.of(context)!.lastVisitLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText1,
@@ -203,7 +198,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                       ? Localizations.of<MaterialLocalizations>(
                               context, MaterialLocalizations)!
                           .formatCompactDate(client.birthday!)
-                      : 'Not Set',
+                      : Languages.of(context)!.notSetLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -223,7 +218,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     bottom: rSize(5),
                   ),
                   child: Text(
-                    'Discount'.toUpperCase(),
+                    Languages.of(context)!.discountLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText1,
@@ -260,7 +255,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     bottom: rSize(5),
                   ),
                   child: Text(
-                    'Total Revenue'.toUpperCase(),
+                    Languages.of(context)!.totalRevenueLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText1,
@@ -287,14 +282,16 @@ class _ClientDetailsState extends State<ClientDetails> {
                     bottom: rSize(5),
                   ),
                   child: Text(
-                    'Trusted Client'.toUpperCase(),
+                    Languages.of(context)!.trustedClientLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
                 Text(
-                  client.isTrusted! ? 'Yes' : 'No',
+                  client.isTrusted!
+                      ? Languages.of(context)!.yesLabel.toTitleCase()
+                      : Languages.of(context)!.noLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -318,7 +315,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 bottom: rSize(5),
               ),
               child: Text(
-                'Notes'.toUpperCase(),
+                Languages.of(context)!.notesLabel.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2,
@@ -344,9 +341,6 @@ class _ClientDetailsState extends State<ClientDetails> {
             rSize(10),
           ),
         ),
-        // padding: EdgeInsets.symmetric(
-        //   horizontal: rSize(0),
-        // ),
         height: rSize(60),
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -360,7 +354,7 @@ class _ClientDetailsState extends State<ClientDetails> {
               direction: Axis.vertical,
               children: [
                 Text(
-                  'Appointments'.toUpperCase(),
+                  Languages.of(context)!.appointmentsLabel.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.subtitle1,
@@ -385,7 +379,7 @@ class _ClientDetailsState extends State<ClientDetails> {
               direction: Axis.vertical,
               children: [
                 Text(
-                  'Cancellation'.toUpperCase(),
+                  Languages.of(context)!.cancellationLabel.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.subtitle1,
@@ -410,7 +404,7 @@ class _ClientDetailsState extends State<ClientDetails> {
               direction: Axis.vertical,
               children: [
                 Text(
-                  'No-show'.toUpperCase(),
+                  Languages.of(context)!.noShowLabel.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.subtitle1?.copyWith(
@@ -563,7 +557,7 @@ class _ClientDetailsState extends State<ClientDetails> {
         return Scaffold(
           appBar: CustomAppBar(
             customAppBarProps: CustomAppBarProps(
-              titleText: 'Client Details',
+              titleText: Languages.of(context)!.clientDetailsLabel,
               withBack: true,
               barHeight: 110,
               withClipPath: true,

@@ -1,7 +1,9 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -36,7 +38,7 @@ class ClientsState extends State<Clients> {
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Clients',
+          titleText: Languages.of(context)!.clientsLabel.toTitleCase(),
           customIcon: Icon(
             FontAwesomeIcons.plus,
             size: rSize(20),

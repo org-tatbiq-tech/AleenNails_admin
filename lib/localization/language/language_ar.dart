@@ -175,22 +175,6 @@ class LanguageAr extends Languages {
   @override
   String get emptyAddress => 'لا يمكن أن يكون العنوان فارغًا!';
 
-  /// ************ Course details ************///
-  @override
-  String get courseDetails => "Course details";
-
-  @override
-  String get labelCourseName => "Course name";
-
-  @override
-  String get labelCourseID => "Course ID";
-
-  @override
-  String get labelCourseAttendees => "Course attendees";
-
-  @override
-  String get labelCourseGuide => "Course guide";
-
   /// ************ Contact details ************///
   @override
   String get contactDetails => "Contact details";
@@ -223,4 +207,75 @@ class LanguageAr extends Languages {
   String get bookingSettingsLabel => "Booking Settings";
   @override
   String get personalSettingsLabel => "Personal Settings";
+
+  /// ************ Client Screens labels ************///
+
+  @override
+  String get clientsLabel => "clients";
+  @override
+  String get clientAppointmentsLabel => "client appointments";
+  @override
+  String get newClientLabel => "new client";
+  @override
+  String get editClientLabel => "edit client";
+  @override
+  String get clientDetailsLabel => "client details";
+  @override
+  String get appointmentsLabel => "appointments";
+  @override
+  String get cancellationLabel => "cancellation";
+  @override
+  String get noShowLabel => "no-show";
+  @override
+  String get birthdayLabel => "birthday";
+  @override
+  String get lastVisitLabel => "last visit";
+  @override
+  String get discountLabel => "discount";
+  @override
+  String get totalRevenueLabel => "total revenue";
+  @override
+  String get trustedClientLabel => "trusted client";
+  @override
+  String get notesLabel => "notes";
+  @override
+  String get showAllLabel => "show all";
+  @override
+  String get fullNameLabel => "full name";
+  @override
+  String get phoneNumberLabel => "phone number";
+  @override
+  String get emailAddressLabel => "email address";
+  @override
+  String get addressLabel => "Address";
+  @override
+  String get permissionsLabel => "permissions";
+  @override
+  String get isTrustedClientLabel => "is trusted client";
+  @override
+  String get trustedClientModalBody =>
+      "If switched off client will not be able automatically book an appointment.";
+  @override
+  String get flashMessageSuccessTitle => "well done!";
+  @override
+  String get flashMessageErrorTitle => "oh snap!";
+  @override
+  String get clientCreatedWronglyBody =>
+      "change a few things up and try submitting again.";
+  @override
+  String get clientUpdatedSuccessfullyBody =>
+      "your client have been updated successfully.";
+  @override
+  String get clientCreatedSuccessfullyBody =>
+      "your client have been created successfully.";
+  @override
+  String get notSetLabel => "not set";
+  @override
+  String get yesLabel => "yes";
+  @override
+  String get noLabel => "no";
+  @override
+  String get emptyAppointmentListLabel => "no appointment added yet";
+  @override
+  String get addNewAppointmentLabel => "add new appointment";
 }

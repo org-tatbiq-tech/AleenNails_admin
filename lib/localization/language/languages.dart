@@ -123,17 +123,6 @@ abstract class Languages {
 
   String get emptyAddress;
 
-  /// ************ Course details ************///
-  String get courseDetails;
-
-  String get labelCourseName;
-
-  String get labelCourseID;
-
-  String get labelCourseAttendees;
-
-  String get labelCourseGuide;
-
   /// ************ Contact details ************///
   String get contactDetails;
 
@@ -155,4 +144,40 @@ abstract class Languages {
   String get businessDetailsLabel;
   String get bookingSettingsLabel;
   String get personalSettingsLabel;
+
+  /// ************ Client Screens labels ************///
+
+  String get clientsLabel;
+  String get clientAppointmentsLabel;
+  String get newClientLabel;
+  String get editClientLabel;
+  String get clientDetailsLabel;
+  String get appointmentsLabel;
+  String get cancellationLabel;
+  String get noShowLabel;
+  String get birthdayLabel;
+  String get lastVisitLabel;
+  String get discountLabel;
+  String get totalRevenueLabel;
+  String get trustedClientLabel;
+  String get notesLabel;
+  String get showAllLabel;
+  String get fullNameLabel;
+  String get phoneNumberLabel;
+  String get emailAddressLabel;
+  String get addressLabel;
+  String get permissionsLabel;
+  String get isTrustedClientLabel;
+  String get trustedClientModalBody;
+  String get flashMessageSuccessTitle;
+  String get flashMessageErrorTitle;
+  String get clientCreatedWronglyBody;
+  String get clientUpdatedSuccessfullyBody;
+  String get clientCreatedSuccessfullyBody;
+  String get notSetLabel;
+  String get yesLabel;
+  String get noLabel;
+
+  String get emptyAppointmentListLabel;
+  String get addNewAppointmentLabel;
 }

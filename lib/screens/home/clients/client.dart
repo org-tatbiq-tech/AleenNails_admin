@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -138,7 +140,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Permissions',
+              Languages.of(context)!.permissionsLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -150,7 +152,7 @@ class _ClientWidgetState extends State<ClientWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                'Is trusted client',
+                Languages.of(context)!.isTrustedClientLabel.toTitleCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText1,
@@ -168,9 +170,13 @@ class _ClientWidgetState extends State<ClientWidget> {
                           enableDrag: true,
                           // showDragPen: true,
                           centerTitle: true,
-                          title: 'Trusted Client',
+                          title: Languages.of(context)!
+                              .trustedClientLabel
+                              .toTitleCase(),
                           child: Text(
-                            'If switched off clients will not be able automatically book an appointment.',
+                            Languages.of(context)!
+                                .trustedClientModalBody
+                                .toCapitalized(),
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
@@ -229,7 +235,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Notes',
+              Languages.of(context)!.notesLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -263,7 +269,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Full Name',
+              Languages.of(context)!.fullNameLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -299,7 +305,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Phone Number',
+              Languages.of(context)!.phoneNumberLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -336,7 +342,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Email Address',
+              Languages.of(context)!.emailAddressLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -372,7 +378,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Address',
+              Languages.of(context)!.addressLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -404,7 +410,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Birthday',
+              Languages.of(context)!.birthdayLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -422,7 +428,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                 maximumDate: maximumDate,
                 initialDateTime: birthdayDate ?? maximumDate,
                 mode: CupertinoDatePickerMode.date,
-                title: 'Birthday',
+                title: Languages.of(context)!.editClientLabel.toTitleCase(),
                 onDateTimeChanged: (DateTime value) => {
                   setState(() {
                     birthdayDateTemp = value;
@@ -454,7 +460,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Discount',
+              Languages.of(context)!.discountLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -497,20 +503,22 @@ class _ClientWidgetState extends State<ClientWidget> {
     importClient() async {
       if (await FlutterContacts.requestPermission()) {
         final contact = await FlutterContacts.openExternalPick();
-        _nameController.text = contact!.displayName;
-        String phoneNumber = contact.phones.isNotEmpty
-            ? contact.phones[0].number
-                .replaceAll('-', '')
-                .replaceAll('+972', '0')
-                .replaceAll('(', '')
-                .replaceAll(')', '')
-                .replaceAll(' ', '')
-            : '';
-        _phoneController.text = phoneNumber;
-        _emailController.text =
-            contact.emails.isNotEmpty ? contact.emails[0].address : '';
-        _addressController.text =
-            contact.addresses.isNotEmpty ? contact.addresses[0].address : '';
+        if (contact != null) {
+          _nameController.text = contact.displayName;
+          String phoneNumber = contact.phones.isNotEmpty
+              ? contact.phones[0].number
+                  .replaceAll('-', '')
+                  .replaceAll('+972', '0')
+                  .replaceAll('(', '')
+                  .replaceAll(')', '')
+                  .replaceAll(' ', '')
+              : '';
+          _phoneController.text = phoneNumber;
+          _emailController.text =
+              contact.emails.isNotEmpty ? contact.emails[0].address : '';
+          _addressController.text =
+              contact.addresses.isNotEmpty ? contact.addresses[0].address : '';
+        }
       }
     }
 
@@ -584,8 +592,12 @@ class _ClientWidgetState extends State<ClientWidget> {
                 Navigator.pop(context),
                 showSuccessFlash(
                   context: context,
-                  successTitle: 'Submitted!',
-                  successBody: 'Client was added to DB successfully!',
+                  successTitle: Languages.of(context)!
+                      .flashMessageSuccessTitle
+                      .toTitleCase(),
+                  successBody: Languages.of(context)!
+                      .clientCreatedSuccessfullyBody
+                      .toCapitalized(),
                   successColor: successPrimaryColor,
                 ),
                 Navigator.pop(context),
@@ -595,8 +607,12 @@ class _ClientWidgetState extends State<ClientWidget> {
                 Navigator.pop(context),
                 showSuccessFlash(
                   context: context,
-                  successTitle: 'Updated!',
-                  successBody: 'Client was updated successfully!',
+                  successTitle: Languages.of(context)!
+                      .flashMessageSuccessTitle
+                      .toTitleCase(),
+                  successBody: Languages.of(context)!
+                      .clientUpdatedSuccessfullyBody
+                      .toCapitalized(),
                   successColor: successPrimaryColor,
                 ),
                 Navigator.pop(context),
@@ -618,15 +634,19 @@ class _ClientWidgetState extends State<ClientWidget> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: widget.client != null ? 'Client Details' : 'New Client',
+            titleText: widget.client != null
+                ? Languages.of(context)!.editClientLabel.toTitleCase()
+                : Languages.of(context)!.newClientLabel.toTitleCase(),
             withBack: true,
             withSave: true,
             withSaveDisabled: isSaveDisabled,
             saveTap: () => saveClient(),
-            customIcon: Icon(
-              Icons.import_contacts_rounded,
-              size: rSize(24),
-            ),
+            customIcon: widget.client == null
+                ? Icon(
+                    Icons.import_contacts_rounded,
+                    size: rSize(24),
+                  )
+                : null,
             customIconTap: () => importClient(),
           ),
         ),
