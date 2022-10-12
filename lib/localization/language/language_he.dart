@@ -194,7 +194,7 @@ class LanguageHe extends Languages {
   @override
   String get notesLabel => "הערות";
   @override
-  String get showAllLabel => "התג הכל";
+  String get showAllLabel => "הצג הכל";
   @override
   String get fullNameLabel => "שם מלא";
   @override
@@ -246,7 +246,7 @@ class LanguageHe extends Languages {
   @override
   String get editLogoLabel => "עריכת לוגו";
   @override
-  String get deleteLogoLabel => "מחקית לוגו";
+  String get deleteLogoLabel => "מחיקת לוגו";
   @override
   String get addLogoLabel => "הוספת לוגו";
   @override
