@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -65,19 +67,27 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   @override
   Widget build(BuildContext context) {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    deleteImage() async {
-      if (_imageFile != null) {
-        setState(() {
-          _isLoading = true;
-        });
-        await settingsMgr.deleteCoverImage().then(
-              (value) => setState(
+    deleteImage() {
+      if (imageUrl.isNotEmpty) {
+        showLoaderDialog(context);
+        settingsMgr.deleteCoverImage().then((value) => {
+              Navigator.pop(context),
+              showSuccessFlash(
+                context: context,
+                successColor: successPrimaryColor,
+                successBody: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successTitle: Languages.of(context)!
+                    .coverPhotoPhotoUploadedSuccessfullyBody
+                    .toCapitalized(),
+              ),
+              setState(
                 (() {
                   _imageFile = null;
-                  _isLoading = false;
                 }),
               ),
-            );
+            });
       }
     }
 
@@ -86,19 +96,11 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
-          primaryButtonText: 'Delete',
-          secondaryButtonText: 'Back',
+          primaryButtonText: Languages.of(context)!.deleteLabel,
+          secondaryButtonText: Languages.of(context)!.backLabel,
           deleteCancelModal: true,
-          primaryAction: () async => {
-            showLoaderDialog(context),
-            await deleteImage(),
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successBody: 'Success',
-              successTitle: 'Logo Photo Deleted Successfully.',
-            ),
+          primaryAction: () => {
+            deleteImage(),
           },
           footerButton: ModalFooter.both,
           child: Column(
@@ -121,14 +123,14 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                 height: rSize(30),
               ),
               Text(
-                'Delete Cover Photo?',
+                '${Languages.of(context)!.deleteCoverPhotoLabel.toCapitalized()}?',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Action can not be undone',
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ],
@@ -174,27 +176,36 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                     child: SizedBox(
                       width: rSize(400),
                       height: rSize(225),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          CustomIcon(
-                            customIconProps: CustomIconProps(
-                              icon: null,
-                              backgroundColor: Colors.transparent,
-                              path: 'assets/icons/camera.png',
-                              containerSize: 80,
+                      child: Visibility(
+                        visible: !_isLoading,
+                        replacement: CustomLoadingIndicator(
+                          customLoadingIndicatorProps:
+                              CustomLoadingIndicatorProps(),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            CustomIcon(
+                              customIconProps: CustomIconProps(
+                                icon: null,
+                                backgroundColor: Colors.transparent,
+                                path: 'assets/icons/camera.png',
+                                containerSize: 80,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: rSize(2),
-                          ),
-                          Text(
-                            'Add Cover Photo',
-                            style: Theme.of(context).textTheme.bodyText2,
-                          )
-                        ],
+                            SizedBox(
+                              height: rSize(2),
+                            ),
+                            Text(
+                              Languages.of(context)!
+                                  .addCoverPhotoLabel
+                                  .toTitleCase(),
+                              style: Theme.of(context).textTheme.bodyText2,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -246,7 +257,9 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                                 ),
                               )
                             },
-                            text: 'Edit Cover Photo',
+                            text: Languages.of(context)!
+                                .editCoverPhotoLabel
+                                .toTitleCase(),
                             isPrimary: true,
                           ),
                         ),
@@ -256,7 +269,9 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                         CustomButton(
                           customButtonProps: CustomButtonProps(
                             onTap: () => {deleteCoverPhoto()},
-                            text: 'Delete Cover Photo',
+                            text: Languages.of(context)!
+                                .deleteCoverPhotoLabel
+                                .toTitleCase(),
                             backgroundColor:
                                 Theme.of(context).colorScheme.error,
                             textColor: Colors.white,
@@ -270,34 +285,39 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
       );
     }
 
-    saveImage() async {
+    saveImage() {
       if (_imageFile != null) {
-        await settingsMgr.uploadCoverImage(_imageFile!);
+        showLoaderDialog(context);
+        settingsMgr.uploadCoverImage(_imageFile!).then((value) => {
+              Navigator.pop(context),
+              showSuccessFlash(
+                context: context,
+                successColor: successPrimaryColor,
+                successBody: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successTitle: Languages.of(context)!
+                    .coverPhotoPhotoUploadedSuccessfullyBody
+                    .toCapitalized(),
+              ),
+              setState(() {
+                isSaveDisabled = true;
+              })
+            });
       }
     }
 
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Cover Photo',
+          titleText: Languages.of(context)!.coverPhotoLabel.toTitleCase(),
           withBack: true,
           barHeight: 110,
           withClipPath: true,
           withSave: true,
           withSaveDisabled: isSaveDisabled,
-          saveTap: () async => {
-            showLoaderDialog(context),
-            await saveImage(),
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successBody: 'Success',
-              successTitle: 'Cover Photo Uploaded Successfully.',
-            ),
-            setState(() {
-              isSaveDisabled = true;
-            })
+          saveTap: () => {
+            saveImage(),
           },
         ),
       ),
@@ -313,16 +333,13 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Your cover photo is the first thing that your customers seen on your profile. Add a photo to give them  insight into what you are all about',
+              Languages.of(context)!.coverPhotoDescription.toCapitalized(),
               style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(
               height: rSize(80),
             ),
-            _isLoading
-                ? CustomLoadingIndicator(
-                    customLoadingIndicatorProps: CustomLoadingIndicatorProps())
-                : renderBusinessCoverPhoto(),
+            renderBusinessCoverPhoto(),
           ],
         ),
       ),

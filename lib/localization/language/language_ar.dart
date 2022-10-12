@@ -252,6 +252,10 @@ class LanguageAr extends Languages {
   @override
   String get deleteLogoLabel => "حذف الشعار";
   @override
+  String get addLogoLabel => "add logo";
+  @override
+  String get addCoverPhotoLabel => "add cover photo";
+  @override
   String get editCoverPhotoLabel => "تحرير صورة الغلاف";
   @override
   String get deleteCoverPhotoLabel => "حذف صورة الغلاف";
@@ -394,6 +398,18 @@ class LanguageAr extends Languages {
   String get chooseFromLibraryLabel => "اختر من المكتبة";
   @override
   String get idLabel => "هوية";
+  @override
+  String get waitingLabel => "waiting";
+  @override
+  String get confirmedLabel => "confirmed";
+  @override
+  String get cancelledLabel => "cancelled";
+  @override
+  String get declinedLabel => "declined";
+  @override
+  String get paidLabel => "paid";
+  @override
+  String get unpaidLabel => "unpaid";
 
   /// ************ Flash Messages ************///
   @override
@@ -410,6 +426,21 @@ class LanguageAr extends Languages {
 
   @override
   String get wpPhotoDeletedSuccessfullyBody => "تم حذف صورة مكان عملك بنجاح";
+  @override
+  String get wpPhotoUploadedSuccessfullyBody =>
+      "your workplace photo have been uploaded Successfully.";
+  @override
+  String get logoPhotoDeletedSuccessfullyBody =>
+      "your logo photo have been deleted Successfully.";
+  @override
+  String get covePhotoPhotoDeletedSuccessfullyBody =>
+      "your cover photo photo have been deleted Successfully.";
+  @override
+  String get logoPhotoUploadedSuccessfullyBody =>
+      "your logo photo have been uploaded Successfully.";
+  @override
+  String get coverPhotoPhotoUploadedSuccessfullyBody =>
+      "your cover photo photo have been uploaded Successfully.";
 
   @override
   String get serviceUpdatedSuccessfullyBody => "تم تعديل الخدمة بنجاح";

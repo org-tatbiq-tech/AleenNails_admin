@@ -117,6 +117,8 @@ abstract class Languages {
   String get profileImageDescription;
   String get editLogoLabel;
   String get deleteLogoLabel;
+  String get addLogoLabel;
+  String get addCoverPhotoLabel;
   String get editCoverPhotoLabel;
   String get deleteCoverPhotoLabel;
   String get deletePhotoLabel;
@@ -191,6 +193,12 @@ abstract class Languages {
   String get takePhotoLabel;
   String get chooseFromLibraryLabel;
   String get idLabel;
+  String get waitingLabel;
+  String get confirmedLabel;
+  String get cancelledLabel;
+  String get declinedLabel;
+  String get paidLabel;
+  String get unpaidLabel;
 
   /// ************ Flash Messages ************///
   String get flashMessageSuccessTitle;
@@ -199,6 +207,11 @@ abstract class Languages {
   String get clientUpdatedSuccessfullyBody;
   String get clientCreatedSuccessfullyBody;
   String get wpPhotoDeletedSuccessfullyBody;
+  String get wpPhotoUploadedSuccessfullyBody;
+  String get logoPhotoDeletedSuccessfullyBody;
+  String get covePhotoPhotoDeletedSuccessfullyBody;
+  String get logoPhotoUploadedSuccessfullyBody;
+  String get coverPhotoPhotoUploadedSuccessfullyBody;
   String get serviceUpdatedSuccessfullyBody;
   String get serviceCreatedSuccessfullyBody;
   String get appointmentUpdatedSuccessfullyBody;

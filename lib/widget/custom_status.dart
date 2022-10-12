@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,21 @@ class CustomStatus extends StatelessWidget {
       }
     }
 
+    String getAppointmentStatusText(AppointmentStatus status) {
+      switch (status) {
+        case AppointmentStatus.confirmed:
+          return Languages.of(context)!.confirmLabel;
+        case AppointmentStatus.cancelled:
+          return Languages.of(context)!.cancelledLabel;
+        case AppointmentStatus.declined:
+          return Languages.of(context)!.declinedLabel;
+        case AppointmentStatus.waiting:
+          return Languages.of(context)!.waitingLabel;
+        default:
+          return Languages.of(context)!.waitingLabel;
+      }
+    }
+
     getPaymentStatusColor(PaymentStatus status) {
       switch (status) {
         case PaymentStatus.paid:
@@ -35,6 +51,17 @@ class CustomStatus extends StatelessWidget {
           return warningPrimaryColor;
         default:
           return informationPrimaryColor;
+      }
+    }
+
+    String getPaymentStatusText(PaymentStatus status) {
+      switch (status) {
+        case PaymentStatus.paid:
+          return Languages.of(context)!.paidLabel;
+        case PaymentStatus.unpaid:
+          return Languages.of(context)!.unpaidLabel;
+        default:
+          return Languages.of(context)!.unpaidLabel;
       }
     }
 
@@ -57,8 +84,10 @@ class CustomStatus extends StatelessWidget {
         ),
         child: Text(
           customStatusProps.appointmentStatus != null
-              ? customStatusProps.appointmentStatus!.name.toUpperCase()
-              : customStatusProps.paymentStatus!.name.toUpperCase(),
+              ? getAppointmentStatusText(customStatusProps.appointmentStatus!)
+                  .toUpperCase()
+              : getPaymentStatusText(customStatusProps.paymentStatus!)
+                  .toUpperCase(),
           style: Theme.of(context).textTheme.headline1?.copyWith(
                 fontSize: rSize(customStatusProps.fontSize),
                 color: customStatusProps.appointmentStatus != null
