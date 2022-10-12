@@ -316,6 +316,10 @@ class LanguageHe extends Languages {
 
   /// ************ Service Labels ************///
   @override
+  String get serviceLabel => "שירות";
+  @override
+  String get servicesLabel => "שירותים";
+  @override
   String get newServiceLabel => "שירות חדש";
   @override
   String get editServiceLabel => "עריכת שירות";
@@ -385,6 +389,8 @@ class LanguageHe extends Languages {
   String get takePhotoLabel => "צלם תמונה";
   @override
   String get chooseFromLibraryLabel => "בחר ממדיה";
+  @override
+  String get idLabel => "מזהה";
 
   /// ************ Flash Messages ************///
   @override
@@ -408,17 +414,13 @@ class LanguageHe extends Languages {
   String get serviceCreatedSuccessfullyBody => "השירות נוצר בהצלחה";
 
   @override
-  String get appointmentUpdatedSuccessfullyBody =>
-      "your appointment have been updated successfully.";
+  String get appointmentUpdatedSuccessfullyBody => "התור עודכן בהצלחה";
   @override
-  String get appointmentCreatedSuccessfullyBody =>
-      "your appointment have been created successfully.";
+  String get appointmentCreatedSuccessfullyBody => "התור נוצר בהצלחה";
   @override
-  String get appointmentCancelledSuccessfullyBody =>
-      "your appointment have been cancelled successfully.";
+  String get appointmentCancelledSuccessfullyBody => "התור בוטל בהצלחה";
   @override
-  String get clientMissingBody => "please select client in order to continue.";
+  String get clientMissingBody => "אנא בחר לקוח כדי להמשיך";
   @override
-  String get serviceMissingBody =>
-      "please select at least one service in order to continue.";
+  String get serviceMissingBody => "אנא בחר שירות אחד לפחות כדי להמשיך";
 }
