@@ -37,7 +37,7 @@ Future<Locale> saveLocale(String languageCode) async {
 
 Future<Locale> loadLocale() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
-  String languageCode = pref.getString(prefSelectedLanguageCode) ?? en;
+  String languageCode = pref.getString(prefSelectedLanguageCode) ?? he;
   return _locale(languageCode);
 }
 
