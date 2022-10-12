@@ -130,9 +130,6 @@ class ClientAppointmentCard extends StatelessWidget {
                     .subtitle2
                     ?.copyWith(fontSize: rSize(12)),
               ),
-              SizedBox(
-                height: rSize(5),
-              ),
               Text(
                 getDateTimeFormat(
                   dateTime: clientAppointmentCardProps
@@ -142,9 +139,6 @@ class ClientAppointmentCard extends StatelessWidget {
                 style: Theme.of(context).textTheme.bodyText2?.copyWith(
                       fontSize: rSize(22),
                     ),
-              ),
-              SizedBox(
-                height: rSize(2),
               ),
               Text(
                 getDateTimeFormat(
