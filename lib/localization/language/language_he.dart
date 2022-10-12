@@ -182,7 +182,7 @@ class LanguageHe extends Languages {
   @override
   String get noShowLabel => "לא הופיע";
   @override
-  String get birthdayLabel => "יום הולדת";
+  String get birthdayLabel => "תאריך לידה";
   @override
   String get lastVisitLabel => "ביקור אחרון";
   @override
