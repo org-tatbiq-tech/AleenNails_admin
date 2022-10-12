@@ -59,7 +59,7 @@ class ClientAppointmentCard extends StatelessWidget {
               dateTime:
                   clientAppointmentCardProps.clientAppointmentDetails.startTime,
               format: 'HH:mm',
-            )} → ${getDateTimeFormat(
+            )} - ${getDateTimeFormat(
               dateTime:
                   clientAppointmentCardProps.clientAppointmentDetails.endTime,
               format: 'HH:mm',
