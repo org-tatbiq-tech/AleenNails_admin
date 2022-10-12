@@ -1,7 +1,7 @@
 import 'package:appointments/localization/localizations_delegate.dart';
 import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
-import 'package:appointments/providers/auth_state.dart';
+import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/services_mgr.dart';
@@ -50,8 +50,8 @@ void main() {
       providers: [
         ChangeNotifierProvider<ThemeNotifier>(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider<LocaleData>(create: (_) => LocaleData()),
-        ChangeNotifierProvider<AuthenticationState>(
-            create: (_) => AuthenticationState()),
+        ChangeNotifierProvider<AuthenticationMgr>(
+            create: (_) => AuthenticationMgr()),
         ChangeNotifierProvider<AppointmentsMgr>(
             create: (_) => AppointmentsMgr()),
         ChangeNotifierProvider<ServicesMgr>(create: (_) => ServicesMgr()),
@@ -71,7 +71,7 @@ class AppointmentsApp extends StatelessWidget {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  Future<bool> getAutoLoginValue(AuthenticationState authData) async {
+  Future<bool> getAutoLoginValue(AuthenticationMgr authData) async {
     String? userAutoLogin = await UserSecureStorage.getAutoLogin();
 
     if (userAutoLogin != null && userAutoLogin == 'true') {
@@ -84,9 +84,9 @@ class AppointmentsApp extends StatelessWidget {
 
   Widget getInitScreen(BuildContext context, isLoggedIn) {
     // return const Landing();
-    // if (isLoggedIn == true) {
-    //   return const HomePage();
-    // }
+    if (isLoggedIn == true) {
+      return const HomeScreen();
+    }
     return const LoginScreen();
   }
 
@@ -141,7 +141,7 @@ class AppointmentsApp extends StatelessWidget {
             builder: (context, theme, localeProv, child) => FutureBuilder(
               future: loadLocale(),
               builder: (context, locale) {
-                return Consumer<AuthenticationState>(
+                return Consumer<AuthenticationMgr>(
                   builder: (context, authData, _) {
                     return FutureBuilder(
                       future: getAutoLoginValue(authData),

@@ -126,7 +126,7 @@ class AppointmentService {
 class Appointment {
   String id; // Appointment ID (created by DB)
   AppointmentStatus status; // Appointment Status
-  String creator; // Appointment creator (which admin/worker/...)
+  AppointmentCreator creator; // Appointment creator (which admin/worker/...)
   String clientName; // Client full name
   String clientPhone; // Client phone number
   String clientImagePath; // Client Image Url
@@ -168,7 +168,7 @@ class Appointment {
   Map<String, dynamic> toJson() {
     return {
       'status': status.toString(),
-      'creator': creator,
+      'creator': creator.toString(),
       'clientName': clientName,
       'clientDocID': clientDocID,
       'clientPhone': clientPhone,
@@ -192,6 +192,13 @@ class Appointment {
       return services;
     }
 
+    AppointmentCreator loadCreator(String creatorStr) {
+      if (creatorStr == 'AppointmentCreator.business') {
+        return AppointmentCreator.business;
+      }
+      return AppointmentCreator.client;
+    }
+
     PaymentStatus loadPaymentStatus(String status) {
       switch (status) {
         case 'PaymentStatus.paid':
@@ -206,7 +213,7 @@ class Appointment {
     return Appointment(
       id: doc["id"],
       status: loadAppointmentStatus(doc["status"]),
-      creator: doc['creator'],
+      creator: loadCreator(doc['creator']),
       clientName: doc['clientName'],
       clientDocID: doc['clientDocID'],
       clientPhone: doc['clientPhone'],

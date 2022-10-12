@@ -7,8 +7,8 @@ import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
-import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
@@ -421,7 +421,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             ),
           ),
           Text(
-            appointment.creator,
+            appointment.creator == AppointmentCreator.business
+                ? Languages.of(context)!.businessLabel.toTitleCase()
+                : Languages.of(context)!.clientLabel.toTitleCase(),
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ],

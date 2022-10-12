@@ -76,7 +76,7 @@ abstract class Languages {
   String get personalSettingsLabel;
 
   /// ************ Client labels ************///
-
+  String get clientLabel;
   String get clientsLabel;
   String get clientAppointmentsLabel;
   String get newClientLabel;
@@ -101,6 +101,7 @@ abstract class Languages {
   String get trustedClientModalBody;
 
   /// ************ Business Info Labels ************///
+  String get businessLabel;
   String get businessNameLabel;
   String get socialMediaLabel;
   String get facebookLabel;
@@ -219,4 +220,6 @@ abstract class Languages {
   String get appointmentCancelledSuccessfullyBody;
   String get clientMissingBody;
   String get serviceMissingBody;
+  String get adminMissingBody;
+  String get adminMissingTitle;
 }

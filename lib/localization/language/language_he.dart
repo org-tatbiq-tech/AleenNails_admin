@@ -164,7 +164,8 @@ class LanguageHe extends Languages {
   String get personalSettingsLabel => "הגדרות אישיות";
 
   /// ************ Client labels ************///
-
+  @override
+  String get clientLabel => "הלקוח";
   @override
   String get clientsLabel => "לקוחות";
   @override
@@ -212,6 +213,8 @@ class LanguageHe extends Languages {
       "אם כבוי הלקוח לא יוכל להזמין פגישה אוטומטית";
 
   /// ************ Business Info Labels ************///
+  @override
+  String get businessLabel => "העסק";
   @override
   String get businessNameLabel => "עובד";
   @override
@@ -454,4 +457,8 @@ class LanguageHe extends Languages {
   String get clientMissingBody => "אנא בחר לקוח כדי להמשיך";
   @override
   String get serviceMissingBody => "אנא בחר שירות אחד לפחות כדי להמשיך";
+  @override
+  String get adminMissingTitle => "אינך מנהל!";
+  @override
+  String get adminMissingBody => "האימייל הזה לא רשום כמנהל";
 }

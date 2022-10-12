@@ -1,12 +1,13 @@
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/providers/auth_state.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/utils/secure_storage.dart';
-import 'package:common_widgets/custom_button_widget.dart';
 import 'package:appointments/widget/custom_container.dart';
-import 'package:common_widgets/custom_input_field.dart';
 import 'package:appointments/widget/custom_text_button.dart';
+import 'package:common_widgets/custom_button_widget.dart';
+import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -84,24 +85,32 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   Future<void> validateAndLogin(BuildContext context) async {
-    /// To remove in prod //
-    Navigator.pushReplacementNamed(context, '/home');
-    return;
     final form = _formKey.currentState;
-    final authState = Provider.of<AuthenticationState>(context, listen: false);
+    final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
     if (form!.validate()) {
       showLoaderDialog(context);
-      final UserCredential? user = await authState.signInWithEmailAndPassword(
-          _userEmailController.text, _passwordController.text, errorCallback);
-      final userData = user?.user;
-      if (userData != null) {
-        if (_rememberMeValue) {
-          UserSecureStorage.setAutoLogin('true');
-        } else {
-          UserSecureStorage.deleteAutoLogin();
+      authMgr.checkIfAdmin(_userEmailController.text.trim()).then((res) async {
+        if (!res) {
+          showErrorFlash(
+            context: context,
+            errorTitle: 'Not admin!',
+            errorBody: 'Provided email is not admin!',
+          );
+          Navigator.pop(context);
+          return;
         }
-        Navigator.pushReplacementNamed(context, '/home');
-      }
+        final UserCredential? user = await authMgr.signInWithEmailAndPassword(
+            _userEmailController.text, _passwordController.text, errorCallback);
+        final userData = user?.user;
+        if (userData != null) {
+          if (_rememberMeValue) {
+            UserSecureStorage.setAutoLogin('true');
+          } else {
+            UserSecureStorage.deleteAutoLogin();
+          }
+          Navigator.pushReplacementNamed(context, '/home');
+        }
+      });
     }
   }
 

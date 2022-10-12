@@ -168,7 +168,8 @@ class LanguageEn extends Languages {
   String get personalSettingsLabel => "personal settings";
 
   /// ************ Client labels ************///
-
+  @override
+  String get clientLabel => "client";
   @override
   String get clientsLabel => "clients";
   @override
@@ -216,6 +217,8 @@ class LanguageEn extends Languages {
       "If switched off client will not be able automatically book an appointment.";
 
   /// ************ Business Info Labels ************///
+  @override
+  String get businessLabel => "business";
   @override
   String get businessNameLabel => "working";
   @override
@@ -469,4 +472,8 @@ class LanguageEn extends Languages {
   @override
   String get serviceMissingBody =>
       "please select at least one service in order to continue.";
+  @override
+  String get adminMissingTitle => "Not admin";
+  @override
+  String get adminMissingBody => "This email is not registered as Admin";
 }

@@ -5,8 +5,8 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
-import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
@@ -187,7 +187,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         clientPhone: selectedClient!.phone,
         clientImagePath: selectedClient!.imagePath,
         creationDate: DateTime.now(),
-        creator: 'Business', // will be used as enum AppointmentCreator
+        creator: AppointmentCreator
+            .business, // will be used as enum AppointmentCreator
         date: startDateTime,
         paymentStatus: PaymentStatus.unpaid,
         services: selectedServices,

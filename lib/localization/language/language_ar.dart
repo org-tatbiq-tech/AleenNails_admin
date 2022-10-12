@@ -166,7 +166,8 @@ class LanguageAr extends Languages {
   String get personalSettingsLabel => "اعدادات شخصية";
 
   /// ************ Client labels ************///
-
+  @override
+  String get clientLabel => "العميل";
   @override
   String get clientsLabel => "عملاء";
   @override
@@ -214,6 +215,8 @@ class LanguageAr extends Languages {
       "في حالة الإغلاق ، لن يتمكن العميل من حجز موعد تلقائيًا.";
 
   /// ************ Business Info Labels ************///
+  @override
+  String get businessLabel => "العمل";
   @override
   String get businessNameLabel => "عمل";
   @override
@@ -457,4 +460,8 @@ class LanguageAr extends Languages {
   String get clientMissingBody => "الرجاء تحديد العميل للمتابعة";
   @override
   String get serviceMissingBody => "يرجى تحديد خدمة واحدة على الأقل للمتابعة";
+  @override
+  String get adminMissingTitle => "لست مشرف!";
+  @override
+  String get adminMissingBody => "هذا البريد الالكتروني غير مسجّل كمشرف";
 }

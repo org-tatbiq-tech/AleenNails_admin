@@ -1,16 +1,17 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/widget/custom_container.dart';
+import 'package:appointments/widget/custom_text_button.dart';
+import 'package:common_widgets/custom_button_widget.dart';
+import 'package:common_widgets/custom_input_field.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/custom_button_widget.dart';
-import 'package:appointments/widget/custom_container.dart';
-import 'package:common_widgets/custom_input_field.dart';
-import 'package:appointments/widget/custom_text_button.dart';
-import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import '../../providers/auth_state.dart';
+
+import '../../providers/auth_mgr.dart';
 
 class RegisterMainScreen extends StatefulWidget {
   const RegisterMainScreen({Key? key}) : super(key: key);
@@ -91,7 +92,7 @@ class _RegisterMainScreenState extends State<RegisterMainScreen>
 
   void validateAndRegister() async {
     final form = _formKey.currentState;
-    final authState = Provider.of<AuthenticationState>(context, listen: false);
+    final authState = Provider.of<AuthenticationMgr>(context, listen: false);
     if (form!.validate()) {
       showLoaderDialog(context);
       final UserCredential? user = await authState.registerAccount(

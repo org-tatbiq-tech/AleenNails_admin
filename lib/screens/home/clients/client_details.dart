@@ -35,27 +35,6 @@ class _ClientDetailsState extends State<ClientDetails> {
   @override
   void initState() {
     super.initState();
-    final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-    if (clientsMgr.selectedClient.imagePath.isNotEmpty) {
-      clientsMgr.getClientImage(clientsMgr.selectedClient.imagePath).then(
-            (url) => {
-              if (imageUrl == 'notFound')
-                {
-                  setState(
-                    (() {}),
-                  ),
-                }
-              else
-                {
-                  setState(
-                    (() {
-                      imageUrl = url;
-                    }),
-                  ),
-                },
-            },
-          );
-    }
   }
 
   @override
@@ -552,6 +531,111 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
+    Widget renderDetailsBody() {
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      if (clientsMgr.selectedClient.imagePath.isNotEmpty) {
+        clientsMgr.getClientImage(clientsMgr.selectedClient.imagePath).then(
+              (url) => {
+                if (imageUrl == 'notFound')
+                  {
+                    setState(
+                      (() {}),
+                    ),
+                  }
+                else
+                  {
+                    setState(
+                      (() {
+                        imageUrl = url;
+                      }),
+                    ),
+                  },
+              },
+            );
+      }
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(20),
+            ),
+            child: Column(
+              children: [
+                renderHeader(clientsMgr.selectedClient),
+                FadeAnimation(
+                  positionType: PositionType.bottom,
+                  delay: 0.4,
+                  child: renderActions(clientsMgr.selectedClient),
+                ),
+                SizedBox(
+                  height: rSize(24),
+                ),
+                FadeAnimation(
+                  positionType: PositionType.top,
+                  delay: 0.5,
+                  child: renderStatics(clientsMgr.selectedClient),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              padding: EdgeInsets.symmetric(
+                horizontal: rSize(30),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: rSize(30),
+                  ),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.6,
+                    child: renderBirthday(clientsMgr.selectedClient),
+                  ),
+                  SizedBox(
+                    height: rSize(24),
+                  ),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.7,
+                    child: renderLastVisit(clientsMgr.selectedClient),
+                  ),
+                  SizedBox(
+                    height: rSize(24),
+                  ),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.7,
+                    child: renderTotalRevenue(clientsMgr.selectedClient),
+                  ),
+                  SizedBox(
+                    height: rSize(24),
+                  ),
+                  FadeAnimation(
+                    positionType: PositionType.right,
+                    delay: 0.8,
+                    child: renderNotes(clientsMgr.selectedClient),
+                  ),
+                  SizedBox(
+                    height: rSize(40),
+                  ),
+                  renderAppointments(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
     return Consumer<ClientsMgr>(
       builder: (context, clientsMgr, _) {
         return Scaffold(
@@ -580,88 +664,7 @@ class _ClientDetailsState extends State<ClientDetails> {
           body: !clientsMgr.isSelectedClientLoaded
               ? CustomLoadingIndicator(
                   customLoadingIndicatorProps: CustomLoadingIndicatorProps())
-              : Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: rSize(20),
-                      ),
-                      child: Column(
-                        children: [
-                          renderHeader(clientsMgr.selectedClient),
-                          FadeAnimation(
-                            positionType: PositionType.bottom,
-                            delay: 0.4,
-                            child: renderActions(clientsMgr.selectedClient),
-                          ),
-                          SizedBox(
-                            height: rSize(24),
-                          ),
-                          FadeAnimation(
-                            positionType: PositionType.top,
-                            delay: 0.5,
-                            child: renderStatics(clientsMgr.selectedClient),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: rSize(30),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: rSize(30),
-                            ),
-                            FadeAnimation(
-                              positionType: PositionType.right,
-                              delay: 0.6,
-                              child: renderBirthday(clientsMgr.selectedClient),
-                            ),
-                            SizedBox(
-                              height: rSize(24),
-                            ),
-                            FadeAnimation(
-                              positionType: PositionType.right,
-                              delay: 0.7,
-                              child: renderLastVisit(clientsMgr.selectedClient),
-                            ),
-                            SizedBox(
-                              height: rSize(24),
-                            ),
-                            FadeAnimation(
-                              positionType: PositionType.right,
-                              delay: 0.7,
-                              child:
-                                  renderTotalRevenue(clientsMgr.selectedClient),
-                            ),
-                            SizedBox(
-                              height: rSize(24),
-                            ),
-                            FadeAnimation(
-                              positionType: PositionType.right,
-                              delay: 0.8,
-                              child: renderNotes(clientsMgr.selectedClient),
-                            ),
-                            SizedBox(
-                              height: rSize(40),
-                            ),
-                            renderAppointments(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              : renderDetailsBody(),
         );
       },
     );
