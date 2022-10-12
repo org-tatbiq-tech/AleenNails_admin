@@ -1,10 +1,12 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
@@ -130,8 +132,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
     if (selectedClient == null) {
       showErrorFlash(
         context: context,
-        errorTitle: 'Error',
-        errorBody: 'Please select client.',
+        errorTitle: Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
+        errorBody: Languages.of(context)!.clientMissingBody.toCapitalized(),
         errorColor: errorPrimaryColor,
       );
       return false;
@@ -139,8 +141,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
     if (selectedServices.isEmpty) {
       showErrorFlash(
         context: context,
-        errorTitle: 'Error',
-        errorBody: 'Please select at least one service.',
+        errorTitle: Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
+        errorBody: Languages.of(context)!.serviceMissingBody.toTitleCase(),
         errorColor: errorPrimaryColor,
       );
       return false;
@@ -198,8 +200,12 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               Navigator.pop(context),
               showSuccessFlash(
                 context: context,
-                successTitle: 'Submitted!',
-                successBody: 'Appointment was added successfully!',
+                successTitle: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successBody: Languages.of(context)!
+                    .appointmentCreatedSuccessfullyBody
+                    .toTitleCase(),
                 successColor: successPrimaryColor,
               ),
               Navigator.pop(context),
@@ -209,8 +215,12 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               Navigator.pop(context),
               showSuccessFlash(
                 context: context,
-                successTitle: 'Submitted!',
-                successBody: 'Appointment was updated successfully!',
+                successTitle: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successBody: Languages.of(context)!
+                    .appointmentUpdatedSuccessfullyBody
+                    .toTitleCase(),
                 successColor: successPrimaryColor,
               ),
               Navigator.pop(context),
@@ -270,7 +280,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'Services',
+                  Languages.of(context)!.servicesLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -288,7 +298,9 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                                     ),
                                   ),
                                 ),
-                            text: 'Add Service',
+                            text: Languages.of(context)!
+                                .addServiceLabel
+                                .toTitleCase(),
                             fontSize: rSize(14),
                             textColor: darken(
                               Theme.of(context).colorScheme.secondary,
@@ -310,7 +322,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           ),
           selectedServices.isEmpty
               ? CustomInputFieldButton(
-                  text: 'Choose Service',
+                  text: Languages.of(context)!.chooseServiceLabel.toTitleCase(),
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -351,7 +363,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     right: rSize(10),
                   ),
                   child: Text(
-                    'Start Date & Time',
+                    Languages.of(context)!.startDateTimeLabel.toTitleCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
@@ -369,7 +381,9 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       minimumDate: getMinDate(),
                       minuteInterval: 5,
                       initialDateTime: startDateTime,
-                      title: 'Start Date & Time',
+                      title: Languages.of(context)!
+                          .startDateTimeLabel
+                          .toTitleCase(),
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
                           startDateTimeTemp = value;
@@ -402,10 +416,12 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     left: rSize(10),
                     right: rSize(10),
                   ),
-                  child: Text('End',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2),
+                  child: Text(
+                    Languages.of(context)!.endLabel.toTitleCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                 ),
                 CustomInputFieldButton(
                   isDisabled: true,
@@ -465,7 +481,9 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          'Select a client or leave empty for walk-in',
+                          Languages.of(context)!
+                              .walkInClientLabel
+                              .toCapitalized(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodyText1,
@@ -514,7 +532,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                 right: rSize(10),
               ),
               child: Text(
-                'Notes',
+                Languages.of(context)!.notesLabel.toTitleCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2,
@@ -548,8 +566,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
             titleText: widget.appointment != null
-                ? 'Edit Appointment'
-                : 'New Appointment',
+                ? Languages.of(context)!.editAppointmentLabel.toTitleCase()
+                : Languages.of(context)!.newAppointmentLabel.toTitleCase(),
             withBack: true,
             withClipPath: true,
             barHeight: 110,

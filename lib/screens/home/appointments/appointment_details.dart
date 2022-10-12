@@ -1,5 +1,6 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
@@ -7,6 +8,7 @@ import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_status.dart';
@@ -100,8 +102,11 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             showSuccessFlash(
               context: context,
               successColor: successPrimaryColor,
-              successTitle: 'Success',
-              successBody: 'Appointment Cancelled Successfully.',
+              successTitle:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successBody: Languages.of(context)!
+                  .appointmentCancelledSuccessfullyBody
+                  .toCapitalized(),
             ),
             Navigator.pop(context),
           });
@@ -118,8 +123,11 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             showSuccessFlash(
               context: context,
               successColor: successPrimaryColor,
-              successTitle: 'Success',
-              successBody: 'Checkout Successfully Confirmed.',
+              successTitle:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successBody: Languages.of(context)!
+                  .appointmentUpdatedSuccessfullyBody
+                  .toCapitalized(),
             ),
             Navigator.pop(context),
           });
@@ -130,9 +138,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
-          primaryButtonText: 'Cancel',
+          primaryButtonText: Languages.of(context)!.cancelLabel.toUpperCase(),
           primaryAction: () => {cancelAppointmentClicked(appointment)},
-          secondaryButtonText: 'Back',
+          secondaryButtonText: Languages.of(context)!.backLabel.toUpperCase(),
           deleteCancelModal: true,
           footerButton: ModalFooter.both,
           child: Column(
@@ -155,14 +163,16 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 height: rSize(30),
               ),
               Text(
-                'Cancel this appointment?',
+                Languages.of(context)!
+                    .cancelThisAppointmentLabel
+                    .toCapitalized(),
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Action can not be undone',
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ],
@@ -215,7 +225,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     width: rSize(10),
                   ),
                   Text(
-                    'Add Service',
+                    Languages.of(context)!.addServiceLabel.toTitleCase(),
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                   SizedBox(
@@ -239,7 +249,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     width: rSize(10),
                   ),
                   Text(
-                    'Discount',
+                    Languages.of(context)!.discountLabel.toTitleCase(),
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ],
@@ -251,7 +261,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'Total'.toUpperCase(),
+                  Languages.of(context)!.totalLabel.toUpperCase(),
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
@@ -284,7 +294,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                           onTap: () => setState(() {
                             isCheckoutScreen = false;
                           }),
-                          text: 'Back',
+                          text: Languages.of(context)!.backLabel.toUpperCase(),
                           isPrimary: false,
                           isSecondary: true,
                         ),
@@ -302,7 +312,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                                 onTap: () => {
                                   confirmCheckout(appointment),
                                 },
-                                text: 'Confirm',
+                                text: Languages.of(context)!
+                                    .confirmLabel
+                                    .toUpperCase(),
                                 isPrimary: true,
                                 isSecondary: false,
                               ),
@@ -348,7 +360,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       child: CustomButton(
                         customButtonProps: CustomButtonProps(
                           onTap: () => {bookAgainAction()},
-                          text: 'Book Again',
+                          text: Languages.of(context)!
+                              .bookAgainLabel
+                              .toTitleCase(),
                           isPrimary: false,
                           isSecondary: true,
                         ),
@@ -368,7 +382,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                                   onTap: () => setState(() {
                                     isCheckoutScreen = true;
                                   }),
-                                  text: 'Checkout',
+                                  text: Languages.of(context)!
+                                      .checkoutLabel
+                                      .toTitleCase(),
                                   isPrimary: true,
                                   isSecondary: false,
                                 ),
@@ -391,7 +407,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            'ID: ${appointment.id}',
+            '${Languages.of(context)!.idLabel.toUpperCase()}: ${appointment.id}',
             style: Theme.of(context).textTheme.bodyText1,
           ),
           Padding(
@@ -424,7 +440,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             positionType: PositionType.right,
             delay: 0.6,
             child: Text(
-              'Services ($servicesLength)',
+              '${Languages.of(context)!.servicesLabel.toTitleCase()} ($servicesLength)',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -537,7 +553,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Notes',
+              Languages.of(context)!.notesLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -547,7 +563,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             ),
             ReadMoreText(
               appointment.notes.isEmpty
-                  ? 'There is no notes.'
+                  ? Languages.of(context)!.notSetLabel.toCapitalized()
                   : appointment.notes,
               trimLines: 2,
             ),
@@ -638,7 +654,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: isCheckoutScreen ? 'Checkout' : 'Appointment Details',
+          titleText: isCheckoutScreen
+              ? Languages.of(context)!.checkoutLabel.toTitleCase()
+              : Languages.of(context)!.appointmentDetailsLabel.toTitleCase(),
           withBack: true,
           barHeight: 110,
           withClipPath: true,

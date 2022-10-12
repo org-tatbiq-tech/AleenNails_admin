@@ -321,6 +321,10 @@ class LanguageEn extends Languages {
 
   /// ************ Service Labels ************///
   @override
+  String get serviceLabel => "service";
+  @override
+  String get servicesLabel => "services";
+  @override
   String get newServiceLabel => "new service";
   @override
   String get editServiceLabel => "edit service";
@@ -390,6 +394,8 @@ class LanguageEn extends Languages {
   String get takePhotoLabel => "take a photo";
   @override
   String get chooseFromLibraryLabel => "choose from library";
+  @override
+  String get idLabel => "id";
 
   /// ************ Flash Messages ************///
   @override
@@ -417,4 +423,19 @@ class LanguageEn extends Languages {
   @override
   String get serviceCreatedSuccessfullyBody =>
       "your service have been created successfully.";
+
+  @override
+  String get appointmentUpdatedSuccessfullyBody =>
+      "your appointment have been updated successfully.";
+  @override
+  String get appointmentCreatedSuccessfullyBody =>
+      "your appointment have been created successfully.";
+  @override
+  String get appointmentCancelledSuccessfullyBody =>
+      "your appointment have been cancelled successfully.";
+  @override
+  String get clientMissingBody => "please select client in order to continue.";
+  @override
+  String get serviceMissingBody =>
+      "please select at least one service in order to continue.";
 }

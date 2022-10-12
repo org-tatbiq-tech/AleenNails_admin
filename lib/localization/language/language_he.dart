@@ -406,4 +406,19 @@ class LanguageHe extends Languages {
 
   @override
   String get serviceCreatedSuccessfullyBody => "השירות נוצר בהצלחה";
+
+  @override
+  String get appointmentUpdatedSuccessfullyBody =>
+      "your appointment have been updated successfully.";
+  @override
+  String get appointmentCreatedSuccessfullyBody =>
+      "your appointment have been created successfully.";
+  @override
+  String get appointmentCancelledSuccessfullyBody =>
+      "your appointment have been cancelled successfully.";
+  @override
+  String get clientMissingBody => "please select client in order to continue.";
+  @override
+  String get serviceMissingBody =>
+      "please select at least one service in order to continue.";
 }
