@@ -1,6 +1,5 @@
 import 'package:appointments/localization/localizations_delegate.dart';
 import 'package:appointments/localization/utils.dart';
-import 'package:appointments/providers/app_data.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_state.dart';
 import 'package:appointments/providers/clients_mgr.dart';
@@ -58,7 +57,6 @@ void main() {
         ChangeNotifierProvider<ServicesMgr>(create: (_) => ServicesMgr()),
         ChangeNotifierProvider<ClientsMgr>(create: (_) => ClientsMgr()),
         ChangeNotifierProvider<SettingsMgr>(create: (_) => SettingsMgr()),
-        ChangeNotifierProvider<AppData>(create: (_) => AppData()),
       ],
       child: AppointmentsApp(),
     ),
