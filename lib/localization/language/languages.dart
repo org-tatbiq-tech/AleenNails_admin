@@ -153,6 +153,8 @@ abstract class Languages {
   String get reasonHint;
 
   /// ************ Service Labels ************///
+  String get serviceLabel;
+  String get servicesLabel;
   String get newServiceLabel;
   String get editServiceLabel;
   String get serviceNameLabel;
@@ -188,6 +190,7 @@ abstract class Languages {
   String get cancelLabel;
   String get takePhotoLabel;
   String get chooseFromLibraryLabel;
+  String get idLabel;
 
   /// ************ Flash Messages ************///
   String get flashMessageSuccessTitle;
@@ -198,4 +201,9 @@ abstract class Languages {
   String get wpPhotoDeletedSuccessfullyBody;
   String get serviceUpdatedSuccessfullyBody;
   String get serviceCreatedSuccessfullyBody;
+  String get appointmentUpdatedSuccessfullyBody;
+  String get appointmentCreatedSuccessfullyBody;
+  String get appointmentCancelledSuccessfullyBody;
+  String get clientMissingBody;
+  String get serviceMissingBody;
 }
