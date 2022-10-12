@@ -474,7 +474,7 @@ class _DayDetailsState extends State<DayDetails> {
                 height: rSize(20),
               ),
               Text(
-                'Set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day',
+                'set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day',
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontSize: rSize(14),
                     ),

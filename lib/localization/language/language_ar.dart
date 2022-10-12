@@ -3,33 +3,7 @@ import 'languages.dart';
 class LanguageAr extends Languages {
   /// ************ App labels ************///
   @override
-  String get appName => "Studios";
-
-  /// ************ Common labels ************///
-  @override
-  String get error => "خطأ!";
-
-  @override
-  String get success => "نجحت!";
-
-  @override
-  String get sent => "أُرسل!";
-
-  @override
-  String get successSent =>
-      "تم ارسال بريد لاستعادة كلمة السر بنجاح, من فضلك تحقق من بريدك!";
-
-  @override
-  String get submit => "إرسال";
-
-  @override
-  String get labelSelectLanguage => "اختر لغة";
-
-  @override
-  String get labelContinue => "Continue";
-
-  @override
-  String get wentWrong => "Something went wrong!";
+  String get appName => "Aleen Nails";
 
   /// ************ Landing labels ************///
   @override
@@ -70,28 +44,28 @@ class LanguageAr extends Languages {
 
   /// ************ Login labels ************///
   @override
-  String get labelSignIn => "تسجيل الدخول";
+  String get labelSignIn => "Sign In";
 
   @override
-  String get labelEmail => "البريد الالكتروني";
+  String get labelEmail => "Email";
 
   @override
-  String get labelPassword => "كلمة السر";
+  String get labelPassword => "Password";
 
   @override
-  String get labelForgotPassword => "نسيت كلمة السر؟";
+  String get labelForgotPassword => "Forgot password?";
 
   @override
-  String get labelRememberMe => "تذكرني";
+  String get labelRememberMe => "Remember me";
 
   @override
-  String get labelLogin => "دخول";
+  String get labelLogin => "Login";
 
   @override
-  String get labelNoAccount => "لم تسجّل بعد؟ ";
+  String get labelNoAccount => "Do NOT have an account? ";
 
   @override
-  String get labelRegisterNow => "سجّل الان!";
+  String get labelRegisterNow => "Register now!";
 
   @override
   String get labelEnterLoginDetails =>
@@ -102,32 +76,30 @@ class LanguageAr extends Languages {
 
   /// ************ Forgot pass labels ************///
   @override
-  String get labelForgot => "نسيت";
+  String get labelForgot => "Forgot";
 
   @override
-  String get labelFPassword => "كلمة السر؟";
+  String get labelFPassword => "Password?";
 
   @override
-  String get labelFMessage => "لا تقلق!\nأرجوك أدخل بريدك الالكتروني";
+  String get labelFMessage =>
+      "Do not worry! it happens.\nPlease enter email associated with your account";
 
   /// ************ Registration labels ************///
   @override
-  String get labelRegister => "تسجيل";
+  String get labelRegister => "Register";
 
   @override
-  String get registerSuccess => "أهلا وسهلا! تم تسجيلك بنجاح";
+  String get registerSuccess => "Welcome! you have been registered!";
 
   @override
-  String get labelAlreadyHaveAcc => "سجّلت من قبل؟ ";
+  String get labelAlreadyHaveAcc => "Already have an account? ";
 
   @override
-  String get labelLoginNow => "سجّل دخولك!";
+  String get labelLoginNow => "Sing in!";
 
   @override
-  String get labelRepeatPass => "كرر كلمة السر";
-
-  @override
-  String get labelSignOut => "تسجيل الخروج";
+  String get labelRepeatPass => "Repeat password";
 
   @override
   String get labelRegistrationConfirmMsg => "By register you are agree to our";
@@ -148,20 +120,20 @@ class LanguageAr extends Languages {
 
   @override
   String get labelMobileCodeSent =>
-      "يرجى التحقق من هاتفك ، تم إرسال رقم التحقق";
+      "Please check your phone, verification code sent";
 
   @override
-  String get labelChange => "تغير";
+  String get labelChange => "Change";
 
   @override
-  String get labelResend => "إعادة إرسال";
+  String get labelResend => "Resend";
 
   /// ************ validation messages ************///
   @override
-  String get validPhone => 'الرجاء إدخال رقم الهاتف بشكل صحيح!';
+  String get validPhone => 'Please enter valid phone number!';
 
   @override
-  String get emptyUser => 'لا يمكن أن يكون اسم جهة الاتصال فارغًا!';
+  String get emptyUser => 'Contact name can not be empty';
 
   @override
   String get emptyEmail => 'Email can not be empty';
@@ -173,42 +145,29 @@ class LanguageAr extends Languages {
   String get passwordMismatch => 'Passwords mismatch';
 
   @override
-  String get emptyAddress => 'لا يمكن أن يكون العنوان فارغًا!';
-
-  /// ************ Contact details ************///
-  @override
-  String get contactDetails => "Contact details";
-
-  @override
-  String get labelContactName => "Name";
-
-  @override
-  String get labelContactPhone => "Phone";
-
-  @override
-  String get labelContactAddress => "Address";
+  String get emptyAddress => 'Address can not be empty';
 
   /// ************ Calendar labels ************///
   @override
-  String get monthLabel => "month";
+  String get monthLabel => "Month";
   @override
-  String get weekLabel => "week";
+  String get weekLabel => "Week";
 
   /// ************ Settings labels ************///
   @override
-  String get reviewRatingLabel => "Reviews & Ratings";
+  String get reviewRatingLabel => "reviews & ratings";
   @override
-  String get serviceSetupLabel => "Services Setup";
+  String get serviceSetupLabel => "services setup";
   @override
-  String get scheduleManagementLabel => "Schedule Management";
+  String get scheduleManagementLabel => "schedule management";
   @override
-  String get businessDetailsLabel => "Business Details";
+  String get businessDetailsLabel => "business details";
   @override
-  String get bookingSettingsLabel => "Booking Settings";
+  String get bookingSettingsLabel => "booking settings";
   @override
-  String get personalSettingsLabel => "Personal Settings";
+  String get personalSettingsLabel => "personal settings";
 
-  /// ************ Client Screens labels ************///
+  /// ************ Client labels ************///
 
   @override
   String get clientsLabel => "clients";
@@ -255,6 +214,184 @@ class LanguageAr extends Languages {
   @override
   String get trustedClientModalBody =>
       "If switched off client will not be able automatically book an appointment.";
+
+  /// ************ Business Info Labels ************///
+  @override
+  String get businessNameLabel => "working";
+  @override
+  String get socialMediaLabel => "social media";
+  @override
+  String get facebookLabel => "facebook";
+  @override
+  String get instagramLabel => "instagram";
+  @override
+  String get websiteLabel => "website";
+  @override
+  String get businessDescriptionLabel => "business description";
+  @override
+  String get logoLabel => "logo";
+  @override
+  String get logoDescription =>
+      "Upload your business logo so its visible on your profile.";
+  @override
+  String get coverPhotoLabel => "cover photo";
+  String get coverPhotoDescription =>
+      "Your cover photo is the first thing that your customers seen on your profile. Add a photo to give them  insight into what you are all about";
+  @override
+  String get workplacePhotoLabel => "workplace photo";
+  @override
+  @override
+  String get workplacePhotoDescription =>
+      "Give clients a sneak peek of your space before they even walk through the door.";
+  @override
+  String get profileImagesLabel => "profile images";
+  @override
+  String get profileImageDescription =>
+      "What is the first thing you want clients to see about your business? Remember, new clients want to see what they could look like with your services.";
+  @override
+  String get editLogoLabel => "edit logo";
+  @override
+  String get deleteLogoLabel => "delete logo";
+  @override
+  String get editCoverPhotoLabel => "edit cover photo";
+  @override
+  String get deleteCoverPhotoLabel => "delete cover photo";
+  @override
+  String get deletePhotoLabel => "delete photo";
+
+  /// ************ Appointment Labels ************///
+  @override
+  String get emptyAppointmentListLabel => "no appointment added yet";
+  @override
+  String get emptyAppointmentTimeListLabel => "no appointment on this day";
+  @override
+  String get addNewAppointmentLabel => "add new appointment";
+  @override
+  String get newAppointmentLabel => "new appointment";
+  @override
+  String get editAppointmentLabel => "edit appointment";
+  @override
+  String get appointmentDetailsLabel => "appointment details";
+  @override
+  String get chooseServiceLabel => "choose service";
+  @override
+  String get walkInClientLabel => "select a client or leave empty from walk-in";
+  @override
+  String get totalLabel => "total";
+  @override
+  String get todayLabel => "today";
+  @override
+  String get bookAgainLabel => "book again";
+  @override
+  String get checkoutLabel => "checkout";
+  @override
+  String get cancelThisAppointmentLabel => "cancel this appointment";
+  @override
+  String get addServiceLabel => "add service";
+
+  /// ************ Schedule Management Labels ************///
+  @override
+  String get workingDaysLabel => "working days";
+  @override
+  String get unavailabilityLabel => "unavailability";
+  @override
+  String get unavailabilityListLabel => "unavailability list";
+  @override
+  String get businessHoursNotesLabel => "business hours notes";
+  @override
+  String get businessHoursNotesHint =>
+      "short description of your business working hours (recommended)";
+  @override
+  String get breakLabel => "break";
+  @override
+  String get breaksLabel => "breaks";
+  @override
+  String get addBreakLabel => "add break";
+  @override
+  String get workingOnThisDayLabel => "working on this day";
+  @override
+  String get dayDetailsDescriptionLabel =>
+      "set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day.";
+  @override
+  String get startDateTimeLabel => "start date & time";
+  @override
+  String get reasonLabel => "reason";
+  @override
+  String get reasonHint => "short description of your reason (recommended)";
+
+  /// ************ Service Labels ************///
+  @override
+  String get newServiceLabel => "new service";
+  @override
+  String get editServiceLabel => "edit service";
+  @override
+  String get serviceNameLabel => "service name";
+  @override
+  String get priceLabel => "price";
+  @override
+  String get durationLabel => "duration";
+  @override
+  String get colorLabel => "color";
+  @override
+  String get descriptionLabel => "description";
+  @override
+  String get deleteServiceLabel => "delete service";
+  @override
+  String get deleteThisServiceLabel => "delete this service";
+  @override
+  String get messageToClientLabel => "message to client";
+  @override
+  String get messageToClientModalBody =>
+      "this message will be sent to your client before the appointment. E.g please don't eat 1 hour before the appointment.";
+  @override
+  String get clientBookPermissionLabel => "allow client to book online";
+  @override
+  String get clientBookPermissionModalBody =>
+      "if switched off clients will not be able to book this service using the app. You will have to manually add appointment to your calendar";
+
+  /// ************ Common Labels ************///
+  @override
+  String get notSetLabel => "not set";
+  @override
+  String get yesLabel => "yes";
+  @override
+  String get noLabel => "no";
+  @override
+  String get submitLabel => "submit";
+  @override
+  String get signOutLabel => "Sign out";
+  @override
+  String get continueLabel => "continue";
+  @override
+  String get deleteLabel => "delete";
+  @override
+  String get backLabel => "back";
+  @override
+  String get actionUndoneLabel => "action can't be undone";
+  @override
+  String get mediaLabel => "media";
+  @override
+  String get addMediaLabel => "add media";
+  @override
+  String get closeLabel => "close";
+  @override
+  String get openLabel => "open";
+  @override
+  String get closedLabel => "closed";
+  @override
+  String get startLabel => "start";
+  @override
+  String get confirmLabel => "confirm";
+  @override
+  String get endLabel => "end";
+  @override
+  String get cancelLabel => "cancel";
+  @override
+  String get takePhotoLabel => "take a photo";
+  @override
+  String get chooseFromLibraryLabel => "choose from library";
+
+  /// ************ Flash Messages ************///
   @override
   String get flashMessageSuccessTitle => "well done!";
   @override
@@ -268,14 +405,16 @@ class LanguageAr extends Languages {
   @override
   String get clientCreatedSuccessfullyBody =>
       "your client have been created successfully.";
+
   @override
-  String get notSetLabel => "not set";
+  String get wpPhotoDeletedSuccessfullyBody =>
+      "your workplace photo have been deleted Successfully.";
+
   @override
-  String get yesLabel => "yes";
+  String get serviceUpdatedSuccessfullyBody =>
+      "your service have been updated successfully.";
+
   @override
-  String get noLabel => "no";
-  @override
-  String get emptyAppointmentListLabel => "no appointment added yet";
-  @override
-  String get addNewAppointmentLabel => "add new appointment";
+  String get serviceCreatedSuccessfullyBody =>
+      "your service have been created successfully.";
 }

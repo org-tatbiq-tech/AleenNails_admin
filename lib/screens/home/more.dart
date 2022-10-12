@@ -2,9 +2,9 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_icon_button.dart';
-
 import 'package:common_widgets/fade_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:appointments/utils/general.dart';
 
 class More extends StatefulWidget {
   const More({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class MoreState extends State<More> {
             //     animationDelay: 0.3,
             //     iconPath: 'assets/icons/rating.png',
             //     positionType: PositionType.bottom,
-            //     title: Languages.of(context)!.reviewRatingLabel,
+            //     title: Languages.of(context)!.reviewRatingLabel.toTitleCase(),
             //   ),
             // ),
             // SizedBox(
@@ -69,7 +69,7 @@ class MoreState extends State<More> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/menu.png',
                 positionType: PositionType.bottom,
-                title: Languages.of(context)!.serviceSetupLabel,
+                title: Languages.of(context)!.serviceSetupLabel.toTitleCase(),
               ),
             ),
             SizedBox(
@@ -82,7 +82,9 @@ class MoreState extends State<More> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/calendar_time.png',
                 positionType: PositionType.bottom,
-                title: Languages.of(context)!.scheduleManagementLabel,
+                title: Languages.of(context)!
+                    .scheduleManagementLabel
+                    .toTitleCase(),
               ),
             ),
             SizedBox(
@@ -94,7 +96,8 @@ class MoreState extends State<More> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/profile.png',
                 positionType: PositionType.bottom,
-                title: Languages.of(context)!.businessDetailsLabel,
+                title:
+                    Languages.of(context)!.businessDetailsLabel.toTitleCase(),
               ),
             ),
             SizedBox(
@@ -106,7 +109,8 @@ class MoreState extends State<More> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/settings.png',
                 positionType: PositionType.bottom,
-                title: Languages.of(context)!.bookingSettingsLabel,
+                title:
+                    Languages.of(context)!.bookingSettingsLabel.toTitleCase(),
               ),
             ),
             SizedBox(
@@ -119,7 +123,8 @@ class MoreState extends State<More> {
                 animationDelay: 0.7,
                 iconPath: 'assets/icons/setting_hand.png',
                 positionType: PositionType.bottom,
-                title: Languages.of(context)!.personalSettingsLabel,
+                title:
+                    Languages.of(context)!.personalSettingsLabel.toTitleCase(),
               ),
             ),
             // SizedBox(

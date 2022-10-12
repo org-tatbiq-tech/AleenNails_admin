@@ -184,7 +184,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen>
                                 Navigator.pushReplacementNamed(
                                     context, '/loginScreen'),
                               },
-                              text: Languages.of(context)!.submit,
+                              text: Languages.of(context)!.submitLabel,
                               isPrimary: true,
                             ),
                           ),

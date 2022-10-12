@@ -188,7 +188,7 @@ class _RegisterMobileScreenState extends State<RegisterMobileScreen>
                               onTap: () => {
                                 validateAndSend(),
                               },
-                              text: Languages.of(context)!.labelContinue,
+                              text: Languages.of(context)!.continueLabel,
                               isPrimary: true,
                             ),
                           ),

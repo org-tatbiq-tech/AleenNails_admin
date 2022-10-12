@@ -5,135 +5,65 @@ abstract class Languages {
     return Localizations.of<Languages>(context, Languages);
   }
 
-  /// ************ App labels ************///
   String get appName;
-
-  /// ************ Common labels ************///
-  String get error;
-
-  String get success;
-
-  String get sent;
-
-  String get successSent;
-
-  String get submit;
-
-  String get labelSelectLanguage;
-
-  String get labelSignOut;
-
-  String get labelContinue;
-
-  String get wentWrong;
 
   /// ************ Landing labels ************///
   String get swiper1Title;
-
   String get swiper1SubTitle;
-
   String get swiper1Desc;
-
   String get swiper2Title;
-
   String get swiper2SubTitle;
-
   String get swiper2Desc;
-
   String get swiper3Title;
-
   String get swiper3SubTitle;
-
   String get swiper3Desc;
-
   String get swiper4Title;
-
   String get swiper4SubTitle;
-
   String get swiper4Desc;
 
   /// ************ Login labels ************///
-
   String get labelSignIn;
-
   String get labelEmail;
-
   String get labelPassword;
-
   String get labelForgotPassword;
-
   String get labelRememberMe;
-
   String get labelLogin;
-
   String get labelNoAccount;
-
   String get labelRegisterNow;
-
   String get labelEnterLoginDetails;
-
   String get labelUserName;
 
   /// ************ Forgot pass labels ************///
   String get labelForgot;
-
   String get labelFPassword;
-
   String get labelFMessage;
 
   /// ************ Registration labels ************///
   String get labelRegister;
-
   String get registerSuccess;
-
   String get labelAlreadyHaveAcc;
-
   String get labelLoginNow;
-
   String get labelRepeatPass;
-
   String get labelRegistrationConfirmMsg;
-
   String get labelTermsConditions;
-
   String get labelPrivacyPolicy;
 
   /// ************ OTP ************///
   String get labelMobileNumber;
-
   String get labelEnterOTP;
-
   String get labelMobileCodeSent;
-
   String get labelChange;
-
   String get labelResend;
 
   /// ************ validation messages ************///
-
   String get validPhone;
-
   String get emptyUser;
-
-  String get emptyPassword;
-
   String get emptyEmail;
-
+  String get emptyPassword;
   String get passwordMismatch;
-
   String get emptyAddress;
 
-  /// ************ Contact details ************///
-  String get contactDetails;
-
-  String get labelContactName;
-
-  String get labelContactPhone;
-
-  String get labelContactAddress;
-
   /// ************ Calendar labels ************///
-
   String get monthLabel;
   String get weekLabel;
 
@@ -145,7 +75,7 @@ abstract class Languages {
   String get bookingSettingsLabel;
   String get personalSettingsLabel;
 
-  /// ************ Client Screens labels ************///
+  /// ************ Client labels ************///
 
   String get clientsLabel;
   String get clientAppointmentsLabel;
@@ -169,15 +99,103 @@ abstract class Languages {
   String get permissionsLabel;
   String get isTrustedClientLabel;
   String get trustedClientModalBody;
+
+  /// ************ Business Info Labels ************///
+  String get businessNameLabel;
+  String get socialMediaLabel;
+  String get facebookLabel;
+  String get instagramLabel;
+  String get websiteLabel;
+  String get businessDescriptionLabel;
+  String get logoLabel;
+  String get logoDescription;
+  String get coverPhotoLabel;
+  String get coverPhotoDescription;
+  String get workplacePhotoLabel;
+  String get workplacePhotoDescription;
+  String get profileImagesLabel;
+  String get profileImageDescription;
+  String get editLogoLabel;
+  String get deleteLogoLabel;
+  String get editCoverPhotoLabel;
+  String get deleteCoverPhotoLabel;
+  String get deletePhotoLabel;
+
+  /// ************ Appointment Labels ************///
+  String get emptyAppointmentListLabel;
+  String get emptyAppointmentTimeListLabel;
+  String get addNewAppointmentLabel;
+  String get newAppointmentLabel;
+  String get editAppointmentLabel;
+  String get appointmentDetailsLabel;
+  String get chooseServiceLabel;
+  String get walkInClientLabel;
+  String get totalLabel;
+  String get todayLabel;
+  String get bookAgainLabel;
+  String get checkoutLabel;
+  String get cancelThisAppointmentLabel;
+  String get addServiceLabel;
+
+  /// ************ Schedule Management Labels ************///
+  String get workingDaysLabel;
+  String get unavailabilityLabel;
+  String get unavailabilityListLabel;
+  String get businessHoursNotesLabel;
+  String get businessHoursNotesHint;
+  String get breakLabel;
+  String get breaksLabel;
+  String get addBreakLabel;
+  String get workingOnThisDayLabel;
+  String get dayDetailsDescriptionLabel;
+  String get startDateTimeLabel;
+  String get reasonLabel;
+  String get reasonHint;
+
+  /// ************ Service Labels ************///
+  String get newServiceLabel;
+  String get editServiceLabel;
+  String get serviceNameLabel;
+  String get priceLabel;
+  String get durationLabel;
+  String get colorLabel;
+  String get descriptionLabel;
+  String get deleteServiceLabel;
+  String get deleteThisServiceLabel;
+  String get messageToClientLabel;
+  String get messageToClientModalBody;
+  String get clientBookPermissionLabel;
+  String get clientBookPermissionModalBody;
+
+  /// ************ Common Labels ************///
+  String get notSetLabel;
+  String get yesLabel;
+  String get noLabel;
+  String get submitLabel;
+  String get signOutLabel;
+  String get continueLabel;
+  String get deleteLabel;
+  String get backLabel;
+  String get actionUndoneLabel;
+  String get mediaLabel;
+  String get addMediaLabel;
+  String get closeLabel;
+  String get openLabel;
+  String get closedLabel;
+  String get startLabel;
+  String get confirmLabel;
+  String get endLabel;
+  String get cancelLabel;
+  String get takePhotoLabel;
+  String get chooseFromLibraryLabel;
+
+  /// ************ Flash Messages ************///
   String get flashMessageSuccessTitle;
   String get flashMessageErrorTitle;
   String get clientCreatedWronglyBody;
   String get clientUpdatedSuccessfullyBody;
   String get clientCreatedSuccessfullyBody;
-  String get notSetLabel;
-  String get yesLabel;
-  String get noLabel;
-
-  String get emptyAppointmentListLabel;
-  String get addNewAppointmentLabel;
+  String get wpPhotoDeletedSuccessfullyBody;
+  String get serviceUpdatedSuccessfullyBody;
+  String get serviceCreatedSuccessfullyBody;
 }

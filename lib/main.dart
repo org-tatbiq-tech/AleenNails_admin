@@ -134,7 +134,7 @@ class AppointmentsApp extends StatelessWidget {
         if (appLoad.hasError) {
           return Center(
             child: Text(
-              Languages.of(context)!.wentWrong,
+              Languages.of(context)!.flashMessageErrorTitle,
             ),
           );
         }

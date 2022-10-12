@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/utils/layout.dart';
@@ -163,8 +164,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             showSuccessFlash(
               context: context,
               successColor: successPrimaryColor,
-              successBody: 'Success',
-              successTitle: 'Workplace Photo Deleted Successfully.',
+              successTitle: Languages.of(context)!.flashMessageSuccessTitle,
+              successBody: 'Workplace Photo Deleted Successfully.',
             ),
           },
           footerButton: ModalFooter.both,
@@ -795,7 +796,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           Navigator.pop(context);
           showSuccessFlash(
             context: context,
-            successTitle: 'Submitted!',
+            successTitle: Languages.of(context)!.flashMessageSuccessTitle,
             successBody: 'Service was uploaded to DB successfully!',
             successColor: successPrimaryColor,
           );
@@ -807,7 +808,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           Navigator.pop(context);
           showSuccessFlash(
             context: context,
-            successTitle: 'Updated!',
+            successTitle: Languages.of(context)!.flashMessageSuccessTitle,
             successBody: 'Service was updated successfully!',
             successColor: successPrimaryColor,
           );
