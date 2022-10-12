@@ -28,10 +28,10 @@ class Service {
   Duration duration; // Service time duration (2 hours, 1.5 hours,...)
   int colorID; // Service hex color (color.hex/color.toString())
   String? description; // Service description
-  List<String>? imageFBS; // List of firebase storage image id
   String? noteMessage; // Service notification message
   bool onlineBooking; // Whether this service allows online booking or not
   int? priority;
+  List<String>? images; // List of firebase storage image id
 
   Service({
     required this.id,
@@ -40,11 +40,18 @@ class Service {
     required this.duration,
     required this.colorID,
     this.description,
-    this.imageFBS,
     this.noteMessage,
     required this.onlineBooking,
     this.priority,
-  });
+    images,
+  }) {
+    this.images = [];
+    if (images != null) {
+      for (var image in images) {
+        this.images!.add(image);
+      }
+    }
+  }
 
   Map<String, dynamic> toJson() {
     return {
@@ -53,10 +60,10 @@ class Service {
       'duration': duration.inMinutes.toString(),
       'colorID': colorID,
       'description': description,
-      'imageFBS': imageFBS,
       'noteMessage': noteMessage,
       'onlineBooking': onlineBooking,
       'priority': priority,
+      'images': images,
     };
   }
 
@@ -71,6 +78,7 @@ class Service {
       noteMessage: doc['noteMessage'],
       onlineBooking: doc['onlineBooking'],
       priority: doc['priority'],
+      images: doc['images'],
     );
   }
 }

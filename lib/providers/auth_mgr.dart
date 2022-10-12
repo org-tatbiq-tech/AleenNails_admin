@@ -23,11 +23,7 @@ class AuthenticationMgr extends ChangeNotifier {
   Future<void> init() async {
     _fa.userChanges().listen((user) {
       if (user != null) {
-        if (user.phoneNumber != null) {
-          _authState = ApplicationLoginState.loggedIn;
-        } else {
-          _authState = ApplicationLoginState.mobileAuth;
-        }
+        _authState = ApplicationLoginState.loggedIn;
       } else {
         _authState = ApplicationLoginState.loggedOut;
       }

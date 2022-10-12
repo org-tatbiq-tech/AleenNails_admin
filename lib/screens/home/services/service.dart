@@ -88,7 +88,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
       final serviceMgr = Provider.of<ServicesMgr>(context, listen: false);
       try {
-        serviceMgr.getServiceImages(widget.service!.name).then(
+        serviceMgr.getServiceImages(widget.service!).then(
               (res) async => {
                 if (res.isEmpty)
                   {
@@ -98,11 +98,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                   }
                 else
                   {
-                    for (var workPlacePhoto in res.entries)
+                    for (var servicePhoto in res.entries)
                       {
-                        mediaList[workPlacePhoto.key] = await fileFromImageUrl(
-                          workPlacePhoto.key,
-                          workPlacePhoto.value,
+                        mediaList[servicePhoto.key] = await fileFromImageUrl(
+                          servicePhoto.key,
+                          servicePhoto.value,
                         ),
                       },
                     setState(() {
@@ -130,7 +130,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     _messageToClientController.addListener(() => setState(() {
           isSaveDisabled = false;
         }));
-    _isLoading = false;
   }
 
   @override
@@ -246,6 +245,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 setState(() {
                   mediaList[const Uuid().v4()] = imageFile;
                   mediaListToUpload[const Uuid().v4()] = imageFile;
+                  isSaveDisabled = false;
                 });
               },
             ))

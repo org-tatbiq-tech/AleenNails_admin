@@ -73,7 +73,6 @@ class AppointmentsApp extends StatelessWidget {
 
   Future<bool> getAutoLoginValue(AuthenticationMgr authData) async {
     String? userAutoLogin = await UserSecureStorage.getAutoLogin();
-
     if (userAutoLogin != null && userAutoLogin == 'true') {
       if (authData.loginState == ApplicationLoginState.loggedIn) {
         return true;

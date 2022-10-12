@@ -62,34 +62,29 @@ class ServicesMgr extends ChangeNotifier {
     );
   }
 
-  Future<void> uploadServiceImages(
+  Future<List<String>> uploadServiceImages(
       String serviceName, List<File> imageList) async {
+    List<String> serviceImages = [];
     var uuid = const Uuid();
-    var name = serviceName.replaceAll(' ', '_');
     for (File image in imageList) {
-      Reference ref = _fst
-          .ref('$servicesStorageDir/$name')
-          .child('${name}_${uuid.v4()}_image.png');
+      String photoName = '${uuid.v4()}_image.png';
+      Reference ref = _fst.ref(servicesStorageDir).child(photoName);
+      serviceImages.add(photoName.replaceAll('.png', '_600x600.png'));
       await ref.putFile(image);
     }
+    return serviceImages;
   }
 
-  Future<Map<String, String>> getServiceImages(String serviceName) async {
+  Future<Map<String, String>> getServiceImages(Service service) async {
     /// Return map of file name --> url
     Map<String, String> filesMap = {};
-    var name = serviceName.replaceAll(' ', '_');
-    Reference ref = _fst.ref('$servicesStorageDir/$name');
     var refStr = 'notFound';
     try {
-      await ref.listAll().then(
-            (res) async => {
-              for (var imageRef in res.items)
-                {
-                  refStr = await imageRef.getDownloadURL(),
-                  filesMap[imageRef.name] = refStr,
-                },
-            },
-          );
+      for (String image in service.images!) {
+        Reference imageRef = _fst.ref(servicesStorageDir).child(image);
+        refStr = await imageRef.getDownloadURL();
+        filesMap[imageRef.name] = refStr;
+      }
     } catch (error) {
       return {};
     }
@@ -105,20 +100,24 @@ class ServicesMgr extends ChangeNotifier {
   Future<void> submitNewService(
       Service newService, List<File> imageList) async {
     /// Submitting new service - update DB
+    List<String> serviceImages =
+        await uploadServiceImages(newService.name, imageList);
+    newService.images = serviceImages;
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     var data = newService.toJson();
     data['priority'] = services.length;
     servicesColl.add(data);
-    await uploadServiceImages(newService.name, imageList);
   }
 
   Future<void> updateService(
       Service updatedService, List<File> imageList) async {
     /// Update existing service - update DB
+    List<String> serviceImages =
+        await uploadServiceImages(updatedService.name, imageList);
+    updatedService.images?.addAll(serviceImages);
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     var data = updatedService.toJson();
     servicesColl.doc(updatedService.id).update(data);
-    await uploadServiceImages(updatedService.name, imageList);
   }
 
   Future<void> deleteService(Service serviceToDelete) async {
