@@ -44,10 +44,10 @@ class LanguageAr extends Languages {
 
   /// ************ Login labels ************///
   @override
-  String get labelSignIn => "Sign In";
+  String get labelSignIn => "تسجيل الدخول";
 
   @override
-  String get labelEmail => "Email";
+  String get labelEmail => "الريد الالكتروني";
 
   @override
   String get labelPassword => "Password";

@@ -44,377 +44,366 @@ class LanguageHe extends Languages {
 
   /// ************ Login labels ************///
   @override
-  String get labelSignIn => "Sign In";
+  String get labelSignIn => "התחבר";
 
   @override
-  String get labelEmail => "Email";
+  String get labelEmail => "אימייל";
 
   @override
-  String get labelPassword => "Password";
+  String get labelPassword => "סיסמה";
 
   @override
-  String get labelForgotPassword => "Forgot password?";
+  String get labelForgotPassword => "שכחת סיסמה?";
 
   @override
-  String get labelRememberMe => "Remember me";
+  String get labelRememberMe => "זכור אותי";
 
   @override
-  String get labelLogin => "Login";
+  String get labelLogin => "התחבר";
 
   @override
-  String get labelNoAccount => "Do NOT have an account? ";
+  String get labelNoAccount => "אין לך חשבות?";
 
   @override
-  String get labelRegisterNow => "Register now!";
+  String get labelRegisterNow => "הירשם עכשיו!";
 
   @override
-  String get labelEnterLoginDetails =>
-      "Please enter the details below to continue";
+  String get labelEnterLoginDetails => "אנא הזן את הפרטים למטה כדי להמשיך";
 
   @override
-  String get labelUserName => "User name";
+  String get labelUserName => "שם משתמם";
 
   /// ************ Forgot pass labels ************///
   @override
-  String get labelForgot => "Forgot";
+  String get labelForgot => "שכחת";
 
   @override
-  String get labelFPassword => "Password?";
+  String get labelFPassword => "סיסמה?";
 
   @override
-  String get labelFMessage =>
-      "Do not worry! it happens.\nPlease enter email associated with your account";
+  String get labelFMessage => "אל תדאג!\nאנא הזן את האימייל המושיך לחשבון שלך";
 
   /// ************ Registration labels ************///
   @override
-  String get labelRegister => "Register";
+  String get labelRegister => "הירשם";
 
   @override
-  String get registerSuccess => "Welcome! you have been registered!";
+  String get registerSuccess => "ברוך הבא! נרשמתם בהצלחה";
 
   @override
-  String get labelAlreadyHaveAcc => "Already have an account? ";
+  String get labelAlreadyHaveAcc => "כבר יש לך חשבון?";
 
   @override
-  String get labelLoginNow => "Sing in!";
+  String get labelLoginNow => "התחבר!";
 
   @override
-  String get labelRepeatPass => "Repeat password";
+  String get labelRepeatPass => "חזור על הסיסמה";
 
   @override
-  String get labelRegistrationConfirmMsg => "By register you are agree to our";
+  String get labelRegistrationConfirmMsg => "בהרשמה את/ה מסכים על";
 
   @override
-  String get labelTermsConditions => "Terms & Conditions";
+  String get labelTermsConditions => "תנאים & הגבלות";
 
   @override
-  String get labelPrivacyPolicy => "Privacy policy";
+  String get labelPrivacyPolicy => "מדיניות הפרטיות";
 
   /// ************ OTP ************///
   @override
-  String get labelMobileNumber => 'Mobile number';
+  String get labelMobileNumber => 'מספר טלפון';
 
   @override
-  String get labelEnterOTP =>
-      "Please enter your Mobile number for OTP Authentication";
+  String get labelEnterOTP => "אנא הזן את מספר הטלפון עבור אימות OTP";
 
   @override
-  String get labelMobileCodeSent =>
-      "Please check your phone, verification code sent";
+  String get labelMobileCodeSent => "בדוק את הטלפון שלך, קוד האימות נשלח";
 
   @override
-  String get labelChange => "Change";
+  String get labelChange => "שינוי";
 
   @override
-  String get labelResend => "Resend";
+  String get labelResend => "שלח שוב";
 
   /// ************ validation messages ************///
   @override
-  String get validPhone => 'Please enter valid phone number!';
+  String get validPhone => 'נא להזין מספר טלפון חוקי!';
 
   @override
-  String get emptyUser => 'Contact name can not be empty';
+  String get emptyUser => 'שם משתמש לא יכול להיות ריק!';
 
   @override
-  String get emptyEmail => 'Email can not be empty';
+  String get emptyEmail => 'אימייל לא יכול להיות ריק';
 
   @override
-  String get emptyPassword => 'Password can not be empty';
+  String get emptyPassword => 'הסיסמה לא יכולה להיות ריקה';
 
   @override
-  String get passwordMismatch => 'Passwords mismatch';
+  String get passwordMismatch => 'סיסמאות לא תואמות';
 
   @override
-  String get emptyAddress => 'Address can not be empty';
+  String get emptyAddress => 'הכתובת לא יכולה להיות ריקה';
 
   /// ************ Calendar labels ************///
   @override
-  String get monthLabel => "Month";
+  String get monthLabel => "חודש";
   @override
-  String get weekLabel => "Week";
+  String get weekLabel => "שבוע";
 
   /// ************ Settings labels ************///
   @override
-  String get reviewRatingLabel => "reviews & ratings";
+  String get reviewRatingLabel => "ביקורות & דירוגים";
   @override
-  String get serviceSetupLabel => "services setup";
+  String get serviceSetupLabel => "הגדרת שירותים";
   @override
-  String get scheduleManagementLabel => "schedule management";
+  String get scheduleManagementLabel => "ניהול לוח זמנים";
   @override
-  String get businessDetailsLabel => "business details";
+  String get businessDetailsLabel => "פרטי העסק";
   @override
-  String get bookingSettingsLabel => "booking settings";
+  String get bookingSettingsLabel => "הגדרות זימון";
   @override
-  String get personalSettingsLabel => "personal settings";
+  String get personalSettingsLabel => "הגדרות אישיות";
 
   /// ************ Client labels ************///
 
   @override
-  String get clientsLabel => "clients";
+  String get clientsLabel => "לקוחות";
   @override
-  String get clientAppointmentsLabel => "client appointments";
+  String get clientAppointmentsLabel => "תורי הלקוח";
   @override
-  String get newClientLabel => "new client";
+  String get newClientLabel => "לקוח חדש";
   @override
-  String get editClientLabel => "edit client";
+  String get editClientLabel => "עריכת לקוח";
   @override
-  String get clientDetailsLabel => "client details";
+  String get clientDetailsLabel => "פרטי הלקוח";
   @override
-  String get appointmentsLabel => "appointments";
+  String get appointmentsLabel => "תורים";
   @override
-  String get cancellationLabel => "cancellation";
+  String get cancellationLabel => "ביטולים";
   @override
-  String get noShowLabel => "no-show";
+  String get noShowLabel => "לא הופיע";
   @override
-  String get birthdayLabel => "birthday";
+  String get birthdayLabel => "יום הולדת";
   @override
-  String get lastVisitLabel => "last visit";
+  String get lastVisitLabel => "ביקור אחרון";
   @override
-  String get discountLabel => "discount";
+  String get discountLabel => "הנחה";
   @override
-  String get totalRevenueLabel => "total revenue";
+  String get totalRevenueLabel => "סך תשלומים";
   @override
-  String get trustedClientLabel => "trusted client";
+  String get trustedClientLabel => "לקוח אמין";
   @override
-  String get notesLabel => "notes";
+  String get notesLabel => "הערות";
   @override
-  String get showAllLabel => "show all";
+  String get showAllLabel => "התג הכל";
   @override
-  String get fullNameLabel => "full name";
+  String get fullNameLabel => "שם מלא";
   @override
-  String get phoneNumberLabel => "phone number";
+  String get phoneNumberLabel => "מס פלאפון";
   @override
-  String get emailAddressLabel => "email address";
+  String get emailAddressLabel => "אימייל";
   @override
-  String get addressLabel => "Address";
+  String get addressLabel => "כתובת";
   @override
-  String get permissionsLabel => "permissions";
+  String get permissionsLabel => "הרשאות";
   @override
-  String get isTrustedClientLabel => "is trusted client";
+  String get isTrustedClientLabel => "האם לקוח אמין?";
   @override
   String get trustedClientModalBody =>
-      "If switched off client will not be able automatically book an appointment.";
+      "אם כבוי הלקוח לא יוכל להזמין פגישה אוטומטית";
 
   /// ************ Business Info Labels ************///
   @override
-  String get businessNameLabel => "working";
+  String get businessNameLabel => "עובד";
   @override
-  String get socialMediaLabel => "social media";
+  String get socialMediaLabel => "סוציאל מדיה";
   @override
-  String get facebookLabel => "facebook";
+  String get facebookLabel => "פייסבוק";
   @override
-  String get instagramLabel => "instagram";
+  String get instagramLabel => "אינסטגרם";
   @override
-  String get websiteLabel => "website";
+  String get websiteLabel => "אתר אינטרנט";
   @override
-  String get businessDescriptionLabel => "business description";
+  String get businessDescriptionLabel => "תיאור העסק";
   @override
-  String get logoLabel => "logo";
+  String get logoLabel => "לוגו";
   @override
-  String get logoDescription =>
-      "Upload your business logo so its visible on your profile.";
+  String get logoDescription => "העלה את הלוגו של העסק, יוצג בפרופיל שלך";
   @override
-  String get coverPhotoLabel => "cover photo";
+  String get coverPhotoLabel => "תמונת רקע";
+  @override
   String get coverPhotoDescription =>
-      "Your cover photo is the first thing that your customers seen on your profile. Add a photo to give them  insight into what you are all about";
+      "תמונת רקע הינה הדבר הראשון שהלקוחות יראו בפרופיל שלך, הוסף תמונה כדי לתת תבונה לגביך";
   @override
-  String get workplacePhotoLabel => "workplace photo";
-  @override
+  String get workplacePhotoLabel => "תמונות מהעבודה";
   @override
   String get workplacePhotoDescription =>
-      "Give clients a sneak peek of your space before they even walk through the door.";
+      "תן ללקוחות הצצה מהירה על העבודה, תעלה תמונות ותרשים את ללקוחות לפני שבאים";
   @override
-  String get profileImagesLabel => "profile images";
+  String get profileImagesLabel => "תמונת פרופיל";
   @override
   String get profileImageDescription =>
-      "What is the first thing you want clients to see about your business? Remember, new clients want to see what they could look like with your services.";
+      "מה הדבר הראשון שאתה רוצה שלקוחות יראו על העסק שלך? זכור, לקוחות חדשים רוצים לראות איך הם יכולים להיראות עם השירותים שלך.";
   @override
-  String get editLogoLabel => "edit logo";
+  String get editLogoLabel => "עריכת לוגו";
   @override
-  String get deleteLogoLabel => "delete logo";
+  String get deleteLogoLabel => "מחקית לוגו";
   @override
-  String get editCoverPhotoLabel => "edit cover photo";
+  String get editCoverPhotoLabel => "עריכת תמונת רקע";
   @override
-  String get deleteCoverPhotoLabel => "delete cover photo";
+  String get deleteCoverPhotoLabel => "מחיקת תמונת רקע";
   @override
-  String get deletePhotoLabel => "delete photo";
+  String get deletePhotoLabel => "מחיקת תמונה";
 
   /// ************ Appointment Labels ************///
   @override
-  String get emptyAppointmentListLabel => "no appointment added yet";
+  String get emptyAppointmentListLabel => "אין תורים";
   @override
-  String get emptyAppointmentTimeListLabel => "no appointment on this day";
+  String get emptyAppointmentTimeListLabel => "אין תורים ביום הזה";
   @override
-  String get addNewAppointmentLabel => "add new appointment";
+  String get addNewAppointmentLabel => "הוספת תור חדש";
   @override
-  String get newAppointmentLabel => "new appointment";
+  String get newAppointmentLabel => "תור חדש";
   @override
-  String get editAppointmentLabel => "edit appointment";
+  String get editAppointmentLabel => "עריכת תור";
   @override
-  String get appointmentDetailsLabel => "appointment details";
+  String get appointmentDetailsLabel => "פרטי התור";
   @override
-  String get chooseServiceLabel => "choose service";
+  String get chooseServiceLabel => "בחר שירות";
   @override
-  String get walkInClientLabel => "select a client or leave empty from walk-in";
+  String get walkInClientLabel => "בחר לקוח או השאר ריק";
   @override
-  String get totalLabel => "total";
+  String get totalLabel => "סך הכל";
   @override
-  String get todayLabel => "today";
+  String get todayLabel => "היום";
   @override
-  String get bookAgainLabel => "book again";
+  String get bookAgainLabel => "להזמין שוב";
   @override
-  String get checkoutLabel => "checkout";
+  String get checkoutLabel => "לקופה";
   @override
-  String get cancelThisAppointmentLabel => "cancel this appointment";
+  String get cancelThisAppointmentLabel => "בטל תור";
   @override
-  String get addServiceLabel => "add service";
+  String get addServiceLabel => "הוספת שירות";
 
   /// ************ Schedule Management Labels ************///
   @override
-  String get workingDaysLabel => "working days";
+  String get workingDaysLabel => "ימי עבודה";
   @override
-  String get unavailabilityLabel => "unavailability";
+  String get unavailabilityLabel => "אי-זמינות";
   @override
-  String get unavailabilityListLabel => "unavailability list";
+  String get unavailabilityListLabel => "רשימת אי-זמינות";
   @override
-  String get businessHoursNotesLabel => "business hours notes";
+  String get businessHoursNotesLabel => "העברות שעות פעילות";
   @override
   String get businessHoursNotesHint =>
-      "short description of your business working hours (recommended)";
+      "תיאור קצר של שעות העבודה של העסק שלך (מומלץ)";
   @override
-  String get breakLabel => "break";
+  String get breakLabel => "הפסקה";
   @override
-  String get breaksLabel => "breaks";
+  String get breaksLabel => "הפסקות";
   @override
-  String get addBreakLabel => "add break";
+  String get addBreakLabel => "הוספת הפסקה";
   @override
-  String get workingOnThisDayLabel => "working on this day";
+  String get workingOnThisDayLabel => "עובדים ביום הזה";
   @override
   String get dayDetailsDescriptionLabel =>
-      "set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day.";
+      "הגדר את שעות הפעילות שלך כאן. עבור אל לוח זמנים מתפריט ההגדרות אם אתה צריך להתאים שעות ליום בודד";
   @override
-  String get startDateTimeLabel => "start date & time";
+  String get startDateTimeLabel => "תאריך ושעת התחלה";
   @override
-  String get reasonLabel => "reason";
+  String get reasonLabel => "סיבה";
   @override
-  String get reasonHint => "short description of your reason (recommended)";
+  String get reasonHint => "תיאור קצר של הסיבה שלך (מומלץ)";
 
   /// ************ Service Labels ************///
   @override
-  String get newServiceLabel => "new service";
+  String get newServiceLabel => "שירות חדש";
   @override
-  String get editServiceLabel => "edit service";
+  String get editServiceLabel => "עריכת שירות";
   @override
-  String get serviceNameLabel => "service name";
+  String get serviceNameLabel => "שם שירות";
   @override
-  String get priceLabel => "price";
+  String get priceLabel => "עלות";
   @override
-  String get durationLabel => "duration";
+  String get durationLabel => "משך";
   @override
-  String get colorLabel => "color";
+  String get colorLabel => "צבע";
   @override
-  String get descriptionLabel => "description";
+  String get descriptionLabel => "תיאור";
   @override
-  String get deleteServiceLabel => "delete service";
+  String get deleteServiceLabel => "מחיקת שירות";
   @override
-  String get deleteThisServiceLabel => "delete this service";
+  String get deleteThisServiceLabel => "מחיקת שירות זה";
   @override
-  String get messageToClientLabel => "message to client";
+  String get messageToClientLabel => "הודעה ללקוח";
   @override
   String get messageToClientModalBody =>
-      "this message will be sent to your client before the appointment. E.g please don't eat 1 hour before the appointment.";
+      "הודעה זו תישלח ללקוח שלך לפני הפגישה. למשל, נא לא לאכול שעה אחת לפני התור.";
   @override
-  String get clientBookPermissionLabel => "allow client to book online";
+  String get clientBookPermissionLabel => "לאפשר ללקוח להזמין לבד";
   @override
   String get clientBookPermissionModalBody =>
-      "if switched off clients will not be able to book this service using the app. You will have to manually add appointment to your calendar";
+      "אם כבוי לקוחות לא יוכלו להזמין שירות זה באמצעות האפליקציה. יהיה עליך להוסיף תור ידנית ליומן שלך";
 
   /// ************ Common Labels ************///
   @override
-  String get notSetLabel => "not set";
+  String get notSetLabel => "לא מוכן";
   @override
-  String get yesLabel => "yes";
+  String get yesLabel => "כן";
   @override
-  String get noLabel => "no";
+  String get noLabel => "לא";
   @override
-  String get submitLabel => "submit";
+  String get submitLabel => "הגש";
   @override
-  String get signOutLabel => "Sign out";
+  String get signOutLabel => "התנתק";
   @override
-  String get continueLabel => "continue";
+  String get continueLabel => "המשך";
   @override
-  String get deleteLabel => "delete";
+  String get deleteLabel => "מחק";
   @override
-  String get backLabel => "back";
+  String get backLabel => "חזור";
   @override
-  String get actionUndoneLabel => "action can't be undone";
+  String get actionUndoneLabel => "לא ניתן לבטל את הפעולה";
   @override
-  String get mediaLabel => "media";
+  String get mediaLabel => "מדיה";
   @override
-  String get addMediaLabel => "add media";
+  String get addMediaLabel => "הוספת מדיה";
   @override
-  String get closeLabel => "close";
+  String get closeLabel => "סגור";
   @override
-  String get openLabel => "open";
+  String get openLabel => "פתח";
   @override
-  String get closedLabel => "closed";
+  String get closedLabel => "סגור";
   @override
-  String get startLabel => "start";
+  String get startLabel => "התחל";
   @override
-  String get confirmLabel => "confirm";
+  String get confirmLabel => "אשר";
   @override
-  String get endLabel => "end";
+  String get endLabel => "סיום";
   @override
-  String get cancelLabel => "cancel";
+  String get cancelLabel => "בטל";
   @override
-  String get takePhotoLabel => "take a photo";
+  String get takePhotoLabel => "צלם תמונה";
   @override
-  String get chooseFromLibraryLabel => "choose from library";
+  String get chooseFromLibraryLabel => "בחר ממדיה";
 
   /// ************ Flash Messages ************///
   @override
-  String get flashMessageSuccessTitle => "well done!";
+  String get flashMessageSuccessTitle => "כל הכבוד!";
   @override
-  String get flashMessageErrorTitle => "oh snap!";
+  String get flashMessageErrorTitle => "אוי!";
   @override
-  String get clientCreatedWronglyBody =>
-      "change a few things up and try submitting again.";
+  String get clientCreatedWronglyBody => "שנה כמה דברים ונסה לשלוח שוב";
   @override
-  String get clientUpdatedSuccessfullyBody =>
-      "your client have been updated successfully.";
+  String get clientUpdatedSuccessfullyBody => "הלקוח עודכן בהצלחה";
   @override
-  String get clientCreatedSuccessfullyBody =>
-      "your client have been created successfully.";
+  String get clientCreatedSuccessfullyBody => "הלקוח נוצר בהצלחה";
 
   @override
-  String get wpPhotoDeletedSuccessfullyBody =>
-      "your workplace photo have been deleted Successfully.";
+  String get wpPhotoDeletedSuccessfullyBody => "תמונת העבודה נמחקה בהצלחה";
 
   @override
-  String get serviceUpdatedSuccessfullyBody =>
-      "your service have been updated successfully.";
+  String get serviceUpdatedSuccessfullyBody => "השירות עודכן בהצלחה";
 
   @override
-  String get serviceCreatedSuccessfullyBody =>
-      "your service have been created successfully.";
+  String get serviceCreatedSuccessfullyBody => "השירות נוצר בהצלחה";
 }
