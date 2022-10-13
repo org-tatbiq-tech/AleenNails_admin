@@ -309,6 +309,8 @@ class LanguageEn extends Languages {
   @override
   String get unavailabilityLabel => "unavailability";
   @override
+  String get unavailabilityDeleteLabel => "delete unavailability";
+  @override
   String get unavailabilityListLabel => "unavailability list";
   @override
   String get businessHoursNotesLabel => "business hours notes";
@@ -399,6 +401,10 @@ class LanguageEn extends Languages {
   @override
   String get startLabel => "start";
   @override
+  String get startTimeLabel => "start time";
+  @override
+  String get endTimeLabel => "end time";
+  @override
   String get confirmLabel => "confirm";
   @override
   String get endLabel => "end";
@@ -424,6 +430,8 @@ class LanguageEn extends Languages {
   String get unpaidLabel => "unpaid";
   @override
   String get saveLabel => "save";
+  @override
+  String get okLabel => "ok";
 
   /// ************ Flash Messages ************///
   @override
@@ -485,11 +493,20 @@ class LanguageEn extends Languages {
   String get adminMissingTitle => "Not admin";
   @override
   String get adminMissingBody => "This email is not registered as Admin";
-
   @override
   String get infoUpdatedSuccessfullyBody =>
       "your info have been updated successfully.";
+  @override
+  String get workingDayUpdatedSuccessfullyBody =>
+      "your working day have been updated successfully.";
+  @override
+  String get unavailabilityUpdatedSuccessfullyBody =>
+      "your unavailability have been updated successfully.";
+  @override
+  String get unavailabilityDeletedSuccessfullyBody =>
+      "your unavailability have been deleted successfully.";
 
+  /// ************ Languages ************///
   @override
   String get labelEnglish => "English";
   @override

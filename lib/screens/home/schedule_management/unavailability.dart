@@ -3,6 +3,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/unavailability_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -75,7 +76,7 @@ class _UnavailabilityState extends State<Unavailability> {
             bottom: rSize(5),
           ),
           child: Text(
-            'Reason',
+            Languages.of(context)!.reasonLabel.toCapitalized(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -86,7 +87,7 @@ class _UnavailabilityState extends State<Unavailability> {
           child: CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _descriptionController,
-              hintText: 'Short description of your reason (recommended)',
+              hintText: Languages.of(context)!.reasonHint.toCapitalized(),
               isDescription: true,
               keyboardType: TextInputType.multiline,
             ),
@@ -116,7 +117,7 @@ class _UnavailabilityState extends State<Unavailability> {
                   right: rSize(10),
                 ),
                 child: Text(
-                  'Start Date & Time',
+                  Languages.of(context)!.startDateTimeLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -133,7 +134,8 @@ class _UnavailabilityState extends State<Unavailability> {
                     minuteInterval: 5,
                     minimumDate: nearestFive(DateTime.now()),
                     initialDateTime: startDateTime,
-                    title: 'Start Date & Time',
+                    title:
+                        Languages.of(context)!.startDateTimeLabel.toTitleCase(),
                     onDateTimeChanged: (DateTime value) => {
                       setState(() {
                         startDateTimeTemp = value;
@@ -169,10 +171,12 @@ class _UnavailabilityState extends State<Unavailability> {
                   left: rSize(10),
                   right: rSize(10),
                 ),
-                child: Text('End',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2),
+                child: Text(
+                  Languages.of(context)!.endLabel.toTitleCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
               ),
               CustomInputFieldButton(
                 text: getDateTimeFormat(
@@ -186,7 +190,7 @@ class _UnavailabilityState extends State<Unavailability> {
                     minuteInterval: 5,
                     initialDateTime: endTime,
                     minimumDate: endTimeMin,
-                    title: 'End Time',
+                    title: Languages.of(context)!.endTimeLabel.toTitleCase(),
                     onDateTimeChanged: (DateTime value) => {
                       setState(() {
                         endTimeTemp = value;
@@ -209,7 +213,7 @@ class _UnavailabilityState extends State<Unavailability> {
 
   @override
   Widget build(BuildContext context) {
-    saveUnavailability() async {
+    saveUnavailability() {
       showLoaderDialog(context);
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       UnavailabilityComp unavailabilityComp = UnavailabilityComp(
@@ -218,38 +222,47 @@ class _UnavailabilityState extends State<Unavailability> {
           notes: _descriptionController.text);
       settingsMgr.scheduleManagement.unavailabilityList!
           .add(unavailabilityComp);
-      await settingsMgr.submitNewScheduleManagement();
-      Navigator.pop(context);
-      showSuccessFlash(
-        context: context,
-        successColor: successPrimaryColor,
-        successBody: 'Success!',
-        successTitle: 'Unavailability Updated Successfully.',
-      );
-      Navigator.pop(context);
+      settingsMgr.submitNewScheduleManagement().then((value) => {
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successTitle: Languages.of(context)!
+                  .unavailabilityUpdatedSuccessfullyBody
+                  .toCapitalized(),
+            ),
+            Navigator.pop(context),
+          });
     }
 
     deleteUnavailability(int index) {
-      deleteUnavailabilityFromList(int index) async {
+      deleteUnavailabilityFromList(int index) {
         showLoaderDialog(context);
         settingsMgr.scheduleManagement.unavailabilityList!.removeAt(index);
-        await settingsMgr.submitNewScheduleManagement();
-        showSuccessFlash(
-          context: context,
-          successColor: successPrimaryColor,
-          successBody: 'Success!',
-          successTitle: 'Unavailability Deleted Successfully.',
-        );
-        Navigator.pop(context);
-        setState(() {});
+        settingsMgr.submitNewScheduleManagement().then((value) => {
+              showSuccessFlash(
+                context: context,
+                successColor: successPrimaryColor,
+                successBody: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successTitle: Languages.of(context)!
+                    .unavailabilityDeletedSuccessfullyBody
+                    .toCapitalized(),
+              ),
+              Navigator.pop(context),
+              setState(() {}),
+            });
       }
 
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
-          primaryButtonText: 'Delete',
-          secondaryButtonText: 'Back',
+          primaryButtonText: Languages.of(context)!.deleteLabel.toTitleCase(),
+          secondaryButtonText: Languages.of(context)!.backLabel.toTitleCase(),
           deleteCancelModal: true,
           primaryAction: () => deleteUnavailabilityFromList(index),
           footerButton: ModalFooter.both,
@@ -273,14 +286,14 @@ class _UnavailabilityState extends State<Unavailability> {
                 height: rSize(30),
               ),
               Text(
-                'Delete Unavailability?',
+                '${Languages.of(context)!.unavailabilityDeleteLabel.toCapitalized()}?',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Action can not be undone',
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ],
@@ -299,7 +312,7 @@ class _UnavailabilityState extends State<Unavailability> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'Unavailability',
+            titleText: Languages.of(context)!.unavailabilityLabel.toTitleCase(),
             withBack: true,
             withBorder: false,
             barHeight: 110,
@@ -341,7 +354,7 @@ class _UnavailabilityState extends State<Unavailability> {
                         bottom: rSize(15),
                       ),
                       child: Text(
-                        'Unavailability List (${settingsMgr.scheduleManagement.unavailabilityList!.length})',
+                        '${Languages.of(context)!.unavailabilityListLabel.toTitleCase()} (${settingsMgr.scheduleManagement.unavailabilityList!.length})',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyText2,

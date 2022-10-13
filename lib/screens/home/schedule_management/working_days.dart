@@ -62,7 +62,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Break: ',
+                      '${Languages.of(context)!.breakLabel.toCapitalized()}: ',
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     Text(
@@ -101,7 +101,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                   right: rSize(10),
                 ),
                 child: Text(
-                  'Business Hours Note',
+                  Languages.of(context)!.businessHoursNotesLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -112,8 +112,9 @@ class _WorkingDaysState extends State<WorkingDays> {
                 child: CustomInputField(
                   customInputFieldProps: CustomInputFieldProps(
                     controller: _descriptionController,
-                    hintText:
-                        'Short description of your business working hours (recommended)',
+                    hintText: Languages.of(context)!
+                        .businessHoursNotesHint
+                        .toCapitalized(),
                     isDescription: true,
                     keyboardType: TextInputType.multiline,
                   ),
@@ -194,7 +195,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Closed',
+                            Languages.of(context)!.closedLabel.toTitleCase(),
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ],
@@ -213,20 +214,24 @@ class _WorkingDaysState extends State<WorkingDays> {
       );
     }
 
-    saveWorkingDays() async {
+    saveWorkingDays() {
       showLoaderDialog(context);
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       settingsMgr.scheduleManagement.workingDays!.notes =
           _descriptionController.text;
-      await settingsMgr.submitNewScheduleManagement();
-      Navigator.pop(context);
-      showSuccessFlash(
-        context: context,
-        successColor: successPrimaryColor,
-        successBody: 'Success',
-        successTitle: 'Working Days Updated Successfully.',
-      );
-      Navigator.pop(context);
+      settingsMgr.submitNewScheduleManagement().then((value) => {
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successBody:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successTitle: Languages.of(context)!
+                  .workingDayUpdatedSuccessfullyBody
+                  .toCapitalized(),
+            ),
+            Navigator.pop(context),
+          });
     }
 
     return GestureDetector(
@@ -239,7 +244,7 @@ class _WorkingDaysState extends State<WorkingDays> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'Working Days',
+            titleText: Languages.of(context)!.workingDaysLabel.toCapitalized(),
             withBack: true,
             barHeight: 110,
             withClipPath: true,

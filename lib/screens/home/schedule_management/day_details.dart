@@ -1,7 +1,9 @@
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -125,7 +127,7 @@ class _DayDetailsState extends State<DayDetails> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'Working on this day?',
+                  Languages.of(context)!.workingOnThisDayLabel.toCapitalized(),
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ],
@@ -162,7 +164,9 @@ class _DayDetailsState extends State<DayDetails> {
                 ),
               ),
               Text(
-                widget.workingDay.isDayOn ? 'Open' : 'Closed',
+                widget.workingDay.isDayOn
+                    ? Languages.of(context)!.openLabel.toCapitalized()
+                    : Languages.of(context)!.closedLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontSize: rSize(12),
                     ),
@@ -194,7 +198,7 @@ class _DayDetailsState extends State<DayDetails> {
                       right: rSize(10),
                     ),
                     child: Text(
-                      'Start',
+                      Languages.of(context)!.startLabel.toCapitalized(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyText2,
@@ -225,7 +229,7 @@ class _DayDetailsState extends State<DayDetails> {
                       right: rSize(10),
                     ),
                     child: Text(
-                      'End',
+                      Languages.of(context)!.endLabel.toCapitalized(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyText2,
@@ -302,12 +306,12 @@ class _DayDetailsState extends State<DayDetails> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Breaks',
+                Languages.of(context)!.breaksLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               CustomTextButton(
                 customTextButtonProps: CustomTextButtonProps(
-                  text: 'Add Break',
+                  text: Languages.of(context)!.addBreakLabel.toCapitalized(),
                   textColor: Theme.of(context).colorScheme.primary,
                   fontSize: rSize(16),
                   withIcon: true,
@@ -352,7 +356,7 @@ class _DayDetailsState extends State<DayDetails> {
                     right: rSize(10),
                   ),
                   child: Text(
-                    'Start',
+                    Languages.of(context)!.startLabel.toCapitalized(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
@@ -369,7 +373,8 @@ class _DayDetailsState extends State<DayDetails> {
                       context: context,
                       initialDateTime: startTime,
                       minuteInterval: 5,
-                      title: 'Start Time',
+                      title:
+                          Languages.of(context)!.startTimeLabel.toCapitalized(),
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
                           startTimeTemp = value;
@@ -407,7 +412,7 @@ class _DayDetailsState extends State<DayDetails> {
                     right: rSize(10),
                   ),
                   child: Text(
-                    'End',
+                    Languages.of(context)!.endLabel.toCapitalized(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
@@ -425,7 +430,8 @@ class _DayDetailsState extends State<DayDetails> {
                       minuteInterval: 5,
                       minimumDate: endTimeMin,
                       initialDateTime: endTime,
-                      title: 'End Time',
+                      title:
+                          Languages.of(context)!.endTimeLabel.toCapitalized(),
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
                           endTimeTemp = value;
@@ -474,7 +480,9 @@ class _DayDetailsState extends State<DayDetails> {
                 height: rSize(20),
               ),
               Text(
-                'set your business hours here. Head to Opening Calendar from Settings menu if you need to adjust hours for single day',
+                Languages.of(context)!
+                    .dayDetailsDescriptionLabel
+                    .toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontSize: rSize(14),
                     ),
@@ -504,7 +512,7 @@ class _DayDetailsState extends State<DayDetails> {
               ),
               CustomButton(
                 customButtonProps: CustomButtonProps(
-                  text: 'OK',
+                  text: Languages.of(context)!.okLabel.toCapitalized(),
                   isDisabled: isSaveDisabled,
                   onTap: (() => {
                         widget.workingDay.startTime = TimeOfDay(

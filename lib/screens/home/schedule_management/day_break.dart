@@ -84,7 +84,8 @@ class _DayBreakState extends State<DayBreak> {
                       minimumDate: widget.breakStartTime,
                       maximumDate: widget.breakEndTime,
                       initialDateTime: startTime,
-                      title: 'Start Time',
+                      title:
+                          Languages.of(context)!.startTimeLabel.toTitleCase(),
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
                           startTimeTemp = value;
@@ -140,7 +141,7 @@ class _DayBreakState extends State<DayBreak> {
                       minimumDate: endTimeMin,
                       maximumDate: widget.breakEndTime,
                       initialDateTime: endTime,
-                      title: 'End Time',
+                      title: Languages.of(context)!.endTimeLabel.toTitleCase(),
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
                           endTimeTemp = value;
@@ -164,7 +165,8 @@ class _DayBreakState extends State<DayBreak> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: '${widget.dayTile} Break',
+          titleText:
+              '${widget.dayTile} ${Languages.of(context)!.breakLabel.toTitleCase()}',
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -187,7 +189,7 @@ class _DayBreakState extends State<DayBreak> {
               Expanded(child: renderTimePicker()),
               CustomButton(
                 customButtonProps: CustomButtonProps(
-                  text: 'Add Break',
+                  text: Languages.of(context)!.addBreakLabel.toTitleCase(),
                   onTap: (() => Navigator.pop(
                         context,
                         WorkingDayBreak(

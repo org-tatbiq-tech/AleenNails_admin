@@ -146,6 +146,7 @@ abstract class Languages {
   /// ************ Schedule Management Labels ************///
   String get workingDaysLabel;
   String get unavailabilityLabel;
+  String get unavailabilityDeleteLabel;
   String get unavailabilityListLabel;
   String get businessHoursNotesLabel;
   String get businessHoursNotesHint;
@@ -191,6 +192,8 @@ abstract class Languages {
   String get openLabel;
   String get closedLabel;
   String get startLabel;
+  String get startTimeLabel;
+  String get endTimeLabel;
   String get confirmLabel;
   String get endLabel;
   String get cancelLabel;
@@ -204,6 +207,7 @@ abstract class Languages {
   String get paidLabel;
   String get unpaidLabel;
   String get saveLabel;
+  String get okLabel;
 
   /// ************ Flash Messages ************///
   String get flashMessageSuccessTitle;
@@ -227,6 +231,9 @@ abstract class Languages {
   String get adminMissingBody;
   String get adminMissingTitle;
   String get infoUpdatedSuccessfullyBody;
+  String get workingDayUpdatedSuccessfullyBody;
+  String get unavailabilityUpdatedSuccessfullyBody;
+  String get unavailabilityDeletedSuccessfullyBody;
 
   /// ************ Languages ************///
   String get labelEnglish;

@@ -303,6 +303,8 @@ class LanguageHe extends Languages {
   @override
   String get unavailabilityLabel => "אי-זמינות";
   @override
+  String get unavailabilityDeleteLabel => "למחוק אי-זמינות";
+  @override
   String get unavailabilityListLabel => "רשימת אי-זמינות";
   @override
   String get businessHoursNotesLabel => "העברות שעות פעילות";
@@ -393,6 +395,10 @@ class LanguageHe extends Languages {
   @override
   String get startLabel => "התחל";
   @override
+  String get startTimeLabel => "זמן התחלה";
+  @override
+  String get endTimeLabel => "זמן סיום";
+  @override
   String get confirmLabel => "אשר";
   @override
   String get endLabel => "סיום";
@@ -418,6 +424,8 @@ class LanguageHe extends Languages {
   String get unpaidLabel => "לא שולם";
   @override
   String get saveLabel => "שמור";
+  @override
+  String get okLabel => "אוקי";
 
   /// ************ Flash Messages ************///
   @override
@@ -472,7 +480,17 @@ class LanguageHe extends Languages {
   @override
   String get infoUpdatedSuccessfullyBody =>
       "your info have been updated successfully.";
+  @override
+  String get workingDayUpdatedSuccessfullyBody =>
+      "your working day have been updated successfully.";
+  @override
+  String get unavailabilityUpdatedSuccessfullyBody =>
+      "your unavailability have been updated successfully.";
+  @override
+  String get unavailabilityDeletedSuccessfullyBody =>
+      "your unavailability have been deleted successfully.";
 
+  /// ************ Languages ************///
   @override
   String get labelEnglish => "אנגלית";
   @override
