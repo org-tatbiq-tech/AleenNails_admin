@@ -248,7 +248,7 @@ class LanguageHe extends Languages {
   String get workplacePhotoDescription =>
       "תן ללקוחות הצצה מהירה על העבודה, תעלה תמונות ותרשים את ללקוחות לפני שבאים";
   @override
-  String get profileImagesLabel => "תמונת פרופיל";
+  String get profileImagesLabel => "תמונות פרופיל";
   @override
   String get profileImageDescription =>
       "מה הדבר הראשון שאתה רוצה שלקוחות יראו על העסק שלך? זכור, לקוחות חדשים רוצים לראות איך הם יכולים להיראות עם השירותים שלך.";

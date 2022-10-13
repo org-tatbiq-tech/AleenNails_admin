@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
@@ -67,19 +69,26 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
 
   @override
   Widget build(BuildContext context) {
-    saveWorkplacePhotos() async {
+    saveWorkplacePhotos() {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       if (mediaListToUpload.isNotEmpty) {
-        await settingsMgr
-            .uploadWPImages(mediaListToUpload.values.toList())
-            .then(
+        showLoaderDialog(context);
+        settingsMgr.uploadWPImages(mediaListToUpload.values.toList()).then(
               (value) => showSuccessFlash(
                 context: context,
                 successColor: successPrimaryColor,
-                successTitle: 'Success!',
-                successBody: 'Workplace Photos updated successfully',
+                successTitle: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successBody: Languages.of(context)!
+                    .wpPhotoUploadedSuccessfullyBody
+                    .toCapitalized(),
               ),
             );
+        Navigator.pop(context);
+        setState(() {
+          isSaveDisabled = true;
+        });
       }
     }
 
@@ -93,8 +102,8 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
-          primaryButtonText: 'Delete',
-          secondaryButtonText: 'Back',
+          primaryButtonText: Languages.of(context)!.deleteLabel.toTitleCase(),
+          secondaryButtonText: Languages.of(context)!.cancelLabel.toTitleCase(),
           deleteCancelModal: true,
           primaryAction: () async => {
             showLoaderDialog(context),
@@ -103,8 +112,11 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             showSuccessFlash(
               context: context,
               successColor: successPrimaryColor,
-              successBody: 'Success',
-              successTitle: 'Workplace Photo Deleted Successfully.',
+              successBody:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successTitle: Languages.of(context)!
+                  .wpPhotoDeletedSuccessfullyBody
+                  .toCapitalized(),
             ),
           },
           footerButton: ModalFooter.both,
@@ -128,14 +140,14 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                 height: rSize(30),
               ),
               Text(
-                'Delete Photo?',
+                '${Languages.of(context)!.deletePhotoLabel.toTitleCase()}?',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Action can not be undone',
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ],
@@ -215,7 +227,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                     height: rSize(2),
                   ),
                   Text(
-                    'Add Media',
+                    Languages.of(context)!.addMediaLabel.toTitleCase(),
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           fontSize: rSize(12),
                         ),
@@ -243,25 +255,14 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Workplace Photos',
+          titleText: Languages.of(context)!.workplacePhotoLabel.toTitleCase(),
           withBack: true,
           barHeight: 110,
           withClipPath: true,
           withSave: true,
           withSaveDisabled: isSaveDisabled,
-          saveTap: () async => {
-            showLoaderDialog(context),
-            await saveWorkplacePhotos(),
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successBody: 'Success',
-              successTitle: 'Workplace Photos Uploaded Successfully.',
-            ),
-            setState(() {
-              isSaveDisabled = true;
-            })
+          saveTap: () => {
+            saveWorkplacePhotos(),
           },
         ),
       ),
@@ -277,7 +278,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Give clients a sneak peek of your space before they even walk through the door.',
+              Languages.of(context)!.workplacePhotoDescription.toCapitalized(),
               style: Theme.of(context).textTheme.bodyText2,
             ),
             SizedBox(

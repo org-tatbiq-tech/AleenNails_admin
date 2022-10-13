@@ -1,9 +1,9 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_icon_button.dart';
-
 import 'package:flutter/material.dart';
 
 class ProfileImages extends StatelessWidget {
@@ -14,7 +14,7 @@ class ProfileImages extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Profile Images',
+          titleText: Languages.of(context)!.profileImagesLabel.toCapitalized(),
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -32,7 +32,7 @@ class ProfileImages extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'What is the first thing you want clients to see about your business? Remember, new clients want to see what they could look like with your services.',
+              Languages.of(context)!.profileImageDescription.toCapitalized(),
               style: Theme.of(context).textTheme.bodyText1?.copyWith(
                     fontSize: rSize(16),
                   ),
@@ -46,7 +46,7 @@ class ProfileImages extends StatelessWidget {
                 animationDelay: 0.1,
                 iconPath: 'assets/icons/logo-design.png',
                 positionType: PositionType.bottom,
-                title: 'Logo',
+                title: Languages.of(context)!.logoLabel.toTitleCase(),
               ),
             ),
             SizedBox(
@@ -59,7 +59,7 @@ class ProfileImages extends StatelessWidget {
                 animationDelay: 0.3,
                 iconPath: 'assets/icons/image.png',
                 positionType: PositionType.bottom,
-                title: 'Cover Photo',
+                title: Languages.of(context)!.coverPhotoLabel.toTitleCase(),
               ),
             ),
             SizedBox(
@@ -72,7 +72,7 @@ class ProfileImages extends StatelessWidget {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/images.png',
                 positionType: PositionType.bottom,
-                title: 'Workplace Photos',
+                title: Languages.of(context)!.workplacePhotoLabel.toTitleCase(),
               ),
             ),
           ],

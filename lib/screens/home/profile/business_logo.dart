@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
@@ -93,8 +95,8 @@ class _BusinessLogoState extends State<BusinessLogo> {
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
-          primaryButtonText: 'Delete',
-          secondaryButtonText: 'Back',
+          primaryButtonText: Languages.of(context)!.deleteLabel.toTitleCase(),
+          secondaryButtonText: Languages.of(context)!.backLabel.toTitleCase(),
           deleteCancelModal: true,
           primaryAction: () async => {
             showLoaderDialog(context),
@@ -103,8 +105,11 @@ class _BusinessLogoState extends State<BusinessLogo> {
             showSuccessFlash(
               context: context,
               successColor: successPrimaryColor,
-              successBody: 'Success',
-              successTitle: 'Logo Photo Deleted Successfully.',
+              successBody:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successTitle: Languages.of(context)!
+                  .logoPhotoDeletedSuccessfullyBody
+                  .toCapitalized(),
             ),
           },
           footerButton: ModalFooter.both,
@@ -128,14 +133,14 @@ class _BusinessLogoState extends State<BusinessLogo> {
                 height: rSize(30),
               ),
               Text(
-                'Delete Logo?',
+                '${Languages.of(context)!.deleteLogoLabel.toTitleCase()}?',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Action can not be undone',
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ],
@@ -193,7 +198,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                           height: rSize(5),
                         ),
                         Text(
-                          'Add Logo',
+                          Languages.of(context)!.addLogoLabel.toTitleCase(),
                           style: Theme.of(context).textTheme.bodyText2,
                         )
                       ],
@@ -245,7 +250,9 @@ class _BusinessLogoState extends State<BusinessLogo> {
                                 ),
                               )
                             },
-                            text: 'Edit Logo',
+                            text: Languages.of(context)!
+                                .editLogoLabel
+                                .toTitleCase(),
                             isPrimary: true,
                           ),
                         ),
@@ -255,7 +262,9 @@ class _BusinessLogoState extends State<BusinessLogo> {
                         CustomButton(
                           customButtonProps: CustomButtonProps(
                             onTap: () => {deleteLogo()},
-                            text: 'Delete Logo',
+                            text: Languages.of(context)!
+                                .deleteLogoLabel
+                                .toTitleCase(),
                             backgroundColor:
                                 Theme.of(context).colorScheme.error,
                             textColor: Colors.white,
@@ -272,7 +281,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Logo',
+          titleText: Languages.of(context)!.logoLabel.toTitleCase(),
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -285,8 +294,11 @@ class _BusinessLogoState extends State<BusinessLogo> {
             showSuccessFlash(
               context: context,
               successColor: successPrimaryColor,
-              successBody: 'Success',
-              successTitle: 'Logo Uploaded Successfully.',
+              successBody:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successTitle: Languages.of(context)!
+                  .logoPhotoUploadedSuccessfullyBody
+                  .toCapitalized(),
             ),
             setState(() {
               isSaveDisabled = true;
@@ -308,7 +320,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
             Column(
               children: [
                 Text(
-                  'Upload your business logo so its visible on your profile.',
+                  Languages.of(context)!.logoDescription.toCapitalized(),
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
                 SizedBox(
