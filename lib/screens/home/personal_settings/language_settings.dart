@@ -1,9 +1,11 @@
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/localization/utils.dart';
+import 'package:appointments/providers/langs.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:common_widgets/custom_button_widget.dart';
-
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LanguageSettings extends StatefulWidget {
   const LanguageSettings({Key? key}) : super(key: key);
@@ -15,6 +17,16 @@ class LanguageSettings extends StatefulWidget {
 class _LanguageSettingsState extends State<LanguageSettings> {
   int _value = 0;
   int _oldValue = 0;
+
+  @override
+  void initState() {
+    final localeMgr = Provider.of<LocaleData>(context, listen: false);
+    int idx =
+        supportedLocale.indexWhere((element) => element == localeMgr.locale);
+    _value = idx;
+    _oldValue = idx;
+    super.initState();
+  }
 
   bool isButtonDisabled() {
     if (_value == _oldValue) {
@@ -47,6 +59,12 @@ class _LanguageSettingsState extends State<LanguageSettings> {
         ),
       ],
     );
+  }
+
+  saveLanguage() {
+    final localeMgr = Provider.of<LocaleData>(context, listen: false);
+    localeMgr.setLocale(supportedLocale[_value]);
+    Navigator.pop(context);
   }
 
   @override
@@ -86,18 +104,16 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                     SizedBox(
                       height: rSize(20),
                     ),
-                    renderLanguage(name: 'English', value: 0),
-                    renderLanguage(name: 'Arabic', value: 1),
-                    renderLanguage(name: 'Hebrew', value: 2),
+                    renderLanguage(name: english, value: 0),
+                    renderLanguage(name: arabic, value: 1),
+                    renderLanguage(name: hebrew, value: 2),
                   ],
                 ),
               ),
               CustomButton(
                 customButtonProps: CustomButtonProps(
-                  onTap: () => {
-                    Navigator.pop(context),
-                  },
-                  text: 'Save',
+                  onTap: () => {saveLanguage()},
+                  text: Languages.of(context)!.saveLabel,
                   isPrimary: true,
                   isDisabled: isButtonDisabled(),
                 ),

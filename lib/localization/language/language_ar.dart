@@ -476,4 +476,11 @@ class LanguageAr extends Languages {
   @override
   String get infoUpdatedSuccessfullyBody =>
       "your info have been updated successfully.";
+
+  @override
+  String get labelEnglish => "ألانجليزية";
+  @override
+  String get labelHebrew => "العبرية";
+  @override
+  String get labelArabic => "العربية";
 }
