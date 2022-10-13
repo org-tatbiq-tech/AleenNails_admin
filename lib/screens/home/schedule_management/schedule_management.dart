@@ -1,5 +1,7 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -21,7 +23,8 @@ class ScheduleManagementState extends State<ScheduleManagement> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Schedule Management',
+          titleText:
+              Languages.of(context)!.scheduleManagementLabel.toTitleCase(),
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -39,26 +42,13 @@ class ScheduleManagementState extends State<ScheduleManagement> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // CustomIconButton(
-              //   customIconButtonProps: CustomIconButtonProps(
-              //     onTap: () =>
-              //         {Navigator.pushNamed(context, '/individualSchedule')},
-              //     animationDelay: 0.1,
-              //     iconPath: 'assets/icons/calendar.png',
-              //     positionType: PositionType.bottom,
-              //     title: 'Open Calendar',
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: rSize(20),
-              // ),
               CustomIconButton(
                 customIconButtonProps: CustomIconButtonProps(
                   onTap: () => {Navigator.pushNamed(context, '/workingDays')},
                   animationDelay: 0.3,
                   iconPath: 'assets/icons/calendar_time.png',
                   positionType: PositionType.bottom,
-                  title: 'Working Days',
+                  title: Languages.of(context)!.workingDaysLabel.toTitleCase(),
                 ),
               ),
               SizedBox(
@@ -71,7 +61,8 @@ class ScheduleManagementState extends State<ScheduleManagement> {
                   animationDelay: 0.5,
                   iconPath: 'assets/icons/calendar_x.png',
                   positionType: PositionType.bottom,
-                  title: 'Unavailability',
+                  title:
+                      Languages.of(context)!.unavailabilityLabel.toTitleCase(),
                 ),
               ),
             ],
