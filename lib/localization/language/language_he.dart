@@ -472,4 +472,11 @@ class LanguageHe extends Languages {
   @override
   String get infoUpdatedSuccessfullyBody =>
       "your info have been updated successfully.";
+
+  @override
+  String get labelEnglish => "אנגלית";
+  @override
+  String get labelHebrew => "עברית";
+  @override
+  String get labelArabic => "ערבית";
 }

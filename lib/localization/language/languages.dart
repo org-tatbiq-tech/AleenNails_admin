@@ -227,4 +227,9 @@ abstract class Languages {
   String get adminMissingBody;
   String get adminMissingTitle;
   String get infoUpdatedSuccessfullyBody;
+
+  /// ************ Languages ************///
+  String get labelEnglish;
+  String get labelHebrew;
+  String get labelArabic;
 }

@@ -1,10 +1,11 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/langs.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:appointments/providers/langs.dart';
 
 class CustomExpandableCalendar extends StatelessWidget {
   final CustomExpandableCalendarProps customExpandableCalendarProps;
@@ -16,8 +17,8 @@ class CustomExpandableCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getLocale() {
-      String x = LocaleData().locale.toLanguageTag();
-      print(x);
+      final localeMgr = Provider.of<LocaleData>(context, listen: false);
+      return localeMgr.locale.languageCode;
     }
 
     return Card(
@@ -29,8 +30,8 @@ class CustomExpandableCalendar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(0, 0, 0, rSize(15)),
         child: TableCalendar<FlutterWeekViewEvent>(
-          // locale: getLocale(), // need to add the chosen locale
-          locale: 'he',
+          locale: getLocale(), // need to add the chosen locale
+          // locale: 'he',
           headerVisible: true,
           availableCalendarFormats:
               customExpandableCalendarProps.availableCalendarFormats ??
