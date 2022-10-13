@@ -416,6 +416,8 @@ class LanguageHe extends Languages {
   String get paidLabel => "שולם";
   @override
   String get unpaidLabel => "לא שולם";
+  @override
+  String get saveLabel => "שמור";
 
   /// ************ Flash Messages ************///
   @override

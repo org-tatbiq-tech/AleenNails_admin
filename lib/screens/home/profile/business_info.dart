@@ -490,6 +490,7 @@ class BusinessInfoState extends State<BusinessInfo> {
             withClipPath: true,
             withBack: true,
             withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
             withSaveDisabled: isSaveDisabled,
             saveTap: () async => {
               showLoaderDialog(context),

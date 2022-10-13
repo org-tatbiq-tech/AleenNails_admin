@@ -830,6 +830,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 widget.service != null ? 'Service Details' : 'New Service',
             withBack: true,
             withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
             withSaveDisabled: isSaveDisabled,
             saveTap: () => {
               saveService(),

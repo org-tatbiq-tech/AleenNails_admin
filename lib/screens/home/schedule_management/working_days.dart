@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/utils/general.dart';
@@ -243,6 +244,7 @@ class _WorkingDaysState extends State<WorkingDays> {
             barHeight: 110,
             withClipPath: true,
             withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
             withSaveDisabled: isSaveDisabled,
             saveTap: () => saveWorkingDays(),
           ),

@@ -639,6 +639,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                 : Languages.of(context)!.newClientLabel.toTitleCase(),
             withBack: true,
             withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
             withSaveDisabled: isSaveDisabled,
             saveTap: () => saveClient(),
             customIcon: widget.client == null

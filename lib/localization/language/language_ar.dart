@@ -420,6 +420,8 @@ class LanguageAr extends Languages {
   String get paidLabel => "paid";
   @override
   String get unpaidLabel => "unpaid";
+  @override
+  String get saveLabel => "save";
 
   /// ************ Flash Messages ************///
   @override

@@ -260,6 +260,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
+          saveText: Languages.of(context)!.saveLabel,
           withSaveDisabled: isSaveDisabled,
           saveTap: () => {
             saveWorkplacePhotos(),

@@ -286,6 +286,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
           barHeight: 110,
           withClipPath: true,
           withSave: true,
+          saveText: Languages.of(context)!.saveLabel,
           withSaveDisabled: isSaveDisabled,
           saveTap: () async => {
             showLoaderDialog(context),

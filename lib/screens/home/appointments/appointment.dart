@@ -573,6 +573,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
             withClipPath: true,
             barHeight: 110,
             withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
             saveTap: () => {saveAppointment()},
           ),
         ),

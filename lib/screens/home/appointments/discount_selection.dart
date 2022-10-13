@@ -1,3 +1,4 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -53,6 +54,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
             withBack: true,
             barHeight: 100,
             withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
             saveTap: () => {
               Navigator.pop(context),
             },

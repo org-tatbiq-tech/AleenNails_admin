@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/settings_components.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/utils/layout.dart';
@@ -304,6 +305,7 @@ class _UnavailabilityState extends State<Unavailability> {
             barHeight: 110,
             withClipPath: true,
             withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
             saveTap: () => saveUnavailability(),
           ),
         ),

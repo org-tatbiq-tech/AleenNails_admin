@@ -203,6 +203,7 @@ abstract class Languages {
   String get declinedLabel;
   String get paidLabel;
   String get unpaidLabel;
+  String get saveLabel;
 
   /// ************ Flash Messages ************///
   String get flashMessageSuccessTitle;
