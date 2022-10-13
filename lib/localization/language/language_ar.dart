@@ -228,7 +228,14 @@ class LanguageAr extends Languages {
   @override
   String get websiteLabel => "موقع الكتروني";
   @override
+  String get wazeLabel => "waze";
+  @override
   String get businessDescriptionLabel => "وصف العمل";
+  @override
+  String get businessDescriptionHint =>
+      "short description of your business (recommended)";
+  @override
+  String get businessNameInfoLabel => "business name & info";
   @override
   String get logoLabel => "شعار";
   @override
@@ -464,4 +471,7 @@ class LanguageAr extends Languages {
   String get adminMissingTitle => "لست مشرف!";
   @override
   String get adminMissingBody => "هذا البريد الالكتروني غير مسجّل كمشرف";
+  @override
+  String get infoUpdatedSuccessfullyBody =>
+      "your info have been updated successfully.";
 }

@@ -216,7 +216,7 @@ class LanguageHe extends Languages {
   @override
   String get businessLabel => "העסק";
   @override
-  String get businessNameLabel => "עובד";
+  String get businessNameLabel => "שם העסק";
   @override
   String get socialMediaLabel => "סוציאל מדיה";
   @override
@@ -226,7 +226,13 @@ class LanguageHe extends Languages {
   @override
   String get websiteLabel => "אתר אינטרנט";
   @override
+  String get wazeLabel => "waze";
+  @override
   String get businessDescriptionLabel => "תיאור העסק";
+  @override
+  String get businessDescriptionHint => "תיאור קצר על העסק שלך (מומלץ)";
+  @override
+  String get businessNameInfoLabel => "שם העסק & פרטים";
   @override
   String get logoLabel => "לוגו";
   @override
@@ -461,4 +467,7 @@ class LanguageHe extends Languages {
   String get adminMissingTitle => "אינך מנהל!";
   @override
   String get adminMissingBody => "האימייל הזה לא רשום כמנהל";
+  @override
+  String get infoUpdatedSuccessfullyBody =>
+      "your info have been updated successfully.";
 }

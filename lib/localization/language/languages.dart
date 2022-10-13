@@ -107,7 +107,10 @@ abstract class Languages {
   String get facebookLabel;
   String get instagramLabel;
   String get websiteLabel;
+  String get wazeLabel;
   String get businessDescriptionLabel;
+  String get businessDescriptionHint;
+  String get businessNameInfoLabel;
   String get logoLabel;
   String get logoDescription;
   String get coverPhotoLabel;
@@ -222,4 +225,5 @@ abstract class Languages {
   String get serviceMissingBody;
   String get adminMissingBody;
   String get adminMissingTitle;
+  String get infoUpdatedSuccessfullyBody;
 }

@@ -1,6 +1,8 @@
 import 'package:appointments/data_types/settings_components.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -113,7 +115,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Social Media',
+              Languages.of(context)!.socialMediaLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -122,7 +124,7 @@ class BusinessInfoState extends State<BusinessInfo> {
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _facebookController,
-              hintText: 'Facebook',
+              hintText: Languages.of(context)!.facebookLabel.toTitleCase(),
               keyboardType: TextInputType.text,
               validator: validateUrl,
               prefixIcon: Row(
@@ -164,7 +166,7 @@ class BusinessInfoState extends State<BusinessInfo> {
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _instagramController,
-              hintText: 'Instagram',
+              hintText: Languages.of(context)!.instagramLabel.toTitleCase(),
               keyboardType: TextInputType.text,
               validator: validateUrl,
               prefixIcon: Row(
@@ -206,7 +208,7 @@ class BusinessInfoState extends State<BusinessInfo> {
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _webController,
-              hintText: 'Website',
+              hintText: Languages.of(context)!.websiteLabel.toTitleCase(),
               validator: validateUrl,
               keyboardType: TextInputType.text,
               prefixIcon: Row(
@@ -259,7 +261,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Business Description',
+              Languages.of(context)!.businessDescriptionLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -270,7 +272,9 @@ class BusinessInfoState extends State<BusinessInfo> {
             child: CustomInputField(
               customInputFieldProps: CustomInputFieldProps(
                 controller: _descriptionController,
-                hintText: 'Short description of your business (recommended)',
+                hintText: Languages.of(context)!
+                    .businessDescriptionHint
+                    .toCapitalized(),
                 isDescription: true,
                 keyboardType: TextInputType.multiline,
               ),
@@ -293,7 +297,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Email Address',
+              Languages.of(context)!.emailAddressLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -326,7 +330,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Address',
+              Languages.of(context)!.addressLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -344,7 +348,7 @@ class BusinessInfoState extends State<BusinessInfo> {
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _wazeController,
-              hintText: 'Waze',
+              hintText: Languages.of(context)!.wazeLabel.toTitleCase(),
               validator: validateUrl,
               keyboardType: TextInputType.text,
               prefixIcon: Row(
@@ -394,7 +398,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Phone Number',
+              Languages.of(context)!.phoneNumberLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -428,7 +432,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Business Name',
+              Languages.of(context)!.businessNameLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -453,13 +457,11 @@ class BusinessInfoState extends State<BusinessInfo> {
       if (form!.validate()) {
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
 
-        //Why we are not creating BusinessInfo object
         BusinessInfoComp newData = BusinessInfoComp(
           name: _nameController.text,
           phone: _phoneController.text,
           email: _emailController.text,
-          address:
-              _addressController.text, // address is missing in the below code
+          address: _addressController.text,
           description: _descriptionController.text,
           wazeAddressUrl: _wazeController.text,
           facebookUrl: _facebookController.text,
@@ -467,24 +469,6 @@ class BusinessInfoState extends State<BusinessInfo> {
           websiteUrl: _webController.text,
         );
         settingsMgr.profileManagement.businessInfo = newData;
-
-        // instead of this
-
-        // settingsMgr.profileManagement.businessInfo.name = _nameController.text;
-        // settingsMgr.profileManagement.businessInfo.phone =
-        //     _phoneController.text;
-        // settingsMgr.profileManagement.businessInfo.email =
-        //     _emailController.text;
-        // settingsMgr.profileManagement.businessInfo.description =
-        //     _descriptionController.text;
-        // settingsMgr.profileManagement.businessInfo.wazeAddressUrl =
-        //     _wazeController.text;
-        // settingsMgr.profileManagement.businessInfo.facebookUrl =
-        //     _facebookController.text;
-        // settingsMgr.profileManagement.businessInfo.instagramUrl =
-        //     _instagramController.text;
-        // settingsMgr.profileManagement.businessInfo.websiteUrl =
-        //     _webController.text;
 
         await settingsMgr.submitNewProfile();
       }
@@ -500,7 +484,8 @@ class BusinessInfoState extends State<BusinessInfo> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'Business Name & Info',
+            titleText:
+                Languages.of(context)!.businessNameInfoLabel.toTitleCase(),
             barHeight: 110,
             withClipPath: true,
             withBack: true,
@@ -513,8 +498,12 @@ class BusinessInfoState extends State<BusinessInfo> {
               showSuccessFlash(
                 context: context,
                 successColor: successPrimaryColor,
-                successBody: 'Success!',
-                successTitle: 'Business Info Updated Successfully.',
+                successBody: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successTitle: Languages.of(context)!
+                    .infoUpdatedSuccessfullyBody
+                    .toCapitalized(),
               ),
               setState(() {
                 isSaveDisabled = true;

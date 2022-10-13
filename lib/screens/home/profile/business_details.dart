@@ -1,6 +1,8 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon_button.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,7 @@ class BusinessDetails extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Business Profile',
+          titleText: Languages.of(context)!.businessDetailsLabel.toTitleCase(),
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -38,7 +40,9 @@ class BusinessDetails extends StatelessWidget {
                   animationDelay: 0.1,
                   iconPath: 'assets/icons/home_outline.png',
                   positionType: PositionType.bottom,
-                  title: 'Business Name & Info',
+                  title: Languages.of(context)!
+                      .businessNameInfoLabel
+                      .toTitleCase(),
                 ),
               ),
               SizedBox(
@@ -50,7 +54,8 @@ class BusinessDetails extends StatelessWidget {
                   animationDelay: 0.3,
                   iconPath: 'assets/icons/images.png',
                   positionType: PositionType.bottom,
-                  title: 'Profile Images',
+                  title:
+                      Languages.of(context)!.profileImagesLabel.toTitleCase(),
                 ),
               ),
             ],

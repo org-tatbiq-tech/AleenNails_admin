@@ -230,7 +230,14 @@ class LanguageEn extends Languages {
   @override
   String get websiteLabel => "website";
   @override
+  String get wazeLabel => "waze";
+  @override
   String get businessDescriptionLabel => "business description";
+  @override
+  String get businessDescriptionHint =>
+      "short description of your business (recommended)";
+  @override
+  String get businessNameInfoLabel => "business name & info";
   @override
   String get logoLabel => "logo";
   @override
@@ -476,4 +483,8 @@ class LanguageEn extends Languages {
   String get adminMissingTitle => "Not admin";
   @override
   String get adminMissingBody => "This email is not registered as Admin";
+
+  @override
+  String get infoUpdatedSuccessfullyBody =>
+      "your info have been updated successfully.";
 }
