@@ -1,6 +1,8 @@
 import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
@@ -63,7 +65,7 @@ class _DayBreakState extends State<DayBreak> {
                     right: rSize(10),
                   ),
                   child: Text(
-                    'Start',
+                    Languages.of(context)!.startLabel.toTitleCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
@@ -119,7 +121,7 @@ class _DayBreakState extends State<DayBreak> {
                     right: rSize(10),
                   ),
                   child: Text(
-                    'End',
+                    Languages.of(context)!.endLabel.toTitleCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,

@@ -1,12 +1,15 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/timeline.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
+
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.pop(context),
               Navigator.of(context).pushNamed('/newAppointment'),
             },
-            text: 'New Appointment',
+            text: Languages.of(context)!.newAppointmentLabel.toTitleCase(),
           ),
         ),
         SizedBox(
@@ -49,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.pop(context),
               Navigator.of(context).pushNamed('/unavailability'),
             },
-            text: 'Add Unavailability',
+            text: Languages.of(context)!.unavailabilityLabel.toTitleCase(),
           ),
         ),
       ],
