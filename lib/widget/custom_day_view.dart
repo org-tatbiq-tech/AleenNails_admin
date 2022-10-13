@@ -16,6 +16,7 @@ class CustomDayView extends StatelessWidget {
       initialTime: customDayViewProps.initialTime,
       minimumTime: customDayViewProps.minimumTime,
       userZoomable: customDayViewProps.userZoomAble,
+      isRTL: isRtl(context),
       date: customDayViewProps.date ?? DateTime.now(),
       events: customDayViewProps.events,
       hoursColumnStyle: HoursColumnStyle(

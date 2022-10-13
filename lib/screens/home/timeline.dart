@@ -1,7 +1,9 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/widget/appointment_card.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/custom_day_view.dart';
 import 'package:appointments/widget/custom_expandable_calendar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -229,7 +231,8 @@ class TimeLineState extends State<TimeLine> {
         vertical: rSize(30),
       ),
       child: Align(
-          alignment: Alignment.bottomRight,
+          alignment:
+              isRtl(context) ? Alignment.bottomLeft : Alignment.bottomRight,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -266,7 +269,7 @@ class TimeLineState extends State<TimeLine> {
                         width: rSize(5),
                       ),
                       Text(
-                        'Today',
+                        Languages.of(context)!.todayLabel.toCapitalized(),
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                     ],
@@ -299,7 +302,7 @@ class TimeLineState extends State<TimeLine> {
         customAppBarProps: CustomAppBarProps(
           withBorder: true,
           withClipPath: false,
-          titleText: 'Home',
+          titleText: Languages.of(context)!.appName.toTitleCase(),
           customIcon: getCustomIcon(),
           customIconTap: () => setState(() {
             _isListView = !_isListView;
@@ -362,7 +365,9 @@ class TimeLineState extends State<TimeLine> {
                                 children: [
                                   EmptyListImage(
                                     emptyListImageProps: EmptyListImageProps(
-                                      title: 'No appointment on this day.',
+                                      title: Languages.of(context)!
+                                          .emptyAppointmentTimeListLabel
+                                          .toCapitalized(),
                                       iconPath: 'assets/icons/menu.png',
                                       bottomWidgetPosition: 10,
                                       bottomWidget: CustomTextButton(
@@ -372,7 +377,9 @@ class TimeLineState extends State<TimeLine> {
                                             Navigator.of(context)
                                                 .pushNamed('/newAppointment'),
                                           },
-                                          text: 'Add New Appointment',
+                                          text: Languages.of(context)!
+                                              .addNewAppointmentLabel
+                                              .toCapitalized(),
                                           textColor: Theme.of(context)
                                               .colorScheme
                                               .primary,
