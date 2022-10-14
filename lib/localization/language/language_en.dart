@@ -173,6 +173,8 @@ class LanguageEn extends Languages {
   @override
   String get clientsLabel => "clients";
   @override
+  String get selectClientLabel => "select client";
+  @override
   String get clientAppointmentsLabel => "client appointments";
   @override
   String get newClientLabel => "new client";

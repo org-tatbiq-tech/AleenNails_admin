@@ -78,6 +78,7 @@ abstract class Languages {
   /// ************ Client labels ************///
   String get clientLabel;
   String get clientsLabel;
+  String get selectClientLabel;
   String get clientAppointmentsLabel;
   String get newClientLabel;
   String get editClientLabel;

@@ -169,6 +169,8 @@ class LanguageHe extends Languages {
   @override
   String get clientsLabel => "לקוחות";
   @override
+  String get selectClientLabel => "select client";
+  @override
   String get clientAppointmentsLabel => "תורי הלקוח";
   @override
   String get newClientLabel => "לקוח חדש";

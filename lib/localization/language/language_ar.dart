@@ -171,6 +171,8 @@ class LanguageAr extends Languages {
   @override
   String get clientsLabel => "عملاء";
   @override
+  String get selectClientLabel => "select client";
+  @override
   String get clientAppointmentsLabel => "مواعيد العميل";
   @override
   String get newClientLabel => "عميل جديد";

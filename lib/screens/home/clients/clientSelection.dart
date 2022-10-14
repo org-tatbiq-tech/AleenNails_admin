@@ -1,17 +1,19 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ClientSelection extends StatefulWidget {
-  Function? onTap;
-  ClientSelection({
+  final Function onTap;
+  const ClientSelection({
     Key? key,
-    this.onTap,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -28,7 +30,7 @@ class ClientSelectionState extends State<ClientSelection> {
         return Scaffold(
           appBar: CustomAppBar(
             customAppBarProps: CustomAppBarProps(
-              titleText: 'Select a Client',
+              titleText: Languages.of(context)!.selectClientLabel.toTitleCase(),
               withBack: true,
               withSearch: true,
               withClipPath: false,
@@ -66,7 +68,7 @@ class ClientSelectionState extends State<ClientSelection> {
                   itemBuilder: (context, index) {
                     return ClientCard(
                       clientCardProps: ClientCardProps(
-                        onTap: () => widget.onTap!(
+                        onTap: () => widget.onTap(
                           clientsMgr.clients[index],
                         ),
                         withNavigation: false,
