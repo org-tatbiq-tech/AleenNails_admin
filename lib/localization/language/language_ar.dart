@@ -506,7 +506,17 @@ class LanguageAr extends Languages {
   @override
   String get labelNotification => "إشعارات";
   @override
+  String get notificationsTitle => "إشعارات التطبيق";
+  @override
+  String get notificationsMsg => "اسمح بإرسال إشعارات (هذا الهاتف)";
+  @override
+  String get labelNotifyBy => "من قِبَل";
+  @override
+  String get labelSettings => "إعدادات";
+  @override
   String get labelLanguage => "لغة";
+  @override
+  String get languageMsg => "حدد لغة التطبيق";
   @override
   String get labelLogout => "تسجيل خروج";
   @override

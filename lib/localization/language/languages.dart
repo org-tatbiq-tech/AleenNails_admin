@@ -241,7 +241,12 @@ abstract class Languages {
   /// ************ Profile settings ************///
   String get labelPersonalSettings;
   String get labelNotification;
+  String get notificationsTitle;
+  String get notificationsMsg;
+  String get labelNotifyBy;
+  String get labelSettings;
   String get labelLanguage;
+  String get languageMsg;
   String get labelLogout;
   String get labelLater;
   String get logoutMsg;

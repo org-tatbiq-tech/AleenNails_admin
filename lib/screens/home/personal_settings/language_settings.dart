@@ -72,7 +72,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Language',
+          titleText: Languages.of(context)!.labelLanguage,
           withBack: true,
           withBorder: false,
           barHeight: 110,
@@ -98,7 +98,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Select your Application Language',
+                      Languages.of(context)!.languageMsg,
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     SizedBox(

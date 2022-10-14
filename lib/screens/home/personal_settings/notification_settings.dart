@@ -1,9 +1,8 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
 import 'package:common_widgets/custom_list_tile.dart';
-
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class NotificationSettings extends StatefulWidget {
@@ -25,7 +24,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            'My Notification',
+            Languages.of(context)!.notificationsTitle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -36,7 +35,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                'Send me push notifications (this device)',
+                Languages.of(context)!.notificationsMsg,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText1,
@@ -75,7 +74,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            'Notify By',
+            Languages.of(context)!.labelNotifyBy,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -89,7 +88,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
               enabled: true,
               onTap: () => AppSettings.openNotificationSettings(),
               title: Text(
-                'Settings',
+                Languages.of(context)!.labelSettings,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2,
@@ -110,7 +109,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Notifications',
+          titleText: Languages.of(context)!.labelNotification,
           withBack: true,
           withBorder: false,
           barHeight: 110,

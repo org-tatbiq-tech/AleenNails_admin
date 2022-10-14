@@ -646,7 +646,17 @@ class LanguageHe extends Languages {
   @override
   String get labelNotification => "התראות";
   @override
+  String get notificationsTitle => "התראות האפליקציה";
+  @override
+  String get notificationsMsg => "מאשר שליחת התראות (המכשיר הזה)";
+  @override
+  String get labelNotifyBy => "הודע על ידי";
+  @override
+  String get labelSettings => "הגדרות";
+  @override
   String get labelLanguage => "שפה";
+  @override
+  String get languageMsg => "בחר את שפת האפליקציה";
   @override
   String get labelLogout => "התנתק";
   @override
