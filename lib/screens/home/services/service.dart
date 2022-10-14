@@ -5,6 +5,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/formats.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom_color_picker.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -153,8 +154,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
-          primaryButtonText: 'Delete',
-          secondaryButtonText: 'Back',
+          primaryButtonText: Languages.of(context)!.deleteLabel.toCapitalized(),
+          secondaryButtonText: Languages.of(context)!.backLabel.toCapitalized(),
           deleteCancelModal: true,
           primaryAction: () async => {
             showLoaderDialog(context),
@@ -163,8 +164,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             showSuccessFlash(
               context: context,
               successColor: successPrimaryColor,
-              successTitle: Languages.of(context)!.flashMessageSuccessTitle,
-              successBody: 'Workplace Photo Deleted Successfully.',
+              successTitle:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successBody: Languages.of(context)!
+                  .wpPhotoDeletedSuccessfullyBody
+                  .toCapitalized(),
             ),
           },
           footerButton: ModalFooter.both,
@@ -188,14 +192,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 height: rSize(30),
               ),
               Text(
-                'Delete Photo?',
+                '${Languages.of(context)!.deletePhotoLabel.toTitleCase()}?',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Action can not be undone',
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ],
@@ -279,7 +283,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                     height: rSize(2),
                   ),
                   Text(
-                    'Add Media',
+                    Languages.of(context)!.addMediaLabel.toTitleCase(),
                     style: Theme.of(context).textTheme.subtitle1?.copyWith(
                           fontSize: rSize(12),
                         ),
@@ -303,7 +307,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: rSize(10)),
             child: Text(
-              'Service Color',
+              Languages.of(context)!.colorLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -349,7 +353,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               bottom: rSize(5),
             ),
             child: Text(
-              'Permissions',
+              Languages.of(context)!.permissionsLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -361,7 +365,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Text(
-                'Allow Clients to Book Online',
+                Languages.of(context)!.clientBookPermissionLabel.toTitleCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText1,
@@ -378,9 +382,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                           context: context,
                           enableDrag: true,
                           centerTitle: true,
-                          title: 'Allow Clients to Book Online',
+                          title: Languages.of(context)!
+                              .clientBookPermissionLabel
+                              .toTitleCase(),
                           child: Text(
-                            'If switched off clients will not be able to book this Service using the app. You will have to manually add appointments to your calendar.',
+                            Languages.of(context)!
+                                .clientBookPermissionModalBody
+                                .toCapitalized(),
                             style: Theme.of(context).textTheme.bodyText1,
                           ),
                         ),
@@ -437,8 +445,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
-          primaryButtonText: 'Delete',
-          secondaryButtonText: 'Back',
+          primaryButtonText: Languages.of(context)!.deleteLabel.toTitleCase(),
+          secondaryButtonText: Languages.of(context)!.backLabel.toTitleCase(),
           deleteCancelModal: true,
           footerButton: ModalFooter.both,
           primaryAction: () => deleteService(),
@@ -462,14 +470,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 height: rSize(30),
               ),
               Text(
-                'Delete this service?',
+                '${Languages.of(context)!.deleteThisServiceLabel.toTitleCase()}?',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Action can not be undone',
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.subtitle1,
               ),
             ],
@@ -490,7 +498,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             onTap: () => {
               showDeleteServiceModal(),
             },
-            text: 'Delete Service',
+            text: Languages.of(context)!.deleteServiceLabel.toTitleCase(),
             isPrimary: true,
             // isSecondary: true,
             textColor: Colors.white,
@@ -518,7 +526,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                   right: rSize(10),
                 ),
                 child: Text(
-                  'Message to Client',
+                  Languages.of(context)!.messageToClientLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -532,9 +540,13 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       enableDrag: true,
                       // showDragPen: true,
                       centerTitle: true,
-                      title: 'Message to Client',
+                      title: Languages.of(context)!
+                          .messageToClientLabel
+                          .toTitleCase(),
                       child: Text(
-                        'This message will be sent to your client before the appointment. E.g Please do not eat 1 hour before the appointment.',
+                        Languages.of(context)!
+                            .messageToClientModalBody
+                            .toCapitalized(),
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
@@ -581,7 +593,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Media',
+              Languages.of(context)!.mediaLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -621,7 +633,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Service Description',
+              Languages.of(context)!.descriptionLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -631,8 +643,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             height: rSize(120),
             child: CustomInputField(
               customInputFieldProps: CustomInputFieldProps(
-                hintText:
-                    'Example: This relaxing service included an herbal soak.',
                 controller: _descriptionController,
                 keyboardType: TextInputType.multiline,
                 isDescription: true,
@@ -662,7 +672,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       right: rSize(10),
                     ),
                     child: Text(
-                      'Price',
+                      Languages.of(context)!.priceLabel.toTitleCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyText2,
@@ -695,7 +705,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       right: rSize(10),
                     ),
                     child: Text(
-                      'Duration',
+                      Languages.of(context)!.durationLabel.toTitleCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyText2,
@@ -715,8 +725,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                         minutesData: minutesData,
                         selectedHours: selectedHoursIdx,
                         selectedMinutes: selectedMinutesIdx,
-                        primaryButtonText: 'Save',
-                        secondaryButtonText: 'Cancel',
+                        primaryButtonText:
+                            Languages.of(context)!.saveLabel.toTitleCase(),
+                        secondaryButtonText:
+                            Languages.of(context)!.cancelLabel.toTitleCase(),
                         saveMinutes: (value) => {
                           setState(() {
                             selectedMinutes = minutesData[value];
@@ -751,7 +763,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               right: rSize(10),
             ),
             child: Text(
-              'Service Name',
+              Languages.of(context)!.serviceNameLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyText2,
@@ -789,29 +801,43 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
 
         if (widget.service == null) {
-          await servicesMgr.submitNewService(
-            service,
-            mediaListToUpload.values.toList(),
-          );
-          Navigator.pop(context);
-          showSuccessFlash(
-            context: context,
-            successTitle: Languages.of(context)!.flashMessageSuccessTitle,
-            successBody: 'Service was uploaded to DB successfully!',
-            successColor: successPrimaryColor,
-          );
+          await servicesMgr
+              .submitNewService(
+                service,
+                mediaListToUpload.values.toList(),
+              )
+              .then((value) => {
+                    Navigator.pop(context),
+                    showSuccessFlash(
+                      context: context,
+                      successTitle: Languages.of(context)!
+                          .flashMessageSuccessTitle
+                          .toTitleCase(),
+                      successBody: Languages.of(context)!
+                          .serviceCreatedSuccessfullyBody
+                          .toCapitalized(),
+                      successColor: successPrimaryColor,
+                    ),
+                  });
         } else {
-          await servicesMgr.updateService(
-            service,
-            mediaListToUpload.values.toList(),
-          );
-          Navigator.pop(context);
-          showSuccessFlash(
-            context: context,
-            successTitle: Languages.of(context)!.flashMessageSuccessTitle,
-            successBody: 'Service was updated successfully!',
-            successColor: successPrimaryColor,
-          );
+          await servicesMgr
+              .updateService(
+                service,
+                mediaListToUpload.values.toList(),
+              )
+              .then((value) => {
+                    Navigator.pop(context),
+                    showSuccessFlash(
+                      context: context,
+                      successTitle: Languages.of(context)!
+                          .flashMessageSuccessTitle
+                          .toTitleCase(),
+                      successBody: Languages.of(context)!
+                          .serviceUpdatedSuccessfullyBody
+                          .toCapitalized(),
+                      successColor: successPrimaryColor,
+                    ),
+                  });
         }
       }
     }
@@ -826,8 +852,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText:
-                widget.service != null ? 'Service Details' : 'New Service',
+            titleText: widget.service != null
+                ? Languages.of(context)!.editServiceLabel.toTitleCase()
+                : Languages.of(context)!.newServiceLabel.toTitleCase(),
             withBack: true,
             withSave: true,
             saveText: Languages.of(context)!.saveLabel,

@@ -166,6 +166,8 @@ abstract class Languages {
   String get newServiceLabel;
   String get editServiceLabel;
   String get serviceNameLabel;
+  String get noServiceAddedLabel;
+  String get addNewServiceLabel;
   String get priceLabel;
   String get durationLabel;
   String get colorLabel;

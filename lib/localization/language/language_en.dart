@@ -349,6 +349,10 @@ class LanguageEn extends Languages {
   @override
   String get serviceNameLabel => "service name";
   @override
+  String get noServiceAddedLabel => "no service added yet.";
+  @override
+  String get addNewServiceLabel => "add new service";
+  @override
   String get priceLabel => "price";
   @override
   String get durationLabel => "duration";

@@ -343,6 +343,10 @@ class LanguageHe extends Languages {
   @override
   String get serviceNameLabel => "שם שירות";
   @override
+  String get noServiceAddedLabel => "no service added yet.";
+  @override
+  String get addNewServiceLabel => "add new service";
+  @override
   String get priceLabel => "עלות";
   @override
   String get durationLabel => "משך";

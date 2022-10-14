@@ -1,9 +1,11 @@
 import 'dart:ui';
 
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/screens/home/services/service.dart';
 import 'package:appointments/utils/formats.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/custom_reorderable_list_view.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/service_card.dart';
@@ -66,7 +68,7 @@ class ServicesState extends State<Services> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Services',
+          titleText: Languages.of(context)!.servicesLabel.toTitleCase(),
           withBack: true,
           withSearch: false,
           withClipPath: false,
@@ -170,7 +172,9 @@ class ServicesState extends State<Services> {
                     ),
                     child: EmptyListImage(
                       emptyListImageProps: EmptyListImageProps(
-                        title: 'No services added yet',
+                        title: Languages.of(context)!
+                            .noServiceAddedLabel
+                            .toTitleCase(),
                         iconPath: 'assets/icons/menu.png',
                         bottomWidgetPosition: 10,
                         bottomWidget: CustomTextButton(
@@ -183,7 +187,9 @@ class ServicesState extends State<Services> {
                                 ),
                               ),
                             },
-                            text: 'Add New Service',
+                            text: Languages.of(context)!
+                                .addNewServiceLabel
+                                .toTitleCase(),
                             textColor: Theme.of(context).colorScheme.primary,
                             withIcon: true,
                             icon: Icon(

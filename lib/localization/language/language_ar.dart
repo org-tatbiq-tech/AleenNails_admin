@@ -347,6 +347,10 @@ class LanguageAr extends Languages {
   @override
   String get serviceNameLabel => "اسم الخدمة";
   @override
+  String get noServiceAddedLabel => "no service added yet.";
+  @override
+  String get addNewServiceLabel => "add new service";
+  @override
   String get priceLabel => "السعر";
   @override
   String get durationLabel => "المدة";
