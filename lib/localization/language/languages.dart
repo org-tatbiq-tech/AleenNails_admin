@@ -238,8 +238,11 @@ abstract class Languages {
   String get unavailabilityUpdatedSuccessfullyBody;
   String get unavailabilityDeletedSuccessfullyBody;
 
-  /// ************ Languages ************///
-  String get labelEnglish;
-  String get labelHebrew;
-  String get labelArabic;
+  /// ************ Profile settings ************///
+  String get labelPersonalSettings;
+  String get labelNotification;
+  String get labelLanguage;
+  String get labelLogout;
+  String get labelLater;
+  String get logoutMsg;
 }

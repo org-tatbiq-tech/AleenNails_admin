@@ -512,11 +512,17 @@ class LanguageEn extends Languages {
   String get unavailabilityDeletedSuccessfullyBody =>
       "your unavailability have been deleted successfully.";
 
-  /// ************ Languages ************///
+  /// ************ Profile settings ************///
   @override
-  String get labelEnglish => "English";
+  String get labelPersonalSettings => "Personal Settings";
   @override
-  String get labelHebrew => "Hebrew";
+  String get labelNotification => "Notifications";
   @override
-  String get labelArabic => "Arabic";
+  String get labelLanguage => "Language";
+  @override
+  String get labelLogout => "Logout";
+  @override
+  String get labelLater => "later";
+  @override
+  String get logoutMsg => 'Logout from the Application?';
 }

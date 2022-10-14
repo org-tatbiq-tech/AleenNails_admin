@@ -1,11 +1,10 @@
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-
-import 'package:common_widgets/custom_modal.dart';
-
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_icon_button.dart';
+import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/fade_animation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 
 class PersonalSettings extends StatefulWidget {
@@ -23,8 +22,8 @@ class PersonalSettingsState extends State<PersonalSettings> {
       bottomModalProps: BottomModalProps(
         context: context,
         centerTitle: true,
-        primaryButtonText: 'Logout',
-        secondaryButtonText: 'Not Now',
+        primaryButtonText: Languages.of(context)!.labelLogout,
+        secondaryButtonText: Languages.of(context)!.labelLater,
         deleteCancelModal: true,
         footerButton: ModalFooter.both,
         child: Column(
@@ -47,7 +46,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
               height: rSize(30),
             ),
             Text(
-              'Logout from the Application?',
+              Languages.of(context)!.logoutMsg,
               style: Theme.of(context).textTheme.bodyText2,
             ),
           ],
@@ -61,7 +60,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: 'Personal Settings',
+          titleText: Languages.of(context)!.labelPersonalSettings,
           withBack: true,
           barHeight: 110,
           withClipPath: true,
@@ -85,7 +84,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
                 animationDelay: 0.1,
                 iconPath: 'assets/icons/bell.png',
                 positionType: PositionType.bottom,
-                title: 'Notifications',
+                title: Languages.of(context)!.labelNotification,
               ),
             ),
             SizedBox(
@@ -98,7 +97,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
                 animationDelay: 0.3,
                 iconPath: 'assets/icons/language.png',
                 positionType: PositionType.bottom,
-                title: 'Language',
+                title: Languages.of(context)!.labelLanguage,
               ),
             ),
             SizedBox(
@@ -110,7 +109,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
                 animationDelay: 0.5,
                 iconPath: 'assets/icons/logout.png',
                 positionType: PositionType.bottom,
-                title: 'Logout',
+                title: Languages.of(context)!.labelLogout,
               ),
             ),
           ],

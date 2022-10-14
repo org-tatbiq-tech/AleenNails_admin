@@ -500,11 +500,17 @@ class LanguageAr extends Languages {
   String get unavailabilityDeletedSuccessfullyBody =>
       "your unavailability have been deleted successfully.";
 
-  /// ************ Languages ************///
+  /// ************ Profile settings ************///
   @override
-  String get labelEnglish => "ألانجليزية";
+  String get labelPersonalSettings => "إعدادات شخصية";
   @override
-  String get labelHebrew => "العبرية";
+  String get labelNotification => "إشعارات";
   @override
-  String get labelArabic => "العربية";
+  String get labelLanguage => "لغة";
+  @override
+  String get labelLogout => "تسجيل خروج";
+  @override
+  String get labelLater => "لاحقا";
+  @override
+  String get logoutMsg => 'هل تريد تسجيل الخروج من التطبيق؟';
 }
