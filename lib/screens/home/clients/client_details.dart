@@ -533,7 +533,7 @@ class _ClientDetailsState extends State<ClientDetails> {
 
     Widget renderDetailsBody() {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      if (clientsMgr.selectedClient.imagePath.isNotEmpty) {
+      if (clientsMgr.selectedClient.imagePath.isNotEmpty && imageUrl == '') {
         clientsMgr.getClientImage(clientsMgr.selectedClient.imagePath).then(
               (url) => {
                 if (imageUrl == 'notFound')
