@@ -75,7 +75,7 @@ class ClientsState extends State<Clients> {
                 child: EmptyListImage(
                   emptyListImageProps: EmptyListImageProps(
                     title: Languages.of(context)!
-                        .noServiceAddedLabel
+                        .noClientsAddedLabel
                         .toTitleCase(),
                     iconPath: 'assets/icons/menu.png',
                     bottomWidgetPosition: 10,
@@ -90,7 +90,7 @@ class ClientsState extends State<Clients> {
                           ),
                         },
                         text: Languages.of(context)!
-                            .addNewServiceLabel
+                            .addNewClientLabel
                             .toTitleCase(),
                         textColor: Theme.of(context).colorScheme.primary,
                         withIcon: true,
