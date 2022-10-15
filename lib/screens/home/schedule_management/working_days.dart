@@ -44,14 +44,24 @@ class _WorkingDaysState extends State<WorkingDays> {
   @override
   Widget build(BuildContext context) {
     List<String> workingDaysList = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday'
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
     ];
+
+    Map<String, String> workingDaysMap = {
+      "Sunday": Languages.of(context)!.labelSunday,
+      "Monday": Languages.of(context)!.labelMonday,
+      "Tuesday": Languages.of(context)!.labelTuesday,
+      "Wednesday": Languages.of(context)!.labelWednesday,
+      "Thursday": Languages.of(context)!.labelThursday,
+      "Friday": Languages.of(context)!.labelFriday,
+      "Saturday": Languages.of(context)!.labelSaturday,
+    };
 
     List<Widget> getBreakForWorkingDay(WorkingDay workingDay) {
       List<Widget> widgetList = workingDay.breaks != null
@@ -156,7 +166,7 @@ class _WorkingDaysState extends State<WorkingDays> {
             children: [
               Expanded(
                 child: Text(
-                  workingDay.day,
+                  getDayName(context, workingDay.day),
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
@@ -265,7 +275,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                 Expanded(
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) {
-                      return index == workingDaysList.length
+                      return index == workingDaysMap.values.length
                           ? renderDescription()
                           : index == 0
                               ? const SizedBox()

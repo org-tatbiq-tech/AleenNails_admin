@@ -523,4 +523,20 @@ class LanguageAr extends Languages {
   String get labelLater => "لاحقا";
   @override
   String get logoutMsg => 'هل تريد تسجيل الخروج من التطبيق؟';
+
+  /// ************ Week days ************///
+  @override
+  String get labelSunday => "ألأحد";
+  @override
+  String get labelMonday => "ألاثنين";
+  @override
+  String get labelTuesday => "ألثلاثاء";
+  @override
+  String get labelWednesday => "ألأربعاء";
+  @override
+  String get labelThursday => "ألخميس";
+  @override
+  String get labelFriday => "ألجمعة";
+  @override
+  String get labelSaturday => "ألسبت";
 }

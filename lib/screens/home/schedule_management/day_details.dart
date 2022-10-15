@@ -3,7 +3,6 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -455,7 +454,7 @@ class _DayDetailsState extends State<DayDetails> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-          titleText: widget.workingDay.day,
+          titleText: getDayName(context, widget.workingDay.day),
           withBack: true,
           barHeight: 110,
           withClipPath: true,
