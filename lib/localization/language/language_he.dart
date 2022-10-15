@@ -237,11 +237,11 @@ class LanguageHe extends Languages {
   String get permissionsLabel => "הרשאות";
 
   @override
-  String get isTrustedClientLabel => "האם לקוח אמין?";
+  String get isTrustedClientLabel => "האם הלקוח אמין?";
 
   @override
   String get trustedClientModalBody =>
-      "אם כבוי הלקוח לא יוכל להזמין פגישה אוטומטית";
+      "אם כבוי, הלקוח לא יהיה ביכולתו להזמין תור לבד";
 
   /// ************ Business Info Labels ************///
   @override
@@ -269,7 +269,7 @@ class LanguageHe extends Languages {
   String get businessDescriptionLabel => "תיאור העסק";
 
   @override
-  String get businessDescriptionHint => "תיאור קצר על העסק שלך (מומלץ)";
+  String get businessDescriptionHint => "תיאור קצר על העסק (מומלץ)";
 
   @override
   String get businessNameInfoLabel => "שם העסק & פרטים";
@@ -278,28 +278,28 @@ class LanguageHe extends Languages {
   String get logoLabel => "לוגו";
 
   @override
-  String get logoDescription => "העלה את הלוגו של העסק, יוצג בפרופיל שלך";
+  String get logoDescription => "העלאת תמונת פרופיל, מומלץ להעלות תמונת לוגו";
 
   @override
   String get coverPhotoLabel => "תמונת רקע";
 
   @override
   String get coverPhotoDescription =>
-      "תמונת רקע הינה הדבר הראשון שהלקוחות יראו בפרופיל שלך, הוסף תמונה כדי לתת תבונה לגביך";
+      "תמונת רקע הינה הדבר הראשון שהלקוחות יראו בפרופיל שלך, הוסף תמונה כדי לתת המחשה על העסק";
 
   @override
   String get workplacePhotoLabel => "תמונות מהעבודה";
 
   @override
   String get workplacePhotoDescription =>
-      "תן ללקוחות הצצה מהירה על העבודה, תעלה תמונות ותרשים את ללקוחות לפני שבאים";
+      "תן ללקוחות הצצה מהירה על העבודה, תעלה תמונות ותרשים את הלקוחות לפני שבאים!";
 
   @override
   String get profileImagesLabel => "תמונות פרופיל";
 
   @override
   String get profileImageDescription =>
-      "מה הדבר הראשון שאתה רוצה שלקוחות יראו על העסק שלך? זכור, לקוחות חדשים רוצים לראות איך הם יכולים להיראות עם השירותים שלך.";
+      "זכור, לקוחות חדשים תמיד ירצו לראות תוצאות קודם!\nבחלון הזה, תוכל להציג את העבודה, השירותים, הלוגו,...";
 
   @override
   String get editLogoLabel => "עריכת לוגו";
@@ -379,11 +379,11 @@ class LanguageHe extends Languages {
   String get unavailabilityListLabel => "רשימת אי-זמינות";
 
   @override
-  String get businessHoursNotesLabel => "העברות שעות פעילות";
+  String get businessHoursNotesLabel => "הערות";
 
   @override
   String get businessHoursNotesHint =>
-      "תיאור קצר של שעות העבודה של העסק שלך (מומלץ)";
+      "תיאור קצר של שעות העבודה של העסק (מומלץ)";
 
   @override
   String get breakLabel => "הפסקה";
@@ -408,7 +408,7 @@ class LanguageHe extends Languages {
   String get reasonLabel => "סיבה";
 
   @override
-  String get reasonHint => "תיאור קצר של הסיבה שלך (מומלץ)";
+  String get reasonHint => "הסבר קצר על סיבת האי-זמינות (מומלץ)";
 
   /// ************ Service Labels ************///
   @override
@@ -455,7 +455,7 @@ class LanguageHe extends Languages {
 
   @override
   String get messageToClientModalBody =>
-      "הודעה זו תישלח ללקוח שלך לפני הפגישה. למשל, נא לא לאכול שעה אחת לפני התור.";
+      "הודעה זו תישלח ללקוח לפני הפגישה. למשל, נא לא לאכול שעה אחת לפני התור.";
 
   @override
   String get clientBookPermissionLabel => "לאפשר ללקוח להזמין לבד";
@@ -508,7 +508,7 @@ class LanguageHe extends Languages {
   String get closedLabel => "סגור";
 
   @override
-  String get startLabel => "התחל";
+  String get startLabel => "התחלה";
 
   @override
   String get startTimeLabel => "זמן התחלה";
