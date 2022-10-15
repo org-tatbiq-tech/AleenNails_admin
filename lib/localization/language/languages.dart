@@ -100,6 +100,8 @@ abstract class Languages {
   String get permissionsLabel;
   String get isTrustedClientLabel;
   String get trustedClientModalBody;
+  String get noClientsAddedLabel;
+  String get addNewClientLabel;
 
   /// ************ Business Info Labels ************///
   String get businessLabel;

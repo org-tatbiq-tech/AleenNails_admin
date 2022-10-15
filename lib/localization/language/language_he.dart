@@ -242,6 +242,10 @@ class LanguageHe extends Languages {
   @override
   String get trustedClientModalBody =>
       "אם כבוי, הלקוח לא יהיה ביכולתו להזמין תור לבד";
+  @override
+  String get noClientsAddedLabel => "no client added yet";
+  @override
+  String get addNewClientLabel => "add new client";
 
   /// ************ Business Info Labels ************///
   @override

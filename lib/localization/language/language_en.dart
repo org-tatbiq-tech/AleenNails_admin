@@ -217,6 +217,10 @@ class LanguageEn extends Languages {
   @override
   String get trustedClientModalBody =>
       "If switched off client will not be able automatically book an appointment.";
+  @override
+  String get noClientsAddedLabel => "no client added yet";
+  @override
+  String get addNewClientLabel => "add new client";
 
   /// ************ Business Info Labels ************///
   @override
