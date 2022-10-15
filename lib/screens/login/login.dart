@@ -1,5 +1,6 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/auth_mgr.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/secure_storage.dart';
 import 'package:appointments/widget/custom_container.dart';
 import 'package:appointments/widget/custom_text_button.dart';
@@ -95,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen>
             context: context,
             errorTitle: 'Not admin!',
             errorBody: 'Provided email is not admin!',
+            errorColor: errorPrimaryColor,
           );
           Navigator.pop(context);
           return;

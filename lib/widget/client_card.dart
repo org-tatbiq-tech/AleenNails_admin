@@ -43,6 +43,7 @@ class ClientCard extends StatelessWidget {
 
     return CustomListTile(
       customListTileProps: CustomListTileProps(
+        enabled: clientCardProps.enabled,
         onTap: clientCardProps.onTap ??
             () => navigateToClientDetails(clientCardProps.contactDetails),
         title: Text(
