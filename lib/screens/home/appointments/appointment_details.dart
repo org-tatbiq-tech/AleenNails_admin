@@ -44,6 +44,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     cancelAppointmentVisibility() {
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
+      if (!appointmentsMgr.isSelectedAppointmentLoaded) {
+        return false;
+      }
       Appointment appointment = appointmentsMgr.selectedAppointment;
       if (appointment.status == AppointmentStatus.cancelled) {
         return false;
