@@ -39,7 +39,7 @@ dependencies:
     hosted:
       url: https://dart.cloudsmith.io/ahmad-manaa-44N/common-widgets/
       name: common_widgets
-    version: 0.0.43
+    version: 0.0.44
   cupertino_icons: ^1.0.5
   dotted_border: ^2.0.0+2
   firebase_auth: ^3.11.1

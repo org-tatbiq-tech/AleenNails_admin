@@ -4,8 +4,9 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/screens/home/services/service.dart';
-import 'package:appointments/utils/formats.dart';
-import 'package:appointments/utils/general.dart';
+import 'package:common_widgets/utils/date.dart';
+
+import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/widget/custom_reorderable_list_view.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:appointments/widget/service_card.dart';

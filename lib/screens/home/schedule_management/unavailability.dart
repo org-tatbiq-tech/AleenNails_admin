@@ -1,9 +1,9 @@
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:appointments/utils/formats.dart';
+
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/utils/general.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/widget/unavailability_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -32,12 +32,12 @@ class _UnavailabilityState extends State<Unavailability> {
   final TextEditingController _descriptionController = TextEditingController();
 
   DayViewController dayViewController = DayViewController();
-  DateTime startDateTime = nearestFive(DateTime.now());
-  DateTime startDateTimeTemp = nearestFive(DateTime.now());
+  DateTime startDateTime = nearestRange(DateTime.now());
+  DateTime startDateTimeTemp = nearestRange(DateTime.now());
 
-  DateTime endTime = nearestFive(DateTime.now());
-  DateTime endTimeTemp = nearestFive(DateTime.now());
-  DateTime endTimeMin = nearestFive(DateTime.now());
+  DateTime endTime = nearestRange(DateTime.now());
+  DateTime endTimeTemp = nearestRange(DateTime.now());
+  DateTime endTimeMin = nearestRange(DateTime.now());
 
   DateTime _selectedDay = DateTime.now();
   late SettingsMgr settingsMgr;
@@ -132,7 +132,7 @@ class _UnavailabilityState extends State<Unavailability> {
                   pickerDateTimeModalProps: PickerDateTimeModalProps(
                     context: context,
                     minuteInterval: 5,
-                    minimumDate: nearestFive(DateTime.now()),
+                    minimumDate: nearestRange(DateTime.now()),
                     initialDateTime: startDateTime,
                     title:
                         Languages.of(context)!.startDateTimeLabel.toTitleCase(),

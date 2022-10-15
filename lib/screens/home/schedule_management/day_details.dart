@@ -2,6 +2,7 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';

@@ -3,9 +3,9 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/widget/appointment_card.dart';
-import 'package:appointments/utils/general.dart';
-import 'package:appointments/widget/custom_day_view.dart';
-import 'package:appointments/widget/custom_expandable_calendar.dart';
+import 'package:common_widgets/custom_day_view.dart';
+import 'package:common_widgets/custom_expandable_calendar.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
@@ -319,6 +319,10 @@ class TimeLineState extends State<TimeLine> {
                     focusedDay: _focusedDay,
                     selectedDay: _selectedDay,
                     calendarFormat: _calendarFormat,
+                    availableCalendarFormats: {
+                      CalendarFormat.month: Languages.of(context)!.monthLabel,
+                      CalendarFormat.week: Languages.of(context)!.weekLabel,
+                    },
                     onDaySelected: _onDaySelected,
                     onPageChanged: (focusedDay) {
                       _focusedDay = focusedDay;

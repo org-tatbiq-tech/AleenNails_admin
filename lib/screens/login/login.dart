@@ -2,6 +2,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/secure_storage.dart';
+import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom_container.dart';
 import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -9,7 +10,6 @@ import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/utils/validators.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -252,7 +252,7 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ),
                             labelText: Languages.of(context)!.labelUserName,
-                            validator: validateNotEmpty,
+                            validator: emailValidation,
                           ),
                         ),
                         SizedBox(
@@ -272,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 size: rSize(20),
                               ),
                             ),
-                            validator: validateNotEmpty,
+                            validator: emptyValidation,
                           ),
                         ),
                         SizedBox(

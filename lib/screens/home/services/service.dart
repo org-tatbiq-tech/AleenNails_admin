@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/services_mgr.dart';
-import 'package:appointments/utils/formats.dart';
+
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/utils/general.dart';
+import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom_color_picker.dart';
 import 'package:common_widgets/custom_app_bar.dart';

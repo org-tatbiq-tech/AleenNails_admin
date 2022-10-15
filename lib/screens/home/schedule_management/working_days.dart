@@ -3,6 +3,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_input_field.dart';

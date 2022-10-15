@@ -4,7 +4,7 @@ import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:appointments/utils/general.dart';
+import 'package:common_widgets/utils/general.dart';
 
 class More extends StatefulWidget {
   const More({Key? key}) : super(key: key);

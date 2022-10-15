@@ -27,22 +27,6 @@ TimeOfDay? DBToTimeOfDay(Map data) {
   );
 }
 
-String getTimeOfDayFormat(TimeOfDay? timeOfDay) {
-  if (timeOfDay == null) {
-    return '';
-  }
-  return '${timeOfDay.hour.toString().padLeft(2, '0')}:${timeOfDay.minute.toString().padLeft(2, '0')}';
-}
-
-extension StringCasingExtension on String {
-  String toCapitalized() =>
-      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
-  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
-      .split(' ')
-      .map((str) => str.toCapitalized())
-      .join(' ');
-}
-
 String getDayName(context, day) {
   /// Returns name by selected lang
   switch (day) {

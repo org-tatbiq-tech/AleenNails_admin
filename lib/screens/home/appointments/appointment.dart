@@ -4,8 +4,8 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
-import 'package:appointments/utils/formats.dart';
-import 'package:appointments/utils/general.dart';
+
+import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/client_card.dart';
@@ -41,8 +41,8 @@ class AppointmentScreen extends StatefulWidget {
 class _AppointmentScreenState extends State<AppointmentScreen> {
   final TextEditingController _notesController = TextEditingController();
 
-  DateTime startDateTime = nearestFive(DateTime.now());
-  DateTime startDateTimeTemp = nearestFive(DateTime.now());
+  DateTime startDateTime = nearestRange(DateTime.now());
+  DateTime startDateTimeTemp = nearestRange(DateTime.now());
   DateTime? endTime;
   Client? selectedClient;
   List<AppointmentService> selectedServices = [];
@@ -92,10 +92,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   }
 
   DateTime getMinDate() {
-    if (nearestFive(DateTime.now()).isAfter(startDateTime)) {
+    if (nearestRange(DateTime.now()).isAfter(startDateTime)) {
       return startDateTime;
     }
-    return nearestFive(DateTime.now());
+    return nearestRange(DateTime.now());
   }
 
   onServiceTap(Service service) {

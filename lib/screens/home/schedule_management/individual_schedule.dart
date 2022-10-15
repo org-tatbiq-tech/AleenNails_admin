@@ -1,7 +1,8 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/utils/general.dart';
-import 'package:appointments/widget/custom_expandable_calendar.dart';
+import 'package:appointments/providers/langs.dart';
+import 'package:common_widgets/custom_expandable_calendar.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/ease_in_animation.dart';
@@ -9,6 +10,7 @@ import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class IndividualSchedule extends StatefulWidget {
@@ -124,6 +126,11 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
 
   @override
   Widget build(BuildContext context) {
+    getLocale() {
+      final localeMgr = Provider.of<LocaleData>(context, listen: false);
+      return localeMgr.locale.languageCode;
+    }
+
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
@@ -140,6 +147,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
               focusedDay: _focusedDay,
               selectedDay: _selectedDay,
               calendarFormat: _calendarFormat,
+              locale: getLocale(),
               availableCalendarFormats: {
                 CalendarFormat.month: Languages.of(context)!.monthLabel
               },
@@ -157,7 +165,6 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
                   });
                 }
               },
-              // availableCalendarFormats: {},
             ),
           ),
           Padding(

@@ -6,7 +6,7 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_appointments.dart';
-import 'package:appointments/utils/general.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_text_button.dart';
