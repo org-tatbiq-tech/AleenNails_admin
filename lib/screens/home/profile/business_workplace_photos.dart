@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
@@ -28,6 +28,7 @@ class BusinessWorkplacePhotos extends StatefulWidget {
 }
 
 class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
+  bool disposed = false;
   Map<String, File> mediaList = {};
   Map<String, File> mediaListToUpload = {};
   bool _isLoading = true;
@@ -41,9 +42,12 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             (res) async => {
               if (res.isEmpty)
                 {
-                  setState(() {
-                    _isLoading = false;
-                  }),
+                  if (mounted)
+                    {
+                      setState(() {
+                        _isLoading = false;
+                      }),
+                    }
                 }
               else
                 {
@@ -54,16 +58,21 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                         workPlacePhoto.value,
                       ),
                     },
-                  setState(() {
-                    _isLoading = false;
-                  }),
-                }
+                  if (mounted)
+                    {
+                      setState(() {
+                        _isLoading = false;
+                      }),
+                    },
+                },
             },
           );
     } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
