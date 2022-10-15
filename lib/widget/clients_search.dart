@@ -75,6 +75,17 @@ class ClientsSearchDelegate extends SearchDelegate {
   // Show query result
   @override
   Widget buildResults(BuildContext context) {
+    navigateToClientDetails(Client client) {
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      clientsMgr.setSelectedClient(client: client);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ClientDetails(),
+        ),
+      );
+    }
+
     List<Client> clientsMatchQuery = [];
     for (var p in searchClients) {
       if (p.phone.contains(query.toLowerCase()) ||
@@ -99,7 +110,13 @@ class ClientsSearchDelegate extends SearchDelegate {
         itemBuilder: (context, index) {
           var result = clientsMatchQuery[index];
           return ClientCard(
-            clientCardProps: ClientCardProps(contactDetails: result),
+            clientCardProps: ClientCardProps(
+              contactDetails: result,
+              onTap: () => {
+                close(context, null),
+                navigateToClientDetails(result),
+              },
+            ),
           );
         },
       ),
