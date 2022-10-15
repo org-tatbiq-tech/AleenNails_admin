@@ -54,6 +54,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       if (appointment.paymentStatus == PaymentStatus.paid) {
         return false;
       }
+      if (appointment.status == AppointmentStatus.noShow) {
+        return false;
+      }
       return true;
     }
 
