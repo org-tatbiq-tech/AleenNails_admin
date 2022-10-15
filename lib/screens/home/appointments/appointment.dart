@@ -242,8 +242,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               child: AppointmentServiceCard(
                 // key: ValueKey(service.id),
                 appointmentServiceCardProps: AppointmentServiceCardProps(
-                  withNavigation: false,
                   enabled: false,
+                  withNavigation: false,
                   serviceDetails: service,
                   title: service.name,
                   subTitle: durationToFormat(duration: service.duration),
@@ -506,6 +506,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               clientCardProps: ClientCardProps(
                 withNavigation: false,
                 withDelete: true,
+                enabled: false,
                 onCloseTap: () => {
                   setState(() {
                     selectedClient = null;
@@ -544,8 +545,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               child: CustomInputField(
                 customInputFieldProps: CustomInputFieldProps(
                   controller: _notesController,
-                  // hintText:
-                  //     'Short description of your business working hours (recommended)',
                   isDescription: true,
                   keyboardType: TextInputType.multiline,
                 ),

@@ -93,7 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
             rSize(20),
             rSize(10),
             rSize(20),
-            rSize(0),
+            !isDeviceHasNotch()
+                ? rSize(20)
+                : isAndroid()
+                    ? rSize(20)
+                    : 0,
           ),
           child: Row(
             mainAxisSize: MainAxisSize.max,
