@@ -32,6 +32,7 @@ class ThemeNotifier with ChangeNotifier {
 
   /// Light theme data definition
   final lightTheme = ThemeData(
+      scaffoldBackgroundColor: primaryWithAlpha3,
       brightness: Brightness.light,
       shadowColor: primaryFontWithAlpha1,
       backgroundColor: primaryWithAlpha3,
@@ -61,8 +62,31 @@ class ThemeNotifier with ChangeNotifier {
         size: rSize(24),
         opacity: 1,
       ),
+      inputDecorationTheme: const InputDecorationTheme(
+        border: InputBorder.none,
+      ),
       appBarTheme: AppBarTheme(
         backgroundColor: primaryWithAlpha2,
+        elevation: 0,
+        toolbarHeight: rSize(65),
+        toolbarTextStyle: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w500,
+          fontSize: rSize(16),
+          height: rSize(1.3),
+          fontFamily: GoogleFonts.secularOne().fontFamily,
+          decoration: TextDecoration.none,
+        ),
+        actionsIconTheme: IconThemeData(
+          color: primary,
+          size: rSize(24),
+          opacity: 1,
+        ),
+        iconTheme: IconThemeData(
+          color: primary,
+          size: rSize(24),
+          opacity: 1,
+        ),
       ),
       bottomAppBarTheme: BottomAppBarTheme(
         color: primaryWithAlpha2,

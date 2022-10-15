@@ -30,7 +30,6 @@ dependencies:
   after_layout: ^1.2.0
   app_settings: ^4.1.8
   cached_network_image: ^3.2.2
-  calendar_view: ^1.0.0
   charts_flutter: ^0.12.0
   charts_flutter_new: ^0.12.0
   cloud_firestore: ^3.5.0
@@ -39,7 +38,7 @@ dependencies:
     hosted:
       url: https://dart.cloudsmith.io/ahmad-manaa-44N/common-widgets/
       name: common_widgets
-    version: 0.0.44
+    version: 0.0.45
   cupertino_icons: ^1.0.5
   dotted_border: ^2.0.0+2
   firebase_auth: ^3.11.1
@@ -55,7 +54,6 @@ dependencies:
     sdk: flutter
   flutter_secure_storage: ^6.0.0
   flutter_slidable: ^2.0.0
-  flutter_week_view: ^1.2.2
   font_awesome_flutter: ^10.2.1
   get: ^4.6.1
   google_fonts: ^3.0.1
@@ -67,7 +65,6 @@ dependencies:
   scrollable_positioned_list: ^0.3.5
   shared_preferences: ^2.0.15
   supercharged: ^2.1.1
-  table_calendar: ^3.0.7
   url_launcher: ^6.1.6
   uuid: ^3.0.6
 #  flutter_week_view: ^1.2.1+1

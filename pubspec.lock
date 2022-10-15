@@ -57,13 +57,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
-  calendar_view:
-    dependency: "direct main"
-    description:
-      name: calendar_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   characters:
     dependency: transitive
     description:
@@ -154,7 +147,7 @@ packages:
       name: common_widgets
       url: "https://dart.cloudsmith.io/ahmad-manaa-44N/common-widgets/"
     source: hosted
-    version: "0.0.44"
+    version: "0.0.45"
   cross_file:
     dependency: transitive
     description:
@@ -428,7 +421,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_week_view:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_week_view
       url: "https://pub.dartlang.org"
@@ -937,7 +930,7 @@ packages:
     source: hosted
     version: "3.0.0+3"
   table_calendar:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: table_calendar
       url: "https://pub.dartlang.org"
