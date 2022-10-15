@@ -663,4 +663,20 @@ class LanguageHe extends Languages {
   String get labelLater => "אחר כך";
   @override
   String get logoutMsg => 'להתנתק מהאפליקציה?';
+
+  /// ************ Week days ************///
+  @override
+  String get labelSunday => "ראשון";
+  @override
+  String get labelMonday => "שני";
+  @override
+  String get labelTuesday => "שלישי";
+  @override
+  String get labelWednesday => "רביעי";
+  @override
+  String get labelThursday => "חמישי";
+  @override
+  String get labelFriday => "שישי";
+  @override
+  String get labelSaturday => "שבת";
 }

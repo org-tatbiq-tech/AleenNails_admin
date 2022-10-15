@@ -1,3 +1,4 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:flutter/material.dart';
 
 Map timeOfDayToDB(TimeOfDay? timeOfDay) {
@@ -40,4 +41,26 @@ extension StringCasingExtension on String {
       .split(' ')
       .map((str) => str.toCapitalized())
       .join(' ');
+}
+
+String getDayName(context, day) {
+  /// Returns name by selected lang
+  switch (day) {
+    case "Sunday":
+      return Languages.of(context)!.labelSunday;
+    case "Monday":
+      return Languages.of(context)!.labelMonday;
+    case "Tuesday":
+      return Languages.of(context)!.labelTuesday;
+    case "Wednesday":
+      return Languages.of(context)!.labelWednesday;
+    case "Thursday":
+      return Languages.of(context)!.labelThursday;
+    case "Friday":
+      return Languages.of(context)!.labelFriday;
+    case "Saturday":
+      return Languages.of(context)!.labelSaturday;
+    default:
+      return "!";
+  }
 }

@@ -535,4 +535,20 @@ class LanguageEn extends Languages {
   String get labelLater => "later";
   @override
   String get logoutMsg => 'Logout from the Application?';
+
+  /// ************ Week days ************///
+  @override
+  String get labelSunday => "Sunday";
+  @override
+  String get labelMonday => "Monday";
+  @override
+  String get labelTuesday => "Tuesday";
+  @override
+  String get labelWednesday => "Wednesday";
+  @override
+  String get labelThursday => "Thursday";
+  @override
+  String get labelFriday => "Friday";
+  @override
+  String get labelSaturday => "Saturday";
 }

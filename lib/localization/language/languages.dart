@@ -250,4 +250,13 @@ abstract class Languages {
   String get labelLogout;
   String get labelLater;
   String get logoutMsg;
+
+  /// ************ Week days ************///
+  String get labelSunday;
+  String get labelMonday;
+  String get labelTuesday;
+  String get labelWednesday;
+  String get labelThursday;
+  String get labelFriday;
+  String get labelSaturday;
 }
