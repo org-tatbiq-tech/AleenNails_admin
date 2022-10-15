@@ -14,6 +14,8 @@ AppointmentStatus loadAppointmentStatus(String status) {
       return AppointmentStatus.confirmed;
     case 'AppointmentStatus.declined':
       return AppointmentStatus.declined;
+    case 'AppointmentStatus.noShow':
+      return AppointmentStatus.noShow;
     default:
       return AppointmentStatus.waiting;
   }

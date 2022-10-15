@@ -92,6 +92,22 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       return null;
     }
 
+    bool isNoShowVisible(Appointment appointment) {
+      if (appointment.date.isAfter(DateTime.now())) {
+        return false;
+      }
+      if (appointment.status == AppointmentStatus.cancelled) {
+        return false;
+      }
+      if (appointment.status == AppointmentStatus.noShow) {
+        return false;
+      }
+      if (appointment.paymentStatus == PaymentStatus.paid) {
+        return false;
+      }
+      return true;
+    }
+
     cancelAppointmentClicked(Appointment appointment) {
       showLoaderDialog(context);
       final appointmentsMgr =
@@ -118,6 +134,26 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           Provider.of<AppointmentsMgr>(context, listen: false);
       appointment.status = AppointmentStatus.confirmed;
       appointment.paymentStatus = PaymentStatus.paid;
+      appointmentsMgr.updateAppointment(appointment).then((value) => {
+            Navigator.pop(context),
+            showSuccessFlash(
+              context: context,
+              successColor: successPrimaryColor,
+              successTitle:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successBody: Languages.of(context)!
+                  .appointmentUpdatedSuccessfullyBody
+                  .toCapitalized(),
+            ),
+            Navigator.pop(context),
+          });
+    }
+
+    confirmNoShow(Appointment appointment) {
+      showLoaderDialog(context);
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointment.status = AppointmentStatus.noShow;
       appointmentsMgr.updateAppointment(appointment).then((value) => {
             Navigator.pop(context),
             showSuccessFlash(
@@ -269,6 +305,32 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ],
+            ),
+          ],
+        ),
+      );
+    }
+
+    renderNoShow(Appointment appointment) {
+      return FadeAnimation(
+        positionType: PositionType.top,
+        delay: 1.2,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: CustomButton(
+                customButtonProps: CustomButtonProps(
+                  onTap: () => confirmNoShow(appointment),
+                  text: Languages.of(context)!.noShowLabel.toUpperCase(),
+                  isPrimary: true,
+                  isSecondary: false,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  textColor: Colors.white,
+                ),
+              ),
             ),
           ],
         ),
@@ -774,6 +836,17 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                         ),
                         renderFooter(
                           appointmentsMgr.selectedAppointment,
+                        ),
+                        SizedBox(
+                          height: rSize(15),
+                        ),
+                        Visibility(
+                          visible: isNoShowVisible(
+                            appointmentsMgr.selectedAppointment,
+                          ),
+                          child: renderNoShow(
+                            appointmentsMgr.selectedAppointment,
+                          ),
                         ),
                       ],
                     ),

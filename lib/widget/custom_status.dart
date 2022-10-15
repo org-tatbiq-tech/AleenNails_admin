@@ -23,6 +23,8 @@ class CustomStatus extends StatelessWidget {
           return errorPrimaryColor;
         case AppointmentStatus.waiting:
           return warningPrimaryColor;
+        case AppointmentStatus.noShow:
+          return errorPrimaryColor;
         default:
           return informationPrimaryColor;
       }
@@ -38,6 +40,8 @@ class CustomStatus extends StatelessWidget {
           return Languages.of(context)!.declinedLabel;
         case AppointmentStatus.waiting:
           return Languages.of(context)!.waitingLabel;
+        case AppointmentStatus.noShow:
+          return Languages.of(context)!.noShowLabel;
         default:
           return Languages.of(context)!.waitingLabel;
       }
