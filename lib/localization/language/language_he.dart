@@ -177,7 +177,7 @@ class LanguageHe extends Languages {
   String get clientsLabel => "לקוחות";
 
   @override
-  String get selectClientLabel => "select client";
+  String get selectClientLabel => "בחר לקוח";
 
   @override
   String get clientAppointmentsLabel => "תורי הלקוח";
@@ -243,9 +243,9 @@ class LanguageHe extends Languages {
   String get trustedClientModalBody =>
       "אם כבוי, הלקוח לא יהיה ביכולתו להזמין תור לבד";
   @override
-  String get noClientsAddedLabel => "no client added yet";
+  String get noClientsAddedLabel => "עדיין לא נוסף לקוח";
   @override
-  String get addNewClientLabel => "add new client";
+  String get addNewClientLabel => "הוסף לקוח חדש";
 
   /// ************ Business Info Labels ************///
   @override
@@ -431,10 +431,10 @@ class LanguageHe extends Languages {
   String get serviceNameLabel => "שם שירות";
 
   @override
-  String get noServiceAddedLabel => "no service added yet.";
+  String get noServiceAddedLabel => "עדיין לא נוסף שירות";
 
   @override
-  String get addNewServiceLabel => "add new service";
+  String get addNewServiceLabel => "הוסף שירות חדש";
 
   @override
   String get priceLabel => "עלות";
@@ -583,23 +583,20 @@ class LanguageHe extends Languages {
 
   @override
   String get wpPhotoUploadedSuccessfullyBody =>
-      "your workplace photo have been uploaded Successfully.";
+      "תמונת מקום העבודה הועלתה בהצלחה";
 
   @override
-  String get logoPhotoDeletedSuccessfullyBody =>
-      "your logo photo have been deleted Successfully.";
+  String get logoPhotoDeletedSuccessfullyBody => "תמונת הלוגו נמחקה בהצלחה";
 
   @override
-  String get covePhotoPhotoDeletedSuccessfullyBody =>
-      "your cover photo photo have been deleted Successfully.";
+  String get covePhotoPhotoDeletedSuccessfullyBody => "תמונת הרקע נמחקה בהצלחה";
 
   @override
-  String get logoPhotoUploadedSuccessfullyBody =>
-      "your logo photo have been uploaded Successfully.";
+  String get logoPhotoUploadedSuccessfullyBody => "תמונת הלוגו הועלתה בהצלחה";
 
   @override
   String get coverPhotoPhotoUploadedSuccessfullyBody =>
-      "your cover photo photo have been uploaded Successfully.";
+      "תמונת הרקע הועלתה בהצלחה";
 
   @override
   String get serviceUpdatedSuccessfullyBody => "השירות עודכן בהצלחה";
@@ -629,20 +626,16 @@ class LanguageHe extends Languages {
   String get adminMissingBody => "האימייל הזה לא רשום כמנהל";
 
   @override
-  String get infoUpdatedSuccessfullyBody =>
-      "your info have been updated successfully.";
+  String get infoUpdatedSuccessfullyBody => "המידע עודכן בהצלחה";
 
   @override
-  String get workingDayUpdatedSuccessfullyBody =>
-      "your working day have been updated successfully.";
+  String get workingDayUpdatedSuccessfullyBody => "ימי העבודה עודכן בהצלחה";
 
   @override
-  String get unavailabilityUpdatedSuccessfullyBody =>
-      "your unavailability have been updated successfully.";
+  String get unavailabilityUpdatedSuccessfullyBody => "אי הזמינות עודכן בהצלחה";
 
   @override
-  String get unavailabilityDeletedSuccessfullyBody =>
-      "your unavailability have been deleted successfully.";
+  String get unavailabilityDeletedSuccessfullyBody => "אי הזמינות נמחק בהצלחה";
 
   /// ************ Profile settings ************///
   @override
