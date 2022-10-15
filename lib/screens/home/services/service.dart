@@ -819,6 +819,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                           .toCapitalized(),
                       successColor: successPrimaryColor,
                     ),
+                    Navigator.pop(context),
                   });
         } else {
           await servicesMgr
@@ -838,6 +839,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                           .toCapitalized(),
                       successColor: successPrimaryColor,
                     ),
+                    Navigator.pop(context),
                   });
         }
       }

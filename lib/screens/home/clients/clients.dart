@@ -42,7 +42,7 @@ class ClientsState extends State<Clients> {
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            withSearch: true,
+            withSearch: clientsMgr.clients.isNotEmpty,
             searchFunction: () => showSearch(
               context: context,
               delegate: ClientsSearchDelegate(clients: clientsMgr.clients),

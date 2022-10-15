@@ -4,6 +4,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/screens/home/services/service.dart';
+import 'package:appointments/widget/services_search.dart';
 import 'package:common_widgets/utils/date.dart';
 
 import 'package:common_widgets/utils/general.dart';
@@ -66,30 +67,34 @@ class ServicesState extends State<Services> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: Languages.of(context)!.servicesLabel.toTitleCase(),
-          withBack: true,
-          withSearch: false,
-          withClipPath: false,
-          customIcon: Icon(
-            FontAwesomeIcons.plus,
-            size: rSize(24),
-          ),
-          customIconTap: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ServiceWidget(),
-              ),
+    return Consumer<ServicesMgr>(builder: (context, servicesMgr, _) {
+      return Scaffold(
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: Languages.of(context)!.servicesLabel.toTitleCase(),
+            withBack: true,
+            withSearch: servicesMgr.services.isNotEmpty,
+            searchFunction: () => showSearch(
+              context: context,
+              delegate: ServicesSearchDelegate(services: servicesMgr.services),
             ),
-          },
+            withClipPath: false,
+            customIcon: Icon(
+              FontAwesomeIcons.plus,
+              size: rSize(24),
+            ),
+            customIconTap: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ServiceWidget(),
+                ),
+              ),
+            },
+          ),
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Consumer<ServicesMgr>(
-        builder: (context, servicesMgr, _) => Column(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -205,7 +210,7 @@ class ServicesState extends State<Services> {
                   ),
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 }
