@@ -26,12 +26,8 @@ import 'package:appointments/screens/home/schedule_management/unavailability.dar
 import 'package:appointments/screens/home/schedule_management/working_days.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/home/settings/booking_settings.dart';
-import 'package:appointments/screens/landing/landing.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
-import 'package:appointments/screens/register/mobile.dart';
-import 'package:appointments/screens/register/otp.dart';
-import 'package:appointments/screens/register/register.dart';
 import 'package:appointments/utils/secure_storage.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -93,15 +89,10 @@ class AppointmentsApp extends StatelessWidget {
     /// Supported routes for Navigator
 
     return {
-      '/landing': (context) => const Landing(),
       '/home': (context) => const HomeScreen(),
       '/loginScreen': (context) => const LoginScreen(),
       '/clients': (context) => const Clients(),
       '/forgetPassword': (context) => const ForgetPasswordScreen(),
-      // '/resetPassword': (context) => const ResetPasswordScreen(),
-      '/register': (context) => const RegisterMainScreen(),
-      '/register/registerMobile': (context) => const RegisterMobileScreen(),
-      '/register/otpConfirmation': (context) => const RegisterOTPScreen(),
       '/newAppointment': (context) => const AppointmentScreen(),
       '/discountSelection': (context) => const DiscountSelection(),
       '/services': (context) => const Services(),
