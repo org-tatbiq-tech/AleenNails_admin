@@ -6,7 +6,7 @@ import 'package:appointments/widget/appointment_card.dart';
 import 'package:common_widgets/custom_day_view.dart';
 import 'package:common_widgets/custom_expandable_calendar.dart';
 import 'package:common_widgets/utils/general.dart';
-import 'package:appointments/widget/custom_text_button.dart';
+import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/ease_in_animation.dart';
