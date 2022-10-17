@@ -33,19 +33,28 @@
 		<true/>
 		<key>NSCameraUsageDescription</key>
 		<string>Access camera</string>
+		<key>NSContactsUsageDescription</key>
+		<string>Importing Contacts to the application</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Library</string>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
+		<key>NSAppleMusicUsageDescription</key>
+		<string>Music</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
 		</array>
+		<key>UISupportedInterfaceOrientations~ipad</key>
+		<array>
+			<string>UIInterfaceOrientationLandscapeLeft</string>
+			<string>UIInterfaceOrientationLandscapeRight</string>
+			<string>UIInterfaceOrientationPortrait</string>
+			<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		</array>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
-		<key>NSContactsUsageDescription</key>
-		<string>Importing Contacts to the application</string>
 	</dict>
 </plist>
