@@ -373,6 +373,10 @@ class _DayDetailsState extends State<DayDetails> {
                       context: context,
                       initialDateTime: startTime,
                       minuteInterval: 5,
+                      primaryButtonText:
+                          Languages.of(context)!.saveLabel.toTitleCase(),
+                      secondaryButtonText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
                       title:
                           Languages.of(context)!.startTimeLabel.toCapitalized(),
                       onDateTimeChanged: (DateTime value) => {
@@ -430,6 +434,10 @@ class _DayDetailsState extends State<DayDetails> {
                       minuteInterval: 5,
                       minimumDate: endTimeMin,
                       initialDateTime: endTime,
+                      primaryButtonText:
+                          Languages.of(context)!.saveLabel.toTitleCase(),
+                      secondaryButtonText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
                       title:
                           Languages.of(context)!.endTimeLabel.toCapitalized(),
                       onDateTimeChanged: (DateTime value) => {

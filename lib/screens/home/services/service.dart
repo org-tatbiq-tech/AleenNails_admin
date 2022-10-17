@@ -245,6 +245,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             showImagePickerModal(
                 imagePickerModalProps: ImagePickerModalProps(
               context: context,
+              cancelText: Languages.of(context)!.cancelLabel.toTitleCase(),
+              deleteText: Languages.of(context)!.deleteLabel.toTitleCase(),
+              takePhotoText:
+                  Languages.of(context)!.takePhotoLabel.toTitleCase(),
+              libraryText:
+                  Languages.of(context)!.chooseFromLibraryLabel.toTitleCase(),
               isCircleCropStyle: false,
               saveImage: (File imageFile) {
                 setState(() {

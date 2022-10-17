@@ -426,6 +426,10 @@ class _ClientWidgetState extends State<ClientWidget> {
               pickerDateTimeModalProps: PickerDateTimeModalProps(
                 context: context,
                 maximumDate: maximumDate,
+                primaryButtonText:
+                    Languages.of(context)!.saveLabel.toTitleCase(),
+                secondaryButtonText:
+                    Languages.of(context)!.cancelLabel.toTitleCase(),
                 initialDateTime: birthdayDate ?? maximumDate,
                 mode: CupertinoDatePickerMode.date,
                 title: Languages.of(context)!.editClientLabel.toTitleCase(),
@@ -543,6 +547,16 @@ class _ClientWidgetState extends State<ClientWidget> {
                       showImagePickerModal(
                         imagePickerModalProps: ImagePickerModalProps(
                           context: context,
+                          cancelText:
+                              Languages.of(context)!.cancelLabel.toTitleCase(),
+                          deleteText:
+                              Languages.of(context)!.deleteLabel.toTitleCase(),
+                          takePhotoText: Languages.of(context)!
+                              .takePhotoLabel
+                              .toTitleCase(),
+                          libraryText: Languages.of(context)!
+                              .chooseFromLibraryLabel
+                              .toTitleCase(),
                           saveImage: (File? imageFile) {
                             setState(() {
                               _imageFile = imageFile;

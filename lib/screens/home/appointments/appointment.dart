@@ -379,6 +379,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
                       context: context,
                       minimumDate: getMinDate(),
+                      primaryButtonText:
+                          Languages.of(context)!.saveLabel.toTitleCase(),
+                      secondaryButtonText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
                       minuteInterval: 5,
                       initialDateTime: startDateTime,
                       title: Languages.of(context)!

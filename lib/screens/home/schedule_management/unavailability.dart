@@ -134,6 +134,10 @@ class _UnavailabilityState extends State<Unavailability> {
                     minuteInterval: 5,
                     minimumDate: nearestRange(DateTime.now()),
                     initialDateTime: startDateTime,
+                    primaryButtonText:
+                        Languages.of(context)!.saveLabel.toTitleCase(),
+                    secondaryButtonText:
+                        Languages.of(context)!.cancelLabel.toTitleCase(),
                     title:
                         Languages.of(context)!.startDateTimeLabel.toTitleCase(),
                     onDateTimeChanged: (DateTime value) => {
@@ -190,6 +194,10 @@ class _UnavailabilityState extends State<Unavailability> {
                     minuteInterval: 5,
                     initialDateTime: endTime,
                     minimumDate: endTimeMin,
+                    primaryButtonText:
+                        Languages.of(context)!.saveLabel.toTitleCase(),
+                    secondaryButtonText:
+                        Languages.of(context)!.cancelLabel.toTitleCase(),
                     title: Languages.of(context)!.endTimeLabel.toTitleCase(),
                     onDateTimeChanged: (DateTime value) => {
                       setState(() {

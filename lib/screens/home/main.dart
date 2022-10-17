@@ -76,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: getModalBody(),
                   showDragPen: true,
                   enableDrag: true,
-                  // title: 'Modal Title',
                 ),
               );
             },

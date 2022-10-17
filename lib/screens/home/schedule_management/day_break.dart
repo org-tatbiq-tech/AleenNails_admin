@@ -84,6 +84,10 @@ class _DayBreakState extends State<DayBreak> {
                       minimumDate: widget.breakStartTime,
                       maximumDate: widget.breakEndTime,
                       initialDateTime: startTime,
+                      primaryButtonText:
+                          Languages.of(context)!.saveLabel.toTitleCase(),
+                      secondaryButtonText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
                       title:
                           Languages.of(context)!.startTimeLabel.toTitleCase(),
                       onDateTimeChanged: (DateTime value) => {
@@ -141,6 +145,10 @@ class _DayBreakState extends State<DayBreak> {
                       minimumDate: endTimeMin,
                       maximumDate: widget.breakEndTime,
                       initialDateTime: endTime,
+                      primaryButtonText:
+                          Languages.of(context)!.saveLabel.toTitleCase(),
+                      secondaryButtonText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
                       title: Languages.of(context)!.endTimeLabel.toTitleCase(),
                       onDateTimeChanged: (DateTime value) => {
                         setState(() {
