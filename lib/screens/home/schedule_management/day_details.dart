@@ -4,7 +4,7 @@ import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/custom_text_button.dart';
+import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -373,6 +373,10 @@ class _DayDetailsState extends State<DayDetails> {
                       context: context,
                       initialDateTime: startTime,
                       minuteInterval: 5,
+                      primaryButtonText:
+                          Languages.of(context)!.saveLabel.toTitleCase(),
+                      secondaryButtonText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
                       title:
                           Languages.of(context)!.startTimeLabel.toCapitalized(),
                       onDateTimeChanged: (DateTime value) => {
@@ -430,6 +434,10 @@ class _DayDetailsState extends State<DayDetails> {
                       minuteInterval: 5,
                       minimumDate: endTimeMin,
                       initialDateTime: endTime,
+                      primaryButtonText:
+                          Languages.of(context)!.saveLabel.toTitleCase(),
+                      secondaryButtonText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
                       title:
                           Languages.of(context)!.endTimeLabel.toCapitalized(),
                       onDateTimeChanged: (DateTime value) => {

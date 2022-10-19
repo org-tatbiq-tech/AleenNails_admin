@@ -160,6 +160,15 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                       ratioX: 16,
                       ratioY: 9,
                       isCircleCropStyle: false,
+                      cancelText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
+                      deleteText:
+                          Languages.of(context)!.deleteLabel.toTitleCase(),
+                      takePhotoText:
+                          Languages.of(context)!.takePhotoLabel.toTitleCase(),
+                      libraryText: Languages.of(context)!
+                          .chooseFromLibraryLabel
+                          .toTitleCase(),
                       saveImage: (File? imageFile) {
                         setState(() {
                           _imageFile = imageFile;
@@ -256,6 +265,18 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                                   isCircleCropStyle: false,
                                   ratioX: 16,
                                   ratioY: 9,
+                                  cancelText: Languages.of(context)!
+                                      .cancelLabel
+                                      .toTitleCase(),
+                                  deleteText: Languages.of(context)!
+                                      .deleteLabel
+                                      .toTitleCase(),
+                                  takePhotoText: Languages.of(context)!
+                                      .takePhotoLabel
+                                      .toTitleCase(),
+                                  libraryText: Languages.of(context)!
+                                      .chooseFromLibraryLabel
+                                      .toTitleCase(),
                                   saveImage: (File? imageFile) {
                                     setState(() {
                                       _imageFile = imageFile;

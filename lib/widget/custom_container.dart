@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
 
 class CustomContainer extends StatelessWidget {
   final Widget child;

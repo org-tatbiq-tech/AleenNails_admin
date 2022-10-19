@@ -4,14 +4,13 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
-
+import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/client_card.dart';
 import 'package:appointments/widget/custom_avatar.dart';
 import 'package:appointments/widget/custom_slide_able.dart';
-import 'package:appointments/widget/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
@@ -380,6 +379,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
                       context: context,
                       minimumDate: getMinDate(),
+                      primaryButtonText:
+                          Languages.of(context)!.saveLabel.toTitleCase(),
+                      secondaryButtonText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
                       minuteInterval: 5,
                       initialDateTime: startDateTime,
                       title: Languages.of(context)!

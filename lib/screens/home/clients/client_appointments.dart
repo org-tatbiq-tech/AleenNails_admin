@@ -3,7 +3,7 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/widget/client_appointment_card.dart';
-import 'package:appointments/widget/custom_text_button.dart';
+import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/empty_list_image.dart';
 import 'package:common_widgets/utils/layout.dart';

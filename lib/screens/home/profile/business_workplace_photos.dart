@@ -198,6 +198,12 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             showImagePickerModal(
                 imagePickerModalProps: ImagePickerModalProps(
               context: context,
+              cancelText: Languages.of(context)!.cancelLabel.toTitleCase(),
+              deleteText: Languages.of(context)!.deleteLabel.toTitleCase(),
+              takePhotoText:
+                  Languages.of(context)!.takePhotoLabel.toTitleCase(),
+              libraryText:
+                  Languages.of(context)!.chooseFromLibraryLabel.toTitleCase(),
               saveImage: (File imageFile) {
                 setState(() {
                   mediaList[const Uuid().v4()] = imageFile;

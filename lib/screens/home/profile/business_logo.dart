@@ -167,6 +167,15 @@ class _BusinessLogoState extends State<BusinessLogo> {
                   showImagePickerModal(
                     imagePickerModalProps: ImagePickerModalProps(
                       context: context,
+                      cancelText:
+                          Languages.of(context)!.cancelLabel.toTitleCase(),
+                      deleteText:
+                          Languages.of(context)!.deleteLabel.toTitleCase(),
+                      takePhotoText:
+                          Languages.of(context)!.takePhotoLabel.toTitleCase(),
+                      libraryText: Languages.of(context)!
+                          .chooseFromLibraryLabel
+                          .toTitleCase(),
                       isCircleCropStyle: true,
                       saveImage: (File? imageFile) {
                         setState(() {
@@ -248,6 +257,18 @@ class _BusinessLogoState extends State<BusinessLogo> {
                               showImagePickerModal(
                                 imagePickerModalProps: ImagePickerModalProps(
                                   context: context,
+                                  cancelText: Languages.of(context)!
+                                      .cancelLabel
+                                      .toTitleCase(),
+                                  deleteText: Languages.of(context)!
+                                      .deleteLabel
+                                      .toTitleCase(),
+                                  takePhotoText: Languages.of(context)!
+                                      .takePhotoLabel
+                                      .toTitleCase(),
+                                  libraryText: Languages.of(context)!
+                                      .chooseFromLibraryLabel
+                                      .toTitleCase(),
                                   isCircleCropStyle: true,
                                   saveImage: (File? imageFile) {
                                     setState(() {
