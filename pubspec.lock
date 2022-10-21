@@ -126,7 +126,7 @@ packages:
       name: cloud_functions_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.18"
+    version: "5.1.19"
   cloud_functions_web:
     dependency: transitive
     description:
@@ -259,7 +259,7 @@ packages:
       name: firebase_storage_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.1.18"
+    version: "4.1.19"
   firebase_storage_web:
     dependency: transitive
     description:
@@ -461,7 +461,7 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   image_cropper:
     dependency: transitive
     description:
@@ -538,7 +538,7 @@ packages:
       name: lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   liquid_swipe:
     dependency: transitive
     description:
@@ -748,7 +748,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.3"
+    version: "6.0.4"
   qr:
     dependency: transitive
     description:
@@ -783,7 +783,7 @@ packages:
       name: shared_preferences_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.13"
+    version: "2.0.14"
   shared_preferences_ios:
     dependency: transitive
     description:
@@ -1019,7 +1019,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   xdg_directories:
     dependency: transitive
     description:
