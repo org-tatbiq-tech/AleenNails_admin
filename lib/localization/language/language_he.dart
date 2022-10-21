@@ -562,6 +562,11 @@ class LanguageHe extends Languages {
   @override
   String get okLabel => "אוקי";
 
+  @override
+  String get hoursLabel => "שעות";
+  @override
+  String get minsLabel => "דקות";
+
   /// ************ Flash Messages ************///
   @override
   String get flashMessageSuccessTitle => "כל הכבוד!";

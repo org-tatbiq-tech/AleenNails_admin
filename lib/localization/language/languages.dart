@@ -213,6 +213,8 @@ abstract class Languages {
   String get unpaidLabel;
   String get saveLabel;
   String get okLabel;
+  String get hoursLabel;
+  String get minsLabel;
 
   /// ************ Flash Messages ************///
   String get flashMessageSuccessTitle;

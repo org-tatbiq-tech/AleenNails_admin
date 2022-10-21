@@ -442,6 +442,10 @@ class LanguageEn extends Languages {
   String get saveLabel => "save";
   @override
   String get okLabel => "ok";
+  @override
+  String get hoursLabel => "hours";
+  @override
+  String get minsLabel => "mins";
 
   /// ************ Flash Messages ************///
   @override

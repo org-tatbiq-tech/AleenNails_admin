@@ -736,6 +736,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                             Languages.of(context)!.saveLabel.toTitleCase(),
                         secondaryButtonText:
                             Languages.of(context)!.cancelLabel.toTitleCase(),
+                        hoursText:
+                            Languages.of(context)!.hoursLabel.toTitleCase(),
+                        minsText:
+                            Languages.of(context)!.minsLabel.toTitleCase(),
                         saveMinutes: (value) => {
                           setState(() {
                             selectedMinutes = minutesData[value];
