@@ -2,8 +2,8 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
-import 'package:appointments/widget/custom_avatar.dart';
-import 'package:appointments/widget/custom_status.dart';
+import 'package:appointments/widget/appointment/appointment_status.dart';
+import 'package:appointments/widget/custom/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/input_validation.dart';
@@ -111,7 +111,7 @@ class AppointmentCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    CustomStatus(
+                    AppointmentStatusComp(
                       customStatusProps: CustomStatusProps(
                         appointmentStatus:
                             appointmentCardProps.appointmentDetails.status,

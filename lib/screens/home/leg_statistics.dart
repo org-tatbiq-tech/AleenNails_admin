@@ -1,4 +1,4 @@
-import 'package:appointments/widget/custom_container.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +30,10 @@ class LinearSales {
 }
 
 class StatisticsState extends State<Statistics> {
-  bool clickedCentreFAB = false; //boolean used to handle container animation which expands from the FAB
-  int selectedIndex = 0; //to handle which item is currently selected in the bottom app bar
+  bool clickedCentreFAB =
+      false; //boolean used to handle container animation which expands from the FAB
+  int selectedIndex =
+      0; //to handle which item is currently selected in the bottom app bar
   String text = "Statistics";
   List<charts.Series<dynamic, String>> seriesList = _createSampleData();
   List<charts.Series<dynamic, int>> seriesPieList = _createPieSampleData();
@@ -116,7 +118,9 @@ class StatisticsState extends State<Statistics> {
               print('touched');
             },
             mouseCursorResolver: (event, response) {
-              return response == null || response.spot == null ? MouseCursor.defer : SystemMouseCursors.click;
+              return response == null || response.spot == null
+                  ? MouseCursor.defer
+                  : SystemMouseCursors.click;
             }),
       ),
     );
@@ -178,8 +182,10 @@ class StatisticsState extends State<Statistics> {
             //if clickedCentreFAB == true, the first parameter is used. If it's false, the second.
             height: clickedCentreFAB ? MediaQuery.of(context).size.height : 0.0,
             width: clickedCentreFAB ? MediaQuery.of(context).size.height : 0,
-            decoration:
-                BoxDecoration(borderRadius: BorderRadius.circular(clickedCentreFAB ? 0.0 : 350.0), color: Colors.red),
+            decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.circular(clickedCentreFAB ? 0.0 : 350.0),
+                color: Colors.red),
           ),
         )
       ],

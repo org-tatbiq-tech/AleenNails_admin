@@ -6,11 +6,10 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
-import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/appointment_service_card.dart';
-import 'package:appointments/widget/custom_avatar.dart';
-import 'package:appointments/widget/custom_status.dart';
+import 'package:appointments/widget/appointment/appointment_service_card.dart';
+import 'package:appointments/widget/appointment/appointment_status.dart';
+import 'package:appointments/widget/custom/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -23,6 +22,7 @@ import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -764,7 +764,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      CustomStatus(
+                      AppointmentStatusComp(
                         customStatusProps: CustomStatusProps(
                           appointmentStatus:
                               appointmentsMgr.selectedAppointment.status,
@@ -773,7 +773,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       SizedBox(
                         width: rSize(10),
                       ),
-                      CustomStatus(
+                      AppointmentStatusComp(
                         customStatusProps: CustomStatusProps(
                           paymentStatus:
                               appointmentsMgr.selectedAppointment.paymentStatus,

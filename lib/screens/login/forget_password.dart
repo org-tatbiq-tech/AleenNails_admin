@@ -1,11 +1,11 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/validations.dart';
-import 'package:common_widgets/utils/layout.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_button_widget.dart';
-import 'package:appointments/widget/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

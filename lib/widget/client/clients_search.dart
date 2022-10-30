@@ -1,18 +1,21 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/screens/home/services/service.dart';
-import 'package:appointments/widget/service_card.dart';
+import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/screens/home/clients/client_details.dart';
+import 'package:appointments/widget/client/client_card.dart';
 import 'package:common_widgets/custom_icon.dart';
-import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-// Services search delegate - copies original service and search according to:
-//  - name
+// Clients search delegate - copies original clients and search according to:
+//  - phone
+//  - client name
+//  - email
 
-class ServicesSearchDelegate extends SearchDelegate {
-  List<Service> searchServices = [];
-  ServicesSearchDelegate({required List<Service> services}) {
-    searchServices.addAll(services); // Creating a copy
+class ClientsSearchDelegate extends SearchDelegate {
+  List<Client> searchClients = [];
+  ClientsSearchDelegate({required List<Client> clients}) {
+    searchClients.addAll(clients); // Creating a copy
   }
 
   @override
@@ -65,19 +68,23 @@ class ServicesSearchDelegate extends SearchDelegate {
   // Show query result
   @override
   Widget buildResults(BuildContext context) {
-    navigateToService(Service service) {
+    navigateToClientDetails(Client client) {
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      clientsMgr.setSelectedClient(client: client);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ServiceWidget(service: service),
+          builder: (context) => const ClientDetails(),
         ),
       );
     }
 
-    List<Service> servicesMatchQuery = [];
-    for (var p in searchServices) {
-      if (p.name.contains(query.toLowerCase())) {
-        servicesMatchQuery.add(p);
+    List<Client> clientsMatchQuery = [];
+    for (var p in searchClients) {
+      if (p.phone.contains(query.toLowerCase()) ||
+          p.fullName.toLowerCase().contains(query.toLowerCase()) ||
+          p.email.toLowerCase().contains(query.toLowerCase())) {
+        clientsMatchQuery.add(p);
       }
     }
     return Container(
@@ -92,15 +99,15 @@ class ServicesSearchDelegate extends SearchDelegate {
             height: rSize(15),
           );
         },
-        itemCount: servicesMatchQuery.length,
+        itemCount: clientsMatchQuery.length,
         itemBuilder: (context, index) {
-          var result = servicesMatchQuery[index];
-          return ServiceCard(
-            serviceCardProps: ServiceCardProps(
-              serviceDetails: result,
+          var result = clientsMatchQuery[index];
+          return ClientCard(
+            clientCardProps: ClientCardProps(
+              contactDetails: result,
               onTap: () => {
                 close(context, null),
-                navigateToService(result),
+                navigateToClientDetails(result),
               },
             ),
           );
@@ -112,19 +119,23 @@ class ServicesSearchDelegate extends SearchDelegate {
   // querying process at the runtime
   @override
   Widget buildSuggestions(BuildContext context) {
-    navigateToService(Service service) {
+    navigateToClientDetails(Client client) {
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      clientsMgr.setSelectedClient(client: client);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ServiceWidget(service: service),
+          builder: (context) => const ClientDetails(),
         ),
       );
     }
 
-    List<Service> servicesMatchQuery = [];
-    for (var p in searchServices) {
-      if (p.name.contains(query.toLowerCase())) {
-        servicesMatchQuery.add(p);
+    List<Client> clientsMatchQuery = [];
+    for (var p in searchClients) {
+      if (p.phone.contains(query.toLowerCase()) ||
+          p.fullName.toLowerCase().contains(query.toLowerCase()) ||
+          p.email.toLowerCase().contains(query.toLowerCase())) {
+        clientsMatchQuery.add(p);
       }
     }
     return Container(
@@ -139,19 +150,15 @@ class ServicesSearchDelegate extends SearchDelegate {
             height: rSize(15),
           );
         },
-        itemCount: servicesMatchQuery.length,
+        itemCount: clientsMatchQuery.length,
         itemBuilder: (context, index) {
-          var result = servicesMatchQuery[index];
-          return ServiceCard(
-            serviceCardProps: ServiceCardProps(
-              serviceDetails: result,
-              title: result.name,
-              subTitle: durationToFormat(
-                duration: result.duration,
-              ),
+          var result = clientsMatchQuery[index];
+          return ClientCard(
+            clientCardProps: ClientCardProps(
+              contactDetails: result,
               onTap: () => {
                 close(context, null),
-                navigateToService(result),
+                navigateToClientDetails(result),
               },
             ),
           );

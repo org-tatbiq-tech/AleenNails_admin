@@ -1,7 +1,7 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
-import 'package:appointments/widget/custom_avatar.dart';
+import 'package:appointments/widget/custom/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/ease_in_animation.dart';
