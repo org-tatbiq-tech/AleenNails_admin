@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
@@ -12,6 +13,7 @@ import 'package:uuid/uuid.dart';
 
 ///*************************** Naming **********************************///
 const settingsCollection = 'settings';
+const clientsCollection = 'clients';
 const scheduleManagementDoc = 'scheduleManagement';
 const profileManagementDoc = 'profile';
 const profileStorageDir = 'profile';
@@ -26,8 +28,20 @@ class SettingsMgr extends ChangeNotifier {
   ///*************************** Firestore **********************************///
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
   final FirebaseStorage _fst = FirebaseStorage.instance;
+  final FirebaseAuth _fa = FirebaseAuth.instance;
 
   ///************************* Settings *******************************///
+
+  Future<void> saveToken(String token) async {
+    // Saving token into store document
+    await _fs.collection(clientsCollection).doc(_fa.currentUser?.uid).update(
+      {
+        'tokens': FieldValue.arrayUnion(
+          [token],
+        ),
+      },
+    );
+  }
 
   ///*********************** Schedule management ****************************///
   ScheduleManagement _scheduleManagement =

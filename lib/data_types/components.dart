@@ -139,6 +139,7 @@ class Appointment {
   AppointmentCreator creator; // Appointment creator (which admin/worker/...)
   String clientName; // Client full name
   String clientPhone; // Client phone number
+  String clientEmail; // Client Email
   String clientImagePath; // Client Image Url
   String clientDocID; // Client database ID
   DateTime creationDate; // Appointment creation date (date and time)
@@ -153,6 +154,7 @@ class Appointment {
     required this.creator,
     required this.clientName,
     required this.clientPhone,
+    required this.clientEmail,
     required this.clientDocID,
     required this.creationDate,
     required this.date,
@@ -182,6 +184,7 @@ class Appointment {
       'clientName': clientName,
       'clientDocID': clientDocID,
       'clientPhone': clientPhone,
+      'clientEmail': clientEmail,
       'creationDate': Timestamp.fromDate(creationDate),
       'date': Timestamp.fromDate(date),
       'notes': notes,
@@ -227,6 +230,7 @@ class Appointment {
       clientName: doc['clientName'],
       clientDocID: doc['clientDocID'],
       clientPhone: doc['clientPhone'],
+      clientEmail: doc['clientEmail'],
       creationDate: doc['creationDate'].toDate(),
       notes: doc['notes'],
       clientImagePath: doc['clientImagePath'],

@@ -5,14 +5,16 @@ import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 
-class NotificationSettings extends StatefulWidget {
-  const NotificationSettings({Key? key}) : super(key: key);
+class NotificationSettingsScreen extends StatefulWidget {
+  const NotificationSettingsScreen({Key? key}) : super(key: key);
 
   @override
-  State<NotificationSettings> createState() => _NotificationSettingsState();
+  State<NotificationSettingsScreen> createState() =>
+      _NotificationSettingsScreenState();
 }
 
-class _NotificationSettingsState extends State<NotificationSettings> {
+class _NotificationSettingsScreenState
+    extends State<NotificationSettingsScreen> {
   bool _isEnabled = false;
 
   @override

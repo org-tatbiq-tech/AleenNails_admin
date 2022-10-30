@@ -4,8 +4,6 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
-import 'package:common_widgets/custom_text_button.dart';
-import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment_service_card.dart';
 import 'package:appointments/widget/client_card.dart';
@@ -15,10 +13,12 @@ import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
+import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -184,6 +184,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         clientName: selectedClient!.fullName,
         clientDocID: selectedClient!.id,
         clientPhone: selectedClient!.phone,
+        clientEmail: selectedClient!.email,
         clientImagePath: selectedClient!.imagePath,
         creationDate: DateTime.now(),
         creator: AppointmentCreator

@@ -10,7 +10,6 @@ import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
-import 'package:appointments/screens/home/main.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/personal_settings/language_settings.dart';
 import 'package:appointments/screens/home/personal_settings/notification_settings.dart';
@@ -26,11 +25,13 @@ import 'package:appointments/screens/home/schedule_management/unavailability.dar
 import 'package:appointments/screens/home/schedule_management/working_days.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/home/settings/booking_settings.dart';
+import 'package:appointments/screens/home/tabs.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
 import 'package:appointments/utils/secure_storage.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +39,20 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'localization/language/languages.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Set the background messaging handler early on, as a named top-level function
+  // It will handle notifications while app is terminated
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   return runApp(
     MultiProvider(
@@ -107,7 +120,7 @@ class AppointmentsApp extends StatelessWidget {
       '/workingDays': (context) => const WorkingDays(),
       '/bookingSettings': (context) => const BookingsSettings(),
       '/personalSettings': (context) => const PersonalSettings(),
-      '/notificationSettings': (context) => const NotificationSettings(),
+      '/notificationSettings': (context) => const NotificationSettingsScreen(),
       '/languageSettings': (context) => const LanguageSettings(),
       '/notifications': (context) => const Notifications(),
       // '/registerProfile': (context) => const RegisterProfileScreen(),
