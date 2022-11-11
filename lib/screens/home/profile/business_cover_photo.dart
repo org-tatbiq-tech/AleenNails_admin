@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -14,6 +13,7 @@ import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -35,41 +35,44 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    try {
-      settingsMgr.getCoverImage().then(
-            (url) => {
-              if (url == 'notFound')
-                {
-                  if (mounted)
-                    {
-                      setState(
-                        (() {
-                          _isLoading = false;
-                        }),
-                      ),
-                    },
-                }
-              else
-                {
-                  if (mounted)
-                    {
-                      setState(
-                        (() {
-                          imageUrl = url;
-                          _isLoading = false;
-                        }),
-                      ),
-                    },
-                },
-            },
-          );
-    } catch (error) {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
+    print('cover image is ${settingsMgr.getCoverImageUrl()}');
+    imageUrl = settingsMgr.getCoverImageUrl();
+    _isLoading = false;
+    // try {
+    //   settingsMgr.getCoverImage().then(
+    //         (url) => {
+    //           if (url == 'notFound')
+    //             {
+    //               if (mounted)
+    //                 {
+    //                   setState(
+    //                     (() {
+    //                       _isLoading = false;
+    //                     }),
+    //                   ),
+    //                 },
+    //             }
+    //           else
+    //             {
+    //               if (mounted)
+    //                 {
+    //                   setState(
+    //                     (() {
+    //                       imageUrl = url;
+    //                       _isLoading = false;
+    //                     }),
+    //                   ),
+    //                 },
+    //             },
+    //         },
+    //       );
+    // } catch (error) {
+    //   if (mounted) {
+    //     setState(() {
+    //       _isLoading = false;
+    //     });
+    //   }
+    // }
   }
 
   @override

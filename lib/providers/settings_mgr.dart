@@ -91,7 +91,9 @@ class SettingsMgr extends ChangeNotifier {
 
   ///*********************** Profile ****************************///
   ProfileManagement _profileManagement = ProfileManagement(
-      businessInfo: BusinessInfoComp.fromJson({})); // Holds profile details
+    businessInfo: BusinessInfoComp.fromJson({}),
+    profileMedia: ProfileMedia.fromJson({}),
+  ); // Holds profile details
   bool initializedProfileManagement =
       false; // Don't download Profile details form settings unless required
   StreamSubscription<DocumentSnapshot>? _profileManagementSub;
@@ -137,42 +139,64 @@ class SettingsMgr extends ChangeNotifier {
   Future<void> uploadLogoImage(File image) async {
     Reference ref = _fst.ref(profileStorageDir).child('logo.png');
     await ref.putFile(image);
+    // Updating logo path
+    Reference profRef = _fst.ref(profileStorageDir).child('logo_600x600.png');
+    final refStr = await profRef.getDownloadURL();
+    _fs.collection(settingsCollection).doc('profile').update({
+      'media': {'logo': refStr}
+    });
   }
 
-  Future<String> getLogoImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
-    var refStr = 'notFound';
-    try {
-      refStr = await ref.getDownloadURL();
-    } catch (error) {
-      return refStr;
-    }
-    return refStr;
+  String getLogoImageUrl() {
+    return _profileManagement.profileMedia.logoPath!;
+    // Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
+    // var refStr = 'notFound';
+    // try {
+    //   refStr = await ref.getDownloadURL();
+    // } catch (error) {
+    //   return refStr;
+    // }
+    // return refStr;
   }
 
   Future<void> deleteLogoImage() async {
     Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
+    // Deleting logo path
+    _fs
+        .collection(settingsCollection)
+        .doc('profile')
+        .update({'logo': FieldValue.delete()});
     return await ref.delete();
   }
 
   Future<void> uploadCoverImage(File image) async {
-    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
+    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
     await ref.putFile(image);
+    // Updating logo path
+    Reference profRef =
+        _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
+    final refStr = await profRef.getDownloadURL();
+    _fs.collection(settingsCollection).doc('profile').update({'cover': refStr});
   }
 
-  Future<String> getCoverImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
-    var refStr = 'notFound';
-    try {
-      refStr = await ref.getDownloadURL();
-    } catch (error) {
-      return refStr;
-    }
-    return refStr;
+  String getCoverImageUrl() {
+    return _profileManagement.profileMedia.coverPath!;
+    // Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
+    // var refStr = 'notFound';
+    // try {
+    //   refStr = await ref.getDownloadURL();
+    // } catch (error) {
+    //   return refStr;
+    // }
+    // return refStr;
   }
 
   Future<void> deleteCoverImage() async {
     Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
+    _fs
+        .collection(settingsCollection)
+        .doc('profile')
+        .update({'cover': FieldValue.delete()});
     return await ref.delete();
   }
 

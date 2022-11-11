@@ -190,27 +190,49 @@ class BusinessInfoComp {
 }
 
 class ProfileMedia {
-  // Logo
-  // Cover photo
-  // Workplace photos
+  String? logoPath;
+  String? coverPath;
+  List<String>? wpPhotosPaths;
+
+  ProfileMedia(logoPath, coverPath, wpPhotosPaths) {
+    this.logoPath = logoPath ?? '';
+    this.coverPath = coverPath ?? '';
+    this.wpPhotosPaths = wpPhotosPaths ?? [];
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'logo': logoPath,
+      'cover': coverPath,
+      'wp': wpPhotosPaths,
+    };
+  }
+
+  factory ProfileMedia.fromJson(Map<String, dynamic> doc) {
+    return ProfileMedia(doc['logo'], doc['cover'], doc['wp']);
+  }
 }
 
 class ProfileManagement {
   BusinessInfoComp businessInfo;
-  ProfileMedia? profileMedia;
+  ProfileMedia profileMedia;
 
-  ProfileManagement({required this.businessInfo, this.profileMedia});
+  ProfileManagement({required this.businessInfo, required this.profileMedia});
 
   Map<String, dynamic> toJson() {
     return {
       'businessInfo': businessInfo.toJson(),
+      'media': profileMedia.toJson(),
     };
   }
 
   factory ProfileManagement.fromJson(Map<String, dynamic> doc) {
     return ProfileManagement(
       businessInfo: BusinessInfoComp.fromJson(
-        doc['businessInfo'],
+        doc['businessInfo'] ?? {},
+      ),
+      profileMedia: ProfileMedia.fromJson(
+        doc['media'] ?? {},
       ),
     );
   }
