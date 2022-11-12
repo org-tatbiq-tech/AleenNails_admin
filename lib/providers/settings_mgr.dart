@@ -142,9 +142,9 @@ class SettingsMgr extends ChangeNotifier {
     // Updating logo path
     Reference profRef = _fst.ref(profileStorageDir).child('logo_600x600.png');
     final refStr = await profRef.getDownloadURL();
-    _fs.collection(settingsCollection).doc('profile').update({
-      'media': {'logo': refStr}
-    });
+    _fs.collection(settingsCollection).doc('profile').update(
+      {'media.logo': refStr},
+    );
   }
 
   String getLogoImageUrl() {
@@ -162,21 +162,22 @@ class SettingsMgr extends ChangeNotifier {
   Future<void> deleteLogoImage() async {
     Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
     // Deleting logo path
-    _fs
-        .collection(settingsCollection)
-        .doc('profile')
-        .update({'logo': FieldValue.delete()});
+    _fs.collection(settingsCollection).doc('profile').update(
+      {'media.logo': FieldValue.delete()},
+    );
     return await ref.delete();
   }
 
   Future<void> uploadCoverImage(File image) async {
-    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
+    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
     await ref.putFile(image);
     // Updating logo path
     Reference profRef =
         _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
     final refStr = await profRef.getDownloadURL();
-    _fs.collection(settingsCollection).doc('profile').update({'cover': refStr});
+    _fs.collection(settingsCollection).doc('profile').update(
+      {'media.cover': refStr},
+    );
   }
 
   String getCoverImageUrl() {
@@ -193,10 +194,9 @@ class SettingsMgr extends ChangeNotifier {
 
   Future<void> deleteCoverImage() async {
     Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
-    _fs
-        .collection(settingsCollection)
-        .doc('profile')
-        .update({'cover': FieldValue.delete()});
+    _fs.collection(settingsCollection).doc('profile').update(
+      {'media.cover': FieldValue.delete()},
+    );
     return await ref.delete();
   }
 
@@ -207,31 +207,65 @@ class SettingsMgr extends ChangeNotifier {
           _fst.ref(profileWPStorageDir).child('WP${uuid.v4()}_image.png');
       await ref.putFile(image);
     }
+    Reference ref = _fst.ref(profileWPStorageDir);
+    // Create and save map of file name --> url
+    Map<String, String> filesMap = {};
+    var refStr = '';
+    ref.listAll().then(
+          (res) async => {
+            for (var imageRef in res.items)
+              {
+                refStr = await imageRef.getDownloadURL(),
+                filesMap[imageRef.name] = refStr,
+              },
+            _fs.collection(settingsCollection).doc('profile').update(
+              {'media.wp': filesMap},
+            ),
+          },
+        );
   }
 
-  Future<Map<String, String>> getWPImages() async {
+  Map<String, String> getWPImages() {
     /// Return map of file name --> url
-    Map<String, String> filesMap = {};
-    Reference ref = _fst.ref(profileWPStorageDir);
-    var refStr = 'notFound';
-    try {
-      await ref.listAll().then(
-            (res) async => {
-              for (var imageRef in res.items)
-                {
-                  refStr = await imageRef.getDownloadURL(),
-                  filesMap[imageRef.name] = refStr,
-                },
-            },
-          );
-    } catch (error) {
-      return {};
-    }
-    return filesMap;
+    return _profileManagement.profileMedia.wpPhotosPaths!;
+    // Map<String, String> filesMap = {};
+    // Reference ref = _fst.ref(profileWPStorageDir);
+    // var refStr = 'notFound';
+    // try {
+    //   await ref.listAll().then(
+    //         (res) async => {
+    //           for (var imageRef in res.items)
+    //             {
+    //               refStr = await imageRef.getDownloadURL(),
+    //               filesMap[imageRef.name] = refStr,
+    //             },
+    //         },
+    //       );
+    // } catch (error) {
+    //   return {};
+    // }
+    // return filesMap;
   }
 
   Future<void> deleteWPImage(String image) async {
     Reference ref = _fst.ref(profileWPStorageDir).child(image);
-    return await ref.delete();
+    await ref.delete();
+    ref = _fst.ref(profileWPStorageDir);
+    // Create and save map of file name --> url
+    Map<String, String> filesMap = {};
+    var refStr = '';
+    ref.listAll().then(
+          (res) async => {
+            for (var imageRef in res.items)
+              {
+                refStr = await imageRef.getDownloadURL(),
+                filesMap[imageRef.name] = refStr,
+              },
+            _fs
+                .collection(settingsCollection)
+                .doc('profile')
+                .update({'media.wp': filesMap}),
+          },
+        );
   }
 }

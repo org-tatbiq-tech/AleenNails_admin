@@ -192,12 +192,24 @@ class BusinessInfoComp {
 class ProfileMedia {
   String? logoPath;
   String? coverPath;
-  List<String>? wpPhotosPaths;
+  Map<String, String>? wpPhotosPaths;
+
+  Map<String, String> loadWPImages(Map<String, dynamic> wp) {
+    Map<String, String> wps = {};
+    for (MapEntry mapEntry in wp.entries) {
+      wps[mapEntry.key] = mapEntry.value;
+    }
+    return wps;
+  }
 
   ProfileMedia(logoPath, coverPath, wpPhotosPaths) {
     this.logoPath = logoPath ?? '';
     this.coverPath = coverPath ?? '';
-    this.wpPhotosPaths = wpPhotosPaths ?? [];
+    Map<String, String> wps = {};
+    if (wpPhotosPaths != null) {
+      wps = loadWPImages(wpPhotosPaths);
+    }
+    this.wpPhotosPaths = wps;
   }
 
   Map<String, dynamic> toJson() {
