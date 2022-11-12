@@ -225,7 +225,7 @@ class SettingsMgr extends ChangeNotifier {
         );
   }
 
-  Map<String, String> getWPImages() {
+  Map<String, String> getWPImagesUrls() {
     /// Return map of file name --> url
     return _profileManagement.profileMedia.wpPhotosPaths!;
     // Map<String, String> filesMap = {};

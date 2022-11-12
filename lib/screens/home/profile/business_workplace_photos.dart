@@ -36,7 +36,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    print('wp photos are ${settingsMgr.getWPImages()}');
+    print('wp photos are ${settingsMgr.getWPImagesUrls()}');
     _isLoading = false;
     // try {
     //   settingsMgr.getWPImages().then(
