@@ -13,6 +13,7 @@ import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,49 +33,28 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   Map<String, File> mediaListToUpload = {};
   bool _isLoading = true;
   bool isSaveDisabled = true;
+
+  Future<void> loadImages(Map<String, String> images) async {
+    Map<String, File> imagesMap = {};
+    for (var workPlacePhoto in images.entries) {
+      imagesMap[workPlacePhoto.key] = await fileFromImageUrl(
+        workPlacePhoto.key,
+        workPlacePhoto.value,
+      );
+    }
+    setState(() {
+      mediaList = imagesMap;
+      _isLoading = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    print('wp photos are ${settingsMgr.getWPImagesUrls()}');
-    _isLoading = false;
-    // try {
-    //   settingsMgr.getWPImages().then(
-    //         (res) async => {
-    //           if (res.isEmpty)
-    //             {
-    //               if (mounted)
-    //                 {
-    //                   setState(() {
-    //                     _isLoading = false;
-    //                   }),
-    //                 }
-    //             }
-    //           else
-    //             {
-    //               for (var workPlacePhoto in res.entries)
-    //                 {
-    //                   mediaList[workPlacePhoto.key] = await fileFromImageUrl(
-    //                     workPlacePhoto.key,
-    //                     workPlacePhoto.value,
-    //                   ),
-    //                 },
-    //               if (mounted)
-    //                 {
-    //                   setState(() {
-    //                     _isLoading = false;
-    //                   }),
-    //                 },
-    //             },
-    //         },
-    //       );
-    // } catch (error) {
-    //   if (mounted) {
-    //     setState(() {
-    //       _isLoading = false;
-    //     });
-    //   }
-    // }
+    var res = settingsMgr.getWPImagesUrls();
+    _isLoading = true;
+    loadImages(res);
   }
 
   @override

@@ -35,44 +35,8 @@ class _BusinessLogoState extends State<BusinessLogo> {
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    print('logo image is ${settingsMgr.getLogoImageUrl()}');
     imageUrl = settingsMgr.getLogoImageUrl();
     _isLoading = false;
-    // try {
-    //   settingsMgr.getLogoImage().then(
-    //         (url) => {
-    //           if (url == 'notFound')
-    //             {
-    //               if (mounted)
-    //                 {
-    //                   setState(
-    //                     (() {
-    //                       _isLoading = false;
-    //                     }),
-    //                   ),
-    //                 }
-    //             }
-    //           else
-    //             {
-    //               if (mounted)
-    //                 {
-    //                   setState(
-    //                     (() {
-    //                       imageUrl = url;
-    //                       _isLoading = false;
-    //                     }),
-    //                   ),
-    //                 }
-    //             },
-    //         },
-    //       );
-    // } catch (error) {
-    //   if (mounted) {
-    //     setState(() {
-    //       _isLoading = false;
-    //     });
-    //   }
-    // }
   }
 
   @override

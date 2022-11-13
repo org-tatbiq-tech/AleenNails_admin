@@ -35,44 +35,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   void initState() {
     super.initState();
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    print('cover image is ${settingsMgr.getCoverImageUrl()}');
     imageUrl = settingsMgr.getCoverImageUrl();
     _isLoading = false;
-    // try {
-    //   settingsMgr.getCoverImage().then(
-    //         (url) => {
-    //           if (url == 'notFound')
-    //             {
-    //               if (mounted)
-    //                 {
-    //                   setState(
-    //                     (() {
-    //                       _isLoading = false;
-    //                     }),
-    //                   ),
-    //                 },
-    //             }
-    //           else
-    //             {
-    //               if (mounted)
-    //                 {
-    //                   setState(
-    //                     (() {
-    //                       imageUrl = url;
-    //                       _isLoading = false;
-    //                     }),
-    //                   ),
-    //                 },
-    //             },
-    //         },
-    //       );
-    // } catch (error) {
-    //   if (mounted) {
-    //     setState(() {
-    //       _isLoading = false;
-    //     });
-    //   }
-    // }
   }
 
   @override

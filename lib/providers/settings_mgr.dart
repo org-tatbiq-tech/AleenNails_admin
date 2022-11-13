@@ -149,14 +149,6 @@ class SettingsMgr extends ChangeNotifier {
 
   String getLogoImageUrl() {
     return _profileManagement.profileMedia.logoPath!;
-    // Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
-    // var refStr = 'notFound';
-    // try {
-    //   refStr = await ref.getDownloadURL();
-    // } catch (error) {
-    //   return refStr;
-    // }
-    // return refStr;
   }
 
   Future<void> deleteLogoImage() async {
@@ -182,14 +174,6 @@ class SettingsMgr extends ChangeNotifier {
 
   String getCoverImageUrl() {
     return _profileManagement.profileMedia.coverPath!;
-    // Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
-    // var refStr = 'notFound';
-    // try {
-    //   refStr = await ref.getDownloadURL();
-    // } catch (error) {
-    //   return refStr;
-    // }
-    // return refStr;
   }
 
   Future<void> deleteCoverImage() async {
@@ -228,23 +212,6 @@ class SettingsMgr extends ChangeNotifier {
   Map<String, String> getWPImagesUrls() {
     /// Return map of file name --> url
     return _profileManagement.profileMedia.wpPhotosPaths!;
-    // Map<String, String> filesMap = {};
-    // Reference ref = _fst.ref(profileWPStorageDir);
-    // var refStr = 'notFound';
-    // try {
-    //   await ref.listAll().then(
-    //         (res) async => {
-    //           for (var imageRef in res.items)
-    //             {
-    //               refStr = await imageRef.getDownloadURL(),
-    //               filesMap[imageRef.name] = refStr,
-    //             },
-    //         },
-    //       );
-    // } catch (error) {
-    //   return {};
-    // }
-    // return filesMap;
   }
 
   Future<void> deleteWPImage(String image) async {
