@@ -6,7 +6,6 @@ import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/screens/home/services/service.dart';
 import 'package:appointments/widget/custom/custom_reorderable_list_view.dart';
 import 'package:appointments/widget/service/service_card.dart';
-import 'package:appointments/widget/service/services_search.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/empty_list_image.dart';
@@ -72,11 +71,11 @@ class ServicesState extends State<Services> {
           customAppBarProps: CustomAppBarProps(
             titleText: Languages.of(context)!.servicesLabel.toTitleCase(),
             withBack: true,
-            withSearch: servicesMgr.services.isNotEmpty,
-            searchFunction: showSearch(
-              context: context,
-              delegate: ServicesSearchDelegate(services: servicesMgr.services),
-            ),
+            // withSearch: servicesMgr.services.isNotEmpty,
+            // searchFunction: showSearch(
+            //   context: context,
+            //   delegate: ServicesSearchDelegate(services: servicesMgr.services),
+            // ),
             withClipPath: false,
             customIcon: Icon(
               FontAwesomeIcons.plus,
