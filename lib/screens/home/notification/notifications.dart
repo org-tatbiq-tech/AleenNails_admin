@@ -4,7 +4,6 @@ import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/empty_list_image.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
@@ -70,7 +69,6 @@ class _NotificationsState extends State<Notifications> {
                     emptyListImageProps: EmptyListImageProps(
                       title: 'No Notifications',
                       iconPath: 'assets/icons/menu.png',
-                      bottomWidgetPosition: 10,
                     ),
                   ),
                 ),

@@ -358,7 +358,6 @@ class _ClientWidgetState extends State<ClientWidget> {
               inputFormatters: [
                 LengthLimitingTextInputFormatter(40),
               ],
-              validator: emailValidation,
             ),
           ),
         ],

@@ -3,7 +3,7 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/date.dart';
-import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

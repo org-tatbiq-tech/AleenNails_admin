@@ -23,7 +23,6 @@ import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
-import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

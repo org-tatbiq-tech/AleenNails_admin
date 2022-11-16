@@ -1,5 +1,5 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:flutter/material.dart';

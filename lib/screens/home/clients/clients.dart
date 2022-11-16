@@ -78,7 +78,6 @@ class ClientsState extends State<Clients> {
                         .noClientsAddedLabel
                         .toTitleCase(),
                     iconPath: 'assets/icons/menu.png',
-                    bottomWidgetPosition: 10,
                     bottomWidget: CustomTextButton(
                       customTextButtonProps: CustomTextButtonProps(
                         onTap: () => {

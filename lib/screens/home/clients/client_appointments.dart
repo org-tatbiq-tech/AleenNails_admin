@@ -62,7 +62,6 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                               .emptyAppointmentListLabel
                               .toCapitalized(),
                           iconPath: 'assets/icons/menu.png',
-                          bottomWidgetPosition: 10,
                           bottomWidget: CustomTextButton(
                             customTextButtonProps: CustomTextButtonProps(
                               onTap: () => {

@@ -11,7 +11,6 @@ import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/empty_list_image.dart';
 import 'package:common_widgets/utils/general.dart';
-import 'package:common_widgets/utils/input_validation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
@@ -373,7 +372,6 @@ class TimeLineState extends State<TimeLine> {
                                           .emptyAppointmentTimeListLabel
                                           .toCapitalized(),
                                       iconPath: 'assets/icons/menu.png',
-                                      bottomWidgetPosition: 10,
                                       bottomWidget: CustomTextButton(
                                         customTextButtonProps:
                                             CustomTextButtonProps(

@@ -6,7 +6,7 @@ import 'package:appointments/widget/appointment/appointment_status.dart';
 import 'package:appointments/widget/custom/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_list_tile.dart';
-import 'package:common_widgets/utils/input_validation.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
