@@ -1,4 +1,5 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/auth_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_icon_button.dart';
@@ -6,6 +7,7 @@ import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PersonalSettings extends StatefulWidget {
   const PersonalSettings({Key? key}) : super(key: key);
@@ -17,6 +19,12 @@ class PersonalSettings extends StatefulWidget {
 }
 
 class PersonalSettingsState extends State<PersonalSettings> {
+  signOut() {
+    final authenticationMgr =
+        Provider.of<AuthenticationMgr>(context, listen: false);
+    authenticationMgr.signOut();
+  }
+
   logout() {
     showBottomModal(
       bottomModalProps: BottomModalProps(
@@ -24,6 +32,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
         centerTitle: true,
         primaryButtonText: Languages.of(context)!.labelLogout,
         secondaryButtonText: Languages.of(context)!.labelLater,
+        primaryAction: () => signOut(),
         deleteCancelModal: true,
         footerButton: ModalFooter.both,
         child: Column(

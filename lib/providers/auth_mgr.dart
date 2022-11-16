@@ -125,5 +125,6 @@ class AuthenticationMgr extends ChangeNotifier {
 
   void signOut() {
     _fa.signOut();
+    notifyListeners();
   }
 }
