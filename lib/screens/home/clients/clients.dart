@@ -43,7 +43,7 @@ class ClientsState extends State<Clients> {
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
             withSearch: clientsMgr.clients.isNotEmpty,
-            searchFunction: showSearch(
+            searchFunction: () => showSearch(
               context: context,
               delegate: ClientsSearchDelegate(clients: clientsMgr.clients),
             ),

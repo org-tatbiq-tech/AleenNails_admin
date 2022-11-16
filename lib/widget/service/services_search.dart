@@ -27,11 +27,13 @@ class ServicesSearchDelegate extends SearchDelegate {
       IconButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        onPressed: () {
-          query = '';
-        },
+        onPressed: () {},
         icon: CustomIcon(
           customIconProps: CustomIconProps(
+            isDisabled: false,
+            onTap: () {
+              query = '';
+            },
             icon: Icon(
               Icons.clear,
               size: rSize(25),
@@ -48,11 +50,13 @@ class ServicesSearchDelegate extends SearchDelegate {
     return IconButton(
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
-      onPressed: () {
-        close(context, null);
-      },
+      onPressed: () {},
       icon: CustomIcon(
         customIconProps: CustomIconProps(
+          isDisabled: false,
+          onTap: () {
+            close(context, null);
+          },
           icon: Icon(
             Icons.arrow_back,
             size: rSize(25),
