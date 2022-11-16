@@ -96,6 +96,7 @@ class ServiceCard extends StatelessWidget {
                         customIconProps: CustomIconProps(
                           icon: null,
                           backgroundColor: Colors.transparent,
+                          iconColor: Theme.of(context).colorScheme.primary,
                           path: 'assets/icons/drag_hand.png',
                           withPadding: false,
                           containerSize: 30,

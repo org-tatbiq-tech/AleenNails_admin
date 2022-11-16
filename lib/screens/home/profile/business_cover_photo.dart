@@ -175,6 +175,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                               customIconProps: CustomIconProps(
                                 icon: null,
                                 backgroundColor: Colors.transparent,
+                                iconColor:
+                                    Theme.of(context).colorScheme.primary,
                                 path: 'assets/icons/camera.png',
                                 containerSize: 80,
                               ),

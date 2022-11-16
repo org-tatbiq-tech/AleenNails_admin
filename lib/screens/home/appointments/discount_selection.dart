@@ -109,6 +109,8 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                                   icon: null,
                                   path: 'assets/icons/percent.png',
                                   backgroundColor: Colors.transparent,
+                                  iconColor:
+                                      Theme.of(context).colorScheme.primary,
                                   // withPadding: true,
                                   containerSize: 25,
                                 ),

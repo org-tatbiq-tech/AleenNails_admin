@@ -282,6 +282,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       icon: null,
                       backgroundColor: Colors.transparent,
                       path: 'assets/icons/camera.png',
+                      iconColor: Theme.of(context).colorScheme.primary,
                       containerSize: 40,
                     ),
                   ),

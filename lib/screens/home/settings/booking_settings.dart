@@ -336,6 +336,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
               customIconProps: CustomIconProps(
                 icon: null,
                 path: 'assets/icons/question.png',
+                iconColor: Theme.of(context).colorScheme.primary,
                 contentPadding: rSize(8),
                 withPadding: true,
               ),

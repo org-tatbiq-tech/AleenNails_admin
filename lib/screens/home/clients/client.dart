@@ -486,6 +486,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                     icon: null,
                     path: 'assets/icons/percent.png',
                     backgroundColor: Colors.transparent,
+                    iconColor: Theme.of(context).colorScheme.primary,
                     containerSize: 25,
                   ),
                 )),

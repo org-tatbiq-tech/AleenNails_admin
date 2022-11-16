@@ -576,6 +576,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     backgroundColor: Colors.transparent,
                     path: 'assets/icons/calendar_time.png',
                     icon: null,
+                    iconColor: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),

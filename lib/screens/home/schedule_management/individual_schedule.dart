@@ -188,6 +188,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
                       customIconProps: CustomIconProps(
                         icon: null,
                         path: 'assets/icons/tab_hand.png',
+                        iconColor: Theme.of(context).colorScheme.primary,
                         containerSize: rSize(30),
                         backgroundColor: Colors.transparent,
                       ),
