@@ -518,6 +518,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
               },
+              iconColor: Theme.of(context).colorScheme.primary,
               withPadding: true,
               path: 'assets/icons/calendar_plus_full.png',
               icon: null,

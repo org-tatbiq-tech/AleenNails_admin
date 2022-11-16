@@ -62,49 +62,42 @@ class ClientsState extends State<Clients> {
             },
           ),
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Visibility(
-              visible: clientsMgr.clients.isNotEmpty,
-              replacement: Padding(
-                padding: EdgeInsets.only(
-                  top: rSize(250),
-                ),
-                child: EmptyListImage(
-                  emptyListImageProps: EmptyListImageProps(
-                    title: Languages.of(context)!
-                        .noClientsAddedLabel
-                        .toTitleCase(),
-                    iconPath: 'assets/icons/menu.png',
-                    bottomWidget: CustomTextButton(
-                      customTextButtonProps: CustomTextButtonProps(
-                        onTap: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ClientWidget(),
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: clientsMgr.clients.isEmpty
+              ? Center(
+                  child: EmptyListImage(
+                    emptyListImageProps: EmptyListImageProps(
+                      title: Languages.of(context)!
+                          .noClientsAddedLabel
+                          .toTitleCase(),
+                      iconPath: 'assets/icons/menu.png',
+                      bottomWidget: CustomTextButton(
+                        customTextButtonProps: CustomTextButtonProps(
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ClientWidget(),
+                              ),
                             ),
+                          },
+                          text: Languages.of(context)!
+                              .addNewClientLabel
+                              .toTitleCase(),
+                          textColor: Theme.of(context).colorScheme.primary,
+                          withIcon: true,
+                          icon: Icon(
+                            FontAwesomeIcons.plus,
+                            size: rSize(16),
+                            color: Theme.of(context).colorScheme.primary,
                           ),
-                        },
-                        text: Languages.of(context)!
-                            .addNewClientLabel
-                            .toTitleCase(),
-                        textColor: Theme.of(context).colorScheme.primary,
-                        withIcon: true,
-                        icon: Icon(
-                          FontAwesomeIcons.plus,
-                          size: rSize(16),
-                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              child: Expanded(
-                child: ListView.separated(
+                )
+              : ListView.separated(
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
                       height: rSize(15),
@@ -125,9 +118,6 @@ class ClientsState extends State<Clients> {
                     );
                   },
                 ),
-              ),
-            ),
-          ],
         ),
       );
     });
