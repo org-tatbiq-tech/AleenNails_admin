@@ -37,18 +37,17 @@ class UnavailabilityCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            EaseInAnimation(
-              onTap: () => unavailabilityCardProps.deleteAction(),
-              child: CustomIcon(
-                customIconProps: CustomIconProps(
-                  icon: null,
-                  path: 'assets/icons/trash.png',
-                  withPadding: true,
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  iconColor: Colors.white,
-                  containerSize: rSize(35),
-                  contentPadding: rSize(6),
-                ),
+            CustomIcon(
+              customIconProps: CustomIconProps(
+                isDisabled: false,
+                onTap: () => unavailabilityCardProps.deleteAction(),
+                icon: null,
+                path: 'assets/icons/trash.png',
+                withPadding: true,
+                backgroundColor: Theme.of(context).colorScheme.error,
+                iconColor: Colors.white,
+                containerSize: rSize(35),
+                contentPadding: rSize(6),
               ),
             ),
           ],

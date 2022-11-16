@@ -92,16 +92,13 @@ class ServiceCard extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: rSize(10)),
                     child: ReorderableDelayedDragStartListener(
                       index: serviceCardProps.dragIndex!,
-                      child: EaseInAnimation(
-                        onTap: () => {},
-                        child: CustomIcon(
-                          customIconProps: CustomIconProps(
-                            icon: null,
-                            backgroundColor: Colors.transparent,
-                            path: 'assets/icons/drag_hand.png',
-                            withPadding: false,
-                            containerSize: 30,
-                          ),
+                      child: CustomIcon(
+                        customIconProps: CustomIconProps(
+                          icon: null,
+                          backgroundColor: Colors.transparent,
+                          path: 'assets/icons/drag_hand.png',
+                          withPadding: false,
+                          containerSize: 30,
                         ),
                       ),
                     ),

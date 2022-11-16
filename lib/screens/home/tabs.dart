@@ -281,87 +281,83 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              EaseInAnimation(
-                onTap: () {
-                  setState(() {
-                    _selectedPage = 0;
-                  });
-                },
-                child: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    iconColor: _selectedPage == 0
-                        ? darken(Theme.of(context).colorScheme.secondary, 0.2)
-                        : Theme.of(context).colorScheme.primary,
-                    icon: null,
-                    backgroundColor: Colors.transparent,
-                    path: 'assets/icons/calendar_full.png',
-                    withPadding: true,
-                    contentPadding: 1,
-                    containerSize: 35,
-                  ),
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  isDisabled: false,
+                  onTap: () {
+                    setState(() {
+                      _selectedPage = 0;
+                    });
+                  },
+                  iconColor: _selectedPage == 0
+                      ? darken(Theme.of(context).colorScheme.secondary, 0.2)
+                      : Theme.of(context).colorScheme.primary,
+                  icon: null,
+                  backgroundColor: Colors.transparent,
+                  path: 'assets/icons/calendar_full.png',
+                  withPadding: true,
+                  contentPadding: 1,
+                  containerSize: 35,
                 ),
               ),
-              EaseInAnimation(
-                onTap: () {
-                  setState(() {
-                    _selectedPage = 1;
-                  });
-                },
-                child: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    iconColor: _selectedPage == 1
-                        ? darken(Theme.of(context).colorScheme.secondary, 0.2)
-                        : Theme.of(context).colorScheme.primary,
-                    icon: null,
-                    backgroundColor: Colors.transparent,
-                    path: 'assets/icons/contacts.png',
-                    withPadding: true,
-                    contentPadding: 0,
-                    containerSize: 35,
-                  ),
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  isDisabled: false,
+                  onTap: () {
+                    setState(() {
+                      _selectedPage = 1;
+                    });
+                  },
+                  iconColor: _selectedPage == 1
+                      ? darken(Theme.of(context).colorScheme.secondary, 0.2)
+                      : Theme.of(context).colorScheme.primary,
+                  icon: null,
+                  backgroundColor: Colors.transparent,
+                  path: 'assets/icons/contacts.png',
+                  withPadding: true,
+                  contentPadding: 0,
+                  containerSize: 35,
                 ),
               ),
               SizedBox(
                 width: rSize(80),
               ),
-              EaseInAnimation(
-                onTap: () {
-                  setState(() {
-                    _selectedPage = 2;
-                  });
-                },
-                child: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    iconColor: _selectedPage == 2
-                        ? darken(Theme.of(context).colorScheme.secondary, 0.2)
-                        : Theme.of(context).colorScheme.primary,
-                    icon: null,
-                    backgroundColor: Colors.transparent,
-                    path: 'assets/icons/bell_full.png',
-                    withPadding: true,
-                    contentPadding: 2,
-                    containerSize: 35,
-                  ),
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  isDisabled: false,
+                  onTap: () {
+                    setState(() {
+                      _selectedPage = 2;
+                    });
+                  },
+                  iconColor: _selectedPage == 2
+                      ? darken(Theme.of(context).colorScheme.secondary, 0.2)
+                      : Theme.of(context).colorScheme.primary,
+                  icon: null,
+                  backgroundColor: Colors.transparent,
+                  path: 'assets/icons/bell_full.png',
+                  withPadding: true,
+                  contentPadding: 2,
+                  containerSize: 35,
                 ),
               ),
-              EaseInAnimation(
-                onTap: () {
-                  setState(() {
-                    _selectedPage = 3;
-                  });
-                },
-                child: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    iconColor: _selectedPage == 3
-                        ? darken(Theme.of(context).colorScheme.secondary, 0.2)
-                        : Theme.of(context).colorScheme.primary,
-                    icon: null,
-                    backgroundColor: Colors.transparent,
-                    path: 'assets/icons/more.png',
-                    withPadding: true,
-                    contentPadding: 2,
-                    containerSize: 35,
-                  ),
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  isDisabled: false,
+                  onTap: () {
+                    setState(() {
+                      _selectedPage = 3;
+                    });
+                  },
+                  iconColor: _selectedPage == 3
+                      ? darken(Theme.of(context).colorScheme.secondary, 0.2)
+                      : Theme.of(context).colorScheme.primary,
+                  icon: null,
+                  backgroundColor: Colors.transparent,
+                  path: 'assets/icons/more.png',
+                  withPadding: true,
+                  contentPadding: 2,
+                  containerSize: 35,
                 ),
               ),
             ],

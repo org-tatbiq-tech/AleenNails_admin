@@ -468,63 +468,59 @@ class _ClientDetailsState extends State<ClientDetails> {
           SizedBox(
             width: rSize(120),
           ),
-          EaseInAnimation(
-            onTap: () => makePhoneCall(client.phone),
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: Icon(
-                  Icons.phone,
-                  size: rSize(24),
-                ),
+          CustomIcon(
+            customIconProps: CustomIconProps(
+              isDisabled: false,
+              onTap: () => makePhoneCall(client.phone),
+              icon: Icon(
+                Icons.phone,
+                size: rSize(24),
               ),
             ),
           ),
           SizedBox(
             width: rSize(10),
           ),
-          EaseInAnimation(
-            onTap: () => sendSms(client.phone),
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: Icon(
-                  Icons.message,
-                  size: rSize(24),
-                ),
+          CustomIcon(
+            customIconProps: CustomIconProps(
+              isDisabled: false,
+              onTap: () => sendSms(client.phone),
+              icon: Icon(
+                Icons.message,
+                size: rSize(24),
               ),
             ),
           ),
           SizedBox(
             width: rSize(10),
           ),
-          EaseInAnimation(
-            onTap: () => sendMail(client.email),
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: Icon(
-                  Icons.email,
-                  size: rSize(24),
-                ),
+          CustomIcon(
+            customIconProps: CustomIconProps(
+              isDisabled: false,
+              onTap: () => sendMail(client.email),
+              icon: Icon(
+                Icons.email,
+                size: rSize(24),
               ),
             ),
           ),
           SizedBox(
             width: rSize(10),
           ),
-          EaseInAnimation(
-            onTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AppointmentScreen(client: client),
+          CustomIcon(
+            customIconProps: CustomIconProps(
+              isDisabled: false,
+              onTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AppointmentScreen(client: client),
+                  ),
                 ),
-              ),
-            },
-            child: CustomIcon(
-              customIconProps: CustomIconProps(
-                withPadding: true,
-                path: 'assets/icons/calendar_plus_full.png',
-                icon: null,
-              ),
+              },
+              withPadding: true,
+              path: 'assets/icons/calendar_plus_full.png',
+              icon: null,
             ),
           ),
         ],

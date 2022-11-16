@@ -35,19 +35,18 @@ class CustomSlidable extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      EaseInAnimation(
-                        onTap: () => {
-                          customSlidableProps.deleteAction!(),
-                          Slidable.of(context)?.close() ?? () => {}
-                        },
-                        child: CustomIcon(
-                          customIconProps: CustomIconProps(
-                            icon: null,
-                            path: 'assets/icons/trash.png',
-                            containerSize: rSize(30),
-                            backgroundColor: Colors.transparent,
-                            iconColor: Theme.of(context).colorScheme.error,
-                          ),
+                      CustomIcon(
+                        customIconProps: CustomIconProps(
+                          isDisabled: false,
+                          onTap: () => {
+                            customSlidableProps.deleteAction!(),
+                            Slidable.of(context)?.close() ?? () => {}
+                          },
+                          icon: null,
+                          path: 'assets/icons/trash.png',
+                          containerSize: rSize(30),
+                          backgroundColor: Colors.transparent,
+                          iconColor: Theme.of(context).colorScheme.error,
                         ),
                       ),
                     ],
