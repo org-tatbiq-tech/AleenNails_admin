@@ -1,11 +1,13 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/providers/langs.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
 import 'package:appointments/widget/custom/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_list_tile.dart';
+import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -66,6 +68,11 @@ class AppointmentCard extends StatelessWidget {
       return null;
     }
 
+    getLocale() {
+      final localeMgr = Provider.of<LocaleData>(context, listen: false);
+      return localeMgr.locale.languageCode;
+    }
+
     navigateToAppointmentDetails(Appointment appointment) {
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
@@ -119,7 +126,7 @@ class AppointmentCard extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: rSize(10),
+                      height: rSize(5),
                     ),
                     Text(
                       getStringPrice(
@@ -129,55 +136,68 @@ class AppointmentCard extends StatelessWidget {
                             fontSize: rSize(14),
                           ),
                     ),
+                    Text(
+                      '${getDateTimeFormat(
+                        dateTime: appointmentCardProps.appointmentDetails.date,
+                        locale: getLocale(),
+                      )} - ${getDateTimeFormat(
+                        dateTime:
+                            appointmentCardProps.appointmentDetails.endTime,
+                        locale: getLocale(),
+                      )}',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                   ],
                 ),
                 SizedBox(
                   width: rSize(5),
                 ),
-                appointmentCardProps.withNavigation
-                    ? IconTheme(
-                        data: Theme.of(context).primaryIconTheme,
-                        child: Icon(
-                          Icons.chevron_right,
-                          size: rSize(25),
-                        ),
-                      )
-                    : const SizedBox(),
+                Visibility(
+                  visible: appointmentCardProps.withNavigation,
+                  child: IconTheme(
+                    data: Theme.of(context).primaryIconTheme,
+                    child: Icon(
+                      Icons.chevron_right,
+                      size: rSize(25),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
         ),
         leading: FutureBuilder<ImageProvider<Object>?>(
-            future: getClientImage(
-                appointmentCardProps.appointmentDetails.clientImagePath),
-            builder: (context, snapshot) {
-              return Column(
-                children: [
-                  CustomAvatar(
-                    customAvatarProps: CustomAvatarProps(
-                      radius: rSize(50),
-                      rectangleShape: false,
-                      circleShape: true,
-                      backgroundImage: snapshot.data,
-                      defaultImage: const AssetImage(
-                        'assets/images/avatar_female.png',
-                      ),
-                      enable: false,
+          future: getClientImage(
+              appointmentCardProps.appointmentDetails.clientImagePath),
+          builder: (context, snapshot) {
+            return Column(
+              children: [
+                CustomAvatar(
+                  customAvatarProps: CustomAvatarProps(
+                    radius: rSize(50),
+                    rectangleShape: false,
+                    circleShape: true,
+                    backgroundImage: snapshot.data,
+                    defaultImage: const AssetImage(
+                      'assets/images/avatar_female.png',
                     ),
+                    enable: false,
                   ),
-                  SizedBox(
-                    height: rSize(5),
-                  ),
-                  Text(
-                    appointmentCardProps.appointmentDetails.clientName,
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        ?.copyWith(fontSize: rSize(12)),
-                  ),
-                ],
-              );
-            }),
+                ),
+                SizedBox(
+                  height: rSize(5),
+                ),
+                Text(
+                  appointmentCardProps.appointmentDetails.clientName,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      ?.copyWith(fontSize: rSize(12)),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/providers/auth_mgr.dart';
+import 'package:appointments/providers/langs.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/widget/appointment/appointment_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -174,7 +176,7 @@ class TimeLineState extends State<TimeLine> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AppointmentDetails(),
+        builder: (context) => const AppointmentDetails(),
       ),
     );
   }
@@ -241,7 +243,7 @@ class TimeLineState extends State<TimeLine> {
                 onTap: () => {
                   _onDaySelected(
                     DateTime.now(),
-                    _focusedDay,
+                    DateTime.now(),
                   )
                 },
                 child: Container(
@@ -293,6 +295,11 @@ class TimeLineState extends State<TimeLine> {
     );
   }
 
+  getLocale() {
+    final localeMgr = Provider.of<LocaleData>(context, listen: false);
+    return localeMgr.locale.languageCode;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -317,6 +324,7 @@ class TimeLineState extends State<TimeLine> {
                   customExpandableCalendarProps: CustomExpandableCalendarProps(
                     focusedDay: _focusedDay,
                     selectedDay: _selectedDay,
+                    locale: getLocale(),
                     calendarFormat: _calendarFormat,
                     availableCalendarFormats: {
                       CalendarFormat.month: Languages.of(context)!.monthLabel,
@@ -350,7 +358,7 @@ class TimeLineState extends State<TimeLine> {
                                 dayViewController: dayViewController,
                                 minimumTime: const HourMinute(hour: 6),
                                 date: _selectedDay,
-                                userZoomAble: false,
+                                userZoomAble: true,
                                 events:
                                     getFlutterWeekAppointments(_selectedDay),
                                 initialTime: HourMinute(

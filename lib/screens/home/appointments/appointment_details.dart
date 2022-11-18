@@ -246,19 +246,18 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               visible: isCheckoutScreen,
               child: Row(
                 children: [
-                  EaseInAnimation(
-                    onTap: () => {
-                      addAnotherService(),
-                    },
-                    child: CustomIcon(
-                      customIconProps: CustomIconProps(
-                        iconColor: Theme.of(context).colorScheme.primary,
-                        icon: null,
-                        contentPadding: rSize(10),
-                        withPadding: true,
-                        path: 'assets/icons/plus.png',
-                        containerSize: 35,
-                      ),
+                  CustomIcon(
+                    customIconProps: CustomIconProps(
+                      isDisabled: false,
+                      onTap: () => {
+                        addAnotherService(),
+                      },
+                      iconColor: Theme.of(context).colorScheme.primary,
+                      icon: null,
+                      contentPadding: rSize(10),
+                      withPadding: true,
+                      path: 'assets/icons/plus.png',
+                      containerSize: 35,
                     ),
                   ),
                   SizedBox(
@@ -271,18 +270,17 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   SizedBox(
                     width: rSize(20),
                   ),
-                  EaseInAnimation(
-                    onTap: () => {
-                      Navigator.pushNamed(context, '/discountSelection'),
-                    },
-                    child: CustomIcon(
-                      customIconProps: CustomIconProps(
-                        iconColor: Theme.of(context).colorScheme.primary,
-                        icon: null,
-                        withPadding: true,
-                        path: 'assets/icons/percent.png',
-                        containerSize: 35,
-                      ),
+                  CustomIcon(
+                    customIconProps: CustomIconProps(
+                      isDisabled: false,
+                      onTap: () => {
+                        Navigator.pushNamed(context, '/discountSelection'),
+                      },
+                      iconColor: Theme.of(context).colorScheme.primary,
+                      icon: null,
+                      withPadding: true,
+                      path: 'assets/icons/percent.png',
+                      containerSize: 35,
                     ),
                   ),
                   SizedBox(
@@ -400,20 +398,19 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       visible: cancelAppointmentVisibility(),
                       child: Row(
                         children: [
-                          EaseInAnimation(
-                            onTap: () => cancelAppointment(appointment),
-                            child: CustomIcon(
-                              customIconProps: CustomIconProps(
-                                icon: null,
-                                containerSize: rSize(50),
-                                contentPadding: rSize(12),
-                                withPadding: true,
-                                borderColor:
-                                    Theme.of(context).colorScheme.primary,
-                                backgroundColor: Colors.transparent,
-                                iconColor: Theme.of(context).colorScheme.error,
-                                path: 'assets/icons/cancel.png',
-                              ),
+                          CustomIcon(
+                            customIconProps: CustomIconProps(
+                              isDisabled: false,
+                              onTap: () => cancelAppointment(appointment),
+                              icon: null,
+                              containerSize: rSize(50),
+                              contentPadding: rSize(12),
+                              withPadding: true,
+                              borderColor:
+                                  Theme.of(context).colorScheme.primary,
+                              backgroundColor: Colors.transparent,
+                              iconColor: Theme.of(context).colorScheme.error,
+                              path: 'assets/icons/cancel.png',
                             ),
                           ),
                           SizedBox(
