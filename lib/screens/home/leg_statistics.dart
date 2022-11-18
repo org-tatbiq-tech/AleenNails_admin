@@ -1,4 +1,3 @@
-import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -141,39 +140,38 @@ class StatisticsState extends State<Statistics> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        CustomContainer(
-          child: Column(
-            children: [
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: AspectRatio(
-                    aspectRatio: 2,
-                    child: getSalesBarChart(context),
-                  ),
+        Column(
+          children: [
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: AspectRatio(
+                  aspectRatio: 2,
+                  child: getSalesBarChart(context),
                 ),
               ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: AspectRatio(
-                    aspectRatio: 2,
-                    child: getBarChart(context),
-                  ),
+            ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: AspectRatio(
+                  aspectRatio: 2,
+                  child: getBarChart(context),
                 ),
               ),
-              Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: AspectRatio(
-                    aspectRatio: 3,
-                    child: getPieChart(context),
-                  ),
+            ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: AspectRatio(
+                  aspectRatio: 3,
+                  child: getPieChart(context),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+
         //this is the code for the widget container that comes from behind the floating action button (FAB)
         Align(
           alignment: FractionalOffset.bottomCenter,

@@ -1,4 +1,3 @@
-import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:graphic/graphic.dart';
@@ -332,39 +331,37 @@ class StatisticsState extends State<Statistics> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomContainer(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: AspectRatio(
-                  aspectRatio: 1.5,
-                  child: getServicesHistogram(context),
-                ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: AspectRatio(
+                aspectRatio: 1.5,
+                child: getServicesHistogram(context),
               ),
             ),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: AspectRatio(
-                  aspectRatio: 1.5,
-                  child: getServicesPieChart(context),
-                ),
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: AspectRatio(
+                aspectRatio: 1.5,
+                child: getServicesPieChart(context),
               ),
             ),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: AspectRatio(
-                  aspectRatio: 1.5,
-                  child: getServicesLineChart(context),
-                ),
+          ),
+          Card(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: AspectRatio(
+                aspectRatio: 1.5,
+                child: getServicesLineChart(context),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
