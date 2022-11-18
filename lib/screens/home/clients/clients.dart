@@ -65,33 +65,31 @@ class ClientsState extends State<Clients> {
         body: AnimatedSwitcher(
           duration: const Duration(milliseconds: 500),
           child: clientsMgr.clients.isEmpty
-              ? Center(
-                  child: EmptyListImage(
-                    emptyListImageProps: EmptyListImageProps(
-                      title: Languages.of(context)!
-                          .noClientsAddedLabel
-                          .toTitleCase(),
-                      iconPath: 'assets/icons/menu.png',
-                      bottomWidget: CustomTextButton(
-                        customTextButtonProps: CustomTextButtonProps(
-                          onTap: () => {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const ClientWidget(),
-                              ),
+              ? EmptyListImage(
+                  emptyListImageProps: EmptyListImageProps(
+                    title: Languages.of(context)!
+                        .noClientsAddedLabel
+                        .toTitleCase(),
+                    iconPath: 'assets/icons/menu.png',
+                    bottomWidget: CustomTextButton(
+                      customTextButtonProps: CustomTextButtonProps(
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ClientWidget(),
                             ),
-                          },
-                          text: Languages.of(context)!
-                              .addNewClientLabel
-                              .toTitleCase(),
-                          textColor: Theme.of(context).colorScheme.primary,
-                          withIcon: true,
-                          icon: Icon(
-                            FontAwesomeIcons.plus,
-                            size: rSize(16),
-                            color: Theme.of(context).colorScheme.primary,
                           ),
+                        },
+                        text: Languages.of(context)!
+                            .addNewClientLabel
+                            .toTitleCase(),
+                        textColor: Theme.of(context).colorScheme.primary,
+                        withIcon: true,
+                        icon: Icon(
+                          FontAwesomeIcons.plus,
+                          size: rSize(16),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
