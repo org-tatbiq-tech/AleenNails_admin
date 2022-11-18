@@ -215,6 +215,9 @@ abstract class Languages {
   String get okLabel;
   String get hoursLabel;
   String get minsLabel;
+  String get arrowLabel;
+  String get statusLabel;
+  String get timeLabel;
 
   /// ************ Flash Messages ************///
   String get flashMessageSuccessTitle;

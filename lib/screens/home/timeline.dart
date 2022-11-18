@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_mgr.dart';
@@ -12,6 +13,7 @@ import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/empty_list_image.dart';
+import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -181,20 +183,51 @@ class TimeLineState extends State<TimeLine> {
     );
   }
 
+  String getAppointmentStatusText(AppointmentStatus status) {
+    switch (status) {
+      case AppointmentStatus.confirmed:
+        return Languages.of(context)!.confirmLabel;
+      case AppointmentStatus.cancelled:
+        return Languages.of(context)!.cancelledLabel;
+      case AppointmentStatus.declined:
+        return Languages.of(context)!.declinedLabel;
+      case AppointmentStatus.waiting:
+        return Languages.of(context)!.waitingLabel;
+      case AppointmentStatus.noShow:
+        return Languages.of(context)!.noShowLabel;
+      default:
+        return Languages.of(context)!.waitingLabel;
+    }
+  }
+
   String getAppointmentDescription(Appointment appointment) {
     String description = '';
     if (appointment.clientPhone.isNotEmpty) {
       description += appointment.clientPhone;
     }
+    description +=
+        '\n${Languages.of(context)!.statusLabel} ${Languages.of(context)!.arrowLabel} ${getAppointmentStatusText(appointment.status)}';
     if (appointment.services.isNotEmpty) {
-      description += '\nServices ➙ ${appointment.services.length}';
+      description +=
+          '\n${Languages.of(context)!.servicesLabel} ${Languages.of(context)!.arrowLabel} ${appointment.services.length}';
     }
     if (appointment.notes.isNotEmpty) {
-      description += '\nNotes ➙ ${appointment.notes}';
+      description +=
+          '\n${Languages.of(context)!.notesLabel} ${Languages.of(context)!.arrowLabel} ${appointment.notes}';
     }
-    description += '\nPrice ➙ ${getStringPrice(appointment.totalCost)}';
-    description += '\nDuration ➙ ${appointment.totalDurationInMins}min';
-    description += '\nStatus ➙ ${appointment.status.name.toUpperCase()}';
+    description +=
+        '\n${Languages.of(context)!.priceLabel} ${Languages.of(context)!.arrowLabel} ${getStringPrice(appointment.totalCost)}';
+    description +=
+        '\n${Languages.of(context)!.timeLabel} ${Languages.of(context)!.arrowLabel} ${getDateTimeFormat(
+      dateTime: appointment.date,
+      locale: getLocale(),
+    )} - ${getDateTimeFormat(
+      dateTime: appointment.endTime,
+      locale: getLocale(),
+    )}';
+
+    description +=
+        '\n${Languages.of(context)!.durationLabel} ${Languages.of(context)!.arrowLabel} ${durationToFormat(duration: Duration(minutes: appointment.totalDurationInMins))}';
 
     return description;
   }
@@ -210,12 +243,15 @@ class TimeLineState extends State<TimeLine> {
           description: getAppointmentDescription(appointment),
           start: date.add(
             Duration(
-                hours: appointment.date.hour, minutes: appointment.date.minute),
+              hours: appointment.date.hour,
+              minutes: appointment.date.minute,
+            ),
           ),
           end: date.add(
             Duration(
-                hours: appointment.endTime.hour,
-                minutes: appointment.endTime.minute),
+              hours: appointment.endTime.hour,
+              minutes: appointment.endTime.minute,
+            ),
           ),
           backgroundColor: Color(appointment.services[0].colorID),
           onTap: () => navigateToAppointmentDetails(appointment),
@@ -248,23 +284,19 @@ class TimeLineState extends State<TimeLine> {
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                    horizontal: rSize(10),
+                    horizontal: rSize(15),
                     vertical: rSize(10),
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(rSize(10)),
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                    color: Theme.of(context).colorScheme.onBackground,
                   ),
                   child: Row(
                     children: [
                       Icon(
                         FontAwesomeIcons.arrowUp,
-                        size: rSize(18),
-                        color: darken(
-                          Theme.of(context).colorScheme.primary,
-                          0.2,
-                        ),
+                        size: rSize(16),
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       SizedBox(
                         width: rSize(5),
@@ -435,9 +467,10 @@ class TimeLineState extends State<TimeLine> {
                 ),
               ],
             ),
-            !isSameDay(_selectedDay, DateTime.now())
-                ? renderTodayButton()
-                : const SizedBox(),
+            Visibility(
+              visible: !isSameDay(_selectedDay, DateTime.now()),
+              child: renderTodayButton(),
+            )
           ],
         ),
       ),

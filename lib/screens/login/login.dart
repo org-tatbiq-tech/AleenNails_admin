@@ -1,5 +1,6 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/auth_mgr.dart';
+import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/secure_storage.dart';
 import 'package:appointments/utils/validations.dart';
@@ -8,6 +9,7 @@ import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_text_button.dart';
+import 'package:common_widgets/page_transition.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -232,9 +234,15 @@ class _LoginScreenState extends State<LoginScreen>
                             customTextButtonProps: CustomTextButtonProps(
                               text: Languages.of(context)!.labelForgotPassword,
                               textColor: Theme.of(context).colorScheme.primary,
-                              // fontSize: rSize(16),
                               onTap: () => {
-                                Navigator.pushNamed(context, '/forgetPassword'),
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    type: PageTransitionType.fade,
+                                    isIos: isIos(),
+                                    child: const ForgetPasswordScreen(),
+                                  ),
+                                ),
                               },
                             ),
                           )

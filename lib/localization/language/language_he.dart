@@ -549,23 +549,24 @@ class LanguageHe extends Languages {
 
   @override
   String get declinedLabel => "נדחה";
-
   @override
   String get paidLabel => "שולם";
-
   @override
   String get unpaidLabel => "לא שולם";
-
   @override
   String get saveLabel => "שמור";
-
   @override
   String get okLabel => "אוקי";
-
   @override
   String get hoursLabel => "שעות";
   @override
   String get minsLabel => "דקות";
+  @override
+  String get arrowLabel => "←";
+  @override
+  String get statusLabel => "סטטוס";
+  @override
+  String get timeLabel => "זמן";
 
   /// ************ Flash Messages ************///
   @override

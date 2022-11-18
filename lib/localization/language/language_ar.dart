@@ -444,6 +444,12 @@ class LanguageAr extends Languages {
   String get hoursLabel => "hours";
   @override
   String get minsLabel => "mins";
+  @override
+  String get arrowLabel => "←";
+  @override
+  String get statusLabel => "status";
+  @override
+  String get timeLabel => "time";
 
   /// ************ Flash Messages ************///
   @override
