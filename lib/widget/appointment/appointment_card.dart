@@ -3,6 +3,7 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
 import 'package:appointments/widget/custom/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -66,11 +67,6 @@ class AppointmentCard extends StatelessWidget {
         return CachedNetworkImageProvider(imageUrl);
       }
       return null;
-    }
-
-    getLocale() {
-      final localeMgr = Provider.of<LocaleData>(context, listen: false);
-      return localeMgr.locale.languageCode;
     }
 
     navigateToAppointmentDetails(Appointment appointment) {
@@ -139,11 +135,11 @@ class AppointmentCard extends StatelessWidget {
                     Text(
                       '${getDateTimeFormat(
                         dateTime: appointmentCardProps.appointmentDetails.date,
-                        locale: getLocale(),
+                        locale: getCurrentLocale(context),
                       )} - ${getDateTimeFormat(
                         dateTime:
                             appointmentCardProps.appointmentDetails.endTime,
-                        locale: getLocale(),
+                        locale: getCurrentLocale(context),
                       )}',
                       style: Theme.of(context).textTheme.subtitle2,
                     ),

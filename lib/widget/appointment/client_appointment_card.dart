@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -59,10 +60,12 @@ class ClientAppointmentCard extends StatelessWidget {
               dateTime:
                   clientAppointmentCardProps.clientAppointmentDetails.startTime,
               format: 'HH:mm',
+              locale: getCurrentLocale(context),
             )} - ${getDateTimeFormat(
               dateTime:
                   clientAppointmentCardProps.clientAppointmentDetails.endTime,
               format: 'HH:mm',
+              locale: getCurrentLocale(context),
             )}',
             style: Theme.of(context).textTheme.subtitle2,
           ),
@@ -121,10 +124,12 @@ class ClientAppointmentCard extends StatelessWidget {
             children: [
               Text(
                 getDateTimeFormat(
-                    dateTime: clientAppointmentCardProps
-                        .clientAppointmentDetails.startTime,
-                    format: 'EEE',
-                    isDayOfWeek: true),
+                  dateTime: clientAppointmentCardProps
+                      .clientAppointmentDetails.startTime,
+                  format: 'EEE',
+                  isDayOfWeek: true,
+                  locale: getCurrentLocale(context),
+                ),
                 style: Theme.of(context)
                     .textTheme
                     .subtitle2
@@ -135,6 +140,7 @@ class ClientAppointmentCard extends StatelessWidget {
                   dateTime: clientAppointmentCardProps
                       .clientAppointmentDetails.startTime,
                   format: 'dd',
+                  locale: getCurrentLocale(context),
                 ),
                 style: Theme.of(context).textTheme.bodyText2?.copyWith(
                       fontSize: rSize(22),
@@ -145,6 +151,7 @@ class ClientAppointmentCard extends StatelessWidget {
                   dateTime: clientAppointmentCardProps
                       .clientAppointmentDetails.startTime,
                   format: 'yyyy',
+                  locale: getCurrentLocale(context),
                 ),
                 style: Theme.of(context)
                     .textTheme

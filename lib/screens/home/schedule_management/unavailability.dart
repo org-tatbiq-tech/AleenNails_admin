@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/utils/general.dart';
 
 import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -127,6 +128,7 @@ class _UnavailabilityState extends State<Unavailability> {
                 text: getDateTimeFormat(
                   dateTime: startDateTime,
                   format: 'dd MMM yyyy • HH:mm',
+                  locale: getCurrentLocale(context),
                 ),
                 onTap: () => showPickerDateTimeModal(
                   pickerDateTimeModalProps: PickerDateTimeModalProps(
@@ -186,6 +188,7 @@ class _UnavailabilityState extends State<Unavailability> {
                 text: getDateTimeFormat(
                   dateTime: endTime,
                   format: 'HH:mm',
+                  locale: getCurrentLocale(context),
                 ),
                 onTap: () => showPickerDateTimeModal(
                   pickerDateTimeModalProps: PickerDateTimeModalProps(
@@ -381,10 +384,12 @@ class _UnavailabilityState extends State<Unavailability> {
                           dateTime: settingsMgr.scheduleManagement
                               .unavailabilityList![index].startTime,
                           format: 'HH:mm',
-                        )} → ${getDateTimeFormat(
+                          locale: getCurrentLocale(context),
+                        )} ${Languages.of(context)!.arrowLabel} ${getDateTimeFormat(
                           dateTime: settingsMgr.scheduleManagement
                               .unavailabilityList![index].endTime,
                           format: 'HH:mm',
+                          locale: getCurrentLocale(context),
                         )}',
                         subTitle: settingsMgr.scheduleManagement
                             .unavailabilityList![index].notes,

@@ -1,5 +1,7 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/langs.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Map timeOfDayToDB(TimeOfDay? timeOfDay) {
   // Converter from TimeOfDay to firebase DB document
@@ -47,4 +49,9 @@ String getDayName(context, day) {
     default:
       return "!";
   }
+}
+
+getCurrentLocale(BuildContext context) {
+  final localeMgr = Provider.of<LocaleData>(context, listen: false);
+  return localeMgr.locale.languageCode;
 }

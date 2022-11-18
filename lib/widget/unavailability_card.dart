@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/settings_components.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/ease_in_animation.dart';
@@ -27,11 +28,13 @@ class UnavailabilityCard extends StatelessWidget {
                 fontSize: rSize(16),
               ),
         ),
-        subTitle: Text(
-          unavailabilityCardProps.subTitle,
-          style: Theme.of(context).textTheme.subtitle1,
-          maxLines: 2,
-        ),
+        subTitle: unavailabilityCardProps.subTitle.isNotEmpty
+            ? Text(
+                unavailabilityCardProps.subTitle,
+                style: Theme.of(context).textTheme.subtitle1,
+                maxLines: 2,
+              )
+            : null,
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,8 +56,10 @@ class UnavailabilityCard extends StatelessWidget {
           ],
         ),
         leading: Container(
-          padding:
-              EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(15),
+            vertical: rSize(5),
+          ),
           decoration: BoxDecoration(
             border: Border.all(
               color: Theme.of(context).colorScheme.primary,
@@ -75,6 +80,7 @@ class UnavailabilityCard extends StatelessWidget {
                       unavailabilityCardProps.unavailabilityDetails.startTime,
                   format: 'dd',
                   isDayOfWeek: true,
+                  locale: getCurrentLocale(context),
                 ),
                 style: Theme.of(context).textTheme.bodyText2?.copyWith(
                       fontSize: rSize(22),
@@ -85,6 +91,7 @@ class UnavailabilityCard extends StatelessWidget {
                   dateTime:
                       unavailabilityCardProps.unavailabilityDetails.startTime,
                   format: 'MMM',
+                  locale: getCurrentLocale(context),
                 ),
                 style: Theme.of(context).textTheme.subtitle2?.copyWith(
                       fontSize: rSize(12),
@@ -98,6 +105,7 @@ class UnavailabilityCard extends StatelessWidget {
                   dateTime:
                       unavailabilityCardProps.unavailabilityDetails.startTime,
                   format: 'yyyy',
+                  locale: getCurrentLocale(context),
                 ),
                 style: Theme.of(context).textTheme.subtitle2?.copyWith(
                       fontSize: rSize(12),

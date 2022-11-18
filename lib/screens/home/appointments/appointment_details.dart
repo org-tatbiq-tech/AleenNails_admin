@@ -6,6 +6,7 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
@@ -527,8 +528,15 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     appointmentServiceCardProps: AppointmentServiceCardProps(
                       serviceDetails: services[index],
                       title: services[index].name,
-                      subTitle:
-                          '${getDateTimeFormat(dateTime: services[index].startTime, format: 'HH:mm')} - ${getDateTimeFormat(dateTime: services[index].endTime, format: 'HH:mm')} - ${durationToFormat(duration: services[index].duration)}',
+                      subTitle: '${getDateTimeFormat(
+                        dateTime: services[index].startTime,
+                        format: 'HH:mm',
+                        locale: getCurrentLocale(context),
+                      )} - ${getDateTimeFormat(
+                        dateTime: services[index].endTime,
+                        format: 'HH:mm',
+                        locale: getCurrentLocale(context),
+                      )} - ${durationToFormat(duration: services[index].duration)}',
                       withNavigation: false,
                       enabled: false,
                     ),

@@ -366,6 +366,7 @@ class _DayDetailsState extends State<DayDetails> {
                   text: getDateTimeFormat(
                     dateTime: startTime,
                     format: 'HH:mm',
+                    locale: getCurrentLocale(context),
                   ),
                   onTap: () => showPickerDateTimeModal(
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
@@ -426,6 +427,7 @@ class _DayDetailsState extends State<DayDetails> {
                   text: getDateTimeFormat(
                     dateTime: endTime,
                     format: 'HH:mm',
+                    locale: getCurrentLocale(context),
                   ),
                   onTap: () => showPickerDateTimeModal(
                     pickerDateTimeModalProps: PickerDateTimeModalProps(

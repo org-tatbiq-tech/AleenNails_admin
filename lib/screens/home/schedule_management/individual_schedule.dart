@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/langs.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_expandable_calendar.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -218,6 +219,7 @@ class _IndividualScheduleState extends State<IndividualSchedule> {
                     day: getDateTimeFormat(
                       dateTime: _selectedDay,
                       format: 'EEEE',
+                      locale: getCurrentLocale(context),
                     ),
                     // startTime: kToday,
                     // endTime: kToday,

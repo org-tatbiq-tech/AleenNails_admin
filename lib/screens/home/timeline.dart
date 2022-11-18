@@ -5,6 +5,7 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_day_view.dart';
@@ -220,10 +221,10 @@ class TimeLineState extends State<TimeLine> {
     description +=
         '\n${Languages.of(context)!.timeLabel} ${Languages.of(context)!.arrowLabel} ${getDateTimeFormat(
       dateTime: appointment.date,
-      locale: getLocale(),
+      locale: getCurrentLocale(context),
     )} - ${getDateTimeFormat(
       dateTime: appointment.endTime,
-      locale: getLocale(),
+      locale: getCurrentLocale(context),
     )}';
 
     description +=
@@ -327,11 +328,6 @@ class TimeLineState extends State<TimeLine> {
     );
   }
 
-  getLocale() {
-    final localeMgr = Provider.of<LocaleData>(context, listen: false);
-    return localeMgr.locale.languageCode;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -356,7 +352,7 @@ class TimeLineState extends State<TimeLine> {
                   customExpandableCalendarProps: CustomExpandableCalendarProps(
                     focusedDay: _focusedDay,
                     selectedDay: _selectedDay,
-                    locale: getLocale(),
+                    locale: getCurrentLocale(context),
                     calendarFormat: _calendarFormat,
                     availableCalendarFormats: {
                       CalendarFormat.month: Languages.of(context)!.monthLabel,

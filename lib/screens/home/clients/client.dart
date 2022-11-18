@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom/custom_avatar.dart';
@@ -420,6 +421,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               isDayOfWeek: true,
               dateTime: birthdayDate,
               format: 'dd MMM yyyy',
+              locale: getCurrentLocale(context),
             ),
             onTap: () => showPickerDateTimeModal(
               pickerDateTimeModalProps: PickerDateTimeModalProps(

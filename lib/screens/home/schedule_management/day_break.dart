@@ -1,5 +1,6 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -75,6 +76,7 @@ class _DayBreakState extends State<DayBreak> {
                   text: getDateTimeFormat(
                     dateTime: startTime,
                     format: 'HH:mm',
+                    locale: getCurrentLocale(context),
                   ),
                   onTap: () => showPickerDateTimeModal(
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
@@ -136,6 +138,7 @@ class _DayBreakState extends State<DayBreak> {
                   text: getDateTimeFormat(
                     dateTime: endTime,
                     format: 'HH:mm',
+                    locale: getCurrentLocale(context),
                   ),
                   onTap: () => showPickerDateTimeModal(
                     pickerDateTimeModalProps: PickerDateTimeModalProps(
