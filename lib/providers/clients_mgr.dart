@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 
 ///*************************** Naming **********************************///
 const clientsCollection = 'clients';
+const clientsAppointmentsCollection = 'clients_appointments';
 const clientStorageDir = 'clients';
 
 class ClientsMgr extends ChangeNotifier {
@@ -87,6 +88,24 @@ class ClientsMgr extends ChangeNotifier {
     clientsColl.add(newClient.toJson());
   }
 
+  Future<List<ClientAppointment>> getClientAppointments(String clientID) async {
+    Query<Map<String, dynamic>> query = _fs
+        .collection(clientsCollection)
+        .doc(clientID)
+        .collection(clientsAppointmentsCollection);
+    query = query.where('startTime', isGreaterThanOrEqualTo: DateTime.now());
+    List<ClientAppointment> appointments = [];
+    QuerySnapshot querySnapshot = await query.get();
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      print('loading appiontment of client ${data}');
+      data['id'] = doc.id;
+      appointments.add(ClientAppointment.fromJson(data));
+    }
+    print('returning all appointments ${appointments}');
+    return appointments;
+  }
+
   Future<void> updateClient(Client updatedClient) async {
     /// Update existing Client - update DB
     CollectionReference clientsColl = _fs.collection(clientsCollection);
@@ -103,6 +122,7 @@ class ClientsMgr extends ChangeNotifier {
     String? clientID,
   }) async {
     isSelectedClientLoaded = false;
+    List<ClientAppointment> appointments = [];
     if (client != null) {
       // Client is provided, no need to download
       selectedClient = client;
@@ -111,10 +131,14 @@ class ClientsMgr extends ChangeNotifier {
       // download appointment
       Map<String, dynamic>? data;
       _fs.collection(clientsCollection).doc(clientID).get().then(
-            (value) => {
+            (value) async => {
+              // Get client upcoming appointments
+              appointments = await getClientAppointments(clientID!),
+              print('getting appointments ${appointments}'),
               data = value.data(),
               if (data != null)
                 {
+                  data!['appointments'] = appointments,
                   data!['id'] = value.id,
                   selectedClient = Client.fromJson(data!),
                   isSelectedClientLoaded = true,

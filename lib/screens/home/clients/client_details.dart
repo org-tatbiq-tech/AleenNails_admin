@@ -13,7 +13,6 @@ import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_text_button.dart';
-import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -59,7 +58,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClient.appointments.values.length.toString()})',
+                    '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClient.appointments.length.toString()})',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
@@ -94,8 +93,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 left: rSize(20),
                 right: rSize(20),
               ),
-              itemCount:
-                  min(clientsMgr.selectedClient.appointments.values.length, 1),
+              itemCount: min(clientsMgr.selectedClient.appointments.length, 1),
               itemBuilder: (context, index) {
                 return FadeAnimation(
                   positionType: PositionType.top,
@@ -105,7 +103,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                       enabled: true,
                       withNavigation: false,
                       clientAppointmentDetails: clientsMgr
-                          .selectedClient.appointments.values
+                          .selectedClient.appointments
                           .toList()[index],
                     ),
                   ),

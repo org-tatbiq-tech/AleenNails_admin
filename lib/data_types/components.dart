@@ -280,7 +280,8 @@ class Appointment {
 /// will be saved as part of clients appointments
 
 class ClientAppointment {
-  String id; // Appointment ID (if required to fetch from DB)
+  String id;
+  String appointmentIdRef; // Appointment ID (if required to fetch from DB)v
   DateTime startTime; // Appointment start date and time
   DateTime endTime; // Appointment end date time
   double totalCost; // Appointment total cost
@@ -289,6 +290,7 @@ class ClientAppointment {
 
   ClientAppointment({
     required this.id,
+    required this.appointmentIdRef,
     required this.startTime,
     required this.endTime,
     required this.totalCost,
@@ -299,6 +301,7 @@ class ClientAppointment {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'appointmentIdRef': appointmentIdRef,
       'startTime': Timestamp.fromDate(startTime),
       'endTime': Timestamp.fromDate(endTime),
       'totalCost': totalCost,
@@ -318,6 +321,7 @@ class ClientAppointment {
 
     return ClientAppointment(
         id: doc['id'],
+        appointmentIdRef: doc['appointmentIdRef'],
         startTime: doc['startTime'].toDate(),
         endTime: doc['endTime'].toDate(),
         totalCost: doc['totalCost'].toDouble() ?? 0.0,
@@ -325,6 +329,26 @@ class ClientAppointment {
         status: doc['status'] == null
             ? AppointmentStatus.waiting
             : loadAppointmentStatus(doc['status']));
+  }
+
+  factory ClientAppointment.fromAppointment(Appointment appointment) {
+    List<String> loadServices(List<AppointmentService> appointmentServices) {
+      List<String> services = [];
+      for (AppointmentService service in appointmentServices) {
+        services.add(service.name);
+      }
+      return services;
+    }
+
+    return ClientAppointment(
+      id: '',
+      appointmentIdRef: appointment.id,
+      startTime: appointment.date,
+      endTime: appointment.endTime,
+      totalCost: appointment.totalCost,
+      services: loadServices(appointment.services),
+      status: appointment.status,
+    );
   }
 }
 
@@ -343,30 +367,29 @@ class Client {
   double? discount; // general discount for client
   bool? isTrusted; // Birthday date
   String imagePath; // Image Path
-  Map<String, ClientAppointment> appointments;
+  List<ClientAppointment> appointments;
 
   double get totalRevenue {
-    return appointments.values
-        .fold<double>(0, (sum, item) => sum + item.totalCost);
+    return appointments.fold<double>(0, (sum, item) => sum + item.totalCost);
   }
 
   int get totalCancelledAppointment {
     int totalCancelledAppointments = 0;
-    appointments.forEach((key, value) {
-      if (value.status == AppointmentStatus.cancelled) {
+    for (var app in appointments) {
+      if (app.status == AppointmentStatus.cancelled) {
         totalCancelledAppointments += 1;
       }
-    });
+    }
     return totalCancelledAppointments;
   }
 
   int get totalNoShowAppointment {
     int totalNoShowAppointments = 0;
-    appointments.forEach((key, value) {
-      if (value.status == AppointmentStatus.noShow) {
+    for (var app in appointments) {
+      if (app.status == AppointmentStatus.noShow) {
         totalNoShowAppointments += 1;
       }
-    });
+    }
     return totalNoShowAppointments;
   }
 
@@ -383,7 +406,7 @@ class Client {
     this.discount,
     this.isTrusted,
     this.imagePath = '',
-    this.appointments = const {},
+    this.appointments = const [],
   });
 
   Map<String, dynamic> toJson() {
@@ -399,17 +422,14 @@ class Client {
       'discount': discount,
       'isTrusted': isTrusted,
       'imagePath': imagePath,
-      'appointments':
-          appointments.map((key, value) => MapEntry(key, value.toJson())),
     };
   }
 
   factory Client.fromJson(Map<String, dynamic> doc) {
-    Map<String, ClientAppointment> loadAppointmentsFromDoc(
-        Map<String, dynamic> docAppointments) {
-      Map<String, ClientAppointment> appointments = {};
-      for (var app in docAppointments.entries) {
-        appointments[app.key] = ClientAppointment.fromJson(app.value);
+    List<ClientAppointment> loadAppointmentsFromDoc(List clientAppointments) {
+      List<ClientAppointment> appointments = [];
+      for (var app in clientAppointments) {
+        appointments.add(app);
       }
       return appointments;
     }
@@ -429,7 +449,7 @@ class Client {
       isTrusted: doc['isTrusted'],
       imagePath: doc['imagePath'],
       appointments: doc['appointments'] == null
-          ? {}
+          ? []
           : loadAppointmentsFromDoc(doc['appointments']),
     );
   }

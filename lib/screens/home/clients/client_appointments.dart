@@ -94,14 +94,14 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                           vertical: rSize(40),
                           horizontal: rSize(30),
                         ),
-                        itemCount: clientsMgr
-                            .selectedClient.appointments.values.length,
+                        itemCount:
+                            clientsMgr.selectedClient.appointments.length,
                         itemBuilder: (context, index) {
                           return ClientAppointmentCard(
                             clientAppointmentCardProps:
                                 ClientAppointmentCardProps(
                               clientAppointmentDetails: clientsMgr
-                                  .selectedClient.appointments.values
+                                  .selectedClient.appointments
                                   .toList()[index],
                               withNavigation: true,
                               enabled: true,

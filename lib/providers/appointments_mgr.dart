@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/clients_mgr.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,6 @@ class AppointmentsMgr extends ChangeNotifier {
   Future<void> downloadAppointments() async {
     /// Download appointments from DB
     // query preparation
-
     var query = _fs
         .collection(appointmentsCollection)
         .where('date', isGreaterThanOrEqualTo: _selectedDay)
@@ -82,10 +82,19 @@ class AppointmentsMgr extends ChangeNotifier {
   }
 
   Future<void> submitNewAppointment(Appointment newAppointment) async {
-    /// Submitting new appointment - update DB
+    /// Submitting new appointment - update Appointments DB
     CollectionReference appointmentsColl =
         _fs.collection(appointmentsCollection);
-    appointmentsColl.add(newAppointment.toJson());
+    CollectionReference clientsAppointments = _fs
+        .collection(clientsCollection)
+        .doc(newAppointment.clientDocID)
+        .collection(clientsAppointmentsCollection);
+    appointmentsColl.add(newAppointment.toJson()).then((docRef) => {
+          /// Update client's appointments collections
+          newAppointment.id = docRef.id,
+          clientsAppointments
+              .add(ClientAppointment.fromAppointment(newAppointment).toJson()),
+        });
   }
 
   Future<void> updateAppointment(Appointment updatedAppointment) async {
