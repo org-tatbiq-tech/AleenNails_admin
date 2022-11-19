@@ -74,7 +74,7 @@ class ClientsSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     navigateToClientDetails(Client client) {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      clientsMgr.setSelectedClient(client: client);
+      clientsMgr.setSelectedClient(clientID: client.id);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -125,7 +125,7 @@ class ClientsSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     navigateToClientDetails(Client client) {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      clientsMgr.setSelectedClient(client: client);
+      clientsMgr.setSelectedClient(clientID: client.id);
       Navigator.push(
         context,
         MaterialPageRoute(

@@ -32,11 +32,11 @@ class ClientCard extends StatelessWidget {
 
     navigateToClientDetails(Client client) {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      clientsMgr.setSelectedClient(client: client);
+      clientsMgr.setSelectedClient(clientID: client.id);
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ClientDetails(),
+          builder: (context) => const ClientDetails(),
         ),
       );
     }

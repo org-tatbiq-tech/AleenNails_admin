@@ -28,7 +28,7 @@ class ClientsState extends State<Clients> {
   Widget build(BuildContext context) {
     navigateToClientDetails(Client client) {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      clientsMgr.setSelectedClient(client: client);
+      clientsMgr.setSelectedClient(clientID: client.id);
       Navigator.push(
         context,
         MaterialPageRoute(
