@@ -19,6 +19,11 @@ enum AppointmentCreator {
   client,
 }
 
+enum DiscountType {
+  percent,
+  fixed,
+}
+
 class WorkingDayBreak {
   /// Defines break start and end time
   TimeOfDay startTime;

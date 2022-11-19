@@ -145,6 +145,8 @@ class Appointment {
   DateTime creationDate; // Appointment creation date (date and time)
   DateTime date; // Appointment date (date and time)
   String notes; // Appointment detailed notes
+  double discount;
+  DiscountType discountType;
   List<AppointmentService> services;
   PaymentStatus paymentStatus;
 
@@ -160,6 +162,8 @@ class Appointment {
     required this.date,
     this.notes = '',
     this.clientImagePath = '',
+    this.discount = 0,
+    this.discountType = DiscountType.percent,
     required this.services,
     required this.paymentStatus,
   });
@@ -193,6 +197,8 @@ class Appointment {
       'paymentStatus': paymentStatus.toString(),
       'endTime': endTime,
       'totalCost': totalCost,
+      'discount': discount,
+      'discountType': discountType.toString(),
     };
   }
 
@@ -223,6 +229,18 @@ class Appointment {
       }
     }
 
+    DiscountType loadDiscountType(String? discountType) {
+      if (discountType == null) return DiscountType.percent;
+      switch (discountType) {
+        case 'DiscountType.percent':
+          return DiscountType.percent;
+        case 'DiscountType.fixed':
+          return DiscountType.fixed;
+        default:
+          return DiscountType.percent;
+      }
+    }
+
     return Appointment(
       id: doc["id"],
       status: loadAppointmentStatus(doc["status"]),
@@ -237,6 +255,8 @@ class Appointment {
       date: doc['date'].toDate(),
       services: loadServicesFromDoc(doc['services']),
       paymentStatus: loadPaymentStatus(doc['paymentStatus']),
+      discount: doc['discount'] ?? 0.0,
+      discountType: loadDiscountType(doc['discountType']),
     );
   }
 }

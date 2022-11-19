@@ -4,6 +4,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
+import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/general.dart';
@@ -18,15 +19,14 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
-import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/fade_animation.dart';
+import 'package:common_widgets/page_transition.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class AppointmentDetails extends StatefulWidget {
@@ -225,10 +225,14 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     addAnotherService() {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => Services(
+        PageTransition(
+          type: PageTransitionType.fade,
+          isIos: isIos(),
+          child: Services(
             selectionMode: true,
-            onTap: () => {Navigator.pop(context)},
+            onTap: () => {
+              Navigator.pop(context),
+            },
           ),
         ),
       );
@@ -275,7 +279,14 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     customIconProps: CustomIconProps(
                       isDisabled: false,
                       onTap: () => {
-                        Navigator.pushNamed(context, '/discountSelection'),
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            isIos: isIos(),
+                            child: const DiscountSelection(),
+                          ),
+                        ),
                       },
                       iconColor: Theme.of(context).colorScheme.primary,
                       icon: null,
@@ -554,16 +565,6 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    String getAppointmentDate(Appointment appointment) {
-      // Formatting appointment date
-      return DateFormat('EE dd-MM-yyyy').format(appointment.date);
-    }
-
-    String getAppointmentTime(Appointment appointment) {
-      // Formatting appointment - start time and end time
-      return '${DateFormat('kk:mm').format(appointment.date)} - ${DateFormat('kk:mm').format(appointment.endTime)}';
-    }
-
     renderDate(Appointment appointment) {
       return Column(children: [
         Row(
@@ -599,14 +600,25 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 children: [
                   Text(
                     // 'Wed 13/02/2022',
-                    getAppointmentDate(appointment),
+                    getDateTimeFormat(
+                      dateTime: appointment.date,
+                      format: 'EE dd-MM-yyyy',
+                      locale: getCurrentLocale(context),
+                    ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                   Text(
-                    getAppointmentTime(appointment),
-                    // '13:00 - 14:30',
+                    '${getDateTimeFormat(
+                      dateTime: appointment.date,
+                      format: 'HH:mm',
+                      locale: getCurrentLocale(context),
+                    )} - ${getDateTimeFormat(
+                      dateTime: appointment.endTime,
+                      format: 'HH:mm',
+                      locale: getCurrentLocale(context),
+                    )}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodyText1,

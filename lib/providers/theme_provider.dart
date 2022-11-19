@@ -154,7 +154,7 @@ class ThemeNotifier with ChangeNotifier {
       colorScheme: const ColorScheme.light().copyWith(
         primaryContainer: primaryWithAlpha1,
         primary: primary,
-        onPrimary: primary,
+        onPrimary: primaryWithAlpha3,
         secondaryContainer: const Color(0xFF77454e),
         secondary: secondary,
         onSecondary: const Color(0xFF561723),

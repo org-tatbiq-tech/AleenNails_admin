@@ -82,6 +82,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       );
       selectedServices = widget.bookAgainAppointment!.services;
       _notesController.text = widget.bookAgainAppointment!.notes;
+      endTime = startDateTime.add(getServicesDuration());
     }
   }
 
