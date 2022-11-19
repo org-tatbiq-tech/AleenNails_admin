@@ -98,11 +98,9 @@ class ClientsMgr extends ChangeNotifier {
     QuerySnapshot querySnapshot = await query.get();
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-      print('loading appiontment of client ${data}');
       data['id'] = doc.id;
       appointments.add(ClientAppointment.fromJson(data));
     }
-    print('returning all appointments ${appointments}');
     return appointments;
   }
 
@@ -134,7 +132,6 @@ class ClientsMgr extends ChangeNotifier {
             (value) async => {
               // Get client upcoming appointments
               appointments = await getClientAppointments(clientID!),
-              print('getting appointments ${appointments}'),
               data = value.data(),
               if (data != null)
                 {
