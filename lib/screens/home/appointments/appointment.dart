@@ -46,6 +46,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   DateTime? endTime;
   Client? selectedClient;
   List<AppointmentService> selectedServices = [];
+  Appointment? appointment;
 
   @override
   void initState() {
@@ -55,20 +56,21 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       selectedClient = widget.client;
     }
     if (widget.appointment != null) {
+      appointment = Appointment.fromAppointment(widget.appointment!);
       selectedClient = Client(
-        id: widget.appointment!.clientDocID,
-        fullName: widget.appointment!.clientName,
-        phone: widget.appointment!.clientPhone,
+        id: appointment!.clientDocID,
+        fullName: appointment!.clientName,
+        phone: appointment!.clientPhone,
         address: '',
         email: '',
-        imagePath: widget.appointment!.clientImagePath,
+        imagePath: appointment!.clientImagePath,
         creationDate: DateTime.now(),
       );
-      selectedServices = widget.appointment!.services;
-      startDateTime = widget.appointment!.date;
-      startDateTimeTemp = widget.appointment!.date;
-      endTime = widget.appointment!.endTime;
-      _notesController.text = widget.appointment!.notes;
+      selectedServices = appointment!.services;
+      startDateTime = appointment!.date;
+      startDateTimeTemp = appointment!.date;
+      endTime = appointment!.endTime;
+      _notesController.text = appointment!.notes;
     }
     if (widget.bookAgainAppointment != null) {
       selectedClient = Client(
@@ -207,8 +209,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       //   appointmentServices.add(appointmentService);
       // }
 
-      String appointmentID =
-          widget.appointment == null ? '' : widget.appointment!.id;
+      String appointmentID = appointment == null ? '' : appointment!.id;
 
       Appointment newAppointment = Appointment(
         id: appointmentID,
@@ -227,7 +228,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         notes: _notesController.text,
       );
 
-      if (widget.appointment == null) {
+      if (appointment == null) {
         appointmentsMgr.submitNewAppointment(newAppointment).then((value) => {
               Navigator.pop(context),
               showSuccessFlash(
@@ -602,7 +603,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       child: Scaffold(
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: widget.appointment != null
+            titleText: appointment != null
                 ? Languages.of(context)!.editAppointmentLabel.toTitleCase()
                 : Languages.of(context)!.newAppointmentLabel.toTitleCase(),
             withBack: true,

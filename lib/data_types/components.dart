@@ -202,6 +202,21 @@ class Appointment {
     };
   }
 
+  factory Appointment.fromAppointment(Appointment appointment) {
+    return Appointment(
+      id: appointment.id,
+      status: appointment.status,
+      creator: appointment.creator,
+      clientName: appointment.clientName,
+      clientPhone: appointment.clientPhone,
+      clientEmail: appointment.clientEmail,
+      clientDocID: appointment.clientDocID,
+      creationDate: appointment.creationDate,
+      date: appointment.date,
+      services: List<AppointmentService>.from(appointment.services),
+      paymentStatus: appointment.paymentStatus,
+    );
+  }
   factory Appointment.fromJson(Map<String, dynamic> doc) {
     List<AppointmentService> loadServicesFromDoc(List<dynamic> docServices) {
       List<AppointmentService> services = [];
