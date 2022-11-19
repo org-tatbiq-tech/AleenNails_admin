@@ -164,19 +164,48 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       showLoaderDialog(context);
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
-      List<AppointmentService> appointmentServices = [];
 
-      for (var service in selectedServices) {
-        AppointmentService appointmentService = AppointmentService(
-          id: service.id,
-          name: service.name,
-          startTime: startDateTime,
-          duration: service.duration,
-          cost: service.cost,
-          colorID: service.colorID,
+      // update services start time
+      List<AppointmentService> updatedServices = [];
+      bool first = true;
+      AppointmentService? lastApp;
+      for (AppointmentService appointmentService in selectedServices) {
+        DateTime startTime;
+        if (first) {
+          first = false;
+          startTime = DateTime(
+            startDateTime.year,
+            startDateTime.month,
+            startDateTime.day,
+            startDateTime.hour,
+            startDateTime.minute,
+          );
+        } else {
+          startTime = lastApp!.endTime;
+        }
+        AppointmentService currAppointmentService = AppointmentService(
+          id: appointmentService.id,
+          name: appointmentService.name,
+          startTime: startTime,
+          duration: appointmentService.duration,
+          cost: appointmentService.cost,
+          colorID: appointmentService.colorID,
         );
-        appointmentServices.add(appointmentService);
+        updatedServices.add(currAppointmentService);
+        lastApp = currAppointmentService;
       }
+
+      // for (var service in selectedServices) {
+      //   AppointmentService appointmentService = AppointmentService(
+      //     id: service.id,
+      //     name: service.name,
+      //     startTime: startDateTime,
+      //     duration: service.duration,
+      //     cost: service.cost,
+      //     colorID: service.colorID,
+      //   );
+      //   appointmentServices.add(appointmentService);
+      // }
 
       String appointmentID =
           widget.appointment == null ? '' : widget.appointment!.id;
@@ -193,7 +222,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
             .business, // will be used as enum AppointmentCreator
         date: startDateTime,
         paymentStatus: PaymentStatus.unpaid,
-        services: selectedServices,
+        services: updatedServices,
         status: AppointmentStatus.confirmed,
         notes: _notesController.text,
       );
