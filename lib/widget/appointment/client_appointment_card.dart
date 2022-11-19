@@ -43,7 +43,8 @@ class ClientAppointmentCard extends StatelessWidget {
         enabled: clientAppointmentCardProps.enabled,
         onTap: clientAppointmentCardProps.onTap ??
             () => navigateToAppointmentDetails(
-                  clientAppointmentCardProps.clientAppointmentDetails.id,
+                  clientAppointmentCardProps
+                      .clientAppointmentDetails.appointmentIdRef,
                 ),
         title: Text(
           getAppointmentName(
