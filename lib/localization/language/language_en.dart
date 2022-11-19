@@ -1,161 +1,61 @@
 import 'languages.dart';
 
 class LanguageEn extends Languages {
+  ///************************************************************************///
   /// ************ App labels ************///
   @override
   String get appName => "Aleen Nails";
 
-  /// ************ Landing labels ************///
-  @override
-  String get swiper1Title => "This is a Title";
-
-  @override
-  String get swiper1SubTitle => "This is a sub Title";
-
-  @override
-  String get swiper1Desc => "This is a desc";
-
-  @override
-  String get swiper2Title => "This is a Title";
-
-  @override
-  String get swiper2SubTitle => "This is a sub Title";
-
-  @override
-  String get swiper2Desc => "This is a desc";
-
-  @override
-  String get swiper3Title => "This is a Title";
-
-  @override
-  String get swiper3SubTitle => "This is a sub Title";
-
-  @override
-  String get swiper3Desc => "This is a desc";
-
-  @override
-  String get swiper4Title => "This is a Title";
-
-  @override
-  String get swiper4SubTitle => "This is a sub Title";
-
-  @override
-  String get swiper4Desc => "This is a desc";
-
+  ///************************************************************************///
   /// ************ Login labels ************///
   @override
   String get labelSignIn => "Sign In";
-
   @override
   String get labelEmail => "Email";
-
   @override
   String get labelPassword => "Password";
-
   @override
   String get labelForgotPassword => "Forgot password?";
-
   @override
   String get labelRememberMe => "Remember me";
-
-  @override
-  String get labelLogin => "Login";
-
-  @override
-  String get labelNoAccount => "Do NOT have an account? ";
-
-  @override
-  String get labelRegisterNow => "Register now!";
-
   @override
   String get labelEnterLoginDetails =>
-      "Please enter the details below to continue";
+      "Welcome!\nPlease enter the details below to continue";
 
-  @override
-  String get labelUserName => "User name";
-
+  ///************************************************************************///
   /// ************ Forgot pass labels ************///
   @override
   String get labelForgot => "Forgot";
-
   @override
   String get labelFPassword => "Password?";
-
   @override
   String get labelFMessage =>
-      "Do not worry! it happens.\nPlease enter email associated with your account";
+      "Do not worry! it happens.\nPlease enter email associated to your account";
 
-  /// ************ Registration labels ************///
-  @override
-  String get labelRegister => "Register";
-
-  @override
-  String get registerSuccess => "Welcome! you have been registered!";
-
-  @override
-  String get labelAlreadyHaveAcc => "Already have an account? ";
-
-  @override
-  String get labelLoginNow => "Sing in!";
-
-  @override
-  String get labelRepeatPass => "Repeat password";
-
-  @override
-  String get labelRegistrationConfirmMsg => "By register you are agree to our";
-
-  @override
-  String get labelTermsConditions => "Terms & Conditions";
-
-  @override
-  String get labelPrivacyPolicy => "Privacy policy";
-
-  /// ************ OTP ************///
-  @override
-  String get labelMobileNumber => 'Mobile number';
-
-  @override
-  String get labelEnterOTP =>
-      "Please enter your Mobile number for OTP Authentication";
-
-  @override
-  String get labelMobileCodeSent =>
-      "Please check your phone, verification code sent";
-
-  @override
-  String get labelChange => "Change";
-
-  @override
-  String get labelResend => "Resend";
-
+  ///************************************************************************///
   /// ************ validation messages ************///
   @override
   String get validPhone => 'Please enter valid phone number!';
-
   @override
-  String get emptyUser => 'Contact name can not be empty';
-
+  String get emptyUser => 'Contact name can NOT be empty';
   @override
-  String get emptyEmail => 'Email can not be empty';
-
+  String get emptyEmail => 'Email can NOT be empty';
   @override
-  String get emptyPassword => 'Password can not be empty';
-
+  String get emptyPassword => 'Password can NOT be empty';
   @override
   String get passwordMismatch => 'Passwords mismatch';
-
   @override
-  String get emptyAddress => 'Address can not be empty';
+  String get emptyAddress => 'Address can NOT be empty';
 
+  ///************************************************************************///
   /// ************ Calendar labels ************///
   @override
   String get monthLabel => "Month";
   @override
   String get weekLabel => "Week";
 
+  ///************************************************************************///
   /// ************ Settings labels ************///
-  @override
-  String get reviewRatingLabel => "reviews & ratings";
   @override
   String get serviceSetupLabel => "services setup";
   @override
@@ -167,6 +67,7 @@ class LanguageEn extends Languages {
   @override
   String get personalSettingsLabel => "personal settings";
 
+  ///************************************************************************///
   /// ************ Client labels ************///
   @override
   String get clientLabel => "client";
@@ -222,6 +123,7 @@ class LanguageEn extends Languages {
   @override
   String get addNewClientLabel => "add new client";
 
+  ///************************************************************************///
   /// ************ Business Info Labels ************///
   @override
   String get businessLabel => "business";
@@ -251,11 +153,11 @@ class LanguageEn extends Languages {
       "Upload your business logo so its visible on your profile.";
   @override
   String get coverPhotoLabel => "cover photo";
+  @override
   String get coverPhotoDescription =>
       "Your cover photo is the first thing that your customers seen on your profile. Add a photo to give them  insight into what you are all about";
   @override
   String get workplacePhotoLabel => "workplace photo";
-  @override
   @override
   String get workplacePhotoDescription =>
       "Give clients a sneak peek of your space before they even walk through the door.";
@@ -279,6 +181,7 @@ class LanguageEn extends Languages {
   @override
   String get deletePhotoLabel => "delete photo";
 
+  ///************************************************************************///
   /// ************ Appointment Labels ************///
   @override
   String get emptyAppointmentListLabel => "no appointment added yet";
@@ -309,6 +212,7 @@ class LanguageEn extends Languages {
   @override
   String get addServiceLabel => "add service";
 
+  ///************************************************************************///
   /// ************ Schedule Management Labels ************///
   @override
   String get workingDaysLabel => "working days";
@@ -341,6 +245,7 @@ class LanguageEn extends Languages {
   @override
   String get reasonHint => "short description of your reason (recommended)";
 
+  ///************************************************************************///
   /// ************ Service Labels ************///
   @override
   String get serviceLabel => "service";
@@ -379,6 +284,7 @@ class LanguageEn extends Languages {
   String get clientBookPermissionModalBody =>
       "if switched off clients will not be able to book this service using the app. You will have to manually add appointment to your calendar";
 
+  ///************************************************************************///
   /// ************ Common Labels ************///
   @override
   String get notSetLabel => "not set";
@@ -453,6 +359,7 @@ class LanguageEn extends Languages {
   @override
   String get timeLabel => "time";
 
+  ///************************************************************************///
   /// ************ Flash Messages ************///
   @override
   String get flashMessageSuccessTitle => "well done!";
@@ -467,7 +374,6 @@ class LanguageEn extends Languages {
   @override
   String get clientCreatedSuccessfullyBody =>
       "your client have been created successfully.";
-
   @override
   String get wpPhotoDeletedSuccessfullyBody =>
       "your workplace photo have been deleted Successfully.";
@@ -486,15 +392,12 @@ class LanguageEn extends Languages {
   @override
   String get coverPhotoPhotoUploadedSuccessfullyBody =>
       "your cover photo photo have been uploaded Successfully.";
-
   @override
   String get serviceUpdatedSuccessfullyBody =>
       "your service have been updated successfully.";
-
   @override
   String get serviceCreatedSuccessfullyBody =>
       "your service have been created successfully.";
-
   @override
   String get appointmentUpdatedSuccessfullyBody =>
       "your appointment have been updated successfully.";
@@ -526,6 +429,7 @@ class LanguageEn extends Languages {
   String get unavailabilityDeletedSuccessfullyBody =>
       "your unavailability have been deleted successfully.";
 
+  ///************************************************************************///
   /// ************ Profile settings ************///
   @override
   String get labelPersonalSettings => "Personal Settings";
@@ -550,6 +454,7 @@ class LanguageEn extends Languages {
   @override
   String get logoutMsg => 'Logout from the Application?';
 
+  ///************************************************************************///
   /// ************ Week days ************///
   @override
   String get labelSunday => "Sunday";

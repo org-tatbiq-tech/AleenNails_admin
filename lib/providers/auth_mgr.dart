@@ -123,8 +123,8 @@ class AuthenticationMgr extends ChangeNotifier {
     return null;
   }
 
-  void signOut() {
-    _fa.signOut();
+  void signOut() async {
+    await _fa.signOut();
     notifyListeners();
   }
 }

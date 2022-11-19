@@ -1,10 +1,10 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/fade_animation.dart';
-import 'package:flutter/material.dart';
 import 'package:common_widgets/utils/general.dart';
+import 'package:common_widgets/utils/layout.dart';
+import 'package:flutter/material.dart';
 
 class More extends StatefulWidget {
   const More({Key? key}) : super(key: key);
@@ -39,30 +39,6 @@ class MoreState extends State<More> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // CustomIconButton(
-            //   customIconButtonProps: CustomIconButtonProps(
-            //     onTap: () => {},
-            //     animationDelay: 0.1,
-            //     iconPath: 'assets/icons/growth.png',
-            //     positionType: PositionType.bottom,
-            //     title: 'Marketing',
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: rSize(20),
-            // ),
-            // CustomIconButton(
-            //   customIconButtonProps: CustomIconButtonProps(
-            //     onTap: () => {},
-            //     animationDelay: 0.3,
-            //     iconPath: 'assets/icons/rating.png',
-            //     positionType: PositionType.bottom,
-            //     title: Languages.of(context)!.reviewRatingLabel.toTitleCase(),
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: rSize(20),
-            // ),
             CustomIconButton(
               customIconButtonProps: CustomIconButtonProps(
                 onTap: () => {Navigator.pushNamed(context, '/services')},

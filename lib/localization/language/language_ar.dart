@@ -1,53 +1,18 @@
 import 'languages.dart';
 
 class LanguageAr extends Languages {
+  ///************************************************************************///
   /// ************ App labels ************///
   @override
   String get appName => "Aleen Nails";
 
-  /// ************ Landing labels ************///
-  @override
-  String get swiper1Title => "This is a Title";
-
-  @override
-  String get swiper1SubTitle => "This is a sub Title";
-
-  @override
-  String get swiper1Desc => "This is a desc";
-
-  @override
-  String get swiper2Title => "This is a Title";
-
-  @override
-  String get swiper2SubTitle => "This is a sub Title";
-
-  @override
-  String get swiper2Desc => "This is a desc";
-
-  @override
-  String get swiper3Title => "This is a Title";
-
-  @override
-  String get swiper3SubTitle => "This is a sub Title";
-
-  @override
-  String get swiper3Desc => "This is a desc";
-
-  @override
-  String get swiper4Title => "This is a Title";
-
-  @override
-  String get swiper4SubTitle => "This is a sub Title";
-
-  @override
-  String get swiper4Desc => "This is a desc";
-
+  ///************************************************************************///
   /// ************ Login labels ************///
   @override
   String get labelSignIn => "تسجيل الدخول";
 
   @override
-  String get labelEmail => "الريد الالكتروني";
+  String get labelEmail => "البريد الالكتروني";
 
   @override
   String get labelPassword => "كلمة المرور";
@@ -59,20 +24,10 @@ class LanguageAr extends Languages {
   String get labelRememberMe => "تذكرني";
 
   @override
-  String get labelLogin => "تسجيل دخول";
+  String get labelEnterLoginDetails =>
+      "أهلاً وسهلاً\nالرجاء إدخال التفاصيل أدناه للمتابعة";
 
-  @override
-  String get labelNoAccount => "لا تملك حساب؟";
-
-  @override
-  String get labelRegisterNow => "سجّل الان!";
-
-  @override
-  String get labelEnterLoginDetails => "الرجاء إدخال التفاصيل أدناه للمتابعة";
-
-  @override
-  String get labelUserName => "اسم المستخدم";
-
+  ///************************************************************************///
   /// ************ Forgot pass labels ************///
   @override
   String get labelForgot => "نسيت";
@@ -84,48 +39,7 @@ class LanguageAr extends Languages {
   String get labelFMessage =>
       "لا تقلق!\nالرجاء إدخال البريد الإلكتروني المرتبط بحسابك";
 
-  /// ************ Registration labels ************///
-  @override
-  String get labelRegister => "سجّل";
-
-  @override
-  String get registerSuccess => "اهلا وسهلا! لقد تم تسجيلك!";
-
-  @override
-  String get labelAlreadyHaveAcc => "هل لديك حساب؟";
-
-  @override
-  String get labelLoginNow => "تسجيل دخول!";
-
-  @override
-  String get labelRepeatPass => "اعد كلمة السر";
-
-  @override
-  String get labelRegistrationConfirmMsg => "بالتسجيل فأنت توافق على";
-
-  @override
-  String get labelTermsConditions => "البنود والشروط";
-
-  @override
-  String get labelPrivacyPolicy => "سياسة الخصوصية";
-
-  /// ************ OTP ************///
-  @override
-  String get labelMobileNumber => 'رقم الهاتف';
-
-  @override
-  String get labelEnterOTP => "يرجى إدخال رقم هاتفك المحمول لمصادقة OTP";
-
-  @override
-  String get labelMobileCodeSent =>
-      "يرجى التحقق من هاتفك ، تم إرسال رمز التحقق";
-
-  @override
-  String get labelChange => "تغيير";
-
-  @override
-  String get labelResend => "إعادة إرسال";
-
+  ///************************************************************************///
   /// ************ validation messages ************///
   @override
   String get validPhone => 'الرجاء إدخال رقم هاتف صحيح!';
@@ -145,15 +59,15 @@ class LanguageAr extends Languages {
   @override
   String get emptyAddress => 'Address can not be empty';
 
+  ///************************************************************************///
   /// ************ Calendar labels ************///
   @override
   String get monthLabel => "شهر";
   @override
   String get weekLabel => "اسبوع";
 
+  ///************************************************************************///
   /// ************ Settings labels ************///
-  @override
-  String get reviewRatingLabel => "المراجعات & التقييمات";
   @override
   String get serviceSetupLabel => "إعداد الخدمات";
   @override
@@ -165,13 +79,14 @@ class LanguageAr extends Languages {
   @override
   String get personalSettingsLabel => "اعدادات شخصية";
 
+  ///************************************************************************///
   /// ************ Client labels ************///
   @override
   String get clientLabel => "العميل";
   @override
   String get clientsLabel => "عملاء";
   @override
-  String get selectClientLabel => "select client";
+  String get selectClientLabel => "اختار عميل";
   @override
   String get clientAppointmentsLabel => "مواعيد العميل";
   @override
@@ -220,6 +135,7 @@ class LanguageAr extends Languages {
   @override
   String get addNewClientLabel => "add new client";
 
+  ///************************************************************************///
   /// ************ Business Info Labels ************///
   @override
   String get businessLabel => "العمل";
@@ -278,6 +194,7 @@ class LanguageAr extends Languages {
   @override
   String get deletePhotoLabel => "حذف الصورة";
 
+  ///************************************************************************///
   /// ************ Appointment Labels ************///
   @override
   String get emptyAppointmentListLabel => "لم يتم إضافة موعد بعد";
@@ -308,6 +225,7 @@ class LanguageAr extends Languages {
   @override
   String get addServiceLabel => "أضف خدمة";
 
+  ///************************************************************************///
   /// ************ Schedule Management Labels ************///
   @override
   String get workingDaysLabel => "أيام العمل";
@@ -339,6 +257,7 @@ class LanguageAr extends Languages {
   @override
   String get reasonHint => "وصف قصير للسبب (مفضل)";
 
+  ///************************************************************************///
   /// ************ Service Labels ************///
   @override
   String get serviceLabel => "خدمة";
@@ -377,6 +296,7 @@ class LanguageAr extends Languages {
   String get clientBookPermissionModalBody =>
       "إذا تم اغلاق هذه الخدمة ،فلن يتمكنوا من حجز هذه الخدمة باستخدام التطبيق. سيكون عليك إضافة موعد يدويًا إلى التقويم الخاص بك";
 
+  ///************************************************************************///
   /// ************ Common Labels ************///
   @override
   String get notSetLabel => "غير مضبوط";
@@ -451,6 +371,7 @@ class LanguageAr extends Languages {
   @override
   String get timeLabel => "time";
 
+  ///************************************************************************///
   /// ************ Flash Messages ************///
   @override
   String get flashMessageSuccessTitle => "رائع!";
@@ -481,10 +402,8 @@ class LanguageAr extends Languages {
   @override
   String get coverPhotoPhotoUploadedSuccessfullyBody =>
       "your cover photo photo have been uploaded Successfully.";
-
   @override
   String get serviceUpdatedSuccessfullyBody => "تم تعديل الخدمة بنجاح";
-
   @override
   String get serviceCreatedSuccessfullyBody => "تم إنشاء الخدمة بنجاح";
   @override
@@ -514,6 +433,7 @@ class LanguageAr extends Languages {
   String get unavailabilityDeletedSuccessfullyBody =>
       "your unavailability have been deleted successfully.";
 
+  ///************************************************************************///
   /// ************ Profile settings ************///
   @override
   String get labelPersonalSettings => "إعدادات شخصية";
@@ -538,6 +458,7 @@ class LanguageAr extends Languages {
   @override
   String get logoutMsg => 'هل تريد تسجيل الخروج من التطبيق؟';
 
+  ///************************************************************************///
   /// ************ Week days ************///
   @override
   String get labelSunday => "ألأحد";

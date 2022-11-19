@@ -23,6 +23,8 @@ class PersonalSettingsState extends State<PersonalSettings> {
     final authenticationMgr =
         Provider.of<AuthenticationMgr>(context, listen: false);
     authenticationMgr.signOut();
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/loginScreen', (Route<dynamic> route) => false);
   }
 
   logout() {

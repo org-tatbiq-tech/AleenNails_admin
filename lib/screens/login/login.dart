@@ -68,7 +68,9 @@ class _LoginScreenState extends State<LoginScreen>
     final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
     if (form!.validate()) {
       showLoaderDialog(context);
-      authMgr.checkIfAdmin(_userEmailController.text.trim()).then((res) async {
+      authMgr
+          .checkIfAdmin(_userEmailController.text.trim().toLowerCase())
+          .then((res) async {
         if (!res) {
           showErrorFlash(
             context: context,
@@ -177,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen>
                         children: [
                           Text(
                             Languages.of(context)!.labelEnterLoginDetails,
+                            textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2
@@ -197,7 +200,7 @@ class _LoginScreenState extends State<LoginScreen>
                               size: rSize(20),
                             ),
                           ),
-                          labelText: Languages.of(context)!.labelUserName,
+                          labelText: Languages.of(context)!.labelEmail,
                           validator: emailValidation,
                         ),
                       ),
@@ -259,34 +262,10 @@ class _LoginScreenState extends State<LoginScreen>
                           onTap: () => {
                             validateAndLogin(context),
                           },
-                          text: Languages.of(context)!.labelLogin,
+                          text: Languages.of(context)!.labelSignIn,
                           isPrimary: true,
                         ),
                       ),
-                      // SizedBox(
-                      //   height: rSize(20),
-                      // ),
-                      // Row(
-                      //   mainAxisSize: MainAxisSize.max,
-                      //   mainAxisAlignment: MainAxisAlignment.start,
-                      //   crossAxisAlignment: CrossAxisAlignment.center,
-                      //   children: [
-                      //     Text(
-                      //       Languages.of(context)!.labelNoAccount,
-                      //       style: Theme.of(context).textTheme.subtitle1,
-                      //     ),
-                      //     CustomTextButton(
-                      //       customTextButtonProps: CustomTextButtonProps(
-                      //         text: Languages.of(context)!.labelRegisterNow,
-                      //         textColor:
-                      //             Theme.of(context).colorScheme.primary,
-                      //         onTap: () => {
-                      //           Navigator.pushNamed(context, '/register'),
-                      //         },
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),

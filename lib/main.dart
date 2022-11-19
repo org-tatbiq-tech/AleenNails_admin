@@ -145,9 +145,9 @@ class AppointmentsApp extends StatelessWidget {
               future: loadLocale(),
               builder: (context, locale) {
                 return Consumer<AuthenticationMgr>(
-                  builder: (context, authData, _) {
+                  builder: (context, authMgr, _) {
                     return FutureBuilder(
-                      future: getAutoLoginValue(authData),
+                      future: getAutoLoginValue(authMgr),
                       builder: (context, auth) {
                         return MaterialApp(
                           builder: (context, _) {
