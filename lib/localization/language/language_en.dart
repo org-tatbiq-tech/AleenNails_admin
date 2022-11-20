@@ -431,6 +431,16 @@ class LanguageEn extends Languages {
   @override
   String get unavailabilityDeletedSuccessfullyBody =>
       "your unavailability have been deleted successfully.";
+  @override
+  String get resetPassEmailSentTitle => "Sent!";
+  @override
+  String get resetPassEmailSentSuccessBody =>
+      "Reset email sent successfully. Please check you email!";
+  @override
+  String get resetPassEmailSentErrorTitle => "Reset error!";
+  @override
+  String get resetPassEmailSentErrorBody =>
+      "Reset password failed. Please try again";
 
   ///************************************************************************///
   /// ************ Profile settings ************///

@@ -435,6 +435,16 @@ class LanguageAr extends Languages {
   @override
   String get unavailabilityDeletedSuccessfullyBody =>
       "your unavailability have been deleted successfully.";
+  @override
+  String get resetPassEmailSentTitle => "أُرسل!";
+  @override
+  String get resetPassEmailSentSuccessBody =>
+      "تم ارسال بريد لاستعادة كلمة السر بنجاح, من فضلك تحقق من بريدك!";
+  @override
+  String get resetPassEmailSentErrorTitle => "حدث خطأ!";
+  @override
+  String get resetPassEmailSentErrorBody =>
+      "حدث خطأ في إعادة تعيين كلمة المرور! من فضلك جرب مرة اخرى";
 
   ///************************************************************************///
   /// ************ Profile settings ************///

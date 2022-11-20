@@ -75,6 +75,7 @@ abstract class Languages {
   String get noClientsAddedLabel;
   String get addNewClientLabel;
 
+  ///************************************************************************///
   /// ************ Business Info Labels ************///
   String get businessLabel;
   String get businessNameLabel;
@@ -102,6 +103,7 @@ abstract class Languages {
   String get deleteCoverPhotoLabel;
   String get deletePhotoLabel;
 
+  ///************************************************************************///
   /// ************ Appointment Labels ************///
   String get emptyAppointmentListLabel;
   String get emptyAppointmentTimeListLabel;
@@ -118,6 +120,7 @@ abstract class Languages {
   String get cancelThisAppointmentLabel;
   String get addServiceLabel;
 
+  ///************************************************************************///
   /// ************ Schedule Management Labels ************///
   String get workingDaysLabel;
   String get unavailabilityLabel;
@@ -134,6 +137,7 @@ abstract class Languages {
   String get reasonLabel;
   String get reasonHint;
 
+  ///************************************************************************///
   /// ************ Service Labels ************///
   String get serviceLabel;
   String get servicesLabel;
@@ -153,6 +157,7 @@ abstract class Languages {
   String get clientBookPermissionLabel;
   String get clientBookPermissionModalBody;
 
+  ///************************************************************************///
   /// ************ Common Labels ************///
   String get notSetLabel;
   String get yesLabel;
@@ -191,6 +196,7 @@ abstract class Languages {
   String get statusLabel;
   String get timeLabel;
 
+  ///************************************************************************///
   /// ************ Flash Messages ************///
   String get flashMessageSuccessTitle;
   String get flashMessageErrorTitle;
@@ -217,7 +223,12 @@ abstract class Languages {
   String get workingDayUpdatedSuccessfullyBody;
   String get unavailabilityUpdatedSuccessfullyBody;
   String get unavailabilityDeletedSuccessfullyBody;
+  String get resetPassEmailSentTitle;
+  String get resetPassEmailSentSuccessBody;
+  String get resetPassEmailSentErrorTitle;
+  String get resetPassEmailSentErrorBody;
 
+  ///************************************************************************///
   /// ************ Profile settings ************///
   String get labelPersonalSettings;
   String get labelNotification;
@@ -231,6 +242,7 @@ abstract class Languages {
   String get labelLater;
   String get logoutMsg;
 
+  ///************************************************************************///
   /// ************ Week days ************///
   String get labelSunday;
   String get labelMonday;

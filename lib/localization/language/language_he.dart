@@ -411,6 +411,15 @@ class LanguageHe extends Languages {
   String get unavailabilityUpdatedSuccessfullyBody => "אי הזמינות עודכן בהצלחה";
   @override
   String get unavailabilityDeletedSuccessfullyBody => "אי הזמינות נמחק בהצלחה";
+  @override
+  String get resetPassEmailSentTitle => "נשלח";
+  @override
+  String get resetPassEmailSentSuccessBody =>
+      "אימיל שחזור סיסמה נשלח בהצלחה!, בבקשה תבדוק את המייל";
+  @override
+  String get resetPassEmailSentErrorTitle => "שחזור נכשל!";
+  @override
+  String get resetPassEmailSentErrorBody => "שחזור סיסמה נכשל! בבקשה לנסות שוב";
 
   ///************************************************************************///
   /// ************ Profile settings ************///

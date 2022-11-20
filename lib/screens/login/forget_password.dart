@@ -1,11 +1,17 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/auth_mgr.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({Key? key}) : super(key: key);
@@ -30,19 +36,37 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     _emailController.dispose();
   }
 
-  void submit() {}
+  void errorCallback(FirebaseAuthException e) {
+    showErrorFlash(
+      errorTitle: Languages.of(context)!.resetPassEmailSentErrorTitle,
+      errorBody: Languages.of(context)!.resetPassEmailSentErrorBody,
+      context: context,
+      errorColor: errorPrimaryColor,
+    );
 
-  // Positioned(
-  //   top: rSize(100),
-  //   left: rSize(120),
-  //   child: CustomIcon(
-  //     customIconProps: CustomIconProps(
-  //       isDisabled: false,
-  //       onTap: () => {Navigator.pop(context)},
-  //       icon: Icon(Icons.arrow_back),
-  //     ),
-  //   ),
-  // ),
+    Navigator.pushNamedAndRemoveUntil(
+        context, '/loginScreen', (Route<dynamic> route) => false);
+  }
+
+  void validateAndSubmit() async {
+    final form = _formKey.currentState;
+    final authState = Provider.of<AuthenticationMgr>(context, listen: false);
+    if (form!.validate()) {
+      showLoaderDialog(context);
+      final result = await authState.sendPasswordResetEmail(
+          _emailController.text, errorCallback);
+      if (result == true) {
+        showSuccessFlash(
+          successTitle: Languages.of(context)!.resetPassEmailSentTitle,
+          successBody: Languages.of(context)!.resetPassEmailSentSuccessBody,
+          context: context,
+          successColor: successPrimaryColor,
+        );
+      }
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/loginScreen', (Route<dynamic> route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +177,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       ),
                       CustomButton(
                         customButtonProps: CustomButtonProps(
-                          onTap: () => {},
+                          onTap: () => validateAndSubmit(),
                           text: Languages.of(context)!.submitLabel,
                           isPrimary: true,
                         ),
