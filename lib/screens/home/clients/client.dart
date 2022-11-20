@@ -604,35 +604,57 @@ class _ClientWidgetState extends State<ClientWidget> {
         );
 
         if (widget.client == null) {
-          clientMgr.submitNewClient(client).then((value) => {
-                Navigator.pop(context),
-                showSuccessFlash(
-                  context: context,
-                  successTitle: Languages.of(context)!
-                      .flashMessageSuccessTitle
-                      .toTitleCase(),
-                  successBody: Languages.of(context)!
-                      .clientCreatedSuccessfullyBody
-                      .toCapitalized(),
-                  successColor: successPrimaryColor,
-                ),
-                Navigator.pop(context),
-              });
+          try {
+            await clientMgr.submitNewClient(client);
+            Navigator.pop(context);
+            showSuccessFlash(
+              context: context,
+              successTitle:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successBody: Languages.of(context)!
+                  .clientCreatedSuccessfullyBody
+                  .toCapitalized(),
+              successColor: successPrimaryColor,
+            );
+            Navigator.pop(context);
+          } on PhoneNumberUsedException catch (e) {
+            Navigator.pop(context);
+            showErrorFlash(
+              context: context,
+              errorTitle:
+                  Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
+              errorBody: Languages.of(context)!
+                  .clientPhoneAlreadyUsedErrorBody
+                  .toTitleCase(),
+              errorColor: errorPrimaryColor,
+            );
+          }
         } else {
-          await clientMgr.updateClient(client).then((value) => {
-                Navigator.pop(context),
-                showSuccessFlash(
-                  context: context,
-                  successTitle: Languages.of(context)!
-                      .flashMessageSuccessTitle
-                      .toTitleCase(),
-                  successBody: Languages.of(context)!
-                      .clientUpdatedSuccessfullyBody
-                      .toCapitalized(),
-                  successColor: successPrimaryColor,
-                ),
-                Navigator.pop(context),
-              });
+          try {
+            await clientMgr.updateClient(client);
+            Navigator.pop(context);
+            showSuccessFlash(
+              context: context,
+              successTitle:
+                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+              successBody: Languages.of(context)!
+                  .clientUpdatedSuccessfullyBody
+                  .toCapitalized(),
+              successColor: successPrimaryColor,
+            );
+            Navigator.pop(context);
+          } on PhoneNumberUsedException catch (e) {
+            Navigator.pop(context);
+            showErrorFlash(
+              context: context,
+              errorTitle:
+                  Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
+              errorBody: Languages.of(context)!
+                  .clientPhoneAlreadyUsedErrorBody
+                  .toTitleCase(),
+              errorColor: errorPrimaryColor,
+            );
+          }
         }
       }
       setState(() {

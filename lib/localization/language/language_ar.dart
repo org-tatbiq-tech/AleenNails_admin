@@ -381,6 +381,9 @@ class LanguageAr extends Languages {
   String get clientCreatedWronglyBody =>
       "قم بتغيير بعض الأشياء وحاول الإرسال مرة أخرى.";
   @override
+  String get clientPhoneAlreadyUsedErrorBody =>
+      "رقم الهاتف مسجل لعميل اخر. قم بتغيير رقم الهاتف وحاول الإرسال مرة أخرى.";
+  @override
   String get clientUpdatedSuccessfullyBody => "تم تعديل العميل بنجاح";
   @override
   String get clientCreatedSuccessfullyBody => "تم إنشاء العميل بنجاح";

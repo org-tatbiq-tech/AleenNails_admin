@@ -365,6 +365,9 @@ class LanguageHe extends Languages {
   @override
   String get clientCreatedWronglyBody => "שנה כמה דברים ונסה לשלוח שוב";
   @override
+  String get clientPhoneAlreadyUsedErrorBody =>
+      "מספר הטלפון כבר רשום אצל לקוח קיים. נא לשנות את מספר הטלפון ולנסות שוב.";
+  @override
   String get clientUpdatedSuccessfullyBody => "הלקוח עודכן בהצלחה";
   @override
   String get clientCreatedSuccessfullyBody => "הלקוח נוצר בהצלחה";

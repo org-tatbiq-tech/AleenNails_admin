@@ -369,6 +369,9 @@ class LanguageEn extends Languages {
   String get clientCreatedWronglyBody =>
       "change a few things up and try submitting again.";
   @override
+  String get clientPhoneAlreadyUsedErrorBody =>
+      "phone number already used by another user. please change the phone number and try again.";
+  @override
   String get clientUpdatedSuccessfullyBody =>
       "your client have been updated successfully.";
   @override
