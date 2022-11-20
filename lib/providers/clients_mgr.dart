@@ -15,6 +15,8 @@ const clientsCollection = 'clients';
 const clientsAppointmentsCollection = 'clients_appointments';
 const clientStorageDir = 'clients';
 
+class PhoneNumberUsedException implements Exception {}
+
 class ClientsMgr extends ChangeNotifier {
   ///*************************** Firestore **********************************///
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
@@ -82,9 +84,44 @@ class ClientsMgr extends ChangeNotifier {
     return await ref.delete();
   }
 
+  Future<bool> checkPhoneNumberAvailability(
+      String phone, String? byClientId) async {
+    if (initialized) {
+      for (Client client in _clients) {
+        if (client.phone == phone &&
+            (byClientId == null || client.id != byClientId)) {
+          return false;
+        }
+      }
+    } else {
+      CollectionReference clientsColl = _fs.collection(clientsCollection);
+      var clientsResults =
+          await clientsColl.where('phone', isEqualTo: phone).get();
+      if (clientsResults.size > 0) {
+        if (byClientId == null) {
+          return false;
+        } else {
+          for (var clientDoc in clientsResults.docs) {
+            if (clientDoc.id != byClientId) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true;
+  }
+
   Future<void> submitNewClient(Client newClient) async {
-    /// Submitting new Client - update DB
+    // Validate that phone number is not used by existing client
+    bool phoneAvailable =
+        await checkPhoneNumberAvailability(newClient.phone, null);
+    if (!phoneAvailable) {
+      throw PhoneNumberUsedException();
+    }
     CollectionReference clientsColl = _fs.collection(clientsCollection);
+
+    /// Submitting new Client - update DB
     clientsColl.add(newClient.toJson());
   }
 
@@ -105,6 +142,13 @@ class ClientsMgr extends ChangeNotifier {
   }
 
   Future<void> updateClient(Client updatedClient) async {
+    /// Validate that phone number is not used by another client
+    bool phoneAvailable = await checkPhoneNumberAvailability(
+        updatedClient.phone, updatedClient.id);
+    if (!phoneAvailable) {
+      throw PhoneNumberUsedException();
+    }
+
     /// Update existing Client - update DB
     CollectionReference clientsColl = _fs.collection(clientsCollection);
     var data = updatedClient.toJson();
