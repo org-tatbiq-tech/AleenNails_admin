@@ -40,23 +40,47 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   bool isCheckoutScreen = false;
   @override
   Widget build(BuildContext context) {
-    cancelAppointmentVisibility() {
+    isEditAppointment() {
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
-      if (!appointmentsMgr.isSelectedAppointmentLoaded) {
-        return false;
-      }
       Appointment appointment = appointmentsMgr.selectedAppointment;
-      if (appointment.status == AppointmentStatus.cancelled) {
-        return false;
+      if (appointment.status == AppointmentStatus.confirmed) {
+        return true;
       }
-      if (appointment.paymentStatus == PaymentStatus.paid) {
-        return false;
+      if (appointment.status == AppointmentStatus.waiting) {
+        return true;
       }
-      if (appointment.status == AppointmentStatus.noShow) {
-        return false;
+      return false;
+    }
+
+    isCancelAppointmentVisible(Appointment appointment) {
+      if (appointment.status == AppointmentStatus.confirmed) {
+        return true;
       }
-      return true;
+      return false;
+    }
+
+    bool isNoShowVisible(Appointment appointment) {
+      if (appointment.date.isBefore(DateTime.now()) &&
+          appointment.status == AppointmentStatus.confirmed) {
+        return true;
+      }
+      return false;
+    }
+
+    bool isCheckoutVisible(Appointment appointment) {
+      if (appointment.status == AppointmentStatus.confirmed) {
+        return true;
+      }
+      return false;
+    }
+
+    bool isDeclineVisible(Appointment appointment) {
+      if (appointment.date.isBefore(DateTime.now()) &&
+          appointment.status == AppointmentStatus.waiting) {
+        return true;
+      }
+      return false;
     }
 
     editAppointmentAction() {
@@ -95,22 +119,6 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         return CachedNetworkImageProvider(imageUrl);
       }
       return null;
-    }
-
-    bool isNoShowVisible(Appointment appointment) {
-      if (appointment.date.isAfter(DateTime.now())) {
-        return false;
-      }
-      if (appointment.status == AppointmentStatus.cancelled) {
-        return false;
-      }
-      if (appointment.status == AppointmentStatus.noShow) {
-        return false;
-      }
-      if (appointment.paymentStatus == PaymentStatus.paid) {
-        return false;
-      }
-      return true;
     }
 
     cancelAppointmentClicked(Appointment appointment) {
@@ -159,19 +167,141 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
       appointment.status = AppointmentStatus.noShow;
-      appointmentsMgr.updateAppointment(appointment).then((value) => {
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successTitle:
-                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-              successBody: Languages.of(context)!
-                  .appointmentUpdatedSuccessfullyBody
-                  .toCapitalized(),
-            ),
-            Navigator.pop(context),
-          });
+      appointmentsMgr.updateAppointment(appointment).then(
+            (value) => {
+              Navigator.pop(context),
+              showSuccessFlash(
+                context: context,
+                successColor: successPrimaryColor,
+                successTitle: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successBody: Languages.of(context)!
+                    .appointmentUpdatedSuccessfullyBody
+                    .toCapitalized(),
+              ),
+              Navigator.pop(context),
+            },
+          );
+    }
+
+    confirmDecline(Appointment appointment) {
+      showLoaderDialog(context);
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointment.status = AppointmentStatus.declined;
+      appointmentsMgr.updateAppointment(appointment).then(
+            (value) => {
+              Navigator.pop(context),
+              showSuccessFlash(
+                context: context,
+                successColor: successPrimaryColor,
+                successTitle: Languages.of(context)!
+                    .flashMessageSuccessTitle
+                    .toTitleCase(),
+                successBody: Languages.of(context)!
+                    .appointmentUpdatedSuccessfullyBody
+                    .toCapitalized(),
+              ),
+              Navigator.pop(context),
+            },
+          );
+    }
+
+    noShowAppointment(Appointment appointment) {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: Languages.of(context)!.noShowLabel.toUpperCase(),
+          primaryAction: () => {confirmNoShow(appointment)},
+          secondaryButtonText: Languages.of(context)!.backLabel.toUpperCase(),
+          deleteCancelModal: true,
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/cancel.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: rSize(80),
+                  contentPadding: rSize(20),
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                Languages.of(context)!
+                    .cancelThisAppointmentLabel
+                    .toCapitalized(),
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    declineAppointment(Appointment appointment) {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: 'Decline',
+          primaryAction: () => {confirmDecline(appointment)},
+          secondaryButtonText: Languages.of(context)!.backLabel.toUpperCase(),
+          deleteCancelModal: true,
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/cancel.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: rSize(80),
+                  contentPadding: rSize(20),
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                Languages.of(context)!
+                    .cancelThisAppointmentLabel
+                    .toCapitalized(),
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                Languages.of(context)!.actionUndoneLabel.toCapitalized(),
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
     cancelAppointment(Appointment appointment) {
@@ -337,7 +467,33 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             Expanded(
               child: CustomButton(
                 customButtonProps: CustomButtonProps(
-                  onTap: () => confirmNoShow(appointment),
+                  onTap: () => noShowAppointment(appointment),
+                  text: Languages.of(context)!.noShowLabel.toUpperCase(),
+                  isPrimary: true,
+                  isSecondary: false,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  textColor: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+    renderDecline(Appointment appointment) {
+      return FadeAnimation(
+        positionType: PositionType.top,
+        delay: 1.2,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: CustomButton(
+                customButtonProps: CustomButtonProps(
+                  onTap: () => declineAppointment(appointment),
                   text: Languages.of(context)!.noShowLabel.toUpperCase(),
                   isPrimary: true,
                   isSecondary: false,
@@ -407,7 +563,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Visibility(
-                      visible: cancelAppointmentVisibility(),
+                      visible: isCancelAppointmentVisible(appointment),
                       child: Row(
                         children: [
                           CustomIcon(
@@ -444,7 +600,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       ),
                     ),
                     Visibility(
-                      visible: cancelAppointmentVisibility(),
+                      visible: isCheckoutVisible(appointment),
                       child: Expanded(
                         child: Row(
                           children: [
@@ -746,7 +902,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           withBack: true,
           barHeight: 110,
           withClipPath: true,
-          customIcon: cancelAppointmentVisibility()
+          customIcon: isEditAppointment()
               ? Icon(
                   Icons.edit,
                   size: rSize(24),
@@ -828,7 +984,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: rSize(30),
+                          height: rSize(20),
                         ),
                         FadeAnimation(
                           positionType: PositionType.right,
@@ -838,7 +994,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                           ),
                         ),
                         SizedBox(
-                          height: rSize(40),
+                          height: rSize(15),
                         ),
                         Expanded(
                           child: renderServices(
@@ -867,6 +1023,14 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                             appointmentsMgr.selectedAppointment,
                           ),
                           child: renderNoShow(
+                            appointmentsMgr.selectedAppointment,
+                          ),
+                        ),
+                        Visibility(
+                          visible: isDeclineVisible(
+                            appointmentsMgr.selectedAppointment,
+                          ),
+                          child: renderDecline(
                             appointmentsMgr.selectedAppointment,
                           ),
                         ),
