@@ -1015,8 +1015,14 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                         renderFooter(
                           appointmentsMgr.selectedAppointment,
                         ),
-                        SizedBox(
-                          height: rSize(15),
+                        Visibility(
+                          visible: isNoShowVisible(
+                                  appointmentsMgr.selectedAppointment) ||
+                              isDeclineVisible(
+                                  appointmentsMgr.selectedAppointment),
+                          child: SizedBox(
+                            height: rSize(15),
+                          ),
                         ),
                         Visibility(
                           visible: isNoShowVisible(
@@ -1032,6 +1038,12 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                           ),
                           child: renderDecline(
                             appointmentsMgr.selectedAppointment,
+                          ),
+                        ),
+                        Visibility(
+                          visible: isAndroid() || !isDeviceHasNotch(),
+                          child: SizedBox(
+                            height: rSize(15),
                           ),
                         ),
                       ],

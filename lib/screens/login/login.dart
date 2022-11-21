@@ -221,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen>
                               size: rSize(20),
                             ),
                           ),
-                          validator: emptyValidation,
+                          validator: passwordValidation,
                         ),
                       ),
                       SizedBox(

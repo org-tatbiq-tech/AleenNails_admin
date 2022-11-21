@@ -23,36 +23,18 @@ class DiscountSelection extends StatefulWidget {
 
 class _DiscountSelectionState extends State<DiscountSelection> {
   final TextEditingController _discountController = TextEditingController();
-  final FocusNode _focus = FocusNode();
   late double xAlign;
   @override
   void initState() {
     super.initState();
     xAlign = -1;
     _discountController.addListener(() => setState(() {}));
-    _focus.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
     super.dispose();
     _discountController.dispose();
-    _focus.removeListener(_onFocusChange);
-    _focus.dispose();
-  }
-
-  void _onFocusChange() {
-    final appointmentsMgr =
-        Provider.of<AppointmentsMgr>(context, listen: false);
-    if (_focus.hasFocus) {
-      _discountController.selection = TextSelection(
-        baseOffset: 0,
-        extentOffset: _discountController.text.length,
-      );
-    } else {
-      appointmentsMgr.selectedAppointment.discount =
-          double.parse(_discountController.text);
-    }
   }
 
   @override
@@ -123,7 +105,6 @@ class _DiscountSelectionState extends State<DiscountSelection> {
               CustomInputField(
                 customInputFieldProps: CustomInputFieldProps(
                   controller: _discountController,
-                  focusNode: _focus,
                   autoFocus: true,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(xAlign == 1

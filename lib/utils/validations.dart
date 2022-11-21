@@ -1,11 +1,14 @@
-emptyValidation(String value) {
+import 'package:appointments/localization/language/languages.dart';
+import 'package:flutter/material.dart';
+
+emptyValidation(String value, BuildContext context) {
   if (value.isEmpty) {
     return 'Field can not be empty!.';
   }
   return null;
 }
 
-mobileValidation(String mobile) {
+mobileValidation(String mobile, BuildContext context) {
   if (mobile.isEmpty) {
     return 'Mobile can not be empty!.';
   }
@@ -15,9 +18,9 @@ mobileValidation(String mobile) {
   return null;
 }
 
-emailValidation(String email) {
+emailValidation(String email, BuildContext context) {
   if (email.isEmpty) {
-    return 'Email can not be empty!.';
+    return Languages.of(context)!.emptyEmail;
   }
   if (!RegExp(
           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -27,9 +30,9 @@ emailValidation(String email) {
   return null;
 }
 
-passwordValidation(String password) {
+passwordValidation(String password, BuildContext context) {
   if (password.isEmpty) {
-    return 'Password can not be empty!.';
+    return Languages.of(context)!.emptyPassword;
   }
   if (password.length < 6) {
     return 'Password is too short! must be > 6.';
@@ -37,15 +40,16 @@ passwordValidation(String password) {
   return null;
 }
 
-confirmPasswordValidation(String password, String confirmPassword) {
+confirmPasswordValidation(
+    String password, String confirmPassword, BuildContext context) {
   if (confirmPassword.isEmpty) {
-    return 'Password can not be empty!.';
+    return Languages.of(context)!.emptyPassword;
   }
   if (confirmPassword.length < 6) {
     return 'Password is too short! must be > 6.';
   }
   if (confirmPassword != password) {
-    return 'Passwords do NOT match!.';
+    return Languages.of(context)!.passwordMismatch;
   }
   return null;
 }
