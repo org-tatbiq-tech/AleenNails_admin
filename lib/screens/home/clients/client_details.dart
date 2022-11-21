@@ -101,7 +101,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   child: ClientAppointmentCard(
                     clientAppointmentCardProps: ClientAppointmentCardProps(
                       enabled: true,
-                      withNavigation: false,
+                      withNavigation: true,
                       clientAppointmentDetails: clientsMgr
                           .selectedClient.appointments
                           .toList()[index],
@@ -596,7 +596,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     child: renderBirthday(clientsMgr.selectedClient),
                   ),
                   SizedBox(
-                    height: rSize(24),
+                    height: rSize(15),
                   ),
                   FadeAnimation(
                     positionType: PositionType.right,
@@ -604,7 +604,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     child: renderLastVisit(clientsMgr.selectedClient),
                   ),
                   SizedBox(
-                    height: rSize(24),
+                    height: rSize(15),
                   ),
                   FadeAnimation(
                     positionType: PositionType.right,
@@ -612,7 +612,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     child: renderTotalRevenue(clientsMgr.selectedClient),
                   ),
                   SizedBox(
-                    height: rSize(24),
+                    height: rSize(15),
                   ),
                   FadeAnimation(
                     positionType: PositionType.right,
@@ -620,7 +620,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     child: renderNotes(clientsMgr.selectedClient),
                   ),
                   SizedBox(
-                    height: rSize(40),
+                    height: rSize(20),
                   ),
                   renderAppointments(),
                 ],

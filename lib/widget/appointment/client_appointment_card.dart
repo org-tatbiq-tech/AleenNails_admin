@@ -2,6 +2,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/widget/appointment/appointment_status.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -81,27 +82,45 @@ class ClientAppointmentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  getStringPrice(
-                    clientAppointmentCardProps
-                        .clientAppointmentDetails.totalCost,
-                  ),
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontSize: rSize(14),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    AppointmentStatusComp(
+                      customStatusProps: CustomStatusProps(
+                        appointmentStatus: clientAppointmentCardProps
+                            .clientAppointmentDetails.status,
+                        fontSize: 10,
                       ),
+                    ),
+                    SizedBox(
+                      height: rSize(5),
+                    ),
+                    Text(
+                      getStringPrice(
+                        clientAppointmentCardProps
+                            .clientAppointmentDetails.totalCost,
+                      ),
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontSize: rSize(14),
+                          ),
+                    )
+                  ],
                 ),
                 SizedBox(
                   width: rSize(5),
                 ),
-                clientAppointmentCardProps.withNavigation
-                    ? IconTheme(
-                        data: Theme.of(context).primaryIconTheme,
-                        child: Icon(
-                          Icons.chevron_right,
-                          size: rSize(25),
-                        ),
-                      )
-                    : const SizedBox(),
+                Visibility(
+                  visible: clientAppointmentCardProps.withNavigation,
+                  child: IconTheme(
+                    data: Theme.of(context).primaryIconTheme,
+                    child: Icon(
+                      Icons.chevron_right,
+                      size: rSize(25),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
