@@ -1,4 +1,4 @@
-import 'package:common_widgets/custom_button_widget.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +14,13 @@ void showColorPicker({
       centerTitle: true,
       isDismissible: false,
       footerButton: ModalFooter.both,
-      primaryButtonText: 'Save',
-      secondaryButtonText: 'Cancel',
+      primaryButtonText: Languages.of(colorPickerProps.context)!.saveLabel,
+      secondaryButtonText: Languages.of(colorPickerProps.context)!.cancelLabel,
       primaryAction: colorPickerProps.primaryAction,
       child: ColorPicker(
         displayThumbColor: true,
         hexInputBar: false,
-        pickerAreaBorderRadius: BorderRadius.circular(rSize(0)),
+        pickerAreaBorderRadius: BorderRadius.circular(rSize(10)),
         pickerAreaHeightPercent: 1,
         pickerColor: colorPickerProps.pickerColor,
         onColorChanged: colorPickerProps.onColorChanged,

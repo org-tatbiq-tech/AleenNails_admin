@@ -54,7 +54,7 @@ confirmPasswordValidation(
   return null;
 }
 
-validateUrl(String url) {
+validateUrl(String url, BuildContext context) {
   if (url.isEmpty) {
     return null;
   }
@@ -67,7 +67,7 @@ validateUrl(String url) {
   return null;
 }
 
-priceValidation(String price) {
+priceValidation(String price, BuildContext context) {
   String pattern = r'^\d{0,8}(\.\d{1,4})?$';
   RegExp regExp = RegExp(pattern);
   if (price.isEmpty) {

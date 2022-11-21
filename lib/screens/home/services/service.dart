@@ -24,6 +24,7 @@ import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:uuid/uuid.dart';
@@ -51,7 +52,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   bool onlineBooking = true;
   bool _isLoading = false;
   bool isSaveDisabled = true;
-
+  bool autoValidate = false;
   List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
   List<int> minutesData = [0, 15, 30, 45];
 
@@ -214,7 +215,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       for (var servicePhoto in mediaList.entries) {
         widgetList.add(
           Padding(
-            padding: EdgeInsets.only(left: rSize(10)),
+            padding: EdgeInsets.only(
+              left: isRtl(context) ? 0 : rSize(15),
+              right: isRtl(context) ? rSize(15) : 0,
+            ),
             child: EaseInAnimation(
               beginAnimation: 0.98,
               onTap: () => {
@@ -239,64 +243,65 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       }
       widgetList.insert(
         0,
-        EaseInAnimation(
-          onTap: () => {
-            showImagePickerModal(
-                imagePickerModalProps: ImagePickerModalProps(
-              context: context,
-              cancelText: Languages.of(context)!.cancelLabel.toTitleCase(),
-              deleteText: Languages.of(context)!.deleteLabel.toTitleCase(),
-              takePhotoText:
-                  Languages.of(context)!.takePhotoLabel.toTitleCase(),
-              libraryText:
-                  Languages.of(context)!.chooseFromLibraryLabel.toTitleCase(),
-              isCircleCropStyle: false,
-              saveImage: (File imageFile) {
-                setState(() {
-                  mediaList[const Uuid().v4()] = imageFile;
-                  mediaListToUpload[const Uuid().v4()] = imageFile;
-                  isSaveDisabled = false;
-                });
-              },
-            ))
-          },
-          beginAnimation: 0.98,
-          child: DottedBorder(
-            color: Theme.of(context).colorScheme.primaryContainer,
-            borderType: BorderType.RRect,
-            dashPattern: [rSize(6), rSize(4)],
-            strokeWidth: rSize(1),
-            radius: Radius.circular(
-              rSize(10),
-            ),
-            child: SizedBox(
-              width: rSize(100),
-              height: rSize(100),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  CustomIcon(
-                    customIconProps: CustomIconProps(
-                      icon: null,
-                      backgroundColor: Colors.transparent,
-                      path: 'assets/icons/camera.png',
-                      iconColor: Theme.of(context).colorScheme.primary,
-                      containerSize: 40,
-                    ),
+        DottedBorder(
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderType: BorderType.RRect,
+          dashPattern: [rSize(6), rSize(4)],
+          strokeWidth: rSize(1),
+          radius: Radius.circular(
+            rSize(10),
+          ),
+          child: SizedBox(
+            width: rSize(100),
+            height: rSize(100),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                CustomIcon(
+                  customIconProps: CustomIconProps(
+                    isDisabled: false,
+                    onTap: () => {
+                      showImagePickerModal(
+                          imagePickerModalProps: ImagePickerModalProps(
+                        context: context,
+                        cancelText:
+                            Languages.of(context)!.cancelLabel.toTitleCase(),
+                        deleteText:
+                            Languages.of(context)!.deleteLabel.toTitleCase(),
+                        takePhotoText:
+                            Languages.of(context)!.takePhotoLabel.toTitleCase(),
+                        libraryText: Languages.of(context)!
+                            .chooseFromLibraryLabel
+                            .toTitleCase(),
+                        isCircleCropStyle: false,
+                        saveImage: (File imageFile) {
+                          setState(() {
+                            mediaList[const Uuid().v4()] = imageFile;
+                            mediaListToUpload[const Uuid().v4()] = imageFile;
+                            isSaveDisabled = false;
+                          });
+                        },
+                      ))
+                    },
+                    icon: null,
+                    backgroundColor: Colors.transparent,
+                    path: 'assets/icons/camera.png',
+                    iconColor: Theme.of(context).colorScheme.primary,
+                    containerSize: 40,
                   ),
-                  SizedBox(
-                    height: rSize(2),
-                  ),
-                  Text(
-                    Languages.of(context)!.addMediaLabel.toTitleCase(),
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                          fontSize: rSize(12),
-                        ),
-                  )
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: rSize(2),
+                ),
+                Text(
+                  Languages.of(context)!.addMediaLabel.toTitleCase(),
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        fontSize: rSize(12),
+                      ),
+                )
+              ],
             ),
           ),
         ),
@@ -382,33 +387,32 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  EaseInAnimation(
-                    onTap: () => {
-                      showBottomModal(
-                        bottomModalProps: BottomModalProps(
-                          context: context,
-                          enableDrag: true,
-                          centerTitle: true,
-                          title: Languages.of(context)!
-                              .clientBookPermissionLabel
-                              .toTitleCase(),
-                          child: Text(
-                            Languages.of(context)!
-                                .clientBookPermissionModalBody
-                                .toCapitalized(),
-                            style: Theme.of(context).textTheme.bodyText1,
+                  CustomIcon(
+                    customIconProps: CustomIconProps(
+                      isDisabled: false,
+                      onTap: () => {
+                        showBottomModal(
+                          bottomModalProps: BottomModalProps(
+                            context: context,
+                            enableDrag: true,
+                            centerTitle: true,
+                            title: Languages.of(context)!
+                                .clientBookPermissionLabel
+                                .toTitleCase(),
+                            child: Text(
+                              Languages.of(context)!
+                                  .clientBookPermissionModalBody
+                                  .toCapitalized(),
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                           ),
-                        ),
-                      )
-                    },
-                    child: CustomIcon(
-                      customIconProps: CustomIconProps(
-                        icon: null,
-                        path: 'assets/icons/question.png',
-                        containerSize: 25,
-                        backgroundColor: Colors.transparent,
-                        iconColor: Theme.of(context).colorScheme.primary,
-                      ),
+                        )
+                      },
+                      icon: null,
+                      path: 'assets/icons/question.png',
+                      containerSize: 25,
+                      backgroundColor: Colors.transparent,
+                      iconColor: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   SizedBox(
@@ -521,46 +525,45 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  bottom: rSize(5),
-                  left: rSize(10),
-                  right: rSize(10),
-                ),
-                child: Text(
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: rSize(5),
+              left: rSize(10),
+              right: rSize(10),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
                   Languages.of(context)!.messageToClientLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
-              ),
-              EaseInAnimation(
-                onTap: () => {
-                  showBottomModal(
-                    bottomModalProps: BottomModalProps(
-                      context: context,
-                      enableDrag: true,
-                      // showDragPen: true,
-                      centerTitle: true,
-                      title: Languages.of(context)!
-                          .messageToClientLabel
-                          .toTitleCase(),
-                      child: Text(
-                        Languages.of(context)!
-                            .messageToClientModalBody
-                            .toCapitalized(),
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ),
-                  )
-                },
-                child: CustomIcon(
+                CustomIcon(
                   customIconProps: CustomIconProps(
+                    isDisabled: false,
+                    onTap: () => {
+                      showBottomModal(
+                        bottomModalProps: BottomModalProps(
+                          context: context,
+                          enableDrag: true,
+                          // showDragPen: true,
+                          centerTitle: true,
+                          title: Languages.of(context)!
+                              .messageToClientLabel
+                              .toTitleCase(),
+                          child: Text(
+                            Languages.of(context)!
+                                .messageToClientModalBody
+                                .toCapitalized(),
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                      )
+                    },
                     icon: null,
                     path: 'assets/icons/question.png',
                     containerSize: 25,
@@ -568,8 +571,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                     iconColor: Theme.of(context).colorScheme.primary,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(
             height: rSize(5),
@@ -688,7 +691,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                   CustomInputField(
                     customInputFieldProps: CustomInputFieldProps(
                       controller: _priceController,
-                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(5),
+                      ],
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
                       isCurrency: true,
                       validator: priceValidation,
                     ),
@@ -796,6 +803,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
     saveService() async {
       final form = _formKey.currentState;
+      setState(() {
+        autoValidate = true;
+      });
       if (form!.validate()) {
         showLoaderDialog(context);
         final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
@@ -885,6 +895,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           ),
           child: Form(
             key: _formKey,
+            autovalidateMode:
+                autoValidate ? AutovalidateMode.onUserInteraction : null,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
