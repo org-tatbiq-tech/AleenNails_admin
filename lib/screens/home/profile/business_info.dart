@@ -126,7 +126,6 @@ class BusinessInfoState extends State<BusinessInfo> {
               controller: _facebookController,
               hintText: Languages.of(context)!.facebookLabel.toTitleCase(),
               keyboardType: TextInputType.text,
-              validator: validateUrl,
               prefixIcon: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +168,6 @@ class BusinessInfoState extends State<BusinessInfo> {
               controller: _instagramController,
               hintText: Languages.of(context)!.instagramLabel.toTitleCase(),
               keyboardType: TextInputType.text,
-              validator: validateUrl,
               prefixIcon: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,

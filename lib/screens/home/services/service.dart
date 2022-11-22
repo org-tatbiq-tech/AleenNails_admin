@@ -611,8 +611,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           ),
           SingleChildScrollView(
             padding: EdgeInsets.only(
-              // horizontal: rSize(20),
-              top: rSize(15),
+              left: rSize(5),
+              right: rSize(5),
+              top: rSize(10),
+              bottom: rSize(10),
             ),
             scrollDirection: Axis.horizontal,
             child: Visibility(

@@ -1,13 +1,11 @@
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
-
-import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
-
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/wheel_picker_modal.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BookingsSettings extends StatefulWidget {
   const BookingsSettings({Key? key}) : super(key: key);
@@ -17,7 +15,7 @@ class BookingsSettings extends StatefulWidget {
 }
 
 class _BookingsSettingsState extends State<BookingsSettings> {
-  bool isEnabled = false;
+  bool isEnabled = true;
 
   int selectedBookingWindowPicker = 0;
   int selectedFutureBookingPickerdata = 0;
@@ -327,20 +325,18 @@ class _BookingsSettingsState extends State<BookingsSettings> {
     return Scaffold(
       appBar: CustomAppBar(
         customAppBarProps: CustomAppBarProps(
-            titleText: 'Booking Settings',
-            withBack: true,
-            barHeight: 110,
-            withClipPath: true,
-            customIconTap: () => {getSettingInfo()},
-            customIcon: CustomIcon(
-              customIconProps: CustomIconProps(
-                icon: null,
-                path: 'assets/icons/question.png',
-                iconColor: Theme.of(context).colorScheme.primary,
-                contentPadding: rSize(8),
-                withPadding: true,
-              ),
-            )),
+          titleText: 'Booking Settings',
+          withBack: true,
+          barHeight: 110,
+          withClipPath: true,
+          customIconTap: () => {
+            getSettingInfo(),
+          },
+          customIcon: Icon(
+            FontAwesomeIcons.circleQuestion,
+            size: rSize(25),
+          ),
+        ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
