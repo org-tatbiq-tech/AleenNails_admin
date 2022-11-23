@@ -88,7 +88,7 @@ class AppointmentsMgr extends ChangeNotifier {
     CollectionReference clientsAppointments = _fs
         .collection(clientsCollection)
         .doc(newAppointment.clientDocID)
-        .collection(clientsAppointmentsCollection);
+        .collection(clientAppointmentsCollection);
     appointmentsColl.add(newAppointment.toJson()).then((docRef) => {
           /// Update client's appointments collections
           newAppointment.id = docRef.id,
