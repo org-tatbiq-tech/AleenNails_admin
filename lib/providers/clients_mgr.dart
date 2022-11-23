@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 
 ///*************************** Naming **********************************///
 const clientsCollection = 'clients';
-const clientsAppointmentsCollection = 'clients_appointments';
+const clientAppointmentsCollection = 'client_appointments';
 const clientStorageDir = 'clients';
 
 class PhoneNumberUsedException implements Exception {}
@@ -129,7 +129,7 @@ class ClientsMgr extends ChangeNotifier {
     Query<Map<String, dynamic>> query = _fs
         .collection(clientsCollection)
         .doc(clientID)
-        .collection(clientsAppointmentsCollection);
+        .collection(clientAppointmentsCollection);
     query = query.where('startTime', isGreaterThanOrEqualTo: DateTime.now());
     List<ClientAppointment> appointments = [];
     QuerySnapshot querySnapshot = await query.get();
