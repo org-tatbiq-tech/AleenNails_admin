@@ -288,7 +288,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
         showLoaderDialog(context);
         File? imagePath = await compressImageNative(
           path: _imageFile!.absolute.path,
-          quality: 50,
+          quality: 80,
           targetWidth: 1000,
           targetHeight: (1000 * 9 / 16).round(),
         );

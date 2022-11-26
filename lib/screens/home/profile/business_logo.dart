@@ -15,6 +15,7 @@ import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,8 +42,14 @@ class _BusinessLogoState extends State<BusinessLogo> {
   Widget build(BuildContext context) {
     saveImage() async {
       if (_imageFile != null) {
+        File? imagePath = await compressImageNative(
+          path: _imageFile!.absolute.path,
+          quality: 80,
+          targetWidth: 1000,
+          targetHeight: 1000,
+        );
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-        await settingsMgr.uploadLogoImage(_imageFile!);
+        await settingsMgr.uploadLogoImage(imagePath!);
       }
     }
 
