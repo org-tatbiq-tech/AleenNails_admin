@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:appointments/data_types/components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -61,35 +60,6 @@ class ClientsMgr extends ChangeNotifier {
         notifyListeners();
       },
     );
-  }
-
-  Future<String> uploadClientImage(
-      File image, String newPath, String oldPath) async {
-    String refPath = '${newPath}_600x600.png';
-    newPath = '$newPath.png';
-
-    Reference ref = _fst.ref(clientStorageDir).child(newPath);
-    TaskSnapshot taskSnapshot = await ref.putFile(image);
-    final imageMetaData = SettableMetadata(
-      customMetadata: {
-        "location": "Yosemite, CA, USA",
-        "activity": "Hiking",
-      },
-    );
-    Reference resizedRef = _fst.ref(clientStorageDir).child(refPath);
-    final refStr = await resizedRef.getDownloadURL();
-
-    if (oldPath.isNotEmpty) {
-      // Delete old file
-      Reference oldImageRef = _fst.ref(clientStorageDir).child(oldPath);
-      oldImageRef.delete(); // no need await for it.
-    }
-    return refStr;
-  }
-
-  Future<void> deleteClientImage(String path) async {
-    Reference ref = _fst.ref(clientStorageDir).child('${path}_600x600.png');
-    await ref.delete();
   }
 
   Future<bool> checkPhoneNumberAvailability(

@@ -33,7 +33,8 @@ class Service {
   String? noteMessage; // Service notification message
   bool onlineBooking; // Whether this service allows online booking or not
   int? priority;
-  List<String>? images; // List of firebase storage image id
+  Map<String, String>?
+      imagesURL; // Map of firebase storage image path to image URL
 
   Service({
     required this.id,
@@ -47,10 +48,10 @@ class Service {
     this.priority,
     images,
   }) {
-    this.images = [];
+    imagesURL = {};
     if (images != null) {
-      for (var image in images) {
-        this.images!.add(image);
+      for (MapEntry imageEntry in images.entries) {
+        imagesURL![imageEntry.key] = imageEntry.value;
       }
     }
   }
@@ -65,7 +66,7 @@ class Service {
       'noteMessage': noteMessage,
       'onlineBooking': onlineBooking,
       'priority': priority,
-      'images': images,
+      'images': imagesURL,
     };
   }
 
@@ -450,7 +451,7 @@ class Client {
           : null,
       discount: doc['discount'],
       isTrusted: doc['isTrusted'],
-      imagePath: doc['imagePath'],
+      imagePath: doc['imagePath'] ?? '',
       imageURL: doc['imageURL'] ?? '',
       appointments: doc['appointments'] == null
           ? []

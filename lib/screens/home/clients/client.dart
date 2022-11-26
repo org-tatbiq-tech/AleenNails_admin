@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
@@ -26,7 +24,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 class ClientWidget extends StatefulWidget {
   final Client? client;
@@ -47,10 +44,8 @@ class _ClientWidgetState extends State<ClientWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool trustedClient = true;
   bool autoValidate = false;
-  File? _imageFile;
   String imagePath = '';
   String imageURL = '';
-  bool _isImageFileChanged = false;
   bool isSaveDisabled = true;
 
   DateTime? birthdayDate;
@@ -479,8 +474,6 @@ class _ClientWidgetState extends State<ClientWidget> {
     ImageProvider<Object>? getBackgroundImage() {
       if (imageURL.isNotEmpty) {
         return CachedNetworkImageProvider(imageURL);
-      } else if (_imageFile != null) {
-        return FileImage(_imageFile!);
       }
       return null;
     }
@@ -537,18 +530,6 @@ class _ClientWidgetState extends State<ClientWidget> {
         showLoaderDialog(context);
         final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
         String clientID = widget.client == null ? '' : widget.client!.id;
-        if (_imageFile != null && _isImageFileChanged) {
-          if (imagePath.isEmpty) {
-            imagePath = const Uuid().v4();
-            imageURL =
-                await clientMgr.uploadClientImage(_imageFile!, imagePath, '');
-          } else {
-            String oldImagePath = imagePath;
-            imagePath = const Uuid().v4();
-            imageURL = await clientMgr.uploadClientImage(
-                _imageFile!, imagePath, oldImagePath);
-          }
-        }
 
         Client client = Client(
           id: clientID,
@@ -569,7 +550,6 @@ class _ClientWidgetState extends State<ClientWidget> {
         if (widget.client == null) {
           try {
             await clientMgr.submitNewClient(client);
-            Navigator.pop(context);
             showSuccessFlash(
               context: context,
               successTitle:
