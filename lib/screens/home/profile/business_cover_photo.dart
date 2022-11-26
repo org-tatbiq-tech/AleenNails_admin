@@ -29,22 +29,12 @@ class BusinessCoverPhoto extends StatefulWidget {
 
 class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   File? _imageFile;
-  String imageUrl = '';
   bool _isLoading = true;
   bool isSaveDisabled = true;
   @override
   void initState() {
     super.initState();
-    loadImage();
-  }
-
-  Future<void> loadImage() async {
-    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    String url = await settingsMgr.getCoverImageUrl();
-    setState(() {
-      imageUrl = url;
-      _isLoading = false;
-    });
+    _isLoading = false;
   }
 
   @override

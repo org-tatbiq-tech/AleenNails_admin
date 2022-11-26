@@ -28,22 +28,13 @@ class BusinessLogo extends StatefulWidget {
 
 class _BusinessLogoState extends State<BusinessLogo> {
   File? _imageFile;
-  String imageUrl = '';
   bool _isLoading = true;
   bool isSaveDisabled = true;
+
   @override
   void initState() {
     super.initState();
-    loadImage();
-  }
-
-  Future<void> loadImage() async {
-    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    String url = await settingsMgr.getLogoImageUrl();
-    setState(() {
-      imageUrl = url;
-      _isLoading = false;
-    });
+    _isLoading = false;
   }
 
   @override
@@ -132,10 +123,12 @@ class _BusinessLogoState extends State<BusinessLogo> {
     }
 
     Widget renderBusinessLogo() {
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       return AnimatedSwitcher(
         reverseDuration: const Duration(milliseconds: 400),
         duration: const Duration(milliseconds: 400),
-        child: _imageFile == null && imageUrl.isEmpty
+        child: _imageFile == null &&
+                settingsMgr.profileManagement.profileMedia.logoURL!.isEmpty
             ? EaseInAnimation(
                 onTap: () => {
                   showImagePickerModal(
@@ -208,7 +201,8 @@ class _BusinessLogoState extends State<BusinessLogo> {
                       image: _imageFile == null
                           ? DecorationImage(
                               fit: BoxFit.cover,
-                              image: CachedNetworkImageProvider(imageUrl),
+                              image: CachedNetworkImageProvider(settingsMgr
+                                  .profileManagement.profileMedia.logoURL!),
                             )
                           : DecorationImage(
                               fit: BoxFit.cover,

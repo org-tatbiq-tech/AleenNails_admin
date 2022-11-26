@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 /// Settings manager provider
 /// Managing and handling settings data and DB interaction
@@ -141,39 +140,22 @@ class SettingsMgr extends ChangeNotifier {
   /// LOGO
   Future<void> uploadLogoImage(File image) async {
     Reference ref = _fst.ref(profileStorageDir).child('logo.png');
-    // Firstly delete logo path, so image won't be available.
-    _fs.collection(settingsCollection).doc('profile').update(
-      {
-        'media.logoURL': FieldValue.delete(),
-        'media.logoPath': FieldValue.delete(),
-      },
-    );
-    final metaData = SettableMetadata(
-      customMetadata: {
-        'type': 'logo',
-      },
-    );
-    await ref.putFile(image, metaData);
-  }
+    await ref.putFile(image);
 
-  Future<String> getLogoImageUrl() async {
-    if (_profileManagement.profileMedia.logoURL!.isNotEmpty) {
-      return _profileManagement.profileMedia.logoURL!;
-    } else if (_profileManagement.profileMedia.logoPath!.isNotEmpty) {
-      // Logo path exist, but not URL, need to download and update
-      Reference fileRef = _fst.ref(profileStorageDir).child('logo_600x600.png');
-      final refStr = await fileRef.getDownloadURL();
-      _profileManagement.profileMedia.logoURL = refStr;
-      _fs.collection(settingsCollection).doc('profile').update(
-        {'media.logoURL': refStr},
-      );
-      return _profileManagement.profileMedia.logoURL!;
-    }
-    return '';
+    // Image file is already resized, updating path and url
+    String refURL = await ref.getDownloadURL();
+    await _fs.collection(settingsCollection).doc('profile').update(
+      {
+        'media.logoURL': refURL,
+        'media.logoPath': ref.name,
+      },
+    );
+    _profileManagement.profileMedia.logoURL = refURL;
+    notifyListeners();
   }
 
   Future<void> deleteLogoImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
+    Reference ref = _fst.ref(profileStorageDir).child('logo.png');
     // Deleting logo path and URL
     _fs.collection(settingsCollection).doc('profile').update(
       {
@@ -181,43 +163,25 @@ class SettingsMgr extends ChangeNotifier {
         'media.logoPath': FieldValue.delete()
       },
     );
-    return await ref.delete();
+    notifyListeners();
+    await ref.delete();
   }
 
   /// COVER
   Future<void> uploadCoverImage(File image) async {
     Reference ref = _fst.ref(profileStorageDir).child('cover.png');
-    _fs.collection(settingsCollection).doc('profile').update(
+    await ref.putFile(image);
+
+    // Image file is already resized, updating path and url
+    String refURL = await ref.getDownloadURL();
+    await _fs.collection(settingsCollection).doc('profile').update(
       {
-        'media.coverURL': FieldValue.delete(),
-        'media.coverPath': FieldValue.delete(),
+        'media.coverURL': refURL,
+        'media.coverPath': ref.name,
       },
     );
-
-    // Create file metadata to update proper document
-    final metaData = SettableMetadata(
-      customMetadata: {
-        'type': 'cover',
-      },
-    );
-    await ref.putFile(image, metaData);
-  }
-
-  Future<String> getCoverImageUrl() async {
-    if (_profileManagement.profileMedia.coverURL!.isNotEmpty) {
-      return _profileManagement.profileMedia.coverURL!;
-    } else if (_profileManagement.profileMedia.coverPath!.isNotEmpty) {
-      // Cover path exist, but not URL, need to download and update
-      Reference fileRef =
-          _fst.ref(profileStorageDir).child('cover_600x600.png');
-      final refStr = await fileRef.getDownloadURL();
-      _profileManagement.profileMedia.logoURL = refStr;
-      _fs.collection(settingsCollection).doc('profile').update(
-        {'media.coverURL': refStr},
-      );
-      return _profileManagement.profileMedia.logoURL!;
-    }
-    return '';
+    _profileManagement.profileMedia.coverURL = refURL;
+    notifyListeners();
   }
 
   Future<void> deleteCoverImage() async {
@@ -229,78 +193,32 @@ class SettingsMgr extends ChangeNotifier {
         'media.coverPath': FieldValue.delete()
       },
     );
-    return await ref.delete();
+    await ref.delete();
+    notifyListeners();
   }
 
   /// WP
-  Future updateResizedWPUrls(List<String> newFiles) async {
-    /// Updating profile work place images urls as individual process
-    /// List of names of new files added
+  Future<void> uploadWPImages(Map<String, File> imagesMap) async {
     Map<String, String> filesMap = {};
-    print('upadting new files');
-    print(newFiles);
-    while (true) {
-      try {
-        for (String fileName in newFiles) {
-          print('file $fileName');
-          Reference fileRef =
-              _fst.ref(profileWPStorageDir).child('${fileName}_600x600.png');
-          final refStr = await fileRef.getDownloadURL();
-          filesMap[fileRef.name] = refStr;
-        }
-        print('updated');
-        print(filesMap);
-        _fs.collection(settingsCollection).doc('profile').update(
-          {'media.wp': filesMap},
-        );
-        _profileManagement.profileMedia.wpPhotosURLsMap = filesMap;
-        break;
-      } catch (e) {
-        sleep(const Duration(seconds: 2));
-        filesMap = {};
-      }
-    }
-  }
-
-  Future<void> uploadWPImages(List<File> imageList) async {
-    var uuid = const Uuid();
-    List<String> newFiles = [];
-    for (File image in imageList) {
-      String fileName = 'WP${uuid.v4()}_image';
+    for (MapEntry imageEntry in imagesMap.entries) {
+      String fileName = 'WP${imageEntry.key}_image';
       Reference ref = _fst.ref(profileWPStorageDir).child('$fileName.png');
-      await ref.putFile(image);
-      newFiles.add(fileName);
+      await ref.putFile(imageEntry.value);
+      String imageUrl = await ref.getDownloadURL();
+      filesMap['media.wp.$fileName'] = imageUrl;
     }
-    print('updating WP');
-    updateResizedWPUrls(newFiles);
-    print('continued');
-    // compute(updateResizedWPUrls, newFiles);
-  }
-
-  Map<String, String> getWPImagesUrls() {
-    /// Return map of file name --> url
-    return _profileManagement.profileMedia.wpPhotosURLsMap!;
+    await _fs.collection(settingsCollection).doc('profile').update(filesMap);
   }
 
   Future<void> deleteWPImage(String image) async {
-    Reference ref = _fst.ref(profileWPStorageDir).child(image);
+    String fileName = 'WP${image}_image';
+    if (image.endsWith('_image')) {
+      fileName = image;
+    }
+    Reference ref = _fst.ref(profileWPStorageDir).child('$fileName.png');
+    await _fs.collection(settingsCollection).doc('profile').update({
+      'media.wp.$fileName': FieldValue.delete(),
+    });
     await ref.delete();
-    ref = _fst.ref(profileWPStorageDir);
-    // Create and save map of file name --> url
-    Map<String, String> filesMap = {};
-    var refStr = '';
-    ref.listAll().then(
-          (res) async => {
-            for (var imageRef in res.items)
-              {
-                refStr = await imageRef.getDownloadURL(),
-                filesMap[imageRef.name] = refStr,
-              },
-            _fs
-                .collection(settingsCollection)
-                .doc('profile')
-                .update({'media.wp': filesMap}),
-          },
-        );
   }
 }

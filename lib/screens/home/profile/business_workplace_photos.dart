@@ -34,9 +34,11 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   bool _isLoading = true;
   bool isSaveDisabled = true;
 
-  Future<void> loadImages(Map<String, String> images) async {
+  Future<void> loadImages() async {
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     Map<String, File> imagesMap = {};
-    for (var workPlacePhoto in images.entries) {
+    for (var workPlacePhoto in settingsMgr
+        .profileManagement.profileMedia.wpPhotosURLsMap!.entries) {
       imagesMap[workPlacePhoto.key] = await fileFromImageUrl(
         workPlacePhoto.key,
         workPlacePhoto.value,
@@ -51,30 +53,25 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   @override
   void initState() {
     super.initState();
-    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    var res = settingsMgr.getWPImagesUrls();
-    _isLoading = true;
-    loadImages(res);
+    loadImages();
   }
 
   @override
   Widget build(BuildContext context) {
-    saveWorkplacePhotos() {
+    saveWorkplacePhotos() async {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       if (mediaListToUpload.isNotEmpty) {
         showLoaderDialog(context);
-        settingsMgr.uploadWPImages(mediaListToUpload.values.toList()).then(
-              (value) => showSuccessFlash(
-                context: context,
-                successColor: successPrimaryColor,
-                successTitle: Languages.of(context)!
-                    .flashMessageSuccessTitle
-                    .toTitleCase(),
-                successBody: Languages.of(context)!
-                    .wpPhotoUploadedSuccessfullyBody
-                    .toCapitalized(),
-              ),
-            );
+        await settingsMgr.uploadWPImages(mediaListToUpload);
+        showSuccessFlash(
+          context: context,
+          successColor: successPrimaryColor,
+          successTitle:
+              Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+          successBody: Languages.of(context)!
+              .wpPhotoUploadedSuccessfullyBody
+              .toCapitalized(),
+        );
         Navigator.pop(context);
         setState(() {
           isSaveDisabled = true;
@@ -187,8 +184,9 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                   Languages.of(context)!.chooseFromLibraryLabel.toTitleCase(),
               saveImage: (File imageFile) {
                 setState(() {
-                  mediaList[const Uuid().v4()] = imageFile;
-                  mediaListToUpload[const Uuid().v4()] = imageFile;
+                  var uid = const Uuid().v4();
+                  mediaList[uid] = imageFile;
+                  mediaListToUpload[uid] = imageFile;
                   isSaveDisabled = false;
                 });
               },
