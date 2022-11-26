@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_gallery.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
@@ -29,53 +31,52 @@ class BusinessWorkplacePhotos extends StatefulWidget {
 
 class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   bool disposed = false;
-  Map<String, File> mediaList = {};
+  // Map<String, File> mediaList = {};
   Map<String, File> mediaListToUpload = {};
-  bool _isLoading = true;
-  bool isSaveDisabled = true;
+  bool _isLoading = false;
 
-  Future<void> loadImages() async {
-    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    Map<String, File> imagesMap = {};
-    for (var workPlacePhoto in settingsMgr
-        .profileManagement.profileMedia.wpPhotosURLsMap!.entries) {
-      imagesMap[workPlacePhoto.key] = await fileFromImageUrl(
-        workPlacePhoto.key,
-        workPlacePhoto.value,
-      );
-    }
-    setState(() {
-      mediaList = imagesMap;
-      _isLoading = false;
-    });
-  }
+  List<GalleryItem> mediaList = [];
 
   @override
   void initState() {
     super.initState();
-    loadImages();
   }
 
   @override
   Widget build(BuildContext context) {
-    saveWorkplacePhotos() async {
+    uploadedSuccessfully() {
+      showSuccessFlash(
+        context: context,
+        successColor: successPrimaryColor,
+        successTitle:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successBody: Languages.of(context)!
+            .wpPhotoUploadedSuccessfullyBody
+            .toCapitalized(),
+      );
+      Navigator.pop(context);
+      setState(() {
+        mediaListToUpload = {};
+      });
+    }
+
+    getResizedMediaToUpload() async {
+      Map<String, File> resizedMediaListToUpload = {};
+      for (var element in mediaListToUpload.entries) {
+        resizedMediaListToUpload[element.key] =
+            (await compressImageNative(path: element.value.absolute.path))!;
+      }
+      return resizedMediaListToUpload;
+    }
+
+    uploadWorkplacePhotos() async {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       if (mediaListToUpload.isNotEmpty) {
         showLoaderDialog(context);
-        await settingsMgr.uploadWPImages(mediaListToUpload);
-        showSuccessFlash(
-          context: context,
-          successColor: successPrimaryColor,
-          successTitle:
-              Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-          successBody: Languages.of(context)!
-              .wpPhotoUploadedSuccessfullyBody
-              .toCapitalized(),
-        );
-        Navigator.pop(context);
-        setState(() {
-          isSaveDisabled = true;
-        });
+        Map<String, File> resizedMediaListToUpload =
+            await getResizedMediaToUpload();
+        await settingsMgr.uploadWPImages(resizedMediaListToUpload);
+        uploadedSuccessfully();
       }
     }
 
@@ -84,7 +85,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
       await settingsMgr.deleteWPImage(url);
     }
 
-    removeWorkspacePhoto(String url) {
+    removeWorkspacePhoto({required String imageKey, bool isUrl = true}) {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -94,7 +95,15 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           deleteCancelModal: true,
           primaryAction: () async => {
             showLoaderDialog(context),
-            await deleteWorkspacePhoto(url),
+            if (isUrl)
+              {await deleteWorkspacePhoto(imageKey), setState(() {})}
+            else
+              {
+                setState(() {
+                  mediaListToUpload
+                      .removeWhere((key, value) => key == imageKey);
+                })
+              },
             Navigator.pop(context),
             showSuccessFlash(
               context: context,
@@ -145,13 +154,36 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
 
     List<Widget> mediaCards() {
       List<Widget> widgetList = [];
-
-      for (var workspacePhoto in mediaList.entries) {
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      for (var workspacePhoto in settingsMgr
+          .profileManagement.profileMedia.wpPhotosURLsMap!.entries) {
         widgetList.add(
           EaseInAnimation(
             beginAnimation: 0.98,
             onTap: () => {
-              removeWorkspacePhoto(workspacePhoto.key),
+              removeWorkspacePhoto(imageKey: workspacePhoto.key),
+            },
+            child: Container(
+              width: rSize(100),
+              height: rSize(100),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(rSize(10)),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: CachedNetworkImageProvider(
+                      workspacePhoto.value,
+                    ),
+                  )),
+            ),
+          ),
+        );
+      }
+      for (var workspacePhoto in mediaListToUpload.entries) {
+        widgetList.add(
+          EaseInAnimation(
+            beginAnimation: 0.98,
+            onTap: () => {
+              removeWorkspacePhoto(imageKey: workspacePhoto.key, isUrl: false),
             },
             child: Container(
               width: rSize(100),
@@ -185,9 +217,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
               saveImage: (File imageFile) {
                 setState(() {
                   var uid = const Uuid().v4();
-                  mediaList[uid] = imageFile;
                   mediaListToUpload[uid] = imageFile;
-                  isSaveDisabled = false;
                 });
               },
             ))
@@ -256,9 +286,9 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
           withClipPath: true,
           withSave: true,
           saveText: Languages.of(context)!.saveLabel,
-          withSaveDisabled: isSaveDisabled,
+          withSaveDisabled: mediaListToUpload.isEmpty,
           saveTap: () => {
-            saveWorkplacePhotos(),
+            uploadWorkplacePhotos(),
           },
         ),
       ),
