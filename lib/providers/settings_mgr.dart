@@ -125,6 +125,7 @@ class SettingsMgr extends ChangeNotifier {
 
         // schedule management doc has data to show
         _profileManagement = ProfileManagement.fromJson(snapshot.data()!);
+        print('Notigy dsadjsjadlka');
         notifyListeners();
       },
     );

@@ -50,7 +50,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   Widget build(BuildContext context) {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     deleteImage() {
-      if (imageUrl.isNotEmpty) {
+      if (settingsMgr.profileManagement.profileMedia.coverURL!.isNotEmpty) {
         showLoaderDialog(context);
         settingsMgr.deleteCoverImage().then((value) => {
               Navigator.pop(context),
@@ -125,7 +125,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
       return AnimatedSwitcher(
         reverseDuration: const Duration(milliseconds: 400),
         duration: const Duration(milliseconds: 400),
-        child: _imageFile == null && imageUrl.isEmpty
+        child: _imageFile == null &&
+                settingsMgr.profileManagement.profileMedia.coverURL!.isEmpty
             ? EaseInAnimation(
                 onTap: () => {
                   showImagePickerModal(
@@ -214,7 +215,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                       image: _imageFile == null
                           ? DecorationImage(
                               fit: BoxFit.cover,
-                              image: CachedNetworkImageProvider(imageUrl),
+                              image: CachedNetworkImageProvider(settingsMgr
+                                  .profileManagement.profileMedia.coverURL!),
                             )
                           : DecorationImage(
                               fit: BoxFit.cover,
@@ -328,25 +330,27 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(30),
-          vertical: rSize(20),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              Languages.of(context)!.coverPhotoDescription.toCapitalized(),
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            SizedBox(
-              height: rSize(80),
-            ),
-            renderBusinessCoverPhoto(),
-          ],
+      body: Consumer<SettingsMgr>(
+        builder: (context, settingsMgrMgr, _) => Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(30),
+            vertical: rSize(20),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                Languages.of(context)!.coverPhotoDescription.toCapitalized(),
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(80),
+              ),
+              renderBusinessCoverPhoto(),
+            ],
+          ),
         ),
       ),
     );
