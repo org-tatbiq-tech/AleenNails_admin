@@ -214,6 +214,8 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                   Languages.of(context)!.takePhotoLabel.toTitleCase(),
               libraryText:
                   Languages.of(context)!.chooseFromLibraryLabel.toTitleCase(),
+              ratioX: 100,
+              ratioY: 100,
               saveImage: (File imageFile) {
                 setState(() {
                   var uid = const Uuid().v4();

@@ -54,19 +54,17 @@ class _BusinessLogoState extends State<BusinessLogo> {
     }
 
     deleteImage() async {
-      if (_imageFile != null) {
-        final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+      if (settingsMgr.profileManagement.profileMedia.logoURL != null) {
         setState(() {
           _isLoading = true;
         });
-        await settingsMgr.deleteLogoImage().then(
-              (value) => setState(
-                (() {
-                  _imageFile = null;
-                  _isLoading = false;
-                }),
-              ),
-            );
+        await settingsMgr.deleteLogoImage();
+        setState(
+          (() {
+            _isLoading = false;
+          }),
+        );
       }
     }
 
@@ -136,64 +134,67 @@ class _BusinessLogoState extends State<BusinessLogo> {
         duration: const Duration(milliseconds: 400),
         child: _imageFile == null &&
                 settingsMgr.profileManagement.profileMedia.logoURL!.isEmpty
-            ? EaseInAnimation(
-                onTap: () => {
-                  showImagePickerModal(
-                    imagePickerModalProps: ImagePickerModalProps(
-                      context: context,
-                      cancelText:
-                          Languages.of(context)!.cancelLabel.toTitleCase(),
-                      deleteText:
-                          Languages.of(context)!.deleteLabel.toTitleCase(),
-                      takePhotoText:
-                          Languages.of(context)!.takePhotoLabel.toTitleCase(),
-                      libraryText: Languages.of(context)!
-                          .chooseFromLibraryLabel
-                          .toTitleCase(),
-                      isCircleCropStyle: true,
-                      saveImage: (File? imageFile) {
-                        setState(() {
-                          _imageFile = imageFile;
-                          isSaveDisabled = false;
-                        });
-                      },
+            ? Center(
+                child: EaseInAnimation(
+                  onTap: () => {
+                    showImagePickerModal(
+                      imagePickerModalProps: ImagePickerModalProps(
+                        context: context,
+                        cancelText:
+                            Languages.of(context)!.cancelLabel.toTitleCase(),
+                        deleteText:
+                            Languages.of(context)!.deleteLabel.toTitleCase(),
+                        takePhotoText:
+                            Languages.of(context)!.takePhotoLabel.toTitleCase(),
+                        libraryText: Languages.of(context)!
+                            .chooseFromLibraryLabel
+                            .toTitleCase(),
+                        isCircleCropStyle: true,
+                        saveImage: (File? imageFile) {
+                          setState(() {
+                            _imageFile = imageFile;
+                            isSaveDisabled = false;
+                          });
+                        },
+                      ),
+                    )
+                  },
+                  beginAnimation: 0.98,
+                  child: DottedBorder(
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.6),
+                    borderType: BorderType.Circle,
+                    dashPattern: [rSize(6), rSize(4)],
+                    strokeWidth: rSize(1),
+                    radius: Radius.circular(
+                      rSize(10),
                     ),
-                  )
-                },
-                beginAnimation: 0.98,
-                child: DottedBorder(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.6),
-                  borderType: BorderType.Circle,
-                  dashPattern: [rSize(6), rSize(4)],
-                  strokeWidth: rSize(1),
-                  radius: Radius.circular(
-                    rSize(10),
-                  ),
-                  child: SizedBox(
-                    width: rSize(160),
-                    height: rSize(160),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        CustomIcon(
-                          customIconProps: CustomIconProps(
-                            icon: null,
-                            backgroundColor: Colors.transparent,
-                            path: 'assets/icons/camera.png',
-                            iconColor: Theme.of(context).colorScheme.primary,
-                            containerSize: 70,
+                    child: SizedBox(
+                      width: rSize(160),
+                      height: rSize(160),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          CustomIcon(
+                            customIconProps: CustomIconProps(
+                              icon: null,
+                              backgroundColor: Colors.transparent,
+                              path: 'assets/icons/camera.png',
+                              iconColor: Theme.of(context).colorScheme.primary,
+                              containerSize: 70,
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: rSize(5),
-                        ),
-                        Text(
-                          Languages.of(context)!.addLogoLabel.toTitleCase(),
-                          style: Theme.of(context).textTheme.bodyText2,
-                        )
-                      ],
+                          SizedBox(
+                            height: rSize(5),
+                          ),
+                          Text(
+                            Languages.of(context)!.addLogoLabel.toTitleCase(),
+                            style: Theme.of(context).textTheme.bodyText2,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -266,6 +267,9 @@ class _BusinessLogoState extends State<BusinessLogo> {
                         ),
                         CustomButton(
                           customButtonProps: CustomButtonProps(
+                            isDisabled: settingsMgr
+                                    .profileManagement.profileMedia.logoURL ==
+                                null,
                             onTap: () => {deleteLogo()},
                             text: Languages.of(context)!
                                 .deleteLogoLabel
@@ -313,33 +317,35 @@ class _BusinessLogoState extends State<BusinessLogo> {
         ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(30),
-          vertical: rSize(20),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              children: [
-                Text(
-                  Languages.of(context)!.logoDescription.toCapitalized(),
-                  style: Theme.of(context).textTheme.bodyText2,
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        child: _isLoading
+            ? Center(
+                child: CustomLoadingIndicator(
+                  customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
                 ),
-                SizedBox(
-                  height: rSize(40),
+              )
+            : Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: rSize(30),
+                  vertical: rSize(20),
                 ),
-              ],
-            ),
-            _isLoading
-                ? CustomLoadingIndicator(
-                    customLoadingIndicatorProps: CustomLoadingIndicatorProps())
-                : renderBusinessLogo(),
-          ],
-        ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      Languages.of(context)!.logoDescription.toCapitalized(),
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    renderBusinessLogo(),
+                  ],
+                ),
+              ),
       ),
     );
   }

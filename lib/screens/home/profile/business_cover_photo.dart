@@ -7,7 +7,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
-import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
@@ -29,13 +28,7 @@ class BusinessCoverPhoto extends StatefulWidget {
 
 class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   File? _imageFile;
-  bool _isLoading = true;
   bool isSaveDisabled = true;
-  @override
-  void initState() {
-    super.initState();
-    _isLoading = false;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -159,38 +152,30 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                     child: SizedBox(
                       width: rSize(400),
                       height: rSize(225),
-                      child: Visibility(
-                        visible: !_isLoading,
-                        replacement: CustomLoadingIndicator(
-                          customLoadingIndicatorProps:
-                              CustomLoadingIndicatorProps(),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            CustomIcon(
-                              customIconProps: CustomIconProps(
-                                icon: null,
-                                backgroundColor: Colors.transparent,
-                                iconColor:
-                                    Theme.of(context).colorScheme.primary,
-                                path: 'assets/icons/camera.png',
-                                containerSize: 80,
-                              ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          CustomIcon(
+                            customIconProps: CustomIconProps(
+                              icon: null,
+                              backgroundColor: Colors.transparent,
+                              iconColor: Theme.of(context).colorScheme.primary,
+                              path: 'assets/icons/camera.png',
+                              containerSize: 80,
                             ),
-                            SizedBox(
-                              height: rSize(2),
-                            ),
-                            Text(
-                              Languages.of(context)!
-                                  .addCoverPhotoLabel
-                                  .toTitleCase(),
-                              style: Theme.of(context).textTheme.bodyText2,
-                            )
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: rSize(2),
+                          ),
+                          Text(
+                            Languages.of(context)!
+                                .addCoverPhotoLabel
+                                .toTitleCase(),
+                            style: Theme.of(context).textTheme.bodyText2,
+                          )
+                        ],
                       ),
                     ),
                   ),
