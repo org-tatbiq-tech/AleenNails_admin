@@ -442,6 +442,53 @@ class LanguageEn extends Languages {
   String get resetPassEmailSentErrorBody =>
       "Reset password failed. Please try again";
 
+  // Auth Errors
+  @override
+  String get authUserNotFoundErrorTitle => "User not found!";
+  @override
+  String get authUserNotFoundErrorBody =>
+      "Requested user does not exist! please check email";
+  @override
+  String get authLoginFailedErrorTitle => "Login failed!";
+  @override
+  String get authLoginFailedErrorBody =>
+      "Could not login, please ask owners help";
+  @override
+  String get authWrongPassErrorTitle => "Wrong credentials";
+  @override
+  String get authWrongPassErrorBody => "Wrong email or password, please check";
+  @override
+  String get authAdminErrorTitle => "Not admin!";
+  @override
+  String get authAdminErrorBody => "Requested email is not register as admin";
+
+  // Validations
+  @override
+  String get validationEmptyFieldError => "Field can not be empty!";
+  @override
+  String get validationEmptyMobileError => "Mobile can not be empty!";
+  @override
+  String get validationMobileInvalidError =>
+      "Please Enter valid mobile number, 10 digits!";
+  @override
+  String get validationEmptyEmailError => "Email can not be empty!";
+  @override
+  String get validationEmailInvalidError =>
+      "Please enter valid email! example: hello@mail.com";
+  @override
+  String get validationEmptyPasswordError => "Password can not be empty!";
+  @override
+  String get validationPasswordInvalidError =>
+      "Password is too short! must be > 6";
+  @override
+  String get validationMismatchingPasswordError => "Passwords do NOT match!";
+  @override
+  String get validationURLInvalidError => "Please enter valid url!";
+  @override
+  String get validationEmptyPriceError => "Price can not be empty!";
+  @override
+  String get validationPriceInvalidError => "Please enter valid price";
+
   ///************************************************************************///
   /// ************ Profile settings ************///
   @override

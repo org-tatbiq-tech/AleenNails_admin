@@ -33,7 +33,8 @@ class Service {
   String? noteMessage; // Service notification message
   bool onlineBooking; // Whether this service allows online booking or not
   int? priority;
-  List<String>? images; // List of firebase storage image id
+  Map<String, String>?
+      imagesURL; // Map of firebase storage image path to image URL
 
   Service({
     required this.id,
@@ -47,10 +48,10 @@ class Service {
     this.priority,
     images,
   }) {
-    this.images = [];
+    imagesURL = {};
     if (images != null) {
-      for (var image in images) {
-        this.images!.add(image);
+      for (MapEntry imageEntry in images.entries) {
+        imagesURL![imageEntry.key] = imageEntry.value;
       }
     }
   }
@@ -65,7 +66,7 @@ class Service {
       'noteMessage': noteMessage,
       'onlineBooking': onlineBooking,
       'priority': priority,
-      'images': images,
+      'images': imagesURL,
     };
   }
 
@@ -140,7 +141,7 @@ class Appointment {
   String clientName; // Client full name
   String clientPhone; // Client phone number
   String clientEmail; // Client Email
-  String clientImagePath; // Client Image Url
+  String clientImageURL; // Client Image Url
   String clientDocID; // Client database ID
   DateTime creationDate; // Appointment creation date (date and time)
   DateTime date; // Appointment date (date and time)
@@ -161,7 +162,7 @@ class Appointment {
     required this.creationDate,
     required this.date,
     this.notes = '',
-    this.clientImagePath = '',
+    this.clientImageURL = '',
     this.discount = 0,
     this.discountType = DiscountType.percent,
     required this.services,
@@ -192,7 +193,7 @@ class Appointment {
       'creationDate': Timestamp.fromDate(creationDate),
       'date': Timestamp.fromDate(date),
       'notes': notes,
-      'clientImagePath': clientImagePath,
+      'clientImageURL': clientImageURL,
       'services': services.map((service) => service.toJson()).toList(),
       'paymentStatus': paymentStatus.toString(),
       'endTime': endTime,
@@ -266,7 +267,7 @@ class Appointment {
       clientEmail: doc['clientEmail'],
       creationDate: doc['creationDate'].toDate(),
       notes: doc['notes'],
-      clientImagePath: doc['clientImagePath'],
+      clientImageURL: doc['clientImageURL'],
       date: doc['date'].toDate(),
       services: loadServicesFromDoc(doc['services']),
       paymentStatus: loadPaymentStatus(doc['paymentStatus']),
@@ -366,7 +367,6 @@ class Client {
   DateTime? acceptedDate; // Birthday date
   double? discount; // general discount for client
   bool? isTrusted; // Birthday date
-  String imagePath; // Image Path in storage
   String imageURL; // Image URL for quick download
   List<ClientAppointment> appointments;
 
@@ -406,7 +406,6 @@ class Client {
     this.acceptedDate,
     this.discount,
     this.isTrusted,
-    this.imagePath = '',
     this.imageURL = '',
     this.appointments = const [],
   });
@@ -423,7 +422,6 @@ class Client {
       'acceptedDate': Timestamp.fromDate(creationDate),
       'discount': discount,
       'isTrusted': isTrusted,
-      'imagePath': imagePath,
       'imageURL': imageURL,
     };
   }
@@ -449,8 +447,7 @@ class Client {
           ? doc['birthday'].toDate()
           : null,
       discount: doc['discount'],
-      isTrusted: doc['isTrusted'],
-      imagePath: doc['imagePath'],
+      isTrusted: doc['isTrusted'] ?? true,
       imageURL: doc['imageURL'] ?? '',
       appointments: doc['appointments'] == null
           ? []

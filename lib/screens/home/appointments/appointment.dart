@@ -63,7 +63,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         phone: appointment!.clientPhone,
         address: '',
         email: '',
-        imagePath: appointment!.clientImagePath,
+        imageURL: appointment!.clientImageURL,
         creationDate: DateTime.now(),
       );
       selectedServices = appointment!.services;
@@ -79,7 +79,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         phone: widget.bookAgainAppointment!.clientPhone,
         address: '',
         email: '',
-        imagePath: widget.bookAgainAppointment!.clientImagePath,
+        imageURL: widget.bookAgainAppointment!.clientImageURL,
         creationDate: DateTime.now(),
       );
       selectedServices = widget.bookAgainAppointment!.services;
@@ -217,7 +217,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         clientDocID: selectedClient!.id,
         clientPhone: selectedClient!.phone,
         clientEmail: selectedClient!.email,
-        clientImagePath: selectedClient!.imagePath,
+        clientImageURL: selectedClient!.imageURL,
         creationDate: DateTime.now(),
         creator: AppointmentCreator
             .business, // will be used as enum AppointmentCreator

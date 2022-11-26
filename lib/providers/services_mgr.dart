@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 
 /// Services manager provider
 /// Managing and handling services data and DB interaction
@@ -62,59 +61,49 @@ class ServicesMgr extends ChangeNotifier {
     );
   }
 
-  Future<List<String>> uploadServiceImages(
-      String serviceName, List<File> imageList) async {
-    List<String> serviceImages = [];
-    var uuid = const Uuid();
-    for (File image in imageList) {
-      String photoName = '${uuid.v4()}_image.png';
-      Reference ref = _fst.ref(servicesStorageDir).child(photoName);
-      serviceImages.add(photoName.replaceAll('.png', '_600x600.png'));
-      await ref.putFile(image);
+  Future<Map<String, String>> uploadServiceImages(
+      String serviceName, Map<String, File> imagesMap) async {
+    var name = serviceName.replaceAll(' ', '_');
+    Map<String, String> serviceImages = {};
+    for (MapEntry imageEntry in imagesMap.entries) {
+      String photoName = '${imageEntry.key}.png';
+      Reference ref = _fst.ref('$servicesStorageDir/$name').child(photoName);
+      await ref.putFile(imageEntry.value);
+      String imageURL = await ref.getDownloadURL();
+      serviceImages[imageEntry.key] = imageURL;
     }
     return serviceImages;
   }
 
-  Future<Map<String, String>> getServiceImages(Service service) async {
-    /// Return map of file name --> url
-    Map<String, String> filesMap = {};
-    var refStr = 'notFound';
-    try {
-      for (String image in service.images!) {
-        Reference imageRef = _fst.ref(servicesStorageDir).child(image);
-        refStr = await imageRef.getDownloadURL();
-        filesMap[imageRef.name] = refStr;
-      }
-    } catch (error) {
-      return {};
-    }
-    return filesMap;
-  }
-
-  Future<void> deleteServiceImage(String serviceName, String image) async {
-    var name = serviceName.replaceAll(' ', '_');
-    Reference ref = _fst.ref('$servicesStorageDir/$name').child(image);
-    return await ref.delete();
-  }
-
   Future<void> submitNewService(
-      Service newService, List<File> imageList) async {
+      Service newService, Map<String, File> imagesMap) async {
     /// Submitting new service - update DB
-    List<String> serviceImages =
-        await uploadServiceImages(newService.name, imageList);
-    newService.images = serviceImages;
+    /// Images map contains new media images to upload
+    Map<String, String> serviceImages =
+        await uploadServiceImages(newService.name, imagesMap);
+    newService.imagesURL!.addAll(serviceImages);
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     var data = newService.toJson();
     data['priority'] = services.length;
-    servicesColl.add(data);
+    await servicesColl.add(data);
+  }
+
+  Future<void> deleteServiceImage(
+      String serviceID, String serviceName, String image) async {
+    var name = serviceName.replaceAll(' ', '_');
+    Reference ref = _fst.ref('$servicesStorageDir/$name').child('$image.png');
+    await ref.delete();
+    await _fs.collection(servicesCollection).doc(serviceID).update({
+      'images.$image': FieldValue.delete(),
+    });
   }
 
   Future<void> updateService(
       Service updatedService, List<File> imageList) async {
     /// Update existing service - update DB
-    List<String> serviceImages =
-        await uploadServiceImages(updatedService.name, imageList);
-    updatedService.images?.addAll(serviceImages);
+    // List<String> serviceImages =
+    //     await uploadServiceImages(updatedService.name, imageList);
+    // updatedService.imagesURL?.addAll(serviceImages);
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     var data = updatedService.toJson();
     servicesColl.doc(updatedService.id).update(data);

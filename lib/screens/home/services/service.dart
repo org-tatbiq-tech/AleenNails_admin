@@ -21,7 +21,6 @@ import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -89,35 +88,35 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       selectedColorTemp = Color(widget.service!.colorID);
 
       final serviceMgr = Provider.of<ServicesMgr>(context, listen: false);
-      try {
-        serviceMgr.getServiceImages(widget.service!).then(
-              (res) async => {
-                if (res.isEmpty)
-                  {
-                    setState(() {
-                      _isLoading = false;
-                    }),
-                  }
-                else
-                  {
-                    for (var servicePhoto in res.entries)
-                      {
-                        mediaList[servicePhoto.key] = await fileFromImageUrl(
-                          servicePhoto.key,
-                          servicePhoto.value,
-                        ),
-                      },
-                    setState(() {
-                      _isLoading = false;
-                    }),
-                  }
-              },
-            );
-      } catch (error) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
+      // try {
+      //   serviceMgr.getServiceImages(widget.service!).then(
+      //         (res) async => {
+      //           if (res.isEmpty)
+      //             {
+      //               setState(() {
+      //                 _isLoading = false;
+      //               }),
+      //             }
+      //           else
+      //             {
+      //               for (var servicePhoto in res.entries)
+      //                 {
+      //                   mediaList[servicePhoto.key] = await fileFromImageUrl(
+      //                     servicePhoto.key,
+      //                     servicePhoto.value,
+      //                   ),
+      //                 },
+      //               setState(() {
+      //                 _isLoading = false;
+      //               }),
+      //             }
+      //         },
+      //       );
+      // } catch (error) {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      // }
     }
     colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {
@@ -147,10 +146,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   Widget build(BuildContext context) {
     deleteServicePhoto(String fileName) async {
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
-      await servicesMgr.deleteServiceImage(_nameController.text, fileName);
+      // await servicesMgr.deleteServiceImage(_nameController.text, fileName);
     }
 
-    removeServicePhoto(String url) async {
+    removeServicePhoto(String imagePath) async {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -160,7 +159,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           deleteCancelModal: true,
           primaryAction: () async => {
             showLoaderDialog(context),
-            await deleteServicePhoto(url),
+            await deleteServicePhoto(imagePath),
             Navigator.pop(context),
             showSuccessFlash(
               context: context,
@@ -278,8 +277,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                         isCircleCropStyle: false,
                         saveImage: (File imageFile) {
                           setState(() {
-                            mediaList[const Uuid().v4()] = imageFile;
-                            mediaListToUpload[const Uuid().v4()] = imageFile;
+                            var uid = const Uuid().v4();
+                            mediaList[uid] = imageFile;
+                            mediaListToUpload[uid] = imageFile;
                             isSaveDisabled = false;
                           });
                         },
@@ -824,45 +824,35 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
 
         if (widget.service == null) {
-          await servicesMgr
-              .submitNewService(
-                service,
-                mediaListToUpload.values.toList(),
-              )
-              .then((value) => {
-                    Navigator.pop(context),
-                    showSuccessFlash(
-                      context: context,
-                      successTitle: Languages.of(context)!
-                          .flashMessageSuccessTitle
-                          .toTitleCase(),
-                      successBody: Languages.of(context)!
-                          .serviceCreatedSuccessfullyBody
-                          .toCapitalized(),
-                      successColor: successPrimaryColor,
-                    ),
-                    Navigator.pop(context),
-                  });
+          await servicesMgr.submitNewService(
+            service,
+            mediaListToUpload,
+          );
+          showSuccessFlash(
+            context: context,
+            successTitle:
+                Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+            successBody: Languages.of(context)!
+                .serviceCreatedSuccessfullyBody
+                .toCapitalized(),
+            successColor: successPrimaryColor,
+          );
+          Navigator.pop(context);
         } else {
-          await servicesMgr
-              .updateService(
-                service,
-                mediaListToUpload.values.toList(),
-              )
-              .then((value) => {
-                    Navigator.pop(context),
-                    showSuccessFlash(
-                      context: context,
-                      successTitle: Languages.of(context)!
-                          .flashMessageSuccessTitle
-                          .toTitleCase(),
-                      successBody: Languages.of(context)!
-                          .serviceUpdatedSuccessfullyBody
-                          .toCapitalized(),
-                      successColor: successPrimaryColor,
-                    ),
-                    Navigator.pop(context),
-                  });
+          await servicesMgr.updateService(
+            service,
+            mediaListToUpload.values.toList(),
+          );
+          showSuccessFlash(
+            context: context,
+            successTitle:
+                Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+            successBody: Languages.of(context)!
+                .serviceUpdatedSuccessfullyBody
+                .toCapitalized(),
+            successColor: successPrimaryColor,
+          );
+          Navigator.pop(context);
         }
       }
     }

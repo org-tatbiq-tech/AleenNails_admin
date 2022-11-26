@@ -86,7 +86,7 @@ class ClientCard extends StatelessWidget {
         ),
         leading: FutureBuilder<ImageProvider<Object>?>(
             future: getClientImage(
-              clientCardProps.contactDetails.imagePath,
+              clientCardProps.contactDetails.imageURL,
             ),
             builder: (context, snapshot) {
               return CustomAvatar(

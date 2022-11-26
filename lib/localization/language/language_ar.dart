@@ -296,6 +296,56 @@ class LanguageAr extends Languages {
   String get clientBookPermissionModalBody =>
       "إذا تم اغلاق هذه الخدمة ،فلن يتمكنوا من حجز هذه الخدمة باستخدام التطبيق. سيكون عليك إضافة موعد يدويًا إلى التقويم الخاص بك";
 
+  // Auth Errors
+  @override
+  String get authUserNotFoundErrorTitle => "البريد الالكتروني غير مسجل!";
+  @override
+  String get authUserNotFoundErrorBody =>
+      "البريد الالكتروني غير مسجل, الرجاء التأكد او التسجيل";
+  @override
+  String get authLoginFailedErrorTitle => "فشل في الاتصال!";
+  @override
+  String get authLoginFailedErrorBody =>
+      "لم نستطع الاتصال بالنظام, الرجاء اعادة التجربة لاحقاً";
+  @override
+  String get authWrongPassErrorTitle => "معطيات غير ملائمة!";
+  @override
+  String get authWrongPassErrorBody =>
+      "البريد الالكتروني او كلمة المرور غير صحيح";
+  @override
+  String get authAdminErrorTitle => "لست مُشرف";
+  @override
+  String get authAdminErrorBody => "البريد الالكتروني غير مسجّل كمُشرف";
+
+  // Validations
+  @override
+  String get validationEmptyFieldError => "المعطى لا يمكن ان يكون فارغ!";
+  @override
+  String get validationEmptyMobileError => "رقم الهاتف لا يمكن ان يكون فارغ!";
+  @override
+  String get validationMobileInvalidError =>
+      "رقم الهاتف غير صحيح! يجب ان يكون 10 ارقام";
+  @override
+  String get validationEmptyEmailError =>
+      "البريد الالكتروني لا يمكن ان يكون فارغ!";
+  @override
+  String get validationEmailInvalidError =>
+      "البريد الالكتروني غير صحيح, يجب ان يكون كما يلي hello@mail.com";
+  @override
+  String get validationPasswordInvalidError =>
+      "كلمة المرور قصيرة جدا! على الاقل 6 احرف وارقام";
+  @override
+  String get validationEmptyPasswordError =>
+      "كلمة المرور لا يمكن ان تكون فارغه!";
+  @override
+  String get validationMismatchingPasswordError => "كلمات المرور غير متطابقة!";
+  @override
+  String get validationURLInvalidError => "الرابط غير صحيح";
+  @override
+  String get validationEmptyPriceError => "السعر لا يمكن ان يكون فارغ!";
+  @override
+  String get validationPriceInvalidError => "الرجاء ادخال سعر صحيح";
+
   ///************************************************************************///
   /// ************ Common Labels ************///
   @override

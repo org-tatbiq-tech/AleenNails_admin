@@ -421,6 +421,51 @@ class LanguageHe extends Languages {
   @override
   String get resetPassEmailSentErrorBody => "שחזור סיסמה נכשל! בבקשה לנסות שוב";
 
+  // Auth Errors
+  @override
+  String get authUserNotFoundErrorTitle => "אימיל לא נמצא!";
+  @override
+  String get authUserNotFoundErrorBody =>
+      "האימיל המבוקש לא נמצא במערכת, בבקשה לבדוק שוב או להירשם";
+  @override
+  String get authLoginFailedErrorTitle => "ההתחברות נכשלה!";
+  @override
+  String get authLoginFailedErrorBody =>
+      "המערכת נכשלה להתחבר, נא לנסות שוב מאוחר יותר";
+  @override
+  String get authWrongPassErrorTitle => "נתונים אינם תואמים!";
+  @override
+  String get authWrongPassErrorBody => "אימיל או סיסמה לא נכונים";
+  @override
+  String get authAdminErrorTitle => "אינך מנהל!";
+  @override
+  String get authAdminErrorBody => "האימיל המבוקש אינו רשום כמנהל";
+
+  // Validations
+  @override
+  String get validationEmptyFieldError => "נתון לא יכול להיות ריק!";
+  @override
+  String get validationEmptyMobileError => "מס פלאפון אינו יכול ליהות ריק!";
+  @override
+  String get validationMobileInvalidError => "מספר טלפון שגוי! 10 מספרים";
+  @override
+  String get validationEmptyEmailError => "אימיל לא יכול להיות ריק!";
+  @override
+  String get validationEmailInvalidError =>
+      "אימיל אינו בפורמט נכון! צריך להיות בצורה hello@mail.com";
+  @override
+  String get validationEmptyPasswordError => "סיסמה לא יכולה להיות ריקה!";
+  @override
+  String get validationPasswordInvalidError => "סיסמה קצרה! לפחות 6 אותיות";
+  @override
+  String get validationMismatchingPasswordError => "סיסמאות לא תואמות!";
+  @override
+  String get validationURLInvalidError => "נא להכניס אתר נכון!";
+  @override
+  String get validationEmptyPriceError => "מחיר אינו יכול להיות ריק!";
+  @override
+  String get validationPriceInvalidError => "נא להכניס מחיר נכון!";
+
   ///************************************************************************///
   /// ************ Profile settings ************///
   @override
