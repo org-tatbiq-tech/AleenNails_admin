@@ -15,6 +15,7 @@ import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -292,10 +293,16 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
       );
     }
 
-    saveImage() {
+    saveImage() async {
       if (_imageFile != null) {
         showLoaderDialog(context);
-        settingsMgr.uploadCoverImage(_imageFile!).then((value) => {
+        File? imagePath = await compressImageNative(
+          path: _imageFile!.absolute.path,
+          quality: 50,
+          targetWidth: 1000,
+          targetHeight: (1000 * 9 / 16).round(),
+        );
+        settingsMgr.uploadCoverImage(imagePath!).then((value) => {
               Navigator.pop(context),
               showSuccessFlash(
                 context: context,
