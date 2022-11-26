@@ -44,10 +44,13 @@ function profileImagesHandler(fileObject) {
     } else if (imageMetadata[type] == 'cover') {
         console.log('got cover image');
         fsPath = 'media.coverPath';
-    } else {
+    } else if (imageMetadata[type] == 'wp')  {
         console.log('got workplace image');
-        fsPath = 'media.wp';
-        value = {fileName: ''};
+        fsPath = 'media.wp.' + fileName;
+        value = '';
+    } else {
+        // None handled image type!
+        return;
     }
 
     // Update record accordingly
@@ -81,10 +84,10 @@ exports.imagesHandler = functions.storage.bucket().object().onFinalize(async (ob
         return profileImagesHandler(object);
     }
     if (filePath.startsWith('services/')) {
-        return profileImagesHandler(object);
+        return servicesImagesHandler(object);
     }
     if (filePath.startsWith('clients/')) {
-        return profileImagesHandler(object);
+        return clientsImagesHandler(object);
     }
 });
 

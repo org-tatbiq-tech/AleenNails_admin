@@ -28,29 +28,19 @@ class BusinessCoverPhoto extends StatefulWidget {
 
 class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   File? _imageFile;
-  String imageUrl = '';
   bool _isLoading = true;
   bool isSaveDisabled = true;
   @override
   void initState() {
     super.initState();
-    loadImage();
-  }
-
-  Future<void> loadImage() async {
-    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    String url = await settingsMgr.getCoverImageUrl();
-    setState(() {
-      imageUrl = url;
-      _isLoading = false;
-    });
+    _isLoading = false;
   }
 
   @override
   Widget build(BuildContext context) {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     deleteImage() {
-      if (imageUrl.isNotEmpty) {
+      if (settingsMgr.profileManagement.profileMedia.coverURL!.isNotEmpty) {
         showLoaderDialog(context);
         settingsMgr.deleteCoverImage().then((value) => {
               Navigator.pop(context),
@@ -125,7 +115,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
       return AnimatedSwitcher(
         reverseDuration: const Duration(milliseconds: 400),
         duration: const Duration(milliseconds: 400),
-        child: _imageFile == null && imageUrl.isEmpty
+        child: _imageFile == null &&
+                settingsMgr.profileManagement.profileMedia.coverURL!.isEmpty
             ? EaseInAnimation(
                 onTap: () => {
                   showImagePickerModal(
@@ -214,7 +205,8 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                       image: _imageFile == null
                           ? DecorationImage(
                               fit: BoxFit.cover,
-                              image: CachedNetworkImageProvider(imageUrl),
+                              image: CachedNetworkImageProvider(settingsMgr
+                                  .profileManagement.profileMedia.coverURL!),
                             )
                           : DecorationImage(
                               fit: BoxFit.cover,
