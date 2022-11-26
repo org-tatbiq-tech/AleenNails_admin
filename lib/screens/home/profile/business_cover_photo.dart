@@ -34,9 +34,16 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   @override
   void initState() {
     super.initState();
+    loadImage();
+  }
+
+  Future<void> loadImage() async {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    imageUrl = settingsMgr.getCoverImageUrl();
-    _isLoading = false;
+    String url = await settingsMgr.getCoverImageUrl();
+    setState(() {
+      imageUrl = url;
+      _isLoading = false;
+    });
   }
 
   @override

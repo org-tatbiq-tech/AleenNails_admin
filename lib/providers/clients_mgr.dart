@@ -63,25 +63,33 @@ class ClientsMgr extends ChangeNotifier {
     );
   }
 
-  Future<void> uploadClientImage(File image, String path) async {
-    Reference ref = _fst.ref(clientStorageDir).child(path);
-    await ref.putFile(image);
-  }
+  Future<String> uploadClientImage(
+      File image, String newPath, String oldPath) async {
+    String refPath = '${newPath}_600x600.png';
+    newPath = '$newPath.png';
 
-  Future<String> getClientImage(String path) async {
-    Reference ref = _fst.ref(clientStorageDir).child('${path}_600x600');
-    var refStr = 'notFound';
-    try {
-      refStr = await ref.getDownloadURL();
-    } catch (error) {
-      return refStr;
+    Reference ref = _fst.ref(clientStorageDir).child(newPath);
+    TaskSnapshot taskSnapshot = await ref.putFile(image);
+    final imageMetaData = SettableMetadata(
+      customMetadata: {
+        "location": "Yosemite, CA, USA",
+        "activity": "Hiking",
+      },
+    );
+    Reference resizedRef = _fst.ref(clientStorageDir).child(refPath);
+    final refStr = await resizedRef.getDownloadURL();
+
+    if (oldPath.isNotEmpty) {
+      // Delete old file
+      Reference oldImageRef = _fst.ref(clientStorageDir).child(oldPath);
+      oldImageRef.delete(); // no need await for it.
     }
     return refStr;
   }
 
   Future<void> deleteClientImage(String path) async {
-    Reference ref = _fst.ref(clientStorageDir).child('${path}_600x600');
-    return await ref.delete();
+    Reference ref = _fst.ref(clientStorageDir).child('${path}_600x600.png');
+    await ref.delete();
   }
 
   Future<bool> checkPhoneNumberAvailability(

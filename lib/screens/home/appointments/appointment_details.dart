@@ -12,7 +12,6 @@ import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
 import 'package:appointments/widget/custom/custom_avatar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -111,13 +110,10 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
 
     Future<ImageProvider<Object>?> getClientImage(String path) async {
       String imageUrl = '';
-      if (path.isNotEmpty) {
-        final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-        imageUrl = await clientsMgr.getClientImage(path);
-      }
-      if (imageUrl.isNotEmpty) {
-        return CachedNetworkImageProvider(imageUrl);
-      }
+      // if (imageUrl.isNotEmpty) {
+      //   return CachedNetworkImageProvider(imageUrl);
+      // }
+
       return null;
     }
 

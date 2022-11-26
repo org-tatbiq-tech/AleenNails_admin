@@ -34,9 +34,16 @@ class _BusinessLogoState extends State<BusinessLogo> {
   @override
   void initState() {
     super.initState();
+    loadImage();
+  }
+
+  Future<void> loadImage() async {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    imageUrl = settingsMgr.getLogoImageUrl();
-    _isLoading = false;
+    String url = await settingsMgr.getLogoImageUrl();
+    setState(() {
+      imageUrl = url;
+      _isLoading = false;
+    });
   }
 
   @override

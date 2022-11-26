@@ -366,7 +366,8 @@ class Client {
   DateTime? acceptedDate; // Birthday date
   double? discount; // general discount for client
   bool? isTrusted; // Birthday date
-  String imagePath; // Image Path
+  String imagePath; // Image Path in storage
+  String imageURL; // Image URL for quick download
   List<ClientAppointment> appointments;
 
   double get totalRevenue {
@@ -406,6 +407,7 @@ class Client {
     this.discount,
     this.isTrusted,
     this.imagePath = '',
+    this.imageURL = '',
     this.appointments = const [],
   });
 
@@ -422,6 +424,7 @@ class Client {
       'discount': discount,
       'isTrusted': isTrusted,
       'imagePath': imagePath,
+      'imageURL': imageURL,
     };
   }
 
@@ -448,6 +451,7 @@ class Client {
       discount: doc['discount'],
       isTrusted: doc['isTrusted'],
       imagePath: doc['imagePath'],
+      imageURL: doc['imageURL'] ?? '',
       appointments: doc['appointments'] == null
           ? []
           : loadAppointmentsFromDoc(doc['appointments']),

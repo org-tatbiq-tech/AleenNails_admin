@@ -191,8 +191,10 @@ class BusinessInfoComp {
 
 class ProfileMedia {
   String? logoPath;
+  String? logoURL;
   String? coverPath;
-  Map<String, String>? wpPhotosPaths;
+  String? coverURL;
+  Map<String, String>? wpPhotosURLsMap;
 
   Map<String, String> loadWPImages(Map<String, dynamic> wp) {
     Map<String, String> wps = {};
@@ -202,26 +204,36 @@ class ProfileMedia {
     return wps;
   }
 
-  ProfileMedia(logoPath, coverPath, wpPhotosPaths) {
+  ProfileMedia(logoPath, logoURL, coverPath, coverURL, wpPhotosURLsMap) {
     this.logoPath = logoPath ?? '';
+    this.logoURL = logoURL ?? '';
     this.coverPath = coverPath ?? '';
+    this.coverURL = coverURL ?? '';
     Map<String, String> wps = {};
-    if (wpPhotosPaths != null) {
-      wps = loadWPImages(wpPhotosPaths);
+    if (wpPhotosURLsMap != null) {
+      wps = loadWPImages(wpPhotosURLsMap);
     }
-    this.wpPhotosPaths = wps;
+    this.wpPhotosURLsMap = wps;
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'logo': logoPath,
-      'cover': coverPath,
-      'wp': wpPhotosPaths,
+      'logoPath': logoPath,
+      'logoURL': logoURL,
+      'coverPath': coverPath,
+      'coverURL': coverURL,
+      'wp': wpPhotosURLsMap,
     };
   }
 
   factory ProfileMedia.fromJson(Map<String, dynamic> doc) {
-    return ProfileMedia(doc['logo'], doc['cover'], doc['wp']);
+    return ProfileMedia(
+      doc['logoPath'],
+      doc['logoURL'],
+      doc['coverPath'],
+      doc['coverURL'],
+      doc['wp'],
+    );
   }
 }
 

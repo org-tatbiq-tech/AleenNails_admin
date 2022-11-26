@@ -5,6 +5,7 @@ import 'package:appointments/data_types/settings_components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
@@ -136,82 +137,148 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   ///*********************** Storage ****************************///
+  /// LOGO
   Future<void> uploadLogoImage(File image) async {
     Reference ref = _fst.ref(profileStorageDir).child('logo.png');
-    await ref.putFile(image);
-    // Updating logo path
-    Reference profRef = _fst.ref(profileStorageDir).child('logo_600x600.png');
-    final refStr = await profRef.getDownloadURL();
+    // Firstly delete logo path, so image won't be available.
     _fs.collection(settingsCollection).doc('profile').update(
-      {'media.logo': refStr},
+      {
+        'media.logoURL': FieldValue.delete(),
+        'media.logoPath': FieldValue.delete(),
+      },
     );
+    final metaData = SettableMetadata(
+      customMetadata: {
+        'type': 'logo',
+      },
+    );
+    await ref.putFile(image, metaData);
   }
 
-  String getLogoImageUrl() {
-    return _profileManagement.profileMedia.logoPath!;
+  Future<String> getLogoImageUrl() async {
+    if (_profileManagement.profileMedia.logoURL!.isNotEmpty) {
+      return _profileManagement.profileMedia.logoURL!;
+    } else if (_profileManagement.profileMedia.logoPath!.isNotEmpty) {
+      // Logo path exist, but not URL, need to download and update
+      Reference fileRef = _fst.ref(profileStorageDir).child('logo_600x600.png');
+      final refStr = await fileRef.getDownloadURL();
+      _profileManagement.profileMedia.logoURL = refStr;
+      _fs.collection(settingsCollection).doc('profile').update(
+        {'media.logoURL': refStr},
+      );
+      return _profileManagement.profileMedia.logoURL!;
+    }
+    return '';
   }
 
   Future<void> deleteLogoImage() async {
     Reference ref = _fst.ref(profileStorageDir).child('logo_600x600.png');
-    // Deleting logo path
+    // Deleting logo path and URL
     _fs.collection(settingsCollection).doc('profile').update(
-      {'media.logo': FieldValue.delete()},
+      {
+        'media.logoURL': FieldValue.delete(),
+        'media.logoPath': FieldValue.delete()
+      },
     );
     return await ref.delete();
   }
 
+  /// COVER
   Future<void> uploadCoverImage(File image) async {
-    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto.png');
-    await ref.putFile(image);
-    // Updating logo path
-    Reference profRef =
-        _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
-    final refStr = await profRef.getDownloadURL();
+    Reference ref = _fst.ref(profileStorageDir).child('cover.png');
     _fs.collection(settingsCollection).doc('profile').update(
-      {'media.cover': refStr},
+      {
+        'media.coverURL': FieldValue.delete(),
+        'media.coverPath': FieldValue.delete(),
+      },
     );
+
+    // Create file metadata to update proper document
+    final metaData = SettableMetadata(
+      customMetadata: {
+        'type': 'cover',
+      },
+    );
+    await ref.putFile(image, metaData);
   }
 
-  String getCoverImageUrl() {
-    return _profileManagement.profileMedia.coverPath!;
+  Future<String> getCoverImageUrl() async {
+    if (_profileManagement.profileMedia.coverURL!.isNotEmpty) {
+      return _profileManagement.profileMedia.coverURL!;
+    } else if (_profileManagement.profileMedia.coverPath!.isNotEmpty) {
+      // Cover path exist, but not URL, need to download and update
+      Reference fileRef =
+          _fst.ref(profileStorageDir).child('cover_600x600.png');
+      final refStr = await fileRef.getDownloadURL();
+      _profileManagement.profileMedia.logoURL = refStr;
+      _fs.collection(settingsCollection).doc('profile').update(
+        {'media.coverURL': refStr},
+      );
+      return _profileManagement.profileMedia.logoURL!;
+    }
+    return '';
   }
 
   Future<void> deleteCoverImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('coverPhoto_600x600.png');
+    Reference ref = _fst.ref(profileStorageDir).child('cover_600x600.png');
+    // Deleting cover path and URL
     _fs.collection(settingsCollection).doc('profile').update(
-      {'media.cover': FieldValue.delete()},
+      {
+        'media.coverURL': FieldValue.delete(),
+        'media.coverPath': FieldValue.delete()
+      },
     );
     return await ref.delete();
+  }
+
+  /// WP
+  Future updateResizedWPUrls(List<String> newFiles) async {
+    /// Updating profile work place images urls as individual process
+    /// List of names of new files added
+    Map<String, String> filesMap = {};
+    print('upadting new files');
+    print(newFiles);
+    while (true) {
+      try {
+        for (String fileName in newFiles) {
+          print('file $fileName');
+          Reference fileRef =
+              _fst.ref(profileWPStorageDir).child('${fileName}_600x600.png');
+          final refStr = await fileRef.getDownloadURL();
+          filesMap[fileRef.name] = refStr;
+        }
+        print('updated');
+        print(filesMap);
+        _fs.collection(settingsCollection).doc('profile').update(
+          {'media.wp': filesMap},
+        );
+        _profileManagement.profileMedia.wpPhotosURLsMap = filesMap;
+        break;
+      } catch (e) {
+        sleep(const Duration(seconds: 2));
+        filesMap = {};
+      }
+    }
   }
 
   Future<void> uploadWPImages(List<File> imageList) async {
     var uuid = const Uuid();
+    List<String> newFiles = [];
     for (File image in imageList) {
-      Reference ref =
-          _fst.ref(profileWPStorageDir).child('WP${uuid.v4()}_image.png');
+      String fileName = 'WP${uuid.v4()}_image';
+      Reference ref = _fst.ref(profileWPStorageDir).child('$fileName.png');
       await ref.putFile(image);
+      newFiles.add(fileName);
     }
-    Reference ref = _fst.ref(profileWPStorageDir);
-    // Create and save map of file name --> url
-    Map<String, String> filesMap = {};
-    var refStr = '';
-    ref.listAll().then(
-          (res) async => {
-            for (var imageRef in res.items)
-              {
-                refStr = await imageRef.getDownloadURL(),
-                filesMap[imageRef.name] = refStr,
-              },
-            _fs.collection(settingsCollection).doc('profile').update(
-              {'media.wp': filesMap},
-            ),
-          },
-        );
+    print('updating WP');
+    updateResizedWPUrls(newFiles);
+    print('continued');
+    // compute(updateResizedWPUrls, newFiles);
   }
 
   Map<String, String> getWPImagesUrls() {
     /// Return map of file name --> url
-    return _profileManagement.profileMedia.wpPhotosPaths!;
+    return _profileManagement.profileMedia.wpPhotosURLsMap!;
   }
 
   Future<void> deleteWPImage(String image) async {

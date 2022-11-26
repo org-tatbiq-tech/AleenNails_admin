@@ -1,12 +1,9 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
-import 'package:appointments/providers/clients_mgr.dart';
-import 'package:appointments/providers/langs.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
 import 'package:appointments/widget/custom/custom_avatar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -59,13 +56,9 @@ class AppointmentCard extends StatelessWidget {
 
     Future<ImageProvider<Object>?> getClientImage(String path) async {
       String imageUrl = '';
-      if (path.isNotEmpty) {
-        final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-        imageUrl = await clientsMgr.getClientImage(path);
-      }
-      if (imageUrl.isNotEmpty) {
-        return CachedNetworkImageProvider(imageUrl);
-      }
+      // if (imageUrl.isNotEmpty) {
+      //   return CachedNetworkImageProvider(imageUrl);
+      // }
       return null;
     }
 

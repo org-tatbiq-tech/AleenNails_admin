@@ -19,13 +19,9 @@ class ClientCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<ImageProvider<Object>?> getClientImage(String path) async {
-      String imageUrl = '';
-      if (path.isNotEmpty) {
-        final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-        imageUrl = await clientsMgr.getClientImage(path);
-      }
-      if (imageUrl.isNotEmpty) {
-        return CachedNetworkImageProvider(imageUrl);
+      if (clientCardProps.contactDetails.imageURL.isNotEmpty) {
+        return CachedNetworkImageProvider(
+            clientCardProps.contactDetails.imageURL);
       }
       return null;
     }

@@ -29,7 +29,7 @@ class ClientDetails extends StatefulWidget {
 }
 
 class _ClientDetailsState extends State<ClientDetails> {
-  String imageUrl = '';
+  String imageURL = '';
 
   @override
   void initState() {
@@ -421,8 +421,8 @@ class _ClientDetailsState extends State<ClientDetails> {
                 defaultImage: const AssetImage(
                   'assets/images/avatar_female.png',
                 ),
-                backgroundImage: imageUrl.isNotEmpty
-                    ? CachedNetworkImageProvider(imageUrl)
+                backgroundImage: imageURL.isNotEmpty
+                    ? CachedNetworkImageProvider(imageURL)
                     : null,
               ),
             ),
@@ -528,26 +528,7 @@ class _ClientDetailsState extends State<ClientDetails> {
 
     Widget renderDetailsBody() {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      if (clientsMgr.selectedClient.imagePath.isNotEmpty && imageUrl == '') {
-        clientsMgr.getClientImage(clientsMgr.selectedClient.imagePath).then(
-              (url) => {
-                if (imageUrl == 'notFound')
-                  {
-                    setState(
-                      (() {}),
-                    ),
-                  }
-                else
-                  {
-                    setState(
-                      (() {
-                        imageUrl = url;
-                      }),
-                    ),
-                  },
-              },
-            );
-      }
+      imageURL = clientsMgr.selectedClient.imageURL;
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,

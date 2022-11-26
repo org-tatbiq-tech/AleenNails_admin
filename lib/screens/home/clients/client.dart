@@ -15,7 +15,6 @@ import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
-import 'package:common_widgets/image_picker_modal.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
@@ -49,8 +48,8 @@ class _ClientWidgetState extends State<ClientWidget> {
   bool trustedClient = true;
   bool autoValidate = false;
   File? _imageFile;
-  String imageUrl = '';
   String imagePath = '';
+  String imageURL = '';
   bool _isImageFileChanged = false;
   bool isSaveDisabled = true;
 
@@ -63,7 +62,6 @@ class _ClientWidgetState extends State<ClientWidget> {
   void initState() {
     super.initState();
     if (widget.client != null) {
-      final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
       _nameController.text = widget.client!.fullName;
       _phoneController.text = widget.client!.phone;
       _emailController.text = widget.client!.email;
@@ -72,26 +70,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       _discountController.text = widget.client!.discount.toString();
       birthdayDate = widget.client!.birthday;
       imagePath = widget.client!.imagePath;
-      if (imagePath.isNotEmpty) {
-        clientMgr.getClientImage(imagePath).then(
-              (url) => {
-                if (url == 'notFound')
-                  {
-                    setState(
-                      (() {}),
-                    ),
-                  }
-                else
-                  {
-                    setState(
-                      (() {
-                        imageUrl = url;
-                      }),
-                    ),
-                  },
-              },
-            );
-      }
+      imageURL = widget.client!.imageURL;
     }
 
     _nameController.addListener(() => setState(() {
@@ -498,10 +477,10 @@ class _ClientWidgetState extends State<ClientWidget> {
     }
 
     ImageProvider<Object>? getBackgroundImage() {
-      if (_imageFile != null) {
+      if (imageURL.isNotEmpty) {
+        return CachedNetworkImageProvider(imageURL);
+      } else if (_imageFile != null) {
         return FileImage(_imageFile!);
-      } else if (imageUrl.isNotEmpty) {
-        return CachedNetworkImageProvider(imageUrl);
       }
       return null;
     }
@@ -536,39 +515,17 @@ class _ClientWidgetState extends State<ClientWidget> {
         children: [
           CustomAvatar(
             customAvatarProps: CustomAvatarProps(
-                radius: rSize(100),
-                editable: true,
-                circleShape: false,
-                rectangleShape: true,
-                defaultImage: const AssetImage(
-                  'assets/images/avatar_female.png',
-                ),
-                enable: true,
-                backgroundImage: getBackgroundImage(),
-                onTap: () => {
-                      showImagePickerModal(
-                        imagePickerModalProps: ImagePickerModalProps(
-                          context: context,
-                          cancelText:
-                              Languages.of(context)!.cancelLabel.toTitleCase(),
-                          deleteText:
-                              Languages.of(context)!.deleteLabel.toTitleCase(),
-                          takePhotoText: Languages.of(context)!
-                              .takePhotoLabel
-                              .toTitleCase(),
-                          libraryText: Languages.of(context)!
-                              .chooseFromLibraryLabel
-                              .toTitleCase(),
-                          saveImage: (File? imageFile) {
-                            setState(() {
-                              _imageFile = imageFile;
-                              isSaveDisabled = false;
-                              _isImageFileChanged = true;
-                            });
-                          },
-                        ),
-                      )
-                    }),
+              radius: rSize(100),
+              editable: false,
+              circleShape: false,
+              rectangleShape: true,
+              defaultImage: const AssetImage(
+                'assets/images/avatar_female.png',
+              ),
+              enable: false,
+              backgroundImage: getBackgroundImage(),
+              onTap: () => {},
+            ),
           )
         ],
       );
@@ -583,11 +540,16 @@ class _ClientWidgetState extends State<ClientWidget> {
         if (_imageFile != null && _isImageFileChanged) {
           if (imagePath.isEmpty) {
             imagePath = const Uuid().v4();
-            await clientMgr.uploadClientImage(_imageFile!, imagePath);
+            imageURL =
+                await clientMgr.uploadClientImage(_imageFile!, imagePath, '');
           } else {
-            await clientMgr.uploadClientImage(_imageFile!, imagePath);
+            String oldImagePath = imagePath;
+            imagePath = const Uuid().v4();
+            imageURL = await clientMgr.uploadClientImage(
+                _imageFile!, imagePath, oldImagePath);
           }
         }
+
         Client client = Client(
           id: clientID,
           fullName: _nameController.text,
@@ -601,6 +563,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           isTrusted: trustedClient,
           acceptedDate: DateTime.now(),
           imagePath: imagePath,
+          imageURL: imageURL,
         );
 
         if (widget.client == null) {
@@ -642,7 +605,6 @@ class _ClientWidgetState extends State<ClientWidget> {
                   .toCapitalized(),
               successColor: successPrimaryColor,
             );
-            Navigator.pop(context);
           } on PhoneNumberUsedException catch (e) {
             Navigator.pop(context);
             showErrorFlash(
