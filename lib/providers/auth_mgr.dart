@@ -95,22 +95,6 @@ class AuthenticationMgr extends ChangeNotifier {
     return null;
   }
 
-  Future<UserCredential?> registerAccount(
-      String email,
-      String displayName,
-      String password,
-      void Function(FirebaseAuthException e) errorCallback) async {
-    try {
-      UserCredential user = await _fa.createUserWithEmailAndPassword(
-          email: email, password: password);
-      await user.user!.updateDisplayName(displayName);
-      return user;
-    } on FirebaseAuthException catch (e) {
-      errorCallback(e);
-    }
-    return null;
-  }
-
   Future<UserCredential?> linkPhoneNumber(AuthCredential credential,
       void Function(FirebaseAuthException e) errorCallback) async {
     try {
