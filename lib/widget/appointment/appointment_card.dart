@@ -157,7 +157,7 @@ class AppointmentCard extends StatelessWidget {
         ),
         leading: FutureBuilder<ImageProvider<Object>?>(
           future: getClientImage(
-              appointmentCardProps.appointmentDetails.clientImagePath),
+              appointmentCardProps.appointmentDetails.clientImageURL),
           builder: (context, snapshot) {
             return Column(
               children: [

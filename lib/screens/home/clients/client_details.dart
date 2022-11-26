@@ -29,8 +29,6 @@ class ClientDetails extends StatefulWidget {
 }
 
 class _ClientDetailsState extends State<ClientDetails> {
-  String imageURL = '';
-
   @override
   void initState() {
     super.initState();
@@ -215,6 +213,8 @@ class _ClientDetailsState extends State<ClientDetails> {
     }
 
     renderTotalRevenue(Client client) {
+      print('redning total revcen ${client.fullName}');
+
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -421,8 +421,9 @@ class _ClientDetailsState extends State<ClientDetails> {
                 defaultImage: const AssetImage(
                   'assets/images/avatar_female.png',
                 ),
-                backgroundImage: imageURL.isNotEmpty
-                    ? CachedNetworkImageProvider(imageURL)
+                backgroundImage: clientsMgr.selectedClient.imageURL.isNotEmpty
+                    ? CachedNetworkImageProvider(
+                        clientsMgr.selectedClient.imageURL)
                     : null,
               ),
             ),
@@ -528,7 +529,6 @@ class _ClientDetailsState extends State<ClientDetails> {
 
     Widget renderDetailsBody() {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      imageURL = clientsMgr.selectedClient.imageURL;
       return Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,

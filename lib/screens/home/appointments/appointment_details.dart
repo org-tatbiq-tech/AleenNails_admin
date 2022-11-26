@@ -831,7 +831,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           FadeAnimation(
             delay: 0.1,
             child: FutureBuilder<ImageProvider<Object>?>(
-                future: getClientImage(appointment.clientImagePath),
+                future: getClientImage(appointment.clientImageURL),
                 builder: (context, snapshot) {
                   return CustomAvatar(
                     customAvatarProps: CustomAvatarProps(

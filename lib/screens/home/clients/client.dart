@@ -44,7 +44,6 @@ class _ClientWidgetState extends State<ClientWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool trustedClient = true;
   bool autoValidate = false;
-  String imagePath = '';
   String imageURL = '';
   bool isSaveDisabled = true;
 
@@ -64,7 +63,6 @@ class _ClientWidgetState extends State<ClientWidget> {
       _noteController.text = widget.client!.generalNotes!;
       _discountController.text = widget.client!.discount.toString();
       birthdayDate = widget.client!.birthday;
-      imagePath = widget.client!.imagePath;
       imageURL = widget.client!.imageURL;
     }
 
@@ -543,7 +541,6 @@ class _ClientWidgetState extends State<ClientWidget> {
           discount: double.parse(_discountController.text),
           isTrusted: trustedClient,
           acceptedDate: DateTime.now(),
-          imagePath: imagePath,
           imageURL: imageURL,
         );
 
