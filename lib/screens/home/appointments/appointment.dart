@@ -51,7 +51,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   @override
   void initState() {
     super.initState();
-    _notesController.addListener(() => setState(() {}));
     if (widget.client != null) {
       selectedClient = widget.client;
     }
@@ -71,6 +70,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       startDateTimeTemp = appointment!.date;
       endTime = appointment!.endTime;
       _notesController.text = appointment!.notes;
+      print('notes are ${appointment!.notes}');
     }
     if (widget.bookAgainAppointment != null) {
       selectedClient = Client(
@@ -86,6 +86,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       _notesController.text = widget.bookAgainAppointment!.notes;
       endTime = startDateTime.add(getServicesDuration());
     }
+    _notesController.addListener(() => setState(() {}));
   }
 
   @override

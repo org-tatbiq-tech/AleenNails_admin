@@ -118,19 +118,20 @@ class AppointmentsMgr extends ChangeNotifier {
       isSelectedAppointmentLoaded = true;
     } else {
       // download appointment
-      Map<String, dynamic>? data;
-      _fs.collection(appointmentsCollection).doc(appointmentID).get().then(
-            (value) => {
-              data = value.data(),
-              if (data != null)
-                {
-                  data!['id'] = value.id,
-                  selectedAppointment = Appointment.fromJson(data!),
-                  isSelectedAppointmentLoaded = true,
-                },
-              notifyListeners(),
-            },
-          );
+      _fs
+          .collection(appointmentsCollection)
+          .doc(appointmentID)
+          .snapshots()
+          .listen((appointmentDoc) {
+        Map<String, dynamic>? data;
+        data = appointmentDoc.data();
+        if (data != null) {
+          data['id'] = appointmentDoc.id;
+          selectedAppointment = Appointment.fromJson(data);
+          isSelectedAppointmentLoaded = true;
+        }
+        notifyListeners();
+      });
     }
   }
 }

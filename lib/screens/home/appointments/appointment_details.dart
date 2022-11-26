@@ -39,9 +39,10 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   bool isCheckoutScreen = false;
   @override
   Widget build(BuildContext context) {
-    isEditAppointment() {
-      final appointmentsMgr =
-          Provider.of<AppointmentsMgr>(context, listen: false);
+    isEditAppointment(AppointmentsMgr appointmentsMgr) {
+      if (!appointmentsMgr.isSelectedAppointmentLoaded) {
+        return true;
+      }
       Appointment appointment = appointmentsMgr.selectedAppointment;
       if (appointment.status == AppointmentStatus.confirmed) {
         return true;
@@ -889,31 +890,31 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: isCheckoutScreen
-              ? Languages.of(context)!.checkoutLabel.toTitleCase()
-              : Languages.of(context)!.appointmentDetailsLabel.toTitleCase(),
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
-          customIcon: isEditAppointment()
-              ? Icon(
-                  Icons.edit,
-                  size: rSize(24),
-                )
-              : null,
-          customIconTap: () => editAppointmentAction(),
+    return Consumer<AppointmentsMgr>(
+      builder: (context, appointmentsMgr, _) => Scaffold(
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: isCheckoutScreen
+                ? Languages.of(context)!.checkoutLabel.toTitleCase()
+                : Languages.of(context)!.appointmentDetailsLabel.toTitleCase(),
+            withBack: true,
+            barHeight: 110,
+            withClipPath: true,
+            customIcon: isEditAppointment(appointmentsMgr)
+                ? Icon(
+                    Icons.edit,
+                    size: rSize(24),
+                  )
+                : null,
+            customIconTap: () => editAppointmentAction(),
+          ),
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        top: false,
-        left: false,
-        right: false,
-        child: Consumer<AppointmentsMgr>(
-          builder: (context, appointmentsMgr, _) => Visibility(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: SafeArea(
+          top: false,
+          left: false,
+          right: false,
+          child: Visibility(
             visible: appointmentsMgr.isSelectedAppointmentLoaded,
             replacement: Center(
               child: CustomLoadingIndicator(
