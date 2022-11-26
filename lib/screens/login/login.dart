@@ -53,14 +53,34 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   void errorCallback(FirebaseAuthException e) {
+    switch (e.code) {
+      case 'user-not-found':
+        showErrorFlash(
+          errorTitle: Languages.of(context)!.authUserNotFoundErrorTitle,
+          errorBody: Languages.of(context)!.authUserNotFoundErrorBody,
+          context: context,
+          errorColor: errorPrimaryColor,
+        );
+        break;
+      case 'wrong-password':
+        showErrorFlash(
+          errorTitle: Languages.of(context)!.authWrongPassErrorTitle,
+          errorBody: Languages.of(context)!.authWrongPassErrorBody,
+          context: context,
+          errorColor: errorPrimaryColor,
+        );
+        break;
+      default:
+        // Failed login
+        showErrorFlash(
+          errorTitle: Languages.of(context)!.authLoginFailedErrorTitle,
+          errorBody: Languages.of(context)!.authLoginFailedErrorBody,
+          context: context,
+          errorColor: errorPrimaryColor,
+        );
+        break;
+    }
     Navigator.pop(context);
-
-    /// TODO: Add flash
-    // showErrorFlash(
-    //   errorTitle: Languages.of(context)!.error,
-    //   errorBody: e.message.toString(),
-    //   context: context,
-    // );
   }
 
   Future<void> validateAndLogin(BuildContext context) async {
@@ -74,8 +94,8 @@ class _LoginScreenState extends State<LoginScreen>
         if (!res) {
           showErrorFlash(
             context: context,
-            errorTitle: 'Not admin!',
-            errorBody: 'Provided email is not admin!',
+            errorTitle: Languages.of(context)!.authAdminErrorTitle,
+            errorBody: Languages.of(context)!.authAdminErrorBody,
             errorColor: errorPrimaryColor,
           );
           Navigator.pop(context);

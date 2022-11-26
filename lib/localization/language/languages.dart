@@ -228,6 +228,29 @@ abstract class Languages {
   String get resetPassEmailSentErrorTitle;
   String get resetPassEmailSentErrorBody;
 
+  // Auth Errors
+  String get authUserNotFoundErrorTitle;
+  String get authUserNotFoundErrorBody;
+  String get authLoginFailedErrorTitle;
+  String get authLoginFailedErrorBody;
+  String get authWrongPassErrorTitle;
+  String get authWrongPassErrorBody;
+  String get authAdminErrorTitle;
+  String get authAdminErrorBody;
+
+  // Validations
+  String get validationEmptyFieldError;
+  String get validationEmptyMobileError;
+  String get validationMobileInvalidError;
+  String get validationEmptyEmailError;
+  String get validationEmailInvalidError;
+  String get validationPasswordInvalidError;
+  String get validationEmptyPasswordError;
+  String get validationMismatchingPasswordError;
+  String get validationURLInvalidError;
+  String get validationEmptyPriceError;
+  String get validationPriceInvalidError;
+
   ///************************************************************************///
   /// ************ Profile settings ************///
   String get labelPersonalSettings;
