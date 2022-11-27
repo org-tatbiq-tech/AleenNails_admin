@@ -184,7 +184,7 @@ class SettingsMgr extends ChangeNotifier {
   }
 
   Future<void> deleteCoverImage() async {
-    Reference ref = _fst.ref(profileStorageDir).child('cover_600x600.png');
+    Reference ref = _fst.ref(profileStorageDir).child('cover.png');
     // Deleting cover path and URL
     _fs.collection(settingsCollection).doc('profile').update(
       {

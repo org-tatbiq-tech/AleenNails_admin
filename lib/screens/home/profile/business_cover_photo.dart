@@ -40,7 +40,6 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
       if (settingsMgr.profileManagement.profileMedia.coverURL!.isNotEmpty) {
         showLoaderDialog(context);
         await settingsMgr.deleteCoverImage();
-        Navigator.pop(context);
         showSuccessFlash(
           context: context,
           successColor: successPrimaryColor,
@@ -50,6 +49,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
               .coverPhotoPhotoUploadedSuccessfullyBody
               .toCapitalized(),
         );
+        Navigator.pop(context);
       }
     }
 
