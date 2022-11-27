@@ -98,6 +98,16 @@ class ServicesMgr extends ChangeNotifier {
     });
   }
 
+  Future<void> deleteServiceImages(
+      String serviceName, List<String> imagesIDs) async {
+    var name = serviceName.replaceAll(' ', '_');
+    for (String imageName in imagesIDs) {
+      Reference ref =
+          _fst.ref('$servicesStorageDir/$name').child('$imageName.png');
+      await ref.delete();
+    }
+  }
+
   Future<void> updateService(
       Service updatedService, List<File> imageList) async {
     /// Update existing service - update DB
@@ -112,6 +122,8 @@ class ServicesMgr extends ChangeNotifier {
   Future<void> deleteService(Service serviceToDelete) async {
     /// delete existing service - update DB
     CollectionReference servicesColl = _fs.collection(servicesCollection);
+    await deleteServiceImages(
+        serviceToDelete.name, serviceToDelete.imagesURL!.keys.toList());
     servicesColl.doc(serviceToDelete.id).delete();
   }
 }
