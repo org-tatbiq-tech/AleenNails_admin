@@ -88,35 +88,8 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       selectedColorTemp = Color(widget.service!.colorID);
 
       final serviceMgr = Provider.of<ServicesMgr>(context, listen: false);
-      // try {
-      //   serviceMgr.getServiceImages(widget.service!).then(
-      //         (res) async => {
-      //           if (res.isEmpty)
-      //             {
-      //               setState(() {
-      //                 _isLoading = false;
-      //               }),
-      //             }
-      //           else
-      //             {
-      //               for (var servicePhoto in res.entries)
-      //                 {
-      //                   mediaList[servicePhoto.key] = await fileFromImageUrl(
-      //                     servicePhoto.key,
-      //                     servicePhoto.value,
-      //                   ),
-      //                 },
-      //               setState(() {
-      //                 _isLoading = false;
-      //               }),
-      //             }
-      //         },
-      //       );
-      // } catch (error) {
-      //   setState(() {
-      //     _isLoading = false;
-      //   });
-      // }
+      // widget.service.imagesURL;
+      _isLoading = false;
     }
     colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {
@@ -855,6 +828,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           Navigator.pop(context);
         }
       }
+      Navigator.pop(context);
     }
 
     return GestureDetector(
