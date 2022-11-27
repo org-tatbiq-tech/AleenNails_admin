@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom/placeHolders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -19,6 +20,7 @@ import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BusinessLogo extends StatefulWidget {
   const BusinessLogo({Key? key}) : super(key: key);
@@ -201,22 +203,56 @@ class _BusinessLogoState extends State<BusinessLogo> {
               )
             : Column(
                 children: [
-                  Container(
-                    width: rSize(160),
-                    height: rSize(160),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(rSize(80)),
-                      image: _imageFile == null
-                          ? DecorationImage(
-                              fit: BoxFit.cover,
-                              image: CachedNetworkImageProvider(settingsMgr
-                                  .profileManagement.profileMedia.logoURL!),
-                            )
-                          : DecorationImage(
-                              fit: BoxFit.cover,
-                              image: FileImage(_imageFile!),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child: _imageFile != null
+                        ? Container(
+                            width: rSize(160),
+                            height: rSize(160),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(rSize(80)),
+                              image: _imageFile == null
+                                  ? DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: CachedNetworkImageProvider(
+                                        settingsMgr.profileManagement
+                                            .profileMedia.logoURL!,
+                                      ),
+                                    )
+                                  : DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(_imageFile!),
+                                    ),
                             ),
-                    ),
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: settingsMgr
+                                .profileManagement.profileMedia.logoURL!,
+                            imageBuilder: (context, imageProvider) => Container(
+                              width: rSize(160),
+                              height: rSize(160),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(rSize(80))),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            placeholder: (context, url) => Shimmer.fromColors(
+                              baseColor:
+                                  Theme.of(context).colorScheme.background,
+                              highlightColor:
+                                  Theme.of(context).colorScheme.onBackground,
+                              child: ImagePlaceHolder(
+                                width: rSize(160),
+                                height: rSize(160),
+                                borderRadius: rSize(80),
+                              ),
+                            ),
+                            // errorWidget: (context, url, error) => errorWidget,
+                          ),
                   ),
                   SizedBox(
                     height: rSize(40),

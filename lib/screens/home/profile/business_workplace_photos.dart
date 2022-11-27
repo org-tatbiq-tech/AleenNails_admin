@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom/placeholders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_gallery.dart';
@@ -19,6 +20,7 @@ import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:uuid/uuid.dart';
 
 class BusinessWorkplacePhotos extends StatefulWidget {
@@ -163,17 +165,29 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             onTap: () => {
               removeWorkspacePhoto(imageKey: workspacePhoto.key),
             },
-            child: Container(
-              width: rSize(100),
-              height: rSize(100),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(rSize(10)),
+            child: CachedNetworkImage(
+              imageUrl: workspacePhoto.value,
+              imageBuilder: (context, imageProvider) => Container(
+                width: rSize(100),
+                height: rSize(100),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
                   image: DecorationImage(
+                    image: imageProvider,
                     fit: BoxFit.cover,
-                    image: CachedNetworkImageProvider(
-                      workspacePhoto.value,
-                    ),
-                  )),
+                  ),
+                ),
+              ),
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Theme.of(context).colorScheme.background,
+                highlightColor: Theme.of(context).colorScheme.onBackground,
+                child: ImagePlaceHolder(
+                  width: rSize(100),
+                  height: rSize(100),
+                  borderRadius: rSize(10),
+                ),
+              ),
+              // errorWidget: (context, url, error) => errorWidget,
             ),
           ),
         );

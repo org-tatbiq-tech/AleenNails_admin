@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom/placeHolders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -18,6 +19,7 @@ import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 class BusinessCoverPhoto extends StatefulWidget {
   const BusinessCoverPhoto({Key? key}) : super(key: key);
@@ -33,27 +35,21 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
   @override
   Widget build(BuildContext context) {
     final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-    deleteImage() {
+
+    deleteImage() async {
       if (settingsMgr.profileManagement.profileMedia.coverURL!.isNotEmpty) {
         showLoaderDialog(context);
-        settingsMgr.deleteCoverImage().then((value) => {
-              Navigator.pop(context),
-              showSuccessFlash(
-                context: context,
-                successColor: successPrimaryColor,
-                successBody: Languages.of(context)!
-                    .flashMessageSuccessTitle
-                    .toTitleCase(),
-                successTitle: Languages.of(context)!
-                    .coverPhotoPhotoUploadedSuccessfullyBody
-                    .toCapitalized(),
-              ),
-              setState(
-                (() {
-                  _imageFile = null;
-                }),
-              ),
-            });
+        await settingsMgr.deleteCoverImage();
+        Navigator.pop(context);
+        showSuccessFlash(
+          context: context,
+          successColor: successPrimaryColor,
+          successBody:
+              Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+          successTitle: Languages.of(context)!
+              .coverPhotoPhotoUploadedSuccessfullyBody
+              .toCapitalized(),
+        );
       }
     }
 
@@ -183,22 +179,48 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
               )
             : Column(
                 children: [
-                  Container(
-                    width: rSize(400),
-                    height: rSize(225),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(rSize(10)),
-                      image: _imageFile == null
-                          ? DecorationImage(
-                              fit: BoxFit.cover,
-                              image: CachedNetworkImageProvider(settingsMgr
-                                  .profileManagement.profileMedia.coverURL!),
-                            )
-                          : DecorationImage(
-                              fit: BoxFit.cover,
-                              image: FileImage(_imageFile!),
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child: _imageFile != null
+                        ? Container(
+                            width: rSize(400),
+                            height: rSize(225),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(rSize(10)),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: FileImage(_imageFile!),
+                              ),
                             ),
-                    ),
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: settingsMgr
+                                .profileManagement.profileMedia.coverURL!,
+                            imageBuilder: (context, imageProvider) => Container(
+                              width: rSize(400),
+                              height: rSize(225),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(rSize(10))),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            placeholder: (context, url) => Shimmer.fromColors(
+                              baseColor:
+                                  Theme.of(context).colorScheme.background,
+                              highlightColor:
+                                  Theme.of(context).colorScheme.onBackground,
+                              child: ImagePlaceHolder(
+                                width: rSize(400),
+                                height: rSize(225),
+                                borderRadius: rSize(10),
+                              ),
+                            ),
+                            // errorWidget: (context, url, error) => errorWidget,
+                          ),
                   ),
                   SizedBox(
                     height: rSize(40),
