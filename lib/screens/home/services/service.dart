@@ -122,7 +122,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     deleteServicePhoto(String fileName) async {
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
       await servicesMgr.deleteServiceImage(
-          widget.service!.id, widget.service!.name, fileName);
+        widget.service!.id,
+        widget.service!.name,
+        fileName,
+      );
+      setState(() {});
     }
 
     removeServicePhoto({required String imageKey, bool isUrl = true}) async {
@@ -136,7 +140,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           primaryAction: () async => {
             showLoaderDialog(context),
             if (isUrl)
-              {await deleteServicePhoto(imageKey), setState(() {})}
+              deleteServicePhoto(imageKey)
             else
               {
                 setState(() {
