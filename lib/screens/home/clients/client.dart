@@ -4,7 +4,7 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
-import 'package:appointments/widget/custom/custom_avatar.dart';
+import 'package:common_widgets/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';

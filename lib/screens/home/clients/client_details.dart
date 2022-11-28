@@ -7,7 +7,7 @@ import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_appointments.dart';
 import 'package:appointments/widget/appointment/client_appointment_card.dart';
-import 'package:appointments/widget/custom/custom_avatar.dart';
+import 'package:common_widgets/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';

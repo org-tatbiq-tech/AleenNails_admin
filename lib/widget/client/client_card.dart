@@ -1,7 +1,7 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
-import 'package:appointments/widget/custom/custom_avatar.dart';
+import 'package:common_widgets/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/ease_in_animation.dart';
@@ -18,15 +18,6 @@ class ClientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<ImageProvider<Object>?> getClientImage(String path) async {
-      if (clientCardProps.contactDetails.imageURL.isNotEmpty) {
-        return CachedNetworkImageProvider(
-          clientCardProps.contactDetails.imageURL,
-        );
-      }
-      return null;
-    }
-
     navigateToClientDetails(Client client) {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
       clientsMgr.setSelectedClient(clientID: client.id);
@@ -85,24 +76,18 @@ class ClientCard extends StatelessWidget {
                 : const SizedBox(),
           ],
         ),
-        leading: FutureBuilder<ImageProvider<Object>?>(
-            future: getClientImage(
-              clientCardProps.contactDetails.imageURL,
+        leading: CustomAvatar(
+          customAvatarProps: CustomAvatarProps(
+            radius: rSize(50),
+            rectangleShape: true,
+            circleShape: false,
+            imageUrl: clientCardProps.contactDetails.imageURL,
+            defaultImage: const AssetImage(
+              'assets/images/avatar_female.png',
             ),
-            builder: (context, snapshot) {
-              return CustomAvatar(
-                customAvatarProps: CustomAvatarProps(
-                  radius: rSize(50),
-                  rectangleShape: true,
-                  circleShape: false,
-                  imageUrl: clientCardProps.contactDetails.imageURL,
-                  defaultImage: const AssetImage(
-                    'assets/images/avatar_female.png',
-                  ),
-                  enable: false,
-                ),
-              );
-            }),
+            enable: false,
+          ),
+        ),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/widget/custom/custom_avatar.dart';
+import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
