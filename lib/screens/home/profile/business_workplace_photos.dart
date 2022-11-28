@@ -6,7 +6,6 @@ import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/placeholders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-import 'package:common_widgets/custom_gallery.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
@@ -33,12 +32,6 @@ class BusinessWorkplacePhotos extends StatefulWidget {
 class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   bool disposed = false;
   Map<String, File> mediaListToUpload = {};
-  List<GalleryItem> mediaList = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
