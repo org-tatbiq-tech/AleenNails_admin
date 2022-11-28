@@ -831,27 +831,21 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         children: [
           FadeAnimation(
             delay: 0.1,
-            child: FutureBuilder<ImageProvider<Object>?>(
-                future: getClientImage(appointment.clientImageURL),
-                builder: (context, snapshot) {
-                  return CustomAvatar(
-                    customAvatarProps: CustomAvatarProps(
-                      radius: rSize(110),
-                      rectangleShape: true,
-                      backgroundImage: snapshot.data,
-                      // isLoading:
-                      //     snapshot.connectionState == ConnectionState.waiting,
-                      enable: true,
-                      onTap: () => {
-                        navigateToClientDetails(appointment.clientDocID),
-                      },
-                      circleShape: false,
-                      defaultImage: const AssetImage(
-                        'assets/images/avatar_female.png',
-                      ),
-                    ),
-                  );
-                }),
+            child: CustomAvatar(
+              customAvatarProps: CustomAvatarProps(
+                radius: rSize(110),
+                rectangleShape: true,
+                imageUrl: appointment.clientImageURL,
+                enable: true,
+                onTap: () => {
+                  navigateToClientDetails(appointment.clientDocID),
+                },
+                circleShape: false,
+                defaultImage: const AssetImage(
+                  'assets/images/avatar_female.png',
+                ),
+              ),
+            ),
           ),
           SizedBox(
             width: rSize(20),

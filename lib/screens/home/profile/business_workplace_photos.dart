@@ -8,7 +8,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_gallery.dart';
 import 'package:common_widgets/custom_icon.dart';
-import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
@@ -33,10 +32,7 @@ class BusinessWorkplacePhotos extends StatefulWidget {
 
 class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
   bool disposed = false;
-  // Map<String, File> mediaList = {};
   Map<String, File> mediaListToUpload = {};
-  bool _isLoading = false;
-
   List<GalleryItem> mediaList = [];
 
   @override
@@ -82,9 +78,9 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
       }
     }
 
-    deleteWorkspacePhoto(String url) async {
+    deleteWorkspacePhoto(String imageKey) async {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-      await settingsMgr.deleteWPImage(url);
+      await settingsMgr.deleteWPImage(imageKey);
     }
 
     removeWorkspacePhoto({required String imageKey, bool isUrl = true}) {
@@ -326,11 +322,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
             SizedBox(
               height: rSize(40),
             ),
-            _isLoading
-                ? CustomLoadingIndicator(
-                    customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
-                  )
-                : renderMedia(),
+            renderMedia(),
           ],
         ),
       ),

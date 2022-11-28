@@ -469,13 +469,6 @@ class _ClientWidgetState extends State<ClientWidget> {
       );
     }
 
-    ImageProvider<Object>? getBackgroundImage() {
-      if (imageURL.isNotEmpty) {
-        return CachedNetworkImageProvider(imageURL);
-      }
-      return null;
-    }
-
     importClient() async {
       if (await FlutterContacts.requestPermission()) {
         final contact = await FlutterContacts.openExternalPick();
@@ -514,7 +507,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                 'assets/images/avatar_female.png',
               ),
               enable: false,
-              backgroundImage: getBackgroundImage(),
+              imageUrl: imageURL,
               onTap: () => {},
             ),
           )

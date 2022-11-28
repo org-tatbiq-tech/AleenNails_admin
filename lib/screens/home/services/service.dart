@@ -6,6 +6,8 @@ import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom/custom_color_picker.dart';
+import 'package:appointments/widget/custom/placeholders.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -26,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:uuid/uuid.dart';
 
 class ServiceWidget extends StatefulWidget {
@@ -60,7 +63,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   int selectedMinutes = 0;
   int selectedMinutesIdx = 0;
 
-  Map<String, File> mediaList = {};
+  Map<String, String> mediaList = {};
   Map<String, File> mediaListToUpload = {};
 
   @override
@@ -86,9 +89,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       onlineBooking = widget.service!.onlineBooking;
       selectedColor = Color(widget.service!.colorID);
       selectedColorTemp = Color(widget.service!.colorID);
-
-      final serviceMgr = Provider.of<ServicesMgr>(context, listen: false);
-      // widget.service.imagesURL;
+      mediaList = widget.service!.imagesURL!;
       _isLoading = false;
     }
     colorPositionsListener.itemPositions.addListener(() {});
@@ -119,10 +120,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   Widget build(BuildContext context) {
     deleteServicePhoto(String fileName) async {
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
-      // await servicesMgr.deleteServiceImage(_nameController.text, fileName);
+      await servicesMgr.deleteServiceImage(
+          widget.service!.id, widget.service!.name, fileName);
     }
 
-    removeServicePhoto(String imagePath) async {
+    removeServicePhoto({required String imageKey, bool isUrl = true}) async {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -132,7 +134,15 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           deleteCancelModal: true,
           primaryAction: () async => {
             showLoaderDialog(context),
-            await deleteServicePhoto(imagePath),
+            if (isUrl)
+              {await deleteServicePhoto(imageKey), setState(() {})}
+            else
+              {
+                setState(() {
+                  mediaListToUpload
+                      .removeWhere((key, value) => key == imageKey);
+                })
+              },
             Navigator.pop(context),
             showSuccessFlash(
               context: context,
@@ -194,7 +204,47 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             child: EaseInAnimation(
               beginAnimation: 0.98,
               onTap: () => {
-                removeServicePhoto(servicePhoto.key),
+                removeServicePhoto(imageKey: servicePhoto.key),
+              },
+              child: CachedNetworkImage(
+                imageUrl: servicePhoto.value,
+                imageBuilder: (context, imageProvider) => Container(
+                  width: rSize(100),
+                  height: rSize(100),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: Theme.of(context).colorScheme.background,
+                  highlightColor: Theme.of(context).colorScheme.onBackground,
+                  child: ImagePlaceHolder(
+                    width: rSize(100),
+                    height: rSize(100),
+                    borderRadius: rSize(10),
+                  ),
+                ),
+                // errorWidget: (context, url, error) => errorWidget,
+              ),
+            ),
+          ),
+        );
+      }
+      for (var servicePhoto in mediaListToUpload.entries) {
+        widgetList.add(
+          Padding(
+            padding: EdgeInsets.only(
+              left: isRtl(context) ? 0 : rSize(15),
+              right: isRtl(context) ? rSize(15) : 0,
+            ),
+            child: EaseInAnimation(
+              beginAnimation: 0.98,
+              onTap: () => {
+                removeServicePhoto(imageKey: servicePhoto.key, isUrl: false),
               },
               child: Container(
                 width: rSize(100),
@@ -251,7 +301,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                         saveImage: (File imageFile) {
                           setState(() {
                             var uid = const Uuid().v4();
-                            mediaList[uid] = imageFile;
                             mediaListToUpload[uid] = imageFile;
                             isSaveDisabled = false;
                           });

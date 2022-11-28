@@ -421,10 +421,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 defaultImage: const AssetImage(
                   'assets/images/avatar_female.png',
                 ),
-                backgroundImage: clientsMgr.selectedClient.imageURL.isNotEmpty
-                    ? CachedNetworkImageProvider(
-                        clientsMgr.selectedClient.imageURL)
-                    : null,
+                imageUrl: clientsMgr.selectedClient.imageURL,
               ),
             ),
           ),

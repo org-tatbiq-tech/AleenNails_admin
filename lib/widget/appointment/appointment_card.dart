@@ -155,37 +155,32 @@ class AppointmentCard extends StatelessWidget {
             ),
           ],
         ),
-        leading: FutureBuilder<ImageProvider<Object>?>(
-          future: getClientImage(
-              appointmentCardProps.appointmentDetails.clientImageURL),
-          builder: (context, snapshot) {
-            return Column(
-              children: [
-                CustomAvatar(
-                  customAvatarProps: CustomAvatarProps(
-                    radius: rSize(50),
-                    rectangleShape: false,
-                    circleShape: true,
-                    backgroundImage: snapshot.data,
-                    defaultImage: const AssetImage(
-                      'assets/images/avatar_female.png',
-                    ),
-                    enable: false,
-                  ),
+        leading: Column(
+          children: [
+            CustomAvatar(
+              customAvatarProps: CustomAvatarProps(
+                radius: rSize(50),
+                rectangleShape: false,
+                circleShape: true,
+                imageUrl:
+                    appointmentCardProps.appointmentDetails.clientImageURL,
+                defaultImage: const AssetImage(
+                  'assets/images/avatar_female.png',
                 ),
-                SizedBox(
-                  height: rSize(5),
-                ),
-                Text(
-                  appointmentCardProps.appointmentDetails.clientName,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle2
-                      ?.copyWith(fontSize: rSize(12)),
-                ),
-              ],
-            );
-          },
+                enable: false,
+              ),
+            ),
+            SizedBox(
+              height: rSize(5),
+            ),
+            Text(
+              appointmentCardProps.appointmentDetails.clientName,
+              style: Theme.of(context)
+                  .textTheme
+                  .subtitle2
+                  ?.copyWith(fontSize: rSize(12)),
+            ),
+          ],
         ),
       ),
     );

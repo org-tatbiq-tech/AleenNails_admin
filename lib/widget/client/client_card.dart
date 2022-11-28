@@ -21,7 +21,8 @@ class ClientCard extends StatelessWidget {
     Future<ImageProvider<Object>?> getClientImage(String path) async {
       if (clientCardProps.contactDetails.imageURL.isNotEmpty) {
         return CachedNetworkImageProvider(
-            clientCardProps.contactDetails.imageURL);
+          clientCardProps.contactDetails.imageURL,
+        );
       }
       return null;
     }
@@ -94,7 +95,7 @@ class ClientCard extends StatelessWidget {
                   radius: rSize(50),
                   rectangleShape: true,
                   circleShape: false,
-                  backgroundImage: snapshot.data,
+                  imageUrl: clientCardProps.contactDetails.imageURL,
                   defaultImage: const AssetImage(
                     'assets/images/avatar_female.png',
                   ),
