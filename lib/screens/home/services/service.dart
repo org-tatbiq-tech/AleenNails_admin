@@ -23,6 +23,7 @@ import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -825,6 +826,15 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       );
     }
 
+    getResizedMediaToUpload() async {
+      Map<String, File> resizedMediaListToUpload = {};
+      for (var element in mediaListToUpload.entries) {
+        resizedMediaListToUpload[element.key] =
+            (await compressImageNative(path: element.value.absolute.path))!;
+      }
+      return resizedMediaListToUpload;
+    }
+
     saveService() async {
       final form = _formKey.currentState;
       setState(() {
@@ -846,9 +856,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
         );
 
         if (widget.service == null) {
+          Map<String, File> resizedMediaListToUpload =
+              await getResizedMediaToUpload();
           await servicesMgr.submitNewService(
             service,
-            mediaListToUpload,
+            resizedMediaListToUpload,
           );
           showSuccessFlash(
             context: context,
@@ -861,9 +873,11 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           );
           Navigator.pop(context);
         } else {
+          Map<String, File> resizedMediaListToUpload =
+              await getResizedMediaToUpload();
           await servicesMgr.updateService(
             service,
-            mediaListToUpload.values.toList(),
+            resizedMediaListToUpload.values.toList(),
           );
           showSuccessFlash(
             context: context,
