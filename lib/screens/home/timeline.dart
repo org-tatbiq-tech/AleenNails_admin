@@ -336,8 +336,9 @@ class TimeLineState extends State<TimeLine> {
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            withBorder: true,
+            // withBorder: true,
             isTransparent: true,
+            centerTitle: WrapAlignment.start,
             titleText: Languages.of(context)!.appName.toTitleCase(),
             customIcon: getCustomIcon(),
             barHeight: 70,
