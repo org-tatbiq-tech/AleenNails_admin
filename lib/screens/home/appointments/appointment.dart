@@ -222,6 +222,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         creationDate: DateTime.now(),
         creator: AppointmentCreator
             .business, // will be used as enum AppointmentCreator
+        lastEditor: AppointmentCreator
+            .business, // will be used as enum AppointmentCreator
         date: startDateTime,
         paymentStatus: PaymentStatus.unpaid,
         services: updatedServices,

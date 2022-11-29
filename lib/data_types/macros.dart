@@ -1,6 +1,11 @@
 import 'package:appointments/utils/general.dart';
 import 'package:flutter/material.dart';
 
+enum NotificationCategory {
+  appointment,
+  user,
+}
+
 enum AppointmentStatus {
   confirmed,
   declined,
@@ -15,6 +20,7 @@ enum PaymentStatus {
   unpaid,
 }
 
+//TODO rename this class as AppointmentEditor
 enum AppointmentCreator {
   business,
   client,

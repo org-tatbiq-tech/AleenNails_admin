@@ -138,6 +138,8 @@ class Appointment {
   String id; // Appointment ID (created by DB)
   AppointmentStatus status; // Appointment Status
   AppointmentCreator creator; // Appointment creator (which admin/worker/...)
+  AppointmentCreator
+      lastEditor; // Appointment last editor (which admin/worker/...)
   String clientName; // Client full name
   String clientPhone; // Client phone number
   String clientEmail; // Client Email
@@ -155,6 +157,7 @@ class Appointment {
     required this.id,
     required this.status,
     required this.creator,
+    required this.lastEditor,
     required this.clientName,
     required this.clientPhone,
     required this.clientEmail,
@@ -186,6 +189,8 @@ class Appointment {
     return {
       'status': status.toString(),
       'creator': creator.toString(),
+      // last editor is now the business
+      'lastEditor': AppointmentCreator.business.toString(),
       'clientName': clientName,
       'clientDocID': clientDocID,
       'clientPhone': clientPhone,
@@ -208,6 +213,7 @@ class Appointment {
       id: appointment.id,
       status: appointment.status,
       creator: appointment.creator,
+      lastEditor: appointment.lastEditor,
       clientName: appointment.clientName,
       clientPhone: appointment.clientPhone,
       clientEmail: appointment.clientEmail,
@@ -262,6 +268,9 @@ class Appointment {
       id: doc["id"],
       status: loadAppointmentStatus(doc["status"]),
       creator: loadCreator(doc['creator']),
+      lastEditor: doc['lastEditor'] != null
+          ? loadCreator(doc['lastEditor'])
+          : AppointmentCreator.business,
       clientName: doc['clientName'],
       clientDocID: doc['clientDocID'],
       clientPhone: doc['clientPhone'],
