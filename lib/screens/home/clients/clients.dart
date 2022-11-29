@@ -5,6 +5,7 @@ import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/widget/client/client_card.dart';
 import 'package:appointments/widget/client/clients_search.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/empty_list_image.dart';
@@ -38,84 +39,88 @@ class ClientsState extends State<Clients> {
     }
 
     return Consumer<ClientsMgr>(builder: (context, clientsMgr, _) {
-      return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            withSearch: clientsMgr.clients.isNotEmpty,
-            searchFunction: () => showSearch(
-              context: context,
-              delegate: ClientsSearchDelegate(clients: clientsMgr.clients),
-            ),
-            titleText: Languages.of(context)!.clientsLabel.toTitleCase(),
-            customIcon: Icon(
-              FontAwesomeIcons.plus,
-              size: rSize(20),
-            ),
-            customIconTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ClientWidget(),
-                ),
+      return CustomContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              withSearch: clientsMgr.clients.isNotEmpty,
+              centerTitle: WrapAlignment.start,
+              isTransparent: true,
+              searchFunction: () => showSearch(
+                context: context,
+                delegate: ClientsSearchDelegate(clients: clientsMgr.clients),
               ),
-            },
+              titleText: Languages.of(context)!.clientsLabel.toTitleCase(),
+              customIcon: Icon(
+                FontAwesomeIcons.plus,
+                size: rSize(20),
+              ),
+              customIconTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ClientWidget(),
+                  ),
+                ),
+              },
+            ),
           ),
-        ),
-        body: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 500),
-          child: clientsMgr.clients.isEmpty
-              ? EmptyListImage(
-                  emptyListImageProps: EmptyListImageProps(
-                    title: Languages.of(context)!
-                        .noClientsAddedLabel
-                        .toTitleCase(),
-                    iconPath: 'assets/icons/menu.png',
-                    bottomWidget: CustomTextButton(
-                      customTextButtonProps: CustomTextButtonProps(
-                        onTap: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ClientWidget(),
+          body: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: clientsMgr.clients.isEmpty
+                ? EmptyListImage(
+                    emptyListImageProps: EmptyListImageProps(
+                      title: Languages.of(context)!
+                          .noClientsAddedLabel
+                          .toTitleCase(),
+                      iconPath: 'assets/icons/menu.png',
+                      bottomWidget: CustomTextButton(
+                        customTextButtonProps: CustomTextButtonProps(
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ClientWidget(),
+                              ),
                             ),
+                          },
+                          text: Languages.of(context)!
+                              .addNewClientLabel
+                              .toTitleCase(),
+                          textColor: Theme.of(context).colorScheme.primary,
+                          withIcon: true,
+                          icon: Icon(
+                            FontAwesomeIcons.plus,
+                            size: rSize(16),
+                            color: Theme.of(context).colorScheme.primary,
                           ),
-                        },
-                        text: Languages.of(context)!
-                            .addNewClientLabel
-                            .toTitleCase(),
-                        textColor: Theme.of(context).colorScheme.primary,
-                        withIcon: true,
-                        icon: Icon(
-                          FontAwesomeIcons.plus,
-                          size: rSize(16),
-                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
+                  )
+                : ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        height: rSize(15),
+                      );
+                    },
+                    padding: EdgeInsets.symmetric(
+                      vertical: rSize(40),
+                      horizontal: rSize(20),
+                    ),
+                    itemCount: clientsMgr.clients.length,
+                    itemBuilder: (context, index) {
+                      return ClientCard(
+                        clientCardProps: ClientCardProps(
+                          contactDetails: clientsMgr.clients[index],
+                          onTap: () => navigateToClientDetails(
+                              clientsMgr.clients[index]),
+                        ),
+                      );
+                    },
                   ),
-                )
-              : ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      height: rSize(15),
-                    );
-                  },
-                  padding: EdgeInsets.symmetric(
-                    vertical: rSize(20),
-                    horizontal: rSize(20),
-                  ),
-                  itemCount: clientsMgr.clients.length,
-                  itemBuilder: (context, index) {
-                    return ClientCard(
-                      clientCardProps: ClientCardProps(
-                        contactDetails: clientsMgr.clients[index],
-                        onTap: () =>
-                            navigateToClientDetails(clientsMgr.clients[index]),
-                      ),
-                    );
-                  },
-                ),
+          ),
         ),
       );
     });

@@ -7,6 +7,7 @@ import 'package:appointments/providers/langs.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_card.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_day_view.dart';
 import 'package:common_widgets/custom_expandable_calendar.dart';
@@ -330,144 +331,151 @@ class TimeLineState extends State<TimeLine> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          withBorder: true,
-          withClipPath: false,
-          titleText: Languages.of(context)!.appName.toTitleCase(),
-          customIcon: getCustomIcon(),
-          customIconTap: () => setState(() {
-            _isListView = !_isListView;
-          }),
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            withBorder: true,
+            isTransparent: true,
+            titleText: Languages.of(context)!.appName.toTitleCase(),
+            customIcon: getCustomIcon(),
+            barHeight: 70,
+            customIconTap: () => setState(() {
+              _isListView = !_isListView;
+            }),
+          ),
         ),
-      ),
-      body: Consumer<AppointmentsMgr>(
-        builder: (context, appointmentsMgr, _) => Stack(
-          children: [
-            Column(
-              children: [
-                CustomExpandableCalendar(
-                  customExpandableCalendarProps: CustomExpandableCalendarProps(
-                    focusedDay: _focusedDay,
-                    selectedDay: _selectedDay,
-                    locale: getCurrentLocale(context),
-                    calendarFormat: _calendarFormat,
-                    availableCalendarFormats: {
-                      CalendarFormat.month: Languages.of(context)!.monthLabel,
-                      CalendarFormat.week: Languages.of(context)!.weekLabel,
-                    },
-                    onDaySelected: _onDaySelected,
-                    onPageChanged: (focusedDay) {
-                      _focusedDay = focusedDay;
-                    },
-                    onFormatChanged: (format) {
-                      if (_calendarFormat != format) {
-                        setState(() {
-                          _calendarFormat = format;
-                        });
-                      }
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: Visibility(
-                    visible: !_isLoading,
-                    replacement: CustomLoadingIndicator(
-                      customLoadingIndicatorProps:
-                          CustomLoadingIndicatorProps(),
+        body: Consumer<AppointmentsMgr>(
+          builder: (context, appointmentsMgr, _) => Stack(
+            children: [
+              Column(
+                children: [
+                  CustomExpandableCalendar(
+                    customExpandableCalendarProps:
+                        CustomExpandableCalendarProps(
+                      focusedDay: _focusedDay,
+                      selectedDay: _selectedDay,
+                      locale: getCurrentLocale(context),
+                      calendarFormat: _calendarFormat,
+                      availableCalendarFormats: {
+                        CalendarFormat.month: Languages.of(context)!.monthLabel,
+                        CalendarFormat.week: Languages.of(context)!.weekLabel,
+                      },
+                      onDaySelected: _onDaySelected,
+                      onPageChanged: (focusedDay) {
+                        _focusedDay = focusedDay;
+                      },
+                      onFormatChanged: (format) {
+                        if (_calendarFormat != format) {
+                          setState(() {
+                            _calendarFormat = format;
+                          });
+                        }
+                      },
                     ),
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 300),
-                      child: !_isListView
-                          ? CustomDayView(
-                              customDayViewProps: CustomDayViewProps(
-                                dayViewController: dayViewController,
-                                minimumTime: const HourMinute(hour: 6),
-                                date: _selectedDay,
-                                userZoomAble: true,
-                                events:
-                                    getFlutterWeekAppointments(_selectedDay),
-                                initialTime: HourMinute(
-                                  hour: DateTime.now().hour,
-                                  minute: DateTime.now().minute,
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: !_isLoading,
+                      replacement: CustomLoadingIndicator(
+                        customLoadingIndicatorProps:
+                            CustomLoadingIndicatorProps(),
+                      ),
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: !_isListView
+                            ? CustomDayView(
+                                customDayViewProps: CustomDayViewProps(
+                                  dayViewController: dayViewController,
+                                  minimumTime: const HourMinute(hour: 6),
+                                  date: _selectedDay,
+                                  userZoomAble: true,
+                                  events:
+                                      getFlutterWeekAppointments(_selectedDay),
+                                  initialTime: HourMinute(
+                                    hour: DateTime.now().hour,
+                                    minute: DateTime.now().minute,
+                                  ),
                                 ),
-                              ),
-                            )
-                          : Visibility(
-                              visible: getAppointments(_selectedDay).isNotEmpty,
-                              replacement: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  EmptyListImage(
-                                    emptyListImageProps: EmptyListImageProps(
-                                      title: Languages.of(context)!
-                                          .emptyAppointmentTimeListLabel
-                                          .toCapitalized(),
-                                      iconPath: 'assets/icons/menu.png',
-                                      bottomWidget: CustomTextButton(
-                                        customTextButtonProps:
-                                            CustomTextButtonProps(
-                                          onTap: () => {
-                                            Navigator.of(context)
-                                                .pushNamed('/newAppointment'),
-                                          },
-                                          text: Languages.of(context)!
-                                              .addNewAppointmentLabel
-                                              .toCapitalized(),
-                                          textColor: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                          withIcon: true,
-                                          icon: Icon(
-                                            FontAwesomeIcons.plus,
-                                            size: rSize(16),
-                                            color: Theme.of(context)
+                              )
+                            : Visibility(
+                                visible:
+                                    getAppointments(_selectedDay).isNotEmpty,
+                                replacement: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    EmptyListImage(
+                                      emptyListImageProps: EmptyListImageProps(
+                                        title: Languages.of(context)!
+                                            .emptyAppointmentTimeListLabel
+                                            .toCapitalized(),
+                                        iconPath: 'assets/icons/menu.png',
+                                        bottomWidget: CustomTextButton(
+                                          customTextButtonProps:
+                                              CustomTextButtonProps(
+                                            onTap: () => {
+                                              Navigator.of(context)
+                                                  .pushNamed('/newAppointment'),
+                                            },
+                                            text: Languages.of(context)!
+                                                .addNewAppointmentLabel
+                                                .toCapitalized(),
+                                            textColor: Theme.of(context)
                                                 .colorScheme
                                                 .primary,
+                                            withIcon: true,
+                                            icon: Icon(
+                                              FontAwesomeIcons.plus,
+                                              size: rSize(16),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              child: ListView.separated(
-                                padding: EdgeInsets.only(
-                                  top: rSize(20),
-                                  left: rSize(20),
-                                  right: rSize(20),
+                                  ],
                                 ),
-                                itemCount: getAppointments(_selectedDay).length,
-                                itemBuilder: (context, index) {
-                                  return AppointmentCard(
-                                    appointmentCardProps: AppointmentCardProps(
-                                      appointmentDetails:
-                                          getAppointments(_selectedDay)[index],
-                                    ),
-                                  );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return SizedBox(
-                                    height: rSize(10),
-                                  );
-                                },
+                                child: ListView.separated(
+                                  padding: EdgeInsets.only(
+                                    top: rSize(20),
+                                    left: rSize(20),
+                                    right: rSize(20),
+                                  ),
+                                  itemCount:
+                                      getAppointments(_selectedDay).length,
+                                  itemBuilder: (context, index) {
+                                    return AppointmentCard(
+                                      appointmentCardProps:
+                                          AppointmentCardProps(
+                                        appointmentDetails: getAppointments(
+                                            _selectedDay)[index],
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return SizedBox(
+                                      height: rSize(10),
+                                    );
+                                  },
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Visibility(
-              visible: !isSameDay(_selectedDay, DateTime.now()),
-              child: renderTodayButton(),
-            )
-          ],
+                ],
+              ),
+              Visibility(
+                visible: !isSameDay(_selectedDay, DateTime.now()),
+                child: renderTodayButton(),
+              )
+            ],
+          ),
         ),
       ),
     );
