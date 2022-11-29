@@ -106,19 +106,33 @@ class AppointmentsMgr extends ChangeNotifier {
   }
 
   /// Appointment selection
-  late Appointment selectedAppointment;
+  late Appointment _selectedAppointment;
   bool isSelectedAppointmentLoaded = false;
+  StreamSubscription<DocumentSnapshot>? _selectedAppointmentSub;
+
+  Appointment get selectedAppointment {
+    if (_selectedAppointmentSub != null && _selectedAppointmentSub!.isPaused) {
+      _selectedAppointmentSub!.resume();
+    }
+    return _selectedAppointment;
+  }
+
+  void pauseSelectedAppointment() {
+    if (_selectedAppointmentSub != null && !_selectedAppointmentSub!.isPaused) {
+      _selectedAppointmentSub!.pause();
+    }
+  }
 
   Future<void> setSelectedAppointment(
       {Appointment? appointment, String? appointmentID}) async {
     isSelectedAppointmentLoaded = false;
     if (appointment != null) {
       // Appointment is provided, no need to download
-      selectedAppointment = appointment;
+      _selectedAppointment = appointment;
       isSelectedAppointmentLoaded = true;
     } else {
       // download appointment
-      _fs
+      _selectedAppointmentSub = _fs
           .collection(appointmentsCollection)
           .doc(appointmentID)
           .snapshots()
@@ -127,7 +141,7 @@ class AppointmentsMgr extends ChangeNotifier {
         data = appointmentDoc.data();
         if (data != null) {
           data['id'] = appointmentDoc.id;
-          selectedAppointment = Appointment.fromJson(data);
+          _selectedAppointment = Appointment.fromJson(data);
           isSelectedAppointmentLoaded = true;
         }
         notifyListeners();

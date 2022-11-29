@@ -1,9 +1,9 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
-import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/fade_animation.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +18,13 @@ class ScheduleManagement extends StatefulWidget {
 }
 
 class ScheduleManagementState extends State<ScheduleManagement> {
+  @override
+  void dispose() {
+    SettingsMgr settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    settingsMgr.pauseScheduleManagement();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

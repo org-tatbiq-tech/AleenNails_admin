@@ -2,8 +2,6 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
-import 'package:appointments/providers/auth_mgr.dart';
-import 'package:appointments/providers/langs.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_card.dart';
@@ -173,16 +171,18 @@ class TimeLineState extends State<TimeLine> {
     return appointmentsMgr.appointments;
   }
 
-  navigateToAppointmentDetails(Appointment appointment) {
+  navigateToAppointmentDetails(Appointment appointment) async {
     final appointmentsMgr =
         Provider.of<AppointmentsMgr>(context, listen: false);
-    appointmentsMgr.setSelectedAppointment(appointment: appointment);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const AppointmentDetails(),
-      ),
-    );
+    await appointmentsMgr.setSelectedAppointment(appointment: appointment);
+    if (mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AppointmentDetails(),
+        ),
+      );
+    }
   }
 
   String getAppointmentStatusText(AppointmentStatus status) {

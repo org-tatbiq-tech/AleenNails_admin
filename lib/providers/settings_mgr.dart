@@ -51,11 +51,21 @@ class SettingsMgr extends ChangeNotifier {
   StreamSubscription<DocumentSnapshot>? _scheduleManagementSub;
 
   ScheduleManagement get scheduleManagement {
+    if (_scheduleManagementSub != null && _scheduleManagementSub!.isPaused) {
+      _scheduleManagementSub!.resume();
+    }
+
     if (!initializedScheduleManagement) {
       initializedScheduleManagement = true;
       downloadScheduleManagement();
     }
     return _scheduleManagement;
+  }
+
+  void pauseScheduleManagement() {
+    if (_scheduleManagementSub != null && !_scheduleManagementSub!.isPaused) {
+      _scheduleManagementSub!.pause();
+    }
   }
 
   Future<void> downloadScheduleManagement() async {
@@ -99,11 +109,20 @@ class SettingsMgr extends ChangeNotifier {
   StreamSubscription<DocumentSnapshot>? _profileManagementSub;
 
   ProfileManagement get profileManagement {
+    if (_profileManagementSub != null && _profileManagementSub!.isPaused) {
+      _profileManagementSub!.resume();
+    }
     if (!initializedProfileManagement) {
       initializedProfileManagement = true;
       downloadProfileManagement();
     }
     return _profileManagement;
+  }
+
+  void pauseProfileManagement() {
+    if (_profileManagementSub != null && !_profileManagementSub!.isPaused) {
+      _profileManagementSub!.pause();
+    }
   }
 
   Future<void> downloadProfileManagement() async {
