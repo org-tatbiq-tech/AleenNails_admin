@@ -38,7 +38,7 @@ async function getAdminTokens() {
 
 // Update the admin when client creates new appointment and update the client when
 // admin creates new appointment for him
-async function HandleNewAppointment(snap, context) {
+async function handleNewAppointment(snap, context) {
     // Getting details of the new document
     const appointmentId = context.params.appointmentId;
     const newAppointmentData = snap.data();
@@ -90,7 +90,7 @@ async function HandleNewAppointment(snap, context) {
     }
 }
 
-async function HandleAppointmentUpdate(change, context) {
+async function handleAppointmentUpdate(change, context) {
     // Get the updated object representing the updated document
     const newValue = change.after.data();
     const appointmentId = change.after.id;
@@ -215,10 +215,10 @@ async function HandleAppointmentUpdate(change, context) {
 // Handle new appointment
 exports.newAppointment = functions.firestore.
     document('appointments/{appointmentId}').
-    onCreate(HandleNewAppointment);
+    onCreate(handleNewAppointment);
 
 
 // Handle updating appointment
 exports.updateAppointment = functions.firestore.
     document('appointments/{any}').
-    onUpdate(HandleAppointmentUpdate);
+    onUpdate(handleAppointmentUpdate);
