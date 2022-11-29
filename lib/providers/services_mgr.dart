@@ -109,11 +109,14 @@ class ServicesMgr extends ChangeNotifier {
   }
 
   Future<void> updateService(
-      Service updatedService, List<File> imageList) async {
+      Service updatedService, Map<String, File> imagesMap) async {
     /// Update existing service - update DB
     // List<String> serviceImages =
     //     await uploadServiceImages(updatedService.name, imageList);
     // updatedService.imagesURL?.addAll(serviceImages);
+    Map<String, String> serviceImages =
+        await uploadServiceImages(updatedService.name, imagesMap);
+    updatedService.imagesURL!.addAll(serviceImages);
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     var data = updatedService.toJson();
     servicesColl.doc(updatedService.id).update(data);
