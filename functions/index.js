@@ -1,174 +1,224 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-
 admin.initializeApp();
 var path = require('path');
 
 // Macros
 const appointmentsCollection = "appointments";
 const clientsCollection = "clients";
-const settingCollection = "settings";
-const profileDoc = "profile";
+const adminsCollection = "admins";
 
-
-// Profile images handler - any new image loaded into storage
-// There is no way currently to listen to files changes in specific directory
-// For that, creating once master cloud function which will navigate to proper image handler
-// Functions are responsible to update imagePath.
-
-// Logo, Cover & Work place images handler
-function profileImagesHandler(fileObject) {
-    // File object is the same object got into cloud function
-    const filePath = fileObject.name; // File path in the bucket.
-    if (!filePath.startsWith('profile/')) {
-        return;
-    }
-
-    // Check if file is after resizer extension
-    if (!filePath.endsWith('_600x600.png')) {
-        return;
-    }
-
-    // Understanding what image are we loading (logo/cover/workplace) according to metadata
-    // Metadata is dictionary, expecting type key
-    const imageMetadata = fileObject.metadata;
-    const fileName = path.basename(filePath);
-
-    // Preparing record update
-    var fsPath = '';
-    var value = fileName;
-    const type = 'type';
-    if (imageMetadata[type] == 'logo') {
-        console.log('got logo image');
-        fsPath = 'media.logoPath';
-    } else if (imageMetadata[type] == 'cover') {
-        console.log('got cover image');
-        fsPath = 'media.coverPath';
-    } else if (imageMetadata[type] == 'wp')  {
-        console.log('got workplace image');
-        fsPath = 'media.wp.' + fileName;
-        value = '';
-    } else {
-        // None handled image type!
-        return;
-    }
-
-    // Update record accordingly
-    var profile = admin.firestore().collection(settingCollection).doc(profileDoc);
-    var data = {};
-    data[fsPath] = value;
-    return profile.update(data);
+function isClient(editor) {
+    return editor === 'AppointmentCreator.client';
 }
 
-// Services image handler
-function servicesImagesHandler(fileObject) {
-    // Do something
+function isBusiness(editor) {
+    return editor === 'AppointmentCreator.business';
 }
 
-// Clients image handler
-function clientsImagesHandler(fileObject) {
-    // Do something
+async function getClientTokens(clientDocID) {
+    const clientResults  = await admin.firestore().collection(clientsCollection).doc(clientDocID).get();
+    const client = clientResults.data();
+    return client['tokens'];
 }
 
-exports.imagesHandler = functions.storage.bucket().object().onFinalize(async (object) => {
-    const filePath = object.name; // File path in the bucket.
+async function getAdminTokens() {
+    let adminTokens = [];
+    const adminResults  = await admin.firestore().collection(adminsCollection).get();
+    for (adminDoc of adminResults.docs) {
+        const adminEmail = adminDoc.id;
+        const adminClientResults = await admin.firestore().collection(clientsCollection).where('email', '==', adminEmail).get();
+        for (adminClientDoc of adminClientResults.docs) {
+            currentTokens = adminClientDoc.data()['tokens'];
+            adminTokens = [...adminTokens, ...currentTokens]
+        }
+    }
+    return adminTokens;
+}
 
-    // Check if file is after resizer
-    if (!filePath.endsWith('_600x600.png')) {
-        // Updating only in case of resized image
+// Update the admin when client creates new appointment and update the client when
+// admin creates new appointment for him
+async function HandleNewAppointment(snap, context) {
+    // Getting details of the new document
+    const appointmentId = context.params.appointmentId;
+    const newAppointmentData = snap.data();
+    const clientDocID = newAppointmentData.clientDocID;
+    if ( isClient(newAppointmentData.creator) ) {
+       console.log('Appointment created by client. need to notify the admin');
+       const clientName = newAppointmentData.clientName ?? 'User';
+       const title = clientName + ' Created new appointment';
+       const services = newAppointmentData.services ? newAppointmentData.services.length : 0;
+       const msg = clientName + ' created new appointment for ' +  services + ' services'
+       // Setting notification content - must send package_id
+       const notificationContent = {
+           notification: {
+               title: title,
+               body: msg,
+               sound: 'default'
+           },
+           data: {
+               client_id: clientDocID,
+               appointment_id: appointmentId,
+               category: 'NotificationCategory.appointment',
+           }
+       };
+       const adminTokens = await getAdminTokens();
+       return admin.messaging().sendToDevice(adminTokens, notificationContent);
+    }
+    if ( isBusiness(newAppointmentData.creator) ) {
+        console.log('Appointment created by business. need to notify the client');
+        const clientTokens = await getClientTokens(clientDocID);
+        if(clientTokens) {
+             const title = 'Aleen Created new appointment for you';
+             const services = newAppointmentData.services ? newAppointmentData.services.length : 0;
+             const msg = 'New appointment with ' +  services + ' services'
+             const notificationContent = {
+                notification: {
+                  title: title,
+                  body: msg,
+                  sound: 'default'
+                },
+                data: {
+                  client_id: clientDocID,
+                  appointment_id: appointmentId,
+                  category: 'NotificationCategory.appointment',
+                }
+            };
+            console.log('Sending notification to ', newAppointmentData.clientName)
+            admin.messaging().sendToDevice(clientTokens, notificationContent);
+        }
+    }
+}
+
+async function HandleAppointmentUpdate(change, context) {
+    // Get the updated object representing the updated document
+    const newValue = change.after.data();
+    const appointmentId = change.after.id;
+    // Get the previous object before this updated document
+    const previousValue = change.before.data();
+    // check the editor
+    const changedByClient = isClient(newValue.lastEditor);
+    const changedByBusiness = isBusiness(newValue.lastEditor);
+    const clientDocID = newValue.clientDocID;
+    if (!changedByClient && !changedByBusiness){
+        console.log('last editor is not defined');
         return;
     }
-
-    // Exit if the image uploaded is not part of profile.
-    if (filePath.startsWith('profile/')) {
-        return profileImagesHandler(object);
+    // Check if appointment rescheduled
+    if (!newValue.date.isEqual(previousValue.date)) {
+        let title = changedByClient ? newValue.clientName : 'Aleen';
+        title += ' rescheduled the appointment';
+        const msg = 'Appointment moved to ' + newValue.date.toDate();
+        const notificationContent = {
+            notification: {
+              title: title,
+              body: msg,
+              sound: 'default'
+            },
+            data: {
+              client_id: clientDocID,
+              appointment_id: appointmentId,
+              category: 'NotificationCategory.appointment',
+            }
+        };
+        console.log('Send notification about the rescheduled appointment')
+        if (changedByClient) {
+            const adminTokens = await getAdminTokens();
+            return admin.messaging().sendToDevice(adminTokens, notificationContent);
+        } else {
+            const clientTokens = await getClientTokens(clientDocID);
+            if(clientTokens) {
+                console.log('Sending notification to ', newValue.clientName)
+                return admin.messaging().sendToDevice(clientTokens, notificationContent);
+            }
+        }
     }
-    if (filePath.startsWith('services/')) {
-        return servicesImagesHandler(object);
+    if (newValue.status != previousValue.status) {
+        if(newValue.status === 'AppointmentStatus.confirmed') {
+            console.log('Send notification about confirmed appointment')
+            const title = 'Aleen confirmed your appointment';
+            const msg = 'We are expecting you on ' + newValue.date.toDate();
+            const notificationContent = {
+               notification: {
+                 title: title,
+                 body: msg,
+                 sound: 'default'
+               },
+               data: {
+                 client_id: clientDocID,
+                 appointment_id: appointmentId,
+                 category: 'NotificationCategory.appointment',
+               }
+           };
+           const clientTokens = await getClientTokens(clientDocID);
+           if(clientTokens) {
+               console.log('Sending notification to ', newValue.clientName)
+               return admin.messaging().sendToDevice(clientTokens, notificationContent);
+           }
+        }
+        if(newValue.status === 'AppointmentStatus.declined') {
+            console.log('Send notification about declined appointment')
+            const title = 'Failed to schedule your appointment';
+            const msg = 'Please contact Aleen to schedule the appointment';
+            const notificationContent = {
+               notification: {
+                 title: title,
+                 body: msg,
+                 sound: 'default'
+               },
+               data: {
+                 client_id: clientDocID,
+                 appointment_id: appointmentId,
+                 category: 'NotificationCategory.appointment',
+               }
+           };
+           const clientTokens = await getClientTokens(clientDocID);
+           if(clientTokens) {
+               console.log('Sending notification to ', newValue.clientName)
+               return admin.messaging().sendToDevice(clientTokens, notificationContent);
+           }
+        }
+
+        if(newValue.status ==='AppointmentStatus.cancelled') {
+            console.log('Notify that appointment is cancelled');
+            let title = changedByClient ? newValue.clientName : 'Aleen';
+            title += ' canceled the appointment';
+            const msg = 'Appointment on ' + newValue.date.toDate() + 'is canceled';
+            const notificationContent = {
+                notification: {
+                  title: title,
+                  body: msg,
+                  sound: 'default'
+                },
+                data: {
+                  client_id: clientDocID,
+                  appointment_id: appointmentId,
+                  category: 'NotificationCategory.appointment',
+                }
+            };
+            console.log('Send notification about the canceled appointment')
+            if (changedByClient) {
+                const adminTokens = await getAdminTokens();
+                return admin.messaging().sendToDevice(adminTokens, notificationContent);
+            } else {
+                const clientTokens = await getClientTokens(clientDocID);
+                if(clientTokens) {
+                    console.log('Sending notification to ', newValue.clientName)
+                    return admin.messaging().sendToDevice(clientTokens, notificationContent);
+                }
+            }
+        }
     }
-    if (filePath.startsWith('clients/')) {
-        return clientsImagesHandler(object);
-    }
-});
+}
 
-// Creating new appointment function listener, one new appointment added, need to update client's appointment list
 
-// No need for now
-//exports.newAppointment = functions.firestore.
-//    document('appointments/{appointmentId}').
-//    onCreate((snap, context) => {
-//
-//        // Getting details of the new document
-//        const appointmentId = context.params.appointmentId;
-//        const newAppointmentData = snap.data();
-//
-//        const clientDocID = newAppointmentData.clientDocID;
-//
-//        const client = admin.firestore().collection(clientsCollection).doc(clientDocID);
-//
-//        return client.get().then(clientDoc => {
-//            clientAppointments = clientDoc.data().appointments
-//            let services = [];
-//            for(const idx in newAppointmentData.services) {
-//                services.push(newAppointmentData.services[idx].name);
-//            }
-//            clientAppointments[appointmentId] = {
-//                id: appointmentId,
-//                startTime: newAppointmentData.date,
-//                endTime: newAppointmentData.endTime,
-//                totalCost: newAppointmentData.totalCost,
-//                services: services,
-//                status: newAppointmentData.status,
-//                }
-//            return client.update({
-//                       appointments: clientAppointments
-//           });
-//        })
-//
-//         // Setting notification content - must send package_id
-////        const notificationContent = {
-////            notification: {
-////                title: title,
-////                body: msg,
-////                sound: 'default'
-////            },
-////            data: {
-////                package_id: packageId
-////            }
-////        };
-////
-////        return admin.messaging().sendToDevice(store.data()["tokens"], notificationContent);
-//
-//    })
+// Handle new appointment
+exports.newAppointment = functions.firestore.
+    document('appointments/{appointmentId}').
+    onCreate(HandleNewAppointment);
 
-// Updating existing appointment status
-//exports.updateAppointmentStatus = functions.firestore.
-//    document('appointments/{any}').
-//    onUpdate((change, context) => {
-//
-//        // Get the updated object representing the updated document
-//        const newValue = change.after.data();
-//        const appointmentId = change.after.id;
-//
-//        // Get the previous object before this updated document
-//        const previousValue = change.before.data();
-//
-//        if (newValue.status == previousValue.status) {
-//            return;
-//        }
-//        // status has changed, hence, change status in user
-//        const clientDocID = newValue.clientDocID;
-//        const client = admin.firestore().collection(clientsCollection).doc(clientDocID);
-//
-//        return client.get().then(clientDoc => {
-//            clientAppointments = clientDoc.data().appointments;
-//            clientAppointment = clientDoc.data().appointments[appointmentId];
-//            clientAppointment['status'] = newValue.status;
-//            clientAppointments[appointmentId] = clientAppointment;
-//
-//            return client.update({
-//                       appointments: clientAppointments
-//           });
-//        })
-//    })
 
+// Handle updating appointment
+exports.updateAppointment = functions.firestore.
+    document('appointments/{any}').
+    onUpdate(HandleAppointmentUpdate);
