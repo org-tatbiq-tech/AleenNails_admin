@@ -7,6 +7,7 @@ import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_appointments.dart';
 import 'package:appointments/widget/appointment/client_appointment_card.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -403,67 +404,9 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
-    renderHeader(Client client) {
-      return Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          FadeAnimation(
-            delay: 0.1,
-            child: CustomAvatar(
-              customAvatarProps: CustomAvatarProps(
-                radius: rSize(100),
-                editable: false,
-                circleShape: false,
-                rectangleShape: true,
-                enable: false,
-                defaultImage: const AssetImage(
-                  'assets/images/avatar_female.png',
-                ),
-                imageUrl: clientsMgr.selectedClient.imageURL,
-              ),
-            ),
-          ),
-          SizedBox(
-            width: rSize(20),
-          ),
-          FadeAnimation(
-            delay: 0.1,
-            positionType: PositionType.left,
-            child: Wrap(
-              direction: Axis.vertical,
-              alignment: WrapAlignment.center,
-              spacing: rSize(2),
-              runSpacing: rSize(2),
-              children: [
-                Text(
-                  client.fullName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
-                ),
-                Text(
-                  client.phone,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-                Text(
-                  client.email,
-                  style: Theme.of(context).textTheme.bodyText1,
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    }
-
     renderActions(Client client) {
       return Row(
         children: [
-          SizedBox(
-            width: rSize(120),
-          ),
           CustomIcon(
             customIconProps: CustomIconProps(
               isDisabled: false,
@@ -524,6 +467,71 @@ class _ClientDetailsState extends State<ClientDetails> {
       );
     }
 
+    renderHeader(Client client) {
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FadeAnimation(
+            delay: 0.1,
+            child: CustomAvatar(
+              customAvatarProps: CustomAvatarProps(
+                radius: rSize(80),
+                editable: false,
+                circleShape: false,
+                rectangleShape: true,
+                enable: false,
+                defaultImage: const AssetImage(
+                  'assets/images/avatar_female.png',
+                ),
+                imageUrl: clientsMgr.selectedClient.imageURL,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: rSize(20),
+          ),
+          FadeAnimation(
+            delay: 0.1,
+            positionType: PositionType.left,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: rSize(5),
+                ),
+                Text(
+                  client.fullName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                Text(
+                  client.phone,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                Text(
+                  client.email,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                FadeAnimation(
+                  positionType: PositionType.bottom,
+                  delay: 0.4,
+                  child: renderActions(clientsMgr.selectedClient),
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
     Widget renderDetailsBody() {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
       return Column(
@@ -531,18 +539,16 @@ class _ClientDetailsState extends State<ClientDetails> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: rSize(40),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: rSize(20),
+              horizontal: rSize(30),
             ),
             child: Column(
               children: [
                 renderHeader(clientsMgr.selectedClient),
-                FadeAnimation(
-                  positionType: PositionType.bottom,
-                  delay: 0.4,
-                  child: renderActions(clientsMgr.selectedClient),
-                ),
                 SizedBox(
                   height: rSize(24),
                 ),
@@ -558,7 +564,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               padding: EdgeInsets.symmetric(
-                horizontal: rSize(30),
+                horizontal: rSize(40),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
@@ -611,33 +617,38 @@ class _ClientDetailsState extends State<ClientDetails> {
 
     return Consumer<ClientsMgr>(
       builder: (context, clientsMgr, _) {
-        return Scaffold(
-          appBar: CustomAppBar(
-            customAppBarProps: CustomAppBarProps(
-              titleText: Languages.of(context)!.clientDetailsLabel,
-              withBack: true,
-              barHeight: 110,
-              withClipPath: true,
-              customIcon: Icon(
-                Icons.edit,
-                size: rSize(24),
-              ),
-              customIconTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        ClientWidget(client: clientsMgr.selectedClient),
-                  ),
+        return CustomContainer(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: CustomAppBar(
+              customAppBarProps: CustomAppBarProps(
+                titleText: Languages.of(context)!.clientDetailsLabel,
+                withBack: true,
+                isTransparent: true,
+                customIcon: Icon(
+                  Icons.edit,
+                  size: rSize(24),
                 ),
-              },
+                customIconTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ClientWidget(client: clientsMgr.selectedClient),
+                    ),
+                  ),
+                },
+              ),
             ),
+            body: !clientsMgr.isSelectedClientLoaded
+                ? Center(
+                    child: CustomLoadingIndicator(
+                      customLoadingIndicatorProps:
+                          CustomLoadingIndicatorProps(),
+                    ),
+                  )
+                : renderDetailsBody(),
           ),
-          backgroundColor: Theme.of(context).colorScheme.background,
-          body: !clientsMgr.isSelectedClientLoaded
-              ? CustomLoadingIndicator(
-                  customLoadingIndicatorProps: CustomLoadingIndicatorProps())
-              : renderDetailsBody(),
         );
       },
     );
