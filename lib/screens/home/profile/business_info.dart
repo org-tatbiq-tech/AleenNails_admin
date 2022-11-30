@@ -36,7 +36,7 @@ class BusinessInfoState extends State<BusinessInfo> {
   final TextEditingController _descriptionController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isSaveDisabled = true;
-
+  bool autoValidate = false;
   @override
   void initState() {
     super.initState();
@@ -456,10 +456,12 @@ class BusinessInfoState extends State<BusinessInfo> {
     }
 
     saveBusinessInfo() async {
-      showLoaderDialog(context);
-
       final form = _formKey.currentState;
+      setState(() {
+        autoValidate = true;
+      });
       if (form!.validate()) {
+        showLoaderDialog(context);
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
 
         BusinessInfoComp newData = BusinessInfoComp(
@@ -521,6 +523,8 @@ class BusinessInfoState extends State<BusinessInfo> {
             ),
             child: Form(
               key: _formKey,
+              autovalidateMode:
+                  autoValidate ? AutovalidateMode.onUserInteraction : null,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
