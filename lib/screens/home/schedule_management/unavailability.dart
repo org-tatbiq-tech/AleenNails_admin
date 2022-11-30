@@ -2,10 +2,8 @@ import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/general.dart';
-
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/custom/custom_container.dart';
-import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/widget/unavailability_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -16,6 +14,7 @@ import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -225,7 +224,7 @@ class _UnavailabilityState extends State<Unavailability> {
 
   @override
   Widget build(BuildContext context) {
-    saveUnavailability() {
+    saveUnavailability() async {
       showLoaderDialog(context);
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       UnavailabilityComp unavailabilityComp = UnavailabilityComp(
@@ -234,19 +233,17 @@ class _UnavailabilityState extends State<Unavailability> {
           notes: _descriptionController.text);
       settingsMgr.scheduleManagement.unavailabilityList!
           .add(unavailabilityComp);
-      settingsMgr.submitNewScheduleManagement().then((value) => {
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successBody:
-                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-              successTitle: Languages.of(context)!
-                  .unavailabilityUpdatedSuccessfullyBody
-                  .toCapitalized(),
-            ),
-            Navigator.pop(context),
-          });
+      await settingsMgr.submitNewScheduleManagement();
+      showSuccessFlash(
+        context: context,
+        successColor: successPrimaryColor,
+        successBody:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successTitle: Languages.of(context)!
+            .unavailabilityUpdatedSuccessfullyBody
+            .toCapitalized(),
+      );
+      Navigator.pop(context);
     }
 
     deleteUnavailability(int index) {
