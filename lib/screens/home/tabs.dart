@@ -1,14 +1,15 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/timeline.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
-import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -41,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //FCM instance
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
   late SettingsMgr settingsMgr;
+  late AppointmentsMgr appointmentsMgr;
 
   _requestIOSNotificationPermissions() async {
     NotificationSettings settings = await _messaging.requestPermission(
@@ -83,20 +85,28 @@ class _HomeScreenState extends State<HomeScreen> {
     _messaging.onTokenRefresh.listen(settingsMgr.saveToken);
   }
 
-  Future<dynamic> onSelectNotification(payload) async {
-    // Assuming application data has already been updated with selected package
+  Future<dynamic> onSelectNotification(
+      NotificationResponse notificationResponse) async {
+    // Assuming application data has already been updated with selected appointment
     // handle notification selection
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const AppointmentDetails()));
+    if (notificationResponse.payload ==
+        NotificationCategory.appointment.toString()) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const AppointmentDetails()));
+    }
   }
 
   _initializeNotification() async {
     /// Foreground messages handler
     FirebaseMessaging.onMessage.listen(
-      (RemoteMessage message) {
+      (RemoteMessage message) async {
         if (message.data.isNotEmpty) {
-          /// Updating application data with expected details
-          /// message.data['appointment ID']
+          if (message.data['category'] ==
+              NotificationCategory.appointment.toString()) {
+            String appointmentId = message.data['appointment_id'];
+            await appointmentsMgr.setSelectedAppointment(
+                appointmentID: appointmentId);
+          }
         }
         if (message.notification != null) {
           RemoteNotification? notification = message.notification;
@@ -123,6 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   presentSound: true,
                 ),
               ),
+              payload: message.data['category'],
             );
           }
         }
@@ -130,24 +141,34 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
     /// Activated on background only
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      /// Take data from message and behave accordingly
-      /// example from pkg:
-      // String pkgId = message.data['package_id'];
-      // appData.setSelectedPackage(pkgId);
-      onSelectNotification(message.data);
+    FirebaseMessaging.onMessageOpenedApp.listen((message) async {
+      if (message.data['category'] ==
+          NotificationCategory.appointment.toString()) {
+        String appointmentId = message.data['appointment_id'];
+        await appointmentsMgr.setSelectedAppointment(
+            appointmentID: appointmentId);
+        onSelectNotification(NotificationResponse(
+            notificationResponseType:
+                NotificationResponseType.selectedNotification,
+            payload: message.data['category']));
+      }
     });
 
     /// Activated on terminated only
     FirebaseMessaging.instance
         .getInitialMessage()
-        .then((RemoteMessage? message) {
+        .then((RemoteMessage? message) async {
       if (message != null) {
-        /// Take data from message and behave accordingly
-        /// example from pkg:
-        // String pkgId = message.data['package_id'];
-        // appData.setSelectedPackage(pkgId);
-        onSelectNotification(message.data);
+        if (message.data['category'] ==
+            NotificationCategory.appointment.toString()) {
+          String appointmentId = message.data['appointment_id'];
+          await appointmentsMgr.setSelectedAppointment(
+              appointmentID: appointmentId);
+          onSelectNotification(NotificationResponse(
+              notificationResponseType:
+                  NotificationResponseType.selectedNotification,
+              payload: message.data['category']));
+        }
       }
     });
   }
@@ -193,6 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    appointmentsMgr = Provider.of<AppointmentsMgr>(context, listen: false);
     _init();
     _requestIOSNotificationPermissions();
     _getToken();

@@ -65,7 +65,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   int selectedMinutes = 0;
   int selectedMinutesIdx = 0;
 
-  Map<String, String> mediaList = {};
+  Map<String, String> mediaMap = {};
   Map<String, File> mediaListToUpload = {};
 
   @override
@@ -91,7 +91,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       onlineBooking = widget.service!.onlineBooking;
       selectedColor = Color(widget.service!.colorID);
       selectedColorTemp = Color(widget.service!.colorID);
-      mediaList = widget.service!.imagesURL!;
+      mediaMap = widget.service!.imagesURL!;
       _isLoading = false;
     }
     colorPositionsListener.itemPositions.addListener(() {});
@@ -200,7 +200,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     List<Widget> mediaCards() {
       List<Widget> widgetList = [];
 
-      for (var servicePhoto in mediaList.entries) {
+      for (var servicePhoto in mediaMap.entries) {
         widgetList.add(
           Padding(
             padding: EdgeInsets.only(
@@ -858,6 +858,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           onlineBooking: onlineBooking,
           description: _descriptionController.text,
           noteMessage: _messageToClientController.text,
+          images: mediaMap,
         );
 
         if (widget.service == null) {
@@ -882,7 +883,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               await getResizedMediaToUpload();
           await servicesMgr.updateService(
             service,
-            resizedMediaListToUpload.values.toList(),
+            resizedMediaListToUpload,
           );
           showSuccessFlash(
             context: context,
