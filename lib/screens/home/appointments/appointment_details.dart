@@ -149,7 +149,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       showLoaderDialog(context);
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
-      appointment.status = AppointmentStatus.confirmed;
+      appointment.status = AppointmentStatus.finished;
       appointment.paymentStatus = PaymentStatus.paid;
       appointmentsMgr.updateAppointment(appointment).then((value) => {
             Navigator.pop(context),
