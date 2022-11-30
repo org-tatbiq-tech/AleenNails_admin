@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/placeholders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -318,42 +319,43 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
       }
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: Languages.of(context)!.coverPhotoLabel.toTitleCase(),
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
-          withSave: true,
-          saveText: Languages.of(context)!.saveLabel,
-          withSaveDisabled: isSaveDisabled,
-          saveTap: () => {
-            saveImage(),
-          },
-        ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Consumer<SettingsMgr>(
-        builder: (context, settingsMgrMgr, _) => Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
-            vertical: rSize(20),
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: Languages.of(context)!.coverPhotoLabel.toTitleCase(),
+            withBack: true,
+            isTransparent: true,
+            withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
+            withSaveDisabled: isSaveDisabled,
+            saveTap: () => {
+              saveImage(),
+            },
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                Languages.of(context)!.coverPhotoDescription.toCapitalized(),
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-              SizedBox(
-                height: rSize(80),
-              ),
-              renderBusinessCoverPhoto(),
-            ],
+        ),
+        body: Consumer<SettingsMgr>(
+          builder: (context, settingsMgrMgr, _) => Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+              vertical: rSize(40),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  Languages.of(context)!.coverPhotoDescription.toCapitalized(),
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                SizedBox(
+                  height: rSize(80),
+                ),
+                renderBusinessCoverPhoto(),
+              ],
+            ),
           ),
         ),
       ),

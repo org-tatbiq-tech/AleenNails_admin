@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/placeholders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -42,7 +43,8 @@ class _BusinessLogoState extends State<BusinessLogo> {
 
   @override
   Widget build(BuildContext context) {
-    saveImage() async {
+    uploadLogo() async {
+      showLoaderDialog(context);
       if (_imageFile != null) {
         File? imagePath = await compressImageNative(
           path: _imageFile!.absolute.path,
@@ -53,6 +55,20 @@ class _BusinessLogoState extends State<BusinessLogo> {
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
         await settingsMgr.uploadLogoImage(imagePath!);
       }
+
+      Navigator.pop(context);
+      showSuccessFlash(
+        context: context,
+        successColor: successPrimaryColor,
+        successBody:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successTitle: Languages.of(context)!
+            .logoPhotoUploadedSuccessfullyBody
+            .toCapitalized(),
+      );
+      setState(() {
+        isSaveDisabled = true;
+      });
     }
 
     deleteImage() async {
@@ -323,65 +339,50 @@ class _BusinessLogoState extends State<BusinessLogo> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: Languages.of(context)!.logoLabel.toTitleCase(),
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
-          withSave: true,
-          saveText: Languages.of(context)!.saveLabel,
-          withSaveDisabled: isSaveDisabled,
-          saveTap: () async => {
-            showLoaderDialog(context),
-            await saveImage(),
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successBody:
-                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-              successTitle: Languages.of(context)!
-                  .logoPhotoUploadedSuccessfullyBody
-                  .toCapitalized(),
-            ),
-            setState(() {
-              isSaveDisabled = true;
-            })
-          },
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: Languages.of(context)!.logoLabel.toTitleCase(),
+            withBack: true,
+            isTransparent: true,
+            withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
+            withSaveDisabled: isSaveDisabled,
+            saveTap: () => uploadLogo(),
+          ),
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 500),
-        child: _isLoading
-            ? Center(
-                child: CustomLoadingIndicator(
-                  customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
+        body: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 500),
+          child: _isLoading
+              ? Center(
+                  child: CustomLoadingIndicator(
+                    customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
+                  ),
+                )
+              : Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(30),
+                    vertical: rSize(50),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        Languages.of(context)!.logoDescription.toCapitalized(),
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      SizedBox(
+                        height: rSize(40),
+                      ),
+                      renderBusinessLogo(),
+                    ],
+                  ),
                 ),
-              )
-            : Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: rSize(30),
-                  vertical: rSize(20),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      Languages.of(context)!.logoDescription.toCapitalized(),
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    SizedBox(
-                      height: rSize(40),
-                    ),
-                    renderBusinessLogo(),
-                  ],
-                ),
-              ),
+        ),
       ),
     );
   }

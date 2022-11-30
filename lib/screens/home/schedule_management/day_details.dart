@@ -2,6 +2,7 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_text_button.dart';
@@ -58,13 +59,6 @@ class _DayDetailsState extends State<DayDetails> {
               widget.workingDay.startTime!.minute,
             );
       startTimeTemp = startTime;
-      // startTimeTemp = DateTime(
-      //   today.year,
-      //   today.month,
-      //   today.day,
-      //   8,
-      //   0,
-      // );
       endTime = widget.workingDay.endTime == null
           ? DateTime(
               today.year,
@@ -81,13 +75,6 @@ class _DayDetailsState extends State<DayDetails> {
               widget.workingDay.endTime!.minute,
             );
       endTimeTemp = endTime;
-      // endTimeTemp = DateTime(
-      //   today.year,
-      //   today.month,
-      //   today.day,
-      //   18,
-      //   0,
-      // );
       endTimeMin = startTime;
     });
   }
@@ -450,6 +437,7 @@ class _DayDetailsState extends State<DayDetails> {
                       primaryAction: () => {
                         setState(() {
                           endTime = endTimeTemp;
+                          isSaveDisabled = false;
                         }),
                       },
                     ),
@@ -462,82 +450,86 @@ class _DayDetailsState extends State<DayDetails> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: getDayName(context, widget.workingDay.day),
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
-        ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        top: false,
-        right: false,
-        left: false,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: getDayName(context, widget.workingDay.day),
+            withBack: true,
+            isTransparent: true,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              renderSwitch(),
-              SizedBox(
-                height: rSize(20),
-              ),
-              Text(
-                Languages.of(context)!
-                    .dayDetailsDescriptionLabel
-                    .toCapitalized(),
-                style: Theme.of(context).textTheme.subtitle1?.copyWith(
-                      fontSize: rSize(14),
-                    ),
-              ),
-              Expanded(
-                child: AnimatedSwitcher(
-                  reverseDuration: const Duration(milliseconds: 400),
-                  duration: const Duration(milliseconds: 400),
-                  child: widget.workingDay.isDayOn
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            SizedBox(
-                              height: rSize(40),
-                            ),
-                            renderTimePicker(),
-                            SizedBox(
-                              height: rSize(40),
-                            ),
-                            renderBreaks(),
-                          ],
-                        )
-                      : const SizedBox(),
+        ),
+        body: SafeArea(
+          top: false,
+          right: false,
+          left: false,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  height: rSize(20),
                 ),
-              ),
-              CustomButton(
-                customButtonProps: CustomButtonProps(
-                  text: Languages.of(context)!.okLabel.toCapitalized(),
-                  isDisabled: isSaveDisabled,
-                  onTap: (() => {
-                        widget.workingDay.startTime = TimeOfDay(
-                          hour: startTime.hour,
-                          minute: startTime.minute,
-                        ),
-                        widget.workingDay.endTime = TimeOfDay(
-                          hour: endTime.hour,
-                          minute: endTime.minute,
-                        ),
-                        Navigator.pop(context)
-                      }),
+                renderSwitch(),
+                SizedBox(
+                  height: rSize(20),
                 ),
-              ),
-            ],
+                Text(
+                  Languages.of(context)!
+                      .dayDetailsDescriptionLabel
+                      .toCapitalized(),
+                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                        fontSize: rSize(14),
+                      ),
+                ),
+                Expanded(
+                  child: AnimatedSwitcher(
+                    reverseDuration: const Duration(milliseconds: 400),
+                    duration: const Duration(milliseconds: 400),
+                    child: widget.workingDay.isDayOn
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              SizedBox(
+                                height: rSize(40),
+                              ),
+                              renderTimePicker(),
+                              SizedBox(
+                                height: rSize(40),
+                              ),
+                              renderBreaks(),
+                            ],
+                          )
+                        : const SizedBox(),
+                  ),
+                ),
+                CustomButton(
+                  customButtonProps: CustomButtonProps(
+                    text: Languages.of(context)!.okLabel.toCapitalized(),
+                    isDisabled: isSaveDisabled,
+                    onTap: (() => {
+                          widget.workingDay.startTime = TimeOfDay(
+                            hour: startTime.hour,
+                            minute: startTime.minute,
+                          ),
+                          widget.workingDay.endTime = TimeOfDay(
+                            hour: endTime.hour,
+                            minute: endTime.minute,
+                          ),
+                          Navigator.pop(context)
+                        }),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

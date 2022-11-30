@@ -3,6 +3,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/schedule_management/day_details.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -252,57 +253,64 @@ class _WorkingDaysState extends State<WorkingDays> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            titleText: Languages.of(context)!.workingDaysLabel.toCapitalized(),
-            withBack: true,
-            barHeight: 110,
-            withClipPath: true,
-            withSave: true,
-            saveText: Languages.of(context)!.saveLabel,
-            withSaveDisabled: isSaveDisabled,
-            saveTap: () => saveWorkingDays(),
+      child: CustomContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText:
+                  Languages.of(context)!.workingDaysLabel.toCapitalized(),
+              withBack: true,
+              withSave: true,
+              isTransparent: true,
+              saveText: Languages.of(context)!.saveLabel,
+              withSaveDisabled: isSaveDisabled,
+              saveTap: () => saveWorkingDays(),
+            ),
           ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: Consumer<SettingsMgr>(
-          builder: (context, settingsMgr, _) => SafeArea(
-            top: false,
-            right: false,
-            left: false,
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) {
-                      return index == workingDaysMap.values.length
-                          ? renderDescription()
-                          : index == 0
-                              ? const SizedBox()
-                              : Divider(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer,
-                                );
-                    },
-                    padding: EdgeInsets.symmetric(
-                      vertical: rSize(20),
-                      horizontal: rSize(30),
-                    ),
-                    itemCount: workingDaysList.length + 2,
-                    itemBuilder: (context, index) {
-                      if (index == 0 || index == workingDaysList.length + 1) {
-                        return Container(); // zero height: not visible
-                      }
-                      return renderDay(
-                        workingDay: settingsMgr.scheduleManagement.workingDays!
-                            .schedule![workingDaysList[index - 1]]!,
-                      );
-                    },
+          body: Consumer<SettingsMgr>(
+            builder: (context, settingsMgr, _) => SafeArea(
+              top: false,
+              right: false,
+              left: false,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: rSize(30),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: ListView.separated(
+                      separatorBuilder: (BuildContext context, int index) {
+                        return index == workingDaysMap.values.length
+                            ? renderDescription()
+                            : index == 0
+                                ? const SizedBox()
+                                : Divider(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
+                                  );
+                      },
+                      padding: EdgeInsets.symmetric(
+                        vertical: rSize(20),
+                        horizontal: rSize(30),
+                      ),
+                      itemCount: workingDaysList.length + 2,
+                      itemBuilder: (context, index) {
+                        if (index == 0 || index == workingDaysList.length + 1) {
+                          return Container(); // zero height: not visible
+                        }
+                        return renderDay(
+                          workingDay: settingsMgr
+                              .scheduleManagement
+                              .workingDays!
+                              .schedule![workingDaysList[index - 1]]!,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

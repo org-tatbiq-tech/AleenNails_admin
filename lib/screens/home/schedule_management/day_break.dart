@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/general.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -173,50 +174,54 @@ class _DayBreakState extends State<DayBreak> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText:
-              '${widget.dayTile} ${Languages.of(context)!.breakLabel.toTitleCase()}',
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
-        ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        top: false,
-        right: false,
-        left: false,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText:
+                '${getDayName(context, widget.dayTile)} ${Languages.of(context)!.breakLabel.toTitleCase()}',
+            withBack: true,
+            isTransparent: true,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(child: renderTimePicker()),
-              CustomButton(
-                customButtonProps: CustomButtonProps(
-                  text: Languages.of(context)!.addBreakLabel.toTitleCase(),
-                  onTap: (() => Navigator.pop(
-                        context,
-                        WorkingDayBreak(
-                          startTime: TimeOfDay(
-                            hour: startTime.hour,
-                            minute: startTime.minute,
-                          ),
-                          endTime: TimeOfDay(
-                            hour: endTime.hour,
-                            minute: endTime.minute,
-                          ),
-                        ),
-                      )),
+        ),
+        body: SafeArea(
+          top: false,
+          right: false,
+          left: false,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  height: rSize(30),
                 ),
-              ),
-            ],
+                Expanded(child: renderTimePicker()),
+                CustomButton(
+                  customButtonProps: CustomButtonProps(
+                    text: Languages.of(context)!.addBreakLabel.toTitleCase(),
+                    onTap: (() => Navigator.pop(
+                          context,
+                          WorkingDayBreak(
+                            startTime: TimeOfDay(
+                              hour: startTime.hour,
+                              minute: startTime.minute,
+                            ),
+                            endTime: TimeOfDay(
+                              hour: endTime.hour,
+                              minute: endTime.minute,
+                            ),
+                          ),
+                        )),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -455,6 +456,8 @@ class BusinessInfoState extends State<BusinessInfo> {
     }
 
     saveBusinessInfo() async {
+      showLoaderDialog(context);
+
       final form = _formKey.currentState;
       if (form!.validate()) {
         final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
@@ -473,6 +476,19 @@ class BusinessInfoState extends State<BusinessInfo> {
         settingsMgr.profileManagement.businessInfo = newData;
 
         await settingsMgr.submitNewProfile();
+        Navigator.pop(context);
+        showSuccessFlash(
+          context: context,
+          successColor: successPrimaryColor,
+          successBody:
+              Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+          successTitle: Languages.of(context)!
+              .infoUpdatedSuccessfullyBody
+              .toCapitalized(),
+        );
+        setState(() {
+          isSaveDisabled = true;
+        });
       }
     }
 
@@ -483,76 +499,59 @@ class BusinessInfoState extends State<BusinessInfo> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            titleText:
-                Languages.of(context)!.businessNameInfoLabel.toTitleCase(),
-            barHeight: 110,
-            withClipPath: true,
-            withBack: true,
-            withSave: true,
-            saveText: Languages.of(context)!.saveLabel,
-            withSaveDisabled: isSaveDisabled,
-            saveTap: () async => {
-              showLoaderDialog(context),
-              await saveBusinessInfo(),
-              Navigator.pop(context),
-              showSuccessFlash(
-                context: context,
-                successColor: successPrimaryColor,
-                successBody: Languages.of(context)!
-                    .flashMessageSuccessTitle
-                    .toTitleCase(),
-                successTitle: Languages.of(context)!
-                    .infoUpdatedSuccessfullyBody
-                    .toCapitalized(),
+      child: CustomContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText:
+                  Languages.of(context)!.businessNameInfoLabel.toTitleCase(),
+              isTransparent: true,
+              withBack: true,
+              withSave: true,
+              saveText: Languages.of(context)!.saveLabel,
+              withSaveDisabled: isSaveDisabled,
+              saveTap: () => saveBusinessInfo(),
+            ),
+          ),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+              vertical: rSize(40),
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  renderBusinessName(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderPhoneNumber(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderEmail(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderAddress(),
+                  SizedBox(
+                    height: rSize(30),
+                  ),
+                  renderSocialMedia(),
+                  SizedBox(
+                    height: rSize(30),
+                  ),
+                  renderDescription(),
+                  SizedBox(
+                    height: rSize(30),
+                  ),
+                ],
               ),
-              setState(() {
-                isSaveDisabled = true;
-              })
-              // Navigator.pop(context),
-            },
-          ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
-            vertical: rSize(20),
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                renderBusinessName(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderPhoneNumber(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderEmail(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderAddress(),
-                SizedBox(
-                  height: rSize(30),
-                ),
-                renderSocialMedia(),
-                SizedBox(
-                  height: rSize(30),
-                ),
-                renderDescription(),
-                SizedBox(
-                  height: rSize(30),
-                ),
-              ],
             ),
           ),
         ),

@@ -4,6 +4,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/screens/home/services/service.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:appointments/widget/custom/custom_reorderable_list_view.dart';
 import 'package:appointments/widget/service/service_card.dart';
 import 'package:appointments/widget/service/services_search.dart';
@@ -67,113 +68,119 @@ class ServicesState extends State<Services> {
     }
 
     return Consumer<ServicesMgr>(builder: (context, servicesMgr, _) {
-      return Scaffold(
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            titleText: Languages.of(context)!.servicesLabel.toTitleCase(),
-            withBack: true,
-            withSearch: servicesMgr.services.isNotEmpty,
-            searchFunction: () => showSearch(
-              context: context,
-              delegate: ServicesSearchDelegate(services: servicesMgr.services),
-            ),
-            withClipPath: false,
-            customIcon: Icon(
-              FontAwesomeIcons.plus,
-              size: rSize(24),
-            ),
-            customIconTap: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ServiceWidget(),
-                ),
+      return CustomContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText: Languages.of(context)!.servicesLabel.toTitleCase(),
+              withBack: true,
+              isTransparent: true,
+              centerTitle: WrapAlignment.start,
+              withSearch: servicesMgr.services.isNotEmpty,
+              searchFunction: () => showSearch(
+                context: context,
+                delegate:
+                    ServicesSearchDelegate(services: servicesMgr.services),
               ),
-            },
+              customIcon: Icon(
+                FontAwesomeIcons.plus,
+                size: rSize(24),
+              ),
+              customIconTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ServiceWidget(),
+                  ),
+                ),
+              },
+            ),
           ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            servicesMgr.services.isNotEmpty
-                ? Expanded(
-                    child: CustomReorderableListView.separated(
-                      // scrollController: scrollController,
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: rSize(15),
+          body: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              servicesMgr.services.isNotEmpty
+                  ? Expanded(
+                      child: CustomReorderableListView.separated(
+                        // scrollController: scrollController,
+                        separatorBuilder: (context, index) => SizedBox(
+                          height: rSize(15),
+                        ),
+                        buildDefaultDragHandles: false,
+                        onReorder: (oldIndex, newIndex) {
+                          if (newIndex > oldIndex) newIndex--;
+                          final Service service =
+                              servicesMgr.services.removeAt(oldIndex);
+                          servicesMgr.services.insert(newIndex, service);
+                        },
+                        proxyDecorator: proxyDecorator,
+                        padding: EdgeInsets.symmetric(
+                          vertical: rSize(40),
+                          horizontal: rSize(30),
+                        ),
+                        itemCount: servicesMgr.services.length,
+                        itemBuilder: (context, index) {
+                          return ServiceCard(
+                            key: ValueKey(servicesMgr.services[index].id),
+                            serviceCardProps: ServiceCardProps(
+                              withNavigation: !widget.selectionMode,
+                              dragIndex:
+                                  index == 0 ? index : index + (1 * index),
+                              onTap: widget.onTap != null
+                                  ? () =>
+                                      widget.onTap!(servicesMgr.services[index])
+                                  : () => navigateToService(
+                                      servicesMgr.services[index]),
+                              serviceDetails: servicesMgr.services[index],
+                              title: servicesMgr.services[index].name,
+                              subTitle: durationToFormat(
+                                  duration:
+                                      servicesMgr.services[index].duration),
+                            ),
+                          );
+                        },
                       ),
-                      buildDefaultDragHandles: false,
-                      onReorder: (oldIndex, newIndex) {
-                        if (newIndex > oldIndex) newIndex--;
-                        final Service service =
-                            servicesMgr.services.removeAt(oldIndex);
-                        servicesMgr.services.insert(newIndex, service);
-                      },
-                      proxyDecorator: proxyDecorator,
-                      padding: EdgeInsets.symmetric(
-                        vertical: rSize(40),
-                        horizontal: rSize(30),
+                    )
+                  : Padding(
+                      padding: EdgeInsets.only(
+                        top: rSize(250),
                       ),
-                      itemCount: servicesMgr.services.length,
-                      itemBuilder: (context, index) {
-                        return ServiceCard(
-                          key: ValueKey(servicesMgr.services[index].id),
-                          serviceCardProps: ServiceCardProps(
-                            withNavigation: !widget.selectionMode,
-                            dragIndex: index == 0 ? index : index + (1 * index),
-                            onTap: widget.onTap != null
-                                ? () =>
-                                    widget.onTap!(servicesMgr.services[index])
-                                : () => navigateToService(
-                                    servicesMgr.services[index]),
-                            serviceDetails: servicesMgr.services[index],
-                            title: servicesMgr.services[index].name,
-                            subTitle: durationToFormat(
-                                duration: servicesMgr.services[index].duration),
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(
-                      top: rSize(250),
-                    ),
-                    child: EmptyListImage(
-                      emptyListImageProps: EmptyListImageProps(
-                        title: Languages.of(context)!
-                            .noServiceAddedLabel
-                            .toTitleCase(),
-                        iconPath: 'assets/icons/menu.png',
-                        bottomWidget: CustomTextButton(
-                          customTextButtonProps: CustomTextButtonProps(
-                            onTap: () => {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ServiceWidget(),
+                      child: EmptyListImage(
+                        emptyListImageProps: EmptyListImageProps(
+                          title: Languages.of(context)!
+                              .noServiceAddedLabel
+                              .toTitleCase(),
+                          iconPath: 'assets/icons/menu.png',
+                          bottomWidget: CustomTextButton(
+                            customTextButtonProps: CustomTextButtonProps(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ServiceWidget(),
+                                  ),
                                 ),
+                              },
+                              text: Languages.of(context)!
+                                  .addNewServiceLabel
+                                  .toTitleCase(),
+                              textColor: Theme.of(context).colorScheme.primary,
+                              withIcon: true,
+                              icon: Icon(
+                                FontAwesomeIcons.plus,
+                                size: rSize(16),
+                                color: Theme.of(context).colorScheme.primary,
                               ),
-                            },
-                            text: Languages.of(context)!
-                                .addNewServiceLabel
-                                .toTitleCase(),
-                            textColor: Theme.of(context).colorScheme.primary,
-                            withIcon: true,
-                            icon: Icon(
-                              FontAwesomeIcons.plus,
-                              size: rSize(16),
-                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-          ],
+            ],
+          ),
         ),
       );
     });

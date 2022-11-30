@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/placeholders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -282,41 +283,44 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: Languages.of(context)!.workplacePhotoLabel.toTitleCase(),
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
-          withSave: true,
-          saveText: Languages.of(context)!.saveLabel,
-          withSaveDisabled: mediaListToUpload.isEmpty,
-          saveTap: () => {
-            uploadWorkplacePhotos(),
-          },
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: Languages.of(context)!.workplacePhotoLabel.toTitleCase(),
+            withBack: true,
+            isTransparent: true,
+            withSave: true,
+            saveText: Languages.of(context)!.saveLabel,
+            withSaveDisabled: mediaListToUpload.isEmpty,
+            saveTap: () => {
+              uploadWorkplacePhotos(),
+            },
+          ),
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(30),
-          vertical: rSize(20),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              Languages.of(context)!.workplacePhotoDescription.toCapitalized(),
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            SizedBox(
-              height: rSize(40),
-            ),
-            renderMedia(),
-          ],
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(30),
+            vertical: rSize(40),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                Languages.of(context)!
+                    .workplacePhotoDescription
+                    .toCapitalized(),
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(40),
+              ),
+              renderMedia(),
+            ],
+          ),
         ),
       ),
     );

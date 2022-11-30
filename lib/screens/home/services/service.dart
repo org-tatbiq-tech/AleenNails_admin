@@ -6,6 +6,7 @@ import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom/custom_color_picker.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -905,66 +906,69 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            titleText: widget.service != null
-                ? Languages.of(context)!.editServiceLabel.toTitleCase()
-                : Languages.of(context)!.newServiceLabel.toTitleCase(),
-            withBack: true,
-            withSave: true,
-            saveText: Languages.of(context)!.saveLabel,
-            withSaveDisabled: isSaveDisabled,
-            saveTap: () => {
-              saveService(),
-            },
+      child: CustomContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText: widget.service != null
+                  ? Languages.of(context)!.editServiceLabel.toTitleCase()
+                  : Languages.of(context)!.newServiceLabel.toTitleCase(),
+              withBack: true,
+              withSave: true,
+              isTransparent: true,
+              saveText: Languages.of(context)!.saveLabel,
+              withSaveDisabled: isSaveDisabled,
+              saveTap: () => {
+                saveService(),
+              },
+            ),
           ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
-            vertical: rSize(40),
-          ),
-          child: Form(
-            key: _formKey,
-            autovalidateMode:
-                autoValidate ? AutovalidateMode.onUserInteraction : null,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                renderServiceName(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderPriceDuration(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderServiceColors(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderDescription(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderMedia(),
-                SizedBox(
-                  height: rSize(30),
-                ),
-                renderMessageToClient(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderPermissions(),
-                Visibility(
-                  visible: widget.service != null,
-                  child: renderFooter(),
-                ),
-              ],
+          body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+              vertical: rSize(40),
+            ),
+            child: Form(
+              key: _formKey,
+              autovalidateMode:
+                  autoValidate ? AutovalidateMode.onUserInteraction : null,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  renderServiceName(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderPriceDuration(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderServiceColors(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderDescription(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderMedia(),
+                  SizedBox(
+                    height: rSize(30),
+                  ),
+                  renderMessageToClient(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderPermissions(),
+                  Visibility(
+                    visible: widget.service != null,
+                    child: renderFooter(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

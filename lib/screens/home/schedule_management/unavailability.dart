@@ -4,6 +4,7 @@ import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/general.dart';
 
 import 'package:appointments/utils/layout.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/widget/unavailability_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -320,95 +321,97 @@ class _UnavailabilityState extends State<Unavailability> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            titleText: Languages.of(context)!.unavailabilityLabel.toTitleCase(),
-            withBack: true,
-            withBorder: false,
-            barHeight: 110,
-            withClipPath: true,
-            withSave: true,
-            saveText: Languages.of(context)!.saveLabel,
-            saveTap: () => saveUnavailability(),
+      child: CustomContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText:
+                  Languages.of(context)!.unavailabilityLabel.toTitleCase(),
+              withBack: true,
+              withBorder: false,
+              isTransparent: true,
+              withSave: true,
+              saveText: Languages.of(context)!.saveLabel,
+              saveTap: () => saveUnavailability(),
+            ),
           ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SizedBox(
-                height: rSize(30),
-              ),
-              renderTimePicker(),
-              SizedBox(
-                height: rSize(30),
-              ),
-              _renderReason(),
-              Visibility(
-                visible: settingsMgr
-                    .scheduleManagement.unavailabilityList!.isNotEmpty,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: rSize(40),
-                        bottom: rSize(15),
-                      ),
-                      child: Text(
-                        '${Languages.of(context)!.unavailabilityListLabel.toTitleCase()} (${settingsMgr.scheduleManagement.unavailabilityList!.length})',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ),
-                  ],
+          body: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  height: rSize(40),
                 ),
-              ),
-              Expanded(
-                child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return UnavailabilityCard(
-                      key: ValueKey(index),
-                      unavailabilityCardProps: UnavailabilityCardProps(
-                        title: '${getDateTimeFormat(
-                          dateTime: settingsMgr.scheduleManagement
-                              .unavailabilityList![index].startTime,
-                          format: 'HH:mm',
-                          locale: getCurrentLocale(context),
-                        )} ${Languages.of(context)!.arrowLabel} ${getDateTimeFormat(
-                          dateTime: settingsMgr.scheduleManagement
-                              .unavailabilityList![index].endTime,
-                          format: 'HH:mm',
-                          locale: getCurrentLocale(context),
-                        )}',
-                        subTitle: settingsMgr.scheduleManagement
-                            .unavailabilityList![index].notes,
-                        unavailabilityDetails: settingsMgr
-                            .scheduleManagement.unavailabilityList![index],
-                        deleteAction: () => {deleteUnavailability(index)},
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      height: rSize(15),
-                    );
-                  },
-                  itemCount:
-                      settingsMgr.scheduleManagement.unavailabilityList!.length,
+                renderTimePicker(),
+                SizedBox(
+                  height: rSize(30),
                 ),
-              )
-            ],
+                _renderReason(),
+                Visibility(
+                  visible: settingsMgr
+                      .scheduleManagement.unavailabilityList!.isNotEmpty,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: rSize(40),
+                          bottom: rSize(15),
+                        ),
+                        child: Text(
+                          '${Languages.of(context)!.unavailabilityListLabel.toTitleCase()} (${settingsMgr.scheduleManagement.unavailabilityList!.length})',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return UnavailabilityCard(
+                        key: ValueKey(index),
+                        unavailabilityCardProps: UnavailabilityCardProps(
+                          title: '${getDateTimeFormat(
+                            dateTime: settingsMgr.scheduleManagement
+                                .unavailabilityList![index].startTime,
+                            format: 'HH:mm',
+                            locale: getCurrentLocale(context),
+                          )} ${Languages.of(context)!.arrowLabel} ${getDateTimeFormat(
+                            dateTime: settingsMgr.scheduleManagement
+                                .unavailabilityList![index].endTime,
+                            format: 'HH:mm',
+                            locale: getCurrentLocale(context),
+                          )}',
+                          subTitle: settingsMgr.scheduleManagement
+                              .unavailabilityList![index].notes,
+                          unavailabilityDetails: settingsMgr
+                              .scheduleManagement.unavailabilityList![index],
+                          deleteAction: () => {deleteUnavailability(index)},
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        height: rSize(15),
+                      );
+                    },
+                    itemCount: settingsMgr
+                        .scheduleManagement.unavailabilityList!.length,
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
