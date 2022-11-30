@@ -390,6 +390,8 @@ class LanguageHe extends Languages {
   @override
   String get serviceCreatedSuccessfullyBody => "השירות נוצר בהצלחה";
   @override
+  String get serviceDeletedSuccessfullyBody => "השירות נמחק בהצלחה";
+  @override
   String get appointmentUpdatedSuccessfullyBody => "התור עודכן בהצלחה";
   @override
   String get appointmentCreatedSuccessfullyBody => "התור נוצר בהצלחה";

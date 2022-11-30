@@ -21,25 +21,23 @@ class ServiceCard extends StatelessWidget {
         // marginBottom: 15,
         enabled: serviceCardProps.enabled,
         onTap: serviceCardProps.onTap,
-        title: Text(
-          serviceCardProps.title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.headline1?.copyWith(
-                fontSize: rSize(16),
-              ),
-        ),
-        subTitle: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Text(
-              serviceCardProps.subTitle,
-              style: Theme.of(context).textTheme.subtitle1,
-            ),
-          ],
-        ),
+        title: serviceCardProps.title.isNotEmpty
+            ? Text(
+                serviceCardProps.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline1?.copyWith(
+                      fontSize: rSize(16),
+                    ),
+              )
+            : null,
+        subTitle: serviceCardProps.subTitle.isNotEmpty
+            ? Text(
+                serviceCardProps.subTitle,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.subtitle1,
+              )
+            : null,
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,

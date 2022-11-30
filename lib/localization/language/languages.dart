@@ -212,6 +212,7 @@ abstract class Languages {
   String get coverPhotoPhotoUploadedSuccessfullyBody;
   String get serviceUpdatedSuccessfullyBody;
   String get serviceCreatedSuccessfullyBody;
+  String get serviceDeletedSuccessfullyBody;
   String get appointmentUpdatedSuccessfullyBody;
   String get appointmentCreatedSuccessfullyBody;
   String get appointmentCancelledSuccessfullyBody;

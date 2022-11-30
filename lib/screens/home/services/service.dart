@@ -60,9 +60,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   List<int> hoursData = [0, 1, 2, 3, 4, 5, 6, 7];
   List<int> minutesData = [0, 15, 30, 45];
 
-  int selectedHours = 0;
+  late int selectedHours;
   int selectedHoursIdx = 1;
-  int selectedMinutes = 0;
+  late int selectedMinutes;
   int selectedMinutesIdx = 0;
 
   Map<String, String> mediaMap = {};
@@ -94,6 +94,12 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       mediaMap = widget.service!.imagesURL!;
       _isLoading = false;
     }
+
+    selectedHours =
+        selectedHoursIdx > 0 ? hoursData[selectedHoursIdx] : hoursData[0];
+    selectedMinutes = selectedMinutesIdx > 0
+        ? minutesData[selectedMinutesIdx]
+        : minutesData[0];
     colorPositionsListener.itemPositions.addListener(() {});
     _nameController.addListener(() => setState(() {
           isSaveDisabled = false;
@@ -121,11 +127,22 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   @override
   Widget build(BuildContext context) {
     deleteServicePhoto(String fileName) async {
+      showLoaderDialog(context);
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
       await servicesMgr.deleteServiceImage(
         widget.service!.id,
         widget.service!.name,
         fileName,
+      );
+      Navigator.pop(context);
+      showSuccessFlash(
+        context: context,
+        successColor: successPrimaryColor,
+        successTitle:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successBody: Languages.of(context)!
+            .wpPhotoDeletedSuccessfullyBody
+            .toCapitalized(),
       );
       setState(() {});
     }
@@ -139,7 +156,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
           secondaryButtonText: Languages.of(context)!.backLabel.toCapitalized(),
           deleteCancelModal: true,
           primaryAction: () async => {
-            showLoaderDialog(context),
             if (isUrl)
               deleteServicePhoto(imageKey)
             else
@@ -148,17 +164,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                   mediaListToUpload
                       .removeWhere((key, value) => key == imageKey);
                 })
-              },
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successTitle:
-                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-              successBody: Languages.of(context)!
-                  .wpPhotoDeletedSuccessfullyBody
-                  .toCapitalized(),
-            ),
+              }
           },
           footerButton: ModalFooter.both,
           child: Column(
@@ -473,10 +479,20 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       );
     }
 
-    deleteService() {
+    deleteService() async {
+      // showLoaderDialog(context);
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
-      servicesMgr.deleteService(widget.service!);
+      await servicesMgr.deleteService(widget.service!);
       Navigator.pop(context);
+      // showSuccessFlash(
+      //   context: context,
+      //   successTitle:
+      //       Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+      //   successBody: Languages.of(context)!
+      //       .serviceDeletedSuccessfullyBody
+      //       .toCapitalized(),
+      //   successColor: successPrimaryColor,
+      // );
     }
 
     showDeleteServiceModal() {
@@ -779,12 +795,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                             Languages.of(context)!.minsLabel.toTitleCase(),
                         saveMinutes: (value) => {
                           setState(() {
+                            selectedMinutesIdx = value;
                             selectedMinutes = minutesData[value];
                             isSaveDisabled = false;
                           })
                         },
                         saveHours: (value) => {
                           setState(() {
+                            selectedHoursIdx = value;
                             selectedHours = hoursData[value];
                             isSaveDisabled = false;
                           })
@@ -841,10 +859,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     }
 
     saveService() async {
-      final form = _formKey.currentState;
       setState(() {
         autoValidate = true;
       });
+      final form = _formKey.currentState;
       if (form!.validate()) {
         showLoaderDialog(context);
         final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
@@ -878,6 +896,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             successColor: successPrimaryColor,
           );
           Navigator.pop(context);
+          Navigator.pop(context);
         } else {
           Map<String, File> resizedMediaListToUpload =
               await getResizedMediaToUpload();
@@ -895,9 +914,9 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             successColor: successPrimaryColor,
           );
           Navigator.pop(context);
+          Navigator.pop(context);
         }
       }
-      Navigator.pop(context);
     }
 
     return GestureDetector(

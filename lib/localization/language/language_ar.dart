@@ -460,6 +460,9 @@ class LanguageAr extends Languages {
   @override
   String get serviceCreatedSuccessfullyBody => "تم إنشاء الخدمة بنجاح";
   @override
+  String get serviceDeletedSuccessfullyBody =>
+      "your service have been deleted successfully.";
+  @override
   String get appointmentUpdatedSuccessfullyBody => "تم تعديل الموعد بنجاح";
   @override
   String get appointmentCreatedSuccessfullyBody => "تم إنشاء الموعد بنجاح";

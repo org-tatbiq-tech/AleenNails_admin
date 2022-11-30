@@ -402,6 +402,9 @@ class LanguageEn extends Languages {
   String get serviceCreatedSuccessfullyBody =>
       "your service have been created successfully.";
   @override
+  String get serviceDeletedSuccessfullyBody =>
+      "your service have been deleted successfully.";
+  @override
   String get appointmentUpdatedSuccessfullyBody =>
       "your appointment have been updated successfully.";
   @override
