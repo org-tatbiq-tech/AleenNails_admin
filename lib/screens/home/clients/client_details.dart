@@ -477,7 +477,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             delay: 0.1,
             child: CustomAvatar(
               customAvatarProps: CustomAvatarProps(
-                radius: rSize(80),
+                radius: rSize(90),
                 editable: false,
                 circleShape: false,
                 rectangleShape: true,

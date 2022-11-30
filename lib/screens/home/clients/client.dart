@@ -4,6 +4,7 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -499,7 +500,7 @@ class _ClientWidgetState extends State<ClientWidget> {
         children: [
           CustomAvatar(
             customAvatarProps: CustomAvatarProps(
-              radius: rSize(100),
+              radius: rSize(120),
               editable: false,
               circleShape: false,
               rectangleShape: true,
@@ -601,79 +602,82 @@ class _ClientWidgetState extends State<ClientWidget> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            titleText: widget.client != null
-                ? Languages.of(context)!.editClientLabel.toTitleCase()
-                : Languages.of(context)!.newClientLabel.toTitleCase(),
-            withBack: true,
-            withSave: true,
-            saveText: Languages.of(context)!.saveLabel,
-            withSaveDisabled: isSaveDisabled,
-            saveTap: () => saveClient(),
-            customIcon: widget.client == null
-                ? Icon(
-                    Icons.import_contacts_rounded,
-                    size: rSize(24),
-                  )
-                : null,
-            customIconTap: () => importClient(),
+      child: CustomContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText: widget.client != null
+                  ? Languages.of(context)!.editClientLabel.toTitleCase()
+                  : Languages.of(context)!.newClientLabel.toTitleCase(),
+              withBack: true,
+              withSave: true,
+              isTransparent: true,
+              saveText: Languages.of(context)!.saveLabel,
+              withSaveDisabled: isSaveDisabled,
+              saveTap: () => saveClient(),
+              customIcon: widget.client == null
+                  ? Icon(
+                      Icons.import_contacts_rounded,
+                      size: rSize(24),
+                    )
+                  : null,
+              customIconTap: () => importClient(),
+            ),
           ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
-            vertical: rSize(40),
-          ),
-          child: Form(
-            key: _formKey,
-            autovalidateMode:
-                autoValidate ? AutovalidateMode.onUserInteraction : null,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                renderAvatar(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderClientName(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderClientPhone(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderClientEmail(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderClientAddress(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                Row(
-                  children: [
-                    Expanded(child: renderBirthdayPicker()),
-                    SizedBox(
-                      width: rSize(10),
-                    ),
-                    Expanded(child: renderClientDiscount()),
-                  ],
-                ),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderNotes(),
-                SizedBox(
-                  height: rSize(40),
-                ),
-                renderPermissions(),
-              ],
+          body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+              vertical: rSize(40),
+            ),
+            child: Form(
+              key: _formKey,
+              autovalidateMode:
+                  autoValidate ? AutovalidateMode.onUserInteraction : null,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  renderAvatar(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderClientName(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderClientPhone(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderClientEmail(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderClientAddress(),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: renderBirthdayPicker()),
+                      SizedBox(
+                        width: rSize(10),
+                      ),
+                      Expanded(child: renderClientDiscount()),
+                    ],
+                  ),
+                  SizedBox(
+                    height: rSize(20),
+                  ),
+                  renderNotes(),
+                  SizedBox(
+                    height: rSize(40),
+                  ),
+                  renderPermissions(),
+                ],
+              ),
             ),
           ),
         ),
