@@ -336,8 +336,8 @@ class TimeLineState extends State<TimeLine> {
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            // withBorder: true,
-            isTransparent: true,
+            withBorder: true,
+            isTransparent: false,
             centerTitle: WrapAlignment.start,
             titleText: Languages.of(context)!.appName.toTitleCase(),
             customIcon: getCustomIcon(),
@@ -446,6 +446,7 @@ class TimeLineState extends State<TimeLine> {
                                     top: rSize(20),
                                     left: rSize(20),
                                     right: rSize(20),
+                                    bottom: rSize(20),
                                   ),
                                   itemCount:
                                       getAppointments(_selectedDay).length,
