@@ -337,6 +337,8 @@ class LanguageEn extends Languages {
   @override
   String get confirmedLabel => "confirmed";
   @override
+  String get finishedLabel => "finished";
+  @override
   String get cancelledLabel => "cancelled";
   @override
   String get declinedLabel => "declined";

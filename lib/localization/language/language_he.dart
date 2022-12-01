@@ -334,6 +334,8 @@ class LanguageHe extends Languages {
   @override
   String get confirmedLabel => "מאושר";
   @override
+  String get finishedLabel => "הסתיים";
+  @override
   String get cancelledLabel => "מבוטל";
   @override
   String get declinedLabel => "נדחה";

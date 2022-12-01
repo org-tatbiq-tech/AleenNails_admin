@@ -17,6 +17,8 @@ class AppointmentStatusComp extends StatelessWidget {
       switch (status) {
         case AppointmentStatus.confirmed:
           return successPrimaryColor;
+        case AppointmentStatus.finished:
+          return successPrimaryColor;
         case AppointmentStatus.cancelled:
           return errorPrimaryColor;
         case AppointmentStatus.declined:
@@ -33,7 +35,9 @@ class AppointmentStatusComp extends StatelessWidget {
     String getAppointmentStatusText(AppointmentStatus status) {
       switch (status) {
         case AppointmentStatus.confirmed:
-          return Languages.of(context)!.confirmLabel;
+          return Languages.of(context)!.confirmedLabel;
+        case AppointmentStatus.finished:
+          return Languages.of(context)!.finishedLabel;
         case AppointmentStatus.cancelled:
           return Languages.of(context)!.cancelledLabel;
         case AppointmentStatus.declined:

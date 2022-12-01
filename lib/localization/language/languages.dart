@@ -184,6 +184,7 @@ abstract class Languages {
   String get idLabel;
   String get waitingLabel;
   String get confirmedLabel;
+  String get finishedLabel;
   String get cancelledLabel;
   String get declinedLabel;
   String get paidLabel;
