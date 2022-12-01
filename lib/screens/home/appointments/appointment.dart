@@ -9,9 +9,9 @@ import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/client/client_card.dart';
 import 'package:appointments/widget/custom/custom_container.dart';
-import 'package:common_widgets/custom_avatar.dart';
 import 'package:appointments/widget/custom/custom_slide_able.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
@@ -547,7 +547,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           : ClientCard(
               clientCardProps: ClientCardProps(
                 withNavigation: false,
-                withDelete: true,
+                withDelete: widget.appointment != null ? false : true,
                 enabled: false,
                 onCloseTap: () => {
                   setState(() {
