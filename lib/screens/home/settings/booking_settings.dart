@@ -1,3 +1,4 @@
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -322,81 +323,84 @@ class _BookingsSettingsState extends State<BookingsSettings> {
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: 'Booking Settings',
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
-          customIconTap: () => {
-            getSettingInfo(),
-          },
-          customIcon: Icon(
-            FontAwesomeIcons.circleQuestion,
-            size: rSize(25),
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: 'Booking Settings',
+            withBack: true,
+            isTransparent: true,
+            customIconTap: () => {
+              getSettingInfo(),
+            },
+            customIcon: Icon(
+              FontAwesomeIcons.circleQuestion,
+              size: rSize(25),
+            ),
           ),
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        top: false,
-        right: false,
-        left: false,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
-            // vertical: rSize(20),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Expanded(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(
-                    height: rSize(10),
-                  ),
-                  renderSwitch(),
-                  SizedBox(
-                    height: rSize(40),
-                  ),
-                  renderBookingRules(),
-                ],
-              )),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: CustomButton(
-                      customButtonProps: CustomButtonProps(
-                        text: 'Reset',
-                        isPrimary: false,
-                        isSecondary: true,
-                        onTap: (() => Navigator.pop(context)),
+        body: SafeArea(
+          top: false,
+          right: false,
+          left: false,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  height: rSize(30),
+                ),
+                Expanded(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    SizedBox(
+                      height: rSize(10),
+                    ),
+                    renderSwitch(),
+                    SizedBox(
+                      height: rSize(40),
+                    ),
+                    renderBookingRules(),
+                  ],
+                )),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: CustomButton(
+                        customButtonProps: CustomButtonProps(
+                          text: 'Reset',
+                          isPrimary: false,
+                          isSecondary: true,
+                          onTap: (() => Navigator.pop(context)),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: rSize(20),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: CustomButton(
-                      customButtonProps: CustomButtonProps(
-                        text: 'Save',
-                        onTap: (() => Navigator.pop(context)),
+                    SizedBox(
+                      width: rSize(20),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: CustomButton(
+                        customButtonProps: CustomButtonProps(
+                          text: 'Save',
+                          onTap: (() => Navigator.pop(context)),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

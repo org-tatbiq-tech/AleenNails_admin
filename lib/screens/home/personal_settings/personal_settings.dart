@@ -1,6 +1,7 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_icon_button.dart';
@@ -85,62 +86,63 @@ class PersonalSettingsState extends State<PersonalSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: Languages.of(context)!.labelPersonalSettings,
-          withBack: true,
-          barHeight: 110,
-          withClipPath: true,
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: Languages.of(context)!.labelPersonalSettings,
+            withBack: true,
+            isTransparent: true,
+          ),
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(30),
-          vertical: rSize(60),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CustomIconButton(
-              customIconButtonProps: CustomIconButtonProps(
-                onTap: () =>
-                    {Navigator.pushNamed(context, '/notificationSettings')},
-                animationDelay: 0.1,
-                iconPath: 'assets/icons/bell.png',
-                positionType: PositionType.bottom,
-                title: Languages.of(context)!.labelNotification,
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(30),
+            vertical: rSize(80),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIconButton(
+                customIconButtonProps: CustomIconButtonProps(
+                  onTap: () =>
+                      {Navigator.pushNamed(context, '/notificationSettings')},
+                  animationDelay: 0.1,
+                  iconPath: 'assets/icons/bell.png',
+                  positionType: PositionType.bottom,
+                  title: Languages.of(context)!.labelNotification,
+                ),
               ),
-            ),
-            SizedBox(
-              height: rSize(20),
-            ),
-            CustomIconButton(
-              customIconButtonProps: CustomIconButtonProps(
-                onTap: () =>
-                    {Navigator.pushNamed(context, '/languageSettings')},
-                animationDelay: 0.3,
-                iconPath: 'assets/icons/language.png',
-                positionType: PositionType.bottom,
-                title: Languages.of(context)!.labelLanguage,
+              SizedBox(
+                height: rSize(20),
               ),
-            ),
-            SizedBox(
-              height: rSize(20),
-            ),
-            CustomIconButton(
-              customIconButtonProps: CustomIconButtonProps(
-                onTap: () => {logout()},
-                animationDelay: 0.5,
-                iconPath: 'assets/icons/logout.png',
-                positionType: PositionType.bottom,
-                title: Languages.of(context)!.labelLogout,
+              CustomIconButton(
+                customIconButtonProps: CustomIconButtonProps(
+                  onTap: () =>
+                      {Navigator.pushNamed(context, '/languageSettings')},
+                  animationDelay: 0.3,
+                  iconPath: 'assets/icons/language.png',
+                  positionType: PositionType.bottom,
+                  title: Languages.of(context)!.labelLanguage,
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: rSize(20),
+              ),
+              CustomIconButton(
+                customIconButtonProps: CustomIconButtonProps(
+                  onTap: () => {logout()},
+                  animationDelay: 0.5,
+                  iconPath: 'assets/icons/logout.png',
+                  positionType: PositionType.bottom,
+                  title: Languages.of(context)!.labelLogout,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

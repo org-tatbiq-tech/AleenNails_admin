@@ -1,6 +1,7 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/langs.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -69,56 +70,56 @@ class _LanguageSettingsState extends State<LanguageSettings> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: Languages.of(context)!.labelLanguage,
-          withBack: true,
-          withBorder: false,
-          barHeight: 110,
-          withClipPath: true,
-        ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        top: false,
-        right: false,
-        left: false,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: rSize(30),
-            right: rSize(30),
-            top: rSize(20),
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+            titleText: Languages.of(context)!.labelLanguage,
+            withBack: true,
+            isTransparent: true,
           ),
-          child: Column(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      Languages.of(context)!.languageMsg,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    SizedBox(
-                      height: rSize(20),
-                    ),
-                    renderLanguage(name: english, value: 0),
-                    renderLanguage(name: arabic, value: 1),
-                    renderLanguage(name: hebrew, value: 2),
-                  ],
+        ),
+        body: SafeArea(
+          top: false,
+          right: false,
+          left: false,
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: rSize(30),
+              right: rSize(30),
+              top: rSize(40),
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        Languages.of(context)!.languageMsg,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      SizedBox(
+                        height: rSize(20),
+                      ),
+                      renderLanguage(name: english, value: 0),
+                      renderLanguage(name: arabic, value: 1),
+                      renderLanguage(name: hebrew, value: 2),
+                    ],
+                  ),
                 ),
-              ),
-              CustomButton(
-                customButtonProps: CustomButtonProps(
-                  onTap: () => {saveLanguage()},
-                  text: Languages.of(context)!.saveLabel,
-                  isPrimary: true,
-                  isDisabled: isButtonDisabled(),
-                ),
-              )
-            ],
+                CustomButton(
+                  customButtonProps: CustomButtonProps(
+                    onTap: () => {saveLanguage()},
+                    text: Languages.of(context)!.saveLabel,
+                    isPrimary: true,
+                    isDisabled: isButtonDisabled(),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

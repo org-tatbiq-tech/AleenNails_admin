@@ -8,6 +8,7 @@ import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/client/client_card.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:appointments/widget/custom/custom_slide_able.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -603,50 +604,54 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           currentFocus.unfocus();
         }
       },
-      child: Scaffold(
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            titleText: appointment != null
-                ? Languages.of(context)!.editAppointmentLabel.toTitleCase()
-                : Languages.of(context)!.newAppointmentLabel.toTitleCase(),
-            withBack: true,
-            withClipPath: true,
-            barHeight: 110,
-            withSave: true,
-            saveText: Languages.of(context)!.saveLabel,
-            saveTap: () => {saveAppointment()},
+      child: CustomContainer(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText: appointment != null
+                  ? Languages.of(context)!.editAppointmentLabel.toTitleCase()
+                  : Languages.of(context)!.newAppointmentLabel.toTitleCase(),
+              withBack: true,
+              isTransparent: true,
+              withSave: true,
+              saveText: Languages.of(context)!.saveLabel,
+              saveTap: () => {saveAppointment()},
+            ),
           ),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(
-          top: false,
-          left: false,
-          right: false,
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: rSize(30),
-                    vertical: rSize(20),
-                  ),
-                  child: Column(
-                    children: [
-                      renderClient(),
-                      SizedBox(
-                        height: rSize(40),
-                      ),
-                      renderServicePicker(),
-                      SizedBox(
-                        height: rSize(40),
-                      ),
-                      renderTimePicker(),
-                      renderNote(),
-                    ],
+          body: SafeArea(
+            top: false,
+            left: false,
+            right: false,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: rSize(20),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: rSize(30),
+                      vertical: rSize(20),
+                    ),
+                    child: Column(
+                      children: [
+                        renderClient(),
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        renderServicePicker(),
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        renderTimePicker(),
+                        renderNote(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

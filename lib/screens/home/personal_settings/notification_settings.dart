@@ -1,5 +1,6 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -86,7 +87,6 @@ class _NotificationSettingsScreenState
           ),
           CustomListTile(
             customListTileProps: CustomListTileProps(
-              height: rSize(60),
               enabled: true,
               onTap: () => AppSettings.openNotificationSettings(),
               title: Text(
@@ -108,30 +108,29 @@ class _NotificationSettingsScreenState
       );
     }
 
-    return Scaffold(
-      appBar: CustomAppBar(
-        customAppBarProps: CustomAppBarProps(
-          titleText: Languages.of(context)!.labelNotification,
-          withBack: true,
-          withBorder: false,
-          barHeight: 110,
-          withClipPath: true,
+    return CustomContainer(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: CustomAppBar(
+          customAppBarProps: CustomAppBarProps(
+              titleText: Languages.of(context)!.labelNotification,
+              withBack: true,
+              isTransparent: true),
         ),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(30),
-          vertical: rSize(20),
-        ),
-        child: Column(
-          children: [
-            renderMyNotification(),
-            SizedBox(
-              height: rSize(20),
-            ),
-            renderNotifyBy(),
-          ],
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: rSize(30),
+            vertical: rSize(40),
+          ),
+          child: Column(
+            children: [
+              renderMyNotification(),
+              SizedBox(
+                height: rSize(20),
+              ),
+              renderNotifyBy(),
+            ],
+          ),
         ),
       ),
     );
