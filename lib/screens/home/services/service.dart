@@ -71,7 +71,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
   @override
   void initState() {
     super.initState();
-
     if (widget.service != null) {
       _isLoading = true;
       _nameController.text = widget.service!.name;
@@ -144,7 +143,10 @@ class _ServiceWidgetState extends State<ServiceWidget> {
             .wpPhotoDeletedSuccessfullyBody
             .toCapitalized(),
       );
-      setState(() {});
+
+      setState(() {
+        mediaMap.removeWhere((key, value) => key == fileName);
+      });
     }
 
     removeServicePhoto({required String imageKey, bool isUrl = true}) async {
