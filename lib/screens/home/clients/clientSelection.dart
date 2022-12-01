@@ -2,6 +2,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/widget/client/client_card.dart';
+import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -27,58 +28,61 @@ class ClientSelectionState extends State<ClientSelection> {
   Widget build(BuildContext context) {
     return Consumer<ClientsMgr>(
       builder: (context, clientsMgr, _) {
-        return Scaffold(
-          appBar: CustomAppBar(
-            customAppBarProps: CustomAppBarProps(
-              titleText: Languages.of(context)!.selectClientLabel.toTitleCase(),
-              withBack: true,
-              withSearch: true,
-              withClipPath: false,
-              customIcon: Icon(
-                FontAwesomeIcons.plus,
-                size: rSize(24),
-              ),
-              customIconTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ClientWidget(),
-                  ),
+        return CustomContainer(
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            appBar: CustomAppBar(
+              customAppBarProps: CustomAppBarProps(
+                titleText:
+                    Languages.of(context)!.selectClientLabel.toTitleCase(),
+                withBack: true,
+                withSearch: true,
+                isTransparent: true,
+                customIcon: Icon(
+                  FontAwesomeIcons.plus,
+                  size: rSize(24),
                 ),
-              },
+                customIconTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ClientWidget(),
+                    ),
+                  ),
+                },
+              ),
             ),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.background,
-          body: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(
-                      height: rSize(15),
-                    );
-                  },
-                  padding: EdgeInsets.symmetric(
-                    vertical: rSize(20),
-                    horizontal: rSize(20),
-                  ),
-                  itemCount: clientsMgr.clients.length,
-                  itemBuilder: (context, index) {
-                    return ClientCard(
-                      clientCardProps: ClientCardProps(
-                        onTap: () => widget.onTap(
-                          clientsMgr.clients[index],
+            body: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        height: rSize(15),
+                      );
+                    },
+                    padding: EdgeInsets.symmetric(
+                      vertical: rSize(30),
+                      horizontal: rSize(30),
+                    ),
+                    itemCount: clientsMgr.clients.length,
+                    itemBuilder: (context, index) {
+                      return ClientCard(
+                        clientCardProps: ClientCardProps(
+                          onTap: () => widget.onTap(
+                            clientsMgr.clients[index],
+                          ),
+                          withNavigation: false,
+                          contactDetails: clientsMgr.clients[index],
                         ),
-                        withNavigation: false,
-                        contactDetails: clientsMgr.clients[index],
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
