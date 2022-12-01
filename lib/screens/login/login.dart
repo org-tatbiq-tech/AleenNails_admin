@@ -220,6 +220,7 @@ class _LoginScreenState extends State<LoginScreen>
                               size: rSize(20),
                             ),
                           ),
+                          keyboardType: TextInputType.emailAddress,
                           labelText: Languages.of(context)!.labelEmail,
                           validator: emailValidation,
                         ),

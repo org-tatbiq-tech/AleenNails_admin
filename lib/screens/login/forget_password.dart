@@ -168,6 +168,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                               size: rSize(20),
                             ),
                           ),
+                          keyboardType: TextInputType.emailAddress,
                           labelText: Languages.of(context)!.labelEmail,
                           validator: emailValidation,
                         ),
