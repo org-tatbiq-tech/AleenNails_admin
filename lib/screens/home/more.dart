@@ -1,6 +1,5 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/widget/custom/custom_container.dart';
-import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/general.dart';
