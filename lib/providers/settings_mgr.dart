@@ -43,6 +43,17 @@ class SettingsMgr extends ChangeNotifier {
     );
   }
 
+  Future<void> deleteToken(String token) async {
+    // Deleting the token from the store document
+    await _fs.collection(clientsCollection).doc(_fa.currentUser!.uid).update(
+      {
+        'tokens': FieldValue.arrayRemove(
+          [token],
+        ),
+      },
+    );
+  }
+
   ///*********************** Schedule management ****************************///
   ScheduleManagement _scheduleManagement =
       ScheduleManagement(); // Holds Working days
