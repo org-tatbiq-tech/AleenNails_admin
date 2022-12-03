@@ -26,12 +26,9 @@ async function getAdminTokens() {
     let adminTokens = [];
     const adminResults  = await admin.firestore().collection(adminsCollection).get();
     for (adminDoc of adminResults.docs) {
-        const adminEmail = adminDoc.id;
-        const adminClientResults = await admin.firestore().collection(clientsCollection).where('email', '==', adminEmail).get();
-        for (adminClientDoc of adminClientResults.docs) {
-            currentTokens = adminClientDoc.data()['tokens'];
-            adminTokens = [...adminTokens, ...currentTokens]
-        }
+        const adminData = adminDoc.data();
+        currentTokens = adminData['tokens'];
+        adminTokens = [...adminTokens, ...currentTokens]
     }
     return adminTokens;
 }

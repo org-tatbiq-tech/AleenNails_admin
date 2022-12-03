@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:appointments/utils/secure_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 const adminsCollection = 'admins';
@@ -15,6 +17,7 @@ enum ApplicationLoginState {
 class AuthenticationMgr extends ChangeNotifier {
   final FirebaseAuth _fa = FirebaseAuth.instance;
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
+  final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
   AuthenticationMgr() {
     init();
@@ -107,8 +110,40 @@ class AuthenticationMgr extends ChangeNotifier {
     return null;
   }
 
+  Future<void> saveToken(String token) async {
+    // Saving token into store document
+    await _fs.collection(adminsCollection).doc(_fa.currentUser?.email).update(
+      {
+        'tokens': FieldValue.arrayUnion(
+          [token],
+        ),
+      },
+    );
+  }
+
+  Future<void> deleteToken(String token) async {
+    // Deleting the token from the store document
+    await _fs.collection(adminsCollection).doc(_fa.currentUser!.email).update(
+      {
+        'tokens': FieldValue.arrayRemove(
+          [token],
+        ),
+      },
+    );
+  }
+
+  Future<void> resetData() async {
+    await UserSecureStorage.deleteAutoLogin();
+    String? token = await _messaging.getToken();
+    if (token != null) {
+      await _messaging.deleteToken();
+      await deleteToken(token);
+    }
+  }
+
   void signOut() async {
     await _fa.signOut();
+    await resetData();
     notifyListeners();
   }
 }
