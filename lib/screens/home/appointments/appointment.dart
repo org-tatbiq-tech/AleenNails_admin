@@ -8,7 +8,8 @@ import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/client/client_card.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:appointments/widget/custom/custom_slide_able.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_avatar.dart';
@@ -605,6 +606,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         }
       },
       child: CustomContainer(
+        imagePath: 'assets/images/background4.png',
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: CustomAppBar(

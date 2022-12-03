@@ -1,7 +1,8 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/langs.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -71,6 +72,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      imagePath: 'assets/images/background4.png',
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(

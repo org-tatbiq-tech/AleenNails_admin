@@ -11,7 +11,8 @@ import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -893,6 +894,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     }
 
     return CustomContainer(
+      imagePath: 'assets/images/background4.png',
       child: Consumer<AppointmentsMgr>(
         builder: (context, appointmentsMgr, _) => !appointmentsMgr
                 .isSelectedAppointmentLoaded

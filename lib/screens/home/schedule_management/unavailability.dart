@@ -3,7 +3,8 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:appointments/widget/unavailability_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -319,6 +320,7 @@ class _UnavailabilityState extends State<Unavailability> {
         }
       },
       child: CustomContainer(
+        imagePath: 'assets/images/background4.png',
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: CustomAppBar(

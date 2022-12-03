@@ -2,7 +2,8 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:appointments/utils/general.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_text_button.dart';
@@ -451,6 +452,7 @@ class _DayDetailsState extends State<DayDetails> {
     }
 
     return CustomContainer(
+      imagePath: 'assets/images/background4.png',
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(

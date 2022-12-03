@@ -1,5 +1,6 @@
 import 'package:appointments/data_types/components.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:appointments/widget/notification_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/empty_list_image.dart';
@@ -24,6 +25,7 @@ class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      imagePath: 'assets/images/background4.png',
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(

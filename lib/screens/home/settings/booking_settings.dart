@@ -1,4 +1,5 @@
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -324,6 +325,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
     }
 
     return CustomContainer(
+      imagePath: 'assets/images/background4.png',
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(

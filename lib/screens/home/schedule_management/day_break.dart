@@ -1,7 +1,8 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/utils/general.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -175,6 +176,7 @@ class _DayBreakState extends State<DayBreak> {
     }
 
     return CustomContainer(
+      imagePath: 'assets/images/background4.png',
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(

@@ -1,6 +1,7 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -109,6 +110,7 @@ class _NotificationSettingsScreenState
     }
 
     return CustomContainer(
+      imagePath: 'assets/images/background4.png',
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(

@@ -1,5 +1,6 @@
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -13,6 +14,7 @@ class ProfileImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomContainer(
+      imagePath: 'assets/images/background4.png',
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(

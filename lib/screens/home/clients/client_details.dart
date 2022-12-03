@@ -7,7 +7,8 @@ import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_appointments.dart';
 import 'package:appointments/widget/appointment/client_appointment_card.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -618,6 +619,7 @@ class _ClientDetailsState extends State<ClientDetails> {
     return Consumer<ClientsMgr>(
       builder: (context, clientsMgr, _) {
         return CustomContainer(
+          imagePath: 'assets/images/background4.png',
           child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: CustomAppBar(

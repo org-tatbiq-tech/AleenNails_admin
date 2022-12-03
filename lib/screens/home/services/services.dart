@@ -4,7 +4,8 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/screens/home/services/service.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:appointments/widget/custom/custom_reorderable_list_view.dart';
 import 'package:appointments/widget/service/service_card.dart';
 import 'package:appointments/widget/service/services_search.dart';
@@ -69,6 +70,7 @@ class ServicesState extends State<Services> {
 
     return Consumer<ServicesMgr>(builder: (context, servicesMgr, _) {
       return CustomContainer(
+        imagePath: 'assets/images/background4.png',
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: CustomAppBar(

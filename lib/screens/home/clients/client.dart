@@ -4,7 +4,8 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
-import 'package:appointments/widget/custom/custom_container.dart';
+import 'package:common_widgets/custom_container.dart';
+
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -603,6 +604,7 @@ class _ClientWidgetState extends State<ClientWidget> {
         }
       },
       child: CustomContainer(
+        imagePath: 'assets/images/background4.png',
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: CustomAppBar(
