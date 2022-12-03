@@ -542,4 +542,13 @@ class LanguageAr extends Languages {
   String get labelFriday => "ألجمعة";
   @override
   String get labelSaturday => "ألسبت";
+
+  ///************************************************************************///
+  /// ************ Booking settings ************///
+  @override
+  String get labelBookingInAdvance => "";
+  @override
+  String get labelFutureBooking => "";
+  @override
+  String get labelReschedulingWindow => "";
 }

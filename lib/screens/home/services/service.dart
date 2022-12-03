@@ -6,11 +6,10 @@ import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:appointments/widget/custom/custom_color_picker.dart';
-import 'package:common_widgets/custom_container.dart';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
@@ -131,7 +130,6 @@ class _ServiceWidgetState extends State<ServiceWidget> {
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
       await servicesMgr.deleteServiceImage(
         widget.service!.id,
-        widget.service!.name,
         fileName,
       );
       Navigator.pop(context);

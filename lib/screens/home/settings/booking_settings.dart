@@ -1,10 +1,9 @@
-import 'package:common_widgets/custom_container.dart';
-
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
-import 'package:common_widgets/custom_modal.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_modal.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/wheel_picker_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,10 +19,10 @@ class _BookingsSettingsState extends State<BookingsSettings> {
   bool isEnabled = true;
 
   int selectedBookingWindowPicker = 0;
-  int selectedFutureBookingPickerdata = 0;
-  int selectedReschedulingPickerdata = 0;
+  int selectedFutureBookingPickerData = 0;
+  int selectedReschedulingPickerData = 0;
 
-  List<String> bookingWindowPickerdata = [
+  List<String> bookingWindowPickerData = [
     'No less than 15 minutes in advance',
     'No less than 30 minutes in advance',
     'No less than 1 hour in advance',
@@ -36,7 +35,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
     'No less than 3 days in advance',
     'No less than 5 days in advance',
   ];
-  List<String> futureBookingPickerdata = [
+  List<String> futureBookingPickerData = [
     'Up to 7 days in the future',
     'Up to 14 days in the future',
     'Up to 1 month in the future',
@@ -46,7 +45,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
     'Up to 12 months in the future',
     'Up to 24 months in the future',
   ];
-  List<String> reschedulingPickerdata = [
+  List<String> reschedulingPickerData = [
     'No less than 1 hour in advance',
     'No less than 2 hours in advance',
     'No less than 3 hours in advance',
@@ -166,13 +165,13 @@ class _BookingsSettingsState extends State<BookingsSettings> {
             ),
           ),
           CustomInputFieldButton(
-            text: bookingWindowPickerdata[selectedBookingWindowPicker],
+            text: bookingWindowPickerData[selectedBookingWindowPicker],
             fontSize: 16,
             onTap: () => {
               showWheelPickerModal(
                 wheelPickerModalProps: WheelPickerModalProps(
                   context: context,
-                  pickerData: bookingWindowPickerdata,
+                  pickerData: bookingWindowPickerData,
                   title: 'Booking Window',
                   selected: selectedBookingWindowPicker,
                   primaryAction: (value) => {
@@ -200,17 +199,17 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           ),
           CustomInputFieldButton(
             fontSize: 16,
-            text: futureBookingPickerdata[selectedFutureBookingPickerdata],
+            text: futureBookingPickerData[selectedFutureBookingPickerData],
             onTap: () => {
               showWheelPickerModal(
                 wheelPickerModalProps: WheelPickerModalProps(
                   context: context,
-                  pickerData: futureBookingPickerdata,
+                  pickerData: futureBookingPickerData,
                   title: 'Future Booking Window',
-                  selected: selectedFutureBookingPickerdata,
+                  selected: selectedFutureBookingPickerData,
                   primaryAction: (value) => {
                     setState(() {
-                      selectedFutureBookingPickerdata = value[0];
+                      selectedFutureBookingPickerData = value[0];
                     })
                   },
                 ),
@@ -233,17 +232,17 @@ class _BookingsSettingsState extends State<BookingsSettings> {
           ),
           CustomInputFieldButton(
             fontSize: 16,
-            text: reschedulingPickerdata[selectedReschedulingPickerdata],
+            text: reschedulingPickerData[selectedReschedulingPickerData],
             onTap: () => {
               showWheelPickerModal(
                 wheelPickerModalProps: WheelPickerModalProps(
                   context: context,
-                  pickerData: reschedulingPickerdata,
+                  pickerData: reschedulingPickerData,
                   title: 'Rescheduling',
-                  selected: selectedReschedulingPickerdata,
+                  selected: selectedReschedulingPickerData,
                   primaryAction: (value) => {
                     setState(() {
-                      selectedReschedulingPickerdata = value[0];
+                      selectedReschedulingPickerData = value[0];
                     })
                   },
                 ),

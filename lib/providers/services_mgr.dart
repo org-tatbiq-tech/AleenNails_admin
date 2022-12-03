@@ -62,12 +62,12 @@ class ServicesMgr extends ChangeNotifier {
   }
 
   Future<Map<String, String>> uploadServiceImages(
-      String serviceName, Map<String, File> imagesMap) async {
-    var name = serviceName.replaceAll(' ', '_');
+      String serviceID, Map<String, File> imagesMap) async {
     Map<String, String> serviceImages = {};
     for (MapEntry imageEntry in imagesMap.entries) {
       String photoName = '${imageEntry.key}.png';
-      Reference ref = _fst.ref('$servicesStorageDir/$name').child(photoName);
+      Reference ref =
+          _fst.ref('$servicesStorageDir/$serviceID').child(photoName);
       await ref.putFile(imageEntry.value);
       String imageURL = await ref.getDownloadURL();
       serviceImages[imageEntry.key] = imageURL;
@@ -79,19 +79,20 @@ class ServicesMgr extends ChangeNotifier {
       Service newService, Map<String, File> imagesMap) async {
     /// Submitting new service - update DB
     /// Images map contains new media images to upload
-    Map<String, String> serviceImages =
-        await uploadServiceImages(newService.name, imagesMap);
-    newService.imagesURL!.addAll(serviceImages);
+
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     var data = newService.toJson();
     data['priority'] = services.length;
-    await servicesColl.add(data);
+    DocumentReference doc = await servicesColl.add(data);
+    Map<String, String> serviceImages =
+        await uploadServiceImages(doc.id, imagesMap);
+    newService.imagesURL!.addAll(serviceImages);
+    await servicesColl.doc(doc.id).update({'images': newService.imagesURL!});
   }
 
-  Future<void> deleteServiceImage(
-      String serviceID, String serviceName, String image) async {
-    var name = serviceName.replaceAll(' ', '_');
-    Reference ref = _fst.ref('$servicesStorageDir/$name').child('$image.png');
+  Future<void> deleteServiceImage(String serviceID, String image) async {
+    Reference ref =
+        _fst.ref('$servicesStorageDir/$serviceID').child('$image.png');
     await ref.delete();
     await _fs.collection(servicesCollection).doc(serviceID).update({
       'images.$image': FieldValue.delete(),
@@ -99,11 +100,10 @@ class ServicesMgr extends ChangeNotifier {
   }
 
   Future<void> deleteServiceImages(
-      String serviceName, List<String> imagesIDs) async {
-    var name = serviceName.replaceAll(' ', '_');
+      String serviceID, List<String> imagesIDs) async {
     for (String imageName in imagesIDs) {
       Reference ref =
-          _fst.ref('$servicesStorageDir/$name').child('$imageName.png');
+          _fst.ref('$servicesStorageDir/$serviceID').child('$imageName.png');
       await ref.delete();
     }
   }
@@ -111,11 +111,8 @@ class ServicesMgr extends ChangeNotifier {
   Future<void> updateService(
       Service updatedService, Map<String, File> imagesMap) async {
     /// Update existing service - update DB
-    // List<String> serviceImages =
-    //     await uploadServiceImages(updatedService.name, imageList);
-    // updatedService.imagesURL?.addAll(serviceImages);
     Map<String, String> serviceImages =
-        await uploadServiceImages(updatedService.name, imagesMap);
+        await uploadServiceImages(updatedService.id, imagesMap);
     updatedService.imagesURL!.addAll(serviceImages);
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     var data = updatedService.toJson();
@@ -126,7 +123,7 @@ class ServicesMgr extends ChangeNotifier {
     /// delete existing service - update DB
     CollectionReference servicesColl = _fs.collection(servicesCollection);
     await deleteServiceImages(
-        serviceToDelete.name, serviceToDelete.imagesURL!.keys.toList());
+        serviceToDelete.id, serviceToDelete.imagesURL!.keys.toList());
     servicesColl.doc(serviceToDelete.id).delete();
   }
 }

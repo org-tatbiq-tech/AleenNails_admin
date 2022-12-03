@@ -510,4 +510,13 @@ class LanguageHe extends Languages {
   String get labelFriday => "שישי";
   @override
   String get labelSaturday => "שבת";
+
+  ///************************************************************************///
+  /// ************ Booking settings ************///
+  @override
+  String get labelBookingInAdvance => "";
+  @override
+  String get labelFutureBooking => "";
+  @override
+  String get labelReschedulingWindow => "";
 }

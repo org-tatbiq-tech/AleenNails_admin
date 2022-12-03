@@ -276,4 +276,10 @@ abstract class Languages {
   String get labelThursday;
   String get labelFriday;
   String get labelSaturday;
+
+  ///************************************************************************///
+  /// ************ Booking settings ************///
+  String get labelBookingInAdvance;
+  String get labelFutureBooking;
+  String get labelReschedulingWindow;
 }
