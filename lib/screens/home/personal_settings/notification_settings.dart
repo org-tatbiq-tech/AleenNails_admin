@@ -77,7 +77,7 @@ class _NotificationSettingsScreenState
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            Languages.of(context)!.labelNotifyBy,
+            Languages.of(context)!.labelNotification,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -90,7 +90,7 @@ class _NotificationSettingsScreenState
               enabled: true,
               onTap: () => AppSettings.openNotificationSettings(),
               title: Text(
-                Languages.of(context)!.labelSettings,
+                Languages.of(context)!.notificationsMsg,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2,
@@ -124,10 +124,10 @@ class _NotificationSettingsScreenState
           ),
           child: Column(
             children: [
-              renderMyNotification(),
-              SizedBox(
-                height: rSize(20),
-              ),
+              // renderMyNotification(),
+              // SizedBox(
+              //   height: rSize(20),
+              // ),
               renderNotifyBy(),
             ],
           ),
