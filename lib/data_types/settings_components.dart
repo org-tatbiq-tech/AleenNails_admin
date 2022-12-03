@@ -265,4 +265,29 @@ class ProfileManagement {
 /// Booking
 class BookingSettingComp {
 // Hold for now
+  int bookingWindowMinutes;
+  int reschedulingWindowHours;
+  int futureBookingDays;
+
+  BookingSettingComp({
+    this.bookingWindowMinutes = 6 * 60,
+    this.reschedulingWindowHours = 6,
+    this.futureBookingDays = 2 * 30,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'bookingWindow': bookingWindowMinutes,
+      'reschedulingWindow': reschedulingWindowHours,
+      'futureBooking': futureBookingDays,
+    };
+  }
+
+  factory BookingSettingComp.fromJson(Map<String, dynamic> doc) {
+    return BookingSettingComp(
+      bookingWindowMinutes: doc['bookingWindow'],
+      reschedulingWindowHours: doc['reschedulingWindow'],
+      futureBookingDays: doc['futureBooking'],
+    );
+  }
 }

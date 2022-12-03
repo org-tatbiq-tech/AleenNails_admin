@@ -1,4 +1,6 @@
+import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/settings_mgr.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
@@ -8,6 +10,7 @@ import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/wheel_picker_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class BookingsSettings extends StatefulWidget {
   const BookingsSettings({Key? key}) : super(key: key);
@@ -20,8 +23,68 @@ class _BookingsSettingsState extends State<BookingsSettings> {
   bool isEnabled = true;
 
   int selectedBookingWindowPicker = 0;
-  int selectedFutureBookingPickerData = 0;
   int selectedReschedulingPickerData = 0;
+  int selectedFutureBookingPickerData = 0;
+
+  Map<int, int> bookingWindowIndexToMins = {
+    0: 15,
+    1: 30,
+    2: 60,
+    3: 2 * 60,
+    4: 3 * 60,
+    5: 6 * 60,
+    6: 12 * 60,
+    7: 24 * 60,
+    8: 2 * 24 * 60,
+    9: 3 * 24 * 60,
+    10: 5 * 24 * 60,
+  }; // selected Index to minutes
+  Map<int, int> reschedulingWindowIndexToHours = {
+    0: 1,
+    1: 2,
+    2: 3,
+    3: 6,
+    4: 12,
+    5: 24,
+    6: 2 * 24,
+    7: 3 * 24,
+    8: 5 * 24 * 60,
+    9: 7 * 24 * 60,
+  }; // selected Index to hours
+  Map<int, int> futureBookingIndexToDays = {
+    0: 7,
+    1: 14,
+    2: 30,
+    3: 2 * 30,
+    4: 3 * 30,
+    5: 6 * 30,
+  }; // selected Index to day
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SettingsMgr settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    selectedBookingWindowPicker = bookingWindowIndexToMins.keys.firstWhere(
+        (k) =>
+            bookingWindowIndexToMins[k] ==
+            settingsMgr.bookingSettingComp.bookingWindowMinutes,
+        orElse: () => 0);
+    selectedReschedulingPickerData = reschedulingWindowIndexToHours.keys
+        .firstWhere(
+            (k) =>
+                reschedulingWindowIndexToHours[k] ==
+                settingsMgr.bookingSettingComp.reschedulingWindowHours,
+            orElse: () => 0);
+    selectedFutureBookingPickerData = futureBookingIndexToDays.keys.firstWhere(
+        (k) =>
+            futureBookingIndexToDays[k] ==
+            settingsMgr.bookingSettingComp.futureBookingDays,
+        orElse: () => 0);
+
+    //selectedFutureBookingPickerData
+    // selectedReschedulingPickerData
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +107,6 @@ class _BookingsSettingsState extends State<BookingsSettings> {
       Languages.of(context)!.upTo14Days,
       Languages.of(context)!.upTo1Month,
       Languages.of(context)!.upTo2Months,
-      Languages.of(context)!.upTo3Months,
       Languages.of(context)!.upTo3Months,
       Languages.of(context)!.upTo6Months,
     ];
@@ -328,6 +390,22 @@ class _BookingsSettingsState extends State<BookingsSettings> {
       );
     }
 
+    saveBookingSettings() {
+      SettingsMgr settingsMgr =
+          Provider.of<SettingsMgr>(context, listen: false);
+      settingsMgr.saveBookingSettings(
+        BookingSettingComp(
+          bookingWindowMinutes:
+              bookingWindowIndexToMins[selectedBookingWindowPicker]!,
+          reschedulingWindowHours:
+              reschedulingWindowIndexToHours[selectedReschedulingPickerData]!,
+          futureBookingDays:
+              futureBookingIndexToDays[selectedFutureBookingPickerData]!,
+        ),
+      );
+      Navigator.pop(context);
+    }
+
     return CustomContainer(
       imagePath: 'assets/images/background4.png',
       child: Scaffold(
@@ -399,7 +477,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                       child: CustomButton(
                         customButtonProps: CustomButtonProps(
                           text: Languages.of(context)!.saveLabel,
-                          onTap: (() => Navigator.pop(context)),
+                          onTap: (() => saveBookingSettings()),
                         ),
                       ),
                     ),

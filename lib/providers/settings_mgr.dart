@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 const settingsCollection = 'settings';
 const clientsCollection = 'clients';
 const scheduleManagementDoc = 'scheduleManagement';
+const bookingSettingsDoc = 'bookingSettings';
 const profileManagementDoc = 'profile';
 const profileStorageDir = 'profile';
 const profileWPStorageDir = 'profile/workplace';
@@ -23,6 +24,7 @@ class SettingsMgr extends ChangeNotifier {
   SettingsMgr() {
     downloadScheduleManagement();
     downloadProfileManagement();
+    downloadBookingSettings();
   }
 
   ///*************************** Firestore **********************************///
@@ -227,5 +229,27 @@ class SettingsMgr extends ChangeNotifier {
       'media.wp.$fileName': FieldValue.delete(),
     });
     await ref.delete();
+  }
+
+  ///*********************** Booking settings ****************************///
+  BookingSettingComp bookingSettingComp = BookingSettingComp();
+  Future<void> saveBookingSettings(
+      BookingSettingComp bookingSettingComp) async {
+    await _fs
+        .collection(settingsCollection)
+        .doc(bookingSettingsDoc)
+        .set(bookingSettingComp.toJson());
+    await downloadBookingSettings();
+  }
+
+  Future<void> downloadBookingSettings() async {
+    var query = _fs.collection(settingsCollection);
+    DocumentSnapshot doc = await query.doc(bookingSettingsDoc).get();
+    if (doc.exists) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      bookingSettingComp = BookingSettingComp.fromJson(data);
+    } else {
+      bookingSettingComp = BookingSettingComp();
+    }
   }
 }
