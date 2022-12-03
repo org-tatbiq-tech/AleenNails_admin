@@ -479,7 +479,7 @@ class LanguageHe extends Languages {
   @override
   String get notificationsTitle => "התראות האפליקציה";
   @override
-  String get notificationsMsg => "מאשר שליחת התראות (המכשיר הזה)";
+  String get notificationsMsg => "שנה הגדרות שליחת התראות";
   @override
   String get labelNotifyBy => "הודע על ידי";
   @override
