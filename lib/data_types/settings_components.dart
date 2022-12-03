@@ -264,7 +264,6 @@ class ProfileManagement {
 
 /// Booking
 class BookingSettingComp {
-// Hold for now
   int bookingWindowMinutes;
   int reschedulingWindowHours;
   int futureBookingDays;
