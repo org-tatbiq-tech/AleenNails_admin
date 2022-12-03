@@ -1,12 +1,12 @@
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
-import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/timeline.dart';
-import 'package:appointments/data_types/macros.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ///********************** Notifications handler **********************///
   //FCM instance
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  late SettingsMgr settingsMgr;
+  late AuthenticationMgr authMgr;
   late AppointmentsMgr appointmentsMgr;
 
   _requestIOSNotificationPermissions() async {
@@ -77,12 +77,12 @@ class _HomeScreenState extends State<HomeScreen> {
     _messaging.getToken().then((token) {
       // Save in database
       if (token != null) {
-        settingsMgr.saveToken(token);
+        authMgr.saveToken(token);
       }
     });
 
     // Any time the token refreshes, store this in the database too.
-    _messaging.onTokenRefresh.listen(settingsMgr.saveToken);
+    _messaging.onTokenRefresh.listen(authMgr.saveToken);
   }
 
   Future<dynamic> onSelectNotification(
@@ -213,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
+    authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
     appointmentsMgr = Provider.of<AppointmentsMgr>(context, listen: false);
     _init();
     _requestIOSNotificationPermissions();

@@ -1,6 +1,5 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/auth_mgr.dart';
-import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/widget/custom/custom_container.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -8,9 +7,9 @@ import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PersonalSettings extends StatefulWidget {
   const PersonalSettings({Key? key}) : super(key: key);
@@ -24,13 +23,11 @@ class PersonalSettings extends StatefulWidget {
 class PersonalSettingsState extends State<PersonalSettings> {
   //FCM instance
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-  late SettingsMgr settingsMgr;
   late AuthenticationMgr authenticationMgr;
 
   @override
   void initState() {
     super.initState();
-    settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     authenticationMgr = Provider.of<AuthenticationMgr>(context, listen: false);
   }
 
@@ -38,7 +35,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
     String? token = await _messaging.getToken();
     if (token != null) {
       await _messaging.deleteToken();
-      await settingsMgr.deleteToken(token);
+      await authenticationMgr.deleteToken(token);
     }
     authenticationMgr.signOut();
     Navigator.pushNamedAndRemoveUntil(
