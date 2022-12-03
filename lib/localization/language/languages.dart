@@ -190,6 +190,8 @@ abstract class Languages {
   String get paidLabel;
   String get unpaidLabel;
   String get saveLabel;
+  String get enabledLabel;
+  String get disabledLabel;
   String get okLabel;
   String get hoursLabel;
   String get minsLabel;
@@ -279,7 +281,53 @@ abstract class Languages {
 
   ///************************************************************************///
   /// ************ Booking settings ************///
-  String get labelBookingInAdvance;
+  String get labelBookingRules;
+  String get labelRules;
+  String get labelBookingInAdvanceTitle;
+  String get labelBookingInAdvanceModal;
+  String get labelFutureBookingModal;
   String get labelFutureBooking;
   String get labelReschedulingWindow;
+  String get labelReschedulingWindowModal;
+  String get labelAutomaticallyConfirm;
+  String get labelAutomaticallyConfirmMsg;
+
+  /// Booking lists///
+  String get notLessThan15Mins;
+  String get notLessThan30Mins;
+  String get notLessThan1H;
+  String get notLessThan2H;
+  String get notLessThan3H;
+  String get notLessThan6H;
+  String get notLessThan12H;
+  String get notLessThan1D;
+  String get notLessThan2D;
+  String get notLessThan3D;
+  String get notLessThan5D;
+
+  /// Future booking
+  String get upTo7Days;
+  String get upTo14Days;
+  String get upTo1Month;
+  String get upTo2Months;
+  String get upTo3Months;
+  String get upTo6Months;
+
+  /// Rescheduling
+  String get notBefore1Hour;
+  String get notBefore2Hours;
+  String get notBefore3Hours;
+  String get notBefore6Hours;
+  String get notBefore12Hours;
+  String get notBefore1Day;
+  String get notBefore2Days;
+  String get notBefore3Days;
+  String get notBefore5Days;
+  String get notBefore7Days;
+
+  /// Booking settings msgs
+  String get labelAutomaticallyConfirmMsgCompletion;
+  String get labelBookingInAdvanceExplanation;
+  String get labelFutureBookingExplanation;
+  String get labelReschedulingExplanation;
 }

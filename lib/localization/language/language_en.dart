@@ -349,6 +349,10 @@ class LanguageEn extends Languages {
   @override
   String get saveLabel => "save";
   @override
+  String get enabledLabel => "enabled";
+  @override
+  String get disabledLabel => "disabled";
+  @override
   String get okLabel => "ok";
   @override
   String get hoursLabel => "hours";
@@ -539,9 +543,99 @@ class LanguageEn extends Languages {
   ///************************************************************************///
   /// ************ Booking settings ************///
   @override
-  String get labelBookingInAdvance => "";
+  String get labelBookingRules => "Booking rules";
   @override
-  String get labelFutureBooking => "";
+  String get labelRules => "Rules";
   @override
-  String get labelReschedulingWindow => "";
+  String get labelBookingInAdvanceTitle =>
+      "window booking appointment in advance";
+  @override
+  String get labelBookingInAdvanceModal => "Not less than";
+  @override
+  String get labelFutureBooking => "Window booking future appointment till";
+  @override
+  String get labelFutureBookingModal => "Future booking up to:";
+  @override
+  String get labelReschedulingWindow => "Rescheduling window in advance";
+  @override
+  String get labelReschedulingWindowModal => "Rescheduling not less then";
+  @override
+  String get labelAutomaticallyConfirm => "Automatically confirm bookings";
+  @override
+  String get labelAutomaticallyConfirmMsg =>
+      "Turning on automatic confirmation, saved time and make it easier for clients to book. highly recommended";
+
+  /// Booking lists///
+  @override
+  String get notLessThan15Mins => 'No less than 15 minutes in advance';
+  @override
+  String get notLessThan30Mins => 'No less than 30 minutes in advance';
+  @override
+  String get notLessThan1H => 'No less than 1 hour in advance';
+  @override
+  String get notLessThan2H => 'No less than 2 hours in advance';
+  @override
+  String get notLessThan3H => 'No less than 3 hours in advance';
+  @override
+  String get notLessThan6H => 'No less than 6 hours in advance';
+  @override
+  String get notLessThan12H => 'No less than 12 hours in advance';
+  @override
+  String get notLessThan1D => 'No less than 1 day in advance';
+  @override
+  String get notLessThan2D => 'No less than 2 days in advance';
+  @override
+  String get notLessThan3D => 'No less than 3 days in advance';
+  @override
+  String get notLessThan5D => 'No less than 5 days in advance';
+
+  /// Future booking
+  @override
+  String get upTo7Days => 'Up to 7 days in the future';
+  @override
+  String get upTo14Days => 'Up to 14 days in the future';
+  @override
+  String get upTo1Month => 'Up to 1 month in the future';
+  @override
+  String get upTo2Months => 'Up to 2 months in the future';
+  @override
+  String get upTo3Months => 'Up to 3 months in the future';
+  @override
+  String get upTo6Months => 'Up to 6 months in the future';
+
+  /// Rescheduling
+  @override
+  String get notBefore1Hour => "Not before 1 hour";
+  @override
+  String get notBefore2Hours => "Not before 2 hours";
+  @override
+  String get notBefore3Hours => "Not before 3 hours";
+  @override
+  String get notBefore6Hours => "Not before 6 hours";
+  @override
+  String get notBefore12Hours => "Not before 12 hours";
+  @override
+  String get notBefore1Day => "Not before 1 day";
+  @override
+  String get notBefore2Days => "Not before 2 days";
+  @override
+  String get notBefore3Days => "Not before 3 days";
+  @override
+  String get notBefore5Days => "Not before 5 days";
+  @override
+  String get notBefore7Days => "Not before 7 days";
+
+  /// Booking settings msgs
+  @override
+  String get labelAutomaticallyConfirmMsgCompletion =>
+      "If turned off, Admin will have to manually confirm each customer booking. Please note: Your availability is only updated upon confirmation, not based in requests. this means you could receive multiple customer request for the same time slot.";
+  @override
+  String get labelBookingInAdvanceExplanation =>
+      "How mch of a window do you need between the time of booking and the appointment time? This helps you to plan ahead and eliminates any surprises appointments.";
+  @override
+  String get labelFutureBookingExplanation =>
+      'Choose how far in the future clients can schedule appointments if you want to encourage repeat bookings we recommend setting this for a longer time period.';
+  @override
+  String get labelReschedulingExplanation =>
+      "Choose how long before an appointment a client can reschedule or cancel.";
 }

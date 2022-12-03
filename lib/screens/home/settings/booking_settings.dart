@@ -1,3 +1,4 @@
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
@@ -22,43 +23,45 @@ class _BookingsSettingsState extends State<BookingsSettings> {
   int selectedFutureBookingPickerData = 0;
   int selectedReschedulingPickerData = 0;
 
-  List<String> bookingWindowPickerData = [
-    'No less than 15 minutes in advance',
-    'No less than 30 minutes in advance',
-    'No less than 1 hour in advance',
-    'No less than 2 hours in advance',
-    'No less than 3 hours in advance',
-    'No less than 6 hours in advance',
-    'No less than 12 hours in advance',
-    'No less than 1 day in advance',
-    'No less than 2 days in advance',
-    'No less than 3 days in advance',
-    'No less than 5 days in advance',
-  ];
-  List<String> futureBookingPickerData = [
-    'Up to 7 days in the future',
-    'Up to 14 days in the future',
-    'Up to 1 month in the future',
-    'Up to 2 months in the future',
-    'Up to 3 months in the future',
-    'Up to 6 months in the future',
-    'Up to 12 months in the future',
-    'Up to 24 months in the future',
-  ];
-  List<String> reschedulingPickerData = [
-    'No less than 1 hour in advance',
-    'No less than 2 hours in advance',
-    'No less than 3 hours in advance',
-    'No less than 6 hours in advance',
-    'No less than 12 hours in advance',
-    'No less than 1 day in advance',
-    'No less than 2 days in advance',
-    'No less than 3 days in advance',
-    'No less than 5 days in advance',
-    'No less than 7 days in advance',
-  ];
   @override
   Widget build(BuildContext context) {
+    List<String> bookingWindowPickerData = [
+      Languages.of(context)!.notLessThan15Mins,
+      Languages.of(context)!.notLessThan30Mins,
+      Languages.of(context)!.notLessThan1H,
+      Languages.of(context)!.notLessThan2H,
+      Languages.of(context)!.notLessThan3H,
+      Languages.of(context)!.notLessThan6H,
+      Languages.of(context)!.notLessThan12H,
+      Languages.of(context)!.notLessThan1D,
+      Languages.of(context)!.notLessThan2D,
+      Languages.of(context)!.notLessThan3D,
+      Languages.of(context)!.notLessThan5D,
+    ];
+
+    List<String> futureBookingPickerData = [
+      Languages.of(context)!.upTo7Days,
+      Languages.of(context)!.upTo14Days,
+      Languages.of(context)!.upTo1Month,
+      Languages.of(context)!.upTo2Months,
+      Languages.of(context)!.upTo3Months,
+      Languages.of(context)!.upTo3Months,
+      Languages.of(context)!.upTo6Months,
+    ];
+
+    List<String> reschedulingPickerData = [
+      Languages.of(context)!.notBefore1Hour,
+      Languages.of(context)!.notBefore2Hours,
+      Languages.of(context)!.notBefore3Hours,
+      Languages.of(context)!.notBefore6Hours,
+      Languages.of(context)!.notBefore12Hours,
+      Languages.of(context)!.notBefore1Day,
+      Languages.of(context)!.notBefore2Days,
+      Languages.of(context)!.notBefore3Days,
+      Languages.of(context)!.notBefore5Days,
+      Languages.of(context)!.notBefore7Days,
+    ];
+
     getSettingInfo() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
@@ -75,63 +78,63 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                 height: rSize(10),
               ),
               Text(
-                'Automatic Confirmation',
+                Languages.of(context)!.labelAutomaticallyConfirm,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'When this is turned on Application will automatically confirm bookings for you. This is easier for you, and your clients.',
+                Languages.of(context)!.labelAutomaticallyConfirmMsg,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'If this option is turned off you will have to manually confirm each customer booking. Please note: Your availability is only updated upon confirmation, not based in requests. this means you could receive multiple customer request for the same time slot.',
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-              SizedBox(
-                height: rSize(30),
-              ),
-              Text(
-                'Booking window',
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-              SizedBox(
-                height: rSize(10),
-              ),
-              Text(
-                'How mch of a window do you need between the time of booking and the appointment time? This helps you to plan ahead and eliminates any surprises appointments.',
+                Languages.of(context)!.labelAutomaticallyConfirmMsgCompletion,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(
                 height: rSize(30),
               ),
               Text(
-                'Future Booking window',
+                Languages.of(context)!.labelBookingInAdvanceTitle,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Choose how far in the future clients can schedule appointments if you want to encourage repeat bookings we recommend setting this for a longer time period.',
+                Languages.of(context)!.labelBookingInAdvanceExplanation,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
               SizedBox(
                 height: rSize(30),
               ),
               Text(
-                'Rescheduling',
+                Languages.of(context)!.labelFutureBooking,
                 style: Theme.of(context).textTheme.bodyText2,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
-                'Choose how long before an appointment a client can reschedule or cancel.',
+                Languages.of(context)!.labelFutureBookingExplanation,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                Languages.of(context)!.labelReschedulingWindow,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                Languages.of(context)!.labelReschedulingExplanation,
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ],
@@ -147,7 +150,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            'Booking Rules',
+            Languages.of(context)!.labelRules,
             style: Theme.of(context).textTheme.bodyText2,
           ),
           SizedBox(
@@ -160,7 +163,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
               right: rSize(10),
             ),
             child: Text(
-              'Booking Window',
+              Languages.of(context)!.labelBookingInAdvanceTitle,
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -172,7 +175,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                 wheelPickerModalProps: WheelPickerModalProps(
                   context: context,
                   pickerData: bookingWindowPickerData,
-                  title: 'Booking Window',
+                  title: Languages.of(context)!.labelBookingInAdvanceModal,
                   selected: selectedBookingWindowPicker,
                   primaryAction: (value) => {
                     setState(() {
@@ -193,7 +196,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
               right: rSize(10),
             ),
             child: Text(
-              'Future Booking Window',
+              Languages.of(context)!.labelFutureBooking,
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -205,7 +208,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                 wheelPickerModalProps: WheelPickerModalProps(
                   context: context,
                   pickerData: futureBookingPickerData,
-                  title: 'Future Booking Window',
+                  title: Languages.of(context)!.labelFutureBookingModal,
                   selected: selectedFutureBookingPickerData,
                   primaryAction: (value) => {
                     setState(() {
@@ -226,7 +229,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
               right: rSize(10),
             ),
             child: Text(
-              'Rescheduling',
+              Languages.of(context)!.labelReschedulingWindow,
               style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
@@ -238,7 +241,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                 wheelPickerModalProps: WheelPickerModalProps(
                   context: context,
                   pickerData: reschedulingPickerData,
-                  title: 'Rescheduling',
+                  title: Languages.of(context)!.labelReschedulingWindowModal,
                   selected: selectedReschedulingPickerData,
                   primaryAction: (value) => {
                     setState(() {
@@ -268,14 +271,14 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    'Automatically confirm bookings',
+                    Languages.of(context)!.labelAutomaticallyConfirm,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                   SizedBox(
                     height: rSize(10),
                   ),
                   Text(
-                    'When you turn on automatic confirmations, you save time and make it easier for your clients to book. we recommends it.',
+                    Languages.of(context)!.labelAutomaticallyConfirmMsg,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ],
@@ -312,7 +315,9 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                 ),
               ),
               Text(
-                isEnabled ? 'Enabled' : 'Disabled',
+                isEnabled
+                    ? Languages.of(context)!.enabledLabel
+                    : Languages.of(context)!.disabledLabel,
                 style: Theme.of(context).textTheme.subtitle1?.copyWith(
                       fontSize: rSize(12),
                     ),
@@ -329,7 +334,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'Booking Settings',
+            titleText: Languages.of(context)!.labelBookingRules,
             withBack: true,
             isTransparent: true,
             customIconTap: () => {
@@ -379,7 +384,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                       flex: 1,
                       child: CustomButton(
                         customButtonProps: CustomButtonProps(
-                          text: 'Reset',
+                          text: Languages.of(context)!.backLabel,
                           isPrimary: false,
                           isSecondary: true,
                           onTap: (() => Navigator.pop(context)),
@@ -393,7 +398,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                       flex: 2,
                       child: CustomButton(
                         customButtonProps: CustomButtonProps(
-                          text: 'Save',
+                          text: Languages.of(context)!.saveLabel,
                           onTap: (() => Navigator.pop(context)),
                         ),
                       ),

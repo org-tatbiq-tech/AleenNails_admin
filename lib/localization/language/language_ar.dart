@@ -411,6 +411,10 @@ class LanguageAr extends Languages {
   @override
   String get saveLabel => "save";
   @override
+  String get enabledLabel => "enabled";
+  @override
+  String get disabledLabel => "disabled";
+  @override
   String get okLabel => "ok";
   @override
   String get hoursLabel => "hours";
@@ -546,9 +550,98 @@ class LanguageAr extends Languages {
   ///************************************************************************///
   /// ************ Booking settings ************///
   @override
-  String get labelBookingInAdvance => "";
+  String get labelBookingRules => "قواعد الحجز";
   @override
-  String get labelFutureBooking => "";
+  String get labelRules => "القواعد";
   @override
-  String get labelReschedulingWindow => "";
+  String get labelBookingInAdvanceTitle => "حجز مواعيد مقدما حتى";
+  @override
+  String get labelBookingInAdvanceModal => "حجز مقدم حتى";
+  @override
+  String get labelFutureBooking => "حجز مواعيد مستقبلية حتى";
+  @override
+  String get labelFutureBookingModal => "حجز مستقبلا حتى";
+  @override
+  String get labelReschedulingWindow => "امكانيّة تغيير مواعيد حتى";
+  @override
+  String get labelReschedulingWindowModal => "ممكن تغيير مواعيد حتى";
+  @override
+  String get labelAutomaticallyConfirm => "قبول الادوار تلقائيا";
+  @override
+  String get labelAutomaticallyConfirmMsg =>
+      "قبول الادوار تلقائيا توفر الوقت وتسهّل على المتخدمين في تعيين الادوار, مُستحسن!";
+
+  /// Booking lists///
+  @override
+  String get notLessThan15Mins => 'على الاقل قبل 15 دقيقة';
+  @override
+  String get notLessThan30Mins => 'على الاقل قبل 30 دقيقة';
+  @override
+  String get notLessThan1H => 'على الاقل قبل 1 ساعات';
+  @override
+  String get notLessThan2H => 'على الاقل قبل 2 ساعات';
+  @override
+  String get notLessThan3H => 'على الاقل قبل 3 ساعات';
+  @override
+  String get notLessThan6H => 'على الاقل قبل 6 ساعات';
+  @override
+  String get notLessThan12H => 'على الاقل قبل 12 ساعات';
+  @override
+  String get notLessThan1D => 'على الاقل قبل 1 ايام';
+  @override
+  String get notLessThan2D => 'على الاقل قبل 2 ايام';
+  @override
+  String get notLessThan3D => 'على الاقل قبل 3 ايام';
+  @override
+  String get notLessThan5D => 'على الاقل قبل 5 ايام';
+
+  /// Future booking
+  @override
+  String get upTo7Days => 'حتى 7 ايام';
+  @override
+  String get upTo14Days => 'حتى 14 يوم';
+  @override
+  String get upTo1Month => 'حتى شهر';
+  @override
+  String get upTo2Months => 'حتى 2 اشهر';
+  @override
+  String get upTo3Months => 'حتى 3 اشهر';
+  @override
+  String get upTo6Months => 'حتى 6 اشهر';
+
+  /// Rescheduling
+  @override
+  String get notBefore1Hour => "حتى ساعة";
+  @override
+  String get notBefore2Hours => "حتى ساعتين";
+  @override
+  String get notBefore3Hours => "حتى 3 ساعات";
+  @override
+  String get notBefore6Hours => "حتى 6 ساعات";
+  @override
+  String get notBefore12Hours => "حتى 12 ساعة";
+  @override
+  String get notBefore1Day => "حتى يوم";
+  @override
+  String get notBefore2Days => "حتى 2 ايام";
+  @override
+  String get notBefore3Days => "حتى 3 ايام";
+  @override
+  String get notBefore5Days => "حتى 5 ايام";
+  @override
+  String get notBefore7Days => "حتى 7 ايام";
+
+  /// Booking settings msgs
+  @override
+  String get labelAutomaticallyConfirmMsgCompletion =>
+      "If turned off, Admin will have to manually confirm each customer booking. Please note: Your availability is only updated upon confirmation, not based in requests. this means you could receive multiple customer request for the same time slot.";
+  @override
+  String get labelBookingInAdvanceExplanation =>
+      "How mch of a window do you need between the time of booking and the appointment time? This helps you to plan ahead and eliminates any surprises appointments.";
+  @override
+  String get labelFutureBookingExplanation =>
+      "Choose how far in the future clients can schedule appointments if you want to encourage repeat bookings we recommend setting this for a longer time period.";
+  @override
+  String get labelReschedulingExplanation =>
+      "Choose how long before an appointment a client can reschedule or cancel.";
 }

@@ -346,6 +346,10 @@ class LanguageHe extends Languages {
   @override
   String get saveLabel => "שמור";
   @override
+  String get enabledLabel => "מופעל";
+  @override
+  String get disabledLabel => "מושבת";
+  @override
   String get okLabel => "אוקי";
   @override
   String get hoursLabel => "שעות";
@@ -514,9 +518,98 @@ class LanguageHe extends Languages {
   ///************************************************************************///
   /// ************ Booking settings ************///
   @override
-  String get labelBookingInAdvance => "";
+  String get labelBookingRules => "חוקי זימון תורים";
   @override
-  String get labelFutureBooking => "";
+  String get labelRules => "חוקים";
   @override
-  String get labelReschedulingWindow => "";
+  String get labelBookingInAdvanceTitle => "חלון הזמנת תור מראש";
+  @override
+  String get labelBookingInAdvanceModal => "הזמנה מראש עד";
+  @override
+  String get labelFutureBooking => "חלון הזמנת תור עתידי עד";
+  @override
+  String get labelFutureBookingModal => "הזמנת תור עד";
+  @override
+  String get labelReschedulingWindow => "חלון שינוי זמני תור";
+  @override
+  String get labelReschedulingWindowModal => "שינוי מותר לפחות לפני";
+  @override
+  String get labelAutomaticallyConfirm => "אישור תורים אוטומטית";
+  @override
+  String get labelAutomaticallyConfirmMsg =>
+      "הפעלת אישור תורים אוטומטית חוסכת זמן ומקלה על הלקוחות בזימון תורים, מומלץ!";
+
+  /// Booking lists///
+  @override
+  String get notLessThan15Mins => 'לפחות 15 דקות לפני';
+  @override
+  String get notLessThan30Mins => 'לפחות 30 דקות לפני';
+  @override
+  String get notLessThan1H => 'לפחות 1 שעות לפני';
+  @override
+  String get notLessThan2H => 'לפחות 2 שעות לפני';
+  @override
+  String get notLessThan3H => 'לפחות 3 שעות לפני';
+  @override
+  String get notLessThan6H => 'לפחות 6 שעות לפני';
+  @override
+  String get notLessThan12H => 'לפחות 12 שעות לפני';
+  @override
+  String get notLessThan1D => 'לפחות 1 ימים לפני';
+  @override
+  String get notLessThan2D => 'לפחות 2 ימים לפני';
+  @override
+  String get notLessThan3D => 'לפחות 3 ימים לפני';
+  @override
+  String get notLessThan5D => 'לפחות 5 ימים לפני';
+
+  /// Future booking
+  @override
+  String get upTo7Days => 'עד 7 ימים קדימה';
+  @override
+  String get upTo14Days => 'עד 14 ימים קדימה';
+  @override
+  String get upTo1Month => 'עד חודש קדימה';
+  @override
+  String get upTo2Months => 'עד 2 חודשים קדימה';
+  @override
+  String get upTo3Months => 'עד 3 חודשים קדימה';
+  @override
+  String get upTo6Months => 'עד 6 חודשים קדימה';
+
+  /// Rescheduling
+  @override
+  String get notBefore1Hour => "לא לפני שעה";
+  @override
+  String get notBefore2Hours => "לא לפני 2 שעות";
+  @override
+  String get notBefore3Hours => "לא לפני 3 שעות";
+  @override
+  String get notBefore6Hours => "לא לפני 6 שעות";
+  @override
+  String get notBefore12Hours => "לא לפני 12 שעות";
+  @override
+  String get notBefore1Day => "לא לפני 1 ימים";
+  @override
+  String get notBefore2Days => "לא לפני 2 ימים";
+  @override
+  String get notBefore3Days => "לא לפני 3 ימים";
+  @override
+  String get notBefore5Days => "לא לפני 5 ימים";
+  @override
+  String get notBefore7Days => "לא לפני 7 ימים";
+
+  /// Booking settings msgs
+  @override
+  String get labelAutomaticallyConfirmMsgCompletion =>
+      "אם מושבת, תתצרך לאשר כל תור בצורה ידנית, אך תזהר, אי זמינותך תוביל למצב ששני לקוחות יזמינו באותה שעה";
+  @override
+  String get labelBookingInAdvanceExplanation =>
+      "מה חלון הזמן בין זמן זימון התור לבין התור עצמו? זה יעזור להתאגן ולמנוע הפתעות";
+  @override
+  String get labelFutureBookingExplanation =>
+      "כמה רחוק הלקוחות יכולים לזמן תורים ? אם יש תורים חוזרים עדיף לבחור זמן רחוק";
+  @override
+  String get labelReschedulingExplanation =>
+      "בחר חלון זמן שמאפשר ללקוחות לשנות זמן התור";
 }
