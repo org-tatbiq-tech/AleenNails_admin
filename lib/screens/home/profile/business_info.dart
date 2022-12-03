@@ -488,9 +488,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               .infoUpdatedSuccessfullyBody
               .toCapitalized(),
         );
-        setState(() {
-          isSaveDisabled = true;
-        });
+        Navigator.pop(context);
       }
     }
 
