@@ -110,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen>
           } else {
             UserSecureStorage.deleteAutoLogin();
           }
+          Navigator.pop(context);
           Navigator.pushReplacementNamed(context, '/home');
         }
       });
