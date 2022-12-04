@@ -276,17 +276,17 @@ class BookingSettingComp {
 
   Map<String, dynamic> toJson() {
     return {
-      'bookingWindow': bookingWindowMinutes,
-      'reschedulingWindow': reschedulingWindowHours,
-      'futureBooking': futureBookingDays,
+      'bookingWindowMins': bookingWindowMinutes,
+      'reschedulingWindowHours': reschedulingWindowHours,
+      'futureBookingDays': futureBookingDays,
     };
   }
 
   factory BookingSettingComp.fromJson(Map<String, dynamic> doc) {
     return BookingSettingComp(
-      bookingWindowMinutes: doc['bookingWindow'],
-      reschedulingWindowHours: doc['reschedulingWindow'],
-      futureBookingDays: doc['futureBooking'],
+      bookingWindowMinutes: doc['bookingWindowMins'],
+      reschedulingWindowHours: doc['reschedulingWindowHours'],
+      futureBookingDays: doc['futureBookingDays'],
     );
   }
 }
