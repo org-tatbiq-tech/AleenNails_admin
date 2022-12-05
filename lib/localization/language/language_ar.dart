@@ -131,9 +131,13 @@ class LanguageAr extends Languages {
   String get trustedClientModalBody =>
       "في حالة الإغلاق ، لن يتمكن العميل من حجز موعد تلقائيًا.";
   @override
-  String get noClientsAddedLabel => "no client added yet";
+  String get noClientsAddedLabel => "لا يوجد عملاء";
   @override
-  String get addNewClientLabel => "add new client";
+  String get addNewClientLabel => "أضف عميل جديد";
+  @override
+  String get approveClientLabel => "الموافقة على العميل";
+  @override
+  String get blockClientLabel => "حظر العميل";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///

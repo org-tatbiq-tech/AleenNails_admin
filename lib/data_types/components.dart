@@ -376,9 +376,10 @@ class Client {
   DateTime creationDate; // Client creation date
   DateTime? acceptedDate; // Birthday date
   double? discount; // general discount for client
-  bool? isTrusted; // Birthday date
+  bool? isTrusted; // Trusted user
   String imageURL; // Image URL for quick download
   List<ClientAppointment> appointments;
+  bool? isApprovedByAdmin; // Admin approved this account
 
   double get totalRevenue {
     return appointments.fold<double>(0, (sum, item) => sum + item.totalCost);
@@ -418,6 +419,7 @@ class Client {
     this.isTrusted,
     this.imageURL = '',
     this.appointments = const [],
+    this.isApprovedByAdmin,
   });
 
   Map<String, dynamic> toJson() {
@@ -433,6 +435,7 @@ class Client {
       'discount': discount,
       'isTrusted': isTrusted,
       'imageURL': imageURL,
+      'isApprovedByAdmin': isApprovedByAdmin ?? "",
     };
   }
 
@@ -462,6 +465,7 @@ class Client {
       appointments: doc['appointments'] == null
           ? []
           : loadAppointmentsFromDoc(doc['appointments']),
+      isApprovedByAdmin: doc['isApprovedByAdmin'],
     );
   }
 }
