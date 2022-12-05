@@ -125,7 +125,7 @@ class LanguageEn extends Languages {
   @override
   String get approveClientLabel => "approve client";
   @override
-  String get blockClientLabel => "block client";
+  String get rejectClientLabel => "reject client";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///
@@ -287,6 +287,15 @@ class LanguageEn extends Languages {
   @override
   String get clientBookPermissionModalBody =>
       "if switched off clients will not be able to book this service using the app. You will have to manually add appointment to your calendar";
+
+  ///************************************************************************///
+  /// ************ Notification Labels ************///
+  @override
+  String get rejectLabel => "reject";
+  @override
+  String get approveLabel => "approve";
+  @override
+  String get approvalRequestLabel => "approval request";
 
   ///************************************************************************///
   /// ************ Common Labels ************///

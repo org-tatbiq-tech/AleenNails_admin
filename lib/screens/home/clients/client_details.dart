@@ -298,11 +298,14 @@ class _ClientDetailsState extends State<ClientDetails> {
                 Languages.of(context)!.notesLabel.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
             ReadMoreText(
-              client.generalNotes ?? '',
+              client.generalNotes!.isNotEmpty
+                  ? client.generalNotes!
+                  : Languages.of(context)!.notSetLabel.toTitleCase(),
+              customTextStyle: Theme.of(context).textTheme.bodyText2,
               trimLines: 2,
             ),
           ],
@@ -322,7 +325,7 @@ class _ClientDetailsState extends State<ClientDetails> {
         customButtonProps: CustomButtonProps(
           onTap: () => {toggleApproveClient()},
           text: clientsMgr.selectedClient.isApprovedByAdmin == true
-              ? Languages.of(context)!.blockClientLabel.toTitleCase()
+              ? Languages.of(context)!.rejectClientLabel.toTitleCase()
               : Languages.of(context)!.approveClientLabel.toTitleCase(),
           isPrimary: false,
           isSecondary: true,
@@ -507,7 +510,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 defaultImage: const AssetImage(
                   'assets/images/avatar_female.png',
                 ),
-                imageUrl: clientsMgr.selectedClient.imageURL,
+                imageUrl: client.imageURL,
               ),
             ),
           ),
@@ -545,7 +548,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                 FadeAnimation(
                   positionType: PositionType.bottom,
                   delay: 0.4,
-                  child: renderActions(clientsMgr.selectedClient),
+                  child: renderActions(client),
                 ),
               ],
             ),

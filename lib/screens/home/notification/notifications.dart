@@ -1,10 +1,12 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
+import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_container.dart';
-
 import 'package:appointments/widget/notification_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/empty_list_image.dart';
 import 'package:common_widgets/utils/layout.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:flutter/material.dart';
 
 class Notifications extends StatefulWidget {
@@ -16,11 +18,12 @@ class Notifications extends StatefulWidget {
 
 class _NotificationsState extends State<Notifications> {
   List<NotificationData> notifications = [
-    // NotificationData(
-    //   'id',
-    //   'Here will be the description of the notification',
-    //   DateTime.now(),
-    // ),
+    NotificationData(
+      id: 'id',
+      creationDate: DateTime.now(),
+      description: 'description',
+      notificationCategory: NotificationCategory.user,
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class _NotificationsState extends State<Notifications> {
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'Notifications',
+            titleText: Languages.of(context)!.labelNotification.toTitleCase(),
             withClipPath: false,
             isTransparent: true,
             centerTitle: WrapAlignment.start,

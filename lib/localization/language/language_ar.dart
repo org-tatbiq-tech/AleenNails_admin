@@ -137,7 +137,7 @@ class LanguageAr extends Languages {
   @override
   String get approveClientLabel => "الموافقة على العميل";
   @override
-  String get blockClientLabel => "حظر العميل";
+  String get rejectClientLabel => "حظر العميل";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///
@@ -349,6 +349,15 @@ class LanguageAr extends Languages {
   String get validationEmptyPriceError => "السعر لا يمكن ان يكون فارغ!";
   @override
   String get validationPriceInvalidError => "الرجاء ادخال سعر صحيح";
+
+  ///************************************************************************///
+  /// ************ Notification Labels ************///
+  @override
+  String get rejectLabel => "رفض";
+  @override
+  String get approveLabel => "قبول";
+  @override
+  String get approvalRequestLabel => "قبول الطلب";
 
   ///************************************************************************///
   /// ************ Common Labels ************///

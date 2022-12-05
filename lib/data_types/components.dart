@@ -477,10 +477,12 @@ class NotificationData {
   String id;
   String description;
   DateTime creationDate;
+  NotificationCategory notificationCategory;
 
-  NotificationData(
-    this.id,
-    this.description,
-    this.creationDate,
-  );
+  NotificationData({
+    required this.id,
+    required this.description,
+    required this.creationDate,
+    required this.notificationCategory,
+  });
 }

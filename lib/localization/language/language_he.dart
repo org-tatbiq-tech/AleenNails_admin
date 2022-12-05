@@ -124,7 +124,7 @@ class LanguageHe extends Languages {
   @override
   String get approveClientLabel => "אשר לקוח";
   @override
-  String get blockClientLabel => "תחסום לקוח";
+  String get rejectClientLabel => "לדחות לקוח";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///
@@ -284,6 +284,15 @@ class LanguageHe extends Languages {
   @override
   String get clientBookPermissionModalBody =>
       "אם כבוי לקוחות לא יוכלו להזמין שירות זה באמצעות האפליקציה. יהיה עליך להוסיף תור ידנית ליומן שלך";
+
+  ///************************************************************************///
+  /// ************ Notification Labels ************///
+  @override
+  String get rejectLabel => "לדחות";
+  @override
+  String get approveLabel => "לאשר";
+  @override
+  String get approvalRequestLabel => "בקשה לאישור";
 
   ///************************************************************************///
   /// ************ Common Labels ************///
