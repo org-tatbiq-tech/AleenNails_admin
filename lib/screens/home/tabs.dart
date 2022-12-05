@@ -2,7 +2,9 @@ import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_mgr.dart';
+import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
+import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
@@ -43,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
   late AuthenticationMgr authMgr;
   late AppointmentsMgr appointmentsMgr;
+  late ClientsMgr clientsMgr;
 
   _requestIOSNotificationPermissions() async {
     NotificationSettings settings = await _messaging.requestPermission(
@@ -94,6 +97,10 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const AppointmentDetails()));
     }
+    if (notificationResponse.payload == NotificationCategory.user.toString()) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ClientDetails()));
+    }
   }
 
   _initializeNotification() async {
@@ -106,6 +113,11 @@ class _HomeScreenState extends State<HomeScreen> {
             String appointmentId = message.data['appointment_id'];
             await appointmentsMgr.setSelectedAppointment(
                 appointmentID: appointmentId);
+          }
+          if (message.data['category'] ==
+              NotificationCategory.user.toString()) {
+            String clientId = message.data['client_id'];
+            await clientsMgr.setSelectedClient(clientID: clientId);
           }
         }
         if (message.notification != null) {
@@ -152,6 +164,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 NotificationResponseType.selectedNotification,
             payload: message.data['category']));
       }
+      if (message.data['category'] == NotificationCategory.user.toString()) {
+        String clientId = message.data['client_id'];
+        await clientsMgr.setSelectedClient(clientID: clientId);
+        onSelectNotification(NotificationResponse(
+            notificationResponseType:
+                NotificationResponseType.selectedNotification,
+            payload: message.data['category']));
+      }
     });
 
     /// Activated on terminated only
@@ -164,6 +184,14 @@ class _HomeScreenState extends State<HomeScreen> {
           String appointmentId = message.data['appointment_id'];
           await appointmentsMgr.setSelectedAppointment(
               appointmentID: appointmentId);
+          onSelectNotification(NotificationResponse(
+              notificationResponseType:
+                  NotificationResponseType.selectedNotification,
+              payload: message.data['category']));
+        }
+        if (message.data['category'] == NotificationCategory.user.toString()) {
+          String clientId = message.data['client_id'];
+          await clientsMgr.setSelectedClient(clientID: clientId);
           onSelectNotification(NotificationResponse(
               notificationResponseType:
                   NotificationResponseType.selectedNotification,
@@ -215,6 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
     appointmentsMgr = Provider.of<AppointmentsMgr>(context, listen: false);
+    clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
     _init();
     _requestIOSNotificationPermissions();
     _getToken();

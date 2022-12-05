@@ -208,6 +208,46 @@ async function handleAppointmentUpdate(change, context) {
     }
 }
 
+async function handleNewClient(snap, context) {
+    // Getting details of the new document
+    const clientId = context.params.clientId;
+    const newClientData = snap.data();
+    try {
+        let userRecord = await admin.auth().getUser(clientId);
+        if(userRecord) {
+            // The new client record created by user that was registered by himself
+            // Need to notify the admins
+            console.log('Notify the admin about new created user', newClientData.fullName);
+            const title = newClientData.fullName + ' registered to the system';
+            const msg = 'please approve or deny ' + newClientData.fullName + ' registration';
+            const notificationContent = {
+                notification: {
+                  title: title,
+                  body: msg,
+                  sound: 'default'
+                },
+                data: {
+                  client_id: clientId,
+                  category: 'NotificationCategory.user',
+                }
+            };
+            const adminTokens = await getAdminTokens();
+            return admin.messaging().sendToDevice(adminTokens, notificationContent);
+        }
+    } catch (e) {
+        if (e.code === 'auth/user-not-found') {
+            // user created by admin
+            console.log('User not found in firebase auth');
+        } else {
+            //TBD: we should send email to the dev team
+            console.log('throw this unknown error');
+            console.log(e);
+            throw e; // re-throw the error unchanged
+        }
+    }
+
+}
+
 
 // Handle new appointment
 exports.newAppointment = functions.firestore.
@@ -219,3 +259,8 @@ exports.newAppointment = functions.firestore.
 exports.updateAppointment = functions.firestore.
     document('appointments/{any}').
     onUpdate(handleAppointmentUpdate);
+
+// Handle new appointment
+exports.newAppointment = functions.firestore.
+    document('clients/{clientId}').
+    onCreate(handleNewClient);

@@ -122,6 +122,10 @@ class LanguageEn extends Languages {
   String get noClientsAddedLabel => "no client added yet";
   @override
   String get addNewClientLabel => "add new client";
+  @override
+  String get approveClientLabel => "approve client";
+  @override
+  String get blockClientLabel => "block client";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///

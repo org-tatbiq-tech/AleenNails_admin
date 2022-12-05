@@ -121,6 +121,10 @@ class LanguageHe extends Languages {
   String get noClientsAddedLabel => "עדיין לא נוסף לקוח";
   @override
   String get addNewClientLabel => "הוסף לקוח חדש";
+  @override
+  String get approveClientLabel => "אשר לקוח";
+  @override
+  String get blockClientLabel => "תחסום לקוח";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///
