@@ -173,6 +173,18 @@ class Appointment {
   });
 
   double get totalCost {
+    double cost = services.fold<double>(0, (sum, item) => sum + item.cost);
+    if (discount == 0) {
+      return cost;
+    }
+
+    if (discountType == DiscountType.percent) {
+      return cost * (100 - discount) / 100;
+    }
+    return cost - discount;
+  }
+
+  double get servicesCost {
     return services.fold<double>(0, (sum, item) => sum + item.cost);
   }
 

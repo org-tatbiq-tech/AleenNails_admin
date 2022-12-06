@@ -338,4 +338,8 @@ abstract class Languages {
   String get labelBookingInAdvanceExplanation;
   String get labelFutureBookingExplanation;
   String get labelReschedulingExplanation;
+
+  /// Discount
+  String get labelAddDiscount;
+  String get labelNewPrice;
 }

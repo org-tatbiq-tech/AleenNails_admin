@@ -1,17 +1,14 @@
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
-import 'package:common_widgets/custom_container.dart';
-
 import 'package:appointments/widget/custom/custom_toggle.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_container.dart';
+import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/custom_app_bar.dart';
-
-import 'package:common_widgets/custom_icon.dart';
-
-import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/utils/validators.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -48,14 +45,15 @@ class _DiscountSelectionState extends State<DiscountSelection> {
         double discountValue = double.parse(_discountController.text);
 
         if (xAlign == 1) {
-          return getStringPrice(appointmentsMgr.selectedAppointment.totalCost *
-              ((100 - discountValue) / 100));
+          return getStringPrice(
+              appointmentsMgr.selectedAppointment.servicesCost *
+                  ((100 - discountValue) / 100));
         } else {
           return getStringPrice(
-              appointmentsMgr.selectedAppointment.totalCost - discountValue);
+              appointmentsMgr.selectedAppointment.servicesCost - discountValue);
         }
       }
-      return getStringPrice(appointmentsMgr.selectedAppointment.totalCost);
+      return getStringPrice(appointmentsMgr.selectedAppointment.servicesCost);
     }
 
     getNumberLength(int value) {
@@ -68,13 +66,18 @@ class _DiscountSelectionState extends State<DiscountSelection> {
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'Add Discount',
+            titleText: Languages.of(context)!.labelAddDiscount,
             withBack: true,
             isTransparent: true,
             withSave: true,
             saveText: Languages.of(context)!.saveLabel,
             saveTap: () => {
-              Navigator.pop(context),
+              Navigator.pop(context, {
+                'discount': _discountController.text.isNotEmpty
+                    ? double.parse(_discountController.text)
+                    : 0,
+                'type': xAlign == 1 ? DiscountType.percent : DiscountType.fixed,
+              }),
             },
           ),
         ),
@@ -95,7 +98,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  'Add Discount'.toTitleCase(),
+                  Languages.of(context)!.labelAddDiscount.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2?.copyWith(
@@ -113,13 +116,13 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                       LengthLimitingTextInputFormatter(xAlign == 1
                           ? 2
                           : getNumberLength(appointmentsMgr
-                              .selectedAppointment.totalCost
+                              .selectedAppointment.servicesCost
                               .round())),
                       LimitRangeTextInputFormatter(
                           0,
                           xAlign == 1
                               ? 99
-                              : appointmentsMgr.selectedAppointment.totalCost
+                              : appointmentsMgr.selectedAppointment.servicesCost
                                   .round()),
                       FilteringTextInputFormatter.digitsOnly
                     ],
@@ -153,7 +156,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Text(
-                      'New Price',
+                      Languages.of(context)!.labelNewPrice,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ],

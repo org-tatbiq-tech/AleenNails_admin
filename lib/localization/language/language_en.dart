@@ -651,4 +651,10 @@ class LanguageEn extends Languages {
   @override
   String get labelReschedulingExplanation =>
       "Choose how long before an appointment a client can reschedule or cancel.";
+
+  /// Discount
+  @override
+  String get labelAddDiscount => "Add discount";
+  @override
+  String get labelNewPrice => "New price";
 }
