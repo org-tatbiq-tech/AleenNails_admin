@@ -7,6 +7,8 @@ var path = require('path');
 const appointmentsCollection = "appointments";
 const clientsCollection = "clients";
 const adminsCollection = "admins";
+const adminNotificationsCollection = "notifications";
+const clientNotificationsCollection = "notifications";
 
 function isClient(editor) {
     return editor === 'AppointmentCreator.client';
@@ -19,19 +21,41 @@ function isBusiness(editor) {
 async function getClientTokens(clientDocID) {
     const clientResults  = await admin.firestore().collection(clientsCollection).doc(clientDocID).get();
     const client = clientResults.data();
-    return client['tokens'];
+    let clientTokens = {};
+    if (client['tokens']) {
+        clientTokens[clientDocID] = client['tokens'];
+    }
+    return clientTokens;
 }
 
 async function getAdminTokens() {
-    let adminTokens = [];
+    let adminTokens = {};
     const adminResults  = await admin.firestore().collection(adminsCollection).get();
     for (adminDoc of adminResults.docs) {
         const adminData = adminDoc.data();
-        currentTokens = adminData['tokens'];
-        adminTokens = [...adminTokens, ...currentTokens]
+        adminTokens[adminDoc.id] = adminData['tokens'];
     }
     return adminTokens;
 }
+
+async function sendClientNotification(clientTokensDict, notificationContent) {
+    for (const clientDocumentId in clientTokensDict) {
+        if(clientTokensDict[clientDocumentId]) {
+            const clientNotifications  = await admin.firestore().collection(clientsCollection).doc(clientDocumentId).collection(clientNotificationsCollection);
+            await clientNotifications.doc().set(notificationContent);
+            await admin.messaging().sendToDevice(clientTokensDict[clientDocumentId], notificationContent);
+        }
+    }
+}
+
+async function sendAdminNotification(adminTokensDict, notificationContent) {
+    for (const adminDocumentId in adminTokensDict) {
+        const adminNotifications  = await admin.firestore().collection(adminsCollection).doc(adminDocumentId).collection(adminNotificationsCollection);
+        await adminNotifications.doc().set(notificationContent);
+        await admin.messaging().sendToDevice(adminTokensDict[adminDocumentId], notificationContent);
+    }
+}
+
 
 // Update the admin when client creates new appointment and update the client when
 // admin creates new appointment for him
@@ -60,7 +84,8 @@ async function handleNewAppointment(snap, context) {
            }
        };
        const adminTokens = await getAdminTokens();
-       return admin.messaging().sendToDevice(adminTokens, notificationContent);
+       await sendAdminNotification(adminTokens, notificationContent);
+       return;
     }
     if ( isBusiness(newAppointmentData.creator) ) {
         console.log('Appointment created by business. need to notify the client');
@@ -81,8 +106,9 @@ async function handleNewAppointment(snap, context) {
                   category: 'NotificationCategory.appointment',
                 }
             };
-            console.log('Sending notification to ', newAppointmentData.clientName)
-            admin.messaging().sendToDevice(clientTokens, notificationContent);
+            console.log('Sending notification to ', newAppointmentData.clientName);
+            await sendClientNotification(clientTokens, notificationContent);
+            return;
         }
     }
 }
@@ -121,12 +147,14 @@ async function handleUpdateAppointment(change, context) {
         console.log('Send notification about the rescheduled appointment')
         if (changedByClient) {
             const adminTokens = await getAdminTokens();
-            return admin.messaging().sendToDevice(adminTokens, notificationContent);
+            await sendAdminNotification(adminTokens, notificationContent);
+            return;
         } else {
             const clientTokens = await getClientTokens(clientDocID);
             if(clientTokens) {
                 console.log('Sending notification to ', newValue.clientName)
-                return admin.messaging().sendToDevice(clientTokens, notificationContent);
+                await sendClientNotification(clientTokens, notificationContent);
+                return;
             }
         }
     }
@@ -149,8 +177,9 @@ async function handleUpdateAppointment(change, context) {
            };
            const clientTokens = await getClientTokens(clientDocID);
            if(clientTokens) {
-               console.log('Sending notification to ', newValue.clientName)
-               return admin.messaging().sendToDevice(clientTokens, notificationContent);
+               console.log('Sending notification to ', newValue.clientName);
+               await sendClientNotification(clientTokens, notificationContent);
+               return;
            }
         }
         if(newValue.status === 'AppointmentStatus.declined') {
@@ -171,8 +200,9 @@ async function handleUpdateAppointment(change, context) {
            };
            const clientTokens = await getClientTokens(clientDocID);
            if(clientTokens) {
-               console.log('Sending notification to ', newValue.clientName)
-               return admin.messaging().sendToDevice(clientTokens, notificationContent);
+               console.log('Sending notification to ', newValue.clientName);
+               await sendClientNotification(clientTokens, notificationContent);
+               return;
            }
         }
 
@@ -196,12 +226,14 @@ async function handleUpdateAppointment(change, context) {
             console.log('Send notification about the canceled appointment')
             if (changedByClient) {
                 const adminTokens = await getAdminTokens();
-                return admin.messaging().sendToDevice(adminTokens, notificationContent);
+                await sendAdminNotification(adminTokens, notificationContent);
+                return;
             } else {
                 const clientTokens = await getClientTokens(clientDocID);
                 if(clientTokens) {
-                    console.log('Sending notification to ', newValue.clientName)
-                    return admin.messaging().sendToDevice(clientTokens, notificationContent);
+                    console.log('Sending notification to ', newValue.clientName);
+                    await sendClientNotification(clientTokens, notificationContent);
+                    return;
                 }
             }
         }
@@ -231,7 +263,8 @@ async function handleUpdateClient(change, context) {
             }
         };
         const adminTokens = await getAdminTokens();
-        return admin.messaging().sendToDevice(adminTokens, notificationContent);
+        await sendAdminNotification(adminTokens, notificationContent);
+        return;
     }
 // // Disabled the following code because for now we don't need to check with auth if user exist
 // // because we add phone only after otp
@@ -255,7 +288,7 @@ async function handleUpdateClient(change, context) {
 //                }
 //            };
 //            const adminTokens = await getAdminTokens();
-//            return admin.messaging().sendToDevice(adminTokens, notificationContent);
+//            SEND NOTIFICATION
 //        }
 //    } catch (e) {
 //        if (e.code === 'auth/user-not-found') {
