@@ -455,7 +455,7 @@ class Client {
       address: doc['address'],
       email: doc['email'],
       creationDate: doc['creationDate'].toDate(),
-      generalNotes: doc['generalNotes'],
+      generalNotes: doc['generalNotes'] ?? "",
       birthday: doc['birthday'].toString().isNotEmpty
           ? doc['birthday'].toDate()
           : null,
