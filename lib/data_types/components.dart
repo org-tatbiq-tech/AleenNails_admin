@@ -447,7 +447,7 @@ class Client {
       'discount': discount,
       'isTrusted': isTrusted,
       'imageURL': imageURL,
-      'isApprovedByAdmin': isApprovedByAdmin ?? "",
+      'isApprovedByAdmin': isApprovedByAdmin,
     };
   }
 
