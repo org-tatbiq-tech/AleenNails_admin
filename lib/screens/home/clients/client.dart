@@ -1,13 +1,13 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_container.dart';
-
 import 'package:common_widgets/custom_avatar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
@@ -15,12 +15,12 @@ import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/page_transition.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/utils/validators.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,9 +41,8 @@ class _ClientWidgetState extends State<ClientWidget> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
-  final TextEditingController _discountController =
-      TextEditingController(text: '0');
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  int clientDiscount = 0;
   bool trustedClient = true;
   bool autoValidate = false;
   String imageURL = '';
@@ -63,7 +62,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       _emailController.text = widget.client!.email;
       _addressController.text = widget.client!.address;
       _noteController.text = widget.client!.generalNotes!;
-      _discountController.text = widget.client!.discount.toString();
+      clientDiscount = widget.client!.discount!.round();
       birthdayDate = widget.client!.birthday;
       imageURL = widget.client!.imageURL;
     }
@@ -83,13 +82,6 @@ class _ClientWidgetState extends State<ClientWidget> {
     _noteController.addListener(() => setState(() {
           isSaveDisabled = false;
         }));
-    _discountController.selection = const TextSelection(
-      baseOffset: 0,
-      extentOffset: 1,
-    );
-    _discountController.addListener(() => setState(() {
-          isSaveDisabled = false;
-        }));
   }
 
   @override
@@ -104,6 +96,29 @@ class _ClientWidgetState extends State<ClientWidget> {
 
   @override
   Widget build(BuildContext context) {
+    navigateToDiscount() async {
+      var res = await Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          isIos: isIos(),
+          child: DiscountSelection(
+            discountValue: clientDiscount.toString(),
+            discountType: DiscountType.percent,
+            oneDiscountOnly: true,
+          ),
+        ),
+      );
+
+      if (res == null) {
+        return;
+      }
+      setState(() {
+        isSaveDisabled = false;
+        clientDiscount = res['discount'];
+      });
+    }
+
     Widget renderPermissions() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -448,24 +463,9 @@ class _ClientWidgetState extends State<ClientWidget> {
           SizedBox(
             height: rSize(5),
           ),
-          CustomInputField(
-            customInputFieldProps: CustomInputFieldProps(
-                controller: _discountController,
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(3),
-                  LimitRangeTextInputFormatter(1, 100),
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                keyboardType: TextInputType.number,
-                prefixIcon: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    icon: null,
-                    path: 'assets/icons/percent.png',
-                    backgroundColor: Colors.transparent,
-                    iconColor: Theme.of(context).colorScheme.primary,
-                    containerSize: 25,
-                  ),
-                )),
+          CustomInputFieldButton(
+            text: clientDiscount.toString(),
+            onTap: () => navigateToDiscount(),
           ),
         ],
       );
@@ -533,7 +533,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           creationDate: DateTime.now(),
           birthday: birthdayDate,
           generalNotes: _noteController.text,
-          discount: double.parse(_discountController.text),
+          discount: clientDiscount.toDouble(),
           isTrusted: trustedClient,
           acceptedDate: DateTime.now(),
           imageURL: imageURL,

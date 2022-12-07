@@ -148,7 +148,7 @@ class Appointment {
   DateTime creationDate; // Appointment creation date (date and time)
   DateTime date; // Appointment date (date and time)
   String notes; // Appointment detailed notes
-  int discount;
+  double discount;
   DiscountType discountType;
   List<AppointmentService> services;
   PaymentStatus paymentStatus;

@@ -203,7 +203,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  '${client.discount}%',
+                  '${client.discount!.round()}%',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,

@@ -14,10 +14,12 @@ import 'package:provider/provider.dart';
 class DiscountSelection extends StatefulWidget {
   final String discountValue;
   final DiscountType discountType;
+  final bool oneDiscountOnly;
   const DiscountSelection({
     Key? key,
     this.discountType = DiscountType.fixed,
     this.discountValue = '0',
+    this.oneDiscountOnly = false,
   }) : super(key: key);
 
   @override
@@ -152,42 +154,50 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                   ],
                 ),
                 const Expanded(child: SizedBox()),
-                Column(
-                  children: [
-                    Text(
-                      getStringPrice(
-                          appointmentsMgr.selectedAppointment.servicesCost),
-                      style: Theme.of(context).textTheme.headline1?.copyWith(
-                            decoration: TextDecoration.lineThrough,
-                            decorationThickness: rSize(4),
-                            decorationColor:
-                                Theme.of(context).colorScheme.primary,
-                            decorationStyle: TextDecorationStyle.wavy,
+                Visibility(
+                  visible: !widget.oneDiscountOnly,
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            getStringPrice(appointmentsMgr
+                                .selectedAppointment.servicesCost),
+                            style:
+                                Theme.of(context).textTheme.headline1?.copyWith(
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationThickness: rSize(4),
+                                      decorationColor:
+                                          Theme.of(context).colorScheme.primary,
+                                      decorationStyle: TextDecorationStyle.wavy,
+                                    ),
                           ),
-                    ),
-                    Text(
-                      getNewPrice(),
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    Text(
-                      Languages.of(context)!.labelNewPrice,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                CustomToggle(
-                  width: rSize(300),
-                  height: rSize(40),
-                  xAlign: xAlign,
-                  setXAlign: (double value) {
-                    setState(() {
-                      xAlign = value;
-                      _discountController.text = '0';
-                    });
-                  },
+                          Text(
+                            getNewPrice(),
+                            style: Theme.of(context).textTheme.headline1,
+                          ),
+                          Text(
+                            Languages.of(context)!.labelNewPrice,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: rSize(20),
+                      ),
+                      CustomToggle(
+                        width: rSize(300),
+                        height: rSize(40),
+                        xAlign: xAlign,
+                        setXAlign: (double value) {
+                          setState(() {
+                            xAlign = value;
+                            _discountController.text = '0';
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
