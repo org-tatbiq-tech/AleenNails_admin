@@ -9,6 +9,7 @@ class CounterButton extends StatefulWidget {
   final TextEditingController discountController;
   final int inputRangeMax;
   final int inputRangeMin;
+  final bool fadeAnimation;
 
   final int? maxLength;
 
@@ -18,6 +19,7 @@ class CounterButton extends StatefulWidget {
     this.inputRangeMax = 99,
     this.inputRangeMin = 0,
     this.maxLength = 2,
+    this.fadeAnimation = false,
   }) : super(key: key);
 
   @override
@@ -25,9 +27,14 @@ class CounterButton extends StatefulWidget {
 }
 
 class _CounterButtonState extends State<CounterButton> {
+  bool plusClicked = false;
+
   @override
   Widget build(BuildContext context) {
     plusIconClicked() {
+      setState(() {
+        plusClicked = true;
+      });
       if (widget.inputRangeMax >=
           int.parse(widget.discountController.text) + 1) {
         widget.discountController.text =
@@ -36,6 +43,9 @@ class _CounterButtonState extends State<CounterButton> {
     }
 
     minusIconClicked() {
+      setState(() {
+        plusClicked = false;
+      });
       if (widget.inputRangeMin <=
           int.parse(widget.discountController.text) - 1) {
         widget.discountController.text =
@@ -63,21 +73,31 @@ class _CounterButtonState extends State<CounterButton> {
             return currentChild!;
           },
           transitionBuilder: (Widget child, Animation<double> animation) {
+            final Animation<Offset> inAnimation =
+                Tween<Offset>(begin: const Offset(0.5, 0.0), end: Offset.zero)
+                    .animate(animation);
+            final Animation<Offset> outAnimation =
+                Tween<Offset>(begin: const Offset(-0.5, 0.0), end: Offset.zero)
+                    .animate(animation);
             final Animation<double> fadeAnimation =
                 Tween<double>(begin: 0.0, end: 1).animate(animation);
-            if (child.key.toString() == widget.discountController.text) {
-              return ClipRect(
-                child: FadeTransition(opacity: fadeAnimation, child: child),
-              );
-            } else {
+            if (widget.fadeAnimation) {
               return ClipRect(
                 child: FadeTransition(opacity: fadeAnimation, child: child),
               );
             }
+            if (plusClicked) {
+              return ClipRect(
+                child: SlideTransition(position: inAnimation, child: child),
+              );
+            }
+            return ClipRect(
+              child: SlideTransition(position: outAnimation, child: child),
+            );
           },
           child: SizedBox(
             key: Key(widget.discountController.text),
-            width: rSize(100),
+            width: rSize(80),
             child: Center(
               child: TextFormField(
                 controller: widget.discountController,
