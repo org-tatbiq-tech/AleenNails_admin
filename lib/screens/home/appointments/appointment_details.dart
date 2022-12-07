@@ -6,16 +6,14 @@ import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
-import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
-import 'package:common_widgets/custom_container.dart';
-
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
@@ -57,8 +55,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   @override
   Widget build(BuildContext context) {
     isEditAppointment(AppointmentsMgr appointmentsMgr) {
-      if (!appointmentsMgr.isSelectedAppointmentLoaded ||
-          appointmentsMgr.selectedAppointment == null) {
+      if (!appointmentsMgr.isSelectedAppointmentLoaded) {
         return true;
       }
       Appointment appointment = appointmentsMgr.selectedAppointment;
@@ -147,25 +144,24 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           });
     }
 
-    confirmCheckout(Appointment appointment) {
+    confirmCheckout(Appointment appointment) async {
       showLoaderDialog(context);
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
       appointment.status = AppointmentStatus.finished;
       appointment.paymentStatus = PaymentStatus.paid;
-      appointmentsMgr.updateAppointment(appointment).then((value) => {
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successTitle:
-                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-              successBody: Languages.of(context)!
-                  .appointmentUpdatedSuccessfullyBody
-                  .toCapitalized(),
-            ),
-            Navigator.pop(context),
-          });
+      await appointmentsMgr.updateAppointment(appointment);
+      Navigator.pop(context);
+      showSuccessFlash(
+        context: context,
+        successColor: successPrimaryColor,
+        successTitle:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successBody: Languages.of(context)!
+            .appointmentUpdatedSuccessfullyBody
+            .toCapitalized(),
+      );
+      Navigator.pop(context);
     }
 
     confirmNoShow(Appointment appointment) {
@@ -267,7 +263,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
-          primaryButtonText: 'Decline',
+          primaryButtonText: Languages.of(context)!.cancelLabel,
           primaryAction: () => {confirmDecline(appointment)},
           secondaryButtonText: Languages.of(context)!.backLabel.toUpperCase(),
           deleteCancelModal: true,
@@ -358,20 +354,25 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    addAnotherService() {
-      Navigator.push(
+    navigateToDiscount(Appointment appointment) async {
+      var res = await Navigator.push(
         context,
         PageTransition(
           type: PageTransitionType.fade,
           isIos: isIos(),
-          child: Services(
-            selectionMode: true,
-            onTap: () => {
-              Navigator.pop(context),
-            },
+          child: DiscountSelection(
+            discountValue: appointment.discount.toString(),
+            discountType: appointment.discountType,
           ),
         ),
       );
+
+      if (res == null) {
+        return;
+      }
+      appointment.discountType = res['type'];
+      appointment.discount = res['discount'];
+      appointmentsMgr.updateAppointment(appointment);
     }
 
     renderAmount(Appointment appointment) {
@@ -387,47 +388,40 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               visible: isCheckoutScreen,
               child: Row(
                 children: [
-                  CustomIcon(
-                    customIconProps: CustomIconProps(
-                      isDisabled: false,
-                      onTap: () => {
-                        addAnotherService(),
-                      },
-                      iconColor: Theme.of(context).colorScheme.primary,
-                      icon: null,
-                      contentPadding: rSize(10),
-                      withPadding: true,
-                      path: 'assets/icons/plus.png',
-                      containerSize: 35,
-                    ),
-                  ),
-                  SizedBox(
-                    width: rSize(10),
-                  ),
-                  Text(
-                    Languages.of(context)!.addServiceLabel.toTitleCase(),
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
+                  // CustomIcon(
+                  //   customIconProps: CustomIconProps(
+                  //     isDisabled: false,
+                  //     onTap: () => {
+                  //       addAnotherService(),
+                  //     },
+                  //     iconColor: Theme.of(context).colorScheme.primary,
+                  //     icon: null,
+                  //     contentPadding: rSize(10),
+                  //     withPadding: true,
+                  //     path: 'assets/icons/plus.png',
+                  //     containerSize: 35,
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   width: rSize(10),
+                  // ),
+                  // Text(
+                  //   Languages.of(context)!.addServiceLabel.toTitleCase(),
+                  //   style: Theme.of(context).textTheme.subtitle1,
+                  // ),
                   SizedBox(
                     width: rSize(20),
                   ),
                   CustomIcon(
                     customIconProps: CustomIconProps(
                       isDisabled: false,
-                      onTap: () => {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            isIos: isIos(),
-                            child: const DiscountSelection(),
-                          ),
-                        ),
-                      },
+                      onTap: () => {navigateToDiscount(appointment)},
                       iconColor: Theme.of(context).colorScheme.primary,
                       icon: null,
                       withPadding: true,
-                      path: 'assets/icons/percent.png',
+                      path: appointment.discountType == DiscountType.percent
+                          ? 'assets/icons/percent.png'
+                          : 'assets/icons/shekel.png',
                       containerSize: 35,
                     ),
                   ),
@@ -436,6 +430,13 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   ),
                   Text(
                     Languages.of(context)!.discountLabel.toTitleCase(),
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  SizedBox(
+                    width: rSize(10),
+                  ),
+                  Text(
+                    appointment.discount.toString(),
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ],

@@ -657,4 +657,10 @@ class LanguageAr extends Languages {
   @override
   String get labelReschedulingExplanation =>
       "Choose how long before an appointment a client can reschedule or cancel.";
+
+  /// Discount
+  @override
+  String get labelAddDiscount => "إضافة تخيض";
+  @override
+  String get labelNewPrice => "السعر بعد التخفيض";
 }

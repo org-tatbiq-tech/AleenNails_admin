@@ -1,24 +1,24 @@
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
-import 'package:appointments/screens/home/appointments/counter_buttom.dart';
-import 'package:common_widgets/custom_container.dart';
-
+import 'package:appointments/screens/home/appointments/counter_button.dart';
 import 'package:appointments/widget/custom/custom_toggle.dart';
+import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_container.dart';
+import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/custom_app_bar.dart';
-
-import 'package:common_widgets/custom_icon.dart';
-
-import 'package:common_widgets/custom_input_field.dart';
-import 'package:common_widgets/utils/validators.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class DiscountSelection extends StatefulWidget {
-  const DiscountSelection({Key? key}) : super(key: key);
+  final String discountValue;
+  final DiscountType discountType;
+  const DiscountSelection({
+    Key? key,
+    this.discountType = DiscountType.fixed,
+    this.discountValue = '0',
+  }) : super(key: key);
 
   @override
   State<DiscountSelection> createState() => _DiscountSelectionState();
@@ -30,7 +30,8 @@ class _DiscountSelectionState extends State<DiscountSelection> {
   @override
   void initState() {
     super.initState();
-    xAlign = -1;
+    xAlign = widget.discountType == DiscountType.percent ? 1 : -1;
+    _discountController.text = widget.discountValue;
     _discountController.addListener(() => setState(() {}));
   }
 
@@ -49,14 +50,15 @@ class _DiscountSelectionState extends State<DiscountSelection> {
         double discountValue = double.parse(_discountController.text);
 
         if (xAlign == 1) {
-          return getStringPrice(appointmentsMgr.selectedAppointment.totalCost *
-              ((100 - discountValue) / 100));
+          return getStringPrice(
+              appointmentsMgr.selectedAppointment.servicesCost *
+                  ((100 - discountValue) / 100));
         } else {
           return getStringPrice(
-              appointmentsMgr.selectedAppointment.totalCost - discountValue);
+              appointmentsMgr.selectedAppointment.servicesCost - discountValue);
         }
       }
-      return getStringPrice(appointmentsMgr.selectedAppointment.totalCost);
+      return getStringPrice(appointmentsMgr.selectedAppointment.servicesCost);
     }
 
     getNumberLength(int value) {
@@ -69,13 +71,18 @@ class _DiscountSelectionState extends State<DiscountSelection> {
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
-            titleText: 'Add Discount',
+            titleText: Languages.of(context)!.labelAddDiscount,
             withBack: true,
             isTransparent: true,
             withSave: true,
             saveText: Languages.of(context)!.saveLabel,
             saveTap: () => {
-              Navigator.pop(context),
+              Navigator.pop(context, {
+                'discount': _discountController.text.isNotEmpty
+                    ? int.parse(_discountController.text)
+                    : 0,
+                'type': xAlign == 1 ? DiscountType.percent : DiscountType.fixed,
+              }),
             },
           ),
         ),
@@ -95,59 +102,54 @@ class _DiscountSelectionState extends State<DiscountSelection> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Text(
-                  'Add Discount'.toTitleCase(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                        fontSize: rSize(18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      Languages.of(context)!.labelAddDiscount.toTitleCase(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                            fontSize: rSize(18),
+                          ),
+                    ),
+                    SizedBox(
+                      width: rSize(10),
+                    ),
+                    CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: null,
+                        path: xAlign == 1
+                            ? 'assets/icons/percent.png'
+                            : 'assets/icons/shekel.png',
+                        backgroundColor: Colors.transparent,
+                        iconColor: Theme.of(context).colorScheme.primary,
+                        withPadding: false,
+                        containerSize: 20,
                       ),
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  height: rSize(10),
+                  height: rSize(20),
                 ),
-                CustomInputField(
-                  customInputFieldProps: CustomInputFieldProps(
-                    controller: _discountController,
-                    autoFocus: true,
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(xAlign == 1
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CounterButton(
+                      discountController: _discountController,
+                      maxLength: xAlign == 1
                           ? 2
                           : getNumberLength(appointmentsMgr
-                              .selectedAppointment.totalCost
-                              .round())),
-                      LimitRangeTextInputFormatter(
-                          0,
-                          xAlign == 1
-                              ? 99
-                              : appointmentsMgr.selectedAppointment.totalCost
-                                  .round()),
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
-                    keyboardType: TextInputType.number,
-                    prefixIcon: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CustomIcon(
-                          customIconProps: CustomIconProps(
-                            icon: null,
-                            path: xAlign == 1
-                                ? 'assets/icons/percent.png'
-                                : 'assets/icons/shekel.png',
-                            backgroundColor: Colors.transparent,
-                            iconColor: Theme.of(context).colorScheme.primary,
-                            withPadding: false,
-                            containerSize: 20,
-                          ),
-                        ),
-                      ],
+                              .selectedAppointment.servicesCost
+                              .round()),
+                      inputRangeMax: xAlign == 1
+                          ? 99
+                          : appointmentsMgr.selectedAppointment.servicesCost
+                              .round(),
+                      inputRangeMin: 0,
                     ),
-                  ),
-                ),
-                CounterButton(
-                  discountController: _discountController,
+                  ],
                 ),
                 const Expanded(child: SizedBox()),
                 Column(
@@ -157,7 +159,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                       style: Theme.of(context).textTheme.headline1,
                     ),
                     Text(
-                      'New Price',
+                      Languages.of(context)!.labelNewPrice,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ],
@@ -172,6 +174,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                   setXAlign: (double value) {
                     setState(() {
                       xAlign = value;
+                      _discountController.text = '0';
                     });
                   },
                 ),

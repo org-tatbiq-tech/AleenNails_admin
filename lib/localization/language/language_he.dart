@@ -625,4 +625,10 @@ class LanguageHe extends Languages {
   @override
   String get labelReschedulingExplanation =>
       "בחר חלון זמן שמאפשר ללקוחות לשנות זמן התור";
+
+  /// Discount
+  @override
+  String get labelAddDiscount => "הוספת הנחה";
+  @override
+  String get labelNewPrice => "עלות מעודכנת";
 }

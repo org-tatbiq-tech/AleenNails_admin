@@ -148,7 +148,7 @@ class Appointment {
   DateTime creationDate; // Appointment creation date (date and time)
   DateTime date; // Appointment date (date and time)
   String notes; // Appointment detailed notes
-  double discount;
+  int discount;
   DiscountType discountType;
   List<AppointmentService> services;
   PaymentStatus paymentStatus;
@@ -173,6 +173,18 @@ class Appointment {
   });
 
   double get totalCost {
+    double cost = services.fold<double>(0, (sum, item) => sum + item.cost);
+    if (discount == 0) {
+      return cost;
+    }
+
+    if (discountType == DiscountType.percent) {
+      return cost * (100 - discount) / 100;
+    }
+    return cost - discount;
+  }
+
+  double get servicesCost {
     return services.fold<double>(0, (sum, item) => sum + item.cost);
   }
 
@@ -281,7 +293,7 @@ class Appointment {
       date: doc['date'].toDate(),
       services: loadServicesFromDoc(doc['services']),
       paymentStatus: loadPaymentStatus(doc['paymentStatus']),
-      discount: doc['discount'] ?? 0.0,
+      discount: doc['discount'] ?? 0,
       discountType: loadDiscountType(doc['discountType']),
     );
   }
@@ -435,7 +447,7 @@ class Client {
       'discount': discount,
       'isTrusted': isTrusted,
       'imageURL': imageURL,
-      'isApprovedByAdmin': isApprovedByAdmin ?? "",
+      'isApprovedByAdmin': isApprovedByAdmin,
     };
   }
 
@@ -455,7 +467,7 @@ class Client {
       address: doc['address'],
       email: doc['email'],
       creationDate: doc['creationDate'].toDate(),
-      generalNotes: doc['generalNotes'],
+      generalNotes: doc['generalNotes'] ?? "",
       birthday: doc['birthday'].toString().isNotEmpty
           ? doc['birthday'].toDate()
           : null,
