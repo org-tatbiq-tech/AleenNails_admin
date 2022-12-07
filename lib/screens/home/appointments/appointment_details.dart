@@ -388,30 +388,6 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               visible: isCheckoutScreen,
               child: Row(
                 children: [
-                  // CustomIcon(
-                  //   customIconProps: CustomIconProps(
-                  //     isDisabled: false,
-                  //     onTap: () => {
-                  //       addAnotherService(),
-                  //     },
-                  //     iconColor: Theme.of(context).colorScheme.primary,
-                  //     icon: null,
-                  //     contentPadding: rSize(10),
-                  //     withPadding: true,
-                  //     path: 'assets/icons/plus.png',
-                  //     containerSize: 35,
-                  //   ),
-                  // ),
-                  // SizedBox(
-                  //   width: rSize(10),
-                  // ),
-                  // Text(
-                  //   Languages.of(context)!.addServiceLabel.toTitleCase(),
-                  //   style: Theme.of(context).textTheme.subtitle1,
-                  // ),
-                  SizedBox(
-                    width: rSize(20),
-                  ),
                   CustomIcon(
                     customIconProps: CustomIconProps(
                       isDisabled: false,
@@ -419,28 +395,72 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                       iconColor: Theme.of(context).colorScheme.primary,
                       icon: null,
                       withPadding: true,
-                      path: appointment.discountType == DiscountType.percent
-                          ? 'assets/icons/percent.png'
-                          : 'assets/icons/shekel.png',
+                      path: 'assets/icons/add_discount.png',
                       containerSize: 35,
                     ),
                   ),
-                  SizedBox(
-                    width: rSize(10),
-                  ),
-                  Text(
-                    Languages.of(context)!.discountLabel.toTitleCase(),
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                  SizedBox(
-                    width: rSize(10),
-                  ),
-                  Text(
-                    appointment.discount.toString(),
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
                 ],
               ),
+            ),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: appointmentsMgr.selectedAppointment.discount != 0
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          Languages.of(context)!.priceLabel.toUpperCase(),
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              getStringPrice(
+                                appointmentsMgr
+                                    .selectedAppointment.servicesCost,
+                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline1
+                                  ?.copyWith(
+                                    decoration: TextDecoration.lineThrough,
+                                    decorationThickness: rSize(4),
+                                    decorationColor:
+                                        Theme.of(context).colorScheme.primary,
+                                    decorationStyle: TextDecorationStyle.wavy,
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
+            ),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: appointmentsMgr.selectedAppointment.discount != 0
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          Languages.of(context)!.discountLabel.toUpperCase(),
+                          style: Theme.of(context).textTheme.subtitle1,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              getStringPrice(appointment.discount.toDouble()),
+                              style: Theme.of(context).textTheme.headline1,
+                            ),
+                          ],
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,

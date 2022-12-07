@@ -155,6 +155,17 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                 Column(
                   children: [
                     Text(
+                      getStringPrice(
+                          appointmentsMgr.selectedAppointment.servicesCost),
+                      style: Theme.of(context).textTheme.headline1?.copyWith(
+                            decoration: TextDecoration.lineThrough,
+                            decorationThickness: rSize(4),
+                            decorationColor:
+                                Theme.of(context).colorScheme.primary,
+                            decorationStyle: TextDecorationStyle.wavy,
+                          ),
+                    ),
+                    Text(
                       getNewPrice(),
                       style: Theme.of(context).textTheme.headline1,
                     ),
