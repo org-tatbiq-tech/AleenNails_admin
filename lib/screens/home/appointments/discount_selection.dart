@@ -1,5 +1,6 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/screens/home/appointments/counter_buttom.dart';
 import 'package:common_widgets/custom_container.dart';
 
 import 'package:appointments/widget/custom/custom_toggle.dart';
@@ -144,6 +145,9 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                       ],
                     ),
                   ),
+                ),
+                CounterButton(
+                  discountController: _discountController,
                 ),
                 const Expanded(child: SizedBox()),
                 Column(
