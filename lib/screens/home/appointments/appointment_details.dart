@@ -361,7 +361,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           type: PageTransitionType.fade,
           isIos: isIos(),
           child: DiscountSelection(
-            discountValue: appointment.discount.round().toString(),
+            discountValue: appointment.discount.round(),
             discountType: appointment.discountType,
           ),
         ),

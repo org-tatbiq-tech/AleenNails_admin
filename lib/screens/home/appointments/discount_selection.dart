@@ -12,14 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DiscountSelection extends StatefulWidget {
-  final String discountValue;
+  final int discountValue;
   final DiscountType discountType;
-  final bool oneDiscountOnly;
+  final bool clientDiscount;
   const DiscountSelection({
     Key? key,
     this.discountType = DiscountType.fixed,
-    this.discountValue = '0',
-    this.oneDiscountOnly = false,
+    this.discountValue = 0,
+    this.clientDiscount = false,
   }) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
   void initState() {
     super.initState();
     xAlign = widget.discountType == DiscountType.percent ? 1 : -1;
-    _discountController.text = widget.discountValue;
+    _discountController.text = widget.discountValue.toString();
     _discountController.addListener(() => setState(() {}));
   }
 
@@ -154,9 +154,8 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                   ],
                 ),
                 const Expanded(child: SizedBox()),
-                Visibility(
-                  visible: !widget.oneDiscountOnly,
-                  child: Column(
+                if (!widget.clientDiscount)
+                  Column(
                     children: [
                       Column(
                         children: [
@@ -198,7 +197,6 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                       ),
                     ],
                   ),
-                ),
               ],
             ),
           ),

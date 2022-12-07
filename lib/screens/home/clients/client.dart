@@ -103,9 +103,9 @@ class _ClientWidgetState extends State<ClientWidget> {
           type: PageTransitionType.fade,
           isIos: isIos(),
           child: DiscountSelection(
-            discountValue: clientDiscount.toString(),
+            discountValue: clientDiscount,
             discountType: DiscountType.percent,
-            oneDiscountOnly: true,
+            clientDiscount: true,
           ),
         ),
       );
@@ -441,6 +441,61 @@ class _ClientWidgetState extends State<ClientWidget> {
       );
     }
 
+    void close() {
+      Navigator.pop(context);
+    }
+
+    void showNewClientSuccessMessage() {
+      close();
+
+      showSuccessFlash(
+        context: context,
+        successTitle:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successBody: Languages.of(context)!
+            .clientCreatedSuccessfullyBody
+            .toCapitalized(),
+        successColor: successPrimaryColor,
+      );
+    }
+
+    void showNewClientErrorMessage() {
+      close();
+      showErrorFlash(
+        context: context,
+        errorTitle: Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
+        errorBody: Languages.of(context)!
+            .clientPhoneAlreadyUsedErrorBody
+            .toTitleCase(),
+        errorColor: errorPrimaryColor,
+      );
+    }
+
+    void showUpdateClientSuccessMessage() {
+      close();
+      showSuccessFlash(
+        context: context,
+        successTitle:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successBody: Languages.of(context)!
+            .clientUpdatedSuccessfullyBody
+            .toCapitalized(),
+        successColor: successPrimaryColor,
+      );
+    }
+
+    void showUpdateClientErrorMessage() {
+      close();
+      showErrorFlash(
+        context: context,
+        errorTitle: Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
+        errorBody: Languages.of(context)!
+            .clientPhoneAlreadyUsedErrorBody
+            .toTitleCase(),
+        errorColor: errorPrimaryColor,
+      );
+    }
+
     Widget renderClientDiscount() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -533,7 +588,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           creationDate: DateTime.now(),
           birthday: birthdayDate,
           generalNotes: _noteController.text,
-          discount: clientDiscount.toDouble(),
+          discount: clientDiscount,
           isTrusted: trustedClient,
           acceptedDate: DateTime.now(),
           imageURL: imageURL,
@@ -542,52 +597,20 @@ class _ClientWidgetState extends State<ClientWidget> {
         if (widget.client == null) {
           try {
             await clientMgr.submitNewClient(client);
-            showSuccessFlash(
-              context: context,
-              successTitle:
-                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-              successBody: Languages.of(context)!
-                  .clientCreatedSuccessfullyBody
-                  .toCapitalized(),
-              successColor: successPrimaryColor,
-            );
-            Navigator.pop(context);
-          } on PhoneNumberUsedException catch (e) {
-            Navigator.pop(context);
-            showErrorFlash(
-              context: context,
-              errorTitle:
-                  Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
-              errorBody: Languages.of(context)!
-                  .clientPhoneAlreadyUsedErrorBody
-                  .toTitleCase(),
-              errorColor: errorPrimaryColor,
-            );
+            close();
+            showNewClientSuccessMessage();
+          } on PhoneNumberUsedException {
+            close();
+            showNewClientErrorMessage();
           }
         } else {
           try {
             await clientMgr.updateClient(client);
-            Navigator.pop(context);
-            showSuccessFlash(
-              context: context,
-              successTitle:
-                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-              successBody: Languages.of(context)!
-                  .clientUpdatedSuccessfullyBody
-                  .toCapitalized(),
-              successColor: successPrimaryColor,
-            );
-          } on PhoneNumberUsedException catch (e) {
-            Navigator.pop(context);
-            showErrorFlash(
-              context: context,
-              errorTitle:
-                  Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
-              errorBody: Languages.of(context)!
-                  .clientPhoneAlreadyUsedErrorBody
-                  .toTitleCase(),
-              errorColor: errorPrimaryColor,
-            );
+            close();
+            showUpdateClientSuccessMessage();
+          } on PhoneNumberUsedException {
+            close();
+            showUpdateClientErrorMessage();
           }
         }
       }

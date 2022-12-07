@@ -387,7 +387,7 @@ class Client {
   DateTime? birthday; // Birthday date
   DateTime creationDate; // Client creation date
   DateTime? acceptedDate; // Birthday date
-  double? discount; // general discount for client
+  int? discount; // general discount for client
   bool? isTrusted; // Trusted user
   String imageURL; // Image URL for quick download
   List<ClientAppointment> appointments;
@@ -471,7 +471,7 @@ class Client {
       birthday: doc['birthday'].toString().isNotEmpty
           ? doc['birthday'].toDate()
           : null,
-      discount: doc['discount'],
+      discount: doc['discount'].round(),
       isTrusted: doc['isTrusted'] ?? true,
       imageURL: doc['imageURL'] ?? '',
       appointments: doc['appointments'] == null
