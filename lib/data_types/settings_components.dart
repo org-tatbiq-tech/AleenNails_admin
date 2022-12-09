@@ -141,6 +141,8 @@ class BusinessInfoComp {
   String? instagramUrl;
   String? websiteUrl;
   String? wazeAddressUrl;
+  double? latitude;
+  double? longitude;
 
   BusinessInfoComp({
     required this.name,
@@ -152,6 +154,8 @@ class BusinessInfoComp {
     instagramUrl = '',
     websiteUrl = '',
     wazeAddressUrl = '',
+    this.latitude,
+    this.longitude,
   }) {
     this.description = description ?? '';
     this.facebookUrl = facebookUrl ?? '';
@@ -171,6 +175,8 @@ class BusinessInfoComp {
       'instagramUrl': instagramUrl,
       'websiteUrl': websiteUrl,
       'wazeAddressUrl': wazeAddressUrl,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 
@@ -185,6 +191,8 @@ class BusinessInfoComp {
       instagramUrl: doc['instagramUrl'] ?? '',
       websiteUrl: doc['websiteUrl'] ?? '',
       wazeAddressUrl: doc['wazeAddressUrl'] ?? '',
+      latitude: doc['latitude'],
+      longitude: doc['longitude'],
     );
   }
 }

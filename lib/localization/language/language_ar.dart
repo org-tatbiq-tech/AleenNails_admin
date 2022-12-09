@@ -663,4 +663,12 @@ class LanguageAr extends Languages {
   String get labelAddDiscount => "إضافة تخيض";
   @override
   String get labelNewPrice => "السعر بعد التخفيض";
+
+  @override
+  String get locationDisabled => 'خدمة تحديد الموقع غير مفعلة';
+  @override
+  String get locationDenied => 'تم رفض اذن تحديد الموقع';
+  @override
+  String get locationTotallyDenied =>
+      'تم رفض أذن الموقع بشكل دائم ، ولا يمكننا طلب أذن';
 }

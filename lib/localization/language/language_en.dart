@@ -657,4 +657,13 @@ class LanguageEn extends Languages {
   String get labelAddDiscount => "Add discount";
   @override
   String get labelNewPrice => "New price";
+
+  @override
+  String get locationDisabled =>
+      'Location services are disabled. Please enable the services';
+  @override
+  String get locationDenied => 'Location permissions are denied';
+  @override
+  String get locationTotallyDenied =>
+      'Location permissions are permanently denied, we cannot request permissions.';
 }

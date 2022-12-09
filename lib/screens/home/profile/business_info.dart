@@ -1,18 +1,22 @@
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:common_widgets/custom_container.dart';
-import 'package:common_widgets/utils/general.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
+import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 class BusinessInfo extends StatefulWidget {
@@ -37,6 +41,9 @@ class BusinessInfoState extends State<BusinessInfo> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isSaveDisabled = true;
   bool autoValidate = false;
+  double? latitude;
+  double? longitude;
+
   @override
   void initState() {
     super.initState();
@@ -319,6 +326,18 @@ class BusinessInfoState extends State<BusinessInfo> {
       );
     }
 
+    getCurrentLocation() async {
+      Position? position = await getCurrentPosition(context);
+      if (position != null) {
+        print(
+            'got location and lat is: ${position.latitude} and long is ${position.longitude}');
+        latitude = position.latitude;
+        longitude = position.longitude;
+      } else {
+        print('position is null');
+      }
+    }
+
     Widget renderAddress() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -382,6 +401,18 @@ class BusinessInfoState extends State<BusinessInfo> {
                   ),
                 ],
               ),
+            ),
+          ),
+          SizedBox(
+            height: rSize(20),
+          ),
+          CustomIconButton(
+            customIconButtonProps: CustomIconButtonProps(
+              onTap: () => {getCurrentLocation()},
+              animationDelay: 0.1,
+              iconPath: 'assets/icons/home_outline.png',
+              positionType: PositionType.bottom,
+              title: 'Location',
             ),
           ),
         ],
@@ -474,6 +505,8 @@ class BusinessInfoState extends State<BusinessInfo> {
           facebookUrl: _facebookController.text,
           instagramUrl: _instagramController.text,
           websiteUrl: _webController.text,
+          longitude: longitude,
+          latitude: latitude,
         );
         settingsMgr.profileManagement.businessInfo = newData;
 

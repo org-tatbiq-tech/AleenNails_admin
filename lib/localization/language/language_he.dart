@@ -631,4 +631,12 @@ class LanguageHe extends Languages {
   String get labelAddDiscount => "הוספת הנחה";
   @override
   String get labelNewPrice => "עלות מעודכנת";
+
+  @override
+  String get locationDisabled => 'שירותי זיהוי מיקום לא מופעלים';
+  @override
+  String get locationDenied => 'הרשאות המיקום נדחות';
+  @override
+  String get locationTotallyDenied =>
+      'הרשאות המיקום נדחות לצמיתות, איננו יכולים לבקש הרשאות.';
 }

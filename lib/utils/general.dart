@@ -1,6 +1,7 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 Map timeOfDayToDB(TimeOfDay? timeOfDay) {
@@ -54,4 +55,59 @@ String getDayName(context, day) {
 getCurrentLocale(BuildContext context) {
   final localeMgr = Provider.of<LocaleData>(context, listen: false);
   return localeMgr.locale.languageCode;
+}
+
+Future<bool> _handleLocationPermission(BuildContext context) async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(Languages.of(context)!.locationDisabled),
+      ),
+    );
+    return false;
+  }
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            Languages.of(context)!.locationDenied,
+          ),
+        ),
+      );
+      return false;
+    }
+  }
+  if (permission == LocationPermission.deniedForever) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          Languages.of(context)!.locationTotallyDenied,
+        ),
+      ),
+    );
+    return false;
+  }
+  return true;
+}
+
+Future<Position?> getCurrentPosition(BuildContext context) async {
+  Position? currPosition = null;
+  final hasPermission = await _handleLocationPermission(context);
+  if (!hasPermission) return null;
+  await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+      .then(
+    (Position position) {
+      currPosition = position;
+    },
+  ).catchError((e) => {
+            currPosition = null,
+          });
+  return currPosition;
 }

@@ -342,4 +342,8 @@ abstract class Languages {
   /// Discount
   String get labelAddDiscount;
   String get labelNewPrice;
+
+  String get locationDisabled;
+  String get locationDenied;
+  String get locationTotallyDenied;
 }
