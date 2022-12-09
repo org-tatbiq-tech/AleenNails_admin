@@ -16,6 +16,8 @@ AppointmentStatus loadAppointmentStatus(String status) {
       return AppointmentStatus.declined;
     case 'AppointmentStatus.noShow':
       return AppointmentStatus.noShow;
+    case 'AppointmentStatus.finished':
+      return AppointmentStatus.finished;
     default:
       return AppointmentStatus.waiting;
   }
@@ -293,7 +295,7 @@ class Appointment {
       date: doc['date'].toDate(),
       services: loadServicesFromDoc(doc['services']),
       paymentStatus: loadPaymentStatus(doc['paymentStatus']),
-      discount: doc['discount'] ?? 0,
+      discount: doc['discount'] ?? 0.0,
       discountType: loadDiscountType(doc['discountType']),
     );
   }

@@ -54,10 +54,11 @@ class AppointmentCard extends StatelessWidget {
       return widgetList;
     }
 
-    navigateToAppointmentDetails(Appointment appointment) {
+    navigateToAppointmentDetails(Appointment appointment) async {
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
-      appointmentsMgr.setSelectedAppointment(appointmentID: appointment.id);
+      await appointmentsMgr.setSelectedAppointment(
+          appointmentID: appointment.id);
       Navigator.push(
         context,
         MaterialPageRoute(

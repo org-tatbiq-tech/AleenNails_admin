@@ -38,11 +38,17 @@ class AppointmentDetails extends StatefulWidget {
 class AppointmentDetailsState extends State<AppointmentDetails> {
   bool isCheckoutScreen = false;
   late AppointmentsMgr appointmentsMgr;
+  late DiscountType discountType;
+  late double discount;
+  late double priceAfterDiscount;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     appointmentsMgr = Provider.of<AppointmentsMgr>(context, listen: false);
+    discountType = appointmentsMgr.selectedAppointment.discountType;
+    discount = appointmentsMgr.selectedAppointment.discount;
+    priceAfterDiscount = appointmentsMgr.selectedAppointment.servicesCost;
   }
 
   @override
@@ -150,6 +156,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           Provider.of<AppointmentsMgr>(context, listen: false);
       appointment.status = AppointmentStatus.finished;
       appointment.paymentStatus = PaymentStatus.paid;
+      appointment.discount = discount;
+      appointment.discountType = discountType;
       await appointmentsMgr.updateAppointment(appointment);
       Navigator.pop(context);
       showSuccessFlash(
@@ -370,9 +378,19 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       if (res == null) {
         return;
       }
-      appointment.discountType = res['type'];
-      appointment.discount = res['discount'];
-      appointmentsMgr.updateAppointment(appointment);
+      setState(() {
+        discountType = res['type'];
+        discount = res['discount'];
+        if (discountType == DiscountType.percent) {
+          priceAfterDiscount =
+              appointmentsMgr.selectedAppointment.servicesCost *
+                  (100 - discount) /
+                  100;
+        } else {
+          priceAfterDiscount =
+              appointmentsMgr.selectedAppointment.servicesCost - discount;
+        }
+      });
     }
 
     renderAmount(Appointment appointment) {
@@ -440,7 +458,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             ),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
-              child: appointmentsMgr.selectedAppointment.discount != 0
+              child: discount != 0.0
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -453,7 +471,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                         Row(
                           children: [
                             Text(
-                              getStringPrice(appointment.discount.toDouble()),
+                              getStringPrice(discount.toDouble()),
                               style: Theme.of(context).textTheme.headline1,
                             ),
                           ],
@@ -472,7 +490,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  getStringPrice(appointment.totalCost),
+                  getStringPrice(priceAfterDiscount),
                   style: Theme.of(context).textTheme.headline1,
                 ),
               ],
@@ -552,6 +570,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                         customButtonProps: CustomButtonProps(
                           onTap: () => setState(() {
                             isCheckoutScreen = false;
+                            discount = appointment.discount;
+                            discountType = appointment.discountType;
+                            priceAfterDiscount = appointment.totalCost;
                           }),
                           text: Languages.of(context)!.backLabel.toUpperCase(),
                           isPrimary: false,
