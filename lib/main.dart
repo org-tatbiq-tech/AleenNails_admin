@@ -5,6 +5,7 @@ import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/providers/internet_mgr.dart';
 import 'package:appointments/providers/langs.dart';
+import 'package:appointments/providers/notifications_mgr.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
@@ -73,6 +74,8 @@ void main() async {
         ChangeNotifierProvider<ClientsMgr>(create: (_) => ClientsMgr()),
         ChangeNotifierProvider<SettingsMgr>(create: (_) => SettingsMgr()),
         ChangeNotifierProvider<InternetMgr>(create: (_) => InternetMgr()),
+        ChangeNotifierProvider<NotificationsMgr>(
+            create: (_) => NotificationsMgr()),
       ],
       child: AppointmentsApp(),
     ),

@@ -487,16 +487,42 @@ class Client {
 /// NotificationData holds all required data to define, understand and explain
 /// an Notification to its details
 ///
+NotificationCategory loadNotificationCategory(String category) {
+  switch (category) {
+    case 'NotificationCategory.appointment':
+      return NotificationCategory.appointment;
+    case 'NotificationCategory.user':
+      return NotificationCategory.user;
+    default:
+      return NotificationCategory.appointment;
+  }
+}
+
 class NotificationData {
   String id;
-  String description;
   DateTime creationDate;
-  NotificationCategory notificationCategory;
+  bool isOpened;
+  Map<String, dynamic> data;
+  Map<String, dynamic> notification;
 
   NotificationData({
     required this.id,
-    required this.description,
     required this.creationDate,
-    required this.notificationCategory,
+    required this.isOpened,
+    required this.data,
+    required this.notification,
   });
+
+  factory NotificationData.fromJson(Map<String, dynamic> doc) {
+    return NotificationData(
+      id: doc['id'],
+      creationDate: doc['creationDate'].toDate(),
+      isOpened: doc['isOpened'] ?? false,
+      data: {
+        ...doc['data'],
+        'category': loadNotificationCategory(doc['data']['category'])
+      },
+      notification: doc['notification'],
+    );
+  }
 }
