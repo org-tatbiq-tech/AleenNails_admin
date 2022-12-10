@@ -37,6 +37,10 @@ class AuthenticationMgr extends ChangeNotifier {
   ApplicationLoginState _authState = ApplicationLoginState.loggedOut;
   ApplicationLoginState get loginState => _authState;
 
+  String? getLoggedInAdminEmail() {
+    return _fa.currentUser?.email;
+  }
+
   Future<void> verifyPhoneNumber({
     required String phoneNumber,
     verificationCompleted,

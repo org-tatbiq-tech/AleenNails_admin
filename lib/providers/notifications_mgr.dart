@@ -26,7 +26,7 @@ class NotificationsMgr extends ChangeNotifier {
   }
 
   List<NotificationData> getNotifications(adminEmail) {
-    if (!initialized) {
+    if (!initialized && adminEmail != null) {
       initialized = true;
       downloadNotifications(adminEmail);
     }
