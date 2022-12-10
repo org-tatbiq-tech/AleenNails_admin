@@ -43,7 +43,6 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   late double priceAfterDiscount;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     appointmentsMgr = Provider.of<AppointmentsMgr>(context, listen: false);
     discountType = appointmentsMgr.selectedAppointment.discountType;
@@ -53,7 +52,6 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     appointmentsMgr.pauseSelectedAppointment();
     super.dispose();
   }
