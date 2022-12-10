@@ -3,6 +3,7 @@ import 'package:appointments/localization/utils.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/providers/internet_mgr.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/services_mgr.dart';
 import 'package:appointments/providers/settings_mgr.dart';
@@ -29,7 +30,6 @@ import 'package:appointments/screens/home/tabs.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
 import 'package:appointments/utils/secure_storage.dart';
-import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
-import 'localization/language/languages.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -47,8 +46,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   );
 }
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // Set the background messaging handler early on, as a named top-level function
   // It will handle notifications while app is terminated
@@ -66,19 +69,48 @@ void main() {
         ChangeNotifierProvider<ServicesMgr>(create: (_) => ServicesMgr()),
         ChangeNotifierProvider<ClientsMgr>(create: (_) => ClientsMgr()),
         ChangeNotifierProvider<SettingsMgr>(create: (_) => SettingsMgr()),
+        ChangeNotifierProvider<InternetMgr>(create: (_) => InternetMgr()),
       ],
       child: AppointmentsApp(),
     ),
   );
 }
 
-class AppointmentsApp extends StatelessWidget {
-  AppointmentsApp({Key? key}) : super(key: key);
+class AppointmentsApp extends StatefulWidget {
+  const AppointmentsApp({Key? key}) : super(key: key);
 
+  @override
+  State<AppointmentsApp> createState() => _AppointmentsAppState();
+}
+
+class _AppointmentsAppState extends State<AppointmentsApp> {
+  InternetMgr? _checkInternet;
+  bool isLoggedIn = false;
   void initApp() {}
+
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await initialization();
+    });
+    super.initState();
+  }
+
+  Future<void> initialization() async {
+    _checkInternet = Provider.of<InternetMgr>(context, listen: false);
+    _checkInternet?.checkRealtimeConnection();
+    final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+    bool loggedIn = await getAutoLoginValue(authMgr);
+    await loadLocale();
+    setState(() {
+      isLoggedIn = loggedIn;
+    });
+    // FlutterNativeSplash.remove();
+  }
 
   Future<bool> getAutoLoginValue(AuthenticationMgr authData) async {
     String? userAutoLogin = await UserSecureStorage.getAutoLogin();
@@ -90,9 +122,8 @@ class AppointmentsApp extends StatelessWidget {
     return false;
   }
 
-  Widget getInitScreen(BuildContext context, isLoggedIn) {
-    // return const Landing();
-    if (isLoggedIn == true) {
+  Widget getInitScreen(bool loggedIn) {
+    if (loggedIn == true) {
       return const HomeScreen();
     }
     return const LoginScreen();
@@ -129,65 +160,39 @@ class AppointmentsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _fbApp,
-      builder: (context, appLoad) {
-        if (appLoad.hasError) {
-          return Center(
-            child: Text(
-              Languages.of(context)!.flashMessageErrorTitle,
-            ),
-          );
-        }
-        if (appLoad.hasData) {
-          return Consumer2<ThemeNotifier, LocaleData>(
-            builder: (context, theme, localeProv, child) => FutureBuilder(
-              future: loadLocale(),
-              builder: (context, locale) {
-                return Consumer<AuthenticationMgr>(
-                  builder: (context, authMgr, _) {
-                    return FutureBuilder(
-                      future: getAutoLoginValue(authMgr),
-                      builder: (context, auth) {
-                        return MaterialApp(
-                          builder: (context, _) {
-                            var child = _!;
-                            return child;
-                          },
-                          debugShowCheckedModeBanner: false,
-                          theme: theme.getTheme(),
-                          home: getInitScreen(context, auth.data),
-                          routes: getRoutes(context),
-                          locale: localeProv.locale,
-                          supportedLocales: supportedLocale,
-                          localizationsDelegates: const [
-                            AppLocalizationsDelegate(),
-                            GlobalMaterialLocalizations.delegate,
-                            GlobalWidgetsLocalizations.delegate,
-                            GlobalCupertinoLocalizations.delegate,
-                          ],
-                          localeResolutionCallback: (locale, supportedLocales) {
-                            for (var supportedLocale in supportedLocales) {
-                              if (supportedLocale.languageCode ==
-                                      locale?.languageCode &&
-                                  supportedLocale.countryCode ==
-                                      locale?.countryCode) {
-                                return supportedLocale;
-                              }
-                            }
-                            return supportedLocales.first;
-                          },
-                        );
-                      },
-                    );
-                  },
-                );
-              },
-            ),
-          );
-        }
-        return CustomLoadingIndicator(
-          customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
+    return Consumer4<ThemeNotifier, LocaleData, AuthenticationMgr, InternetMgr>(
+      builder: (context, theme, localeProv, authMgr, internetMgr, child) {
+        return MaterialApp(
+          builder: (context, _) {
+            var child = _!;
+            return internetMgr.status == InternetConnectionStatus.offline
+                ? const Center(
+                    child: Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: Text('No internet')))
+                : child;
+          },
+          debugShowCheckedModeBanner: false,
+          theme: theme.getTheme(),
+          home: getInitScreen(isLoggedIn),
+          routes: getRoutes(context),
+          locale: localeProv.locale,
+          supportedLocales: supportedLocale,
+          localizationsDelegates: const [
+            AppLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          localeResolutionCallback: (locale, supportedLocales) {
+            for (var supportedLocale in supportedLocales) {
+              if (supportedLocale.languageCode == locale?.languageCode &&
+                  supportedLocale.countryCode == locale?.countryCode) {
+                return supportedLocale;
+              }
+            }
+            return supportedLocales.first;
+          },
         );
       },
     );

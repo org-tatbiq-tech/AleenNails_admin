@@ -39,6 +39,7 @@ dependencies:
       url: https://dart.cloudsmith.io/ahmad-manaa-44N/common-widgets/
       name: common_widgets
     version: 0.0.92
+  connectivity_plus: ^3.0.2
   cupertino_icons: ^1.0.5
   dotted_border: ^2.0.0+2
   firebase_auth: ^4.1.2

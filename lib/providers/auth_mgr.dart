@@ -142,8 +142,8 @@ class AuthenticationMgr extends ChangeNotifier {
   }
 
   void signOut() async {
-    await _fa.signOut();
     await resetData();
+    await _fa.signOut();
     notifyListeners();
   }
 }
