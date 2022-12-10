@@ -1,5 +1,6 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/auth_mgr.dart';
+import 'package:appointments/providers/notifications_mgr.dart';
 import 'package:common_widgets/custom_container.dart';
 
 import 'package:common_widgets/custom_app_bar.dart';
@@ -25,11 +26,13 @@ class PersonalSettingsState extends State<PersonalSettings> {
   //FCM instance
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
   late AuthenticationMgr authenticationMgr;
+  late NotificationsMgr notificationsMgr;
 
   @override
   void initState() {
     super.initState();
     authenticationMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+    notificationsMgr = Provider.of<NotificationsMgr>(context, listen: false);
   }
 
   signOut() async {
@@ -39,6 +42,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
       await authenticationMgr.deleteToken(token);
     }
     authenticationMgr.signOut();
+    notificationsMgr.resetNotifications();
     Navigator.pushNamedAndRemoveUntil(
         context, '/loginScreen', (Route<dynamic> route) => false);
   }

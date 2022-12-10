@@ -78,11 +78,10 @@ class NotificationCard extends StatelessWidget {
         PageTransition(
           type: PageTransitionType.fade,
           isIos: isIos(),
-          child:
-              notificationCardProps.notificationDetails.notificationCategory ==
-                      NotificationCategory.user
-                  ? const ApprovalRequest()
-                  : const AppointmentDetails(),
+          child: notificationCardProps.notificationDetails.data['category'] ==
+                  NotificationCategory.user
+              ? const ApprovalRequest()
+              : const AppointmentDetails(),
         ),
       );
     }
@@ -148,7 +147,7 @@ class NotificationCard extends StatelessWidget {
             ],
           ),
           secondMain: notificationCardProps
-                      .notificationDetails.notificationCategory ==
+                      .notificationDetails.data['category'] ==
                   NotificationCategory.user
               ? Padding(
                   padding: EdgeInsets.only(top: rSize(10)),

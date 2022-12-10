@@ -38,11 +38,19 @@ async function getAdminTokens() {
     return adminTokens;
 }
 
+function getNotificationRecord(notificationContent) {
+    return {
+        ...notificationContent,
+        creationDate:  admin.firestore.Timestamp.now(),
+        isOpened: false
+    }
+}
+
 async function sendClientNotification(clientTokensDict, notificationContent) {
     for (const clientDocumentId in clientTokensDict) {
         if(clientTokensDict[clientDocumentId]) {
             const clientNotifications  = await admin.firestore().collection(clientsCollection).doc(clientDocumentId).collection(clientNotificationsCollection);
-            await clientNotifications.doc().set(notificationContent);
+            await clientNotifications.doc().set(getNotificationRecord(notificationContent));
             await admin.messaging().sendToDevice(clientTokensDict[clientDocumentId], notificationContent);
         }
     }
@@ -51,7 +59,7 @@ async function sendClientNotification(clientTokensDict, notificationContent) {
 async function sendAdminNotification(adminTokensDict, notificationContent) {
     for (const adminDocumentId in adminTokensDict) {
         const adminNotifications  = await admin.firestore().collection(adminsCollection).doc(adminDocumentId).collection(adminNotificationsCollection);
-        await adminNotifications.doc().set(notificationContent);
+        await adminNotifications.doc().set(getNotificationRecord(notificationContent));
         await admin.messaging().sendToDevice(adminTokensDict[adminDocumentId], notificationContent);
     }
 }
