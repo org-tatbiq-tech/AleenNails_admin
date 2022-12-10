@@ -26,6 +26,8 @@ import 'package:appointments/screens/home/schedule_management/unavailability.dar
 import 'package:appointments/screens/home/schedule_management/working_days.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/screens/home/settings/booking_settings.dart';
+import 'package:appointments/screens/home/settings/internet_connection_screen.dart';
+import 'package:appointments/screens/home/settings/loading_screen.dart';
 import 'package:appointments/screens/home/tabs.dart';
 import 'package:appointments/screens/login/forget_password.dart';
 import 'package:appointments/screens/login/login.dart';
@@ -34,6 +36,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -51,7 +54,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   // Set the background messaging handler early on, as a named top-level function
   // It will handle notifications while app is terminated
@@ -86,6 +89,7 @@ class AppointmentsApp extends StatefulWidget {
 class _AppointmentsAppState extends State<AppointmentsApp> {
   InternetMgr? _checkInternet;
   bool isLoggedIn = false;
+  bool isLoading = true;
   void initApp() {}
 
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp(
@@ -108,8 +112,9 @@ class _AppointmentsAppState extends State<AppointmentsApp> {
     await loadLocale();
     setState(() {
       isLoggedIn = loggedIn;
+      isLoading = false;
     });
-    // FlutterNativeSplash.remove();
+    FlutterNativeSplash.remove();
   }
 
   Future<bool> getAutoLoginValue(AuthenticationMgr authData) async {
@@ -165,12 +170,15 @@ class _AppointmentsAppState extends State<AppointmentsApp> {
         return MaterialApp(
           builder: (context, _) {
             var child = _!;
-            return internetMgr.status == InternetConnectionStatus.offline
-                ? const Center(
-                    child: Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: Text('No internet')))
-                : child;
+            return AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: internetMgr.status == InternetConnectionStatus.offline
+                  ? const InternetConnectionScreen()
+                  : AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 500),
+                      child: isLoading ? const LoadingScreen() : child,
+                    ),
+            );
           },
           debugShowCheckedModeBanner: false,
           theme: theme.getTheme(),
