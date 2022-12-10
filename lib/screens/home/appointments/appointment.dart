@@ -8,11 +8,10 @@ import 'package:appointments/utils/general.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/client/client_card.dart';
-import 'package:common_widgets/custom_container.dart';
-
 import 'package:appointments/widget/custom/custom_slide_able.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_avatar.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
@@ -55,15 +54,17 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
     super.initState();
     if (widget.client != null) {
       selectedClient = widget.client;
+      print('im here and client is $selectedClient');
     }
     if (widget.appointment != null) {
       appointment = Appointment.fromAppointment(widget.appointment!);
+
       selectedClient = Client(
         id: appointment!.clientDocID,
         fullName: appointment!.clientName,
         phone: appointment!.clientPhone,
         address: '',
-        email: '',
+        email: appointment!.clientEmail,
         imageURL: appointment!.clientImageURL,
         creationDate: DateTime.now(),
       );
@@ -72,7 +73,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       startDateTimeTemp = appointment!.date;
       endTime = appointment!.endTime;
       _notesController.text = appointment!.notes;
-      print('notes are ${appointment!.notes}');
     }
     if (widget.bookAgainAppointment != null) {
       selectedClient = Client(
@@ -80,7 +80,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         fullName: widget.bookAgainAppointment!.clientName,
         phone: widget.bookAgainAppointment!.clientPhone,
         address: '',
-        email: '',
+        email: appointment!.clientEmail,
         imageURL: widget.bookAgainAppointment!.clientImageURL,
         creationDate: DateTime.now(),
       );
@@ -164,7 +164,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
     return totalDuration;
   }
 
-  saveAppointment() {
+  saveAppointment() async {
     if (validateAppointmentData()) {
       showLoaderDialog(context);
       final appointmentsMgr =
@@ -234,35 +234,31 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       );
 
       if (appointment == null) {
-        appointmentsMgr.submitNewAppointment(newAppointment).then((value) => {
-              Navigator.pop(context),
-              showSuccessFlash(
-                context: context,
-                successTitle: Languages.of(context)!
-                    .flashMessageSuccessTitle
-                    .toTitleCase(),
-                successBody: Languages.of(context)!
-                    .appointmentCreatedSuccessfullyBody
-                    .toTitleCase(),
-                successColor: successPrimaryColor,
-              ),
-              Navigator.pop(context),
-            });
+        await appointmentsMgr.submitNewAppointment(newAppointment);
+        Navigator.pop(context);
+        showSuccessFlash(
+          context: context,
+          successTitle:
+              Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+          successBody: Languages.of(context)!
+              .appointmentCreatedSuccessfullyBody
+              .toTitleCase(),
+          successColor: successPrimaryColor,
+        );
+        Navigator.pop(context);
       } else {
-        appointmentsMgr.updateAppointment(newAppointment).then((value) => {
-              Navigator.pop(context),
-              showSuccessFlash(
-                context: context,
-                successTitle: Languages.of(context)!
-                    .flashMessageSuccessTitle
-                    .toTitleCase(),
-                successBody: Languages.of(context)!
-                    .appointmentUpdatedSuccessfullyBody
-                    .toTitleCase(),
-                successColor: successPrimaryColor,
-              ),
-              Navigator.pop(context),
-            });
+        await appointmentsMgr.updateAppointment(newAppointment);
+        Navigator.pop(context);
+        showSuccessFlash(
+          context: context,
+          successTitle:
+              Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+          successBody: Languages.of(context)!
+              .appointmentUpdatedSuccessfullyBody
+              .toTitleCase(),
+          successColor: successPrimaryColor,
+        );
+        Navigator.pop(context);
       }
     }
   }

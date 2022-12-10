@@ -5,9 +5,8 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_card.dart';
-import 'package:common_widgets/custom_container.dart';
-
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_day_view.dart';
 import 'package:common_widgets/custom_expandable_calendar.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
@@ -41,16 +40,6 @@ class TimeLineState extends State<TimeLine> {
   List<Appointment> appointments = [];
   bool _isListView = true;
   bool _isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -175,7 +164,7 @@ class TimeLineState extends State<TimeLine> {
   navigateToAppointmentDetails(Appointment appointment) async {
     final appointmentsMgr =
         Provider.of<AppointmentsMgr>(context, listen: false);
-    await appointmentsMgr.setSelectedAppointment(appointment: appointment);
+    await appointmentsMgr.setSelectedAppointment(appointmentID: appointment.id);
     if (mounted) {
       Navigator.push(
         context,

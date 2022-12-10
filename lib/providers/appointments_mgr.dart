@@ -89,12 +89,29 @@ class AppointmentsMgr extends ChangeNotifier {
         .collection(clientsCollection)
         .doc(newAppointment.clientDocID)
         .collection(clientAppointmentsCollection);
-    appointmentsColl.add(newAppointment.toJson()).then((docRef) => {
-          /// Update client's appointments collections
-          newAppointment.id = docRef.id,
-          clientsAppointments
-              .add(ClientAppointment.fromAppointment(newAppointment).toJson()),
-        });
+    DocumentReference docRef =
+        await appointmentsColl.add(newAppointment.toJson());
+
+    /// Update client's appointments collections
+    newAppointment.id = docRef.id;
+    await clientsAppointments
+        .add(ClientAppointment.fromAppointment(newAppointment).toJson());
+  }
+
+  Future<void> updateClientAppointment(Appointment updatedAppointment) async {
+    CollectionReference clientsAppointments = _fs
+        .collection(clientsCollection)
+        .doc(updatedAppointment.clientDocID)
+        .collection(clientAppointmentsCollection);
+    QuerySnapshot querySnapshot = await clientsAppointments
+        .where('appointmentIdRef', isEqualTo: updatedAppointment.id)
+        .get();
+    if (querySnapshot.docs.length != 1) {
+      return;
+    }
+    DocumentReference docRef = querySnapshot.docs[0].reference;
+    docRef
+        .update(ClientAppointment.fromAppointment(updatedAppointment).toJson());
   }
 
   Future<void> updateAppointment(Appointment updatedAppointment) async {
@@ -102,7 +119,9 @@ class AppointmentsMgr extends ChangeNotifier {
     CollectionReference appointmentsColl =
         _fs.collection(appointmentsCollection);
     var data = updatedAppointment.toJson();
+    data.remove('creationDate');
     appointmentsColl.doc(updatedAppointment.id).update(data);
+    updateClientAppointment(updatedAppointment);
   }
 
   /// Appointment selection
