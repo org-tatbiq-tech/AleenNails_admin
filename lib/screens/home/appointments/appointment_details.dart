@@ -48,6 +48,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     discountType = appointmentsMgr.selectedAppointment.discountType;
     discount = appointmentsMgr.selectedAppointment.discount;
     priceAfterDiscount = appointmentsMgr.selectedAppointment.servicesCost;
+    super.initState();
   }
 
   @override
@@ -128,24 +129,22 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    cancelAppointmentClicked(Appointment appointment) {
+    cancelAppointmentClicked(Appointment appointment) async {
       showLoaderDialog(context);
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
       appointment.status = AppointmentStatus.cancelled;
-      appointmentsMgr.updateAppointment(appointment).then((value) => {
-            Navigator.pop(context),
-            showSuccessFlash(
-              context: context,
-              successColor: successPrimaryColor,
-              successTitle:
-                  Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-              successBody: Languages.of(context)!
-                  .appointmentCancelledSuccessfullyBody
-                  .toCapitalized(),
-            ),
-            Navigator.pop(context),
-          });
+      await appointmentsMgr.updateAppointment(appointment);
+      Navigator.pop(context);
+      showSuccessFlash(
+        context: context,
+        successColor: successPrimaryColor,
+        successTitle:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successBody: Languages.of(context)!
+            .appointmentCancelledSuccessfullyBody
+            .toCapitalized(),
+      );
     }
 
     confirmCheckout(Appointment appointment) async {

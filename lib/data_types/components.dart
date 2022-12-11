@@ -233,6 +233,7 @@ class Appointment {
       clientEmail: appointment.clientEmail,
       clientDocID: appointment.clientDocID,
       creationDate: appointment.creationDate,
+      clientImageURL: appointment.clientImageURL,
       notes: appointment.notes,
       date: appointment.date,
       services: List<AppointmentService>.from(appointment.services),
@@ -325,7 +326,6 @@ class ClientAppointment {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'appointmentIdRef': appointmentIdRef,
       'startTime': Timestamp.fromDate(startTime),
       'endTime': Timestamp.fromDate(endTime),
