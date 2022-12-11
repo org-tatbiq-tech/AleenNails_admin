@@ -3,18 +3,17 @@ import 'dart:io';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/layout.dart';
-import 'package:common_widgets/custom_container.dart';
-
-import 'package:common_widgets/placeholders.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/image_picker_modal.dart';
+import 'package:common_widgets/placeholders.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -74,7 +73,8 @@ class _BusinessLogoState extends State<BusinessLogo> {
 
     deleteImage() async {
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
-      if (settingsMgr.profileManagement.profileMedia.logoURL != null) {
+      if (settingsMgr.profileManagement.profileMedia.logoURL != null &&
+          settingsMgr.profileManagement.profileMedia.logoURL!.isNotEmpty) {
         setState(() {
           _isLoading = true;
         });
@@ -84,6 +84,10 @@ class _BusinessLogoState extends State<BusinessLogo> {
             _isLoading = false;
           }),
         );
+      } else if (_imageFile != null) {
+        setState(() {
+          _imageFile = null;
+        });
       }
     }
 
