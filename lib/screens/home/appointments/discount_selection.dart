@@ -1,8 +1,8 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
-import 'package:appointments/screens/home/appointments/counter_button.dart';
 import 'package:appointments/widget/custom/custom_toggle.dart';
+import 'package:common_widgets/counter_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';

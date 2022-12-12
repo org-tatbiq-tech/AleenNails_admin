@@ -209,6 +209,9 @@ abstract class Languages {
   String get arrowLabel;
   String get statusLabel;
   String get timeLabel;
+  String get locationLabel;
+  String get currentLocationLabel;
+  String get updateBusinessLocationLabel;
 
   ///************************************************************************///
   /// ************ Flash Messages ************///

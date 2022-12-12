@@ -155,32 +155,31 @@ class _ClientWidgetState extends State<ClientWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  EaseInAnimation(
-                    onTap: () => {
-                      showBottomModal(
-                        bottomModalProps: BottomModalProps(
-                          context: context,
-                          centerTitle: true,
-                          title: Languages.of(context)!
-                              .trustedClientLabel
-                              .toTitleCase(),
-                          child: Text(
-                            Languages.of(context)!
-                                .trustedClientModalBody
-                                .toCapitalized(),
-                            style: Theme.of(context).textTheme.bodyText1,
+                  CustomIcon(
+                    customIconProps: CustomIconProps(
+                      isDisabled: false,
+                      onTap: () => {
+                        showBottomModal(
+                          bottomModalProps: BottomModalProps(
+                            context: context,
+                            centerTitle: true,
+                            title: Languages.of(context)!
+                                .trustedClientLabel
+                                .toTitleCase(),
+                            child: Text(
+                              Languages.of(context)!
+                                  .trustedClientModalBody
+                                  .toCapitalized(),
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                           ),
-                        ),
-                      )
-                    },
-                    child: CustomIcon(
-                      customIconProps: CustomIconProps(
-                        icon: null,
-                        path: 'assets/icons/question.png',
-                        containerSize: 25,
-                        backgroundColor: Colors.transparent,
-                        iconColor: Theme.of(context).colorScheme.primary,
-                      ),
+                        )
+                      },
+                      icon: null,
+                      path: 'assets/icons/question.png',
+                      containerSize: 25,
+                      backgroundColor: Colors.transparent,
+                      iconColor: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   SizedBox(
@@ -225,32 +224,31 @@ class _ClientWidgetState extends State<ClientWidget> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  EaseInAnimation(
-                    onTap: () => {
-                      showBottomModal(
-                        bottomModalProps: BottomModalProps(
-                          context: context,
-                          centerTitle: true,
-                          title: Languages.of(context)!
-                              .blockedClientLabel
-                              .toTitleCase(),
-                          child: Text(
-                            Languages.of(context)!
-                                .blockedClientModalBody
-                                .toCapitalized(),
-                            style: Theme.of(context).textTheme.bodyText1,
+                  CustomIcon(
+                    customIconProps: CustomIconProps(
+                      isDisabled: false,
+                      onTap: () => {
+                        showBottomModal(
+                          bottomModalProps: BottomModalProps(
+                            context: context,
+                            centerTitle: true,
+                            title: Languages.of(context)!
+                                .blockedClientLabel
+                                .toTitleCase(),
+                            child: Text(
+                              Languages.of(context)!
+                                  .blockedClientModalBody
+                                  .toCapitalized(),
+                              style: Theme.of(context).textTheme.bodyText1,
+                            ),
                           ),
-                        ),
-                      )
-                    },
-                    child: CustomIcon(
-                      customIconProps: CustomIconProps(
-                        icon: null,
-                        path: 'assets/icons/question.png',
-                        containerSize: 25,
-                        backgroundColor: Colors.transparent,
-                        iconColor: Theme.of(context).colorScheme.primary,
-                      ),
+                        )
+                      },
+                      icon: null,
+                      path: 'assets/icons/question.png',
+                      containerSize: 25,
+                      backgroundColor: Colors.transparent,
+                      iconColor: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   SizedBox(

@@ -381,6 +381,12 @@ class LanguageHe extends Languages {
   String get statusLabel => "סטטוס";
   @override
   String get timeLabel => "זמן";
+  @override
+  String get locationLabel => "מיקום";
+  @override
+  String get currentLocationLabel => "מיקום נוכחי";
+  @override
+  String get updateBusinessLocationLabel => "עדכן את מיקום העסק";
 
   ///************************************************************************///
   /// ************ Flash Messages ************///

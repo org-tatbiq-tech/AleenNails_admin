@@ -140,7 +140,6 @@ class BusinessInfoComp {
   String? facebookUrl;
   String? instagramUrl;
   String? websiteUrl;
-  String? wazeAddressUrl;
   double? latitude;
   double? longitude;
 
@@ -153,7 +152,6 @@ class BusinessInfoComp {
     facebookUrl = '',
     instagramUrl = '',
     websiteUrl = '',
-    wazeAddressUrl = '',
     this.latitude,
     this.longitude,
   }) {
@@ -161,7 +159,6 @@ class BusinessInfoComp {
     this.facebookUrl = facebookUrl ?? '';
     this.instagramUrl = instagramUrl ?? '';
     this.websiteUrl = websiteUrl ?? '';
-    this.wazeAddressUrl = wazeAddressUrl ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -174,7 +171,6 @@ class BusinessInfoComp {
       'facebookUrl': facebookUrl,
       'instagramUrl': instagramUrl,
       'websiteUrl': websiteUrl,
-      'wazeAddressUrl': wazeAddressUrl,
       'latitude': latitude,
       'longitude': longitude,
     };
@@ -190,7 +186,6 @@ class BusinessInfoComp {
       facebookUrl: doc['facebookUrl'] ?? '',
       instagramUrl: doc['instagramUrl'] ?? '',
       websiteUrl: doc['websiteUrl'] ?? '',
-      wazeAddressUrl: doc['wazeAddressUrl'] ?? '',
       latitude: doc['latitude'],
       longitude: doc['longitude'],
     );

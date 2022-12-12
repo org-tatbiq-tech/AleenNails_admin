@@ -384,6 +384,12 @@ class LanguageEn extends Languages {
   String get statusLabel => "status";
   @override
   String get timeLabel => "time";
+  @override
+  String get locationLabel => "location";
+  @override
+  String get updateBusinessLocationLabel => "update business location";
+  @override
+  String get currentLocationLabel => "current location";
 
   ///************************************************************************///
   /// ************ Flash Messages ************///

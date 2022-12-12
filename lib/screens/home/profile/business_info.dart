@@ -1,22 +1,23 @@
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:appointments/utils/general.dart';
+import 'package:appointments/screens/home/profile/business_location.dart';
 import 'package:appointments/utils/layout.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
-import 'package:common_widgets/custom_icon_button.dart';
 import 'package:common_widgets/custom_input_field.dart';
+import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
-import 'package:common_widgets/fade_animation.dart';
+import 'package:common_widgets/custom_modal.dart';
+import 'package:common_widgets/page_transition.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class BusinessInfo extends StatefulWidget {
@@ -33,7 +34,6 @@ class BusinessInfoState extends State<BusinessInfo> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
-  final TextEditingController _wazeController = TextEditingController();
   final TextEditingController _facebookController = TextEditingController();
   final TextEditingController _instagramController = TextEditingController();
   final TextEditingController _webController = TextEditingController();
@@ -41,8 +41,7 @@ class BusinessInfoState extends State<BusinessInfo> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isSaveDisabled = true;
   bool autoValidate = false;
-  double? latitude;
-  double? longitude;
+  CameraPosition? businessLocation;
 
   @override
   void initState() {
@@ -54,8 +53,6 @@ class BusinessInfoState extends State<BusinessInfo> {
     _emailController.text = settingsMgr.profileManagement.businessInfo.email;
     _addressController.text =
         settingsMgr.profileManagement.businessInfo.address;
-    _wazeController.text =
-        settingsMgr.profileManagement.businessInfo.wazeAddressUrl!;
     _facebookController.text =
         settingsMgr.profileManagement.businessInfo.facebookUrl!;
     _instagramController.text =
@@ -64,6 +61,17 @@ class BusinessInfoState extends State<BusinessInfo> {
         settingsMgr.profileManagement.businessInfo.websiteUrl!;
     _descriptionController.text =
         settingsMgr.profileManagement.businessInfo.description!;
+
+    if (settingsMgr.profileManagement.businessInfo.latitude != null &&
+        settingsMgr.profileManagement.businessInfo.longitude != null) {
+      businessLocation = CameraPosition(
+        target: LatLng(
+          settingsMgr.profileManagement.businessInfo.latitude!,
+          settingsMgr.profileManagement.businessInfo.longitude!,
+        ),
+        zoom: 14.4746,
+      );
+    }
 
     _nameController.addListener(() => setState(() {
           isSaveDisabled = false;
@@ -75,9 +83,6 @@ class BusinessInfoState extends State<BusinessInfo> {
           isSaveDisabled = false;
         }));
     _addressController.addListener(() => setState(() {
-          isSaveDisabled = false;
-        }));
-    _wazeController.addListener(() => setState(() {
           isSaveDisabled = false;
         }));
     _facebookController.addListener(() => setState(() {
@@ -101,7 +106,6 @@ class BusinessInfoState extends State<BusinessInfo> {
     _phoneController.dispose();
     _emailController.dispose();
     _addressController.dispose();
-    _wazeController.dispose();
     _facebookController.dispose();
     _instagramController.dispose();
     _webController.dispose();
@@ -326,15 +330,22 @@ class BusinessInfoState extends State<BusinessInfo> {
       );
     }
 
-    getCurrentLocation() async {
-      Position? position = await getCurrentPosition(context);
-      if (position != null) {
-        print(
-            'got location and lat is: ${position.latitude} and long is ${position.longitude}');
-        latitude = position.latitude;
-        longitude = position.longitude;
-      } else {
-        print('position is null');
+    navigateToBusinessLocation() async {
+      final result = await Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          isIos: isIos(),
+          child: BusinessLocation(
+            storePosition: businessLocation,
+          ),
+        ),
+      );
+      if (result != null) {
+        setState(() {
+          businessLocation = result;
+          isSaveDisabled = false;
+        });
       }
     }
 
@@ -366,54 +377,82 @@ class BusinessInfoState extends State<BusinessInfo> {
           SizedBox(
             height: rSize(20),
           ),
-          CustomInputField(
-            customInputFieldProps: CustomInputFieldProps(
-              controller: _wazeController,
-              hintText: Languages.of(context)!.wazeLabel.toTitleCase(),
-              validator: validateUrl,
-              keyboardType: TextInputType.text,
-              prefixIcon: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: rSize(10),
-                  ),
-                  CustomIcon(
-                    customIconProps: CustomIconProps(
-                      icon: null,
-                      path: 'assets/icons/waze.png',
-                      backgroundColor: Colors.transparent,
-                      iconColor: Theme.of(context).colorScheme.primary,
-                      containerSize: 30,
-                    ),
-                  ),
-                  SizedBox(
-                    width: rSize(10),
-                  ),
-                  Container(
-                    width: rSize(1),
-                    color: Theme.of(context).colorScheme.primary,
-                    margin: EdgeInsets.symmetric(
-                      vertical: rSize(6),
-                    ),
-                  ),
-                ],
+          Padding(
+            padding: EdgeInsets.only(
+              left: rSize(10),
+              right: rSize(10),
+              bottom: rSize(5),
+            ),
+            child: Text(
+              Languages.of(context)!.locationLabel.toTitleCase(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: CustomInputFieldButton(
+                  text: Languages.of(context)!.updateBusinessLocationLabel,
+                  onTap: () => navigateToBusinessLocation(),
+                ),
               ),
-            ),
-          ),
-          SizedBox(
-            height: rSize(20),
-          ),
-          CustomIconButton(
-            customIconButtonProps: CustomIconButtonProps(
-              onTap: () => {getCurrentLocation()},
-              animationDelay: 0.1,
-              iconPath: 'assets/icons/home_outline.png',
-              positionType: PositionType.bottom,
-              title: 'Location',
-            ),
+              SizedBox(
+                width: rSize(10),
+              ),
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  isDisabled: false,
+                  onTap: () => {
+                    showBottomModal(
+                      bottomModalProps: BottomModalProps(
+                        context: context,
+                        centerTitle: true,
+                        title:
+                            Languages.of(context)!.locationLabel.toTitleCase(),
+                        child: Text(
+                          Languages.of(context)!
+                              .blockedClientModalBody
+                              .toCapitalized(),
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                    )
+                  },
+                  icon: null,
+                  path: 'assets/icons/question.png',
+                  containerSize: 25,
+                  backgroundColor: Colors.transparent,
+                  iconColor: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              SizedBox(
+                width: rSize(10),
+              ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: (businessLocation != null)
+                    ? CustomIcon(
+                        customIconProps: CustomIconProps(
+                          icon: null,
+                          path: 'assets/icons/check.png',
+                          containerSize: 25,
+                          backgroundColor: Colors.transparent,
+                          iconColor: successPrimaryColor,
+                        ),
+                      )
+                    : CustomIcon(
+                        customIconProps: CustomIconProps(
+                          icon: null,
+                          path: 'assets/icons/close.png',
+                          containerSize: 25,
+                          backgroundColor: Colors.transparent,
+                          iconColor: Theme.of(context).colorScheme.error,
+                        ),
+                      ),
+              ),
+            ],
           ),
         ],
       );
@@ -501,12 +540,11 @@ class BusinessInfoState extends State<BusinessInfo> {
           email: _emailController.text,
           address: _addressController.text,
           description: _descriptionController.text,
-          wazeAddressUrl: _wazeController.text,
           facebookUrl: _facebookController.text,
           instagramUrl: _instagramController.text,
           websiteUrl: _webController.text,
-          longitude: longitude,
-          latitude: latitude,
+          longitude: businessLocation!.target.longitude,
+          latitude: businessLocation!.target.latitude,
         );
         settingsMgr.profileManagement.businessInfo = newData;
 
