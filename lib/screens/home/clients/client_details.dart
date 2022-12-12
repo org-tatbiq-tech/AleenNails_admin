@@ -17,6 +17,7 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/fade_animation.dart';
+import 'package:common_widgets/page_transition.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -678,22 +679,26 @@ class _ClientDetailsState extends State<ClientDetails> {
                 customIconTap: () => {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ClientWidget(client: clientsMgr.selectedClient),
+                    PageTransition(
+                      type: PageTransitionType.fade,
+                      isIos: isIos(),
+                      child: ClientWidget(client: clientsMgr.selectedClient),
                     ),
                   ),
                 },
               ),
             ),
-            body: !clientsMgr.isSelectedClientLoaded
-                ? Center(
-                    child: CustomLoadingIndicator(
-                      customLoadingIndicatorProps:
-                          CustomLoadingIndicatorProps(),
-                    ),
-                  )
-                : renderDetailsBody(),
+            body: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              child: !clientsMgr.isSelectedClientLoaded
+                  ? Center(
+                      child: CustomLoadingIndicator(
+                        customLoadingIndicatorProps:
+                            CustomLoadingIndicatorProps(),
+                      ),
+                    )
+                  : renderDetailsBody(),
+            ),
           ),
         );
       },
