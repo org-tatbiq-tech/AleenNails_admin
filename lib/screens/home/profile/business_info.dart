@@ -335,7 +335,6 @@ class BusinessInfoState extends State<BusinessInfo> {
         context,
         PageTransition(
           type: PageTransitionType.fade,
-          isIos: isIos(),
           child: BusinessLocation(
             storePosition: businessLocation,
           ),
