@@ -64,8 +64,8 @@ class _ClientWidgetState extends State<ClientWidget> {
       _addressController.text = widget.client!.address;
       _noteController.text = widget.client!.generalNotes!;
       clientDiscount = widget.client!.discount!.round();
-      trustedClient = widget.client!.isTrusted ?? false;
-      blockedClient = widget.client!.isApprovedByAdmin ?? false;
+      trustedClient = widget.client!.isTrusted;
+      blockedClient = widget.client!.isApprovedByAdmin;
       birthdayDate = widget.client!.birthday;
       imageURL = widget.client!.imageURL;
     }
@@ -121,13 +121,6 @@ class _ClientWidgetState extends State<ClientWidget> {
         clientDiscount = res['discount'];
       });
     }
-
-    // toggleApproveClient() async {
-    //   clientsMgr.selectedClient.isApprovedByAdmin =
-    //       !(clientsMgr.selectedClient.isApprovedByAdmin != null &&
-    //           clientsMgr.selectedClient.isApprovedByAdmin == true);
-    //   await clientsMgr.updateClient(clientsMgr.selectedClient);
-    // }
 
     Widget renderPermissions() {
       return Column(
@@ -685,6 +678,7 @@ class _ClientWidgetState extends State<ClientWidget> {
         } else {
           try {
             await clientMgr.updateClient(client);
+            await clientMgr.setSelectedClient(clientID: client.id);
             close();
             showUpdateClientSuccessMessage();
           } on PhoneNumberUsedException {

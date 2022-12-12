@@ -117,31 +117,73 @@ class _ClientDetailsState extends State<ClientDetails> {
     }
 
     renderBirthday(Client client) {
-      return Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      return Row(
         children: [
-          Padding(
-            padding: EdgeInsets.only(
-              bottom: rSize(5),
-            ),
-            child: Text(
-              Languages.of(context)!.birthdayLabel.toUpperCase(),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText1,
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                  ),
+                  child: Text(
+                    Languages.of(context)!.birthdayLabel.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+                Text(
+                  client.birthday != null
+                      ? Localizations.of<MaterialLocalizations>(
+                              context, MaterialLocalizations)!
+                          .formatCompactDate(client.birthday!)
+                      : Languages.of(context)!.notSetLabel.toTitleCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+              ],
             ),
           ),
-          Text(
-            client.birthday != null
-                ? Localizations.of<MaterialLocalizations>(
-                        context, MaterialLocalizations)!
-                    .formatCompactDate(client.birthday!)
-                : Languages.of(context)!.notSetLabel.toTitleCase(),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2,
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: rSize(5),
+                  ),
+                  child: Text(
+                    Languages.of(context)!.blockedClientLabel.toUpperCase(),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText1
+                        ?.copyWith(color: Theme.of(context).colorScheme.error),
+                  ),
+                ),
+                Text(
+                  client.isApprovedByAdmin
+                      ? Languages.of(context)!.yesLabel.toTitleCase()
+                      : Languages.of(context)!.noLabel.toTitleCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2
+                      ?.copyWith(color: Theme.of(context).colorScheme.error),
+                ),
+              ],
+            ),
           ),
         ],
       );
@@ -203,7 +245,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  '${client.discount!.round()}%',
+                  '${client.discount!}%',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -216,8 +258,6 @@ class _ClientDetailsState extends State<ClientDetails> {
     }
 
     renderTotalRevenue(Client client) {
-      print('redning total revcen ${client.fullName}');
-
       return Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -269,7 +309,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  client.isTrusted!
+                  client.isTrusted
                       ? Languages.of(context)!.yesLabel.toTitleCase()
                       : Languages.of(context)!.noLabel.toTitleCase(),
                   maxLines: 1,
