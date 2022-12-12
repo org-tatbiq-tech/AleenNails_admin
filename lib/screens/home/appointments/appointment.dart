@@ -54,7 +54,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
     super.initState();
     if (widget.client != null) {
       selectedClient = widget.client;
-      print('im here and client is $selectedClient');
     }
     if (widget.appointment != null) {
       appointment = Appointment.fromAppointment(widget.appointment!);

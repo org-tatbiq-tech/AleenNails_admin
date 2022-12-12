@@ -84,6 +84,17 @@ class NotificationCard extends StatelessWidget {
       );
     }
 
+    navigateTo(Widget screen) {
+      Navigator.push(
+        context,
+        PageTransition(
+          type: PageTransitionType.fade,
+          isIos: isIos(),
+          child: screen,
+        ),
+      );
+    }
+
     onCardTap() async {
       if (notificationCardProps.notificationDetails.data['category'] ==
           NotificationCategory.user) {
@@ -91,27 +102,14 @@ class NotificationCard extends StatelessWidget {
         await clientsMgr.setSelectedClient(
             clientID:
                 notificationCardProps.notificationDetails.data['client_id']);
-        Navigator.push(
-          context,
-          PageTransition(
-              type: PageTransitionType.fade,
-              isIos: isIos(),
-              child: const ApprovalRequest()),
-        );
+        navigateTo(const ApprovalRequest());
       } else {
         final appointmentsMgr =
             Provider.of<AppointmentsMgr>(context, listen: false);
         await appointmentsMgr.setSelectedAppointment(
             appointmentID: notificationCardProps
                 .notificationDetails.data['appointment_id']);
-        Navigator.push(
-          context,
-          PageTransition(
-            type: PageTransitionType.fade,
-            isIos: isIos(),
-            child: const AppointmentDetails(),
-          ),
-        );
+        navigateTo(const AppointmentDetails());
       }
     }
 

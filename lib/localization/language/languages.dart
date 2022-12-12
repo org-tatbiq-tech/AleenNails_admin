@@ -76,6 +76,9 @@ abstract class Languages {
   String get addNewClientLabel;
   String get approveClientLabel;
   String get rejectClientLabel;
+  String get isBlockedClientLabel;
+  String get blockedClientLabel;
+  String get blockedClientModalBody;
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///

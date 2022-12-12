@@ -4,6 +4,7 @@ import 'package:appointments/screens/home/appointments/appointment_details.dart'
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
 import 'package:common_widgets/custom_list_tile.dart';
+import 'package:common_widgets/page_transition.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -33,8 +34,10 @@ class ClientAppointmentCard extends StatelessWidget {
       appointmentsMgr.setSelectedAppointment(appointmentID: appointmentId);
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (context) => const AppointmentDetails(),
+        PageTransition(
+          type: PageTransitionType.fade,
+          isIos: isIos(),
+          child: const AppointmentDetails(),
         ),
       );
     }

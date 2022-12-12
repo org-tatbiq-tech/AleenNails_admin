@@ -126,7 +126,7 @@ class LanguageAr extends Languages {
   @override
   String get permissionsLabel => "أذونات";
   @override
-  String get isTrustedClientLabel => "هل العميل موثوق";
+  String get isTrustedClientLabel => "؟هل العميل موثوق";
   @override
   String get trustedClientModalBody =>
       "في حالة الإغلاق ، لن يتمكن العميل من حجز موعد تلقائيًا.";
@@ -138,6 +138,13 @@ class LanguageAr extends Languages {
   String get approveClientLabel => "الموافقة على العميل";
   @override
   String get rejectClientLabel => "حظر العميل";
+  @override
+  String get isBlockedClientLabel => "؟هل العميل محظور";
+  @override
+  String get blockedClientLabel => "عميل محظور";
+  @override
+  String get blockedClientModalBody =>
+      "في حالة الإغلاق ، لن يتمكن العميل من الدخول للتطبيق.";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///

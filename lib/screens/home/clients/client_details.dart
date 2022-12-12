@@ -313,26 +313,6 @@ class _ClientDetailsState extends State<ClientDetails> {
       ]);
     }
 
-    toggleApproveClient() async {
-      clientsMgr.selectedClient.isApprovedByAdmin =
-          !(clientsMgr.selectedClient.isApprovedByAdmin != null &&
-              clientsMgr.selectedClient.isApprovedByAdmin == true);
-      await clientsMgr.updateClient(clientsMgr.selectedClient);
-    }
-
-    Widget renderApproveClientButton() {
-      return CustomButton(
-        customButtonProps: CustomButtonProps(
-          onTap: () => {toggleApproveClient()},
-          text: clientsMgr.selectedClient.isApprovedByAdmin == true
-              ? Languages.of(context)!.rejectClientLabel.toTitleCase()
-              : Languages.of(context)!.approveClientLabel.toTitleCase(),
-          isPrimary: false,
-          isSecondary: true,
-        ),
-      );
-    }
-
     renderStatics(Client client) {
       return Container(
         decoration: BoxDecoration(
@@ -628,10 +608,6 @@ class _ClientDetailsState extends State<ClientDetails> {
                     delay: 0.8,
                     child: renderNotes(clientsMgr.selectedClient),
                   ),
-                  SizedBox(
-                    height: rSize(20),
-                  ),
-                  renderApproveClientButton(),
                   SizedBox(
                     height: rSize(20),
                   ),

@@ -44,6 +44,7 @@ class _ClientWidgetState extends State<ClientWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int clientDiscount = 0;
   bool trustedClient = true;
+  bool blockedClient = false;
   bool autoValidate = false;
   String imageURL = '';
   bool isSaveDisabled = true;
@@ -63,6 +64,8 @@ class _ClientWidgetState extends State<ClientWidget> {
       _addressController.text = widget.client!.address;
       _noteController.text = widget.client!.generalNotes!;
       clientDiscount = widget.client!.discount!.round();
+      trustedClient = widget.client!.isTrusted ?? false;
+      blockedClient = widget.client!.isApprovedByAdmin ?? false;
       birthdayDate = widget.client!.birthday;
       imageURL = widget.client!.imageURL;
     }
@@ -119,6 +122,13 @@ class _ClientWidgetState extends State<ClientWidget> {
       });
     }
 
+    // toggleApproveClient() async {
+    //   clientsMgr.selectedClient.isApprovedByAdmin =
+    //       !(clientsMgr.selectedClient.isApprovedByAdmin != null &&
+    //           clientsMgr.selectedClient.isApprovedByAdmin == true);
+    //   await clientsMgr.updateClient(clientsMgr.selectedClient);
+    // }
+
     Widget renderPermissions() {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -157,8 +167,6 @@ class _ClientWidgetState extends State<ClientWidget> {
                       showBottomModal(
                         bottomModalProps: BottomModalProps(
                           context: context,
-                          enableDrag: true,
-                          // showDragPen: true,
                           centerTitle: true,
                           title: Languages.of(context)!
                               .trustedClientLabel
@@ -202,6 +210,76 @@ class _ClientWidgetState extends State<ClientWidget> {
                       inactiveTrackColor:
                           Theme.of(context).colorScheme.primaryContainer,
                       value: trustedClient,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                Languages.of(context)!.isBlockedClientLabel.toTitleCase(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  EaseInAnimation(
+                    onTap: () => {
+                      showBottomModal(
+                        bottomModalProps: BottomModalProps(
+                          context: context,
+                          centerTitle: true,
+                          title: Languages.of(context)!
+                              .blockedClientLabel
+                              .toTitleCase(),
+                          child: Text(
+                            Languages.of(context)!
+                                .blockedClientModalBody
+                                .toCapitalized(),
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
+                        ),
+                      )
+                    },
+                    child: CustomIcon(
+                      customIconProps: CustomIconProps(
+                        icon: null,
+                        path: 'assets/icons/question.png',
+                        containerSize: 25,
+                        backgroundColor: Colors.transparent,
+                        iconColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: rSize(10),
+                  ),
+                  Transform.scale(
+                    scale: rSize(1.4),
+                    alignment: Alignment.center,
+                    child: Switch(
+                      onChanged: (bool value) {
+                        setState(() {
+                          blockedClient = value;
+                          isSaveDisabled = false;
+                        });
+                      },
+                      splashRadius: 0,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      inactiveThumbColor:
+                          Theme.of(context).colorScheme.onBackground,
+                      inactiveTrackColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      value: blockedClient,
                     ),
                   ),
                 ],
@@ -590,6 +668,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           generalNotes: _noteController.text,
           discount: clientDiscount,
           isTrusted: trustedClient,
+          isApprovedByAdmin: blockedClient,
           acceptedDate: DateTime.now(),
           imageURL: imageURL,
         );

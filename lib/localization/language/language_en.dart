@@ -114,7 +114,7 @@ class LanguageEn extends Languages {
   @override
   String get permissionsLabel => "permissions";
   @override
-  String get isTrustedClientLabel => "is trusted client";
+  String get isTrustedClientLabel => "is trusted client?";
   @override
   String get trustedClientModalBody =>
       "If switched off client will not be able automatically book an appointment.";
@@ -126,6 +126,13 @@ class LanguageEn extends Languages {
   String get approveClientLabel => "approve client";
   @override
   String get rejectClientLabel => "reject client";
+  @override
+  String get isBlockedClientLabel => "is blocked client?";
+  @override
+  String get blockedClientModalBody =>
+      "If switched off client will not be able to access the application";
+  @override
+  String get blockedClientLabel => "blocked client";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///

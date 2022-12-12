@@ -1,16 +1,22 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_loading-indicator.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/read_more_text.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ApprovalRequest extends StatefulWidget {
   const ApprovalRequest({Key? key}) : super(key: key);
@@ -22,17 +28,33 @@ class ApprovalRequest extends StatefulWidget {
 class _ApprovalRequestState extends State<ApprovalRequest> {
   @override
   Widget build(BuildContext context) {
-    Client client = Client(
-      id: '2121',
-      fullName: 'fullName',
-      phone: 'phone',
-      address: 'address',
-      email: 'email',
-      creationDate: DateTime.now(),
-    );
-    approveClient() async {}
-    rejectClient() async {}
-    showRejectClientModal() async {
+    clientUpdatedSuccessfullyMessage() {
+      Navigator.pop(context);
+      showSuccessFlash(
+        successColor: successPrimaryColor,
+        context: context,
+        successTitle: Languages.of(context)!.flashMessageSuccessTitle,
+        successBody: Languages.of(context)!.clientUpdatedSuccessfullyBody,
+      );
+      Navigator.pop(context);
+    }
+
+    approveClient(Client client) async {
+      showLoaderDialog(context);
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      client.isApprovedByAdmin = true;
+      await clientsMgr.updateClient(client);
+      clientUpdatedSuccessfullyMessage();
+    }
+
+    rejectClient(Client client) async {
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      client.isApprovedByAdmin = false;
+      await clientsMgr.updateClient(client);
+      clientUpdatedSuccessfullyMessage();
+    }
+
+    showRejectClientModal(Client client) async {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -41,7 +63,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
           secondaryButtonText: Languages.of(context)!.backLabel.toCapitalized(),
           deleteCancelModal: true,
           primaryAction: () async => {
-            rejectClient(),
+            rejectClient(client),
           },
           footerButton: ModalFooter.both,
           child: Column(
@@ -225,14 +247,14 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
       );
     }
 
-    renderFooter() {
+    renderFooter(Client client) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Expanded(
             child: CustomButton(
               customButtonProps: CustomButtonProps(
-                onTap: () => approveClient(),
+                onTap: () => approveClient(client),
                 text: Languages.of(context)!.approveLabel,
                 isPrimary: true,
                 verticalPadding: rSize(8),
@@ -245,7 +267,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
           Expanded(
             child: CustomButton(
               customButtonProps: CustomButtonProps(
-                onTap: () => showRejectClientModal(),
+                onTap: () => showRejectClientModal(client),
                 text: Languages.of(context)!.rejectLabel,
                 backgroundColor: Theme.of(context).colorScheme.error,
                 textColor: Theme.of(context).colorScheme.onError,
@@ -257,49 +279,61 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
       );
     }
 
-    return CustomContainer(
-      imagePath: 'assets/images/background4.png',
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: CustomAppBar(
-          customAppBarProps: CustomAppBarProps(
-            titleText:
-                Languages.of(context)!.approvalRequestLabel.toTitleCase(),
-            withClipPath: false,
-            isTransparent: true,
-            withBack: true,
-            centerTitle: WrapAlignment.start,
+    return Consumer<ClientsMgr>(builder: (consumerContext, clientsMgr, _) {
+      return CustomContainer(
+        imagePath: 'assets/images/background4.png',
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText:
+                  Languages.of(context)!.approvalRequestLabel.toTitleCase(),
+              withClipPath: false,
+              isTransparent: true,
+              withBack: true,
+              centerTitle: WrapAlignment.start,
+            ),
+          ),
+          body: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: clientsMgr.isSelectedClientLoaded
+                ? Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: rSize(30),
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: rSize(40),
+                        ),
+                        renderHeader(clientsMgr.selectedClient),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        renderBirthday(clientsMgr.selectedClient),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        renderNotes(clientsMgr.selectedClient),
+                        const Expanded(
+                          child: SizedBox(),
+                        ),
+                        renderFooter(clientsMgr.selectedClient),
+                      ],
+                    ),
+                  )
+                : Center(
+                    child: CustomLoadingIndicator(
+                      customLoadingIndicatorProps:
+                          CustomLoadingIndicatorProps(),
+                    ),
+                  ),
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: rSize(30),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: rSize(40),
-              ),
-              renderHeader(client),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderBirthday(client),
-              SizedBox(
-                height: rSize(20),
-              ),
-              renderNotes(client),
-              const Expanded(
-                child: SizedBox(),
-              ),
-              renderFooter(),
-            ],
-          ),
-        ),
-      ),
-    );
+      );
+    });
   }
 }

@@ -935,171 +935,174 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     return CustomContainer(
       imagePath: 'assets/images/background4.png',
       child: Consumer<AppointmentsMgr>(
-        builder: (context, appointmentsMgr, _) => !appointmentsMgr
-                .isSelectedAppointmentLoaded
-            ? Center(
-                child: CustomLoadingIndicator(
-                  customLoadingIndicatorProps: CustomLoadingIndicatorProps(),
-                ),
-              )
-            : Scaffold(
-                backgroundColor: Colors.transparent,
-                appBar: CustomAppBar(
-                  customAppBarProps: CustomAppBarProps(
-                    titleText: isCheckoutScreen
-                        ? Languages.of(context)!.checkoutLabel.toTitleCase()
-                        : Languages.of(context)!
-                            .appointmentDetailsLabel
-                            .toTitleCase(),
-                    withBack: true,
-                    isTransparent: true,
-                    customIcon: isEditAppointment(appointmentsMgr)
-                        ? Icon(
-                            Icons.edit,
-                            size: rSize(24),
-                          )
-                        : null,
-                    customIconTap: () => editAppointmentAction(),
-                  ),
-                ),
-                body: SafeArea(
-                  top: false,
-                  left: false,
-                  right: false,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                      FadeAnimation(
-                        positionType: PositionType.bottom,
-                        delay: 0.3,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            AppointmentStatusComp(
-                              customStatusProps: CustomStatusProps(
-                                appointmentStatus:
-                                    appointmentsMgr.selectedAppointment.status,
-                              ),
-                            ),
-                            SizedBox(
-                              width: rSize(10),
-                            ),
-                            AppointmentStatusComp(
-                              customStatusProps: CustomStatusProps(
-                                paymentStatus: appointmentsMgr
-                                    .selectedAppointment.paymentStatus,
-                              ),
-                            ),
-                          ],
+        builder: (context, appointmentsMgr, _) => Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: CustomAppBar(
+            customAppBarProps: CustomAppBarProps(
+              titleText: isCheckoutScreen
+                  ? Languages.of(context)!.checkoutLabel.toTitleCase()
+                  : Languages.of(context)!
+                      .appointmentDetailsLabel
+                      .toTitleCase(),
+              withBack: true,
+              isTransparent: true,
+              customIcon: isEditAppointment(appointmentsMgr)
+                  ? Icon(
+                      Icons.edit,
+                      size: rSize(24),
+                    )
+                  : null,
+              customIconTap: () => editAppointmentAction(),
+            ),
+          ),
+          body: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: appointmentsMgr.isSelectedAppointmentLoaded
+                ? Center(
+                    child: CustomLoadingIndicator(
+                      customLoadingIndicatorProps:
+                          CustomLoadingIndicatorProps(),
+                    ),
+                  )
+                : SafeArea(
+                    top: false,
+                    left: false,
+                    right: false,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: rSize(20),
                         ),
-                      ),
-                      SizedBox(
-                        height: rSize(10),
-                      ),
-                      FadeAnimation(
-                        positionType: PositionType.bottom,
-                        delay: 0.3,
-                        child: renderAppointmentID(
-                            appointmentsMgr.selectedAppointment),
-                      ),
-                      SizedBox(
-                        height: rSize(20),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: rSize(20),
-                        ),
-                        child:
-                            renderHeader(appointmentsMgr.selectedAppointment),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: rSize(30),
-                          ),
-                          child: Column(
+                        FadeAnimation(
+                          positionType: PositionType.bottom,
+                          delay: 0.3,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              SizedBox(
-                                height: rSize(20),
-                              ),
-                              FadeAnimation(
-                                positionType: PositionType.right,
-                                delay: 0.5,
-                                child: renderNotes(
-                                  appointmentsMgr.selectedAppointment,
+                              AppointmentStatusComp(
+                                customStatusProps: CustomStatusProps(
+                                  appointmentStatus: appointmentsMgr
+                                      .selectedAppointment.status,
                                 ),
                               ),
                               SizedBox(
-                                height: rSize(15),
+                                width: rSize(10),
                               ),
-                              Expanded(
-                                child: renderServices(
-                                  appointmentsMgr.selectedAppointment,
-                                ),
-                              ),
-                              SizedBox(
-                                height: rSize(20),
-                              ),
-                              Visibility(
-                                child: renderAmount(
-                                  appointmentsMgr.selectedAppointment,
-                                ),
-                              ),
-                              SizedBox(
-                                height: rSize(15),
-                              ),
-                              renderFooter(
-                                appointmentsMgr.selectedAppointment,
-                              ),
-                              Visibility(
-                                visible: isNoShowVisible(
-                                        appointmentsMgr.selectedAppointment) ||
-                                    isDeclineVisible(
-                                        appointmentsMgr.selectedAppointment),
-                                child: SizedBox(
-                                  height: rSize(15),
-                                ),
-                              ),
-                              Visibility(
-                                visible: isNoShowVisible(
-                                  appointmentsMgr.selectedAppointment,
-                                ),
-                                child: renderNoShow(
-                                  appointmentsMgr.selectedAppointment,
-                                ),
-                              ),
-                              Visibility(
-                                visible: isDeclineVisible(
-                                  appointmentsMgr.selectedAppointment,
-                                ),
-                                child: renderDecline(
-                                  appointmentsMgr.selectedAppointment,
-                                ),
-                              ),
-                              Visibility(
-                                visible: isAndroid() || !isDeviceHasNotch(),
-                                child: SizedBox(
-                                  height: rSize(15),
+                              AppointmentStatusComp(
+                                customStatusProps: CustomStatusProps(
+                                  paymentStatus: appointmentsMgr
+                                      .selectedAppointment.paymentStatus,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: rSize(10),
+                        ),
+                        FadeAnimation(
+                          positionType: PositionType.bottom,
+                          delay: 0.3,
+                          child: renderAppointmentID(
+                              appointmentsMgr.selectedAppointment),
+                        ),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: rSize(20),
+                          ),
+                          child:
+                              renderHeader(appointmentsMgr.selectedAppointment),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: rSize(30),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: rSize(20),
+                                ),
+                                FadeAnimation(
+                                  positionType: PositionType.right,
+                                  delay: 0.5,
+                                  child: renderNotes(
+                                    appointmentsMgr.selectedAppointment,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: rSize(15),
+                                ),
+                                Expanded(
+                                  child: renderServices(
+                                    appointmentsMgr.selectedAppointment,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: rSize(20),
+                                ),
+                                Visibility(
+                                  child: renderAmount(
+                                    appointmentsMgr.selectedAppointment,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: rSize(15),
+                                ),
+                                renderFooter(
+                                  appointmentsMgr.selectedAppointment,
+                                ),
+                                Visibility(
+                                  visible: isNoShowVisible(appointmentsMgr
+                                          .selectedAppointment) ||
+                                      isDeclineVisible(
+                                          appointmentsMgr.selectedAppointment),
+                                  child: SizedBox(
+                                    height: rSize(15),
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: isNoShowVisible(
+                                    appointmentsMgr.selectedAppointment,
+                                  ),
+                                  child: renderNoShow(
+                                    appointmentsMgr.selectedAppointment,
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: isDeclineVisible(
+                                    appointmentsMgr.selectedAppointment,
+                                  ),
+                                  child: renderDecline(
+                                    appointmentsMgr.selectedAppointment,
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: isAndroid() || !isDeviceHasNotch(),
+                                  child: SizedBox(
+                                    height: rSize(15),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ),
+          ),
+        ),
       ),
     );
   }

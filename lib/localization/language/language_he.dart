@@ -125,6 +125,13 @@ class LanguageHe extends Languages {
   String get approveClientLabel => "אשר לקוח";
   @override
   String get rejectClientLabel => "לדחות לקוח";
+  @override
+  String get isBlockedClientLabel => "האם הלקוח חסום?";
+  @override
+  String get blockedClientLabel => "לקוח חסום";
+  @override
+  String get blockedClientModalBody =>
+      "אם כבוי, הלקוח לא יהיה ביכולתו להיכנס לאפליקציה";
 
   ///************************************************************************///
   /// ************ Business Info Labels ************///
