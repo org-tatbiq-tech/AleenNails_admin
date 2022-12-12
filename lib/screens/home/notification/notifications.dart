@@ -1,4 +1,5 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/notifications_mgr.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:appointments/widget/notification_card.dart';
@@ -18,11 +19,14 @@ class Notifications extends StatefulWidget {
 }
 
 class _NotificationsState extends State<Notifications> {
+  late AuthenticationMgr authMgr;
   @override
   void initState() {
+    authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+
     final notificationsMgr =
         Provider.of<NotificationsMgr>(context, listen: false);
-    notificationsMgr.getNotifications('saeed.isa90@gmail.com');
+    notificationsMgr.getNotifications(authMgr.getLoggedInAdminEmail());
     super.initState();
   }
 
@@ -54,7 +58,8 @@ class _NotificationsState extends State<Notifications> {
                           child: AnimatedSwitcher(
                             duration: const Duration(milliseconds: 500),
                             child: notificationsMgr
-                                    .getNotifications('saeed.isa90@gmail.com')
+                                    .getNotifications(
+                                        authMgr.getLoggedInAdminEmail())
                                     .isNotEmpty
                                 ? ListView.builder(
                                     padding: EdgeInsets.symmetric(
@@ -63,21 +68,21 @@ class _NotificationsState extends State<Notifications> {
                                     ),
                                     itemCount: notificationsMgr
                                         .getNotifications(
-                                            'saeed.isa90@gmail.com')
+                                            authMgr.getLoggedInAdminEmail())
                                         .length,
                                     itemBuilder: (context, index) {
                                       return NotificationCard(
                                         key: ValueKey(notificationsMgr
-                                            .getNotifications(
-                                                'saeed.isa90@gmail.com')[index]
+                                            .getNotifications(authMgr
+                                                .getLoggedInAdminEmail())[index]
                                             .id),
                                         notificationCardProps:
                                             NotificationCardProps(
                                           withNavigation: true,
-                                          notificationDetails:
-                                              notificationsMgr.getNotifications(
-                                                      'saeed.isa90@gmail.com')[
-                                                  index],
+                                          notificationDetails: notificationsMgr
+                                                  .getNotifications(authMgr
+                                                      .getLoggedInAdminEmail())[
+                                              index],
                                         ),
                                       );
                                     },
