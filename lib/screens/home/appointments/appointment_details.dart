@@ -366,8 +366,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           type: PageTransitionType.fade,
           isIos: isIos(),
           child: DiscountSelection(
-            discountValue: appointment.discount.round(),
-            discountType: appointment.discountType,
+            discountValue: discount.round(),
+            discountType: discountType,
           ),
         ),
       );
@@ -419,7 +419,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             ),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
-              child: appointmentsMgr.selectedAppointment.discount != 0
+              child: discount != 0
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -468,7 +468,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                         Row(
                           children: [
                             Text(
-                              getStringPrice(discount.toDouble()),
+                              discountType == DiscountType.fixed
+                                  ? getStringPrice(discount.toDouble())
+                                  : '${discount.toStringAsFixed(1)} %',
                               style: Theme.of(context).textTheme.headline1,
                             ),
                           ],
