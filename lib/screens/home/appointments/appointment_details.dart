@@ -957,7 +957,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           ),
           body: AnimatedSwitcher(
             duration: const Duration(milliseconds: 500),
-            child: appointmentsMgr.isSelectedAppointmentLoaded
+            child: !appointmentsMgr.isSelectedAppointmentLoaded
                 ? Center(
                     child: CustomLoadingIndicator(
                       customLoadingIndicatorProps:
