@@ -342,7 +342,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               controller: _nameController,
               keyboardType: TextInputType.text,
               inputFormatters: [
-                LengthLimitingTextInputFormatter(30),
+                LengthLimitingTextInputFormatter(15),
               ],
               validator: emptyValidation,
             ),

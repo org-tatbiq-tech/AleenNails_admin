@@ -4,6 +4,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/providers/langs.dart';
+import 'package:appointments/providers/notifications_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/notification/approval_request.dart';
@@ -96,6 +97,8 @@ class NotificationCard extends StatelessWidget {
     }
 
     onCardTap() async {
+      final notificationsMgr =
+          Provider.of<NotificationsMgr>(context, listen: false);
       if (notificationCardProps.notificationDetails.data['category'] ==
           NotificationCategory.user) {
         final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
