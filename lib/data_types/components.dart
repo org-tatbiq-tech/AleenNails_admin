@@ -150,7 +150,7 @@ class Appointment {
   DateTime creationDate; // Appointment creation date (date and time)
   DateTime date; // Appointment date (date and time)
   String notes; // Appointment detailed notes
-  double discount;
+  int discount;
   DiscountType discountType;
   List<AppointmentService> services;
   PaymentStatus paymentStatus;
@@ -217,7 +217,7 @@ class Appointment {
       'paymentStatus': paymentStatus.toString(),
       'endTime': endTime,
       'totalCost': totalCost,
-      'discount': discount,
+      'discount': discount.round(),
       'discountType': discountType.toString(),
     };
   }
@@ -296,7 +296,7 @@ class Appointment {
       date: doc['date'].toDate(),
       services: loadServicesFromDoc(doc['services']),
       paymentStatus: loadPaymentStatus(doc['paymentStatus']),
-      discount: doc['discount'] ?? 0.0,
+      discount: doc['discount'].round(),
       discountType: loadDiscountType(doc['discountType']),
     );
   }
@@ -389,7 +389,7 @@ class Client {
   DateTime? birthday; // Birthday date
   DateTime creationDate; // Client creation date
   DateTime? acceptedDate; // Birthday date
-  int? discount; // general discount for client
+  int discount; // general discount for client
   bool isTrusted; // Trusted user
   String imageURL; // Image URL for quick download
   List<ClientAppointment> appointments;
@@ -429,7 +429,7 @@ class Client {
     this.birthday,
     required this.creationDate,
     this.acceptedDate,
-    this.discount,
+    this.discount = 0,
     this.isTrusted = false,
     this.imageURL = '',
     this.appointments = const [],

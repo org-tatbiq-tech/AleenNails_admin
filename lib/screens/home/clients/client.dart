@@ -63,7 +63,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       _emailController.text = widget.client!.email;
       _addressController.text = widget.client!.address;
       _noteController.text = widget.client!.generalNotes!;
-      clientDiscount = widget.client!.discount!.round();
+      clientDiscount = widget.client!.discount;
       trustedClient = widget.client!.isTrusted;
       blockedClient = widget.client!.isApprovedByAdmin;
       birthdayDate = widget.client!.birthday;

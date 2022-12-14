@@ -81,7 +81,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
             saveTap: () => {
               Navigator.pop(context, {
                 'discount': _discountController.text.isNotEmpty
-                    ? double.parse(_discountController.text)
+                    ? int.parse(_discountController.text)
                     : 0,
                 'type': xAlign == 1 ? DiscountType.percent : DiscountType.fixed,
               }),

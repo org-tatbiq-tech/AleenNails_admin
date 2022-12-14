@@ -39,7 +39,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   bool isCheckoutScreen = false;
   late AppointmentsMgr appointmentsMgr;
   late DiscountType discountType;
-  late double discount;
+  late int discount;
   late double priceAfterDiscount;
   @override
   void initState() {
