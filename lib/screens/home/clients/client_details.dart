@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
@@ -7,11 +6,8 @@ import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_appointments.dart';
 import 'package:appointments/widget/appointment/client_appointment_card.dart';
-import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
-
 import 'package:common_widgets/custom_avatar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
@@ -246,7 +242,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  '${client.discount!}%',
+                  '${client.discount}%',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -679,12 +675,11 @@ class _ClientDetailsState extends State<ClientDetails> {
                 customIconTap: () => {
                   Navigator.push(
                     context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      isIos: isIos(),
-                      child: ClientWidget(client: clientsMgr.selectedClient),
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ClientWidget(client: clientsMgr.selectedClient),
                     ),
-                  ),
+                  )
                 },
               ),
             ),

@@ -19,6 +19,7 @@ import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_week_view/flutter_week_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -329,10 +330,14 @@ class TimeLineState extends State<TimeLine> {
           customAppBarProps: CustomAppBarProps(
             withBorder: true,
             isTransparent: false,
-            centerTitle: WrapAlignment.start,
-            titleText: Languages.of(context)!.appName.toTitleCase(),
+            centerTitle: WrapAlignment.center,
+            titleWidget: Lottie.asset(
+              'assets/images/hello.json',
+              repeat: true,
+              width: rSize(280),
+              animate: true,
+            ),
             customIcon: getCustomIcon(),
-            barHeight: 70,
             customIconTap: () => setState(() {
               _isListView = !_isListView;
             }),

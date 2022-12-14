@@ -102,10 +102,8 @@ class _ClientWidgetState extends State<ClientWidget> {
     navigateToDiscount() async {
       var res = await Navigator.push(
         context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          isIos: isIos(),
-          child: DiscountSelection(
+        MaterialPageRoute(
+          builder: (context) => DiscountSelection(
             discountValue: clientDiscount,
             discountType: DiscountType.percent,
             clientDiscount: true,
