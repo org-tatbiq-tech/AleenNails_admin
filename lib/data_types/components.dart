@@ -296,7 +296,7 @@ class Appointment {
       date: doc['date'].toDate(),
       services: loadServicesFromDoc(doc['services']),
       paymentStatus: loadPaymentStatus(doc['paymentStatus']),
-      discount: doc['discount'].round(),
+      discount: doc['discount'] ?? 0,
       discountType: loadDiscountType(doc['discountType']),
     );
   }

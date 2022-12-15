@@ -56,10 +56,20 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     await waitWhile(() => appointmentsMgr.isSelectedAppointmentLoaded == false);
     discountType = appointmentsMgr.selectedAppointment.discountType;
     discount = appointmentsMgr.selectedAppointment.discount;
-    priceAfterDiscount = appointmentsMgr.selectedAppointment.servicesCost;
+    priceAfterDiscount = getPriceAfterDiscount();
     setState(() {
       isLoading = false;
     });
+  }
+
+  getPriceAfterDiscount() {
+    if (discountType == DiscountType.percent) {
+      return appointmentsMgr.selectedAppointment.servicesCost *
+          (100 - discount) /
+          100;
+    } else {
+      return appointmentsMgr.selectedAppointment.servicesCost - discount;
+    }
   }
 
   @override
@@ -388,13 +398,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         discountType = res['type'];
         discount = res['discount'];
         if (discountType == DiscountType.percent) {
-          priceAfterDiscount =
-              appointmentsMgr.selectedAppointment.servicesCost *
-                  (100 - discount) /
-                  100;
+          priceAfterDiscount = getPriceAfterDiscount();
         } else {
-          priceAfterDiscount =
-              appointmentsMgr.selectedAppointment.servicesCost - discount;
+          priceAfterDiscount = getPriceAfterDiscount();
         }
       });
     }

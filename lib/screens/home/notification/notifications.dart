@@ -23,7 +23,6 @@ class _NotificationsState extends State<Notifications> {
   @override
   void initState() {
     authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
-
     final notificationsMgr =
         Provider.of<NotificationsMgr>(context, listen: false);
     notificationsMgr.getNotifications(authMgr.getLoggedInAdminEmail());

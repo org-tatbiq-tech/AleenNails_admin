@@ -47,7 +47,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
   DateTime? endTime;
   Client? selectedClient;
   List<AppointmentService> selectedServices = [];
-  Appointment? appointment;
 
   @override
   void initState() {
@@ -56,22 +55,20 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       selectedClient = widget.client;
     }
     if (widget.appointment != null) {
-      appointment = Appointment.fromAppointment(widget.appointment!);
-
       selectedClient = Client(
-        id: appointment!.clientDocID,
-        fullName: appointment!.clientName,
-        phone: appointment!.clientPhone,
+        id: widget.appointment!.clientDocID,
+        fullName: widget.appointment!.clientName,
+        phone: widget.appointment!.clientPhone,
         address: '',
-        email: appointment!.clientEmail,
-        imageURL: appointment!.clientImageURL,
+        email: widget.appointment!.clientEmail,
+        imageURL: widget.appointment!.clientImageURL,
         creationDate: DateTime.now(),
       );
-      selectedServices = appointment!.services;
-      startDateTime = appointment!.date;
-      startDateTimeTemp = appointment!.date;
-      endTime = appointment!.endTime;
-      _notesController.text = appointment!.notes;
+      selectedServices = widget.appointment!.services;
+      startDateTime = widget.appointment!.date;
+      startDateTimeTemp = widget.appointment!.date;
+      endTime = widget.appointment!.endTime;
+      _notesController.text = widget.appointment!.notes;
     }
     if (widget.bookAgainAppointment != null) {
       selectedClient = Client(
@@ -79,7 +76,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         fullName: widget.bookAgainAppointment!.clientName,
         phone: widget.bookAgainAppointment!.clientPhone,
         address: '',
-        email: appointment!.clientEmail,
+        email: widget.bookAgainAppointment!.clientEmail,
         imageURL: widget.bookAgainAppointment!.clientImageURL,
         creationDate: DateTime.now(),
       );
@@ -211,7 +208,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       //   appointmentServices.add(appointmentService);
       // }
 
-      String appointmentID = appointment == null ? '' : appointment!.id;
+      String appointmentID =
+          widget.appointment == null ? '' : widget.appointment!.id;
 
       Appointment newAppointment = Appointment(
         id: appointmentID,
@@ -232,7 +230,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         notes: _notesController.text,
       );
 
-      if (appointment == null) {
+      if (widget.appointment == null) {
         await appointmentsMgr.submitNewAppointment(newAppointment);
         Navigator.pop(context);
         showSuccessFlash(
@@ -543,7 +541,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           : ClientCard(
               clientCardProps: ClientCardProps(
                 withNavigation: false,
-                withDelete: widget.appointment != null ? false : true,
+                withDelete: widget.appointment != null ||
+                        widget.bookAgainAppointment != null
+                    ? false
+                    : true,
                 enabled: false,
                 onCloseTap: () => {
                   setState(() {
@@ -606,7 +607,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           backgroundColor: Colors.transparent,
           appBar: CustomAppBar(
             customAppBarProps: CustomAppBarProps(
-              titleText: appointment != null
+              titleText: widget.appointment != null
                   ? Languages.of(context)!.editAppointmentLabel.toTitleCase()
                   : Languages.of(context)!.newAppointmentLabel.toTitleCase(),
               withBack: true,
