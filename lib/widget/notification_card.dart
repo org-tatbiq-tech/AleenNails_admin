@@ -13,7 +13,7 @@ import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/custom_modal.dart';
-import 'package:common_widgets/page_transition.dart';
+
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -88,10 +88,8 @@ class NotificationCard extends StatelessWidget {
     navigateTo(Widget screen) {
       Navigator.push(
         context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          isIos: isIos(),
-          child: screen,
+        MaterialPageRoute(
+          builder: (context) => screen,
         ),
       );
     }

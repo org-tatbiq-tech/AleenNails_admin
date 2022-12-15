@@ -8,7 +8,7 @@ import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_text_button.dart';
-import 'package:common_widgets/page_transition.dart';
+
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -261,10 +261,9 @@ class _LoginScreenState extends State<LoginScreen>
                               onTap: () => {
                                 Navigator.push(
                                   context,
-                                  PageTransition(
-                                    type: PageTransitionType.fade,
-                                    isIos: isIos(),
-                                    child: const ForgetPasswordScreen(),
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgetPasswordScreen(),
                                   ),
                                 ),
                               },

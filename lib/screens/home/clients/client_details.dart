@@ -13,7 +13,7 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/fade_animation.dart';
-import 'package:common_widgets/page_transition.dart';
+
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
@@ -19,7 +21,7 @@ import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/fade_animation.dart';
-import 'package:common_widgets/page_transition.dart';
+
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
@@ -41,14 +43,23 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
   late DiscountType discountType;
   late int discount;
   late double priceAfterDiscount;
+  bool isLoading = true;
+
   @override
   void initState() {
-    super.initState();
     appointmentsMgr = Provider.of<AppointmentsMgr>(context, listen: false);
+    prepareData();
+    super.initState();
+  }
+
+  prepareData() async {
+    await waitWhile(() => appointmentsMgr.isSelectedAppointmentLoaded == false);
     discountType = appointmentsMgr.selectedAppointment.discountType;
     discount = appointmentsMgr.selectedAppointment.discount;
     priceAfterDiscount = appointmentsMgr.selectedAppointment.servicesCost;
-    super.initState();
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -362,10 +373,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
     navigateToDiscount(Appointment appointment) async {
       var res = await Navigator.push(
         context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          isIos: isIos(),
-          child: DiscountSelection(
+        MaterialPageRoute(
+          builder: (context) => DiscountSelection(
             discountValue: discount.round(),
             discountType: discountType,
           ),
@@ -959,7 +968,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
           ),
           body: AnimatedSwitcher(
             duration: const Duration(milliseconds: 500),
-            child: !appointmentsMgr.isSelectedAppointmentLoaded
+            child: isLoading
                 ? Center(
                     child: CustomLoadingIndicator(
                       customLoadingIndicatorProps:

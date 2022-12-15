@@ -11,7 +11,7 @@ import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
-import 'package:common_widgets/page_transition.dart';
+
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -333,13 +333,13 @@ class BusinessInfoState extends State<BusinessInfo> {
     navigateToBusinessLocation() async {
       final result = await Navigator.push(
         context,
-        PageTransition(
-          type: PageTransitionType.fade,
-          child: BusinessLocation(
+        MaterialPageRoute(
+          builder: (context) => BusinessLocation(
             storePosition: businessLocation,
           ),
         ),
       );
+
       if (result != null) {
         setState(() {
           businessLocation = result;
