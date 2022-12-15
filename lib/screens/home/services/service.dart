@@ -481,19 +481,20 @@ class _ServiceWidgetState extends State<ServiceWidget> {
     }
 
     deleteService() async {
-      // showLoaderDialog(context);
+      showLoaderDialog(context);
       final servicesMgr = Provider.of<ServicesMgr>(context, listen: false);
       await servicesMgr.deleteService(widget.service!);
       Navigator.pop(context);
-      // showSuccessFlash(
-      //   context: context,
-      //   successTitle:
-      //       Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-      //   successBody: Languages.of(context)!
-      //       .serviceDeletedSuccessfullyBody
-      //       .toCapitalized(),
-      //   successColor: successPrimaryColor,
-      // );
+      showSuccessFlash(
+        context: context,
+        successTitle:
+            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+        successBody: Languages.of(context)!
+            .serviceDeletedSuccessfullyBody
+            .toCapitalized(),
+        successColor: successPrimaryColor,
+      );
+      Navigator.pop(context);
     }
 
     showDeleteServiceModal() {
