@@ -62,4 +62,13 @@ class NotificationsMgr extends ChangeNotifier {
       },
     );
   }
+
+  Future<void> markNotificationOpened(notificationId, adminEmail) async {
+    await _fs
+        .collection(adminsCollection)
+        .doc(adminEmail)
+        .collection(adminNotificationsCollection)
+        .doc(notificationId)
+        .update({'isOpened': true});
+  }
 }

@@ -2,6 +2,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/providers/langs.dart';
 import 'package:appointments/providers/notifications_mgr.dart';
@@ -97,6 +98,10 @@ class NotificationCard extends StatelessWidget {
     onCardTap() async {
       final notificationsMgr =
           Provider.of<NotificationsMgr>(context, listen: false);
+      final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+      await notificationsMgr.markNotificationOpened(
+          notificationCardProps.notificationDetails.id,
+          authMgr.getLoggedInAdminEmail());
       if (notificationCardProps.notificationDetails.data['category'] ==
           NotificationCategory.user) {
         final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
