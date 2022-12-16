@@ -18,6 +18,9 @@ import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../providers/auth_mgr.dart';
+import '../../../providers/notifications_mgr.dart';
+
 class ApprovalRequest extends StatefulWidget {
   const ApprovalRequest({Key? key}) : super(key: key);
 
@@ -42,16 +45,28 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
     approveClient(Client client) async {
       showLoaderDialog(context);
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      client.isApprovedByAdmin = true;
-      await clientsMgr.updateClient(client);
+      final notificationsMgr =
+          Provider.of<NotificationsMgr>(context, listen: false);
+      final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+      await clientsMgr.updateClientApproval(client.id, true);
       clientUpdatedSuccessfullyMessage();
+      // delete notification
+      await notificationsMgr.deleteNotification(
+          notificationsMgr.selectedNotificationId,
+          authMgr.getLoggedInAdminEmail());
     }
 
     rejectClient(Client client) async {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      client.isApprovedByAdmin = false;
-      await clientsMgr.updateClient(client);
+      final notificationsMgr =
+          Provider.of<NotificationsMgr>(context, listen: false);
+      final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+      await clientsMgr.updateClientApproval(client.id, false);
       clientUpdatedSuccessfullyMessage();
+      // delete notification
+      await notificationsMgr.deleteNotification(
+          notificationsMgr.selectedNotificationId,
+          authMgr.getLoggedInAdminEmail());
     }
 
     showRejectClientModal(Client client) async {

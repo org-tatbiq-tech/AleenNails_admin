@@ -16,10 +16,13 @@ import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/custom_modal.dart';
 
 import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../utils/layout.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationCardProps notificationCardProps;
@@ -30,8 +33,44 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    approveClient() async {}
-    rejectClient() async {}
+    clientUpdatedSuccessfullyMessage() {
+      showSuccessFlash(
+        successColor: successPrimaryColor,
+        context: context,
+        successTitle: Languages.of(context)!.flashMessageSuccessTitle,
+        successBody: Languages.of(context)!.clientUpdatedSuccessfullyBody,
+      );
+    }
+
+    approveClient() async {
+      final notificationsMgr =
+          Provider.of<NotificationsMgr>(context, listen: false);
+      final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      // approve client
+      await clientsMgr.updateClientApproval(
+          notificationCardProps.notificationDetails.data['client_id'], true);
+      clientUpdatedSuccessfullyMessage();
+      // delete notification
+      await notificationsMgr.deleteNotification(
+          notificationCardProps.notificationDetails.id,
+          authMgr.getLoggedInAdminEmail());
+    }
+
+    rejectClient() async {
+      final notificationsMgr =
+          Provider.of<NotificationsMgr>(context, listen: false);
+      final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      // deny client
+      await clientsMgr.updateClientApproval(
+          notificationCardProps.notificationDetails.data['client_id'], false);
+      clientUpdatedSuccessfullyMessage();
+      // delete notification
+      await notificationsMgr.deleteNotification(
+          notificationCardProps.notificationDetails.id,
+          authMgr.getLoggedInAdminEmail());
+    }
 
     getCurrentLocale(BuildContext context) {
       final localeMgr = Provider.of<LocaleData>(context, listen: false);
@@ -99,19 +138,19 @@ class NotificationCard extends StatelessWidget {
       final notificationsMgr =
           Provider.of<NotificationsMgr>(context, listen: false);
       final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
+      final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
       await notificationsMgr.markNotificationOpened(
           notificationCardProps.notificationDetails.id,
           authMgr.getLoggedInAdminEmail());
       if (notificationCardProps.notificationDetails.data['category'] ==
           NotificationCategory.user) {
-        final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
         await clientsMgr.setSelectedClient(
             clientID:
                 notificationCardProps.notificationDetails.data['client_id']);
         navigateTo(const ApprovalRequest());
       } else {
-        final appointmentsMgr =
-            Provider.of<AppointmentsMgr>(context, listen: false);
         await appointmentsMgr.setSelectedAppointment(
             appointmentID: notificationCardProps
                 .notificationDetails.data['appointment_id']);

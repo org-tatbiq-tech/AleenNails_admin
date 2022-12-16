@@ -7,6 +7,7 @@ import 'package:appointments/screens/home/appointments/appointment_details.dart'
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
+import 'package:appointments/screens/home/notification/approval_request.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
 import 'package:appointments/screens/home/timeline.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -18,6 +19,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/notifications_mgr.dart';
 
 // Create a [AndroidNotificationChannel] for heads up notifications
 late AndroidNotificationChannel channel;
@@ -46,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late AuthenticationMgr authMgr;
   late AppointmentsMgr appointmentsMgr;
   late ClientsMgr clientsMgr;
+  late NotificationsMgr notificationsMgr;
 
   _requestIOSNotificationPermissions() async {
     NotificationSettings settings = await _messaging.requestPermission(
@@ -90,6 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<dynamic> onSelectNotification(
       NotificationResponse notificationResponse) async {
+    // TODO: mark notification opened
+    // await notificationsMgr.markNotificationOpened(
+    //     message.data['notification_id'], authMgr.getLoggedInAdminEmail());
+
     // Assuming application data has already been updated with selected appointment
     // handle notification selection
     if (notificationResponse.payload ==
@@ -99,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (notificationResponse.payload == NotificationCategory.user.toString()) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ClientDetails()));
+          MaterialPageRoute(builder: (context) => const ApprovalRequest()));
     }
   }
 
@@ -244,6 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
     authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
     appointmentsMgr = Provider.of<AppointmentsMgr>(context, listen: false);
     clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
+    notificationsMgr = Provider.of<NotificationsMgr>(context, listen: false);
     _init();
     _requestIOSNotificationPermissions();
     _getToken();

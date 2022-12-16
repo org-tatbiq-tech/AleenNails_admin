@@ -133,6 +133,13 @@ class ClientsMgr extends ChangeNotifier {
     clientsColl.doc(updatedClient.id).update(data);
   }
 
+  Future<void> updateClientApproval(String clientId, bool approve) async {
+    await _fs
+        .collection(clientsCollection)
+        .doc(clientId)
+        .update({'isApprovedByAdmin': approve});
+  }
+
   /// Client selection
   late Client selectedClient;
   bool isSelectedClientLoaded = false;

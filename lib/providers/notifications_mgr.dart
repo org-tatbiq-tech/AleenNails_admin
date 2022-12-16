@@ -70,5 +70,26 @@ class NotificationsMgr extends ChangeNotifier {
         .collection(adminNotificationsCollection)
         .doc(notificationId)
         .update({'isOpened': true});
+    setSelectedNotification(notificationId);
+  }
+
+  Future<void> deleteNotification(notificationId, adminEmail) async {
+    if (notificationId != null) {
+      await _fs
+          .collection(adminsCollection)
+          .doc(adminEmail)
+          .collection(adminNotificationsCollection)
+          .doc(notificationId)
+          .delete();
+      if (notificationId == selectedNotificationId) {
+        setSelectedNotification(null);
+      }
+    }
+  }
+
+  /// notification selection
+  String? selectedNotificationId;
+  void setSelectedNotification(String? notificationId) {
+    selectedNotificationId = notificationId;
   }
 }
