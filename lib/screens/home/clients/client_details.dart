@@ -169,7 +169,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   ),
                 ),
                 Text(
-                  client.isApprovedByAdmin
+                  !client.isApprovedByAdmin
                       ? Languages.of(context)!.yesLabel.toTitleCase()
                       : Languages.of(context)!.noLabel.toTitleCase(),
                   maxLines: 1,

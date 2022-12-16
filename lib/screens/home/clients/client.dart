@@ -65,7 +65,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       _noteController.text = widget.client!.generalNotes!;
       clientDiscount = widget.client!.discount;
       trustedClient = widget.client!.isTrusted;
-      blockedClient = widget.client!.isApprovedByAdmin;
+      blockedClient = !widget.client!.isApprovedByAdmin;
       birthdayDate = widget.client!.birthday;
       imageURL = widget.client!.imageURL;
     }
@@ -657,7 +657,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           generalNotes: _noteController.text,
           discount: clientDiscount,
           isTrusted: trustedClient,
-          isApprovedByAdmin: blockedClient,
+          isApprovedByAdmin: !blockedClient,
           acceptedDate: DateTime.now(),
           imageURL: imageURL,
         );
