@@ -2,7 +2,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:common_widgets/custom_avatar.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -53,27 +53,48 @@ class ClientCard extends StatelessWidget {
         ),
         trailing: Row(
           children: [
-            clientCardProps.withNavigation
-                ? IconTheme(
-                    data: Theme.of(context).primaryIconTheme,
-                    child: Icon(
-                      Icons.chevron_right,
-                      size: rSize(25),
-                    ),
-                  )
-                : const SizedBox(),
-            clientCardProps.withDelete
-                ? EaseInAnimation(
-                    onTap: clientCardProps.onCloseTap ?? () => {},
-                    child: IconTheme(
-                      data: Theme.of(context).primaryIconTheme,
-                      child: Icon(
-                        Icons.close,
-                        size: rSize(25),
-                      ),
-                    ),
-                  )
-                : const SizedBox(),
+            Visibility(
+              visible: clientCardProps.contactDetails.isApprovedByAdmin,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: rSize(10),
+                ),
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    icon: null,
+                    path: 'assets/icons/lock.png',
+                    // withPadding: true,
+                    backgroundColor: Colors.transparent,
+                    iconColor: Theme.of(context).colorScheme.error,
+                    containerSize: rSize(20),
+                    // contentPadding: rSize(8),
+                  ),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: clientCardProps.withNavigation,
+              child: IconTheme(
+                data: Theme.of(context).primaryIconTheme,
+                child: Icon(
+                  Icons.chevron_right,
+                  size: rSize(25),
+                ),
+              ),
+            ),
+            Visibility(
+              visible: clientCardProps.withDelete,
+              child: EaseInAnimation(
+                onTap: clientCardProps.onCloseTap ?? () => {},
+                child: IconTheme(
+                  data: Theme.of(context).primaryIconTheme,
+                  child: Icon(
+                    Icons.close,
+                    size: rSize(25),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
         leading: CustomAvatar(

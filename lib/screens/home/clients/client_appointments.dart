@@ -100,9 +100,8 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                           return ClientAppointmentCard(
                             clientAppointmentCardProps:
                                 ClientAppointmentCardProps(
-                              clientAppointmentDetails: clientsMgr
-                                  .selectedClient.appointments
-                                  .toList()[index],
+                              clientAppointmentDetails:
+                                  clientsMgr.selectedClient.appointments[index],
                               withNavigation: true,
                               enabled: true,
                             ),

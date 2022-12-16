@@ -88,8 +88,6 @@ class _ClientDetailsState extends State<ClientDetails> {
               shrinkWrap: true,
               padding: EdgeInsets.only(
                 top: rSize(20),
-                left: rSize(20),
-                right: rSize(20),
               ),
               itemCount: min(clientsMgr.selectedClient.appointments.length, 1),
               itemBuilder: (context, index) {
@@ -606,7 +604,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               padding: EdgeInsets.symmetric(
-                horizontal: rSize(40),
+                horizontal: rSize(30),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,

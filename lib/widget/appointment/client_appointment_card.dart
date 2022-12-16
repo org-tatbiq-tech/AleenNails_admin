@@ -28,6 +28,26 @@ class ClientAppointmentCard extends StatelessWidget {
       return appointmentName;
     }
 
+    appointmentServices(List<String> services) {
+      List<Widget> widgetList = services.map((String service) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: rSize(5),
+          ),
+          child: Expanded(
+            child: Text(
+              service,
+              style: Theme.of(context).textTheme.subtitle2,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        );
+      }).toList();
+
+      return widgetList;
+    }
+
     navigateToAppointmentDetails(String appointmentId) {
       final appointmentsMgr =
           Provider.of<AppointmentsMgr>(context, listen: false);
@@ -48,31 +68,35 @@ class ClientAppointmentCard extends StatelessWidget {
                   clientAppointmentCardProps
                       .clientAppointmentDetails.appointmentIdRef,
                 ),
-        title: Text(
-          getAppointmentName(
+        title: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: appointmentServices(
               clientAppointmentCardProps.clientAppointmentDetails.services),
-          style: Theme.of(context).textTheme.subtitle2,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
         ),
-        subTitle: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(5)),
-          child: Text(
-            '${getDateTimeFormat(
-              dateTime:
-                  clientAppointmentCardProps.clientAppointmentDetails.startTime,
-              format: 'HH:mm',
-              locale: getCurrentLocale(context),
-            )} - ${getDateTimeFormat(
-              dateTime:
-                  clientAppointmentCardProps.clientAppointmentDetails.endTime,
-              format: 'HH:mm',
-              locale: getCurrentLocale(context),
-            )}',
-            style: Theme.of(context).textTheme.subtitle2,
-          ),
-        ),
+        // title: Text(
+        //   getAppointmentName(
+        //       clientAppointmentCardProps.clientAppointmentDetails.services),
+        //   style: Theme.of(context).textTheme.subtitle2,
+        //   maxLines: 2,
+        //   overflow: TextOverflow.ellipsis,
+        // ),
+        // subTitle: Text(
+        //   '${getDateTimeFormat(
+        //     dateTime:
+        //         clientAppointmentCardProps.clientAppointmentDetails.startTime,
+        //     format: 'HH:mm',
+        //     locale: getCurrentLocale(context),
+        //   )} - ${getDateTimeFormat(
+        //     dateTime:
+        //         clientAppointmentCardProps.clientAppointmentDetails.endTime,
+        //     format: 'HH:mm',
+        //     locale: getCurrentLocale(context),
+        //   )}',
+        //   style: Theme.of(context).textTheme.subtitle1,
+        // ),
+        subTitle: null,
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +130,19 @@ class ClientAppointmentCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             fontSize: rSize(14),
                           ),
-                    )
+                    ),
+                    Text(
+                      '${getDateTimeFormat(
+                        dateTime: clientAppointmentCardProps
+                            .clientAppointmentDetails.startTime,
+                        locale: getCurrentLocale(context),
+                      )} - ${getDateTimeFormat(
+                        dateTime: clientAppointmentCardProps
+                            .clientAppointmentDetails.endTime,
+                        locale: getCurrentLocale(context),
+                      )}',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                   ],
                 ),
                 SizedBox(
