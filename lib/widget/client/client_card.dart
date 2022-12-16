@@ -54,7 +54,7 @@ class ClientCard extends StatelessWidget {
         trailing: Row(
           children: [
             Visibility(
-              visible: clientCardProps.contactDetails.isApprovedByAdmin,
+              visible: !clientCardProps.contactDetails.isApprovedByAdmin,
               child: Padding(
                 padding: EdgeInsets.only(
                   left: rSize(10),
