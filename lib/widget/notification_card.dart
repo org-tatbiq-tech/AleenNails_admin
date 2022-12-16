@@ -158,111 +158,87 @@ class NotificationCard extends StatelessWidget {
       }
     }
 
-    return CustomListTile(
-      customListTileProps: CustomListTileProps(
-        marginBottom: 15,
-        enabled: notificationCardProps.enabled,
-        onTap: () => onCardTap(),
-        title: Text(
-          notificationCardProps.notificationDetails.notification['title'],
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.bodyText2,
-        ),
-        subTitle: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: rSize(5)),
-              child: Text(
-                getDateTimeFormat(
-                  isDayOfWeek: true,
-                  dateTime:
-                      notificationCardProps.notificationDetails.creationDate,
-                  format: 'dd MMM yyyy • HH:mm',
-                  locale: getCurrentLocale(context),
-                ),
-                style: Theme.of(context).textTheme.subtitle1,
-              ),
-            ),
-          ],
-        ),
-        trailing: notificationCardProps.withNavigation
-            ? IconTheme(
-                data: Theme.of(context).primaryIconTheme,
-                child: Icon(
-                  Icons.chevron_right,
-                  size: rSize(25),
-                ),
-              )
-            : const SizedBox(),
-        leading: Row(
-          children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              child: !notificationCardProps.notificationDetails.isOpened
-                  ? Row(
-                      children: [
-                        CustomIcon(
-                          customIconProps: CustomIconProps(
-                            backgroundColor: Colors.transparent,
-                            containerSize: rSize(15),
-                            icon: Icon(
-                              Icons.circle,
-                              size: rSize(10),
-                              color: secondaryDark,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: rSize(10),
-                        ),
-                      ],
-                    )
-                  : const SizedBox(),
-            ),
-            CustomAvatar(
-              customAvatarProps: CustomAvatarProps(
-                enable: false,
-                circleShape: true,
-                defaultImage: const AssetImage(
-                  'assets/images/avatar_female.png',
+    return Opacity(
+      opacity: notificationCardProps.notificationDetails.isOpened ? 0.8 : 1,
+      child: CustomListTile(
+        customListTileProps: CustomListTileProps(
+          marginBottom: 15,
+          enabled: true,
+          onTap: () => onCardTap(),
+          title: Text(
+            notificationCardProps.notificationDetails.notification['title'],
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          subTitle: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: rSize(5)),
+                child: Text(
+                  getDateTimeFormat(
+                    isDayOfWeek: true,
+                    dateTime:
+                        notificationCardProps.notificationDetails.creationDate,
+                    format: 'dd MMM yyyy • HH:mm',
+                    locale: getCurrentLocale(context),
+                  ),
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-            )
-          ],
+            ],
+          ),
+          leading: CustomAvatar(
+            customAvatarProps: CustomAvatarProps(
+              enable: false,
+              circleShape: true,
+              defaultImage: const AssetImage(
+                'assets/images/avatar_female.png',
+              ),
+            ),
+          ),
+          secondPart: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: !notificationCardProps.notificationDetails.isOpened
+                ? Container(
+                    color: secondaryDark,
+                    width: rSize(10),
+                  )
+                : null,
+          ),
+          secondMain: notificationCardProps
+                      .notificationDetails.data['category'] ==
+                  NotificationCategory.user
+              ? Padding(
+                  padding: EdgeInsets.only(top: rSize(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CustomButton(
+                        customButtonProps: CustomButtonProps(
+                          onTap: () => approveClient(),
+                          text: Languages.of(context)!.approveLabel,
+                          isPrimary: true,
+                          verticalPadding: rSize(8),
+                        ),
+                      ),
+                      CustomButton(
+                        customButtonProps: CustomButtonProps(
+                          onTap: () => showRejectClientModal(),
+                          text: Languages.of(context)!.rejectLabel,
+                          backgroundColor: Theme.of(context).colorScheme.error,
+                          textColor: Theme.of(context).colorScheme.onError,
+                          verticalPadding: rSize(8),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : null,
         ),
-        secondMain: notificationCardProps
-                    .notificationDetails.data['category'] ==
-                NotificationCategory.user
-            ? Padding(
-                padding: EdgeInsets.only(top: rSize(10)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CustomButton(
-                      customButtonProps: CustomButtonProps(
-                        onTap: () => approveClient(),
-                        text: Languages.of(context)!.approveLabel,
-                        isPrimary: true,
-                        verticalPadding: rSize(8),
-                      ),
-                    ),
-                    CustomButton(
-                      customButtonProps: CustomButtonProps(
-                        onTap: () => showRejectClientModal(),
-                        text: Languages.of(context)!.rejectLabel,
-                        backgroundColor: Theme.of(context).colorScheme.error,
-                        textColor: Theme.of(context).colorScheme.onError,
-                        verticalPadding: rSize(8),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : null,
       ),
     );
   }
@@ -270,12 +246,8 @@ class NotificationCard extends StatelessWidget {
 
 class NotificationCardProps {
   final NotificationData notificationDetails;
-  final bool withNavigation;
-  final bool enabled;
 
   NotificationCardProps({
     required this.notificationDetails,
-    this.withNavigation = true,
-    this.enabled = true,
   });
 }

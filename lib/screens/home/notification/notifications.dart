@@ -62,8 +62,8 @@ class _NotificationsState extends State<Notifications> {
                                     .isNotEmpty
                                 ? ListView.builder(
                                     padding: EdgeInsets.symmetric(
-                                      vertical: rSize(40),
-                                      horizontal: rSize(30),
+                                      vertical: rSize(20),
+                                      horizontal: rSize(20),
                                     ),
                                     itemCount: notificationsMgr
                                         .getNotifications(
@@ -77,7 +77,6 @@ class _NotificationsState extends State<Notifications> {
                                             .id),
                                         notificationCardProps:
                                             NotificationCardProps(
-                                          withNavigation: true,
                                           notificationDetails: notificationsMgr
                                                   .getNotifications(authMgr
                                                       .getLoggedInAdminEmail())[
