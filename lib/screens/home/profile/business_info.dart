@@ -2,7 +2,7 @@ import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/profile/business_location.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_container.dart';

@@ -1,4 +1,3 @@
-import 'package:appointments/utils/layout.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/storage_manager.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,14 @@ Color primaryWithAlpha2 = const Color(0xFFe2c5c9);
 Color primaryWithAlpha3 = const Color(0xFFf0e2e4);
 Color primaryFont = const Color(0xFF492c30);
 Color primaryFontWithAlpha1 = const Color(0xFF6d4248);
+
+Color errorPrimaryColor = const Color(0xFFE2364D);
+Color successPrimaryColor = const Color(0xFF61D161);
+// Color warningPrimaryColor = const Color(0xFFEDC25E);
+Color warningPrimaryColor = const Color(0xFFE59400);
+
+Color informationPrimaryColor = const Color(0xFF63c0df);
+Color disabledPrimaryColor = const Color(0xFF6d4248);
 
 class ThemeNotifier with ChangeNotifier {
   /// Dark theme data definition

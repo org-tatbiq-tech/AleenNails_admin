@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:common_widgets/custom_container.dart';
 
 import 'package:common_widgets/placeholders.dart';

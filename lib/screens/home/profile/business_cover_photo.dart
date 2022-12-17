@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';

@@ -5,7 +5,7 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/general.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/client/client_card.dart';
 import 'package:appointments/widget/custom/custom_slide_able.dart';

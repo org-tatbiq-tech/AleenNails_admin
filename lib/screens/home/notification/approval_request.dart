@@ -1,7 +1,7 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_button_widget.dart';

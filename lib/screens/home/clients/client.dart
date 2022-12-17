@@ -4,7 +4,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/utils/general.dart';
-import 'package:appointments/utils/layout.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_avatar.dart';

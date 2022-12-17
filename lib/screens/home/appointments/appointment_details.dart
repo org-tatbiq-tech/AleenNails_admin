@@ -1,15 +1,13 @@
-import 'dart:async';
-
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/utils/general.dart';
-import 'package:appointments/utils/layout.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
 import 'package:common_widgets/custom_app_bar.dart';

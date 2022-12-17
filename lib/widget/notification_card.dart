@@ -14,15 +14,12 @@ import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_list_tile.dart';
 import 'package:common_widgets/custom_modal.dart';
-
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../utils/layout.dart';
 
 class NotificationCard extends StatelessWidget {
   final NotificationCardProps notificationCardProps;
