@@ -57,6 +57,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
     }
 
     rejectClient(Client client) async {
+      showLoaderDialog(context);
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
       final notificationsMgr =
           Provider.of<NotificationsMgr>(context, listen: false);
@@ -69,7 +70,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
           authMgr.getLoggedInAdminEmail());
     }
 
-    showRejectClientModal(Client client) async {
+    showRejectClientModal(Client client) {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -77,7 +78,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
           primaryButtonText: Languages.of(context)!.rejectLabel.toCapitalized(),
           secondaryButtonText: Languages.of(context)!.backLabel.toCapitalized(),
           deleteCancelModal: true,
-          primaryAction: () async => {
+          primaryAction: () => {
             rejectClient(client),
           },
           footerButton: ModalFooter.both,

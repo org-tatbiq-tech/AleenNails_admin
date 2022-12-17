@@ -13,6 +13,7 @@ import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_list_tile.dart';
+import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
@@ -37,9 +38,11 @@ class NotificationCard extends StatelessWidget {
         successTitle: Languages.of(context)!.flashMessageSuccessTitle,
         successBody: Languages.of(context)!.clientUpdatedSuccessfullyBody,
       );
+      Navigator.pop(context);
     }
 
     approveClient() async {
+      showLoaderDialog(context);
       final notificationsMgr =
           Provider.of<NotificationsMgr>(context, listen: false);
       final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
@@ -55,6 +58,7 @@ class NotificationCard extends StatelessWidget {
     }
 
     rejectClient() async {
+      showLoaderDialog(context);
       final notificationsMgr =
           Provider.of<NotificationsMgr>(context, listen: false);
       final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
@@ -74,7 +78,7 @@ class NotificationCard extends StatelessWidget {
       return localeMgr.locale.languageCode;
     }
 
-    showRejectClientModal() async {
+    showRejectClientModal() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
@@ -82,7 +86,7 @@ class NotificationCard extends StatelessWidget {
           primaryButtonText: Languages.of(context)!.rejectLabel.toCapitalized(),
           secondaryButtonText: Languages.of(context)!.backLabel.toCapitalized(),
           deleteCancelModal: true,
-          primaryAction: () async => {
+          primaryAction: () => {
             rejectClient(),
           },
           footerButton: ModalFooter.both,
