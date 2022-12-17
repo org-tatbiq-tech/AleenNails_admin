@@ -47,74 +47,62 @@ class ClientAppointmentsState extends State<ClientAppointments> {
               },
             ),
           ),
-          body: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              clientsMgr.selectedClient.appointments.isEmpty
-                  ? Padding(
-                      padding: EdgeInsets.only(
-                        top: rSize(250),
-                      ),
-                      child: EmptyListImage(
-                        emptyListImageProps: EmptyListImageProps(
-                          title: Languages.of(context)!
-                              .emptyAppointmentListLabel
-                              .toCapitalized(),
-                          iconPath: 'assets/icons/menu.png',
-                          bottomWidget: CustomTextButton(
-                            customTextButtonProps: CustomTextButtonProps(
-                              onTap: () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AppointmentScreen(
-                                        client: clientsMgr.selectedClient),
-                                  ),
-                                ),
-                              },
-                              text: Languages.of(context)!
-                                  .addNewAppointmentLabel
-                                  .toTitleCase(),
-                              textColor: Theme.of(context).colorScheme.primary,
-                              withIcon: true,
-                              icon: Icon(
-                                FontAwesomeIcons.plus,
-                                size: rSize(16),
-                                color: Theme.of(context).colorScheme.primary,
+          body: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: clientsMgr.selectedClient.appointments.isEmpty
+                ? EmptyListImage(
+                    emptyListImageProps: EmptyListImageProps(
+                      title: Languages.of(context)!
+                          .emptyAppointmentListLabel
+                          .toCapitalized(),
+                      iconPath: 'assets/icons/menu.png',
+                      bottomWidget: CustomTextButton(
+                        customTextButtonProps: CustomTextButtonProps(
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AppointmentScreen(
+                                    client: clientsMgr.selectedClient),
                               ),
                             ),
+                          },
+                          text: Languages.of(context)!
+                              .addNewAppointmentLabel
+                              .toTitleCase(),
+                          textColor: Theme.of(context).colorScheme.primary,
+                          withIcon: true,
+                          icon: Icon(
+                            FontAwesomeIcons.plus,
+                            size: rSize(16),
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ),
-                    )
-                  : Expanded(
-                      child: ListView.separated(
-                        padding: EdgeInsets.symmetric(
-                          vertical: rSize(40),
-                          horizontal: rSize(30),
-                        ),
-                        itemCount:
-                            clientsMgr.selectedClient.appointments.length,
-                        itemBuilder: (context, index) {
-                          return ClientAppointmentCard(
-                            clientAppointmentCardProps:
-                                ClientAppointmentCardProps(
-                              clientAppointmentDetails:
-                                  clientsMgr.selectedClient.appointments[index],
-                              withNavigation: true,
-                              enabled: true,
-                            ),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            height: rSize(15),
-                          );
-                        },
-                      ),
                     ),
-            ],
+                  )
+                : ListView.separated(
+                    padding: EdgeInsets.symmetric(
+                      vertical: rSize(40),
+                      horizontal: rSize(30),
+                    ),
+                    itemCount: clientsMgr.selectedClient.appointments.length,
+                    itemBuilder: (context, index) {
+                      return ClientAppointmentCard(
+                        clientAppointmentCardProps: ClientAppointmentCardProps(
+                          clientAppointmentDetails:
+                              clientsMgr.selectedClient.appointments[index],
+                          withNavigation: true,
+                          enabled: true,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        height: rSize(15),
+                      );
+                    },
+                  ),
           ),
         );
       },

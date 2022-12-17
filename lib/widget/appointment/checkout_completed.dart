@@ -3,7 +3,6 @@ import 'package:appointments/providers/theme_provider.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/utils/layout.dart';
-import 'package:common_widgets/utils/general.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -19,6 +18,10 @@ class CheckoutCompleted extends StatefulWidget {
 class CheckoutCompletedState extends State<CheckoutCompleted> {
   @override
   Widget build(BuildContext context) {
+    navigateBack() {
+      Navigator.pop(context);
+    }
+
     return CustomContainer(
       imagePath: 'assets/images/background4.png',
       child: Scaffold(
@@ -34,34 +37,28 @@ class CheckoutCompletedState extends State<CheckoutCompleted> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Lottie.asset(
-                'assets/images/appointment_awaiting.json',
+                'assets/images/checkout.json',
                 repeat: true,
                 height: rSize(200),
                 animate: true,
                 alignment: Alignment.bottomCenter,
               ),
+              SizedBox(
+                height: rSize(10),
+              ),
               Text(
-                'Appointment is awaiting business confirmation'.toUpperCase(),
+                'checkout complete'.toUpperCase(),
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                      fontSize: rSize(20),
-                      color: warningPrimaryColor,
+                      fontSize: rSize(22),
+                      color: successPrimaryColor,
                     ),
                 textAlign: TextAlign.center,
               ),
               const Expanded(child: SizedBox()),
-              Text(
-                'we will let you know after your appointment will be confirmed'
-                    .toCapitalized(),
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: rSize(15),
-              ),
               CustomButton(
                 customButtonProps: CustomButtonProps(
-                  onTap: () => Navigator.pop(context),
-                  text: Languages.of(context)!.okLabel,
+                  onTap: () => navigateBack(),
+                  text: Languages.of(context)!.backLabel,
                 ),
               )
             ],

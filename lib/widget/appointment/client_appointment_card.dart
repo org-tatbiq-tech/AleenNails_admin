@@ -20,27 +20,17 @@ class ClientAppointmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String getAppointmentName(List<String> services) {
-      String appointmentName = services[0];
-      if (services.isNotEmpty && services.length > 1) {
-        appointmentName += ' + More';
-      }
-      return appointmentName;
-    }
-
     appointmentServices(List<String> services) {
       List<Widget> widgetList = services.map((String service) {
         return Padding(
           padding: EdgeInsets.only(
             bottom: rSize(5),
           ),
-          child: Expanded(
-            child: Text(
-              service,
-              style: Theme.of(context).textTheme.subtitle2,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
+          child: Text(
+            service,
+            style: Theme.of(context).textTheme.subtitle2,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         );
       }).toList();
@@ -75,27 +65,6 @@ class ClientAppointmentCard extends StatelessWidget {
           children: appointmentServices(
               clientAppointmentCardProps.clientAppointmentDetails.services),
         ),
-        // title: Text(
-        //   getAppointmentName(
-        //       clientAppointmentCardProps.clientAppointmentDetails.services),
-        //   style: Theme.of(context).textTheme.subtitle2,
-        //   maxLines: 2,
-        //   overflow: TextOverflow.ellipsis,
-        // ),
-        // subTitle: Text(
-        //   '${getDateTimeFormat(
-        //     dateTime:
-        //         clientAppointmentCardProps.clientAppointmentDetails.startTime,
-        //     format: 'HH:mm',
-        //     locale: getCurrentLocale(context),
-        //   )} - ${getDateTimeFormat(
-        //     dateTime:
-        //         clientAppointmentCardProps.clientAppointmentDetails.endTime,
-        //     format: 'HH:mm',
-        //     locale: getCurrentLocale(context),
-        //   )}',
-        //   style: Theme.of(context).textTheme.subtitle1,
-        // ),
         subTitle: null,
         trailing: Column(
           mainAxisSize: MainAxisSize.max,

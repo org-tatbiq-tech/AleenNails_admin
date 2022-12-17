@@ -600,55 +600,53 @@ class _ClientDetailsState extends State<ClientDetails> {
               ],
             ),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              padding: EdgeInsets.symmetric(
-                horizontal: rSize(30),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: rSize(30),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.6,
-                    child: renderBirthday(clientsMgr.selectedClient),
-                  ),
-                  SizedBox(
-                    height: rSize(15),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.7,
-                    child: renderLastVisit(clientsMgr.selectedClient),
-                  ),
-                  SizedBox(
-                    height: rSize(15),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.7,
-                    child: renderTotalRevenue(clientsMgr.selectedClient),
-                  ),
-                  SizedBox(
-                    height: rSize(15),
-                  ),
-                  FadeAnimation(
-                    positionType: PositionType.right,
-                    delay: 0.8,
-                    child: renderNotes(clientsMgr.selectedClient),
-                  ),
-                  SizedBox(
-                    height: rSize(20),
-                  ),
-                  renderAppointments(),
-                ],
-              ),
+          SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(30),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: rSize(30),
+                ),
+                FadeAnimation(
+                  positionType: PositionType.right,
+                  delay: 0.6,
+                  child: renderBirthday(clientsMgr.selectedClient),
+                ),
+                SizedBox(
+                  height: rSize(15),
+                ),
+                FadeAnimation(
+                  positionType: PositionType.right,
+                  delay: 0.7,
+                  child: renderLastVisit(clientsMgr.selectedClient),
+                ),
+                SizedBox(
+                  height: rSize(15),
+                ),
+                FadeAnimation(
+                  positionType: PositionType.right,
+                  delay: 0.7,
+                  child: renderTotalRevenue(clientsMgr.selectedClient),
+                ),
+                SizedBox(
+                  height: rSize(15),
+                ),
+                FadeAnimation(
+                  positionType: PositionType.right,
+                  delay: 0.8,
+                  child: renderNotes(clientsMgr.selectedClient),
+                ),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                renderAppointments(),
+              ],
             ),
           ),
         ],
