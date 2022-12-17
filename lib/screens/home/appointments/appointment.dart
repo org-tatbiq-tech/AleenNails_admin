@@ -541,7 +541,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           : ClientCard(
               clientCardProps: ClientCardProps(
                 withNavigation: false,
-                withDelete: widget.appointment != null ||
+                withDelete: widget.appointment != null &&
                         widget.bookAgainAppointment != null
                     ? false
                     : true,

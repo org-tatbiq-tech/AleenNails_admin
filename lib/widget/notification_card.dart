@@ -156,7 +156,7 @@ class NotificationCard extends StatelessWidget {
     }
 
     return Opacity(
-      opacity: notificationCardProps.notificationDetails.isOpened ? 0.8 : 1,
+      opacity: notificationCardProps.notificationDetails.isOpened ? 0.7 : 1,
       child: CustomListTile(
         customListTileProps: CustomListTileProps(
           marginBottom: 15,
