@@ -1,10 +1,12 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutCompleted extends StatefulWidget {
   const CheckoutCompleted({Key? key}) : super(key: key);
@@ -19,6 +21,10 @@ class CheckoutCompletedState extends State<CheckoutCompleted> {
   @override
   Widget build(BuildContext context) {
     navigateBack() {
+      AppointmentsMgr appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointmentsMgr.setSelectedAppointment(
+          appointmentID: appointmentsMgr.selectedAppointment.id);
       Navigator.pop(context);
     }
 
@@ -38,8 +44,8 @@ class CheckoutCompletedState extends State<CheckoutCompleted> {
             children: [
               Lottie.asset(
                 'assets/images/checkout.json',
-                repeat: true,
-                height: rSize(200),
+                repeat: false,
+                width: rSize(180),
                 animate: true,
                 alignment: Alignment.bottomCenter,
               ),
@@ -60,7 +66,7 @@ class CheckoutCompletedState extends State<CheckoutCompleted> {
                   onTap: () => navigateBack(),
                   text: Languages.of(context)!.backLabel,
                 ),
-              )
+              ),
             ],
           ),
         ),

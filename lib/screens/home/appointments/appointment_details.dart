@@ -10,6 +10,7 @@ import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/appointment/appointment_status.dart';
+import 'package:appointments/widget/appointment/checkout_completed.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -19,6 +20,7 @@ import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/fade_animation.dart';
+import 'package:common_widgets/page_transition.dart';
 
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
@@ -148,12 +150,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
-    cancelAppointmentClicked(Appointment appointment) async {
-      showLoaderDialog(context);
-      final appointmentsMgr =
-          Provider.of<AppointmentsMgr>(context, listen: false);
-      appointment.status = AppointmentStatus.cancelled;
-      await appointmentsMgr.updateAppointment(appointment);
+    cancelAppointmentMessage() {
       Navigator.pop(context);
       showSuccessFlash(
         context: context,
@@ -166,6 +163,27 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       );
     }
 
+    cancelAppointmentClicked(Appointment appointment) async {
+      showLoaderDialog(context);
+      final appointmentsMgr =
+          Provider.of<AppointmentsMgr>(context, listen: false);
+      appointment.status = AppointmentStatus.cancelled;
+      await appointmentsMgr.updateAppointment(appointment);
+      cancelAppointmentMessage();
+    }
+
+    navigateToCompleteCheckout() {
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        PageTransition(
+          child: const CheckoutCompleted(),
+          type: PageTransitionType.fade,
+          isIos: false,
+        ),
+      );
+    }
+
     confirmCheckout(Appointment appointment) async {
       showLoaderDialog(context);
       final appointmentsMgr =
@@ -175,17 +193,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       appointment.discount = discount;
       appointment.discountType = discountType;
       await appointmentsMgr.updateAppointment(appointment);
-      Navigator.pop(context);
-      showSuccessFlash(
-        context: context,
-        successColor: successPrimaryColor,
-        successTitle:
-            Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
-        successBody: Languages.of(context)!
-            .appointmentUpdatedSuccessfullyBody
-            .toCapitalized(),
-      );
-      Navigator.pop(context);
+      navigateToCompleteCheckout();
     }
 
     confirmNoShow(Appointment appointment) {
