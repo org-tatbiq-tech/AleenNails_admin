@@ -17,6 +17,8 @@ const appointmentsCollection = 'appointments';
 
 class PhoneNumberUsedException implements Exception {}
 
+class EmailUsedException implements Exception {}
+
 class ClientsMgr extends ChangeNotifier {
   ///*************************** Firestore **********************************///
   final FirebaseFirestore _fs = FirebaseFirestore.instance;
@@ -63,6 +65,24 @@ class ClientsMgr extends ChangeNotifier {
     );
   }
 
+  Future<bool> checkEmailAvailability(String email) async {
+    if (initialized) {
+      for (Client client in _clients) {
+        if (client.email == email) {
+          return false;
+        }
+      }
+    } else {
+      CollectionReference clientsColl = _fs.collection(clientsCollection);
+      var clientsResults =
+          await clientsColl.where('email', isEqualTo: email).get();
+      if (clientsResults.size > 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   Future<bool> checkPhoneNumberAvailability(
       String phone, String? byClientId) async {
     if (initialized) {
@@ -97,6 +117,10 @@ class ClientsMgr extends ChangeNotifier {
         await checkPhoneNumberAvailability(newClient.phone, null);
     if (!phoneAvailable) {
       throw PhoneNumberUsedException();
+    }
+    bool emailAvailable = await checkEmailAvailability(newClient.email);
+    if (!emailAvailable) {
+      throw EmailUsedException();
     }
     CollectionReference clientsColl = _fs.collection(clientsCollection);
 
@@ -147,6 +171,10 @@ class ClientsMgr extends ChangeNotifier {
         updatedClient.phone, updatedClient.id);
     if (!phoneAvailable) {
       throw PhoneNumberUsedException();
+    }
+    bool emailAvailable = await checkEmailAvailability(updatedClient.email);
+    if (!emailAvailable) {
+      throw EmailUsedException();
     }
 
     /// Update existing Client - update DB

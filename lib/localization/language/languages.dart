@@ -219,6 +219,7 @@ abstract class Languages {
   String get flashMessageErrorTitle;
   String get clientCreatedWronglyBody;
   String get clientPhoneAlreadyUsedErrorBody;
+  String get clientEmailAlreadyUsedErrorBody;
   String get clientUpdatedSuccessfullyBody;
   String get clientCreatedSuccessfullyBody;
   String get wpPhotoDeletedSuccessfullyBody;

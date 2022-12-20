@@ -464,7 +464,10 @@ class LanguageAr extends Languages {
       "قم بتغيير بعض الأشياء وحاول الإرسال مرة أخرى.";
   @override
   String get clientPhoneAlreadyUsedErrorBody =>
-      "رقم الهاتف مسجل لعميل اخر. قم بتغيير رقم الهاتف وحاول الإرسال مرة أخرى.";
+      "رقم الهاتف مسجل لعميل اخر. قم بتغيير رقم الهاتف وحاول مرة أخرى.";
+  @override
+  String get clientEmailAlreadyUsedErrorBody =>
+      "البريد مسجل لعميل اخر. قم بتغييره وحاول مرة أخرى.";
   @override
   String get clientUpdatedSuccessfullyBody => "تم تعديل العميل بنجاح";
   @override

@@ -400,6 +400,9 @@ class LanguageHe extends Languages {
   String get clientPhoneAlreadyUsedErrorBody =>
       "מספר הטלפון כבר רשום אצל לקוח קיים. נא לשנות את מספר הטלפון ולנסות שוב.";
   @override
+  String get clientEmailAlreadyUsedErrorBody =>
+      "האימיל כבר רשום אצל לקוח אחר, נא לשנות את האימיל ולנסות שוב.";
+  @override
   String get clientUpdatedSuccessfullyBody => "הלקוח עודכן בהצלחה";
   @override
   String get clientCreatedSuccessfullyBody => "הלקוח נוצר בהצלחה";

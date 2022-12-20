@@ -402,7 +402,10 @@ class LanguageEn extends Languages {
       "change a few things up and try submitting again.";
   @override
   String get clientPhoneAlreadyUsedErrorBody =>
-      "phone number already used by another user. please change the phone number and try again.";
+      "Phone number already used by another user. please change the phone number and try again.";
+  @override
+  String get clientEmailAlreadyUsedErrorBody =>
+      "Email is already used by another user, please change the email and try again";
   @override
   String get clientUpdatedSuccessfullyBody =>
       "your client have been updated successfully.";

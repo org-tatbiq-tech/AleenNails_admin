@@ -2,20 +2,18 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/appointments/discount_selection.dart';
 import 'package:appointments/utils/general.dart';
-import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/utils/validations.dart';
-import 'package:common_widgets/custom_container.dart';
-import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_avatar.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
-import 'package:common_widgets/ease_in_animation.dart';
-
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
@@ -514,7 +512,6 @@ class _ClientWidgetState extends State<ClientWidget> {
 
     void showNewClientSuccessMessage() {
       close();
-
       showSuccessFlash(
         context: context,
         successTitle:
@@ -526,13 +523,23 @@ class _ClientWidgetState extends State<ClientWidget> {
       );
     }
 
-    void showNewClientErrorMessage() {
-      close();
+    void showNewClientPhoneErrorMessage() {
       showErrorFlash(
         context: context,
         errorTitle: Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
         errorBody: Languages.of(context)!
             .clientPhoneAlreadyUsedErrorBody
+            .toTitleCase(),
+        errorColor: errorPrimaryColor,
+      );
+    }
+
+    void showNewClientEmailErrorMessage() {
+      showErrorFlash(
+        context: context,
+        errorTitle: Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
+        errorBody: Languages.of(context)!
+            .clientEmailAlreadyUsedErrorBody
             .toTitleCase(),
         errorColor: errorPrimaryColor,
       );
@@ -548,18 +555,6 @@ class _ClientWidgetState extends State<ClientWidget> {
             .clientUpdatedSuccessfullyBody
             .toCapitalized(),
         successColor: successPrimaryColor,
-      );
-    }
-
-    void showUpdateClientErrorMessage() {
-      close();
-      showErrorFlash(
-        context: context,
-        errorTitle: Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
-        errorBody: Languages.of(context)!
-            .clientPhoneAlreadyUsedErrorBody
-            .toTitleCase(),
-        errorColor: errorPrimaryColor,
       );
     }
 
@@ -669,7 +664,10 @@ class _ClientWidgetState extends State<ClientWidget> {
             showNewClientSuccessMessage();
           } on PhoneNumberUsedException {
             close();
-            showNewClientErrorMessage();
+            showNewClientPhoneErrorMessage();
+          } on EmailUsedException {
+            close();
+            showNewClientEmailErrorMessage();
           }
         } else {
           try {
@@ -679,7 +677,10 @@ class _ClientWidgetState extends State<ClientWidget> {
             showUpdateClientSuccessMessage();
           } on PhoneNumberUsedException {
             close();
-            showUpdateClientErrorMessage();
+            showNewClientPhoneErrorMessage();
+          } on EmailUsedException {
+            close();
+            showNewClientEmailErrorMessage();
           }
         }
       }
