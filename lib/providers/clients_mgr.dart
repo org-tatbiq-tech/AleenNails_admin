@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 const clientsCollection = 'clients';
 const clientAppointmentsCollection = 'client_appointments';
 const clientStorageDir = 'clients';
+const appointmentsCollection = 'appointments';
 
 class PhoneNumberUsedException implements Exception {}
 
@@ -119,6 +120,27 @@ class ClientsMgr extends ChangeNotifier {
     return appointments;
   }
 
+  Future<void> updateClientAppointments(Client client) async {
+    /// Update client details in all client's appointments
+    Query<Map<String, dynamic>> query = _fs
+        .collection(clientsCollection)
+        .doc(client.id)
+        .collection(clientAppointmentsCollection);
+    QuerySnapshot querySnapshot = await query.get();
+    for (QueryDocumentSnapshot doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
+      var updatedData = {
+        'clientName': client.fullName,
+        'clientPhone': client.phone,
+        'clientEmail': client.email,
+      };
+      await _fs
+          .collection(appointmentsCollection)
+          .doc(data['appointmentIdRef'])
+          .update(updatedData);
+    }
+  }
+
   Future<void> updateClient(Client updatedClient) async {
     /// Validate that phone number is not used by another client
     bool phoneAvailable = await checkPhoneNumberAvailability(
@@ -131,6 +153,7 @@ class ClientsMgr extends ChangeNotifier {
     CollectionReference clientsColl = _fs.collection(clientsCollection);
     var data = updatedClient.toJson();
     clientsColl.doc(updatedClient.id).update(data);
+    updateClientAppointments(updatedClient);
   }
 
   Future<void> updateClientApproval(String clientId, bool approve) async {
