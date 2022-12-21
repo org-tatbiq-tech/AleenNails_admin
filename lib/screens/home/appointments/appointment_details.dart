@@ -1111,13 +1111,6 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                                     appointmentsMgr.selectedAppointment,
                                   ),
                                 ),
-                                Visibility(
-                                  visible:
-                                      isAndroid() || !isDeviceHasNotch(context),
-                                  child: SizedBox(
-                                    height: rSize(15),
-                                  ),
-                                ),
                               ],
                             ),
                           ),
