@@ -108,7 +108,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         children: [
                           Padding(
                             padding: EdgeInsets.only(
-                              top: !isDeviceHasNotch() || isAndroid()
+                              top: !isDeviceHasNotch(context) || isAndroid()
                                   ? rSize(10)
                                   : 0,
                             ),

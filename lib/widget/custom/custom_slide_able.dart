@@ -44,7 +44,7 @@ class CustomSlidable extends StatelessWidget {
                           },
                           icon: null,
                           path: 'assets/icons/trash.png',
-                          containerSize: rSize(30),
+                          containerSize: 30,
                           backgroundColor: Colors.transparent,
                           iconColor: Theme.of(context).colorScheme.error,
                         ),

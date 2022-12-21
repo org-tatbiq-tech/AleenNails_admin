@@ -121,8 +121,8 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                   withPadding: true,
                   backgroundColor: Theme.of(context).colorScheme.error,
                   iconColor: Colors.white,
-                  containerSize: rSize(80),
-                  contentPadding: rSize(20),
+                  containerSize: 80,
+                  contentPadding: 20,
                 ),
               ),
               SizedBox(

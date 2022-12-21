@@ -4,7 +4,6 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
-import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/approval_request.dart';
@@ -331,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
             rSize(20),
             rSize(10),
             rSize(20),
-            !isDeviceHasNotch()
+            !isDeviceHasNotch(context)
                 ? rSize(20)
                 : isAndroid()
                     ? rSize(20)

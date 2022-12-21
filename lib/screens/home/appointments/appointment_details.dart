@@ -264,8 +264,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   withPadding: true,
                   backgroundColor: Theme.of(context).colorScheme.error,
                   iconColor: Colors.white,
-                  containerSize: rSize(80),
-                  contentPadding: rSize(20),
+                  containerSize: 80,
+                  contentPadding: 20,
                 ),
               ),
               SizedBox(
@@ -312,8 +312,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   withPadding: true,
                   backgroundColor: Theme.of(context).colorScheme.error,
                   iconColor: Colors.white,
-                  containerSize: rSize(80),
-                  contentPadding: rSize(20),
+                  containerSize: 80,
+                  contentPadding: 20,
                 ),
               ),
               SizedBox(
@@ -360,8 +360,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   withPadding: true,
                   backgroundColor: Theme.of(context).colorScheme.error,
                   iconColor: Colors.white,
-                  containerSize: rSize(80),
-                  contentPadding: rSize(20),
+                  containerSize: 80,
+                  contentPadding: 20,
                 ),
               ),
               SizedBox(
@@ -639,8 +639,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                               isDisabled: false,
                               onTap: () => cancelAppointment(appointment),
                               icon: null,
-                              containerSize: rSize(50),
-                              contentPadding: rSize(12),
+                              containerSize: 50,
+                              contentPadding: 12,
                               withPadding: true,
                               borderColor:
                                   Theme.of(context).colorScheme.primary,
@@ -1112,7 +1112,8 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                                   ),
                                 ),
                                 Visibility(
-                                  visible: isAndroid() || !isDeviceHasNotch(),
+                                  visible:
+                                      isAndroid() || !isDeviceHasNotch(context),
                                   child: SizedBox(
                                     height: rSize(15),
                                   ),

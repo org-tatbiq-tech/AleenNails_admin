@@ -27,13 +27,15 @@ class AppointmentCard extends StatelessWidget {
           margin: EdgeInsets.only(
             bottom: rSize(5),
           ),
-          height: rSize(18),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
             children: [
-              VerticalDivider(
+              Container(
                 color: Color(service.colorID),
                 width: rSize(2),
-                thickness: rSize(2),
+                height: rSize(18),
               ),
               SizedBox(
                 width: rSize(10),
