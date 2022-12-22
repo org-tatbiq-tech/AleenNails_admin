@@ -73,6 +73,16 @@ class NotificationsMgr extends ChangeNotifier {
     setSelectedNotification(notificationId);
   }
 
+  Future<String> getNotificationType(notificationId, adminEmail) async {
+    var notificationResult = await _fs
+        .collection(adminsCollection)
+        .doc(adminEmail)
+        .collection(adminNotificationsCollection)
+        .doc(notificationId)
+        .get();
+    return notificationResult.data()!['data']['category'];
+  }
+
   Future<void> deleteNotification(notificationId, adminEmail) async {
     if (notificationId != null) {
       await _fs
