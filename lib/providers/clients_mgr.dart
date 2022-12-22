@@ -65,10 +65,11 @@ class ClientsMgr extends ChangeNotifier {
     );
   }
 
-  Future<bool> checkEmailAvailability(String email) async {
+  Future<bool> checkEmailAvailability(String email, String? byClientId) async {
     if (initialized) {
       for (Client client in _clients) {
-        if (client.email == email) {
+        if (client.email == email &&
+            (byClientId == null || client.id != byClientId)) {
           return false;
         }
       }
@@ -77,7 +78,15 @@ class ClientsMgr extends ChangeNotifier {
       var clientsResults =
           await clientsColl.where('email', isEqualTo: email).get();
       if (clientsResults.size > 0) {
-        return false;
+        if (byClientId == null) {
+          return false;
+        } else {
+          for (var clientDoc in clientsResults.docs) {
+            if (clientDoc.id != byClientId) {
+              return false;
+            }
+          }
+        }
       }
     }
     return true;
@@ -118,7 +127,7 @@ class ClientsMgr extends ChangeNotifier {
     if (!phoneAvailable) {
       throw PhoneNumberUsedException();
     }
-    bool emailAvailable = await checkEmailAvailability(newClient.email);
+    bool emailAvailable = await checkEmailAvailability(newClient.email, null);
     if (!emailAvailable) {
       throw EmailUsedException();
     }
@@ -172,7 +181,8 @@ class ClientsMgr extends ChangeNotifier {
     if (!phoneAvailable) {
       throw PhoneNumberUsedException();
     }
-    bool emailAvailable = await checkEmailAvailability(updatedClient.email);
+    bool emailAvailable =
+        await checkEmailAvailability(updatedClient.email, updatedClient.id);
     if (!emailAvailable) {
       throw EmailUsedException();
     }
