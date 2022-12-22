@@ -93,18 +93,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<dynamic> onSelectNotification(
       NotificationResponse notificationResponse) async {
-    // TODO: mark notification opened
-    // await notificationsMgr.markNotificationOpened(
-    //     message.data['notification_id'], authMgr.getLoggedInAdminEmail());
+    await notificationsMgr.markNotificationOpened(
+        notificationResponse.payload, authMgr.getLoggedInAdminEmail());
+    String notificationType = await notificationsMgr.getNotificationType(
+        notificationResponse.payload, authMgr.getLoggedInAdminEmail());
 
     // Assuming application data has already been updated with selected appointment
     // handle notification selection
-    if (notificationResponse.payload ==
-        NotificationCategory.appointment.toString()) {
+    if (notificationType == NotificationCategory.appointment.toString()) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const AppointmentDetails()));
     }
-    if (notificationResponse.payload == NotificationCategory.user.toString()) {
+    if (notificationType == NotificationCategory.user.toString()) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const ApprovalRequest()));
     }
@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   presentSound: true,
                 ),
               ),
-              payload: message.data['category'],
+              payload: message.data['notification_id'],
             );
           }
         }
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onSelectNotification(NotificationResponse(
             notificationResponseType:
                 NotificationResponseType.selectedNotification,
-            payload: message.data['category']));
+            payload: message.data['notification_id']));
       }
       if (message.data['category'] == NotificationCategory.user.toString()) {
         String clientId = message.data['client_id'];
@@ -177,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onSelectNotification(NotificationResponse(
             notificationResponseType:
                 NotificationResponseType.selectedNotification,
-            payload: message.data['category']));
+            payload: message.data['notification_id']));
       }
     });
 
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onSelectNotification(NotificationResponse(
               notificationResponseType:
                   NotificationResponseType.selectedNotification,
-              payload: message.data['category']));
+              payload: message.data['notification_id']));
         }
         if (message.data['category'] == NotificationCategory.user.toString()) {
           String clientId = message.data['client_id'];
@@ -202,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onSelectNotification(NotificationResponse(
               notificationResponseType:
                   NotificationResponseType.selectedNotification,
-              payload: message.data['category']));
+              payload: message.data['notification_id']));
         }
       }
     });
