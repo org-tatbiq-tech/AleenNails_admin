@@ -13,7 +13,6 @@ import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/fade_animation.dart';
-
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -39,75 +38,69 @@ class _ClientDetailsState extends State<ClientDetails> {
     final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
 
     renderAppointments() {
-      return SafeArea(
-        left: false,
-        right: false,
-        top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FadeAnimation(
-              positionType: PositionType.right,
-              delay: 0.9,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClient.appointments.length.toString()})',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  CustomTextButton(
-                    customTextButtonProps: CustomTextButtonProps(
-                      onTap: () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ClientAppointments(),
-                          ),
+      return Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FadeAnimation(
+            positionType: PositionType.right,
+            delay: 0.9,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClient.appointments.length.toString()})',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
+                CustomTextButton(
+                  customTextButtonProps: CustomTextButtonProps(
+                    onTap: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ClientAppointments(),
                         ),
-                      },
-                      text: Languages.of(context)!.showAllLabel.toTitleCase(),
-                      textColor: Theme.of(context).colorScheme.primary,
-                    ),
+                      ),
+                    },
+                    text: Languages.of(context)!.showAllLabel.toTitleCase(),
+                    textColor: Theme.of(context).colorScheme.primary,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            ListView.separated(
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(
-                  height: rSize(10),
-                );
-              },
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              padding: EdgeInsets.only(
-                top: rSize(20),
-              ),
-              itemCount: min(clientsMgr.selectedClient.appointments.length, 1),
-              itemBuilder: (context, index) {
-                return FadeAnimation(
-                  positionType: PositionType.top,
-                  delay: 1 + index.toDouble() * 0.3,
-                  child: ClientAppointmentCard(
-                    clientAppointmentCardProps: ClientAppointmentCardProps(
-                      enabled: true,
-                      withNavigation: true,
-                      clientAppointmentDetails: clientsMgr
-                          .selectedClient.appointments
-                          .toList()[index],
-                    ),
+          ),
+          ListView.separated(
+            separatorBuilder: (BuildContext context, int index) {
+              return SizedBox(
+                height: rSize(10),
+              );
+            },
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            padding: EdgeInsets.only(
+              top: rSize(20),
+            ),
+            itemCount: min(clientsMgr.selectedClient.appointments.length, 1),
+            itemBuilder: (context, index) {
+              return FadeAnimation(
+                positionType: PositionType.top,
+                delay: 1 + index.toDouble() * 0.3,
+                child: ClientAppointmentCard(
+                  clientAppointmentCardProps: ClientAppointmentCardProps(
+                    enabled: true,
+                    withNavigation: true,
+                    clientAppointmentDetails:
+                        clientsMgr.selectedClient.appointments.toList()[index],
                   ),
-                );
-              },
-            ),
-          ],
-        ),
+                ),
+              );
+            },
+          ),
+        ],
       );
     }
 
@@ -574,82 +567,89 @@ class _ClientDetailsState extends State<ClientDetails> {
 
     Widget renderDetailsBody() {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      return Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: rSize(40),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: rSize(30),
+      return SafeArea(
+        left: false,
+        right: false,
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: rSize(20),
             ),
-            child: Column(
-              children: [
-                renderHeader(clientsMgr.selectedClient),
-                SizedBox(
-                  height: rSize(24),
-                ),
-                FadeAnimation(
-                  positionType: PositionType.top,
-                  delay: 0.5,
-                  child: renderStatics(clientsMgr.selectedClient),
-                ),
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: rSize(30),
+              ),
+              child: Column(
+                children: [
+                  renderHeader(clientsMgr.selectedClient),
+                  SizedBox(
+                    height: rSize(24),
+                  ),
+                  FadeAnimation(
+                    positionType: PositionType.top,
+                    delay: 0.5,
+                    child: renderStatics(clientsMgr.selectedClient),
+                  ),
+                ],
+              ),
             ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            padding: EdgeInsets.symmetric(
-              horizontal: rSize(30),
+            Expanded(
+              child: SingleChildScrollView(
+                // scrollDirection: Axis.vertical,
+                padding: EdgeInsets.symmetric(
+                  horizontal: rSize(30),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: rSize(30),
+                    ),
+                    FadeAnimation(
+                      positionType: PositionType.right,
+                      delay: 0.6,
+                      child: renderBirthday(clientsMgr.selectedClient),
+                    ),
+                    SizedBox(
+                      height: rSize(15),
+                    ),
+                    FadeAnimation(
+                      positionType: PositionType.right,
+                      delay: 0.7,
+                      child: renderLastVisit(clientsMgr.selectedClient),
+                    ),
+                    SizedBox(
+                      height: rSize(15),
+                    ),
+                    FadeAnimation(
+                      positionType: PositionType.right,
+                      delay: 0.7,
+                      child: renderTotalRevenue(clientsMgr.selectedClient),
+                    ),
+                    SizedBox(
+                      height: rSize(15),
+                    ),
+                    FadeAnimation(
+                      positionType: PositionType.right,
+                      delay: 0.8,
+                      child: renderNotes(clientsMgr.selectedClient),
+                    ),
+                    SizedBox(
+                      height: rSize(20),
+                    ),
+                    renderAppointments(),
+                  ],
+                ),
+              ),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: rSize(30),
-                ),
-                FadeAnimation(
-                  positionType: PositionType.right,
-                  delay: 0.6,
-                  child: renderBirthday(clientsMgr.selectedClient),
-                ),
-                SizedBox(
-                  height: rSize(15),
-                ),
-                FadeAnimation(
-                  positionType: PositionType.right,
-                  delay: 0.7,
-                  child: renderLastVisit(clientsMgr.selectedClient),
-                ),
-                SizedBox(
-                  height: rSize(15),
-                ),
-                FadeAnimation(
-                  positionType: PositionType.right,
-                  delay: 0.7,
-                  child: renderTotalRevenue(clientsMgr.selectedClient),
-                ),
-                SizedBox(
-                  height: rSize(15),
-                ),
-                FadeAnimation(
-                  positionType: PositionType.right,
-                  delay: 0.8,
-                  child: renderNotes(clientsMgr.selectedClient),
-                ),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                renderAppointments(),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       );
     }
 

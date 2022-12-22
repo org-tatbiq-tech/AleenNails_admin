@@ -4,7 +4,6 @@ import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
-import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/approval_request.dart';
@@ -94,18 +93,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<dynamic> onSelectNotification(
       NotificationResponse notificationResponse) async {
-    // TODO: mark notification opened
-    // await notificationsMgr.markNotificationOpened(
-    //     message.data['notification_id'], authMgr.getLoggedInAdminEmail());
+    await notificationsMgr.markNotificationOpened(
+        notificationResponse.payload, authMgr.getLoggedInAdminEmail());
+    String notificationType = await notificationsMgr.getNotificationType(
+        notificationResponse.payload, authMgr.getLoggedInAdminEmail());
 
     // Assuming application data has already been updated with selected appointment
     // handle notification selection
-    if (notificationResponse.payload ==
-        NotificationCategory.appointment.toString()) {
+    if (notificationType == NotificationCategory.appointment.toString()) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const AppointmentDetails()));
     }
-    if (notificationResponse.payload == NotificationCategory.user.toString()) {
+    if (notificationType == NotificationCategory.user.toString()) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const ApprovalRequest()));
     }
@@ -153,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   presentSound: true,
                 ),
               ),
-              payload: message.data['category'],
+              payload: message.data['notification_id'],
             );
           }
         }
@@ -170,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onSelectNotification(NotificationResponse(
             notificationResponseType:
                 NotificationResponseType.selectedNotification,
-            payload: message.data['category']));
+            payload: message.data['notification_id']));
       }
       if (message.data['category'] == NotificationCategory.user.toString()) {
         String clientId = message.data['client_id'];
@@ -178,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onSelectNotification(NotificationResponse(
             notificationResponseType:
                 NotificationResponseType.selectedNotification,
-            payload: message.data['category']));
+            payload: message.data['notification_id']));
       }
     });
 
@@ -195,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onSelectNotification(NotificationResponse(
               notificationResponseType:
                   NotificationResponseType.selectedNotification,
-              payload: message.data['category']));
+              payload: message.data['notification_id']));
         }
         if (message.data['category'] == NotificationCategory.user.toString()) {
           String clientId = message.data['client_id'];
@@ -203,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onSelectNotification(NotificationResponse(
               notificationResponseType:
                   NotificationResponseType.selectedNotification,
-              payload: message.data['category']));
+              payload: message.data['notification_id']));
         }
       }
     });
@@ -331,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
             rSize(20),
             rSize(10),
             rSize(20),
-            !isDeviceHasNotch()
+            !isDeviceHasNotch(context)
                 ? rSize(20)
                 : isAndroid()
                     ? rSize(20)

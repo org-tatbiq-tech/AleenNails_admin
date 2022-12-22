@@ -102,8 +102,8 @@ class NotificationCard extends StatelessWidget {
                   withPadding: true,
                   backgroundColor: Theme.of(context).colorScheme.error,
                   iconColor: Colors.white,
-                  containerSize: rSize(80),
-                  contentPadding: rSize(20),
+                  containerSize: 80,
+                  contentPadding: 20,
                 ),
               ),
               SizedBox(
@@ -167,7 +167,7 @@ class NotificationCard extends StatelessWidget {
           enabled: true,
           onTap: () => onCardTap(),
           title: Text(
-            notificationCardProps.notificationDetails.notification['title'],
+            notificationCardProps.notificationDetails.notification['body'],
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyText2,
@@ -195,7 +195,10 @@ class NotificationCard extends StatelessWidget {
           leading: CustomAvatar(
             customAvatarProps: CustomAvatarProps(
               enable: false,
-              circleShape: true,
+              circleShape: false,
+              rectangleShape: true,
+              imageUrl: notificationCardProps
+                  .notificationDetails.data['client_image_url'],
               defaultImage: const AssetImage(
                 'assets/images/avatar_female.png',
               ),
