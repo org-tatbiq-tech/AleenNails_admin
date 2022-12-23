@@ -216,7 +216,7 @@ class ClientsMgr extends ChangeNotifier {
     }
   }
 
-  Future<void> updateClient(Client updatedClient) async {
+  Future<void> updateClient(String? adminId, Client updatedClient) async {
     /// Validate that phone number is not used by another client
     bool phoneAvailable = await checkPhoneNumberAvailability(
         updatedClient.phone, updatedClient.id);
@@ -231,16 +231,27 @@ class ClientsMgr extends ChangeNotifier {
 
     /// Update existing Client - update DB
     CollectionReference clientsColl = _fs.collection(clientsCollection);
+    if (initialized) {
+      var oldClientRes = _clients.where((c) => c.id == updatedClient.id);
+      if (oldClientRes.isNotEmpty &&
+          oldClientRes.first.isApprovedByAdmin !=
+              updatedClient.isApprovedByAdmin) {
+        updatedClient.lasApprovalEditorId = adminId;
+        updatedClient.lasApprovalEditDate = DateTime.now();
+      }
+    }
     var data = updatedClient.toJson();
     clientsColl.doc(updatedClient.id).update(data);
     updateClientAppointments(updatedClient);
   }
 
-  Future<void> updateClientApproval(String clientId, bool approve) async {
-    await _fs
-        .collection(clientsCollection)
-        .doc(clientId)
-        .update({'isApprovedByAdmin': approve});
+  Future<void> updateClientApproval(
+      String? adminId, String clientId, bool approve) async {
+    await _fs.collection(clientsCollection).doc(clientId).update({
+      'isApprovedByAdmin': approve,
+      'lasApprovalEditorId': adminId,
+      'lasApprovalEditDate': Timestamp.fromDate(DateTime.now()),
+    });
   }
 
   /// Client selection
