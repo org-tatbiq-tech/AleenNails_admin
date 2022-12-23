@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/data_types/macros.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -137,12 +138,53 @@ class ClientsMgr extends ChangeNotifier {
     clientsColl.add(newClient.toJson());
   }
 
+  List<ClientAppointment> _selectedClientAppointments =
+      []; // Holds all selected client appointments
+  bool initializedClientAppointments =
+      false; // Don't download clients unless required
+  StreamSubscription<QuerySnapshot>? _clientAppointments;
+
+  List<ClientAppointment> get selectedClientAppointments {
+    if (!initializedClientAppointments) {
+      initializedClientAppointments = true;
+      downloadClientAppointment();
+    }
+    return _selectedClientAppointments;
+  }
+
+  Future<void> downloadClientAppointment() async {
+    Query<Map<String, dynamic>> query = _fs
+        .collection(clientsCollection)
+        .doc(selectedClient.id)
+        .collection(clientAppointmentsCollection);
+    query = query
+        .where('startTime', isGreaterThanOrEqualTo: DateTime.now())
+        .where('status', isEqualTo: AppointmentStatus.confirmed.toString());
+    _clientAppointments = query.snapshots().listen((snapshot) {
+      _selectedClientAppointments = [];
+      if (snapshot.docs.isEmpty) {
+        // No data to show - notifying listeners for empty client appointments list.
+        notifyListeners();
+        return;
+      }
+      for (var doc in snapshot.docs) {
+        Map<String, dynamic> data = doc.data();
+        data['id'] = doc.id;
+        _selectedClientAppointments.add(ClientAppointment.fromJson(data));
+      }
+      notifyListeners();
+    });
+  }
+
   Future<List<ClientAppointment>> getClientAppointments(String clientID) async {
     Query<Map<String, dynamic>> query = _fs
         .collection(clientsCollection)
         .doc(clientID)
         .collection(clientAppointmentsCollection);
-    query = query.where('startTime', isGreaterThanOrEqualTo: DateTime.now());
+    query = query
+        .where('startTime', isGreaterThanOrEqualTo: DateTime.now())
+        .where('status', isEqualTo: AppointmentStatus.confirmed.toString())
+        .limit(2);
     List<ClientAppointment> appointments = [];
     QuerySnapshot querySnapshot = await query.get();
     for (QueryDocumentSnapshot doc in querySnapshot.docs) {

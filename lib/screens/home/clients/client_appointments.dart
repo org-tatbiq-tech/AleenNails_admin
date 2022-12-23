@@ -54,7 +54,7 @@ class ClientAppointmentsState extends State<ClientAppointments> {
             ),
             body: AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
-              child: clientsMgr.selectedClient.appointments.isEmpty
+              child: clientsMgr.selectedClientAppointments.isEmpty
                   ? EmptyListImage(
                       emptyListImageProps: EmptyListImageProps(
                         title: Languages.of(context)!
@@ -91,13 +91,13 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                         vertical: rSize(40),
                         horizontal: rSize(30),
                       ),
-                      itemCount: clientsMgr.selectedClient.appointments.length,
+                      itemCount: clientsMgr.selectedClientAppointments.length,
                       itemBuilder: (context, index) {
                         return ClientAppointmentCard(
                           clientAppointmentCardProps:
                               ClientAppointmentCardProps(
                             clientAppointmentDetails:
-                                clientsMgr.selectedClient.appointments[index],
+                                clientsMgr.selectedClientAppointments[index],
                             withNavigation: true,
                             enabled: true,
                           ),
