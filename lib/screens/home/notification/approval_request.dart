@@ -48,7 +48,8 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
       final notificationsMgr =
           Provider.of<NotificationsMgr>(context, listen: false);
       final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
-      await clientsMgr.updateClientApproval(client.id, true);
+      await clientsMgr.updateClientApproval(
+          authMgr.getLoggedInAdminEmail(), client.id, true);
       clientUpdatedSuccessfullyMessage();
       // delete notification
       await notificationsMgr.deleteNotification(
@@ -62,7 +63,8 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
       final notificationsMgr =
           Provider.of<NotificationsMgr>(context, listen: false);
       final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
-      await clientsMgr.updateClientApproval(client.id, false);
+      await clientsMgr.updateClientApproval(
+          authMgr.getLoggedInAdminEmail(), client.id, false);
       clientUpdatedSuccessfullyMessage();
       // delete notification
       await notificationsMgr.deleteNotification(

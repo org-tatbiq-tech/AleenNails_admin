@@ -48,7 +48,7 @@ class NotificationCard extends StatelessWidget {
       final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
       // approve client
-      await clientsMgr.updateClientApproval(
+      await clientsMgr.updateClientApproval(authMgr.getLoggedInAdminEmail(),
           notificationCardProps.notificationDetails.data['client_id'], true);
       clientUpdatedSuccessfullyMessage();
       // delete notification
@@ -64,7 +64,7 @@ class NotificationCard extends StatelessWidget {
       final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
       // deny client
-      await clientsMgr.updateClientApproval(
+      await clientsMgr.updateClientApproval(authMgr.getLoggedInAdminEmail(),
           notificationCardProps.notificationDetails.data['client_id'], false);
       clientUpdatedSuccessfullyMessage();
       // delete notification

@@ -25,6 +25,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../providers/auth_mgr.dart';
+
 class ClientWidget extends StatefulWidget {
   final Client? client;
   const ClientWidget({Key? key, this.client}) : super(key: key);
@@ -42,7 +44,7 @@ class _ClientWidgetState extends State<ClientWidget> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   int clientDiscount = 0;
   bool trustedClient = true;
-  bool blockedClient = false;
+  bool blockedClient = true;
   bool autoValidate = false;
   String imageURL = '';
   bool isSaveDisabled = true;
@@ -63,7 +65,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       _noteController.text = widget.client!.generalNotes!;
       clientDiscount = widget.client!.discount;
       trustedClient = widget.client!.isTrusted;
-      blockedClient = !widget.client!.isApprovedByAdmin;
+      blockedClient = !(widget.client!.isApprovedByAdmin == true);
       birthdayDate = widget.client!.birthday;
       imageURL = widget.client!.imageURL;
     }
@@ -639,6 +641,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       if (form!.validate()) {
         showLoaderDialog(context);
         final clientMgr = Provider.of<ClientsMgr>(context, listen: false);
+        final authMgr = Provider.of<AuthenticationMgr>(context, listen: false);
         String clientID = widget.client == null ? '' : widget.client!.id;
 
         Client client = Client(
@@ -647,14 +650,16 @@ class _ClientWidgetState extends State<ClientWidget> {
           phone: _phoneController.text,
           address: _addressController.text,
           email: _emailController.text,
-          creationDate: DateTime.now(),
+          creationDate: widget.client?.creationDate ?? DateTime.now(),
           birthday: birthdayDate,
           generalNotes: _noteController.text,
           discount: clientDiscount,
           isTrusted: trustedClient,
           isApprovedByAdmin: !blockedClient,
-          acceptedDate: DateTime.now(),
           imageURL: imageURL,
+          lasApprovalEditorId: widget.client?.lasApprovalEditorId,
+          lasApprovalEditDate: widget.client?.lasApprovalEditDate,
+          isRegistered: widget.client?.isRegistered ?? false,
         );
 
         if (widget.client == null) {
@@ -671,7 +676,8 @@ class _ClientWidgetState extends State<ClientWidget> {
           }
         } else {
           try {
-            await clientMgr.updateClient(client);
+            await clientMgr.updateClient(
+                authMgr.getLoggedInAdminEmail(), client);
             await clientMgr.setSelectedClient(clientID: client.id);
             close();
             showUpdateClientSuccessMessage();

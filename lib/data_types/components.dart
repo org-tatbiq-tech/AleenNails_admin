@@ -388,12 +388,15 @@ class Client {
   String? generalNotes; // General notes about client
   DateTime? birthday; // Birthday date
   DateTime creationDate; // Client creation date
-  DateTime? acceptedDate; // Birthday date
   int discount; // general discount for client
   bool isTrusted; // Trusted user
   String imageURL; // Image URL for quick download
   List<ClientAppointment> appointments;
-  bool isApprovedByAdmin; // Admin approved this account
+  bool? isApprovedByAdmin; // Admin approved this account
+  String?
+      lasApprovalEditorId; // last admin id that edited the isApprovedByAdmin
+  DateTime? lasApprovalEditDate; // last edit date for isApprovedByAdmin
+  bool isRegistered; // is it a registered user (not created by admin)
 
   double get totalRevenue {
     return appointments.fold<double>(0, (sum, item) => sum + item.totalCost);
@@ -428,12 +431,14 @@ class Client {
     this.generalNotes,
     this.birthday,
     required this.creationDate,
-    this.acceptedDate,
     this.discount = 0,
     this.isTrusted = false,
     this.imageURL = '',
     this.appointments = const [],
     this.isApprovedByAdmin = false,
+    this.lasApprovalEditorId,
+    this.lasApprovalEditDate,
+    this.isRegistered = false,
   });
 
   Map<String, dynamic> toJson() {
@@ -445,11 +450,15 @@ class Client {
       'generalNotes': generalNotes,
       'birthday': birthday != null ? Timestamp.fromDate(birthday!) : '',
       'creationDate': Timestamp.fromDate(creationDate),
-      'acceptedDate': Timestamp.fromDate(creationDate),
       'discount': discount,
       'isTrusted': isTrusted,
       'imageURL': imageURL,
       'isApprovedByAdmin': isApprovedByAdmin,
+      'lasApprovalEditorId': lasApprovalEditorId,
+      'lasApprovalEditDate': lasApprovalEditDate != null
+          ? Timestamp.fromDate(lasApprovalEditDate!)
+          : null,
+      'isRegistered': isRegistered,
     };
   }
 
@@ -479,7 +488,13 @@ class Client {
       appointments: doc['appointments'] == null
           ? []
           : loadAppointmentsFromDoc(doc['appointments']),
-      isApprovedByAdmin: doc['isApprovedByAdmin'] ?? false,
+      isApprovedByAdmin: doc['isApprovedByAdmin'],
+      lasApprovalEditorId: doc['lasApprovalEditorId'],
+      lasApprovalEditDate: doc['lasApprovalEditDate'] != null &&
+              doc['lasApprovalEditDate'].toString().isNotEmpty
+          ? doc['lasApprovalEditDate'].toDate()
+          : null,
+      isRegistered: doc['isRegistered'] ?? false,
     );
   }
 }
