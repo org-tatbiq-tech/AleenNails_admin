@@ -63,6 +63,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         email: widget.appointment!.clientEmail,
         imageURL: widget.appointment!.clientImageURL,
         creationDate: DateTime.now(),
+        isApprovedByAdmin: true,
       );
       selectedServices = widget.appointment!.services;
       startDateTime = widget.appointment!.date;
@@ -79,6 +80,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         email: widget.bookAgainAppointment!.clientEmail,
         imageURL: widget.bookAgainAppointment!.clientImageURL,
         creationDate: DateTime.now(),
+        isApprovedByAdmin: true,
       );
       selectedServices = widget.bookAgainAppointment!.services;
       _notesController.text = widget.bookAgainAppointment!.notes;
