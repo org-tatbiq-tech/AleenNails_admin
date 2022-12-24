@@ -541,8 +541,9 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
           : ClientCard(
               clientCardProps: ClientCardProps(
                 withNavigation: false,
-                withDelete: widget.appointment != null &&
-                        widget.bookAgainAppointment != null
+                withDelete: widget.appointment != null ||
+                        widget.bookAgainAppointment != null ||
+                        widget.client != null
                     ? false
                     : true,
                 enabled: false,
@@ -613,6 +614,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               withBack: true,
               isTransparent: true,
               withSave: true,
+              withSaveDisabled:
+                  selectedServices.isEmpty || selectedClient == null,
               saveText: Languages.of(context)!.saveLabel,
               saveTap: () => {saveAppointment()},
             ),
