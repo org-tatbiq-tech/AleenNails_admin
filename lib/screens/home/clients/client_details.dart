@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
@@ -6,9 +7,9 @@ import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_appointments.dart';
 import 'package:appointments/widget/appointment/client_appointment_card.dart';
-import 'package:common_widgets/custom_container.dart';
-import 'package:common_widgets/custom_avatar.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_avatar.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_text_button.dart';
@@ -51,7 +52,7 @@ class _ClientDetailsState extends State<ClientDetails> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClient.appointments.length.toString()})',
+                  '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClientUpcomingAppointments.length.toString()})',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -84,7 +85,8 @@ class _ClientDetailsState extends State<ClientDetails> {
             padding: EdgeInsets.only(
               top: rSize(20),
             ),
-            itemCount: min(clientsMgr.selectedClient.appointments.length, 1),
+            itemCount:
+                min(clientsMgr.selectedClientUpcomingAppointments.length, 1),
             itemBuilder: (context, index) {
               return FadeAnimation(
                 positionType: PositionType.top,
@@ -93,8 +95,9 @@ class _ClientDetailsState extends State<ClientDetails> {
                   clientAppointmentCardProps: ClientAppointmentCardProps(
                     enabled: true,
                     withNavigation: true,
-                    clientAppointmentDetails:
-                        clientsMgr.selectedClient.appointments.toList()[index],
+                    clientAppointmentDetails: clientsMgr
+                        .selectedClientUpcomingAppointments
+                        .toList()[index],
                   ),
                 ),
               );
@@ -371,7 +374,8 @@ class _ClientDetailsState extends State<ClientDetails> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  client.appointments.length.toString(),
+                  clientsMgr.selectedClientUpcomingAppointments.length
+                      .toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -396,7 +400,8 @@ class _ClientDetailsState extends State<ClientDetails> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  client.totalCancelledAppointment.toString(),
+                  clientsMgr.selectedClientCancelledAppointments.length
+                      .toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2,
@@ -423,7 +428,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                       ),
                 ),
                 Text(
-                  client.totalNoShowAppointment.toString(),
+                  clientsMgr.selectedClientNoShowAppointments.length.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.bodyText2?.copyWith(
@@ -585,14 +590,14 @@ class _ClientDetailsState extends State<ClientDetails> {
               ),
               child: Column(
                 children: [
-                  renderHeader(clientsMgr.selectedClient),
+                  renderHeader(clientsMgr.selectedClient!),
                   SizedBox(
                     height: rSize(24),
                   ),
                   FadeAnimation(
                     positionType: PositionType.top,
                     delay: 0.5,
-                    child: renderStatics(clientsMgr.selectedClient),
+                    child: renderStatics(clientsMgr.selectedClient!),
                   ),
                 ],
               ),
@@ -613,7 +618,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     FadeAnimation(
                       positionType: PositionType.right,
                       delay: 0.6,
-                      child: renderBirthday(clientsMgr.selectedClient),
+                      child: renderBirthday(clientsMgr.selectedClient!),
                     ),
                     SizedBox(
                       height: rSize(15),
@@ -621,7 +626,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     FadeAnimation(
                       positionType: PositionType.right,
                       delay: 0.7,
-                      child: renderLastVisit(clientsMgr.selectedClient),
+                      child: renderLastVisit(clientsMgr.selectedClient!),
                     ),
                     SizedBox(
                       height: rSize(15),
@@ -629,7 +634,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     FadeAnimation(
                       positionType: PositionType.right,
                       delay: 0.7,
-                      child: renderTotalRevenue(clientsMgr.selectedClient),
+                      child: renderTotalRevenue(clientsMgr.selectedClient!),
                     ),
                     SizedBox(
                       height: rSize(15),
@@ -637,7 +642,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     FadeAnimation(
                       positionType: PositionType.right,
                       delay: 0.8,
-                      child: renderNotes(clientsMgr.selectedClient),
+                      child: renderNotes(clientsMgr.selectedClient!),
                     ),
                     SizedBox(
                       height: rSize(20),

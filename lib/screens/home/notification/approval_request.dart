@@ -12,8 +12,8 @@ import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/general.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -327,19 +327,19 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
                         SizedBox(
                           height: rSize(40),
                         ),
-                        renderHeader(clientsMgr.selectedClient),
+                        renderHeader(clientsMgr.selectedClient!),
                         SizedBox(
                           height: rSize(20),
                         ),
-                        renderBirthday(clientsMgr.selectedClient),
+                        renderBirthday(clientsMgr.selectedClient!),
                         SizedBox(
                           height: rSize(20),
                         ),
-                        renderNotes(clientsMgr.selectedClient),
+                        renderNotes(clientsMgr.selectedClient!),
                         const Expanded(
                           child: SizedBox(),
                         ),
-                        renderFooter(clientsMgr.selectedClient),
+                        renderFooter(clientsMgr.selectedClient!),
                       ],
                     ),
                   )

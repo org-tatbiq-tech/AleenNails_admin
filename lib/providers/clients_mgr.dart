@@ -138,28 +138,96 @@ class ClientsMgr extends ChangeNotifier {
     clientsColl.add(newClient.toJson());
   }
 
+  List<ClientAppointment> _selectedUpcomingClientAppointments =
+      []; // Holds all selected client upcoming appointments
+  bool initializedClientUpcomingAppointments =
+      false; // Don't download clients unless required
+  StreamSubscription<QuerySnapshot>? _clientUpcomingAppointments;
+
+  List<ClientAppointment> get selectedClientUpcomingAppointments {
+    if (!initializedClientAppointments) {
+      initializedClientAppointments = true;
+      downloadClientUpComingAppointment(
+          selectedClient == null ? null : selectedClient!.id);
+    }
+    return _selectedUpcomingClientAppointments;
+  }
+
   List<ClientAppointment> _selectedClientAppointments =
       []; // Holds all selected client appointments
   bool initializedClientAppointments =
       false; // Don't download clients unless required
   StreamSubscription<QuerySnapshot>? _clientAppointments;
 
+  List<ClientAppointment> get selectedClientNoShowAppointments {
+    if (!initializedClientAppointments) {
+      initializedClientAppointments = true;
+      downloadClientAppointment(
+          selectedClient == null ? null : selectedClient!.id);
+    }
+    return _selectedClientAppointments
+        .where((element) => element.status == AppointmentStatus.noShow)
+        .toList();
+  }
+
+  List<ClientAppointment> get selectedClientCancelledAppointments {
+    if (!initializedClientAppointments) {
+      initializedClientAppointments = true;
+      downloadClientAppointment(
+          selectedClient == null ? null : selectedClient!.id);
+    }
+    return _selectedClientAppointments
+        .where((element) => element.status == AppointmentStatus.cancelled)
+        .toList();
+  }
+
   List<ClientAppointment> get selectedClientAppointments {
     if (!initializedClientAppointments) {
       initializedClientAppointments = true;
-      downloadClientAppointment();
+      downloadClientAppointment(
+          selectedClient == null ? null : selectedClient!.id);
     }
     return _selectedClientAppointments;
   }
 
-  Future<void> downloadClientAppointment() async {
+  Future<void> downloadClientUpComingAppointment(String? clientID) async {
+    if (clientID == null) {
+      return;
+    }
     Query<Map<String, dynamic>> query = _fs
         .collection(clientsCollection)
-        .doc(selectedClient.id)
+        .doc(clientID)
         .collection(clientAppointmentsCollection);
     query = query
         .where('startTime', isGreaterThanOrEqualTo: DateTime.now())
         .where('status', isEqualTo: AppointmentStatus.confirmed.toString());
+    _clientUpcomingAppointments = query.snapshots().listen((snapshot) {
+      _selectedUpcomingClientAppointments = [];
+      if (snapshot.docs.isEmpty) {
+        // No data to show - notifying listeners for empty client appointments list.
+        notifyListeners();
+        return;
+      }
+      for (var doc in snapshot.docs) {
+        Map<String, dynamic> data = doc.data();
+        data['id'] = doc.id;
+        _selectedUpcomingClientAppointments
+            .add(ClientAppointment.fromJson(data));
+      }
+      notifyListeners();
+    });
+  }
+
+  Future<void> downloadClientAppointment(String? clientID) async {
+    if (clientID == null) {
+      return;
+    }
+    Query<Map<String, dynamic>> query = _fs
+        .collection(clientsCollection)
+        .doc(clientID)
+        .collection(clientAppointmentsCollection);
+    query = query.where('status',
+        isNotEqualTo: AppointmentStatus.confirmed.toString());
     _clientAppointments = query.snapshots().listen((snapshot) {
       _selectedClientAppointments = [];
       if (snapshot.docs.isEmpty) {
@@ -255,7 +323,7 @@ class ClientsMgr extends ChangeNotifier {
   }
 
   /// Client selection
-  late Client selectedClient;
+  Client? selectedClient;
   bool isSelectedClientLoaded = false;
 
   Future<void> setSelectedClient({
@@ -270,22 +338,23 @@ class ClientsMgr extends ChangeNotifier {
       isSelectedClientLoaded = true;
     } else {
       // download appointment
-      Map<String, dynamic>? data;
-      _fs.collection(clientsCollection).doc(clientID).get().then(
-            (value) async => {
-              // Get client upcoming appointments
-              appointments = await getClientAppointments(clientID!),
-              data = value.data(),
-              if (data != null)
-                {
-                  data!['appointments'] = appointments,
-                  data!['id'] = value.id,
-                  selectedClient = Client.fromJson(data!),
-                  isSelectedClientLoaded = true,
-                },
-              notifyListeners(),
-            },
-          );
+      DocumentSnapshot doc =
+          await _fs.collection(clientsCollection).doc(clientID).get();
+      // Get client upcoming appointments
+      // appointments = await getClientAppointments(clientID!),
+      await downloadClientAppointment(clientID!);
+      await downloadClientUpComingAppointment(clientID);
+      if (!doc.exists) {
+        notifyListeners();
+        return;
+      }
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      data['appointments'] =
+          selectedClientAppointments + selectedClientUpcomingAppointments;
+      data['id'] = doc.id;
+      selectedClient = Client.fromJson(data);
+      isSelectedClientLoaded = true;
+      notifyListeners();
     }
   }
 }

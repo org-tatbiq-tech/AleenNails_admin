@@ -5,9 +5,8 @@ import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/screens/home/clients/client_details.dart';
 import 'package:appointments/widget/client/client_card.dart';
 import 'package:appointments/widget/client/clients_search.dart';
-import 'package:common_widgets/custom_container.dart';
-
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/empty_list_image.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -28,9 +27,9 @@ class Clients extends StatefulWidget {
 class ClientsState extends State<Clients> {
   @override
   Widget build(BuildContext context) {
-    navigateToClientDetails(Client client) {
+    navigateToClientDetails(Client client) async {
       final clientsMgr = Provider.of<ClientsMgr>(context, listen: false);
-      clientsMgr.setSelectedClient(clientID: client.id);
+      await clientsMgr.setSelectedClient(clientID: client.id);
       Navigator.push(
         context,
         MaterialPageRoute(
