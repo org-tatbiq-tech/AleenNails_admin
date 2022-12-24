@@ -48,7 +48,7 @@ class _ClientWidgetState extends State<ClientWidget> {
   bool autoValidate = false;
   String imageURL = '';
   bool isSaveDisabled = true;
-
+  bool isClientRegistered = false;
   DateTime? birthdayDate;
   DateTime? birthdayDateTemp;
   DateTime today = DateTime.now();
@@ -68,6 +68,7 @@ class _ClientWidgetState extends State<ClientWidget> {
       blockedClient = !(widget.client!.isApprovedByAdmin == true);
       birthdayDate = widget.client!.birthday;
       imageURL = widget.client!.imageURL;
+      isClientRegistered = widget.client!.isRegistered;
     }
 
     _nameController.addListener(() => setState(() {
@@ -339,6 +340,7 @@ class _ClientWidgetState extends State<ClientWidget> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _nameController,
               keyboardType: TextInputType.text,
+              isDisabled: !isClientRegistered,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(20),
               ],
@@ -374,6 +376,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _phoneController,
+              isDisabled: !isClientRegistered,
               keyboardType: TextInputType.phone,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(10),
@@ -412,6 +415,7 @@ class _ClientWidgetState extends State<ClientWidget> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
+              isDisabled: !isClientRegistered,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(40),
               ],
@@ -446,6 +450,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _addressController,
+              isDisabled: !isClientRegistered,
               keyboardType: TextInputType.text,
             ),
           ),
@@ -473,6 +478,7 @@ class _ClientWidgetState extends State<ClientWidget> {
             ),
           ),
           CustomInputFieldButton(
+            isDisabled: !isClientRegistered,
             text: getDateTimeFormat(
               isDayOfWeek: true,
               dateTime: birthdayDate,
