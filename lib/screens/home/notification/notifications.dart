@@ -1,13 +1,13 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/notifications_mgr.dart';
-import 'package:common_widgets/custom_container.dart';
 import 'package:appointments/widget/notification_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/empty_list_image.dart';
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/general.dart';
+import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -87,7 +87,9 @@ class _NotificationsState extends State<Notifications> {
                                   )
                                 : EmptyListImage(
                                     emptyListImageProps: EmptyListImageProps(
-                                      title: 'No Notifications',
+                                      title: Languages.of(context)!
+                                          .noNotificationsMsg
+                                          .toTitleCase(),
                                       iconPath: 'assets/icons/menu.png',
                                     ),
                                   ),

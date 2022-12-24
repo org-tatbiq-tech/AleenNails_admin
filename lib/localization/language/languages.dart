@@ -276,6 +276,7 @@ abstract class Languages {
   String get labelNotification;
   String get notificationsTitle;
   String get notificationsMsg;
+  String get noNotificationsMsg;
   String get labelNotifyBy;
   String get labelSettings;
   String get labelLanguage;

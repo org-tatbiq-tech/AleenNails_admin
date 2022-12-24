@@ -510,6 +510,8 @@ class LanguageHe extends Languages {
   @override
   String get labelNotification => "התראות";
   @override
+  String get noNotificationsMsg => "אין התראות!";
+  @override
   String get notificationsTitle => "התראות האפליקציה";
   @override
   String get notificationsMsg => "שנה הגדרות שליחת התראות";

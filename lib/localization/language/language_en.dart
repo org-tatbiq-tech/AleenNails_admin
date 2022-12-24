@@ -536,6 +536,8 @@ class LanguageEn extends Languages {
   @override
   String get notificationsTitle => "App notifications";
   @override
+  String get noNotificationsMsg => "No notifications!";
+  @override
   String get notificationsMsg => "Send push notifications (this device)";
   @override
   String get labelNotifyBy => "Notify by";
