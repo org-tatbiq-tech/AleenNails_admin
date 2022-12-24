@@ -599,9 +599,8 @@ class _ClientDetailsState extends State<ClientDetails> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                // scrollDirection: Axis.vertical,
                 padding: EdgeInsets.symmetric(
-                  horizontal: rSize(30),
+                  horizontal: rSize(50),
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
