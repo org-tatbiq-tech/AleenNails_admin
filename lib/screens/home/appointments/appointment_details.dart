@@ -193,6 +193,9 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       appointment.discount = discount;
       appointment.discountType = discountType;
       await appointmentsMgr.updateAppointment(appointment);
+      setState(() {
+        isCheckoutScreen = false;
+      });
       navigateToCompleteCheckout();
     }
 
