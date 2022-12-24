@@ -11,27 +11,8 @@ const notificationsCollection = "notifications";
 const adminAppTitle = "Aleen Nails Admin";
 const clientAppTitle = "Aleen Nails";
 
-function getMonthStr(date) {
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return months[date.getMonth()];
-}
-
-function getDayStr(date) {
-    return date.getDate().toString();
-}
-
-function getYearStr(date) {
-    return date.getFullYear();
-}
-
-function getTimeStr(date) {
-    return date.getHours() + ":" + ("0" + date.getMinutes()).slice(-2);
-}
-
 function formatDate(date) {
-    let localDate =  new Date(date.toLocaleString('en-US', { timeZone: 'Asia/Jerusalem'}));
-    return getMonthStr(localDate) + " " + getDayStr(localDate) + "," + getYearStr(localDate) + " " + getTimeStr(localDate);
+     return date.toLocaleString('he-IL', { year: 'numeric', month: 'short', day: 'numeric', 'hour': '2-digit', minute: '2-digit' })
 }
 
 function isClient(editor) {
@@ -72,11 +53,13 @@ function getNotificationRecord(notificationContent) {
 
 function getServicesMessage(services) {
     if(!(services && services.length > 0)) {
-        return 'no services';
+        // return 'no services';
+        return 'אין שירותים';
     }
     let message = services[0]['name'];
     if (services.length > 1) {
-        message += ' + more'
+        // message += ' + more';
+        message += ' + עוד';
     }
     return message;
 }
@@ -126,9 +109,14 @@ async function handleNewAppointment(snap, context) {
     const clientDocID = newAppointmentData.clientDocID;
     if ( isClient(newAppointmentData.creator) ) {
        console.log('Appointment created by client. need to notify the admin');
-       const clientName = newAppointmentData.clientName ?? 'Client';
-       let msg = 'You have a new appointment! ' + formatDate(newAppointmentData.date.toDate());
-       msg += ' ' + clientName + ' • ' + getServicesMessage(newAppointmentData.services);
+       // const clientName = newAppointmentData.clientName;
+       const clientName = newAppointmentData.clientName;
+       // let msg = 'You have a new appointment! ' + formatDate(newAppointmentData.date.toDate());
+       // msg += ' ' + clientName + ' • ' + getServicesMessage(newAppointmentData.services);
+       let msg = 'יש לך תור חדש! ';
+       msg += formatDate(newAppointmentData.date.toDate());
+       msg += ' ' + clientName + ' • ';
+       msg += getServicesMessage(newAppointmentData.services);
        let clientDetails = getClientDetailsFromAppointment(newAppointmentData);
        const notificationContent = {
            notification: {
@@ -150,8 +138,12 @@ async function handleNewAppointment(snap, context) {
         console.log('Appointment created by business. need to notify the client');
         const clientTokens = await getClientTokens(clientDocID);
         if(clientTokens) {
-            let msg = 'You have a new appointment! ' + formatDate(newAppointmentData.date.toDate());
-            msg += ' • ' + getServicesMessage(newAppointmentData.services);
+            // let msg = 'You have a new appointment! ' + formatDate(newAppointmentData.date.toDate());
+            // msg += ' • ' + getServicesMessage(newAppointmentData.services);
+            let msg = 'יש לך תור חדש! ';
+            msg += formatDate(newAppointmentData.date.toDate());
+            msg += ' • ';
+            msg += getServicesMessage(newAppointmentData.services);
             const notificationContent = {
                 notification: {
                    title: clientAppTitle,
@@ -180,6 +172,7 @@ async function handleUpdateAppointment(change, context) {
     const changedByClient = isClient(newValue.lastEditor);
     const changedByBusiness = isBusiness(newValue.lastEditor);
     const clientDocID = newValue.clientDocID;
+    const clientName = newValue.clientName;
     if (!changedByClient && !changedByBusiness){
         console.log('last editor is not defined');
         return;
@@ -191,13 +184,19 @@ async function handleUpdateAppointment(change, context) {
         let clientDetails = {};
         if (changedByClient) {
             title = adminAppTitle;
-            msg = 'An appointment has been rescheduled to ' + formatDate(newValue.date.toDate());
-            msg += ' ' + clientName + ' • ' + getServicesMessage(newValue.services);
+            // msg = 'An appointment has been rescheduled to ' + formatDate(newValue.date.toDate());
+            // msg += ' ' + clientName + ' • ' + getServicesMessage(newValue.services);
+            msg = 'התור נדחה ל ';
+            msg += formatDate(newValue.date.toDate());
+            msg += ' ';
+            msg += clientName + ' • ';
+            msg += getServicesMessage(newValue.services);
             clientDetails = getClientDetailsFromAppointment(newValue);
         } else {
             title = clientAppTitle;
-            msg = 'Aleen Nails rescheduled your appointment to ' + formatDate(newValue.date.toDate());
-            // msg += ' and required additional confirmation'
+            // msg = 'Aleen Nails rescheduled your appointment to ' + formatDate(newValue.date.toDate());
+            msg = 'אלין דחתה את התור שלך ל ';
+            msg += formatDate(newValue.date.toDate());
         }
 
         const notificationContent = {
@@ -228,8 +227,12 @@ async function handleUpdateAppointment(change, context) {
     }
     if (newValue.status != previousValue.status) {
         if(newValue.status === 'AppointmentStatus.confirmed') {
-            console.log('Send notification about confirmed appointment')
-            const msg = 'Your appointment with Aleen Nails on ' + formatDate(newValue.date.toDate()) + ' has been confirmed';
+            console.log('Send notification about confirmed appointment');
+            // const msg = 'Your appointment with Aleen Nails on ' + formatDate(newValue.date.toDate()) + ' has been confirmed';
+            let msg = 'התור שלך עם אלין ב ';
+            msg += formatDate(newValue.date.toDate());
+            msg += ' ';
+            msg += 'אושר בהצלחה';
             const notificationContent = {
                notification: {
                  title: clientAppTitle,
@@ -250,7 +253,11 @@ async function handleUpdateAppointment(change, context) {
         }
         if(newValue.status === 'AppointmentStatus.declined') {
             console.log('Send notification about declined appointment')
-            const msg = 'Your appointment with Aleen Nails on ' + formatDate(newValue.date.toDate()) + ' can not be scheduled please contact Aleen';
+            // const msg = 'Your appointment with Aleen Nails on ' + formatDate(newValue.date.toDate()) + ' can not be scheduled please contact Aleen';
+            let msg = 'התור שלך עם אלין ב ';
+            msg += formatDate(newValue.date.toDate());
+            msg += ' ';
+            msg += 'לא הושלם בהצלחה נא ליצור קשר עם אלין';
             const notificationContent = {
                notification: {
                  title: clientAppTitle,
@@ -277,12 +284,21 @@ async function handleUpdateAppointment(change, context) {
             let clientDetails = {};
             if (changedByClient) {
                 title = adminAppTitle;
-                msg = 'An appointment has been canceled ' + formatDate(newValue.date.toDate());
-                msg += ' ' + clientName + ' • ' + getServicesMessage(newValue.services);
+                // msg = 'An appointment has been canceled ' + formatDate(newValue.date.toDate());
+                // msg += ' ' + clientName + ' • ' + getServicesMessage(newValue.services);
+                msg = 'תור בוטל ב ';
+                msg += formatDate(newValue.date.toDate());
+                msg += ' ';
+                msg += clientName + ' • ';
+                msg += getServicesMessage(newValue.services);
                 clientDetails = getClientDetailsFromAppointment(newValue);
             } else {
                 title = clientAppTitle;
                 msg = 'Your appointment with Aleen Nails on ' + formatDate(newValue.date.toDate()) + ' has been canceled';
+                msg = 'התור שלך עם אלין ב ';
+                msg += formatDate(newValue.date.toDate());
+                msg += ' ';
+                msg += 'בוטל';
             }
             const notificationContent = {
                 notification: {
@@ -322,7 +338,11 @@ async function handleUpdateClient(change, context) {
     if(!oldClient.phone && newClient.phone) {
         // phone number is now verified, we need to notify the admin to approve/deny the new client
         console.log('Notify the admin about new created user', newClient.fullName);
-        const msg = 'New registration request from ' + newClient.fullName + ' • please approve/deny';
+        // const msg = 'New registration request from ' + newClient.fullName + ' • please approve/deny';
+        let msg = 'בקשה חדשה להירשמות למערכת מ ';
+        msg += newClient.fullName;
+        msg += ' • ';
+        msg += 'נא לאשר/לדחות';
         const notificationContent = {
             notification: {
               title: adminAppTitle,
