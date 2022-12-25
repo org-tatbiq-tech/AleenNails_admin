@@ -1,8 +1,8 @@
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:appointments/screens/home/profile/business_location.dart';
 import 'package:appointments/providers/theme_provider.dart';
+import 'package:appointments/screens/home/profile/business_location.dart';
 import 'package:appointments/utils/validations.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_container.dart';
@@ -11,7 +11,6 @@ import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
-
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -542,8 +541,12 @@ class BusinessInfoState extends State<BusinessInfo> {
           facebookUrl: _facebookController.text,
           instagramUrl: _instagramController.text,
           websiteUrl: _webController.text,
-          longitude: businessLocation!.target.longitude,
-          latitude: businessLocation!.target.latitude,
+          longitude: businessLocation != null
+              ? businessLocation!.target.longitude
+              : null,
+          latitude: businessLocation != null
+              ? businessLocation!.target.latitude
+              : null,
         );
         settingsMgr.profileManagement.businessInfo = newData;
 

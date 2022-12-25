@@ -142,7 +142,14 @@ class SettingsMgr extends ChangeNotifier {
   Future<void> submitNewProfile() async {
     /// Submitting new Profile details - update DB
     CollectionReference settingsColl = _fs.collection(settingsCollection);
-    settingsColl.doc(profileManagementDoc).update(_profileManagement.toJson());
+    DocumentSnapshot doc = await settingsColl.doc(profileManagementDoc).get();
+    if (doc.exists) {
+      settingsColl
+          .doc(profileManagementDoc)
+          .update(_profileManagement.toJson());
+    } else {
+      settingsColl.doc(profileManagementDoc).set(_profileManagement.toJson());
+    }
   }
 
   ///*********************** Storage ****************************///
