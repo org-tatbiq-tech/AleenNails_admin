@@ -2,6 +2,7 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_card.dart';
@@ -446,9 +447,13 @@ class TimeLineState extends State<TimeLine> {
                                                       customTextButtonProps:
                                                           CustomTextButtonProps(
                                                         onTap: () => {
-                                                          Navigator.of(context)
-                                                              .pushNamed(
-                                                                  '/newAppointment'),
+                                                          Navigator.push(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const AppointmentScreen(),
+                                                            ),
+                                                          ),
                                                         },
                                                         text: Languages.of(
                                                                 context)!

@@ -2,10 +2,10 @@ import 'package:appointments/data_types/components.dart';
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/clients/clientSelection.dart';
 import 'package:appointments/screens/home/services/services.dart';
 import 'package:appointments/utils/general.dart';
-import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/widget/appointment/appointment_service_card.dart';
 import 'package:appointments/widget/client/client_card.dart';
 import 'package:appointments/widget/custom/custom_slide_able.dart';
@@ -221,6 +221,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
         clientEmail: selectedClient!.email,
         clientImageURL: selectedClient!.imageURL,
         creationDate: DateTime.now(),
+        discount: selectedClient!.discount,
         creator: AppointmentCreator
             .business, // will be used as enum AppointmentCreator
         lastEditor: AppointmentCreator

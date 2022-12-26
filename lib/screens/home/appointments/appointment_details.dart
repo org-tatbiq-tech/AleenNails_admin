@@ -21,7 +21,6 @@ import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/fade_animation.dart';
 import 'package:common_widgets/page_transition.dart';
-
 import 'package:common_widgets/read_more_text.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/flash_manager.dart';
@@ -406,11 +405,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
       setState(() {
         discountType = res['type'];
         discount = res['discount'];
-        if (discountType == DiscountType.percent) {
-          priceAfterDiscount = getPriceAfterDiscount();
-        } else {
-          priceAfterDiscount = getPriceAfterDiscount();
-        }
+        priceAfterDiscount = getPriceAfterDiscount();
       });
     }
 

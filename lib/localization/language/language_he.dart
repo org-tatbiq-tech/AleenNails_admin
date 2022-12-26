@@ -140,7 +140,7 @@ class LanguageHe extends Languages {
   @override
   String get businessNameLabel => "שם העסק";
   @override
-  String get socialMediaLabel => "מדיה";
+  String get socialMediaLabel => "סושיאל מדיה";
   @override
   String get facebookLabel => "פייסבוק";
   @override

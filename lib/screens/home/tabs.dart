@@ -3,6 +3,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
 import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
@@ -145,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   channelDescription: channel.description,
                   icon: android.smallIcon,
                   setAsGroupSummary: true,
-                  color: const Color(0xFF117050),
+                  color: const Color(0xFFf0e2e4),
                 ),
                 iOS: const DarwinNotificationDetails(
                   presentAlert: true,
@@ -276,7 +277,12 @@ class _HomeScreenState extends State<HomeScreen> {
           customButtonProps: CustomButtonProps(
             onTap: () => {
               Navigator.pop(context),
-              Navigator.of(context).pushNamed('/newAppointment'),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AppointmentScreen(),
+                ),
+              ),
             },
             text: Languages.of(context)!.newAppointmentLabel.toTitleCase(),
           ),
