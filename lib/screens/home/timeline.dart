@@ -357,7 +357,7 @@ class TimeLineState extends State<TimeLine> {
             centerTitle: WrapAlignment.center,
             titleWidget: Lottie.asset(
               'assets/images/hello.json',
-              repeat: true,
+              repeat: false,
               width: rSize(280),
               animate: true,
             ),
