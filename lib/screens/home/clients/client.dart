@@ -340,7 +340,7 @@ class _ClientWidgetState extends State<ClientWidget> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _nameController,
               keyboardType: TextInputType.text,
-              isDisabled: !isClientRegistered,
+              isDisabled: isClientRegistered,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(20),
               ],
@@ -376,7 +376,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _phoneController,
-              isDisabled: !isClientRegistered,
+              isDisabled: isClientRegistered,
               keyboardType: TextInputType.phone,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(10),
@@ -415,7 +415,7 @@ class _ClientWidgetState extends State<ClientWidget> {
             customInputFieldProps: CustomInputFieldProps(
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
-              isDisabled: !isClientRegistered,
+              isDisabled: isClientRegistered,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(40),
               ],
@@ -450,7 +450,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           CustomInputField(
             customInputFieldProps: CustomInputFieldProps(
               controller: _addressController,
-              isDisabled: !isClientRegistered,
+              isDisabled: isClientRegistered,
               keyboardType: TextInputType.text,
             ),
           ),
@@ -478,7 +478,7 @@ class _ClientWidgetState extends State<ClientWidget> {
             ),
           ),
           CustomInputFieldButton(
-            isDisabled: !isClientRegistered,
+            isDisabled: isClientRegistered,
             text: getDateTimeFormat(
               isDayOfWeek: true,
               dateTime: birthdayDate,
