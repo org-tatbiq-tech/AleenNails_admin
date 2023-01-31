@@ -67,6 +67,10 @@ class ClientsMgr extends ChangeNotifier {
   }
 
   Future<bool> checkEmailAvailability(String email, String? byClientId) async {
+    if (email.isEmpty) {
+      // This is for users created by the admin
+      return true;
+    }
     if (initialized) {
       for (Client client in _clients) {
         if (client.email == email &&
