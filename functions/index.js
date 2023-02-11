@@ -1,7 +1,12 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+
+// Cloud tasks initialization
+const { CloudTasksClient } = require('@google-cloud/tasks')
+
 admin.initializeApp();
-var path = require('path');
+let path = require('path');
+let crypto = require('crypto');
 
 // Macros
 const appointmentsCollection = "appointments";
@@ -11,8 +16,165 @@ const notificationsCollection = "notifications";
 const adminAppTitle = "Aleen Nails Admin";
 const clientAppTitle = "Aleen Nails";
 
+// Cloud tasks initialization
+const project = JSON.parse(process.env.FIREBASE_CONFIG).projectId
+// Cloud functions info
+const cloudFunctionsLocation = "us-central1"
+const notificationsTasksCallbackName = "notificationsTasksCallback"
+// Queue info
+const tasksQueueLocation = "europe-central2"
+const queue = "tasks-queue"
+
+
+// Tasks functions
+async function submitTask(payload, scheduleTime, taskCallbackName) {
+    const tasksClient = new CloudTasksClient();
+    const queuePath = tasksClient.queuePath(project, tasksQueueLocation, queue);
+    // Testing Url:
+    //           `https://us-central1-aleenclienttest.cloudfunctions.net/notificationsTasksCallback`
+    const url = `https://${cloudFunctionsLocation}-${project}.cloudfunctions.net/${taskCallbackName}`;
+    let task = {
+        httpRequest: {
+            httpMethod: 'POST',
+            url,
+            body: Buffer.from(JSON.stringify(payload)).toString('base64'),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            oidcToken: {
+              serviceAccountEmail: "aleennail-prod@appspot.gserviceaccount.com",
+            },
+        },
+        scheduleTime: {
+          seconds: scheduleTime
+        }
+    };
+
+    try {
+        return await tasksClient.createTask({ parent: queuePath, task });
+    } catch (error) {
+        console.log('Failed creating new reminder task', error);
+    }
+    return [];
+}
+
+async function generateReminderTask(appointmentId, appointmentDate, tokensDict, isClient) {
+    let reminders = [];
+
+    // Day before
+    let day_before_msg = 'תזכורת לתור שלך מחר אצל אלין! ';
+    day_before_msg += formatDate(appointmentDate.toDate());
+    let title = isClient ? clientAppTitle : adminAppTitle;
+    let dayBeforeDate = appointmentDate.toDate();
+    dayBeforeDate.setHours(dayBeforeDate.getHours()-24);
+    let payload = {
+        msg: day_before_msg,
+        title: title,
+        isClient: isClient,
+        tokens: tokensDict,
+        additionalInfo: {
+            appointment_id: appointmentId,
+            category: 'NotificationCategory.appointment',
+        }
+    }
+//    let d = new Date();
+//    d.setMinutes(d.getMinutes()+3);
+    if(dayBeforeDate > new Date()) {
+//    if(d > new Date()) {
+        let [response] = await submitTask(payload, dayBeforeDate.getTime()/1000, notificationsTasksCallbackName);
+//        let [response] = await submitTask(payload, d.getTime()/1000, notificationsTasksCallbackName);
+        if (response) {
+            console.log('reminder task name:', response.name);
+            reminders.push(response.name)
+        }
+    }
+
+    // 2 hours before
+    let two_hours_before_msg = 'תזכורת לתור שלך עוד שעתיים אצל אלין! ';
+    two_hours_before_msg += formatDate(appointmentDate.toDate());
+    let twoHoursBeforeDate = appointmentDate.toDate();
+    twoHoursBeforeDate.setHours(twoHoursBeforeDate.getHours()-2);
+    payload = {
+        msg: two_hours_before_msg,
+        title: title,
+        isClient: isClient,
+        tokens: tokensDict,
+        additionalInfo: {
+            appointment_id: appointmentId,
+            category: 'NotificationCategory.appointment',
+        }
+    }
+//    let d2 = new Date();
+//    d2.setMinutes(d2.getMinutes()+2);
+    if(twoHoursBeforeDate > new Date()) {
+//    if(d2 > new Date()) {
+          [response] = await submitTask(payload, twoHoursBeforeDate.getTime()/1000, notificationsTasksCallbackName);
+//        [response] = await submitTask(payload, d2.getTime()/1000, notificationsTasksCallbackName);
+        if (response) {
+            console.log('reminder 2 task name:', response.name);
+            reminders.push(response.name)
+        }
+    }
+    // Update appointment reminders tasks list
+    console.log('updating appointment', appointmentId)
+    const docRef  = await admin.firestore().collection(appointmentsCollection).doc(appointmentId);
+    await docRef.update({
+        reminders: reminders
+    });
+}
+
+async function cancelReminderTask(appointmentId, appointmentData) {
+    if (appointmentData.reminders) {
+        const tasksClient = new CloudTasksClient()
+        for (reminderTask of appointmentData.reminders) {
+            console.log('cancelling task', reminderTask);
+            try {
+                await tasksClient.deleteTask({ name: reminderTask });
+            } catch (error) {
+                console.log('error cancelling task', error);
+            }
+        }
+    }
+    const docRef  = await admin.firestore().collection(appointmentsCollection).doc(appointmentId);
+    await docRef.update({
+        reminders: []
+    });
+}
+
+// Notifications handler from tasks queue
+async function notificationsTasksHandler(req, res) {
+    const payload = req.body;
+    console.log(payload)
+    try {
+        const notificationContent = {
+            notification: {
+               title: payload.title,
+               body: payload.msg,
+               sound: 'default'
+           },
+           data: {
+               ...payload.additionalInfo,
+           }
+       };
+
+       if (payload.isClient) {
+            console.log('Sending task notification to client');
+            console.log(payload.tokens);
+            await sendClientNotification(payload.tokens, notificationContent);
+       } else {
+            console.log('Sending task notification to to admin');
+            await sendAdminNotification(payload.tokens, notificationContent);
+       }
+       res.send(200);
+    }
+    catch (error) {
+        console.error(error)
+        res.status(500).send(error)
+    }
+}
+
 function formatDate(date) {
-     return date.toLocaleString('he-IL', { year: 'numeric', month: 'short', day: 'numeric', 'hour': '2-digit', minute: '2-digit' })
+     return date.toLocaleString('he-IL', { timeZone:'Asia/Jerusalem', year: 'numeric', month: 'short', day: 'numeric', 'hour': '2-digit', minute: '2-digit' })
 }
 
 function isClient(editor) {
@@ -107,6 +269,11 @@ async function handleNewAppointment(snap, context) {
     const appointmentId = context.params.appointmentId;
     const newAppointmentData = snap.data();
     const clientDocID = newAppointmentData.clientDocID;
+    const clientTokens = await getClientTokens(clientDocID);
+    if(clientTokens) {
+         console.log('Send Message to schedule reminder');
+         await generateReminderTask(appointmentId, newAppointmentData.date, clientTokens, true);
+    }
     if ( isClient(newAppointmentData.creator) ) {
        console.log('Appointment created by client. need to notify the admin');
        // const clientName = newAppointmentData.clientName;
@@ -136,7 +303,6 @@ async function handleNewAppointment(snap, context) {
     }
     if ( isBusiness(newAppointmentData.creator) ) {
         console.log('Appointment created by business. need to notify the client');
-        const clientTokens = await getClientTokens(clientDocID);
         if(clientTokens) {
             // let msg = 'You have a new appointment! ' + formatDate(newAppointmentData.date.toDate());
             // msg += ' • ' + getServicesMessage(newAppointmentData.services);
@@ -182,6 +348,14 @@ async function handleUpdateAppointment(change, context) {
         let title = "";
         let msg = "";
         let clientDetails = {};
+        const clientTokens = await getClientTokens(clientDocID);
+        if(clientTokens) {
+            // will not send cancel schedule reminder since we can't control the order of the messages
+            // and because it will be overridden by the new scheduled notification for using the same id
+             console.log('Send Message to schedule reminder');
+             await cancelReminderTask(appointmentId, newValue);
+             await generateReminderTask(appointmentId, newValue.date, clientTokens, true);
+        }
         if (changedByClient) {
             title = adminAppTitle;
             // msg = 'An appointment has been rescheduled to ' + formatDate(newValue.date.toDate());
@@ -217,7 +391,6 @@ async function handleUpdateAppointment(change, context) {
             await sendAdminNotification(adminTokens, notificationContent);
             return;
         } else {
-            const clientTokens = await getClientTokens(clientDocID);
             if(clientTokens) {
                 console.log('Sending notification to ', newValue.clientName)
                 await sendClientNotification(clientTokens, notificationContent);
@@ -273,6 +446,8 @@ async function handleUpdateAppointment(change, context) {
            if(clientTokens) {
                console.log('Sending notification to ', newValue.clientName);
                await sendClientNotification(clientTokens, notificationContent);
+               console.log('Send Message to cancel old scheduled reminder');
+               await cancelReminderTask(appointmentId, newValue);
                return;
            }
         }
@@ -312,13 +487,17 @@ async function handleUpdateAppointment(change, context) {
                   category: 'NotificationCategory.appointment',
                 }
             };
+            const clientTokens = await getClientTokens(clientDocID);
+            if(clientTokens) {
+                console.log('Send Message to cancel old scheduled reminder');
+                await cancelReminderTask(appointmentId, newValue);
+            }
             console.log('Send notification about the canceled appointment')
             if (changedByClient) {
                 const adminTokens = await getAdminTokens();
                 await sendAdminNotification(adminTokens, notificationContent);
                 return;
             } else {
-                const clientTokens = await getClientTokens(clientDocID);
                 if(clientTokens) {
                     console.log('Sending notification to ', newValue.clientName);
                     await sendClientNotification(clientTokens, notificationContent);
@@ -411,3 +590,5 @@ exports.updateAppointment = functions.firestore.
 exports.updateClient = functions.firestore.
     document('clients/{any}').
     onUpdate(handleUpdateClient);
+
+exports.notificationsTasksCallback = functions.https.onRequest(notificationsTasksHandler);
