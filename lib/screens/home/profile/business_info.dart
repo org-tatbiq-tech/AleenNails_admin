@@ -535,7 +535,7 @@ class BusinessInfoState extends State<BusinessInfo> {
         BusinessInfoComp newData = BusinessInfoComp(
           name: _nameController.text,
           phone: _phoneController.text,
-          email: _emailController.text,
+          email: _emailController.text.toLowerCase(),
           address: _addressController.text,
           description: _descriptionController.text,
           facebookUrl: _facebookController.text,
