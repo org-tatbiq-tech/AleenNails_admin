@@ -1,53 +1,61 @@
 {
   "project_info": {
-    "project_number": "788313607719",
-    "project_id": "aleennail-prod",
-    "storage_bucket": "aleennail-prod.appspot.com"
+    "project_number": "1023132620086",
+    "project_id": "aleenclienttest",
+    "storage_bucket": "aleenclienttest.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:788313607719:android:92bc8f66adf2cb5a014802",
+        "mobilesdk_app_id": "1:1023132620086:android:63461084b13322b8740f97",
         "android_client_info": {
           "package_name": "com.s.isa.developments.aleen_nails_client"
         }
       },
       "oauth_client": [
         {
-          "client_id": "788313607719-8t6l72vvlq26kq5b5ilm3l97n5v8i216.apps.googleusercontent.com",
+          "client_id": "1023132620086-13t1vhe8p7uuqlu7uq6v3asopau2btj6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.s.isa.developments.aleen_nails_client",
-            "certificate_hash": "d0451588a2cf200824ccf4f3ee46bebd49bc81cb"
+            "certificate_hash": "30863732cb652dfedd2707b7f0651a539ac9c262"
           }
         },
         {
-          "client_id": "788313607719-nj5ulcena2noq67ens6ead3ptfgm941i.apps.googleusercontent.com",
+          "client_id": "1023132620086-2cc6t58k24b8m43ef64u4k7cl93sl53h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.s.isa.developments.aleen_nails_client",
-            "certificate_hash": "05e6594fa4111fb7b8627f5069ff632dfad2e8e5"
+            "certificate_hash": "609fdad9b5c55d9d34430de10466ec316cde8dfc"
           }
         },
         {
-          "client_id": "788313607719-ktvuube9e4u5lfnr18h8q7lb3rvpla54.apps.googleusercontent.com",
+          "client_id": "1023132620086-f354se6tf3d7l52ge64rcm5geajrqk70.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.s.isa.developments.aleen_nails_client",
+            "certificate_hash": "ecfef1d88f839d914b80b25d6766733e2c911346"
+          }
+        },
+        {
+          "client_id": "1023132620086-bl9i7sf60lcjem14577vhj5a0199jtqr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBjPozY0JKocRCJNawP89qZdMP7jXOtT_s"
+          "current_key": "AIzaSyBOKRvZzDiRZQWqC9TRIJG68w13aF0jlE0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "788313607719-ktvuube9e4u5lfnr18h8q7lb3rvpla54.apps.googleusercontent.com",
+              "client_id": "1023132620086-bl9i7sf60lcjem14577vhj5a0199jtqr.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "788313607719-8rijq9c47biblju0t7omsqv0bcfumh0q.apps.googleusercontent.com",
+              "client_id": "1023132620086-4dhrp1hqm5cfdou54b72d2qsjdh9o7d0.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.s.isa.developments.aleenNailsClient"
@@ -59,31 +67,31 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:788313607719:android:7f8a759cb6ac8b6f014802",
+        "mobilesdk_app_id": "1:1023132620086:android:5848048d7272da66740f97",
         "android_client_info": {
           "package_name": "com.s.isa.developments.appointments"
         }
       },
       "oauth_client": [
         {
-          "client_id": "788313607719-ktvuube9e4u5lfnr18h8q7lb3rvpla54.apps.googleusercontent.com",
+          "client_id": "1023132620086-bl9i7sf60lcjem14577vhj5a0199jtqr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBjPozY0JKocRCJNawP89qZdMP7jXOtT_s"
+          "current_key": "AIzaSyBOKRvZzDiRZQWqC9TRIJG68w13aF0jlE0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "788313607719-ktvuube9e4u5lfnr18h8q7lb3rvpla54.apps.googleusercontent.com",
+              "client_id": "1023132620086-bl9i7sf60lcjem14577vhj5a0199jtqr.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "788313607719-8rijq9c47biblju0t7omsqv0bcfumh0q.apps.googleusercontent.com",
+              "client_id": "1023132620086-4dhrp1hqm5cfdou54b72d2qsjdh9o7d0.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.s.isa.developments.aleenNailsClient"
