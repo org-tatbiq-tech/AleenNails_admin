@@ -1,5 +1,6 @@
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/screens/home/schedule_management/individual_day.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon_button.dart';
@@ -67,6 +68,21 @@ class ScheduleManagementState extends State<ScheduleManagement> {
                     title: Languages.of(context)!
                         .unavailabilityLabel
                         .toTitleCase(),
+                  ),
+                ),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                CustomIconButton(
+                  customIconButtonProps: CustomIconButtonProps(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const IndividualDay())),
+                    animationDelay: 0.7,
+                    iconPath: 'assets/icons/calendar_select.png',
+                    positionType: PositionType.bottom,
+                    title: Languages.of(context)!.individualDay.toTitleCase(),
                   ),
                 ),
               ],

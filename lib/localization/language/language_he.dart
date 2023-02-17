@@ -252,6 +252,11 @@ class LanguageHe extends Languages {
   String get reasonLabel => "סיבה";
   @override
   String get reasonHint => "הסבר קצר על סיבת האי-זמינות (מומלץ)";
+  @override
+  String get individualDay => "יום בודד";
+  @override
+  String get individualDayMessage =>
+      "להתאים את שעות הפתיחה מכל יום באופן עצמאי";
 
   ///************************************************************************///
   /// ************ Service Labels ************///
