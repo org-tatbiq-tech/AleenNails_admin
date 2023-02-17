@@ -102,7 +102,9 @@ class _LoginScreenState extends State<LoginScreen>
           return;
         }
         final UserCredential? user = await authMgr.signInWithEmailAndPassword(
-            _userEmailController.text, _passwordController.text, errorCallback);
+            _userEmailController.text.toLowerCase(),
+            _passwordController.text,
+            errorCallback);
         final userData = user?.user;
         if (userData != null) {
           if (_rememberMeValue) {

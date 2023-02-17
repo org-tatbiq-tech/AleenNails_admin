@@ -255,6 +255,11 @@ class LanguageEn extends Languages {
   String get reasonLabel => "reason";
   @override
   String get reasonHint => "short description of your reason (recommended)";
+  @override
+  String get individualDay => "individual day";
+  @override
+  String get individualDayMessage =>
+      "adjust opening hours from any day independently";
 
   ///************************************************************************///
   /// ************ Service Labels ************///

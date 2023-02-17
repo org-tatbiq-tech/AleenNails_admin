@@ -446,7 +446,7 @@ class Client {
       'fullName': fullName,
       'phone': phone,
       'address': address,
-      'email': email,
+      'email': email.toLowerCase(),
       'generalNotes': generalNotes,
       'birthday': birthday != null ? Timestamp.fromDate(birthday!) : '',
       'creationDate': Timestamp.fromDate(creationDate),
@@ -476,7 +476,7 @@ class Client {
       fullName: doc['fullName'],
       phone: doc['phone'],
       address: doc['address'],
-      email: doc['email'],
+      email: doc['email'].toString().toLowerCase(),
       creationDate: doc['creationDate'].toDate(),
       generalNotes: doc['generalNotes'] ?? "",
       birthday: doc['birthday'].toString().isNotEmpty

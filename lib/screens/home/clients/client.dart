@@ -655,7 +655,7 @@ class _ClientWidgetState extends State<ClientWidget> {
           fullName: _nameController.text,
           phone: _phoneController.text,
           address: _addressController.text,
-          email: _emailController.text,
+          email: _emailController.text.toLowerCase(),
           creationDate: widget.client?.creationDate ?? DateTime.now(),
           birthday: birthdayDate,
           generalNotes: _noteController.text,

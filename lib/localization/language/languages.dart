@@ -141,6 +141,8 @@ abstract class Languages {
   String get startDateTimeLabel;
   String get reasonLabel;
   String get reasonHint;
+  String get individualDay;
+  String get individualDayMessage;
 
   ///************************************************************************///
   /// ************ Service Labels ************///
