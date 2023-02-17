@@ -140,7 +140,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             Languages.of(context)!.labelForgotPassword,
                             style: Theme.of(context)
                                 .textTheme
-                                .headline1
+                                .displayLarge
                                 ?.copyWith(fontSize: rSize(28)),
                           ),
                           SizedBox(
@@ -148,7 +148,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           ),
                           Text(
                             Languages.of(context)!.labelFMessage,
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: Theme.of(context).textTheme.titleMedium,
                             textAlign: TextAlign.center,
                           ),
                         ],

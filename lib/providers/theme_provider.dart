@@ -44,8 +44,7 @@ class ThemeNotifier with ChangeNotifier {
       scaffoldBackgroundColor: primaryWithAlpha3,
       brightness: Brightness.light,
       shadowColor: primaryFontWithAlpha1,
-      backgroundColor: primaryWithAlpha3,
-      fontFamily: GoogleFonts.openSans().fontFamily,
+      fontFamily: GoogleFonts.heebo().fontFamily,
       dividerTheme: DividerThemeData(
         color: primary,
         thickness: rSize(1),
@@ -106,59 +105,80 @@ class ThemeNotifier with ChangeNotifier {
         splashColor: Colors.transparent,
       ),
       textTheme: TextTheme(
-        button: TextStyle(
+        bodyLarge: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w300,
           fontSize: rSize(16),
-          // height: rSize(1.3),
-          fontFamily: GoogleFonts.openSans().fontFamily,
         ),
-        subtitle1: TextStyle(
+        bodyMedium: TextStyle(
           color: primaryFont,
           fontWeight: FontWeight.w300,
           fontSize: rSize(14),
-          // height: rSize(1.2),
-          fontFamily: GoogleFonts.openSans().fontFamily,
         ),
-        subtitle2: TextStyle(
+        bodySmall: TextStyle(
           color: primaryFont,
           fontWeight: FontWeight.w300,
+          fontSize: rSize(12),
+        ),
+        labelLarge: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w500,
           fontSize: rSize(14),
-          // height: rSize(1.2),
-          fontFamily: GoogleFonts.secularOne().fontFamily,
         ),
-        bodyText1: TextStyle(
+        labelMedium: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w500,
+          fontSize: rSize(12),
+        ),
+        labelSmall: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w500,
+          fontSize: rSize(11),
+        ),
+        titleLarge: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w500,
+          fontSize: rSize(22),
+        ),
+        titleMedium: TextStyle(
           color: primaryFont,
           fontWeight: FontWeight.w500,
           fontSize: rSize(16),
-          // height: rSize(1.3),
-          fontFamily: GoogleFonts.openSans().fontFamily,
         ),
-        bodyText2: TextStyle(
+        titleSmall: TextStyle(
           color: primaryFont,
           fontWeight: FontWeight.w500,
-          fontSize: rSize(16),
-          // height: rSize(1.3),
-          fontFamily: GoogleFonts.secularOne().fontFamily,
+          fontSize: rSize(14),
         ),
-        headline1: TextStyle(
+        headlineLarge: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w700,
-          fontSize: rSize(20),
-          // height: rSize(1.3),
-          fontFamily: GoogleFonts.openSans().fontFamily,
+          fontWeight: FontWeight.w300,
+          fontSize: rSize(32),
         ),
-        headline2: TextStyle(
+        headlineMedium: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w700,
-          fontSize: rSize(20),
-          // height: rSize(1.3),
-          fontFamily: GoogleFonts.secularOne().fontFamily,
+          fontWeight: FontWeight.w300,
+          fontSize: rSize(28),
         ),
-        caption: TextStyle(
+        headlineSmall: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
-          fontSize: rSize(18),
+          fontWeight: FontWeight.w300,
+          fontSize: rSize(24),
+        ),
+        displayLarge: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w300,
+          fontSize: rSize(57),
+        ),
+        displayMedium: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w300,
+          fontSize: rSize(45),
+        ),
+        displaySmall: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w300,
+          fontSize: rSize(36),
         ),
       ),
       colorScheme: const ColorScheme.light().copyWith(

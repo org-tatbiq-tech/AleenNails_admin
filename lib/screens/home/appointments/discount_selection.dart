@@ -111,7 +111,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                       Languages.of(context)!.labelAddDiscount.toTitleCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: rSize(18),
                           ),
                     ),
@@ -162,22 +162,24 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                           Text(
                             getStringPrice(appointmentsMgr
                                 .selectedAppointment.servicesCost),
-                            style:
-                                Theme.of(context).textTheme.headline1?.copyWith(
-                                      decoration: TextDecoration.lineThrough,
-                                      decorationThickness: rSize(4),
-                                      decorationColor:
-                                          Theme.of(context).colorScheme.primary,
-                                      decorationStyle: TextDecorationStyle.wavy,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge
+                                ?.copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationThickness: rSize(4),
+                                  decorationColor:
+                                      Theme.of(context).colorScheme.primary,
+                                  decorationStyle: TextDecorationStyle.wavy,
+                                ),
                           ),
                           Text(
                             getNewPrice(),
-                            style: Theme.of(context).textTheme.headline1,
+                            style: Theme.of(context).textTheme.displayLarge,
                           ),
                           Text(
                             Languages.of(context)!.labelNewPrice,
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),

@@ -130,14 +130,14 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
               ),
               Text(
                 '${Languages.of(context)!.deletePhotoLabel.toTitleCase()}?',
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -260,7 +260,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                   ),
                   Text(
                     Languages.of(context)!.addMediaLabel.toTitleCase(),
-                    style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontSize: rSize(12),
                         ),
                   )
@@ -315,7 +315,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                 Languages.of(context)!
                     .workplacePhotoDescription
                     .toCapitalized(),
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(
                 height: rSize(40),

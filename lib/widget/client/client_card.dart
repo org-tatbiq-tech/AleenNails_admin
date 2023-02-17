@@ -36,7 +36,7 @@ class ClientCard extends StatelessWidget {
             () => navigateToClientDetails(clientCardProps.contactDetails),
         title: Text(
           clientCardProps.contactDetails.fullName,
-          style: Theme.of(context).textTheme.headline1?.copyWith(
+          style: Theme.of(context).textTheme.displayLarge?.copyWith(
                 fontSize: rSize(16),
               ),
         ),
@@ -46,7 +46,7 @@ class ClientCard extends StatelessWidget {
           ),
           child: Text(
             clientCardProps.contactDetails.phone,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontSize: rSize(14),
                 ),
           ),

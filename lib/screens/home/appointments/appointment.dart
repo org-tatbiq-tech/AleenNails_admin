@@ -317,7 +317,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                   Languages.of(context)!.servicesLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 selectedServices.isNotEmpty
                     ? CustomTextButton(
@@ -400,7 +400,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     Languages.of(context)!.startDateTimeLabel.toTitleCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
                 CustomInputFieldButton(
@@ -459,7 +459,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     Languages.of(context)!.endLabel.toTitleCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyText2,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
                 CustomInputFieldButton(
@@ -526,7 +526,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                               .toCapitalized(),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ),
                       IconTheme(
@@ -580,7 +580,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                 Languages.of(context)!.notesLabel.toTitleCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
             SizedBox(

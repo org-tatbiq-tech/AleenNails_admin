@@ -26,7 +26,7 @@ class ServiceCard extends StatelessWidget {
                 serviceCardProps.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.headline1?.copyWith(
+                style: Theme.of(context).textTheme.displayLarge?.copyWith(
                       fontSize: rSize(16),
                     ),
               )
@@ -35,7 +35,7 @@ class ServiceCard extends StatelessWidget {
             ? Text(
                 serviceCardProps.subTitle,
                 maxLines: 1,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               )
             : null,
         trailing: Column(
@@ -50,7 +50,7 @@ class ServiceCard extends StatelessWidget {
               children: [
                 Text(
                   getStringPrice(serviceCardProps.serviceDetails.cost),
-                  style: Theme.of(context).textTheme.headline1?.copyWith(
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
                         fontSize: rSize(16),
                       ),
                 ),

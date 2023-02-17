@@ -37,7 +37,7 @@ class ProfileImages extends StatelessWidget {
             children: [
               Text(
                 Languages.of(context)!.profileImageDescription.toCapitalized(),
-                style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: rSize(16),
                     ),
               ),

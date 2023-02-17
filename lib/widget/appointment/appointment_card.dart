@@ -43,7 +43,7 @@ class AppointmentCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   service.name,
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleMedium,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -64,7 +64,7 @@ class AppointmentCard extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => AppointmentDetails(),
+          builder: (context) => const AppointmentDetails(),
         ),
       );
     }
@@ -85,7 +85,7 @@ class AppointmentCard extends StatelessWidget {
             ? null
             : Text(
                 appointmentCardProps.appointmentDetails.notes,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
@@ -116,9 +116,7 @@ class AppointmentCard extends StatelessWidget {
                       getStringPrice(
                         appointmentCardProps.appointmentDetails.totalCost,
                       ),
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
-                            fontSize: rSize(14),
-                          ),
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     Text(
                       '${getDateTimeFormat(
@@ -129,7 +127,7 @@ class AppointmentCard extends StatelessWidget {
                             appointmentCardProps.appointmentDetails.endTime,
                         locale: getCurrentLocale(context),
                       )}',
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ],
                 ),

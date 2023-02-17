@@ -101,13 +101,14 @@ class TimeLineState extends State<TimeLine> {
   ) {
     // the height of each row in the description
     double fontSize =
-        Theme.of(context).textTheme.subtitle1?.fontSize ?? rSize(16);
-    double fontHeight = Theme.of(context).textTheme.subtitle1?.height ?? 1.4;
+        Theme.of(context).textTheme.titleMedium?.fontSize ?? rSize(16);
+    double fontHeight = Theme.of(context).textTheme.titleMedium?.height ?? 1.4;
 
     // This is the height of the title
-    double fontHeight2 = Theme.of(context).textTheme.headline1?.height ?? 1.4;
+    double fontHeight2 =
+        Theme.of(context).textTheme.displayLarge?.height ?? 1.4;
     double fontSize2 =
-        Theme.of(context).textTheme.headline1?.fontSize ?? rSize(22);
+        Theme.of(context).textTheme.displayLarge?.fontSize ?? rSize(22);
 
     // here will calculate the max available max line in the event
     int maxLines =
@@ -122,7 +123,7 @@ class TimeLineState extends State<TimeLine> {
           event.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.headline1?.copyWith(
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: darken(
                   event.backgroundColor ??
                       Theme.of(context).colorScheme.primary,
@@ -135,7 +136,7 @@ class TimeLineState extends State<TimeLine> {
             event.description,
             maxLines: maxLines != 0 ? maxLines : 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: darken(
                     event.backgroundColor ??
                         Theme.of(context).colorScheme.primary,
@@ -320,7 +321,7 @@ class TimeLineState extends State<TimeLine> {
                       ),
                       Text(
                         Languages.of(context)!.todayLabel.toCapitalized(),
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ],
                   ),

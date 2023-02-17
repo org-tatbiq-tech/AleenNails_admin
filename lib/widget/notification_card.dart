@@ -111,14 +111,14 @@ class NotificationCard extends StatelessWidget {
               ),
               Text(
                 '${Languages.of(context)!.rejectClientLabel.toTitleCase()}?',
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -170,7 +170,7 @@ class NotificationCard extends StatelessWidget {
             notificationCardProps.notificationDetails.notification['body'],
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyText2,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           subTitle: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -187,7 +187,7 @@ class NotificationCard extends StatelessWidget {
                     format: 'dd MMM yyyy • HH:mm',
                     locale: getCurrentLocale(context),
                   ),
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             ],

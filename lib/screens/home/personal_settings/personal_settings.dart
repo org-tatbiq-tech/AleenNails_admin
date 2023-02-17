@@ -78,7 +78,7 @@ class PersonalSettingsState extends State<PersonalSettings> {
             ),
             Text(
               Languages.of(context)!.logoutMsg,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ],
         ),

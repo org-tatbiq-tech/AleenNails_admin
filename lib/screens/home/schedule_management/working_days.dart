@@ -76,19 +76,19 @@ class _WorkingDaysState extends State<WorkingDays> {
                   children: [
                     Text(
                       '${Languages.of(context)!.breakLabel.toCapitalized()}: ',
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       getTimeOfDayFormat(dayBreak.startTime),
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       ' - ',
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       getTimeOfDayFormat(dayBreak.endTime),
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ]);
             }).toList()
@@ -117,7 +117,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                   Languages.of(context)!.businessHoursNotesLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               SizedBox(
@@ -170,7 +170,7 @@ class _WorkingDaysState extends State<WorkingDays> {
               Expanded(
                 child: Text(
                   getDayName(context, workingDay.day),
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Expanded(
@@ -184,15 +184,15 @@ class _WorkingDaysState extends State<WorkingDays> {
                             children: [
                               Text(
                                 getTimeOfDayFormat(workingDay.startTime),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               Text(
                                 ' - ',
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               Text(
                                 getTimeOfDayFormat(workingDay.endTime),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ],
                           ),
@@ -209,7 +209,7 @@ class _WorkingDaysState extends State<WorkingDays> {
                         children: [
                           Text(
                             Languages.of(context)!.closedLabel.toTitleCase(),
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),

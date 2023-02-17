@@ -189,14 +189,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               ),
               Text(
                 '${Languages.of(context)!.deletePhotoLabel.toTitleCase()}?',
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -332,7 +332,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 ),
                 Text(
                   Languages.of(context)!.addMediaLabel.toTitleCase(),
-                  style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: rSize(12),
                       ),
                 )
@@ -357,7 +357,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               Languages.of(context)!.colorLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           EaseInAnimation(
@@ -403,7 +403,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               Languages.of(context)!.permissionsLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           Row(
@@ -415,7 +415,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                 Languages.of(context)!.clientBookPermissionLabel.toTitleCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -438,7 +438,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                               Languages.of(context)!
                                   .clientBookPermissionModalBody
                                   .toCapitalized(),
-                              style: Theme.of(context).textTheme.bodyText1,
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
                         )
@@ -528,14 +528,14 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               ),
               Text(
                 '${Languages.of(context)!.deleteThisServiceLabel.toTitleCase()}?',
-                style: Theme.of(context).textTheme.bodyText2,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -586,7 +586,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                   Languages.of(context)!.messageToClientLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 CustomIcon(
                   customIconProps: CustomIconProps(
@@ -605,7 +605,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                             Languages.of(context)!
                                 .messageToClientModalBody
                                 .toCapitalized(),
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       )
@@ -652,7 +652,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               Languages.of(context)!.mediaLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           SingleChildScrollView(
@@ -694,7 +694,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               Languages.of(context)!.descriptionLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           SizedBox(
@@ -733,7 +733,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       Languages.of(context)!.priceLabel.toTitleCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   CustomInputField(
@@ -770,7 +770,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       Languages.of(context)!.durationLabel.toTitleCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),
                   CustomInputFieldButton(
@@ -834,7 +834,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
               Languages.of(context)!.serviceNameLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyText2,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           SizedBox(

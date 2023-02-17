@@ -37,13 +37,13 @@ class RoundedDropDown extends StatelessWidget {
                 hint,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .titleMedium
                     ?.copyWith(fontSize: rSize(12)),
                 overflow: TextOverflow.ellipsis,
               ),
               style: Theme.of(context)
                   .textTheme
-                  .bodyText1
+                  .bodyMedium
                   ?.copyWith(fontSize: rSize(12)),
               items: items,
               onChanged: (item) {

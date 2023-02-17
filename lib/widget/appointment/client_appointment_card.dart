@@ -96,7 +96,7 @@ class ClientAppointmentCard extends StatelessWidget {
                         clientAppointmentCardProps
                             .clientAppointmentDetails.totalCost,
                       ),
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: rSize(14),
                           ),
                     ),
@@ -168,7 +168,7 @@ class ClientAppointmentCard extends StatelessWidget {
                   format: 'dd',
                   locale: getCurrentLocale(context),
                 ),
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: rSize(22),
                     ),
               ),

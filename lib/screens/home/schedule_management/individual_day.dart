@@ -57,19 +57,19 @@ class _IndividualDayState extends State<IndividualDay> {
                   children: [
                     Text(
                       '${Languages.of(context)!.breakLabel.toCapitalized()}: ',
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       getTimeOfDayFormat(dayBreak.startTime),
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       ' - ',
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       getTimeOfDayFormat(dayBreak.endTime),
-                      style: Theme.of(context).textTheme.subtitle1,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ]);
             }).toList()
@@ -108,7 +108,7 @@ class _IndividualDayState extends State<IndividualDay> {
               Expanded(
                 child: Text(
                   getDayName(context, workingDay.day),
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               Expanded(
@@ -122,15 +122,15 @@ class _IndividualDayState extends State<IndividualDay> {
                             children: [
                               Text(
                                 getTimeOfDayFormat(workingDay.startTime),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               Text(
                                 ' - ',
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                               Text(
                                 getTimeOfDayFormat(workingDay.endTime),
-                                style: Theme.of(context).textTheme.bodyText1,
+                                style: Theme.of(context).textTheme.bodyMedium,
                               ),
                             ],
                           ),
@@ -147,7 +147,7 @@ class _IndividualDayState extends State<IndividualDay> {
                         children: [
                           Text(
                             Languages.of(context)!.closedLabel.toTitleCase(),
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
                       ),

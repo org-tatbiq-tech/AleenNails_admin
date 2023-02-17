@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen>
         ),
         Text(
           Languages.of(context)!.labelRememberMe,
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyMedium,
         )
       ],
     );
@@ -205,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen>
                             textAlign: TextAlign.center,
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2
+                                .bodyMedium
                                 ?.copyWith(fontSize: rSize(18)),
                           ),
                         ],

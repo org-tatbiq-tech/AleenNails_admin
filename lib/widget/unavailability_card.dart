@@ -24,14 +24,14 @@ class UnavailabilityCard extends StatelessWidget {
           unavailabilityCardProps.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.headline1?.copyWith(
+          style: Theme.of(context).textTheme.displayLarge?.copyWith(
                 fontSize: rSize(16),
               ),
         ),
         subTitle: unavailabilityCardProps.subTitle.isNotEmpty
             ? Text(
                 unavailabilityCardProps.subTitle,
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
                 maxLines: 2,
               )
             : null,
@@ -82,7 +82,7 @@ class UnavailabilityCard extends StatelessWidget {
                   isDayOfWeek: true,
                   locale: getCurrentLocale(context),
                 ),
-                style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: rSize(22),
                     ),
               ),
