@@ -54,7 +54,7 @@ class CheckoutCompletedState extends State<CheckoutCompleted> {
               ),
               Text(
                 'checkout complete'.toUpperCase(),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontSize: rSize(22),
                       color: successPrimaryColor,
                     ),

@@ -30,7 +30,6 @@ class ThemeNotifier with ChangeNotifier {
     shadowColor: Colors.black,
     colorScheme: const ColorScheme.dark()
         .copyWith(primary: Colors.red, secondary: Colors.pink),
-    backgroundColor: Colors.red,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.red,
       shadowColor: Colors.lightBlue,
@@ -70,8 +69,18 @@ class ThemeNotifier with ChangeNotifier {
         size: rSize(24),
         opacity: 1,
       ),
-      inputDecorationTheme: const InputDecorationTheme(
+      inputDecorationTheme: InputDecorationTheme(
         border: InputBorder.none,
+        hintStyle: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w300,
+          fontSize: rSize(16),
+        ),
+        labelStyle: TextStyle(
+          color: primaryFont,
+          fontWeight: FontWeight.w300,
+          fontSize: rSize(16),
+        ),
       ),
       appBarTheme: AppBarTheme(
         backgroundColor: primaryWithAlpha2,
@@ -79,10 +88,9 @@ class ThemeNotifier with ChangeNotifier {
         toolbarHeight: rSize(65),
         toolbarTextStyle: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w300,
           fontSize: rSize(16),
-          height: rSize(1.3),
-          fontFamily: GoogleFonts.secularOne().fontFamily,
+          fontFamily: GoogleFonts.heebo().fontFamily,
           decoration: TextDecoration.none,
         ),
         actionsIconTheme: IconThemeData(

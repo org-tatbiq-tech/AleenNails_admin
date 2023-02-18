@@ -105,7 +105,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
               ),
               Text(
                 '${Languages.of(context)!.rejectClientLabel.toTitleCase()}?',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
@@ -184,15 +184,15 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
                 client.fullName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
                 client.phone,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
                 client.email,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
@@ -219,14 +219,14 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
                 Languages.of(context)!.notesLabel.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             ReadMoreText(
               client.generalNotes != null && client.generalNotes!.isNotEmpty
                   ? client.generalNotes!
                   : Languages.of(context)!.notSetLabel.toTitleCase(),
-              customTextStyle: Theme.of(context).textTheme.bodyMedium,
+              customTextStyle: Theme.of(context).textTheme.titleMedium,
               trimLines: 2,
             ),
           ],
@@ -248,7 +248,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
               Languages.of(context)!.birthdayLabel.toUpperCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           Text(
@@ -259,7 +259,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
                 : Languages.of(context)!.notSetLabel.toTitleCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ],
       );

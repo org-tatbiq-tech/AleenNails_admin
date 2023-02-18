@@ -85,7 +85,7 @@ class AppointmentCard extends StatelessWidget {
             ? null
             : Text(
                 appointmentCardProps.appointmentDetails.notes,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
@@ -116,7 +116,7 @@ class AppointmentCard extends StatelessWidget {
                       getStringPrice(
                         appointmentCardProps.appointmentDetails.totalCost,
                       ),
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
                       '${getDateTimeFormat(
@@ -127,7 +127,7 @@ class AppointmentCard extends StatelessWidget {
                             appointmentCardProps.appointmentDetails.endTime,
                         locale: getCurrentLocale(context),
                       )}',
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
                 ),
@@ -170,7 +170,7 @@ class AppointmentCard extends StatelessWidget {
               appointmentCardProps.appointmentDetails.clientName,
               style: Theme.of(context)
                   .textTheme
-                  .subtitle2
+                  .titleMedium
                   ?.copyWith(fontSize: rSize(12)),
             ),
           ],

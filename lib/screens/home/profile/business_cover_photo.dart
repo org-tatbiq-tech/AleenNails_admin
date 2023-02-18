@@ -92,14 +92,14 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
               ),
               Text(
                 '${Languages.of(context)!.deleteCoverPhotoLabel.toCapitalized()}?',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),
@@ -175,7 +175,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
                             Languages.of(context)!
                                 .addCoverPhotoLabel
                                 .toTitleCase(),
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: Theme.of(context).textTheme.titleMedium,
                           )
                         ],
                       ),
@@ -354,7 +354,7 @@ class _BusinessCoverPhotoState extends State<BusinessCoverPhoto> {
               children: [
                 Text(
                   Languages.of(context)!.coverPhotoDescription.toCapitalized(),
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 SizedBox(
                   height: rSize(80),

@@ -116,7 +116,7 @@ class _DayDetailsState extends State<DayDetails> {
               children: [
                 Text(
                   Languages.of(context)!.workingOnThisDayLabel.toCapitalized(),
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -189,7 +189,7 @@ class _DayDetailsState extends State<DayDetails> {
                       Languages.of(context)!.startLabel.toCapitalized(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   CustomInputFieldButton(
@@ -220,7 +220,7 @@ class _DayDetailsState extends State<DayDetails> {
                       Languages.of(context)!.endLabel.toCapitalized(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   CustomInputFieldButton(
@@ -295,7 +295,7 @@ class _DayDetailsState extends State<DayDetails> {
             children: [
               Text(
                 Languages.of(context)!.breaksLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               CustomTextButton(
                 customTextButtonProps: CustomTextButtonProps(
@@ -347,7 +347,7 @@ class _DayDetailsState extends State<DayDetails> {
                     Languages.of(context)!.startLabel.toCapitalized(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
                 CustomInputFieldButton(
@@ -408,7 +408,7 @@ class _DayDetailsState extends State<DayDetails> {
                     Languages.of(context)!.endLabel.toCapitalized(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
                 CustomInputFieldButton(
@@ -486,7 +486,7 @@ class _DayDetailsState extends State<DayDetails> {
                   Languages.of(context)!
                       .dayDetailsDescriptionLabel
                       .toCapitalized(),
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: rSize(14),
                       ),
                 ),

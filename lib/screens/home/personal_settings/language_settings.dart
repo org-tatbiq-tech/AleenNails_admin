@@ -57,7 +57,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
         ),
         Text(
           name,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.titleMedium,
         ),
       ],
     );
@@ -101,7 +101,7 @@ class _LanguageSettingsState extends State<LanguageSettings> {
                     children: [
                       Text(
                         Languages.of(context)!.languageMsg,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       SizedBox(
                         height: rSize(20),

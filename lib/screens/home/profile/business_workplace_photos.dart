@@ -130,14 +130,14 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
               ),
               Text(
                 '${Languages.of(context)!.deletePhotoLabel.toTitleCase()}?',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),
@@ -315,7 +315,7 @@ class _BusinessWorkplacePhotosState extends State<BusinessWorkplacePhotos> {
                 Languages.of(context)!
                     .workplacePhotoDescription
                     .toCapitalized(),
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(40),

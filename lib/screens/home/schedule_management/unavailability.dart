@@ -81,7 +81,7 @@ class _UnavailabilityState extends State<Unavailability> {
             Languages.of(context)!.reasonLabel.toCapitalized(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         SizedBox(
@@ -122,7 +122,7 @@ class _UnavailabilityState extends State<Unavailability> {
                   Languages.of(context)!.startDateTimeLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               CustomInputFieldButton(
@@ -182,7 +182,7 @@ class _UnavailabilityState extends State<Unavailability> {
                   Languages.of(context)!.endLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               CustomInputFieldButton(
@@ -297,7 +297,7 @@ class _UnavailabilityState extends State<Unavailability> {
               ),
               Text(
                 '${Languages.of(context)!.unavailabilityDeleteLabel.toCapitalized()}?',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
@@ -369,7 +369,7 @@ class _UnavailabilityState extends State<Unavailability> {
                           '${Languages.of(context)!.unavailabilityListLabel.toTitleCase()} (${settingsMgr.scheduleManagement.unavailabilityList!.length})',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                     ],

@@ -31,7 +31,7 @@ class _NotificationSettingsScreenState
             Languages.of(context)!.notificationsTitle,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,7 +42,7 @@ class _NotificationSettingsScreenState
                 Languages.of(context)!.notificationsMsg,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 width: rSize(70),
@@ -81,7 +81,7 @@ class _NotificationSettingsScreenState
             Languages.of(context)!.labelNotification,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(
             height: rSize(10),
@@ -94,7 +94,7 @@ class _NotificationSettingsScreenState
                 Languages.of(context)!.notificationsMsg,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               trailing: IconTheme(
                 data: Theme.of(context).primaryIconTheme,

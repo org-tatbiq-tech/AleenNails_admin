@@ -1,7 +1,6 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_list_tile.dart';
-import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +16,6 @@ class ServiceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomListTile(
       customListTileProps: CustomListTileProps(
-        // minLeadingWidth: 10,
-        // marginBottom: 15,
         enabled: serviceCardProps.enabled,
         onTap: serviceCardProps.onTap,
         title: serviceCardProps.title.isNotEmpty
@@ -26,16 +23,14 @@ class ServiceCard extends StatelessWidget {
                 serviceCardProps.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                      fontSize: rSize(16),
-                    ),
+                style: Theme.of(context).textTheme.titleMedium,
               )
             : null,
         subTitle: serviceCardProps.subTitle.isNotEmpty
             ? Text(
                 serviceCardProps.subTitle,
                 maxLines: 1,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               )
             : null,
         trailing: Column(
@@ -50,9 +45,7 @@ class ServiceCard extends StatelessWidget {
               children: [
                 Text(
                   getStringPrice(serviceCardProps.serviceDetails.cost),
-                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                        fontSize: rSize(16),
-                      ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 SizedBox(
                   width: rSize(5),

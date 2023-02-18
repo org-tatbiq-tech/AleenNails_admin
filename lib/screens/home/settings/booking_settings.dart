@@ -141,63 +141,63 @@ class _BookingsSettingsState extends State<BookingsSettings> {
               ),
               Text(
                 Languages.of(context)!.labelAutomaticallyConfirm,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.labelAutomaticallyConfirmMsg,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.labelAutomaticallyConfirmMsgCompletion,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(
                 height: rSize(30),
               ),
               Text(
                 Languages.of(context)!.labelBookingInAdvanceTitle,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.labelBookingInAdvanceExplanation,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(
                 height: rSize(30),
               ),
               Text(
                 Languages.of(context)!.labelFutureBooking,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.labelFutureBookingExplanation,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(
                 height: rSize(30),
               ),
               Text(
                 Languages.of(context)!.labelReschedulingWindow,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.labelReschedulingExplanation,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),
@@ -213,7 +213,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
         children: [
           Text(
             Languages.of(context)!.labelRules,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(
             height: rSize(20),
@@ -226,7 +226,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
             ),
             child: Text(
               Languages.of(context)!.labelBookingInAdvanceTitle,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           CustomInputFieldButton(
@@ -259,7 +259,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
             ),
             child: Text(
               Languages.of(context)!.labelFutureBooking,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           CustomInputFieldButton(
@@ -292,7 +292,7 @@ class _BookingsSettingsState extends State<BookingsSettings> {
             ),
             child: Text(
               Languages.of(context)!.labelReschedulingWindow,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ),
           CustomInputFieldButton(
@@ -334,14 +334,14 @@ class _BookingsSettingsState extends State<BookingsSettings> {
                 children: [
                   Text(
                     Languages.of(context)!.labelAutomaticallyConfirm,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   SizedBox(
                     height: rSize(10),
                   ),
                   Text(
                     Languages.of(context)!.labelAutomaticallyConfirmMsg,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),

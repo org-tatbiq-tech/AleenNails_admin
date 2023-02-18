@@ -43,7 +43,7 @@ class RoundedDropDown extends StatelessWidget {
               ),
               style: Theme.of(context)
                   .textTheme
-                  .bodyMedium
+                  .titleMedium
                   ?.copyWith(fontSize: rSize(12)),
               items: items,
               onChanged: (item) {

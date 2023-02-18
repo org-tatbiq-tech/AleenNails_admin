@@ -181,10 +181,10 @@ packages:
     dependency: "direct main"
     description:
       name: common_widgets
-      sha256: "8f2a836436957ca71b0367ea7b6eb3d60c74eb75fd266612530edc9c052ab665"
+      sha256: b8704eff321dee8174696b7c96f3a928eef9959a1bc19778ece2ba2ea76b942d
       url: "https://dart.cloudsmith.io/ahmad-manaa-44N/common-widgets/"
     source: hosted
-    version: "0.1.6"
+    version: "0.1.8"
   connectivity_plus:
     dependency: "direct main"
     description:

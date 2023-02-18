@@ -96,7 +96,7 @@ class AppointmentStatusComp extends StatelessWidget {
                   .toUpperCase()
               : getPaymentStatusText(customStatusProps.paymentStatus!)
                   .toUpperCase(),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontSize: rSize(customStatusProps.fontSize),
                 color: customStatusProps.appointmentStatus != null
                     ? getAppointmentStatusColor(

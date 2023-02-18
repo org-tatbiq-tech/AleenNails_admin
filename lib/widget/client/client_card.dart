@@ -44,7 +44,7 @@ class ClientCard extends StatelessWidget {
           ),
           child: Text(
             clientCardProps.contactDetails.phone,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
         trailing: Row(

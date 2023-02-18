@@ -277,7 +277,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 Languages.of(context)!
                     .cancelThisAppointmentLabel
                     .toCapitalized(),
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
@@ -325,7 +325,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 Languages.of(context)!
                     .cancelThisAppointmentLabel
                     .toCapitalized(),
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
@@ -373,7 +373,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 Languages.of(context)!
                     .cancelThisAppointmentLabel
                     .toCapitalized(),
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
@@ -705,7 +705,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         children: [
           Text(
             '${Languages.of(context)!.idLabel.toUpperCase()}: ${appointment.id}',
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
           Padding(
             padding: EdgeInsets.symmetric(
@@ -714,14 +714,14 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             child: Icon(
               Icons.circle,
               size: rSize(6),
-              color: Theme.of(context).textTheme.bodyMedium!.color,
+              color: Theme.of(context).textTheme.titleMedium!.color,
             ),
           ),
           Text(
             appointment.creator == AppointmentCreator.business
                 ? Languages.of(context)!.businessLabel.toTitleCase()
                 : Languages.of(context)!.clientLabel.toTitleCase(),
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ],
       );
@@ -742,7 +742,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               '${Languages.of(context)!.servicesLabel.toTitleCase()} ($servicesLength)',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           Expanded(
@@ -829,7 +829,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   Text(
                     '${getDateTimeFormat(
@@ -843,7 +843,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     )}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ],
               ),
@@ -864,7 +864,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               Languages.of(context)!.notesLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             SizedBox(
               height: rSize(5),
@@ -932,7 +932,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                   appointment.clientName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               FadeAnimation(
@@ -940,7 +940,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 positionType: PositionType.left,
                 child: Text(
                   appointment.clientPhone,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               SizedBox(

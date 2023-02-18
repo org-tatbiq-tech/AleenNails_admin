@@ -135,14 +135,14 @@ class _BusinessLogoState extends State<BusinessLogo> {
               ),
               Text(
                 '${Languages.of(context)!.deleteLogoLabel.toTitleCase()}?',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
                 height: rSize(10),
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),
@@ -214,7 +214,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                           ),
                           Text(
                             Languages.of(context)!.addLogoLabel.toTitleCase(),
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: Theme.of(context).textTheme.titleMedium,
                           )
                         ],
                       ),
@@ -379,7 +379,7 @@ class _BusinessLogoState extends State<BusinessLogo> {
                     children: [
                       Text(
                         Languages.of(context)!.logoDescription.toCapitalized(),
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       SizedBox(
                         height: rSize(40),

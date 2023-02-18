@@ -38,7 +38,7 @@ class InternetConnectionScreenState extends State<InternetConnectionScreen> {
                 ),
                 Text(
                   'Oooops!',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: rSize(30),
                         color: Theme.of(context).colorScheme.primary,
                       ),
@@ -49,14 +49,14 @@ class InternetConnectionScreenState extends State<InternetConnectionScreen> {
                 ),
                 Text(
                   'No internet connection.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: rSize(16),
                       ),
                   textAlign: TextAlign.center,
                 ),
                 Text(
                   'Please check your internet settings.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontSize: rSize(16),
                       ),
                   textAlign: TextAlign.center,

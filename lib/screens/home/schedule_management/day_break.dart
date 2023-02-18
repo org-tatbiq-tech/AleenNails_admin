@@ -71,7 +71,7 @@ class _DayBreakState extends State<DayBreak> {
                     Languages.of(context)!.startLabel.toTitleCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
                 CustomInputFieldButton(
@@ -133,7 +133,7 @@ class _DayBreakState extends State<DayBreak> {
                     Languages.of(context)!.endLabel.toTitleCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
                 CustomInputFieldButton(

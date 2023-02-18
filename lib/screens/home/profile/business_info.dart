@@ -129,7 +129,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               Languages.of(context)!.socialMediaLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           CustomInputField(
@@ -276,7 +276,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               Languages.of(context)!.businessDescriptionLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           SizedBox(
@@ -312,7 +312,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               Languages.of(context)!.emailAddressLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           CustomInputField(
@@ -363,7 +363,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               Languages.of(context)!.addressLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           CustomInputField(
@@ -385,7 +385,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               Languages.of(context)!.locationLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           Row(
@@ -413,7 +413,7 @@ class BusinessInfoState extends State<BusinessInfo> {
                           Languages.of(context)!
                               .blockedClientModalBody
                               .toCapitalized(),
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                     )
@@ -472,7 +472,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               Languages.of(context)!.phoneNumberLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           CustomInputField(
@@ -506,7 +506,7 @@ class BusinessInfoState extends State<BusinessInfo> {
               Languages.of(context)!.businessNameLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           CustomInputField(

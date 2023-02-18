@@ -24,14 +24,12 @@ class UnavailabilityCard extends StatelessWidget {
           unavailabilityCardProps.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                fontSize: rSize(16),
-              ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         subTitle: unavailabilityCardProps.subTitle.isNotEmpty
             ? Text(
                 unavailabilityCardProps.subTitle,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
                 maxLines: 2,
               )
             : null,
@@ -82,9 +80,7 @@ class UnavailabilityCard extends StatelessWidget {
                   isDayOfWeek: true,
                   locale: getCurrentLocale(context),
                 ),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: rSize(22),
-                    ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               Text(
                 getDateTimeFormat(
@@ -93,9 +89,7 @@ class UnavailabilityCard extends StatelessWidget {
                   format: 'MMM',
                   locale: getCurrentLocale(context),
                 ),
-                style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                      fontSize: rSize(12),
-                    ),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
               SizedBox(
                 height: rSize(2),
@@ -107,9 +101,7 @@ class UnavailabilityCard extends StatelessWidget {
                   format: 'yyyy',
                   locale: getCurrentLocale(context),
                 ),
-                style: Theme.of(context).textTheme.subtitle2?.copyWith(
-                      fontSize: rSize(12),
-                    ),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ],
           ),

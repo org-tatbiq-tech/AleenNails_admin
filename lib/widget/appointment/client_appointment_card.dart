@@ -28,7 +28,7 @@ class ClientAppointmentCard extends StatelessWidget {
           ),
           child: Text(
             service,
-            style: Theme.of(context).textTheme.subtitle2,
+            style: Theme.of(context).textTheme.titleMedium,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -96,7 +96,7 @@ class ClientAppointmentCard extends StatelessWidget {
                         clientAppointmentCardProps
                             .clientAppointmentDetails.totalCost,
                       ),
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontSize: rSize(14),
                           ),
                     ),
@@ -110,7 +110,7 @@ class ClientAppointmentCard extends StatelessWidget {
                             .clientAppointmentDetails.endTime,
                         locale: getCurrentLocale(context),
                       )}',
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
                 ),
@@ -158,7 +158,7 @@ class ClientAppointmentCard extends StatelessWidget {
                 ),
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2
+                    .titleMedium
                     ?.copyWith(fontSize: rSize(12)),
               ),
               Text(
@@ -168,7 +168,7 @@ class ClientAppointmentCard extends StatelessWidget {
                   format: 'dd',
                   locale: getCurrentLocale(context),
                 ),
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontSize: rSize(22),
                     ),
               ),
@@ -176,12 +176,12 @@ class ClientAppointmentCard extends StatelessWidget {
                 getDateTimeFormat(
                   dateTime: clientAppointmentCardProps
                       .clientAppointmentDetails.startTime,
-                  format: 'yyyy',
+                  format: 'MMMM',
                   locale: getCurrentLocale(context),
                 ),
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2
+                    .titleMedium
                     ?.copyWith(fontSize: rSize(12)),
               ),
             ],

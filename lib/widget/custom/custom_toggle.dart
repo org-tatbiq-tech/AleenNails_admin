@@ -48,7 +48,7 @@ class CustomToggle extends StatelessWidget {
                     height: height,
                     child: Text(
                       '₪',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontSize: rSize(18),
                             color: xAlign == -1
                                 ? Theme.of(context).colorScheme.onPrimary
@@ -69,7 +69,7 @@ class CustomToggle extends StatelessWidget {
                     height: height,
                     child: Text(
                       '%',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontSize: rSize(18),
                             color: xAlign == 1
                                 ? Theme.of(context).colorScheme.onPrimary

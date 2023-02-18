@@ -4,12 +4,12 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/appointments_mgr.dart';
 import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/screens/home/appointments/appointment_details.dart';
-import 'package:appointments/screens/home/custom_expandable_calendar.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:appointments/widget/appointment/appointment_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_day_view.dart';
+import 'package:common_widgets/custom_expandable_calendar.dart';
 import 'package:common_widgets/custom_loading-indicator.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
@@ -105,10 +105,9 @@ class TimeLineState extends State<TimeLine> {
     double fontHeight = Theme.of(context).textTheme.titleMedium?.height ?? 1.4;
 
     // This is the height of the title
-    double fontHeight2 =
-        Theme.of(context).textTheme.displayLarge?.height ?? 1.4;
+    double fontHeight2 = Theme.of(context).textTheme.bodyLarge?.height ?? 1.4;
     double fontSize2 =
-        Theme.of(context).textTheme.displayLarge?.fontSize ?? rSize(22);
+        Theme.of(context).textTheme.bodyLarge?.fontSize ?? rSize(22);
 
     // here will calculate the max available max line in the event
     int maxLines =
@@ -123,7 +122,7 @@ class TimeLineState extends State<TimeLine> {
           event.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: darken(
                   event.backgroundColor ??
                       Theme.of(context).colorScheme.primary,
@@ -136,7 +135,7 @@ class TimeLineState extends State<TimeLine> {
             event.description,
             maxLines: maxLines != 0 ? maxLines : 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   color: darken(
                     event.backgroundColor ??
                         Theme.of(context).colorScheme.primary,

@@ -111,7 +111,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                       Languages.of(context)!.labelAddDiscount.toTitleCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             fontSize: rSize(18),
                           ),
                     ),
@@ -179,7 +179,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                           ),
                           Text(
                             Languages.of(context)!.labelNewPrice,
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: Theme.of(context).textTheme.titleMedium,
                           ),
                         ],
                       ),
