@@ -55,7 +55,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClientUpcomingAppointments.length.toString()})',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 CustomTextButton(
                   customTextButtonProps: CustomTextButtonProps(
@@ -125,7 +125,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     Languages.of(context)!.birthdayLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 Text(
@@ -136,7 +136,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                       : Languages.of(context)!.notSetLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -158,7 +158,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyMedium
+                        .bodyLarge
                         ?.copyWith(color: Theme.of(context).colorScheme.error),
                   ),
                 ),
@@ -170,7 +170,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyMedium
+                      .titleMedium
                       ?.copyWith(color: Theme.of(context).colorScheme.error),
                 ),
               ],
@@ -201,7 +201,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     Languages.of(context)!.lastVisitLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 Text(
@@ -212,7 +212,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                       : Languages.of(context)!.notSetLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -232,14 +232,14 @@ class _ClientDetailsState extends State<ClientDetails> {
                     Languages.of(context)!.discountLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 Text(
                   '${client.discount}%',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -269,14 +269,14 @@ class _ClientDetailsState extends State<ClientDetails> {
                     Languages.of(context)!.totalRevenueLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 Text(
                   client.totalRevenue.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -296,7 +296,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                     Languages.of(context)!.trustedClientLabel.toUpperCase(),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 Text(
@@ -305,7 +305,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                       : Languages.of(context)!.noLabel.toTitleCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -329,14 +329,14 @@ class _ClientDetailsState extends State<ClientDetails> {
                 Languages.of(context)!.notesLabel.toUpperCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ),
             ReadMoreText(
               client.generalNotes!.isNotEmpty
                   ? client.generalNotes!
                   : Languages.of(context)!.notSetLabel.toTitleCase(),
-              customTextStyle: Theme.of(context).textTheme.bodyMedium,
+              customTextStyle: Theme.of(context).textTheme.titleMedium,
               trimLines: 2,
             ),
           ],
@@ -371,14 +371,14 @@ class _ClientDetailsState extends State<ClientDetails> {
                   Languages.of(context)!.appointmentsLabel.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   clientsMgr.selectedClientUpcomingAppointments.length
                       .toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -397,14 +397,14 @@ class _ClientDetailsState extends State<ClientDetails> {
                   Languages.of(context)!.cancellationLabel.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   clientsMgr.selectedClientCancelledAppointments.length
                       .toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -423,7 +423,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   Languages.of(context)!.noShowLabel.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Theme.of(context).colorScheme.error,
                       ),
                 ),
@@ -431,7 +431,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   clientsMgr.selectedClientNoShowAppointments.length.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).colorScheme.error,
                       ),
                 ),
@@ -545,15 +545,15 @@ class _ClientDetailsState extends State<ClientDetails> {
                   client.fullName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
                   client.phone,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   client.email,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 SizedBox(
                   height: rSize(20),

@@ -122,32 +122,32 @@ class ThemeNotifier with ChangeNotifier {
         ),
         labelLarge: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: rSize(14),
         ),
         labelMedium: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: rSize(12),
         ),
         labelSmall: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: rSize(11),
         ),
         titleLarge: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: rSize(22),
         ),
         titleMedium: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: rSize(16),
         ),
         titleSmall: TextStyle(
           color: primaryFont,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w600,
           fontSize: rSize(14),
         ),
         headlineLarge: TextStyle(

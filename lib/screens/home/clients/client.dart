@@ -135,7 +135,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               Languages.of(context)!.permissionsLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           Row(
@@ -147,7 +147,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                 Languages.of(context)!.isTrustedClientLabel.toTitleCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,7 +169,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                               Languages.of(context)!
                                   .trustedClientModalBody
                                   .toCapitalized(),
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
                         )
@@ -216,7 +216,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                 Languages.of(context)!.isBlockedClientLabel.toTitleCase(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,7 +238,7 @@ class _ClientWidgetState extends State<ClientWidget> {
                               Languages.of(context)!
                                   .blockedClientModalBody
                                   .toCapitalized(),
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
                         )
@@ -296,7 +296,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               Languages.of(context)!.notesLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           SizedBox(
@@ -330,7 +330,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               Languages.of(context)!.fullNameLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           SizedBox(
@@ -367,7 +367,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               Languages.of(context)!.phoneNumberLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           SizedBox(
@@ -405,7 +405,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               Languages.of(context)!.emailAddressLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           SizedBox(
@@ -441,7 +441,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               Languages.of(context)!.addressLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           SizedBox(
@@ -474,7 +474,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               Languages.of(context)!.birthdayLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           CustomInputFieldButton(
@@ -582,7 +582,7 @@ class _ClientWidgetState extends State<ClientWidget> {
               Languages.of(context)!.discountLabel.toTitleCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
           SizedBox(

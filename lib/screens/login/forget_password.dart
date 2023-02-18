@@ -138,17 +138,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         children: [
                           Text(
                             Languages.of(context)!.labelForgotPassword,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge
-                                ?.copyWith(fontSize: rSize(28)),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                           SizedBox(
                             height: rSize(10),
                           ),
                           Text(
                             Languages.of(context)!.labelFMessage,
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.bodyLarge,
                             textAlign: TextAlign.center,
                           ),
                         ],

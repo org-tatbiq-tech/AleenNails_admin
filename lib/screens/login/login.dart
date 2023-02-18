@@ -8,7 +8,6 @@ import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_input_field.dart';
 import 'package:common_widgets/custom_loading_dialog.dart';
 import 'package:common_widgets/custom_text_button.dart';
-
 import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen>
   final TextEditingController _userEmailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _rememberMeValue = false;
+  bool _rememberMeValue = true;
 
   bool _isPasswordVisible = false;
 
@@ -147,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen>
         ),
         Text(
           Languages.of(context)!.labelRememberMe,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyLarge,
         )
       ],
     );
@@ -189,8 +188,11 @@ class _LoginScreenState extends State<LoginScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      SizedBox(
+                        height: rSize(40),
+                      ),
                       Image(
-                        image: AssetImage('assets/images/main_logo.png'),
+                        image: const AssetImage('assets/images/main_logo.png'),
                         width: rSize(200),
                         fit: BoxFit.cover,
                       ),
@@ -203,15 +205,12 @@ class _LoginScreenState extends State<LoginScreen>
                           Text(
                             Languages.of(context)!.labelEnterLoginDetails,
                             textAlign: TextAlign.center,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(fontSize: rSize(18)),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       ),
                       SizedBox(
-                        height: rSize(40),
+                        height: rSize(60),
                       ),
                       CustomInputField(
                         customInputFieldProps: CustomInputFieldProps(
@@ -219,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen>
                           prefixIcon: IconTheme(
                             data: Theme.of(context).primaryIconTheme,
                             child: Icon(
-                              FontAwesomeIcons.userAlt,
+                              FontAwesomeIcons.userLarge,
                               size: rSize(20),
                             ),
                           ),
