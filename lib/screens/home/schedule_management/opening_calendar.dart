@@ -1,6 +1,8 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/providers/theme_provider.dart';
+import 'package:appointments/screens/home/schedule_management/add_leave.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_container.dart';
@@ -15,14 +17,14 @@ import 'package:table_calendar/table_calendar.dart';
 
 import 'day_details.dart';
 
-class IndividualDay extends StatefulWidget {
-  const IndividualDay({Key? key}) : super(key: key);
+class OpeningCalendar extends StatefulWidget {
+  const OpeningCalendar({Key? key}) : super(key: key);
 
   @override
-  State<IndividualDay> createState() => _IndividualDayState();
+  State<OpeningCalendar> createState() => _OpeningCalendarState();
 }
 
-class _IndividualDayState extends State<IndividualDay> {
+class _OpeningCalendarState extends State<OpeningCalendar> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
@@ -57,19 +59,19 @@ class _IndividualDayState extends State<IndividualDay> {
                   children: [
                     Text(
                       '${Languages.of(context)!.breakLabel.toCapitalized()}: ',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       getTimeOfDayFormat(dayBreak.startTime),
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       ' - ',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       getTimeOfDayFormat(dayBreak.endTime),
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ]);
             }).toList()
@@ -78,27 +80,25 @@ class _IndividualDayState extends State<IndividualDay> {
     }
 
     renderDay({required WorkingDay workingDay}) {
-      getDayDetails() async {
-        await Navigator.push(
+      openDayDetails() {
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => DayDetails(
               workingDay: workingDay,
+              isIndividualWorkingDay: true,
             ),
           ),
         );
-        // setState(() {
-        //   isSaveDisabled = false;
-        // });
       }
 
       return EaseInAnimation(
         beginAnimation: 1,
-        onTap: () => getDayDetails(),
+        onTap: () => openDayDetails(),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: rSize(10),
-            vertical: rSize(10),
+            // vertical: rSize(10),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -122,15 +122,15 @@ class _IndividualDayState extends State<IndividualDay> {
                             children: [
                               Text(
                                 getTimeOfDayFormat(workingDay.startTime),
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               Text(
                                 ' - ',
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               Text(
                                 getTimeOfDayFormat(workingDay.endTime),
-                                style: Theme.of(context).textTheme.titleMedium,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -147,7 +147,7 @@ class _IndividualDayState extends State<IndividualDay> {
                         children: [
                           Text(
                             Languages.of(context)!.closedLabel.toTitleCase(),
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ],
                       ),
@@ -168,15 +168,38 @@ class _IndividualDayState extends State<IndividualDay> {
     return CustomContainer(
       imagePath: 'assets/images/background4.png',
       child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton(
+          elevation: 4.0,
+          splashColor: Colors.transparent,
+          onPressed: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddLeave(),
+              ),
+            )
+          },
+          child: CustomIcon(
+            customIconProps: CustomIconProps(
+              icon: null,
+              path: 'assets/icons/vacation.png',
+              backgroundColor: Colors.transparent,
+              containerSize: 30,
+              iconColor: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ),
         backgroundColor: Colors.transparent,
         appBar: CustomAppBar(
           customAppBarProps: CustomAppBarProps(
             withBorder: true,
-            isTransparent: false,
+            isTransparent: true,
             withBack: true,
-            withSave: true,
+            withSave: false,
+            barHeight: 75,
             // centerTitle: WrapAlignment.center,
-            titleText: Languages.of(context)!.individualDay,
+            titleText: Languages.of(context)!.openingCalendarLabel,
           ),
         ),
         body: Consumer<SettingsMgr>(
@@ -210,7 +233,7 @@ class _IndividualDayState extends State<IndividualDay> {
                   Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: rSize(20),
-                      vertical: rSize(20),
+                      vertical: rSize(30),
                     ),
                     child: Column(
                       children: [
@@ -230,15 +253,21 @@ class _IndividualDayState extends State<IndividualDay> {
                             SizedBox(
                               width: rSize(10),
                             ),
-                            Text(Languages.of(context)!.individualDayMessage),
+                            Text(Languages.of(context)!.openingCalendarMessage),
                           ],
                         ),
                         SizedBox(
                           height: rSize(20),
                         ),
+                        Divider(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
                         renderDay(
                           workingDay: settingsMgr.scheduleManagement
                               .workingDays!.schedule![workingDaysList[0]]!,
+                        ),
+                        Divider(
+                          color: Theme.of(context).colorScheme.onBackground,
                         ),
                       ],
                     ),

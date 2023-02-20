@@ -268,9 +268,13 @@ class LanguageAr extends Languages {
   @override
   String get reasonHint => "وصف قصير للسبب (مفضل)";
   @override
-  String get individualDay => "يوم فردي";
+  String get openingCalendarLabel => "فتح التقويم";
   @override
-  String get individualDayMessage => "ضبط ساعات العمل من أي يوم بشكل مستقل";
+  String get openingCalendarMessage => "ضبط ساعات العمل من أي يوم بشكل مستقل";
+  @override
+  String get addLeaveLabel => "أضف إجازة";
+  @override
+  String get addLeaveMessage => "يمكنك إغلاق المكان للنطاق الزمني المحدد";
 
   ///************************************************************************///
   /// ************ Service Labels ************///

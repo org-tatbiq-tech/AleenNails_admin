@@ -106,7 +106,7 @@ class AppointmentCard extends StatelessWidget {
                       customStatusProps: CustomStatusProps(
                         appointmentStatus:
                             appointmentCardProps.appointmentDetails.status,
-                        fontSize: 10,
+                        fontSize: 12,
                       ),
                     ),
                     SizedBox(
@@ -116,7 +116,7 @@ class AppointmentCard extends StatelessWidget {
                       getStringPrice(
                         appointmentCardProps.appointmentDetails.totalCost,
                       ),
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       '${getDateTimeFormat(
@@ -127,7 +127,7 @@ class AppointmentCard extends StatelessWidget {
                             appointmentCardProps.appointmentDetails.endTime,
                         locale: getCurrentLocale(context),
                       )}',
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ],
                 ),

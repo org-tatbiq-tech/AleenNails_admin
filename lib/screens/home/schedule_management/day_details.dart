@@ -21,9 +21,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class DayDetails extends StatefulWidget {
   final WorkingDay workingDay;
+  final bool? isIndividualWorkingDay;
   const DayDetails({
     Key? key,
     required this.workingDay,
+    this.isIndividualWorkingDay = false,
   }) : super(key: key);
 
   @override
@@ -479,16 +481,19 @@ class _DayDetailsState extends State<DayDetails> {
                   height: rSize(20),
                 ),
                 renderSwitch(),
-                SizedBox(
-                  height: rSize(20),
-                ),
-                Text(
-                  Languages.of(context)!
-                      .dayDetailsDescriptionLabel
-                      .toCapitalized(),
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: rSize(14),
-                      ),
+                Visibility(
+                  visible: !widget.isIndividualWorkingDay!,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: rSize(20)),
+                    child: Text(
+                      Languages.of(context)!
+                          .dayDetailsDescriptionLabel
+                          .toCapitalized(),
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            fontSize: rSize(14),
+                          ),
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: AnimatedSwitcher(
@@ -515,7 +520,7 @@ class _DayDetailsState extends State<DayDetails> {
                 ),
                 CustomButton(
                   customButtonProps: CustomButtonProps(
-                    text: Languages.of(context)!.okLabel.toCapitalized(),
+                    text: Languages.of(context)!.saveLabel.toCapitalized(),
                     isDisabled: isSaveDisabled,
                     onTap: (() => {
                           widget.workingDay.startTime = TimeOfDay(

@@ -200,7 +200,7 @@ class ThemeNotifier with ChangeNotifier {
         onBackground: primaryWithAlpha2,
         outline: primaryFontWithAlpha1,
         error: errorPrimaryColor,
-        onError: primaryWithAlpha3,
+        onError: Colors.white,
       ));
 
   ThemeData? _themeData;
