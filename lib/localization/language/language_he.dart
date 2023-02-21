@@ -262,6 +262,8 @@ class LanguageHe extends Languages {
   @override
   String get addLeaveMessage =>
       "אתה יכול לסגור את המקום עבור טווח התאריכים שנבחר";
+  @override
+  String get daysLabel => "ימים";
 
   ///************************************************************************///
   /// ************ Service Labels ************///

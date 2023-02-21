@@ -275,6 +275,8 @@ class LanguageAr extends Languages {
   String get addLeaveLabel => "أضف إجازة";
   @override
   String get addLeaveMessage => "يمكنك إغلاق المكان للنطاق الزمني المحدد";
+  @override
+  String get daysLabel => "أيام";
 
   ///************************************************************************///
   /// ************ Service Labels ************///

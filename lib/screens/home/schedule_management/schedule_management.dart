@@ -47,6 +47,23 @@ class ScheduleManagementState extends State<ScheduleManagement> {
               children: [
                 CustomIconButton(
                   customIconButtonProps: CustomIconButtonProps(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const OpeningCalendar())),
+                    animationDelay: 0.7,
+                    iconPath: 'assets/icons/calendar_select.png',
+                    positionType: PositionType.bottom,
+                    title: Languages.of(context)!
+                        .openingCalendarLabel
+                        .toTitleCase(),
+                  ),
+                ),
+                SizedBox(
+                  height: rSize(20),
+                ),
+                CustomIconButton(
+                  customIconButtonProps: CustomIconButtonProps(
                     onTap: () => {Navigator.pushNamed(context, '/workingDays')},
                     animationDelay: 0.3,
                     iconPath: 'assets/icons/calendar_time.png',
@@ -55,9 +72,7 @@ class ScheduleManagementState extends State<ScheduleManagement> {
                         Languages.of(context)!.workingDaysLabel.toTitleCase(),
                   ),
                 ),
-                SizedBox(
-                  height: rSize(20),
-                ),
+
                 // CustomIconButton(
                 //   customIconButtonProps: CustomIconButtonProps(
                 //     onTap: () =>
@@ -73,20 +88,6 @@ class ScheduleManagementState extends State<ScheduleManagement> {
                 // SizedBox(
                 //   height: rSize(20),
                 // ),
-                CustomIconButton(
-                  customIconButtonProps: CustomIconButtonProps(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const OpeningCalendar())),
-                    animationDelay: 0.7,
-                    iconPath: 'assets/icons/calendar_select.png',
-                    positionType: PositionType.bottom,
-                    title: Languages.of(context)!
-                        .openingCalendarLabel
-                        .toTitleCase(),
-                  ),
-                ),
               ],
             ),
           ),

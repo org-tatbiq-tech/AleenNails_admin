@@ -98,7 +98,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: rSize(10),
-            // vertical: rSize(10),
+            vertical: rSize(5),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -179,6 +179,10 @@ class _AddLeaveState extends State<AddLeave> {
       );
     }
 
+    String getDuration() {
+      return (endTime.difference(startTime).inDays + 1).toString();
+    }
+
     return CustomContainer(
       imagePath: 'assets/images/background4.png',
       child: Scaffold(
@@ -231,7 +235,7 @@ class _AddLeaveState extends State<AddLeave> {
                           height: rSize(5),
                         ),
                         Text(
-                          '1 day',
+                          '${getDuration()} ${Languages.of(context)!.daysLabel}',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ],

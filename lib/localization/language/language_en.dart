@@ -265,6 +265,8 @@ class LanguageEn extends Languages {
   @override
   String get addLeaveMessage =>
       "you can close the venue for selected date range";
+  @override
+  String get daysLabel => "days";
 
   ///************************************************************************///
   /// ************ Service Labels ************///
