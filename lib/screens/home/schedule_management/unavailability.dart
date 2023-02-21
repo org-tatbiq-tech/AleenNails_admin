@@ -229,12 +229,11 @@ class _UnavailabilityState extends State<Unavailability> {
       showLoaderDialog(context);
       final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
       UnavailabilityComp unavailabilityComp = UnavailabilityComp(
+          id: '',
           startTime: startDateTime,
           endTime: endTime,
           notes: _descriptionController.text);
-      settingsMgr.scheduleManagement.unavailabilityList!
-          .add(unavailabilityComp);
-      await settingsMgr.submitNewScheduleManagement();
+      await settingsMgr.submitNewUnavailability(unavailabilityComp);
       showSuccessFlash(
         context: context,
         successColor: successPrimaryColor,
@@ -245,26 +244,25 @@ class _UnavailabilityState extends State<Unavailability> {
             .toCapitalized(),
       );
       Navigator.pop(context);
+      setState(() {});
     }
 
     deleteUnavailability(int index) {
-      deleteUnavailabilityFromList(int index) {
+      deleteUnavailabilityFromList(int index) async {
         showLoaderDialog(context);
-        settingsMgr.scheduleManagement.unavailabilityList!.removeAt(index);
-        settingsMgr.submitNewScheduleManagement().then((value) => {
-              showSuccessFlash(
-                context: context,
-                successColor: successPrimaryColor,
-                successBody: Languages.of(context)!
-                    .flashMessageSuccessTitle
-                    .toTitleCase(),
-                successTitle: Languages.of(context)!
-                    .unavailabilityDeletedSuccessfullyBody
-                    .toCapitalized(),
-              ),
-              Navigator.pop(context),
-              setState(() {}),
-            });
+        await settingsMgr
+            .deleteUnavailability(settingsMgr.unavailabilities[index]);
+        showSuccessFlash(
+          context: context,
+          successColor: successPrimaryColor,
+          successBody:
+              Languages.of(context)!.flashMessageSuccessTitle.toTitleCase(),
+          successTitle: Languages.of(context)!
+              .unavailabilityDeletedSuccessfullyBody
+              .toCapitalized(),
+        );
+        Navigator.pop(context);
+        setState(() {});
       }
 
       showBottomModal(
@@ -353,8 +351,7 @@ class _UnavailabilityState extends State<Unavailability> {
                 ),
                 _renderReason(),
                 Visibility(
-                  visible: settingsMgr
-                      .scheduleManagement.unavailabilityList!.isNotEmpty,
+                  visible: settingsMgr.unavailabilities.isNotEmpty,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -366,7 +363,7 @@ class _UnavailabilityState extends State<Unavailability> {
                           bottom: rSize(15),
                         ),
                         child: Text(
-                          '${Languages.of(context)!.unavailabilityListLabel.toTitleCase()} (${settingsMgr.scheduleManagement.unavailabilityList!.length})',
+                          '${Languages.of(context)!.unavailabilityListLabel.toTitleCase()} (${settingsMgr.unavailabilities.length})',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.titleMedium,
@@ -382,20 +379,19 @@ class _UnavailabilityState extends State<Unavailability> {
                         key: ValueKey(index),
                         unavailabilityCardProps: UnavailabilityCardProps(
                           title: '${getDateTimeFormat(
-                            dateTime: settingsMgr.scheduleManagement
-                                .unavailabilityList![index].startTime,
+                            dateTime:
+                                settingsMgr.unavailabilities[index].startTime,
                             format: 'HH:mm',
                             locale: getCurrentLocale(context),
                           )} ${Languages.of(context)!.arrowLabel} ${getDateTimeFormat(
-                            dateTime: settingsMgr.scheduleManagement
-                                .unavailabilityList![index].endTime,
+                            dateTime:
+                                settingsMgr.unavailabilities[index].endTime,
                             format: 'HH:mm',
                             locale: getCurrentLocale(context),
                           )}',
-                          subTitle: settingsMgr.scheduleManagement
-                              .unavailabilityList![index].notes,
-                          unavailabilityDetails: settingsMgr
-                              .scheduleManagement.unavailabilityList![index],
+                          subTitle: settingsMgr.unavailabilities[index].notes,
+                          unavailabilityDetails:
+                              settingsMgr.unavailabilities[index],
                           deleteAction: () => {deleteUnavailability(index)},
                         ),
                       );
@@ -405,8 +401,7 @@ class _UnavailabilityState extends State<Unavailability> {
                         height: rSize(15),
                       );
                     },
-                    itemCount: settingsMgr
-                        .scheduleManagement.unavailabilityList!.length,
+                    itemCount: settingsMgr.unavailabilities.length,
                   ),
                 )
               ],

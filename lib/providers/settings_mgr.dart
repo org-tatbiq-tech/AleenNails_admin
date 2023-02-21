@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 const settingsCollection = 'settings';
 const clientsCollection = 'clients';
 const scheduleManagementDoc = 'scheduleManagement';
+const unavailabilitiesCollection = 'unavailability';
 const bookingSettingsDoc = 'bookingSettings';
 const profileManagementDoc = 'profile';
 const profileStorageDir = 'profile';
@@ -35,6 +36,68 @@ class SettingsMgr extends ChangeNotifier {
   ///************************* Settings *******************************///
 
   ///*********************** Schedule management ****************************///
+  bool initializedUnavailabilities =
+      false; // Don't download unavailabilities unless required
+  List<UnavailabilityComp> _unavailabilities =
+      []; // Holds all DB unavailabilities
+  StreamSubscription<QuerySnapshot>? _unavailabilitiesSub;
+  List<UnavailabilityComp> get unavailabilities {
+    if (!initializedUnavailabilities) {
+      initializedUnavailabilities = true;
+      downloadUnavailabilities();
+    }
+    return _unavailabilities;
+  }
+
+  Future<void> downloadUnavailabilities() async {
+    /// Download Unavailabilities from DB
+    var query = _fs
+        .collection(settingsCollection)
+        .doc(scheduleManagementDoc)
+        .collection(unavailabilitiesCollection)
+        .orderBy('startTime', descending: false);
+
+    _unavailabilitiesSub = query.snapshots().listen(
+      (snapshot) async {
+        _unavailabilities = [];
+        if (snapshot.docs.isEmpty) {
+          // No data to show - notifying listeners for empty unavailabilities list.
+          notifyListeners();
+          return;
+        }
+
+        // Unavailabilities collection has data to show
+        for (var document in snapshot.docs) {
+          var data = document.data();
+          data['id'] = document.id;
+          _unavailabilities.add(UnavailabilityComp.fromJson(data));
+        }
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> submitNewUnavailability(
+      UnavailabilityComp newUnavailability) async {
+    CollectionReference unavailabilitiesColl = _fs
+        .collection(settingsCollection)
+        .doc(scheduleManagementDoc)
+        .collection(unavailabilitiesCollection);
+
+    /// Submitting new Unavailability - update DB
+    await unavailabilitiesColl.add(newUnavailability.toJson());
+  }
+
+  Future<void> deleteUnavailability(UnavailabilityComp unavailability) async {
+    CollectionReference unavailabilitiesColl = _fs
+        .collection(settingsCollection)
+        .doc(scheduleManagementDoc)
+        .collection(unavailabilitiesCollection);
+
+    /// Submitting new Unavailability - update DB
+    await unavailabilitiesColl.doc(unavailability.id).delete();
+  }
+
   ScheduleManagement _scheduleManagement =
       ScheduleManagement(); // Holds Working days
   bool initializedScheduleManagement =
