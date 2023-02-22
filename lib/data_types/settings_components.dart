@@ -103,32 +103,22 @@ class UnavailabilityComp {
 
 class ScheduleManagement {
   WorkingDaysComp? workingDays;
-  List<UnavailabilityComp>? unavailabilityList;
 
   ScheduleManagement({
     workingDays,
-    unavailabilityList,
   }) {
     this.workingDays = workingDays ?? WorkingDaysComp();
-    this.unavailabilityList = unavailabilityList ?? [];
   }
 
   Map<String, dynamic> toJson() {
     return {
       'workingDays': workingDays!.toJson(),
-      'unavailability': unavailabilityList!.map((e) => e.toJson()).toList(),
     };
   }
 
   factory ScheduleManagement.fromJson(Map<String, dynamic> doc) {
-    List<UnavailabilityComp> unavailabilityList = [];
-    for (var unavailabilityElement in doc['unavailability']) {
-      unavailabilityList
-          .add(UnavailabilityComp.fromJson(unavailabilityElement));
-    }
     return ScheduleManagement(
       workingDays: WorkingDaysComp.fromJson(doc['workingDays']),
-      unavailabilityList: unavailabilityList,
     );
   }
 }

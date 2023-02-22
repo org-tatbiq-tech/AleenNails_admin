@@ -24,6 +24,7 @@ const profileWPStorageDir = 'profile/workplace';
 class SettingsMgr extends ChangeNotifier {
   SettingsMgr() {
     downloadScheduleManagement();
+    downloadUnavailabilities();
     downloadProfileManagement();
     downloadBookingSettings();
   }
