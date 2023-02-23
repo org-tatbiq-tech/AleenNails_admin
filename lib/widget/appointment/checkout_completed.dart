@@ -34,9 +34,9 @@ class CheckoutCompletedState extends State<CheckoutCompleted> {
         backgroundColor: Colors.transparent,
         body: Padding(
           padding: EdgeInsets.only(
-            left: rSize(20),
-            right: rSize(20),
-            top: rSize(200),
+            left: rSize(30),
+            right: rSize(30),
+            top: rSize(250),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -54,8 +54,7 @@ class CheckoutCompletedState extends State<CheckoutCompleted> {
               ),
               Text(
                 'checkout complete'.toUpperCase(),
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontSize: rSize(22),
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       color: successPrimaryColor,
                     ),
                 textAlign: TextAlign.center,

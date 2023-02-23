@@ -22,9 +22,7 @@ class AppointmentServiceCard extends StatelessWidget {
           appointmentServiceCardProps.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                fontSize: rSize(16),
-              ),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         subTitle: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +31,7 @@ class AppointmentServiceCard extends StatelessWidget {
           children: [
             Text(
               appointmentServiceCardProps.subTitle,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
           ],
         ),
@@ -50,9 +48,7 @@ class AppointmentServiceCard extends StatelessWidget {
                 Text(
                   getStringPrice(
                       appointmentServiceCardProps.serviceDetails.cost),
-                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                        fontSize: rSize(16),
-                      ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 SizedBox(
                   width: rSize(5),

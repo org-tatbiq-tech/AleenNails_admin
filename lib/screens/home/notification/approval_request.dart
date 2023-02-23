@@ -1,6 +1,8 @@
 import 'package:appointments/data_types/components.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/auth_mgr.dart';
 import 'package:appointments/providers/clients_mgr.dart';
+import 'package:appointments/providers/notifications_mgr.dart';
 import 'package:appointments/providers/theme_provider.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_avatar.dart';
@@ -17,9 +19,6 @@ import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/utils/url_launch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../providers/auth_mgr.dart';
-import '../../../providers/notifications_mgr.dart';
 
 class ApprovalRequest extends StatefulWidget {
   const ApprovalRequest({Key? key}) : super(key: key);
@@ -112,7 +111,8 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
+                // need to change the language here
               ),
             ],
           ),
@@ -188,11 +188,11 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
               ),
               Text(
                 client.phone,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               Text(
                 client.email,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
               SizedBox(
                 height: rSize(10),
@@ -226,7 +226,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
               client.generalNotes != null && client.generalNotes!.isNotEmpty
                   ? client.generalNotes!
                   : Languages.of(context)!.notSetLabel.toTitleCase(),
-              customTextStyle: Theme.of(context).textTheme.titleMedium,
+              customTextStyle: Theme.of(context).textTheme.bodyLarge,
               trimLines: 2,
             ),
           ],
@@ -259,7 +259,7 @@ class _ApprovalRequestState extends State<ApprovalRequest> {
                 : Languages.of(context)!.notSetLabel.toTitleCase(),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
       );

@@ -111,9 +111,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                       Languages.of(context)!.labelAddDiscount.toTitleCase(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: rSize(18),
-                          ),
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                     SizedBox(
                       width: rSize(10),
@@ -164,7 +162,7 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                                 .selectedAppointment.servicesCost),
                             style: Theme.of(context)
                                 .textTheme
-                                .displayLarge
+                                .titleLarge
                                 ?.copyWith(
                                   decoration: TextDecoration.lineThrough,
                                   decorationThickness: rSize(4),
@@ -175,11 +173,11 @@ class _DiscountSelectionState extends State<DiscountSelection> {
                           ),
                           Text(
                             getNewPrice(),
-                            style: Theme.of(context).textTheme.displayLarge,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                           Text(
                             Languages.of(context)!.labelNewPrice,
-                            style: Theme.of(context).textTheme.titleMedium,
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       ),

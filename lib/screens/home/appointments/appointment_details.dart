@@ -274,9 +274,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 height: rSize(30),
               ),
               Text(
-                Languages.of(context)!
-                    .cancelThisAppointmentLabel
-                    .toCapitalized(),
+                Languages.of(context)!.noShowLabel.toCapitalized(),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(
@@ -284,7 +282,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),
@@ -457,7 +455,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                               ),
                               style: Theme.of(context)
                                   .textTheme
-                                  .displayLarge
+                                  .bodyLarge
                                   ?.copyWith(
                                     decoration: TextDecoration.lineThrough,
                                     decorationThickness: rSize(4),
@@ -490,7 +488,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                               discountType == DiscountType.fixed
                                   ? getStringPrice(discount.toDouble())
                                   : '${discount.toStringAsFixed(1)} %',
-                              style: Theme.of(context).textTheme.displayLarge,
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ],
                         ),
@@ -509,7 +507,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 ),
                 Text(
                   getStringPrice(priceAfterDiscount),
-                  style: Theme.of(context).textTheme.displayLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -705,7 +703,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
         children: [
           Text(
             '${Languages.of(context)!.idLabel.toUpperCase()}: ${appointment.id}',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           Padding(
             padding: EdgeInsets.symmetric(
@@ -721,7 +719,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
             appointment.creator == AppointmentCreator.business
                 ? Languages.of(context)!.businessLabel.toTitleCase()
                 : Languages.of(context)!.clientLabel.toTitleCase(),
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
       );
@@ -829,7 +827,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
                     '${getDateTimeFormat(
@@ -843,7 +841,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                     )}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
               ),
@@ -940,11 +938,11 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
                 positionType: PositionType.left,
                 child: Text(
                   appointment.clientPhone,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
               SizedBox(
-                height: rSize(15),
+                height: rSize(5),
               ),
               renderDate(appointment),
             ],
