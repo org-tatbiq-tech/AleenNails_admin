@@ -85,7 +85,7 @@ class AppointmentCard extends StatelessWidget {
             ? null
             : Text(
                 appointmentCardProps.appointmentDetails.notes,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
         trailing: Column(
           mainAxisSize: MainAxisSize.max,
