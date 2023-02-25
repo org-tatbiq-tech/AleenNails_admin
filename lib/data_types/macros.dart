@@ -1,4 +1,5 @@
 import 'package:appointments/utils/general.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 enum NotificationCategory {
@@ -59,6 +60,8 @@ class WorkingDayBreak {
 class WorkingDay {
   /// Defines working/not working, opening/closing and breaks hours per day
   String day;
+  String? id;
+  DateTime? date;
   TimeOfDay? startTime;
   TimeOfDay? endTime;
   bool isDayOn;
@@ -66,6 +69,8 @@ class WorkingDay {
 
   WorkingDay({
     required this.day,
+    this.id,
+    this.date,
     this.startTime,
     this.endTime,
     breaks,
@@ -81,6 +86,8 @@ class WorkingDay {
   Map<String, dynamic> toJson() {
     return {
       'day': day,
+      'id': id,
+      'date': date ?? Timestamp.fromDate(date!),
       'startTime': timeOfDayToDB(startTime),
       'endTime': timeOfDayToDB(endTime),
       'isDayOn': isDayOn,
@@ -99,6 +106,8 @@ class WorkingDay {
 
     return WorkingDay(
       day: doc['day'],
+      id: doc['id'],
+      date: doc['date'].toString().isNotEmpty ? doc['date'].toDate() : null,
       startTime: DBToTimeOfDay(doc['startTime']),
       endTime: DBToTimeOfDay(doc['endTime']),
       breaks: loadBreaks(doc['breaks']),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/data_types/settings_components.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +17,7 @@ const settingsCollection = 'settings';
 const clientsCollection = 'clients';
 const scheduleManagementDoc = 'scheduleManagement';
 const unavailabilitiesCollection = 'unavailability';
+const scheduleOverridesCollection = 'scheduleOverrides';
 const bookingSettingsDoc = 'bookingSettings';
 const profileManagementDoc = 'profile';
 const profileStorageDir = 'profile';
@@ -97,6 +99,66 @@ class SettingsMgr extends ChangeNotifier {
 
     /// Submitting new Unavailability - update DB
     await unavailabilitiesColl.doc(unavailability.id).delete();
+  }
+
+  bool initializedScheduleOverrides =
+      false; // Don't download scheduleOverrides unless required
+  List<WorkingDay> _scheduleOverrides = []; // Holds all DB scheduleOverrides
+  StreamSubscription<QuerySnapshot>? _scheduleOverridesSub;
+  List<WorkingDay> get scheduleOverrides {
+    if (!initializedScheduleOverrides) {
+      initializedScheduleOverrides = true;
+      downloadScheduleOverrides();
+    }
+    return _scheduleOverrides;
+  }
+
+  Future<void> downloadScheduleOverrides() async {
+    /// Download scheduleOverrides from DB
+    var query = _fs
+        .collection(settingsCollection)
+        .doc(scheduleManagementDoc)
+        .collection(scheduleOverridesCollection)
+        .orderBy('date', descending: false);
+
+    _scheduleOverridesSub = query.snapshots().listen(
+      (snapshot) async {
+        _scheduleOverrides = [];
+        if (snapshot.docs.isEmpty) {
+          // No data to show - notifying listeners for empty scheduleOverrides list.
+          notifyListeners();
+          return;
+        }
+
+        // scheduleOverrides collection has data to show
+        for (var document in snapshot.docs) {
+          var data = document.data();
+          data['id'] = document.id;
+          _scheduleOverrides.add(WorkingDay.fromJson(data));
+        }
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> submitNewScheduleOverride(WorkingDay newScheduleOverride) async {
+    CollectionReference scheduleOverridesColl = _fs
+        .collection(settingsCollection)
+        .doc(scheduleManagementDoc)
+        .collection(scheduleOverridesCollection);
+
+    /// Submitting new scheduleOverride - update DB
+    await scheduleOverridesColl.add(newScheduleOverride.toJson());
+  }
+
+  Future<void> deleteScheduleOverride(WorkingDay scheduleOverride) async {
+    CollectionReference scheduleOverridesColl = _fs
+        .collection(settingsCollection)
+        .doc(scheduleManagementDoc)
+        .collection(scheduleOverridesCollection);
+
+    /// Submitting new scheduleOverride - update DB
+    await scheduleOverridesColl.doc(scheduleOverride.id).delete();
   }
 
   ScheduleManagement _scheduleManagement =
