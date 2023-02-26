@@ -87,7 +87,7 @@ class WorkingDay {
     return {
       'day': day,
       'id': id,
-      'date': date ?? Timestamp.fromDate(date!),
+      'date': date != null ? Timestamp.fromDate(date!) : null,
       'startTime': timeOfDayToDB(startTime),
       'endTime': timeOfDayToDB(endTime),
       'isDayOn': isDayOn,
@@ -107,7 +107,9 @@ class WorkingDay {
     return WorkingDay(
       day: doc['day'],
       id: doc['id'],
-      date: doc['date'].toString().isNotEmpty ? doc['date'].toDate() : null,
+      date: doc['date'] != null && doc['date'].toString().isNotEmpty
+          ? doc['date'].toDate()
+          : null,
       startTime: DBToTimeOfDay(doc['startTime']),
       endTime: DBToTimeOfDay(doc['endTime']),
       breaks: loadBreaks(doc['breaks']),
