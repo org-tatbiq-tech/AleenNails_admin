@@ -1,8 +1,4 @@
-import 'package:common_widgets/utils/layout.dart';
 import 'package:common_widgets/custom_icon.dart';
-
-import 'package:common_widgets/ease_in_animation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 

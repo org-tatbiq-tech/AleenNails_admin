@@ -52,7 +52,8 @@ class ClientsState extends State<Clients> {
                 context: context,
                 delegate: ClientsSearchDelegate(clients: clientsMgr.clients),
               ),
-              titleText: Languages.of(context)!.clientsLabel.toTitleCase(),
+              titleText:
+                  '${Languages.of(context)!.clientsLabel.toTitleCase()} (${clientsMgr.clients.length})',
               customIcon: Icon(
                 FontAwesomeIcons.plus,
                 size: rSize(20),

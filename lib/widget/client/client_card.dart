@@ -42,9 +42,22 @@ class ClientCard extends StatelessWidget {
           padding: EdgeInsets.only(
             top: rSize(2),
           ),
-          child: Text(
-            clientCardProps.contactDetails.phone,
-            style: Theme.of(context).textTheme.bodyLarge,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                clientCardProps.contactDetails.phone,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              Visibility(
+                visible: clientCardProps.contactDetails.email.isNotEmpty,
+                child: Text(
+                  clientCardProps.contactDetails.email,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+            ],
           ),
         ),
         trailing: Row(
