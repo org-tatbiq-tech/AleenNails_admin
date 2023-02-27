@@ -31,49 +31,27 @@ class ClientAppointmentsState extends State<ClientAppointments> {
           imagePath: 'assets/images/background4.png',
           child: Scaffold(
             backgroundColor: Colors.transparent,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.miniStartFloat,
-            floatingActionButton: Card(
-              elevation: 10,
-              child: Container(
-                width: rSize(50),
-                height: rSize(50),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
-                  borderRadius: BorderRadius.circular(rSize(10)),
-                ),
-                child: CustomIcon(
-                  customIconProps: CustomIconProps(
-                    icon: null,
-                    path: 'assets/icons/plus.png',
-                    backgroundColor: Colors.transparent,
-                    containerSize: 10,
-                    withPadding: true,
-                    contentPadding: 10,
-                    iconColor: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
-              ),
-            ),
-            // floatingActionButton: FloatingActionButton(
-            //   elevation: 8.0,
-            //   splashColor: Colors.transparent,
-            //   onPressed: () => {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //         builder: (context) =>
-            //             AppointmentScreen(client: clientsMgr.selectedClient),
-            //       ),
+            // floatingActionButtonLocation:
+            //     FloatingActionButtonLocation.miniStartFloat,
+            // floatingActionButton: Card(
+            //   elevation: 10,
+            //   child: Container(
+            //     width: rSize(50),
+            //     height: rSize(50),
+            //     decoration: BoxDecoration(
+            //       color: Theme.of(context).colorScheme.primary,
+            //       borderRadius: BorderRadius.circular(rSize(10)),
             //     ),
-            //   },
-            //   child: CustomIcon(
-            //     customIconProps: CustomIconProps(
-            //       icon: null,
-            //       path: 'assets/icons/plus.png',
-            //       backgroundColor: Colors.transparent,
-            //       containerSize: 20,
-            //       iconColor: Theme.of(context).colorScheme.primary,
+            //     child: CustomIcon(
+            //       customIconProps: CustomIconProps(
+            //         icon: null,
+            //         path: 'assets/icons/plus.png',
+            //         backgroundColor: Colors.transparent,
+            //         containerSize: 10,
+            //         withPadding: true,
+            //         contentPadding: 10,
+            //         iconColor: Theme.of(context).colorScheme.onPrimary,
+            //       ),
             //     ),
             //   ),
             // ),
