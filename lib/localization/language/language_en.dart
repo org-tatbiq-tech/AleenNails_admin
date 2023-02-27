@@ -696,4 +696,20 @@ class LanguageEn extends Languages {
   @override
   String get locationTotallyDenied =>
       'Location permissions are permanently denied, we cannot request permissions.';
+
+  /// Filters
+  @override
+  String get filters => "filters";
+  @override
+  String get dateRange => "date range";
+  @override
+  String get status => "status";
+  @override
+  String get serviceType => "service type";
+  @override
+  String get clearAll => "clear all";
+  @override
+  String get applyFilters => "apply filters";
+  @override
+  String get allLabel => "all";
 }

@@ -359,4 +359,13 @@ abstract class Languages {
   String get locationDisabled;
   String get locationDenied;
   String get locationTotallyDenied;
+
+  /// Filters
+  String get filters;
+  String get dateRange;
+  String get status;
+  String get serviceType;
+  String get clearAll;
+  String get applyFilters;
+  String get allLabel;
 }

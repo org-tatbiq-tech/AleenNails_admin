@@ -699,4 +699,20 @@ class LanguageAr extends Languages {
   @override
   String get locationTotallyDenied =>
       'تم رفض أذن الموقع بشكل دائم ، ولا يمكننا طلب أذن';
+
+  /// Filters
+  @override
+  String get filters => "المرشحات";
+  @override
+  String get dateRange => "نطاق الموعد";
+  @override
+  String get status => "الحالة";
+  @override
+  String get serviceType => "نوع الخدمة";
+  @override
+  String get clearAll => "امسح الكل";
+  @override
+  String get applyFilters => "تطبيق المرشحات";
+  @override
+  String get allLabel => "الكل";
 }

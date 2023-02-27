@@ -4,6 +4,7 @@ import 'package:appointments/screens/home/appointments/appointment.dart';
 import 'package:appointments/widget/appointment/client_appointment_card.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_container.dart';
+import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/empty_list_image.dart';
 import 'package:common_widgets/utils/general.dart';
@@ -30,11 +31,56 @@ class ClientAppointmentsState extends State<ClientAppointments> {
           imagePath: 'assets/images/background4.png',
           child: Scaffold(
             backgroundColor: Colors.transparent,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniStartFloat,
+            floatingActionButton: Card(
+              elevation: 10,
+              child: Container(
+                width: rSize(50),
+                height: rSize(50),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(rSize(10)),
+                ),
+                child: CustomIcon(
+                  customIconProps: CustomIconProps(
+                    icon: null,
+                    path: 'assets/icons/plus.png',
+                    backgroundColor: Colors.transparent,
+                    containerSize: 10,
+                    withPadding: true,
+                    contentPadding: 10,
+                    iconColor: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+              ),
+            ),
+            // floatingActionButton: FloatingActionButton(
+            //   elevation: 8.0,
+            //   splashColor: Colors.transparent,
+            //   onPressed: () => {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) =>
+            //             AppointmentScreen(client: clientsMgr.selectedClient),
+            //       ),
+            //     ),
+            //   },
+            //   child: CustomIcon(
+            //     customIconProps: CustomIconProps(
+            //       icon: null,
+            //       path: 'assets/icons/plus.png',
+            //       backgroundColor: Colors.transparent,
+            //       containerSize: 20,
+            //       iconColor: Theme.of(context).colorScheme.primary,
+            //     ),
+            //   ),
+            // ),
             appBar: CustomAppBar(
               customAppBarProps: CustomAppBarProps(
-                titleText: Languages.of(context)!
-                    .clientAppointmentsLabel
-                    .toTitleCase(),
+                titleText:
+                    '${Languages.of(context)!.clientAppointmentsLabel.toTitleCase()} (${clientsMgr.selectedClientAppointments.length})',
                 withBack: true,
                 isTransparent: true,
                 customIcon: Icon(
@@ -54,7 +100,7 @@ class ClientAppointmentsState extends State<ClientAppointments> {
             ),
             body: AnimatedSwitcher(
               duration: const Duration(milliseconds: 500),
-              child: clientsMgr.selectedClientUpcomingAppointments.isEmpty
+              child: clientsMgr.selectedClientAppointments.isEmpty
                   ? EmptyListImage(
                       emptyListImageProps: EmptyListImageProps(
                         title: Languages.of(context)!
@@ -91,14 +137,13 @@ class ClientAppointmentsState extends State<ClientAppointments> {
                         vertical: rSize(40),
                         horizontal: rSize(30),
                       ),
-                      itemCount:
-                          clientsMgr.selectedClientUpcomingAppointments.length,
+                      itemCount: clientsMgr.selectedClientAppointments.length,
                       itemBuilder: (context, index) {
                         return ClientAppointmentCard(
                           clientAppointmentCardProps:
                               ClientAppointmentCardProps(
-                            clientAppointmentDetails: clientsMgr
-                                .selectedClientUpcomingAppointments[index],
+                            clientAppointmentDetails:
+                                clientsMgr.selectedClientAppointments[index],
                             withNavigation: true,
                             enabled: true,
                           ),

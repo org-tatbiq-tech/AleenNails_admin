@@ -14,7 +14,8 @@ import 'package:provider/provider.dart';
 
 class ClientsSearchDelegate extends SearchDelegate {
   List<Client> searchClients = [];
-  ClientsSearchDelegate({required List<Client> clients}) {
+  Function? onTap;
+  ClientsSearchDelegate({required List<Client> clients, this.onTap}) {
     searchClients.addAll(clients); // Creating a copy
   }
 
@@ -111,7 +112,9 @@ class ClientsSearchDelegate extends SearchDelegate {
               contactDetails: result,
               onTap: () => {
                 close(context, null),
-                navigateToClientDetails(result),
+                onTap != null
+                    ? {onTap!(result)}
+                    : navigateToClientDetails(result),
               },
             ),
           );
@@ -162,7 +165,9 @@ class ClientsSearchDelegate extends SearchDelegate {
               contactDetails: result,
               onTap: () => {
                 close(context, null),
-                navigateToClientDetails(result),
+                onTap != null
+                    ? {onTap!(result)}
+                    : navigateToClientDetails(result),
               },
             ),
           );

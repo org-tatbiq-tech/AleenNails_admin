@@ -185,6 +185,17 @@ class ClientsMgr extends ChangeNotifier {
         .toList();
   }
 
+  List<ClientAppointment> get selectedClientFinishedAppointments {
+    if (!initializedClientAppointments) {
+      initializedClientAppointments = true;
+      downloadClientAppointment(
+          selectedClient == null ? null : selectedClient!.id);
+    }
+    return _selectedClientAppointments
+        .where((element) => element.status == AppointmentStatus.finished)
+        .toList();
+  }
+
   List<ClientAppointment> get selectedClientAppointments {
     if (!initializedClientAppointments) {
       initializedClientAppointments = true;
@@ -229,9 +240,12 @@ class ClientsMgr extends ChangeNotifier {
     Query<Map<String, dynamic>> query = _fs
         .collection(clientsCollection)
         .doc(clientID)
-        .collection(clientAppointmentsCollection);
-    query = query.where('status',
-        isNotEqualTo: AppointmentStatus.confirmed.toString());
+        .collection(clientAppointmentsCollection)
+        .orderBy('startTime');
+    // I added to the query to sort by start time.
+    // why we need to do where clause?
+    // query = query.where('status',
+    //     isNotEqualTo: AppointmentStatus.confirmed.toString());
     _clientAppointments = query.snapshots().listen((snapshot) {
       _selectedClientAppointments = [];
       if (snapshot.docs.isEmpty) {

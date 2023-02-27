@@ -669,4 +669,20 @@ class LanguageHe extends Languages {
   @override
   String get locationTotallyDenied =>
       'הרשאות המיקום נדחות לצמיתות, איננו יכולים לבקש הרשאות.';
+
+  /// Filters
+  @override
+  String get filters => "מסננים";
+  @override
+  String get dateRange => "טווח תאריכים";
+  @override
+  String get status => "סטָטוּס";
+  @override
+  String get serviceType => "סוג שירות";
+  @override
+  String get clearAll => "נקה הכל";
+  @override
+  String get applyFilters => "להחיל מסננים";
+  @override
+  String get allLabel => "הכל";
 }

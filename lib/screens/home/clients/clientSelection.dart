@@ -2,6 +2,7 @@ import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/clients_mgr.dart';
 import 'package:appointments/screens/home/clients/client.dart';
 import 'package:appointments/widget/client/client_card.dart';
+import 'package:appointments/widget/client/clients_search.dart';
 import 'package:common_widgets/custom_container.dart';
 
 import 'package:common_widgets/custom_app_bar.dart';
@@ -40,6 +41,13 @@ class ClientSelectionState extends State<ClientSelection> {
                 withBack: true,
                 withSearch: true,
                 isTransparent: true,
+                searchFunction: () => showSearch(
+                  context: context,
+                  delegate: ClientsSearchDelegate(
+                    clients: clientsMgr.clients,
+                    onTap: widget.onTap,
+                  ),
+                ),
                 customIcon: Icon(
                   FontAwesomeIcons.plus,
                   size: rSize(24),

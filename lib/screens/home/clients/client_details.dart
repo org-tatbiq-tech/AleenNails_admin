@@ -52,7 +52,7 @@ class _ClientDetailsState extends State<ClientDetails> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClientUpcomingAppointments.length.toString()})',
+                  '${Languages.of(context)!.appointmentsLabel.toUpperCase()} (${clientsMgr.selectedClientAppointments.length.toString()})',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium,
@@ -85,8 +85,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             padding: EdgeInsets.only(
               top: rSize(20),
             ),
-            itemCount:
-                min(clientsMgr.selectedClientUpcomingAppointments.length, 1),
+            itemCount: min(clientsMgr.selectedClientAppointments.length, 1),
             itemBuilder: (context, index) {
               return FadeAnimation(
                 positionType: PositionType.top,
@@ -95,9 +94,8 @@ class _ClientDetailsState extends State<ClientDetails> {
                   clientAppointmentCardProps: ClientAppointmentCardProps(
                     enabled: true,
                     withNavigation: true,
-                    clientAppointmentDetails: clientsMgr
-                        .selectedClientUpcomingAppointments
-                        .toList()[index],
+                    clientAppointmentDetails:
+                        clientsMgr.selectedClientAppointments.toList()[index],
                   ),
                 ),
               );
@@ -355,7 +353,7 @@ class _ClientDetailsState extends State<ClientDetails> {
             rSize(10),
           ),
         ),
-        height: rSize(60),
+        height: rSize(65),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -374,8 +372,7 @@ class _ClientDetailsState extends State<ClientDetails> {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  clientsMgr.selectedClientUpcomingAppointments.length
-                      .toString(),
+                  clientsMgr.selectedClientAppointments.length.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.titleMedium,
@@ -401,6 +398,32 @@ class _ClientDetailsState extends State<ClientDetails> {
                 ),
                 Text(
                   clientsMgr.selectedClientCancelledAppointments.length
+                      .toString(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+            VerticalDivider(
+              endIndent: rSize(10),
+              indent: rSize(10),
+              thickness: rSize(1),
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: rSize(4),
+              direction: Axis.vertical,
+              children: [
+                Text(
+                  Languages.of(context)!.finishedLabel.toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Text(
+                  clientsMgr.selectedClientFinishedAppointments.length
                       .toString(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

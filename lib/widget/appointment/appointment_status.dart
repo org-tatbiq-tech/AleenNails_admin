@@ -13,66 +13,6 @@ class AppointmentStatusComp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getAppointmentStatusColor(AppointmentStatus status) {
-      switch (status) {
-        case AppointmentStatus.confirmed:
-          return successPrimaryColor;
-        case AppointmentStatus.finished:
-          return successPrimaryColor;
-        case AppointmentStatus.cancelled:
-          return errorPrimaryColor;
-        case AppointmentStatus.declined:
-          return errorPrimaryColor;
-        case AppointmentStatus.waiting:
-          return warningPrimaryColor;
-        case AppointmentStatus.noShow:
-          return errorPrimaryColor;
-        default:
-          return informationPrimaryColor;
-      }
-    }
-
-    String getAppointmentStatusText(AppointmentStatus status) {
-      switch (status) {
-        case AppointmentStatus.confirmed:
-          return Languages.of(context)!.confirmedLabel;
-        case AppointmentStatus.finished:
-          return Languages.of(context)!.finishedLabel;
-        case AppointmentStatus.cancelled:
-          return Languages.of(context)!.cancelledLabel;
-        case AppointmentStatus.declined:
-          return Languages.of(context)!.declinedLabel;
-        case AppointmentStatus.waiting:
-          return Languages.of(context)!.waitingLabel;
-        case AppointmentStatus.noShow:
-          return Languages.of(context)!.noShowLabel;
-        default:
-          return Languages.of(context)!.waitingLabel;
-      }
-    }
-
-    getPaymentStatusColor(PaymentStatus status) {
-      switch (status) {
-        case PaymentStatus.paid:
-          return successPrimaryColor;
-        case PaymentStatus.unpaid:
-          return warningPrimaryColor;
-        default:
-          return informationPrimaryColor;
-      }
-    }
-
-    String getPaymentStatusText(PaymentStatus status) {
-      switch (status) {
-        case PaymentStatus.paid:
-          return Languages.of(context)!.paidLabel;
-        case PaymentStatus.unpaid:
-          return Languages.of(context)!.unpaidLabel;
-        default:
-          return Languages.of(context)!.unpaidLabel;
-      }
-    }
-
     return Container(
       decoration: BoxDecoration(
         color: lighten(
@@ -92,9 +32,10 @@ class AppointmentStatusComp extends StatelessWidget {
         ),
         child: Text(
           customStatusProps.appointmentStatus != null
-              ? getAppointmentStatusText(customStatusProps.appointmentStatus!)
+              ? getAppointmentStatusText(
+                      customStatusProps.appointmentStatus!, context)
                   .toUpperCase()
-              : getPaymentStatusText(customStatusProps.paymentStatus!)
+              : getPaymentStatusText(customStatusProps.paymentStatus!, context)
                   .toUpperCase(),
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontSize: rSize(customStatusProps.fontSize),
@@ -107,6 +48,67 @@ class AppointmentStatusComp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+getAppointmentStatusColor(AppointmentStatus status) {
+  switch (status) {
+    case AppointmentStatus.confirmed:
+      return successPrimaryColor;
+    case AppointmentStatus.finished:
+      return successPrimaryColor;
+    case AppointmentStatus.cancelled:
+      return errorPrimaryColor;
+    case AppointmentStatus.declined:
+      return errorPrimaryColor;
+    case AppointmentStatus.waiting:
+      return warningPrimaryColor;
+    case AppointmentStatus.noShow:
+      return errorPrimaryColor;
+    default:
+      return informationPrimaryColor;
+  }
+}
+
+String getAppointmentStatusText(
+    AppointmentStatus status, BuildContext context) {
+  switch (status) {
+    case AppointmentStatus.confirmed:
+      return Languages.of(context)!.confirmedLabel;
+    case AppointmentStatus.finished:
+      return Languages.of(context)!.finishedLabel;
+    case AppointmentStatus.cancelled:
+      return Languages.of(context)!.cancelledLabel;
+    case AppointmentStatus.declined:
+      return Languages.of(context)!.declinedLabel;
+    case AppointmentStatus.waiting:
+      return Languages.of(context)!.waitingLabel;
+    case AppointmentStatus.noShow:
+      return Languages.of(context)!.noShowLabel;
+    default:
+      return Languages.of(context)!.waitingLabel;
+  }
+}
+
+getPaymentStatusColor(PaymentStatus status) {
+  switch (status) {
+    case PaymentStatus.paid:
+      return successPrimaryColor;
+    case PaymentStatus.unpaid:
+      return warningPrimaryColor;
+    default:
+      return informationPrimaryColor;
+  }
+}
+
+String getPaymentStatusText(PaymentStatus status, BuildContext context) {
+  switch (status) {
+    case PaymentStatus.paid:
+      return Languages.of(context)!.paidLabel;
+    case PaymentStatus.unpaid:
+      return Languages.of(context)!.unpaidLabel;
+    default:
+      return Languages.of(context)!.unpaidLabel;
   }
 }
 
