@@ -1,4 +1,5 @@
 import 'package:appointments/data_types/components.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/services/service.dart';
 import 'package:appointments/widget/service/service_card.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -20,6 +21,13 @@ class ServicesSearchDelegate extends SearchDelegate {
     final ThemeData theme = Theme.of(context);
     return theme;
   }
+
+  @override
+  TextStyle? get searchFieldStyle => TextStyle(
+        color: primaryFont,
+        fontWeight: FontWeight.w300,
+        fontSize: rSize(16),
+      );
 
   @override
   List<Widget>? buildActions(BuildContext context) {
