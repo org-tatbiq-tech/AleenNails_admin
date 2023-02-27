@@ -141,14 +141,20 @@ class SettingsMgr extends ChangeNotifier {
     );
   }
 
-  Future<void> submitNewScheduleOverride(WorkingDay newScheduleOverride) async {
+  Future<void> submitScheduleOverride(WorkingDay newScheduleOverride) async {
     CollectionReference scheduleOverridesColl = _fs
         .collection(settingsCollection)
         .doc(scheduleManagementDoc)
         .collection(scheduleOverridesCollection);
 
     /// Submitting new scheduleOverride - update DB
-    await scheduleOverridesColl.add(newScheduleOverride.toJson());
+    if (newScheduleOverride.id != null && newScheduleOverride.id != '') {
+      await scheduleOverridesColl
+          .doc(newScheduleOverride.id)
+          .set(newScheduleOverride.toJson());
+    } else {
+      await scheduleOverridesColl.add(newScheduleOverride.toJson());
+    }
   }
 
   Future<void> deleteScheduleOverride(WorkingDay scheduleOverride) async {

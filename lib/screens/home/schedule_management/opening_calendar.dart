@@ -45,9 +45,18 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
-        _selectedDay = selectedDay;
+        _selectedDay =
+            DateTime(selectedDay.year, selectedDay.month, selectedDay.day);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    DateTime now = DateTime.now();
+    _focusedDay = DateTime(now.year, now.month, now.day);
+    _selectedDay = DateTime(now.year, now.month, now.day);
   }
 
   @override
@@ -84,7 +93,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
 
     WorkingDay get_working_day(SettingsMgr settingsMgr, DateTime date) {
       WorkingDay? workingDay = settingsMgr.scheduleOverrides
-          .firstWhereOrNull((wd) => wd.date == date);
+          .firstWhereOrNull((wd) => isSameDay(wd.date, date));
       if (workingDay == null) {
         var defaultDay = settingsMgr.scheduleManagement.workingDays!
             .schedule![DateFormat('EEEE').format(date)]!;
