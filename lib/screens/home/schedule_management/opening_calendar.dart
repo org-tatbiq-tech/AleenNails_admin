@@ -1,7 +1,6 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/schedule_management/add_leave.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -12,11 +11,8 @@ import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:supercharged/supercharged.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
 
 import 'day_details.dart';
 
@@ -89,19 +85,6 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
             }).toList()
           : [];
       return widgetList;
-    }
-
-    WorkingDay get_working_day(SettingsMgr settingsMgr, DateTime date) {
-      WorkingDay? workingDay = settingsMgr.scheduleOverrides
-          .firstWhereOrNull((wd) => isSameDay(wd.date, date));
-      if (workingDay == null) {
-        var defaultDay = settingsMgr.scheduleManagement.workingDays!
-            .schedule![DateFormat('EEEE').format(date)]!;
-        workingDay = WorkingDay.fromJson(defaultDay.toJson());
-        workingDay.date = date;
-        workingDay.id = '';
-      }
-      return workingDay!;
     }
 
     renderDay({required WorkingDay workingDay}) {
@@ -288,8 +271,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
                         renderDay(
-                          workingDay:
-                              get_working_day(settingsMgr, _selectedDay),
+                          workingDay: settingsMgr.getWorkingDay(_selectedDay),
                         ),
                         Divider(
                           color: Theme.of(context).colorScheme.onBackground,

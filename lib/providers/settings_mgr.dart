@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 /// Settings manager provider
 /// Managing and handling settings data and DB interaction
@@ -165,6 +167,27 @@ class SettingsMgr extends ChangeNotifier {
 
     /// Submitting new scheduleOverride - update DB
     await scheduleOverridesColl.doc(scheduleOverride.id).delete();
+  }
+
+  bool checkSameDay(DateTime? a, DateTime? b) {
+    if (a == null || b == null) {
+      return false;
+    }
+
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  WorkingDay getWorkingDay(DateTime date) {
+    WorkingDay? workingDay =
+        scheduleOverrides.firstWhereOrNull((wd) => checkSameDay(wd.date, date));
+    if (workingDay == null) {
+      WorkingDay defaultDay = scheduleManagement
+          .workingDays!.schedule![DateFormat('EEEE').format(date)]!;
+      workingDay = WorkingDay.fromJson(defaultDay.toJson());
+      workingDay.date = date;
+      workingDay.id = '';
+    }
+    return workingDay!;
   }
 
   ScheduleManagement _scheduleManagement =

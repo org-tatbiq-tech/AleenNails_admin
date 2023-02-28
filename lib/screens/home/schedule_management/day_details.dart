@@ -538,7 +538,6 @@ class _DayDetailsState extends State<DayDetails> {
                           if (widget.isIndividualWorkingDay != null &&
                               widget.isIndividualWorkingDay!)
                             {
-                              print('Hello'),
                               await settingsMgr
                                   .submitScheduleOverride(widget.workingDay),
                             },
