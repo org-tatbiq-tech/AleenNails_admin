@@ -116,4 +116,33 @@ class WorkingDay {
       isDayOn: doc['isDayOn'],
     );
   }
+
+  double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+
+  List<List<TimeOfDay>> getDayWorkingIntervals() {
+    if (!isDayOn) {
+      // Not working at this day
+      return [];
+    }
+    //If no breaks, return one intervals
+    if (breaks!.isEmpty) {
+      return [
+        [startTime!, endTime!]
+      ];
+    }
+
+    List<List<TimeOfDay>> workingIntervals = [];
+    // Iterate over breaks, create working intervals accordingly
+    TimeOfDay currentStart = startTime!;
+    for (WorkingDayBreak wdBreak in breaks!) {
+      // if (toDouble(currentStart) < toDouble(wdBreak.startTime)) {
+      if (toDouble(currentStart) != toDouble(wdBreak.startTime)) {
+        workingIntervals.add([currentStart, wdBreak.startTime]);
+      }
+      currentStart = wdBreak.endTime;
+    }
+    // Also here need to check if endTime > currentStart
+    workingIntervals.add([currentStart, endTime!]);
+    return workingIntervals;
+  }
 }
