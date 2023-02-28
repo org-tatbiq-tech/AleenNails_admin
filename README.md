@@ -1,16 +1,24 @@
-# appointments
+# AleenNails_admin
 
-appointments app - help you find your best slot
+Aleen Nails admin application for managing and tracking Aleen business.
+See week work view, update business details and create clients appointments.
 
-## Getting Started
+## Repository description
 
-This project is a starting point for a Flutter application.
+Private repository for Aleen admin, providing the following capabilities:
+* See working week view and booked appointments
+* Manage clients (deleting, approving, declining) 
+* Creating new appointment for selected client
+* Update business details, information, working hours
+* Update business services and representative images
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Technologies
+* Flutter
+* Firebase
+    * Firestore
+    * Messaging for notification
+    * Cloud functions
+    * Storage
+    * Authentication
+* Image resizer
+* Maps and location selector
