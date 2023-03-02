@@ -1,5 +1,6 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_container.dart';
@@ -18,6 +19,7 @@ import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class DayDetails extends StatefulWidget {
   final WorkingDay workingDay;
@@ -33,6 +35,7 @@ class DayDetails extends StatefulWidget {
 }
 
 class _DayDetailsState extends State<DayDetails> {
+  late SettingsMgr settingsMgr;
   DateTime? durationValue;
   late DateTime startTime;
   late DateTime startTimeTemp;
@@ -44,6 +47,7 @@ class _DayDetailsState extends State<DayDetails> {
   @override
   void initState() {
     super.initState();
+    settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     setState(() {
       DateTime today = DateTime.now();
       startTime = widget.workingDay.startTime == null
@@ -522,7 +526,7 @@ class _DayDetailsState extends State<DayDetails> {
                   customButtonProps: CustomButtonProps(
                     text: Languages.of(context)!.saveLabel.toCapitalized(),
                     isDisabled: isSaveDisabled,
-                    onTap: (() => {
+                    onTap: (() async => {
                           widget.workingDay.startTime = TimeOfDay(
                             hour: startTime.hour,
                             minute: startTime.minute,
@@ -531,6 +535,12 @@ class _DayDetailsState extends State<DayDetails> {
                             hour: endTime.hour,
                             minute: endTime.minute,
                           ),
+                          if (widget.isIndividualWorkingDay != null &&
+                              widget.isIndividualWorkingDay!)
+                            {
+                              await settingsMgr
+                                  .submitScheduleOverride(widget.workingDay),
+                            },
                           Navigator.pop(context)
                         }),
                   ),

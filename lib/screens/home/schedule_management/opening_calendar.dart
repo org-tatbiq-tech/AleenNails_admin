@@ -1,7 +1,6 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
-import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/schedule_management/add_leave.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -42,9 +41,18 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
-        _selectedDay = selectedDay;
+        _selectedDay =
+            DateTime(selectedDay.year, selectedDay.month, selectedDay.day);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    DateTime now = DateTime.now();
+    _focusedDay = DateTime(now.year, now.month, now.day);
+    _selectedDay = DateTime(now.year, now.month, now.day);
   }
 
   @override
@@ -263,8 +271,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
                         renderDay(
-                          workingDay: settingsMgr.scheduleManagement
-                              .workingDays!.schedule![workingDaysList[0]]!,
+                          workingDay: settingsMgr.getWorkingDay(_selectedDay),
                         ),
                         Divider(
                           color: Theme.of(context).colorScheme.onBackground,

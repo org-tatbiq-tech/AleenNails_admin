@@ -1,4 +1,5 @@
 import 'package:appointments/utils/general.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 enum NotificationCategory {
@@ -59,6 +60,8 @@ class WorkingDayBreak {
 class WorkingDay {
   /// Defines working/not working, opening/closing and breaks hours per day
   String day;
+  String? id;
+  DateTime? date;
   TimeOfDay? startTime;
   TimeOfDay? endTime;
   bool isDayOn;
@@ -66,6 +69,8 @@ class WorkingDay {
 
   WorkingDay({
     required this.day,
+    this.id,
+    this.date,
     this.startTime,
     this.endTime,
     breaks,
@@ -81,6 +86,8 @@ class WorkingDay {
   Map<String, dynamic> toJson() {
     return {
       'day': day,
+      'id': id,
+      'date': date != null ? Timestamp.fromDate(date!) : null,
       'startTime': timeOfDayToDB(startTime),
       'endTime': timeOfDayToDB(endTime),
       'isDayOn': isDayOn,
@@ -99,10 +106,43 @@ class WorkingDay {
 
     return WorkingDay(
       day: doc['day'],
+      id: doc['id'],
+      date: doc['date'] != null && doc['date'].toString().isNotEmpty
+          ? doc['date'].toDate()
+          : null,
       startTime: DBToTimeOfDay(doc['startTime']),
       endTime: DBToTimeOfDay(doc['endTime']),
       breaks: loadBreaks(doc['breaks']),
       isDayOn: doc['isDayOn'],
     );
+  }
+
+  double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute / 60.0;
+
+  List<List<TimeOfDay>> getDayWorkingIntervals() {
+    if (!isDayOn) {
+      // Not working at this day
+      return [];
+    }
+    //If no breaks, return one intervals
+    if (breaks!.isEmpty) {
+      return [
+        [startTime!, endTime!]
+      ];
+    }
+
+    List<List<TimeOfDay>> workingIntervals = [];
+    // Iterate over breaks, create working intervals accordingly
+    TimeOfDay currentStart = startTime!;
+    for (WorkingDayBreak wdBreak in breaks!) {
+      // if (toDouble(currentStart) < toDouble(wdBreak.startTime)) {
+      if (toDouble(currentStart) != toDouble(wdBreak.startTime)) {
+        workingIntervals.add([currentStart, wdBreak.startTime]);
+      }
+      currentStart = wdBreak.endTime;
+    }
+    // Also here need to check if endTime > currentStart
+    workingIntervals.add([currentStart, endTime!]);
+    return workingIntervals;
   }
 }
