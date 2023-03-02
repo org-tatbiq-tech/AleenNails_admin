@@ -68,8 +68,6 @@ class WorkingDaysComp {
       notes: doc['notes'],
     );
   }
-
-  //TODO sync with client
 }
 
 class UnavailabilityComp {

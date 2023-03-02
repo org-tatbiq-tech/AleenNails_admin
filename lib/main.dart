@@ -155,7 +155,7 @@ class _AppointmentsAppState extends State<AppointmentsApp> {
       '/businessCoverPhoto': (context) => const BusinessCoverPhoto(),
       '/businessWorkplacePhotos': (context) => const BusinessWorkplacePhotos(),
       '/scheduleManagement': (context) => const ScheduleManagement(),
-      '/unavailability': (context) => const Unavailability(),
+      // '/unavailability': (context) => const Unavailability(),
       '/workingDays': (context) => const WorkingDays(),
       '/bookingSettings': (context) => const BookingsSettings(),
       '/personalSettings': (context) => const PersonalSettings(),
