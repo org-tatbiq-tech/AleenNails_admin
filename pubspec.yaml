@@ -46,7 +46,7 @@ dependencies:
   firebase_core: ^2.2.0
   firebase_messaging: ^14.1.0
   firebase_storage: ^11.0.5
-  fl_chart: ^0.60.0
+  fl_chart: ^0.61.0
   flutter:
     sdk: flutter
   flutter_colorpicker: ^1.0.3
@@ -55,7 +55,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_native_splash: ^2.2.16
-  flutter_secure_storage: ^7.0.1
+  flutter_secure_storage: ^8.0.0
   flutter_slidable: ^2.0.0
   font_awesome_flutter: ^10.2.1
   geolocator: ^9.0.2
