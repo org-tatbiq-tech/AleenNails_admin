@@ -264,6 +264,13 @@ class LanguageHe extends Languages {
       "אתה יכול לסגור את המקום עבור טווח התאריכים שנבחר";
   @override
   String get daysLabel => "ימים";
+  @override
+  String get resetLabel => "אפוס";
+  @override
+  String get addVacationMessage =>
+      "האם אתה בטוח שאתה רוצה להוסיף את החופשה הזו?";
+  @override
+  String get resetDateMessage => "האם אתה בטוח שברצונך לאפס את התאריך הזה?";
 
   ///************************************************************************///
   /// ************ Service Labels ************///

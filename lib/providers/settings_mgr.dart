@@ -178,6 +178,16 @@ class SettingsMgr extends ChangeNotifier {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
+  bool isDayResettable(DateTime date) {
+    WorkingDay? workingDay =
+        scheduleOverrides.firstWhereOrNull((wd) => checkSameDay(wd.date, date));
+
+    if (workingDay != null) {
+      return true;
+    }
+    return false;
+  }
+
   WorkingDay getWorkingDay(DateTime date) {
     WorkingDay? workingDay =
         scheduleOverrides.firstWhereOrNull((wd) => checkSameDay(wd.date, date));

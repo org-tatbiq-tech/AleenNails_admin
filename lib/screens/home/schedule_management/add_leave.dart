@@ -3,13 +3,16 @@ import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
+import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class AddLeave extends StatefulWidget {
   const AddLeave({Key? key}) : super(key: key);
@@ -49,6 +52,81 @@ class _AddLeaveState extends State<AddLeave> {
 
   @override
   Widget build(BuildContext context) {
+    String getDuration() {
+      return (endTime.difference(startTime).inDays + 1).toString();
+    }
+
+    addVacation() {
+      getDateRangeMessage() {
+        if (isSameDay(startTime, endTime)) {
+          return '${getDateTimeFormat(
+            dateTime: startTime,
+            format: 'EEEE, dd-MMM-yyyy',
+            locale: getCurrentLocale(context),
+          )} ';
+        }
+        return '${getDateTimeFormat(
+          dateTime: startTime,
+          format: 'EEEE, dd-MMM-yyyy',
+          locale: getCurrentLocale(context),
+        )} ${Languages.of(context)!.arrowLabel} ${getDateTimeFormat(
+          dateTime: endTime,
+          format: 'EEEE, dd-MMM-yyyy',
+          locale: getCurrentLocale(context),
+        )}';
+      }
+
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: Languages.of(context)!.confirmLabel.toUpperCase(),
+          primaryAction: () => {},
+          secondaryButtonText: Languages.of(context)!.cancelLabel.toUpperCase(),
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/cancel.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: 80,
+                  contentPadding: 20,
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                Languages.of(context)!.addVacationMessage.toCapitalized(),
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                getDateRangeMessage(),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              SizedBox(
+                height: rSize(10),
+              ),
+              Text(
+                '${getDuration()} ${Languages.of(context)!.daysLabel}',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     Widget renderTimePicker() {
       return Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -179,10 +257,6 @@ class _AddLeaveState extends State<AddLeave> {
       );
     }
 
-    String getDuration() {
-      return (endTime.difference(startTime).inDays + 1).toString();
-    }
-
     return CustomContainer(
       imagePath: 'assets/images/background4.png',
       child: Scaffold(
@@ -200,7 +274,7 @@ class _AddLeaveState extends State<AddLeave> {
           left: false,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: rSize(30),
+              horizontal: rSize(20),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -245,7 +319,7 @@ class _AddLeaveState extends State<AddLeave> {
                 CustomButton(
                   customButtonProps: CustomButtonProps(
                     text: Languages.of(context)!.saveLabel.toTitleCase(),
-                    onTap: () => {},
+                    onTap: () => {addVacation()},
                   ),
                 ),
               ],

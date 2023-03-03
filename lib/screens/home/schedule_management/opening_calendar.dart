@@ -4,9 +4,11 @@ import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/screens/home/schedule_management/add_leave.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
+import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_expandable_calendar.dart';
 import 'package:common_widgets/custom_icon.dart';
+import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
@@ -28,6 +30,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
   bool _isDayEditable = true;
+  bool _isDayResettable = false;
 
   List<String> workingDaysList = [
     "Sunday",
@@ -40,6 +43,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   ];
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    final settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     var now = DateTime.now();
     var yesterday = DateTime(now.year, now.month, now.day)
         .subtract(const Duration(days: 1));
@@ -52,6 +56,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
         } else {
           _isDayEditable = false;
         }
+        _isDayResettable = settingsMgr.isDayResettable(_selectedDay);
       });
     }
   }
@@ -66,6 +71,44 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
 
   @override
   Widget build(BuildContext context) {
+    resetDate() {
+      showBottomModal(
+        bottomModalProps: BottomModalProps(
+          context: context,
+          centerTitle: true,
+          primaryButtonText: Languages.of(context)!.confirmLabel.toUpperCase(),
+          primaryAction: () => {},
+          secondaryButtonText: Languages.of(context)!.cancelLabel.toUpperCase(),
+          footerButton: ModalFooter.both,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CustomIcon(
+                customIconProps: CustomIconProps(
+                  icon: null,
+                  path: 'assets/icons/cancel.png',
+                  withPadding: true,
+                  backgroundColor: Theme.of(context).colorScheme.error,
+                  iconColor: Colors.white,
+                  containerSize: 80,
+                  contentPadding: 20,
+                ),
+              ),
+              SizedBox(
+                height: rSize(30),
+              ),
+              Text(
+                Languages.of(context)!.resetDateMessage.toCapitalized(),
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     List<Widget> getBreakForWorkingDay(WorkingDay workingDay) {
       List<Widget> widgetList = workingDay.breaks != null
           ? workingDay.breaks!.map((dayBreak) {
@@ -285,6 +328,20 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
                         Divider(
                           color: Theme.of(context).colorScheme.onBackground,
                         ),
+                        SizedBox(
+                          height: rSize(20),
+                        ),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 500),
+                          child: _isDayResettable
+                              ? CustomButton(
+                                  customButtonProps: CustomButtonProps(
+                                    onTap: () => {resetDate()},
+                                    text: Languages.of(context)!.resetLabel,
+                                  ),
+                                )
+                              : const SizedBox(),
+                        )
                       ],
                     ),
                   )

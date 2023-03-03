@@ -146,6 +146,9 @@ abstract class Languages {
   String get addLeaveLabel;
   String get addLeaveMessage;
   String get daysLabel;
+  String get resetLabel;
+  String get resetDateMessage;
+  String get addVacationMessage;
 
   ///************************************************************************///
   /// ************ Service Labels ************///

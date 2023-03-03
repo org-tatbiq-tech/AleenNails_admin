@@ -267,6 +267,13 @@ class LanguageEn extends Languages {
       "you can close the venue for selected date range";
   @override
   String get daysLabel => "days";
+  @override
+  String get resetLabel => "reset";
+  @override
+  String get resetDateMessage => "are you sure you want to reset this date?";
+  @override
+  String get addVacationMessage =>
+      "are you sure you want to add this vacation?";
 
   ///************************************************************************///
   /// ************ Service Labels ************///

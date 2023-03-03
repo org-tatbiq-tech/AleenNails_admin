@@ -277,6 +277,13 @@ class LanguageAr extends Languages {
   String get addLeaveMessage => "يمكنك إغلاق المكان للنطاق الزمني المحدد";
   @override
   String get daysLabel => "أيام";
+  @override
+  String get resetLabel => "إعادة ضبط";
+  @override
+  String get addVacationMessage => "هل أنت متأكد أنك تريد إضافة هذه العطلة؟";
+  @override
+  String get resetDateMessage =>
+      "هل أنت متأكد أنك تريد إعادة تعيين هذا التاريخ؟";
 
   ///************************************************************************///
   /// ************ Service Labels ************///
