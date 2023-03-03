@@ -27,6 +27,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
+  bool _isDayEditable = true;
 
   List<String> workingDaysList = [
     "Sunday",
@@ -39,10 +40,18 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   ];
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    var now = DateTime.now();
+    var yesterday = DateTime(now.year, now.month, now.day)
+        .subtract(const Duration(days: 1));
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
         _selectedDay =
             DateTime(selectedDay.year, selectedDay.month, selectedDay.day);
+        if (_selectedDay.isAfter(yesterday)) {
+          _isDayEditable = true;
+        } else {
+          _isDayEditable = false;
+        }
       });
     }
   }
@@ -102,7 +111,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
 
       return EaseInAnimation(
         beginAnimation: 1,
-        onTap: () => openDayDetails(),
+        onTap: _isDayEditable ? () => openDayDetails() : () => {},
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: rSize(10),

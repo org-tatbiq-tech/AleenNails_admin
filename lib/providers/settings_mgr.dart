@@ -116,6 +116,8 @@ class SettingsMgr extends ChangeNotifier {
 
   Future<void> downloadScheduleOverrides() async {
     /// Download scheduleOverrides from DB
+
+    // Downloading all schedule overrides for old days checks
     var query = _fs
         .collection(settingsCollection)
         .doc(scheduleManagementDoc)
@@ -186,7 +188,7 @@ class SettingsMgr extends ChangeNotifier {
       workingDay.date = date;
       workingDay.id = '';
     }
-    return workingDay!;
+    return workingDay;
   }
 
   ScheduleManagement _scheduleManagement =
