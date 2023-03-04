@@ -550,6 +550,11 @@ class LanguageAr extends Languages {
   @override
   String get resetPassEmailSentErrorBody =>
       "حدث خطأ في إعادة تعيين كلمة المرور! من فضلك جرب مرة اخرى";
+  @override
+  String get vacationTitle => "Vacation added!";
+  @override
+  String get vacationBody =>
+      "Selected vacation day have been added successfully";
 
   ///************************************************************************///
   /// ************ Profile settings ************///

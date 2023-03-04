@@ -1,6 +1,7 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/schedule_management/add_leave.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
@@ -10,6 +11,7 @@ import 'package:common_widgets/custom_expandable_calendar.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/ease_in_animation.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +76,8 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   @override
   Widget build(BuildContext context) {
     resetScheduleDay() {
-      settingsMgr.resetSchedule(settingsMgr.getWorkingDay(_selectedDay));
+      settingsMgr
+          .deleteScheduleOverride(settingsMgr.getWorkingDay(_selectedDay));
       setState(() {
         _isDayResettable = false;
       });
@@ -239,6 +242,23 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
       );
     }
 
+    navigateToVacation() async {
+      var res = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const AddLeave(),
+        ),
+      );
+      if (res != null && res['added']) {
+        showSuccessFlash(
+          successColor: successPrimaryColor,
+          context: context,
+          successTitle: Languages.of(context)!.vacationTitle,
+          successBody: Languages.of(context)!.vacationBody,
+        );
+      }
+    }
+
     return CustomContainer(
       imagePath: 'assets/images/background4.png',
       child: Scaffold(
@@ -246,14 +266,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
         floatingActionButton: FloatingActionButton(
           elevation: 4.0,
           splashColor: Colors.transparent,
-          onPressed: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const AddLeave(),
-              ),
-            )
-          },
+          onPressed: () => {navigateToVacation()},
           child: CustomIcon(
             customIconProps: CustomIconProps(
               icon: null,

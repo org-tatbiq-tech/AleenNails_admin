@@ -254,6 +254,8 @@ abstract class Languages {
   String get resetPassEmailSentSuccessBody;
   String get resetPassEmailSentErrorTitle;
   String get resetPassEmailSentErrorBody;
+  String get vacationTitle;
+  String get vacationBody;
 
   // Auth Errors
   String get authUserNotFoundErrorTitle;

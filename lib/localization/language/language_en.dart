@@ -498,6 +498,11 @@ class LanguageEn extends Languages {
   @override
   String get resetPassEmailSentErrorBody =>
       "Reset password failed. Please try again";
+  @override
+  String get vacationTitle => "Vacation added!";
+  @override
+  String get vacationBody =>
+      "Selected vacation day have been added successfully";
 
   // Auth Errors
   @override

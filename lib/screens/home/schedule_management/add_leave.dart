@@ -1,4 +1,5 @@
 import 'package:appointments/localization/language/languages.dart';
+import 'package:appointments/providers/settings_mgr.dart';
 import 'package:appointments/utils/general.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
@@ -12,6 +13,7 @@ import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class AddLeave extends StatefulWidget {
@@ -28,11 +30,13 @@ class _AddLeaveState extends State<AddLeave> {
   late DateTime endTime;
   late DateTime endTimeTemp;
   late DateTime endTimeMin;
+  late SettingsMgr settingsMgr;
   bool isSaveDisabled = true;
   DateTime today = DateTime.now();
   @override
   void initState() {
     super.initState();
+    settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     setState(() {
       startTime = DateTime(
         today.year,
@@ -76,12 +80,17 @@ class _AddLeaveState extends State<AddLeave> {
         )}';
       }
 
+      submitVacation() {
+        settingsMgr.submitNewVacation(startTime, endTime);
+        Navigator.pop(context, {'added': true});
+      }
+
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
           primaryButtonText: Languages.of(context)!.confirmLabel.toUpperCase(),
-          primaryAction: () => {},
+          primaryAction: () => {submitVacation()},
           secondaryButtonText: Languages.of(context)!.cancelLabel.toUpperCase(),
           footerButton: ModalFooter.both,
           child: Column(

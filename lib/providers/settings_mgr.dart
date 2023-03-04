@@ -18,7 +18,6 @@ import 'package:intl/intl.dart';
 const settingsCollection = 'settings';
 const clientsCollection = 'clients';
 const scheduleManagementDoc = 'scheduleManagement';
-// const unavailabilitiesCollection = 'unavailability';
 const scheduleOverridesCollection = 'scheduleOverrides';
 const bookingSettingsDoc = 'bookingSettings';
 const profileManagementDoc = 'profile';
@@ -40,68 +39,6 @@ class SettingsMgr extends ChangeNotifier {
   ///************************* Settings *******************************///
 
   ///*********************** Schedule management ****************************///
-  // bool initializedUnavailabilities =
-  //     false; // Don't download unavailabilities unless required
-  // List<UnavailabilityComp> _unavailabilities =
-  //     []; // Holds all DB unavailabilities
-  // StreamSubscription<QuerySnapshot>? _unavailabilitiesSub;
-  // List<UnavailabilityComp> get unavailabilities {
-  //   if (!initializedUnavailabilities) {
-  //     initializedUnavailabilities = true;
-  //     downloadUnavailabilities();
-  //   }
-  //   return _unavailabilities;
-  // }
-  //
-  // Future<void> downloadUnavailabilities() async {
-  //   /// Download Unavailabilities from DB
-  //   var query = _fs
-  //       .collection(settingsCollection)
-  //       .doc(scheduleManagementDoc)
-  //       .collection(unavailabilitiesCollection)
-  //       .orderBy('startTime', descending: false);
-  //
-  //   _unavailabilitiesSub = query.snapshots().listen(
-  //     (snapshot) async {
-  //       _unavailabilities = [];
-  //       if (snapshot.docs.isEmpty) {
-  //         // No data to show - notifying listeners for empty unavailabilities list.
-  //         notifyListeners();
-  //         return;
-  //       }
-  //
-  //       // Unavailabilities collection has data to show
-  //       for (var document in snapshot.docs) {
-  //         var data = document.data();
-  //         data['id'] = document.id;
-  //         _unavailabilities.add(UnavailabilityComp.fromJson(data));
-  //       }
-  //       notifyListeners();
-  //     },
-  //   );
-  // }
-  //
-  // Future<void> submitNewUnavailability(
-  //     UnavailabilityComp newUnavailability) async {
-  //   CollectionReference unavailabilitiesColl = _fs
-  //       .collection(settingsCollection)
-  //       .doc(scheduleManagementDoc)
-  //       .collection(unavailabilitiesCollection);
-  //
-  //   /// Submitting new Unavailability - update DB
-  //   await unavailabilitiesColl.add(newUnavailability.toJson());
-  // }
-  //
-  // Future<void> deleteUnavailability(UnavailabilityComp unavailability) async {
-  //   CollectionReference unavailabilitiesColl = _fs
-  //       .collection(settingsCollection)
-  //       .doc(scheduleManagementDoc)
-  //       .collection(unavailabilitiesCollection);
-  //
-  //   /// Submitting new Unavailability - update DB
-  //   await unavailabilitiesColl.doc(unavailability.id).delete();
-  // }
-
   bool initializedScheduleOverrides =
       false; // Don't download scheduleOverrides unless required
   List<WorkingDay> _scheduleOverrides = []; // Holds all DB scheduleOverrides
@@ -170,15 +107,15 @@ class SettingsMgr extends ChangeNotifier {
     await scheduleOverridesColl.doc(scheduleOverride.id).delete();
   }
 
-  Future<void> resetSchedule(WorkingDay scheduleOverride) async {
-    // Resetting working day to default
-    CollectionReference scheduleOverridesColl = _fs
-        .collection(settingsCollection)
-        .doc(scheduleManagementDoc)
-        .collection(scheduleOverridesCollection);
-
-    /// Submitting new scheduleOverride - update DB
-    await scheduleOverridesColl.doc(scheduleOverride.id).delete();
+  Future<void> submitNewVacation(DateTime startDate, DateTime endDate) async {
+    // Iterating over all days in range and setting day as off
+    endDate = endDate.add(const Duration(days: 1)); // to include last day
+    while (startDate.isBefore(endDate)) {
+      WorkingDay wd = getWorkingDay(startDate);
+      wd.isDayOn = false;
+      submitScheduleOverride(wd);
+      startDate = startDate.add(const Duration(days: 1));
+    }
   }
 
   bool checkSameDay(DateTime? a, DateTime? b) {

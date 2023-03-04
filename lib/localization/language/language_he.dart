@@ -245,7 +245,7 @@ class LanguageHe extends Languages {
   String get workingOnThisDayLabel => "האם עובדים ביום הזה";
   @override
   String get dayDetailsDescriptionLabel =>
-      "הגדר את שעות הפעילות שלך כאן. עבור אל לוח זמנים מתפריט ההגדרות אם אתה צריך להתאים שעות ליום בודד";
+      "הגדרי את שעות הפעילות שלך כאן. עברי אל לוח זמנים מתפריט ההגדרות אם את צריכה להתאים שעות ליום בודד";
   @override
   String get startDateTimeLabel => "תאריך ושעת התחלה";
   @override
@@ -261,16 +261,16 @@ class LanguageHe extends Languages {
   String get addLeaveLabel => "להוסיף חופש";
   @override
   String get addLeaveMessage =>
-      "אתה יכול לסגור את המקום עבור טווח התאריכים שנבחר";
+      "את יכול לסגור את המקום עבור טווח התאריכים שנבחר";
   @override
   String get daysLabel => "ימים";
   @override
   String get resetLabel => "אפוס";
   @override
   String get addVacationMessage =>
-      "האם אתה בטוח שאתה רוצה להוסיף את החופשה הזו?";
+      "האם את בטוחה שברצונך להוסיף את החופשה הזו?\nכל התורים בתקופה הזו יבוטלו";
   @override
-  String get resetDateMessage => "האם אתה בטוח שברצונך לאפס את התאריך הזה?";
+  String get resetDateMessage => "האם את בטוח שברצונך לאפס את התאריך הזה?";
 
   ///************************************************************************///
   /// ************ Service Labels ************///
@@ -476,6 +476,10 @@ class LanguageHe extends Languages {
   String get resetPassEmailSentErrorTitle => "שחזור נכשל!";
   @override
   String get resetPassEmailSentErrorBody => "שחזור סיסמה נכשל! בבקשה לנסות שוב";
+  @override
+  String get vacationTitle => "החופש התווסף!";
+  @override
+  String get vacationBody => "הימים המסומנים כחופש התעדכנו בהצלחה!";
 
   // Auth Errors
   @override
