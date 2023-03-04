@@ -170,6 +170,17 @@ class SettingsMgr extends ChangeNotifier {
     await scheduleOverridesColl.doc(scheduleOverride.id).delete();
   }
 
+  Future<void> resetSchedule(WorkingDay scheduleOverride) async {
+    // Resetting working day to default
+    CollectionReference scheduleOverridesColl = _fs
+        .collection(settingsCollection)
+        .doc(scheduleManagementDoc)
+        .collection(scheduleOverridesCollection);
+
+    /// Submitting new scheduleOverride - update DB
+    await scheduleOverridesColl.doc(scheduleOverride.id).delete();
+  }
+
   bool checkSameDay(DateTime? a, DateTime? b) {
     if (a == null || b == null) {
       return false;

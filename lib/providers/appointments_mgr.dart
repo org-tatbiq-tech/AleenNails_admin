@@ -57,8 +57,8 @@ class AppointmentsMgr extends ChangeNotifier {
           isLessThanOrEqualTo: DateTime(
             _selectedDay.year,
             _selectedDay.month,
-            _selectedDay.day + 1,
-          ),
+            _selectedDay.day,
+          ).add(const Duration(days: 1)),
         );
 
     _appointmentsSub = query.snapshots().listen(

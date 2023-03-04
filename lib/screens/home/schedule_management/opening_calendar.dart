@@ -31,6 +31,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   DateTime _selectedDay = DateTime.now();
   bool _isDayEditable = true;
   bool _isDayResettable = false;
+  late SettingsMgr settingsMgr;
 
   List<String> workingDaysList = [
     "Sunday",
@@ -64,6 +65,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
   @override
   void initState() {
     super.initState();
+    settingsMgr = Provider.of<SettingsMgr>(context, listen: false);
     DateTime now = DateTime.now();
     _focusedDay = DateTime(now.year, now.month, now.day);
     _selectedDay = DateTime(now.year, now.month, now.day);
@@ -71,13 +73,20 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
 
   @override
   Widget build(BuildContext context) {
+    resetScheduleDay() {
+      settingsMgr.resetSchedule(settingsMgr.getWorkingDay(_selectedDay));
+      setState(() {
+        _isDayResettable = false;
+      });
+    }
+
     resetDate() {
       showBottomModal(
         bottomModalProps: BottomModalProps(
           context: context,
           centerTitle: true,
           primaryButtonText: Languages.of(context)!.confirmLabel.toUpperCase(),
-          primaryAction: () => {},
+          primaryAction: () => {resetScheduleDay()},
           secondaryButtonText: Languages.of(context)!.cancelLabel.toUpperCase(),
           footerButton: ModalFooter.both,
           child: Column(
@@ -140,8 +149,8 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
     }
 
     renderDay({required WorkingDay workingDay}) {
-      openDayDetails() {
-        Navigator.push(
+      openDayDetails() async {
+        var res = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => DayDetails(
@@ -150,6 +159,11 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
             ),
           ),
         );
+        if (res != null && res['changed'] == true) {
+          setState(() {
+            _isDayResettable = true;
+          });
+        }
       }
 
       return EaseInAnimation(

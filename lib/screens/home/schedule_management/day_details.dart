@@ -1,20 +1,19 @@
 import 'package:appointments/data_types/macros.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:appointments/providers/settings_mgr.dart';
+import 'package:appointments/providers/theme_provider.dart';
 import 'package:appointments/screens/home/schedule_management/day_break.dart';
 import 'package:appointments/utils/general.dart';
-import 'package:common_widgets/custom_container.dart';
-
-import 'package:common_widgets/utils/general.dart';
-import 'package:appointments/providers/theme_provider.dart';
-import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/custom_app_bar.dart';
 import 'package:common_widgets/custom_button_widget.dart';
+import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -541,7 +540,7 @@ class _DayDetailsState extends State<DayDetails> {
                               await settingsMgr
                                   .submitScheduleOverride(widget.workingDay),
                             },
-                          Navigator.pop(context)
+                          Navigator.pop(context, {'changed': true})
                         }),
                   ),
                 ),
