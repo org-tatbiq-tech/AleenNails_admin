@@ -4,6 +4,7 @@ const admin = require("firebase-admin");
 // Cloud tasks initialization
 const { CloudTasksClient } = require('@google-cloud/tasks')
 
+
 admin.initializeApp();
 let path = require('path');
 let crypto = require('crypto');
@@ -11,8 +12,11 @@ let crypto = require('crypto');
 // Macros
 const appointmentsCollection = "appointments";
 const clientsCollection = "clients";
+const clientAppointmentsCollection = "client_appointments";
 const adminsCollection = "admins";
+const settingsCollection = "settings";
 const notificationsCollection = "notifications";
+const scheduleManagementId = "scheduleManagement";
 const adminAppTitle = "Aleen Nails Admin";
 const clientAppTitle = "Aleen Nails";
 
@@ -575,6 +579,171 @@ async function handleUpdateClient(change, context) {
 //    }
 }
 
+async function getConfirmedAppointments(date) {
+    // TODO: use getAppLocalDate and set time accordingly
+    let startDate = new Date(date);
+    let endDate = new Date(date);
+    endDate.setDate(endDate.getDate()+1);
+    console.log('Getting appointments from ', formatDate(startDate))
+    console.log('Getting appointments to', formatDate(endDate))
+    const appointmentResults = await admin.firestore()
+                                .collection(appointmentsCollection)
+                                .where('date', '>=', startDate)
+                                .where('date', '<=', endDate)
+                                .where('status', '==', 'AppointmentStatus.confirmed')
+                                .get();
+    if (appointmentResults.empty) {
+        return [];
+    }
+    let results = []
+    for (appointmentDoc of appointmentResults.docs) {
+        let appointmentData = appointmentDoc.data();
+        appointmentData['id'] = appointmentDoc.id;
+        results.push(appointmentData);
+    }
+    return results;
+}
+
+// TODO: use @google-cloud/dlp instead
+class TimeOfDay {
+  constructor(hour, minute) {
+    this.hour = hour;
+    this.minute= minute;
+  }
+  toDouble() {
+    return this.hour + this.minute / 60.0;
+  }
+}
+
+function DBToTimeOfDay(data) {
+  // Converter from firebase DB document to TimeOfDay
+  if (data['hour'] == null || data['minute'] == null) {
+    return null;
+  }
+
+  return new TimeOfDay(data['hour'], data['minute']);
+}
+
+function getAppLocalDate(date) {
+    let localDateString =  new Date(date).toLocaleString("en-US", { timeZone: "Asia/Jerusalem" });
+    return new Date(localDateString);
+}
+
+function getDateMinutes(date) {
+    return date.getMinutes();
+}
+
+function getDateHours(date) {
+    return date.getHours();
+}
+
+function getDayWorkingIntervals(workingDay) {
+    if (!workingDay.isDayOn) {
+      // Not working at this day
+      return [];
+    }
+    // If no breaks, return one intervals
+    if (workingDay.breaks == null || workingDay.breaks.length == 0) {
+      return [
+        [DBToTimeOfDay(workingDay.startTime), DBToTimeOfDay(workingDay.endTime)]
+      ];
+    }
+
+    let workingIntervals = [];
+    // Iterate over breaks, create working intervals accordingly
+    let currentStart = DBToTimeOfDay(workingDay.startTime);
+    for (let wdBreak of workingDay.breaks) {
+      let breakStart = DBToTimeOfDay(wdBreak.startTime);
+      if (currentStart.toDouble() != breakStart.toDouble()) {
+        workingIntervals.push([currentStart, breakStart]);
+      }
+      let breakEnd = DBToTimeOfDay(wdBreak.endTime)
+      currentStart = breakEnd;
+    }
+    // Also here need to check if endTime > currentStart
+    let endTime = DBToTimeOfDay(workingDay.endTime)
+    workingIntervals.push([currentStart, endTime]);
+    return workingIntervals;
+}
+
+function getAppointmentsToCancel(appointments, workingIntervals) {
+    if(workingIntervals.length == 0) {
+        return appointments;
+    }
+    let appointmentsToCancel = [];
+    for (let appointment of appointments){
+         let appointmentStartDate = getAppLocalDate(appointment.date.toDate())
+         let appointmentStartTime = new TimeOfDay(getDateHours(appointmentStartDate), getDateMinutes(appointmentStartDate));
+         let appointmentEndDate = getAppLocalDate(appointment.endTime.toDate())
+         let appointmentEndTime = new TimeOfDay(getDateHours(appointmentEndDate), getDateMinutes(appointmentEndDate));
+         let toCancel = true;
+         console.log('Appointment start:', appointmentStartTime);
+         console.log('Appointment end:', appointmentEndTime);
+         for (let workingInterval of workingIntervals){
+            if( appointmentStartTime.toDouble() >= workingInterval[0].toDouble() &&
+                appointmentEndTime.toDouble() <= workingInterval[1].toDouble()) {
+                toCancel = false;
+                break;
+           }
+         }
+         if (toCancel) {
+            appointmentsToCancel.push(appointment);
+         }
+    }
+    return appointmentsToCancel;
+}
+
+async function cancelAppointments(appointments) {
+     for (let appointment of appointments) {
+        console.log('canceling appointment', appointment.id)
+        let docRef  = await admin.firestore().collection(appointmentsCollection).doc(appointment.id);
+        await docRef.update({
+            status: 'AppointmentStatus.cancelled',
+            lastEditor: 'AppointmentCreator.business'
+        });
+        let clientAppointmentResults  = await admin.firestore()
+                                          .collection(clientsCollection)
+                                          .doc(appointment.clientDocID)
+                                          .collection(clientAppointmentsCollection)
+                                          .where('appointmentIdRef', '==', appointment.id)
+                                          .get();
+        for (clientAppointment of clientAppointmentResults.docs) {
+            console.log('Update client appointment: ', clientAppointment.id)
+            let clientAppointmentDocRef  =  await admin.firestore()
+                                             .collection(clientsCollection)
+                                             .doc(appointment.clientDocID)
+                                             .collection(clientAppointmentsCollection)
+                                             .doc(clientAppointment.id);
+            await clientAppointmentDocRef.update({
+                status: 'AppointmentStatus.cancelled'
+            });
+        }
+     }
+}
+
+async function handleModifyScheduleOverride(change, context) {
+    // Get an object with the current document value.
+    // If the document does not exist, it has been deleted.
+    const newScheduleOverride = change.after.exists ? change.after.data() : null;
+    let startDate = null;
+    let workingDay = null;
+    if(newScheduleOverride != null) {
+        workingDay = newScheduleOverride;
+        startDate = newScheduleOverride.date.toDate();
+    } else {
+        const oldScheduleOverride = change.before.data();
+        console.log('Schedule override was deleted, get the default schedule for', oldScheduleOverride.day);
+        const scheduleManagementResults  = await admin.firestore().collection(settingsCollection).doc(scheduleManagementId).get();
+        const scheduleManagement = scheduleManagementResults.data();
+        workingDay = scheduleManagement.workingDays.schedule[oldScheduleOverride.day];
+        startDate = oldScheduleOverride.date.toDate();
+    }
+    let appointments = await getConfirmedAppointments(startDate);
+    let workingIntervals = getDayWorkingIntervals(workingDay);
+    let appointmentsToCancel = getAppointmentsToCancel(appointments, workingIntervals);
+    console.log('canceling ', appointmentsToCancel.length, ' appointments');
+    await cancelAppointments(appointmentsToCancel);
+}
 
 // Handle new appointment
 exports.newAppointment = functions.firestore.
@@ -590,5 +759,10 @@ exports.updateAppointment = functions.firestore.
 exports.updateClient = functions.firestore.
     document('clients/{any}').
     onUpdate(handleUpdateClient);
+
+// Handle modify schedule override - create, update or delete
+exports.modifyScheduleOverride = functions.firestore.
+    document('settings/scheduleManagement/scheduleOverrides/{any}').
+    onWrite(handleModifyScheduleOverride);
 
 exports.notificationsTasksCallback = functions.https.onRequest(notificationsTasksHandler);
