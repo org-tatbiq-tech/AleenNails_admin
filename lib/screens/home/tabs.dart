@@ -9,6 +9,7 @@ import 'package:appointments/screens/home/clients/clients.dart';
 import 'package:appointments/screens/home/more.dart';
 import 'package:appointments/screens/home/notification/approval_request.dart';
 import 'package:appointments/screens/home/notification/notifications.dart';
+import 'package:appointments/screens/home/schedule_management/opening_calendar.dart';
 import 'package:appointments/screens/home/timeline.dart';
 import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_icon.dart';
@@ -294,9 +295,12 @@ class _HomeScreenState extends State<HomeScreen> {
           customButtonProps: CustomButtonProps(
             onTap: () => {
               Navigator.pop(context),
-              Navigator.of(context).pushNamed('/unavailability'),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const OpeningCalendar())),
             },
-            text: Languages.of(context)!.unavailabilityLabel.toTitleCase(),
+            text: Languages.of(context)!.openingCalendarLabel.toTitleCase(),
           ),
         ),
       ],
