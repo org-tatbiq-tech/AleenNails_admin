@@ -330,7 +330,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),
@@ -378,7 +378,7 @@ class AppointmentDetailsState extends State<AppointmentDetails> {
               ),
               Text(
                 Languages.of(context)!.actionUndoneLabel.toCapitalized(),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyLarge,
               ),
             ],
           ),
