@@ -1,5 +1,7 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+// To enable consistent time zone with the application
+process.env.TZ = 'Asia/Jerusalem'
 
 // Cloud tasks initialization
 const { CloudTasksClient } = require('@google-cloud/tasks')
@@ -580,9 +582,9 @@ async function handleUpdateClient(change, context) {
 }
 
 async function getConfirmedAppointments(date) {
-    // TODO: use getAppLocalDate and set time accordingly
-    let startDate = new Date(date);
-    let endDate = new Date(date);
+    let startDate = getAppLocalDate(date);
+    startDate.setHours(0, 0, 0, 0);
+    let endDate = getAppLocalDate(startDate);
     endDate.setDate(endDate.getDate()+1);
     console.log('Getting appointments from ', formatDate(startDate))
     console.log('Getting appointments to', formatDate(endDate))
@@ -648,7 +650,17 @@ function getDayWorkingIntervals(workingDay) {
         [DBToTimeOfDay(workingDay.startTime), DBToTimeOfDay(workingDay.endTime)]
       ];
     }
-
+    workingDay.breaks.sort((b1, b2) => {
+        let b1Start = DBToTimeOfDay(b1.startTime);
+        let b2Start = DBToTimeOfDay(b2.startTime);
+        if (b1Start.toDouble() < b2Start.toDouble()) {
+          return -1;
+        }
+        if (b1Start.toDouble() > b2Start.toDouble()) {
+          return 1;
+        }
+        return 0;
+    })
     let workingIntervals = [];
     // Iterate over breaks, create working intervals accordingly
     let currentStart = DBToTimeOfDay(workingDay.startTime);
@@ -672,9 +684,9 @@ function getAppointmentsToCancel(appointments, workingIntervals) {
     }
     let appointmentsToCancel = [];
     for (let appointment of appointments){
-         let appointmentStartDate = getAppLocalDate(appointment.date.toDate())
+         let appointmentStartDate = getAppLocalDate(appointment.date.toDate());
          let appointmentStartTime = new TimeOfDay(getDateHours(appointmentStartDate), getDateMinutes(appointmentStartDate));
-         let appointmentEndDate = getAppLocalDate(appointment.endTime.toDate())
+         let appointmentEndDate = getAppLocalDate(appointment.endTime.toDate());
          let appointmentEndTime = new TimeOfDay(getDateHours(appointmentEndDate), getDateMinutes(appointmentEndDate));
          let toCancel = true;
          console.log('Appointment start:', appointmentStartTime);
@@ -695,11 +707,12 @@ function getAppointmentsToCancel(appointments, workingIntervals) {
 
 async function cancelAppointments(appointments) {
      for (let appointment of appointments) {
-        console.log('canceling appointment', appointment.id)
+        // console.log('canceling appointment', appointment.id);
         let docRef  = await admin.firestore().collection(appointmentsCollection).doc(appointment.id);
         await docRef.update({
             status: 'AppointmentStatus.cancelled',
-            lastEditor: 'AppointmentCreator.business'
+            lastEditor: 'AppointmentCreator.business',
+            notes: 'שינוי בזמני עבודה, עמך הסליחה'
         });
         let clientAppointmentResults  = await admin.firestore()
                                           .collection(clientsCollection)
@@ -708,7 +721,7 @@ async function cancelAppointments(appointments) {
                                           .where('appointmentIdRef', '==', appointment.id)
                                           .get();
         for (clientAppointment of clientAppointmentResults.docs) {
-            console.log('Update client appointment: ', clientAppointment.id)
+            // console.log('Update client appointment: ', clientAppointment.id);
             let clientAppointmentDocRef  =  await admin.firestore()
                                              .collection(clientsCollection)
                                              .doc(appointment.clientDocID)
