@@ -59,7 +59,8 @@ class AppointmentsMgr extends ChangeNotifier {
             _selectedDay.month,
             _selectedDay.day,
           ).add(const Duration(days: 1)),
-        );
+        )
+        .orderBy('date');
 
     _appointmentsSub = query.snapshots().listen(
       (snapshot) async {
