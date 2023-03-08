@@ -157,7 +157,7 @@ class _OpeningCalendarState extends State<OpeningCalendar> {
           context,
           MaterialPageRoute(
             builder: (context) => DayDetails(
-              workingDay: workingDay,
+              workingDay: WorkingDay.fromJson(workingDay.toJson()),
               isIndividualWorkingDay: true,
             ),
           ),
