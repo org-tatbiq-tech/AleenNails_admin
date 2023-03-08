@@ -274,6 +274,8 @@ class LanguageEn extends Languages {
   @override
   String get addVacationMessage =>
       "are you sure you want to add this vacation?";
+  @override
+  String get rescheduleMessage => "are you sure you want to update this day?";
 
   ///************************************************************************///
   /// ************ Service Labels ************///
