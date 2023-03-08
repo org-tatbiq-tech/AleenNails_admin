@@ -9,6 +9,7 @@ import 'package:common_widgets/custom_button_widget.dart';
 import 'package:common_widgets/custom_container.dart';
 import 'package:common_widgets/custom_icon.dart';
 import 'package:common_widgets/custom_input_field_button.dart';
+import 'package:common_widgets/custom_modal.dart';
 import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
@@ -456,6 +457,60 @@ class _DayDetailsState extends State<DayDetails> {
       );
     }
 
+    void submitChanges() {
+      widget.workingDay.startTime = TimeOfDay(
+        hour: startTime.hour,
+        minute: startTime.minute,
+      );
+      widget.workingDay.endTime = TimeOfDay(
+        hour: endTime.hour,
+        minute: endTime.minute,
+      );
+      if (widget.isIndividualWorkingDay != null &&
+          widget.isIndividualWorkingDay!) {
+        showBottomModal(
+          bottomModalProps: BottomModalProps(
+            context: context,
+            centerTitle: true,
+            primaryButtonText:
+                Languages.of(context)!.confirmLabel.toUpperCase(),
+            primaryAction: () async => {
+              await settingsMgr.submitScheduleOverride(widget.workingDay),
+              Navigator.pop(context, {'changed': true}),
+            },
+            secondaryButtonText:
+                Languages.of(context)!.cancelLabel.toUpperCase(),
+            footerButton: ModalFooter.both,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustomIcon(
+                  customIconProps: CustomIconProps(
+                    icon: null,
+                    path: 'assets/icons/cancel.png',
+                    withPadding: true,
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    iconColor: Colors.white,
+                    containerSize: 80,
+                    contentPadding: 20,
+                  ),
+                ),
+                SizedBox(
+                  height: rSize(30),
+                ),
+                Text(
+                  Languages.of(context)!.rescheduleMessage.toCapitalized(),
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    }
+
     return CustomContainer(
       imagePath: 'assets/images/background4.png',
       child: Scaffold(
@@ -525,23 +580,7 @@ class _DayDetailsState extends State<DayDetails> {
                   customButtonProps: CustomButtonProps(
                     text: Languages.of(context)!.saveLabel.toCapitalized(),
                     isDisabled: isSaveDisabled,
-                    onTap: (() async => {
-                          widget.workingDay.startTime = TimeOfDay(
-                            hour: startTime.hour,
-                            minute: startTime.minute,
-                          ),
-                          widget.workingDay.endTime = TimeOfDay(
-                            hour: endTime.hour,
-                            minute: endTime.minute,
-                          ),
-                          if (widget.isIndividualWorkingDay != null &&
-                              widget.isIndividualWorkingDay!)
-                            {
-                              await settingsMgr
-                                  .submitScheduleOverride(widget.workingDay),
-                            },
-                          Navigator.pop(context, {'changed': true})
-                        }),
+                    onTap: () => submitChanges(),
                   ),
                 ),
               ],

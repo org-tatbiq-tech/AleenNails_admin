@@ -149,6 +149,7 @@ abstract class Languages {
   String get resetLabel;
   String get resetDateMessage;
   String get addVacationMessage;
+  String get rescheduleMessage;
 
   ///************************************************************************///
   /// ************ Service Labels ************///

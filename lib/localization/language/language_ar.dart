@@ -282,6 +282,8 @@ class LanguageAr extends Languages {
   @override
   String get addVacationMessage => "هل أنت متأكد أنك تريد إضافة هذه العطلة؟";
   @override
+  String get rescheduleMessage => "هل أنت متأكد أنك تريد التحديث هذا اليوم؟";
+  @override
   String get resetDateMessage =>
       "هل أنت متأكد أنك تريد إعادة تعيين هذا التاريخ؟";
 
