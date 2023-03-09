@@ -14,6 +14,7 @@ import 'package:common_widgets/custom_text_button.dart';
 import 'package:common_widgets/ease_in_animation.dart';
 import 'package:common_widgets/picker_date_time_modal.dart';
 import 'package:common_widgets/utils/date.dart';
+import 'package:common_widgets/utils/flash_manager.dart';
 import 'package:common_widgets/utils/general.dart';
 import 'package:common_widgets/utils/layout.dart';
 import 'package:flutter/cupertino.dart';
@@ -86,6 +87,48 @@ class _DayDetailsState extends State<DayDetails> {
     });
   }
 
+  bool validateBreak(WorkingDayBreak dayBreak) {
+    // Breaks should not intersect
+    DateTime now = DateTime.now();
+    DateTime newBreakStartTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      dayBreak.startTime.hour,
+      dayBreak.startTime.minute,
+    );
+    DateTime newBreakEndTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      dayBreak.endTime.hour,
+      dayBreak.endTime.minute,
+    );
+    for (WorkingDayBreak b in widget.workingDay.breaks!) {
+      DateTime breakStartTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        b.startTime.hour,
+        b.startTime.minute,
+      );
+      DateTime breakEndTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        b.endTime.hour,
+        b.endTime.minute,
+      );
+      if (breakStartTime.isAfter(newBreakEndTime) ||
+          newBreakStartTime.isAfter(breakEndTime)) {
+        continue;
+      } else {
+        return false;
+      }
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     addBreak() async {
@@ -102,8 +145,20 @@ class _DayDetailsState extends State<DayDetails> {
       if (result != null) {
         setState(() {
           widget.workingDay.breaks ??= [];
-          widget.workingDay.breaks!.add(result);
-          isSaveDisabled = false;
+          if (validateBreak(result)) {
+            widget.workingDay.breaks!.add(result);
+            isSaveDisabled = false;
+          } else {
+            showErrorFlash(
+              context: context,
+              errorTitle:
+                  Languages.of(context)!.flashMessageErrorTitle.toTitleCase(),
+              errorBody: Languages.of(context)!
+                  .breaksIntersectErrorBody
+                  .toCapitalized(),
+              errorColor: errorPrimaryColor,
+            );
+          }
         });
       }
     }

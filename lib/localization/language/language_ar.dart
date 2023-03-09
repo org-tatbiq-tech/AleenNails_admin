@@ -482,6 +482,8 @@ class LanguageAr extends Languages {
   String get clientCreatedWronglyBody =>
       "قم بتغيير بعض الأشياء وحاول الإرسال مرة أخرى.";
   @override
+  String get breaksIntersectErrorBody => "Breaks cant intersect";
+  @override
   String get clientPhoneAlreadyUsedErrorBody =>
       "رقم الهاتف مسجل لعميل اخر. قم بتغيير رقم الهاتف وحاول مرة أخرى.";
   @override

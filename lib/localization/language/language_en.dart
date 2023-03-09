@@ -422,6 +422,8 @@ class LanguageEn extends Languages {
   String get clientCreatedWronglyBody =>
       "change a few things up and try submitting again.";
   @override
+  String get breaksIntersectErrorBody => "Breaks cant intersect";
+  @override
   String get clientPhoneAlreadyUsedErrorBody =>
       "Phone number already used by another user. please change the phone number and try again.";
   @override

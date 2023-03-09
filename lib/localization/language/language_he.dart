@@ -419,6 +419,9 @@ class LanguageHe extends Languages {
   @override
   String get clientCreatedWronglyBody => "שנה כמה דברים ונסה לשלוח שוב";
   @override
+  String get breaksIntersectErrorBody =>
+      "אסור שזמני ההפסקות יתכנסו! בבקשה לסדר הפסקות שוב";
+  @override
   String get clientPhoneAlreadyUsedErrorBody =>
       "מספר הטלפון כבר רשום אצל לקוח קיים. נא לשנות את מספר הטלפון ולנסות שוב.";
   @override

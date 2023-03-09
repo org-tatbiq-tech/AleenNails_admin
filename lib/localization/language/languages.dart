@@ -227,6 +227,7 @@ abstract class Languages {
   String get flashMessageSuccessTitle;
   String get flashMessageErrorTitle;
   String get clientCreatedWronglyBody;
+  String get breaksIntersectErrorBody;
   String get clientPhoneAlreadyUsedErrorBody;
   String get clientEmailAlreadyUsedErrorBody;
   String get clientUpdatedSuccessfullyBody;
