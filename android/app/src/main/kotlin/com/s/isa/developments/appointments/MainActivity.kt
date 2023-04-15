@@ -1,4 +1,4 @@
-package com.s.isa.developments.appointments
+package com.tatbiq.tech.aleenNailsAdmin
 
 import io.flutter.embedding.android.FlutterActivity
 

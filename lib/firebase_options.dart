@@ -63,8 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1023132620086',
     projectId: 'aleenclienttest',
     storageBucket: 'aleenclienttest.appspot.com',
-    androidClientId: '1023132620086-13t1vhe8p7uuqlu7uq6v3asopau2btj6.apps.googleusercontent.com',
-    iosClientId: '1023132620086-98ud800n6pvnhj5r70ih3pnc925ujd66.apps.googleusercontent.com',
+    androidClientId:
+        '1023132620086-13t1vhe8p7uuqlu7uq6v3asopau2btj6.apps.googleusercontent.com',
+    iosClientId:
+        '1023132620086-98ud800n6pvnhj5r70ih3pnc925ujd66.apps.googleusercontent.com',
     iosBundleId: 'com.s.isa.developments.appointments',
   );
 }
