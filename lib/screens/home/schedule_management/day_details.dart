@@ -563,6 +563,11 @@ class _DayDetailsState extends State<DayDetails> {
             ),
           ),
         );
+      } else {
+        setState(() {
+          isSaveDisabled = true;
+          Navigator.pop(context, {'changed': true});
+        });
       }
     }
 
