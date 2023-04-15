@@ -65,6 +65,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'aleennail-prod.appspot.com',
     androidClientId: '788313607719-8t6l72vvlq26kq5b5ilm3l97n5v8i216.apps.googleusercontent.com',
     iosClientId: '788313607719-lnn6f3d97b1s7gcudbd7v9mlaaq4imdn.apps.googleusercontent.com',
-    iosBundleId: 'com.s.isa.developments.appointments',
+    iosBundleId: 'com.tatbiq.tech.aleenNailsAdmin',
   );
 }
