@@ -50,23 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBOKRvZzDiRZQWqC9TRIJG68w13aF0jlE0',
-    appId: '1:1023132620086:android:5848048d7272da66740f97',
-    messagingSenderId: '1023132620086',
-    projectId: 'aleenclienttest',
-    storageBucket: 'aleenclienttest.appspot.com',
+    apiKey: 'AIzaSyBjPozY0JKocRCJNawP89qZdMP7jXOtT_s',
+    appId: '1:788313607719:android:461b4f6d6830b279014802',
+    messagingSenderId: '788313607719',
+    projectId: 'aleennail-prod',
+    storageBucket: 'aleennail-prod.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD_HnR_apiOGIRrXdtc7V6MCdkZNTdBTHs',
-    appId: '1:1023132620086:ios:a55ea6fa002ddb07740f97',
-    messagingSenderId: '1023132620086',
-    projectId: 'aleenclienttest',
-    storageBucket: 'aleenclienttest.appspot.com',
-    androidClientId:
-        '1023132620086-13t1vhe8p7uuqlu7uq6v3asopau2btj6.apps.googleusercontent.com',
-    iosClientId:
-        '1023132620086-98ud800n6pvnhj5r70ih3pnc925ujd66.apps.googleusercontent.com',
-    iosBundleId: 'com.s.isa.developments.appointments',
+    apiKey: 'AIzaSyCXniWKB0qcEPQ-FM7VssSbsxmdxY1xN-M',
+    appId: '1:788313607719:ios:eeaa0f813642e3b3014802',
+    messagingSenderId: '788313607719',
+    projectId: 'aleennail-prod',
+    storageBucket: 'aleennail-prod.appspot.com',
+    androidClientId: '788313607719-8t6l72vvlq26kq5b5ilm3l97n5v8i216.apps.googleusercontent.com',
+    iosClientId: '788313607719-7fv54ct1re14vbtm602h03ur4f3ka41g.apps.googleusercontent.com',
+    iosBundleId: 'com.tatbiq.tech.aleenNailsAdmin',
   );
 }
