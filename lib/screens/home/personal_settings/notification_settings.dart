@@ -1,4 +1,4 @@
-import 'package:app_settings/app_settings.dart';
+// import 'package:app_settings/app_settings.dart';
 import 'package:appointments/localization/language/languages.dart';
 import 'package:common_widgets/custom_container.dart';
 
@@ -89,7 +89,7 @@ class _NotificationSettingsScreenState
           CustomListTile(
             customListTileProps: CustomListTileProps(
               enabled: true,
-              onTap: () => AppSettings.openNotificationSettings(),
+              // onTap: () => AppSettings.openNotificationSettings(),
               title: Text(
                 Languages.of(context)!.notificationsMsg,
                 maxLines: 1,
